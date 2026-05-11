@@ -1,9 +1,9 @@
 ---
 title: "New C++ Authorized APIs in CAA V5-6R2016 GA"
-category: "general"
+category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIVpmAFLActionServices", "CATIUserExitLoginTracker", "CATIMfgElementaryMotion", "CAACompositesItf", "CATICGMRecognizeFeatures", "CATIDftDatumTarget", "CATICciCompositesParametersMSSImportExport", "CATIDftCoordDimension", "CATIA", "CATICGMTopSilhOperator"]
-source_file: "Doc\online\CAACenQuickRefs\CAACenV5R26GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R26GANewCPPAPI.md"
 converted: "2026-05-11T17:33:47.574475"
 ---
 
@@ -95,4 +95,4 @@ History Version: **1** [Sep 2015] | Document created
 * * *
 
 _Copyright © 1999-2014, Dassault Systèmes. All rights reserved._  
-Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.htm) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.htm) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.htm)
+Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)

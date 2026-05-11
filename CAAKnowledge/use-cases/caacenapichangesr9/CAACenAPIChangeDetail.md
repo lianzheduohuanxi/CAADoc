@@ -1,9 +1,10 @@
 ---
 title: "Detail Of C++ API Changes"
-category: "general"
+category: "api-changes"
 module: "CAACenAPIChangesR9"
+version: "V5R9"
 tags: ["CAA2Usage", "CAA2Level"]
-source_file: "Doc\online\CAACenAPIChangesR9\CAACenAPIChangeDetail.htm"
+source_file: "Doc/online/CAACenAPIChangesR9/CAACenAPIChangeDetail.md"
 converted: "2026-05-11T17:33:52.825711"
 ---
 
@@ -29,47 +30,47 @@ INDM | Method is no more documented. It does not break your code in any way but 
   
 * * *
 
-AdvancedMathematics | [R9GA vs R8GA](AdvancedMathematics.htm) |   
+AdvancedMathematics | [R9GA vs R8GA](AdvancedMathematics.md) |   
 ---|---|---  
-ApplicationFrame | [R9GA vs R8GA](ApplicationFrame.htm) |   
-AnalysisMeshingModel | [R9GA vs R8GA](AnalysisMeshingModel.htm) |   
-BasicTopologicalOpe | [R9GA vs R8GA](BasicTopologicalOpe.htm) |   
-CATAnalysisBase | [R9GA vs R8GA](CATAnalysisBase.htm) |   
-CATAnalysisInterfaces | [R9GA vs R8GA](CATAnalysisInterfaces.htm) |   
-CATTPSInterfaces | [R9GA vs R8GA](CATTPSInterfaces.htm) |  |   
-Dialog | [R9GA vs R8GA](Dialog.htm) |   
-DMAPSInterfaces | [R9GA vs R8GA](DMAPSInterfaces.htm) |   
-DNBDpmBIWInterfaces | [R9GA vs R8GA](DNBDpmBIWInterfaces.htm) |   
-DNBInspectInterfaces | [R9GA vs R8GA](DNBInspectInterfaces.htm) |   
-DraftingInterfaces | [R9GA vs R8GA](DraftingInterfaces.htm) |   
-ENOVInterfaces | [R9GA vs R8GA](ENOVInterfaces.htm) |   
-ENOVaultClientCPP | [R9GA vs R8GA](ENOVaultClientCPP.htm) |   
-GeometricObjects | [R9GA vs R8GA](GeometricObjects.htm) |   
-GSMInterfaces | [R9GA vs R8GA](GSMInterfaces.htm) |   
-LiteralFeatures | [R9GA vs R8GA](LiteralFeatures.htm) |   
-ManufacturingInterfaces | [R9GA vs R8GA](ManufacturingInterfaces.htm) |   
-Mathematics | [R9GA vs R8GA](Mathematics.htm) |   
-MechanicalCommands | [R9GA vs R8GA](MechanicalCommands.htm) |   
-MechanicalModelerUI | [R9GA vs R8GA](MechanicalModelerUI.htm) |   
-MecModInterfaces | [R9GA vs R8GA](MecModInterfaces.htm) |   
-NewTopologicalObjects | [R9GA vs R8GA](NewTopologicalObjects.htm) |   
-ObjectModelerBase | [R9GA vs R8GA](ObjectModelerBase.htm) |   
-SetcherInterfaces | [R9GA vs R8GA](SketcherInterfaces.htm) |   
-System | [R9GA vs R8GA](System.htm) |   
-Visualization | [R9GA vs R8GA](Visualization.htm) |   
-VPMInterfaces | [R9GA vs R8GA](VPMInterfaces.htm) |   
-VPMPersistency | [R9GA vs R8GA](VPMPersistency.htm) |   
-VPMPsManager | [R9GA vs R8GA](VPMPsManager.htm) |   
-VPMDesktopServices | [R9GA vs R8GA](VPMDesktopServices.htm) |   
-VPMTpManager | [R9GA vs R8GA](VPMTpManager.htm) |   
-VPMXBom | [R9GA vs R8GA](VPMXBom.htm) |   
+ApplicationFrame | [R9GA vs R8GA](ApplicationFrame.md) |   
+AnalysisMeshingModel | [R9GA vs R8GA](AnalysisMeshingModel.md) |   
+BasicTopologicalOpe | [R9GA vs R8GA](BasicTopologicalOpe.md) |   
+CATAnalysisBase | [R9GA vs R8GA](CATAnalysisBase.md) |   
+CATAnalysisInterfaces | [R9GA vs R8GA](CATAnalysisInterfaces.md) |   
+CATTPSInterfaces | [R9GA vs R8GA](CATTPSInterfaces.md) |  |   
+Dialog | [R9GA vs R8GA](Dialog.md) |   
+DMAPSInterfaces | [R9GA vs R8GA](DMAPSInterfaces.md) |   
+DNBDpmBIWInterfaces | [R9GA vs R8GA](DNBDpmBIWInterfaces.md) |   
+DNBInspectInterfaces | [R9GA vs R8GA](DNBInspectInterfaces.md) |   
+DraftingInterfaces | [R9GA vs R8GA](DraftingInterfaces.md) |   
+ENOVInterfaces | [R9GA vs R8GA](ENOVInterfaces.md) |   
+ENOVaultClientCPP | [R9GA vs R8GA](ENOVaultClientCPP.md) |   
+GeometricObjects | [R9GA vs R8GA](GeometricObjects.md) |   
+GSMInterfaces | [R9GA vs R8GA](GSMInterfaces.md) |   
+LiteralFeatures | [R9GA vs R8GA](LiteralFeatures.md) |   
+ManufacturingInterfaces | [R9GA vs R8GA](ManufacturingInterfaces.md) |   
+Mathematics | [R9GA vs R8GA](Mathematics.md) |   
+MechanicalCommands | [R9GA vs R8GA](MechanicalCommands.md) |   
+MechanicalModelerUI | [R9GA vs R8GA](MechanicalModelerUI.md) |   
+MecModInterfaces | [R9GA vs R8GA](MecModInterfaces.md) |   
+NewTopologicalObjects | [R9GA vs R8GA](NewTopologicalObjects.md) |   
+ObjectModelerBase | [R9GA vs R8GA](ObjectModelerBase.md) |   
+SetcherInterfaces | [R9GA vs R8GA](SketcherInterfaces.md) |   
+System | [R9GA vs R8GA](System.md) |   
+Visualization | [R9GA vs R8GA](Visualization.md) |   
+VPMInterfaces | [R9GA vs R8GA](VPMInterfaces.md) |   
+VPMPersistency | [R9GA vs R8GA](VPMPersistency.md) |   
+VPMPsManager | [R9GA vs R8GA](VPMPsManager.md) |   
+VPMDesktopServices | [R9GA vs R8GA](VPMDesktopServices.md) |   
+VPMTpManager | [R9GA vs R8GA](VPMTpManager.md) |   
+VPMXBom | [R9GA vs R8GA](VPMXBom.md) |   
   
 * * *
 
 References [1] | [Migration to CATBoolean](../CAACenQuickRefs/CAACenWhatsNew.htm#CATBoolean)  
 ---|---  
-[2] | [Details Of V5R7 API Changes](../CAACenAPIChangesR7/CAACenAPIChangeDetail.htm)  
-[3] | [Details Of V5R8 API Changes](../CAACenAPIChangesR8/CAACenAPIChangeDetail.htm)  
+[2] | [Details Of V5R7 API Changes](../CAACenAPIChangesR7/CAACenAPIChangeDetail.md)  
+[3] | [Details Of V5R8 API Changes](../CAACenAPIChangesR8/CAACenAPIChangeDetail.md)  
 [4] | [Split of the Visualization framework](../CAACenQuickRefs/CAACenWhatsNew.htm#VisuSplit)  
 [5] | [Move of CAA API resources from MechanicalComands into InteractiveInterfaces](../CAACenQuickRefs/CAACenWhatsNew.htm#MecComMov)  
 [Top]  

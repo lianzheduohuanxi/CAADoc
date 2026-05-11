@@ -3,15 +3,13 @@ title: "How to Use the Topological Operators"
 category: "technical article"
 module: "CAACgmModel"
 tags: ["CATICGMSolidPrimitive", "CAAGMOperatorsSpline", "CATICGMTopSkin", "CATICGMTopOperator", "CATICGMGeoToTopOperator"]
-source_file: "Doc\online\CAACgmModel\CAACgmTaUseTopoOperators.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmTaUseTopoOperators.md"
 converted: "2026-05-11T17:33:48.060274"
 ---
-
 # How to Use Topological Operators  
   
 ---  
 Technical Article  
-  
 ### Abstract
 
 Build on a common scheme, the topological operators are transient objects used to create bodies.
@@ -20,7 +18,6 @@ Build on a common scheme, the topological operators are transient objects used t
     * How to Delete a Topological Operator 
     * In Short  
 ---  
-  
 ### Introduction
 
 Using topological operators is an easy way to create new consistent topological objects. There are two types of operators:
@@ -35,7 +32,6 @@ The operators can log, under request, the follow-up of the faces and free edges 
 The topological operators are transient objects used to define topological operations, and cannot be streamed.
 
 The GMOperatorsInterfaces framework provides main topological operators. 
-
 ### How to Create and Use a Topological Operator
 
 To use a topological operator, you must:
@@ -67,7 +63,6 @@ To use a topological operator, you must:
     // Get the resulting body
     CATBody * piSkinBody = pSkinOp->GetResult();
     ...
-
 ### How to Delete a Topological Operator
 
 Topological operators should be deleted by using the **Release** method.
@@ -79,12 +74,10 @@ Topological operators should be deleted by using the **Release** method.
     // delete the operator
     pSkinOp **- >Release();  
     **pSkinOp **= NULL;**
-
 ### In Short
 
     * The topological operators are transient objects used to create on or more topological bodies. They follow the smart mechanism and do not modify the input operands.
     * All the topological operators are based on the same scheme: creation, specification od additional data if need be, run, read of the results, deletion. They work inside one container.
-
 ### History
 
 Version: **1** [Jan 2007] | Document created  

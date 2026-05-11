@@ -1,9 +1,9 @@
 ---
 title: "mkICE"
-category: "general"
+category: "use-case"
 module: "CAABtlQuickRefs"
 tags: ["CAADialog"]
-source_file: "Doc\online\CAABtlQuickRefs\CAABtlMkICEV5.htm"
+source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkICEV5.md"
 converted: "2026-05-11T17:33:49.991364"
 ---
 
@@ -54,9 +54,9 @@ During edition, the XML document is checked against the XSD. If any error occurs
 [Top] Preventing a Framework from Being Built on Certain Operating Systems
       1. Click the `built` node.
       2. In the `value` list, select `false`.
-      3. In the `osConstraint` box, type the operating systems for which you do not want to build the frameworks. See [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm) to know the list of supported operating systems and the possible values to add in the `osConstraint` box, such as intel_a for Windows 32-bit or win_b64 for Windows 64 bit.
+      3. In the `osConstraint` box, type the operating systems for which you do not want to build the frameworks. See [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md) to know the list of supported operating systems and the possible values to add in the `osConstraint` box, such as intel_a for Windows 32-bit or win_b64 for Windows 64 bit.
       4. On the `File` menu, click `Save`.
-[Top] XML validation The XML file content is validated against the Identity Card xsd when you use mkICE and uses the `Error and warning` pane to display errors. For example, a single built element can exist. When attempting to add a second one, an error is displayed in the the `Error and warning` pane, as shown below. ![mkICE Error and warning](images/CAABtlmkICE02V5.png) [Top] Command Shortcuts Action | Shortcut  
+ Shortcut  
 ---|---  
 Open file | Ctrl+O  
 Save | Ctrl+S  

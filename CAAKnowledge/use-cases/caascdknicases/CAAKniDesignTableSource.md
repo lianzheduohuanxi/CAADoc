@@ -1,18 +1,18 @@
 ---
 title: "CAAKniDesignTable.CATScript"
-category: "general"
+category: "use-case"
 module: "CAAScdKniUseCases"
 tags: ["CAAScdKniUseCases", "CATIA", "CAAKniDesignTable"]
-source_file: "Doc\online\CAAScdKniUseCases\CAAKniDesignTableSource.htm"
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniDesignTableSource.md"
 converted: "2026-05-11T17:31:51.978836"
 ---
 
-
     Option Explicit
     ' COPYRIGHT DASSAULT SYSTEMES 2001
+```vbscript
     Dim Language as String
     Language="VBScript"
-    
+```vbscript
     ' ***********************************************************************
     '   Purpose:      This macro:
     '                 1 - Checks whether the active document is a CATPart
@@ -38,9 +38,14 @@ converted: "2026-05-11T17:31:51.978836"
     '   CATIA Level:  V5R6
     '   Revision : V5R13
     ' ***********************************************************************
+```
+
     
+```
+
+```vbscript
     Sub CATMain()
-    
+```vbscript
         ' ----------------------------------------------------------- 
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String 
@@ -49,60 +54,66 @@ converted: "2026-05-11T17:31:51.978836"
           Err.Raise 9999,,"No Doc Path Defined"
         End If
         ' ----------------------------------------------------------- 
-    
         ' Open the Part document 
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+```
+
     		"online\CAAScdKniUseCases\samples\KwrMacro0.CATPart")
         Dim oDoc As Document
         set oDoc = CATIA.Documents.Open(sFilePath)
+```vbscript
      ' Set the CATIA popup file alerts to False
      ' It prevents to stop the macro at each alert during its execution
      CATIA.DisplayFileAlerts = False
-    
      ' Retrieve your active document - CATIA is your application 
      ' You get the active document by using the ActiveDocument property
      ' on your application object
      Dim oActiveDoc As Document 
      Set oActiveDoc = CATIA.ActiveDocument 
-      
     ' Check whether the document is a CATPart
     ' InStr is a standard VB function
     If (InStr(oActiveDoc.Name,".CATPart")) <> 0  Then 
-    
         ' Set the file system object containing the folder
         Dim oFileSys As FileSystem
         Set oFileSys = CATIA.FileSystem 
-    
         ' Define the design table path
         Dim sFolderPath As String
         sFolderPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+```
+
         "online\CAAScdKniUseCases\samples\KwrMacTable.xls")
-     
+```vbscript
         ' Test whether the design table file exists
         ' if it does not exist a message box is displayed
         ' if it exists the design table is created in the document
         if (oFileSys.FileExists(sFolderPath) = False) then 
+```
+
             MsgBox sFolderPath & " doesn't exist" 
         else
+```vbscript
             ' Retrieve the collection object which contains
             ' all the document relations.
             ' The statements below are only valid when the active
             ' document is a CATPart
             Dim oRelations As Relations
             Set oRelations = oActiveDoc.Part.Relations
-    
             ' Just to be clean before creating relations
             ' Scan the collection of relations and remove the relations
             ' with name "DesignTable.1" 
             Dim i As Integer 
             For i = 1 To oRelations.Count
               if oRelations.Item(i).Name  = "DesignTable.1" then
+```
+
               oRelations.Remove oRelations.Item(i).Name 
               end if
             Next
     
-    
+```
+
+```vbscript
            ' Create the "DesignTable.1" design table
            ' by using the Relations.CreateDesignTable method 
            ' Argument 1: Design table name
@@ -113,16 +124,18 @@ converted: "2026-05-11T17:31:51.978836"
            '             and intend to reuse your document on another platform
            '             (Unix/NT). Otherwise, set this argument to False
            ' Argument 4: design table path
+```
+
+```vbscript
            Dim oDesignTable As DesignTable
            Set oDesignTable = oRelations.CreateDesignTable("DesignTable.1","",_
                                                         False,_
                                                        sFolderPath) 
-    
+```vbscript
            ' Retrieve the collection object which contains
            ' all the part bodies
            Dim oBodies As Bodies
            Set oBodies = oActiveDoc.Part.Bodies
-    
            ' Scan the Bodies collection to determine 
            ' whether a PartBody feature exists
            ' if the PartBody exists - creates two associations
@@ -132,7 +145,6 @@ converted: "2026-05-11T17:31:51.978836"
                  ' Retrieve the "PartBody" item from the Bodies collection
                  Dim oPartBody As AnyObject
                  Set oPartBody = CATIA.ActiveDocument.Part.Bodies.Item("PartBody") 
-    
                  ' Check there is at least one shape in the Part 
                  Dim oShapes As Shapes
                  Set oShapes = oPartBody.Shapes
@@ -141,6 +153,8 @@ converted: "2026-05-11T17:31:51.978836"
                    Dim Pad2 As AnyObject
                    Set Pad2 = oPartBody.Shapes.Item("Pad.1")
                    ' Creates two associations
+```
+
                    oDesignTable.AddAssociation Pad2.FirstLimit.Dimension, "A"
                    oDesignTable.AddAssociation Pad2.SecondLimit.Dimension, "B"
                    ' Apply the third configuration of the design table 
@@ -149,11 +163,13 @@ converted: "2026-05-11T17:31:51.978836"
                  else 
                    msgbox "no shapes"
                  end if
-    
+```vbscript
                 ' Add a new row
                 ' A new row is added to the design table each time the
                 ' macro is replayed on the document
                 ' A limit of 10 rows is specified
+```
+
                 msgbox oDesignTable.ConfigurationsNb
                 If (oDesignTable.ConfigurationsNb < 10) Then
                   oDesignTable.AddNewRow()
@@ -161,20 +177,31 @@ converted: "2026-05-11T17:31:51.978836"
                   msgbox "configuration number = 10"
                 end if
     
+```
+
               else
                 msgbox "A PartBody feature is required"
               end if 
     
            Exit For
            Next
-    
           ' Update the document
+```vbscript
           CATIA.ActiveDocument.Part.Update 
     
+```
+
+```vbscript
         End If
     else 
         MsgBox "The active document must be a CATPart"
     End If
     
+```
+
+```vbscript
     End Sub
     
+```
+
+```

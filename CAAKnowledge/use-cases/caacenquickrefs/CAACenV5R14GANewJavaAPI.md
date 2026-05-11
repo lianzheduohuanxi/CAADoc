@@ -1,9 +1,9 @@
 ---
 title: "New Java Authorized APIs in CAA V5R14 GA"
-category: "general"
+category: "use-case"
 module: "CAACenQuickRefs"
 tags: []
-source_file: "Doc\online\CAACenQuickRefs\CAACenV5R14GANewJavaAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R14GANewJavaAPI.md"
 converted: "2026-05-11T17:33:47.189397"
 ---
 

@@ -3,7 +3,7 @@ title: "Converting Surfaces into NURBS"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsSurFittingToNurbsSur", "CAAGMOperatorsInterfaces", "CAADoc", "CATICGMSurFittingToNurbsSur", "CATICGMObject", "CAAGMModelGemBrowser", "CAASurFittingToNurbsSur", "CATIA", "CAAGMOperatorInterfaces"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcFrfSurFittingToNurbsSur.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcFrfSurFittingToNurbsSur.md"
 converted: "2026-05-11T17:33:48.947040"
 ---
 
@@ -35,7 +35,7 @@ As many times as you need. The CAAGMOperatorsSurFittingToNurbsSur Use Case CAAGM
     1. Creates a revolution surface to be converted into a NURBS surface.
     2. Creates a first CATICGMSurFittingToNurbsSur operator to be used to convert the initial surface into a rational surface. No constraints are specified.
     3. Creates a second CATICGMSurFittingToNurbsSur operator and set a constraint on the minimum length of an arc.
-How to Launch CAAGMOperatorsSurFittingToNurbsSur To launch CAAGMOperatorsSurFittingToNurbsSur, you will need to set up the build time environment, then compile CAAGMOperatorsSurFittingToNurbsSur.m along with its prerequisites, set up the run time environment, and then execute the use case [4]. If you simply type CAAGMOperatorsSurFittingToNurbsSur with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsSurFittingToNurbsSur e:\NurbsSur.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsSurFittingToNurbsSur Code The CAAGMOperatorsSurFittingToNurbsSur use case is made of a main named CAASurFittingToNurbsSur.cpp located in the CAAGMOperatorsSurFittingToNurbsSur.m module of the CAAGMOperatorInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorInterfaces.edu\CAAGMOperatorsSurFittingToNurbsSur.m\` where `InstallRootFolder` [4] is the folder where the API CD-ROM is installed. Step-by-Step CAAGMOperatorsSurFittingToNurbsSur.cpp is divided into five logical steps:
+How to Launch CAAGMOperatorsSurFittingToNurbsSur To launch CAAGMOperatorsSurFittingToNurbsSur, you will need to set up the build time environment, then compile CAAGMOperatorsSurFittingToNurbsSur.m along with its prerequisites, set up the run time environment, and then execute the use case [4]. If you simply type CAAGMOperatorsSurFittingToNurbsSur with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsSurFittingToNurbsSur e/NurbsSur.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsSurFittingToNurbsSur Code The CAAGMOperatorsSurFittingToNurbsSur use case is made of a main named CAASurFittingToNurbsSur.cpp located in the CAAGMOperatorsSurFittingToNurbsSur.m module of the CAAGMOperatorInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorInterfaces.edu\CAAGMOperatorsSurFittingToNurbsSur.m\` where `InstallRootFolder` [4] is the folder where the API CD-ROM is installed. Step-by-Step CAAGMOperatorsSurFittingToNurbsSur.cpp is divided into five logical steps:
     1. Creating the Geometry Factory
     2. Creating the Surface to Be Converted into NURBS
     3. Converting the Created Surface into a NURBS without Specifying Any Constraints
@@ -97,10 +97,10 @@ Modify the rationality factor by replacing 1 with 0 in the argument 4 of the CAT
      //	
      **::CATCloseCGMContainer**(piGeomFactory);
 
-In Short The CATICGMSurFittingToNurbsSur operators allows you to convert a surface into a NURBS surface. Apart from the usual parameters, this operator requires you specify the maximum deviation you would like to obtain from the initial surface as well as the rationality. Constraints on the resulting surface can be specified by using Setxxx methods. References [1] |  [ About NURBS](../CAACgmModel/CAACgmTaGobAboutNurbs.htm)  
+In Short The CATICGMSurFittingToNurbsSur operators allows you to convert a surface into a NURBS surface. Apart from the usual parameters, this operator requires you specify the maximum deviation you would like to obtain from the initial surface as well as the rationality. Constraints on the resulting surface can be specified by using Setxxx methods. References [1] |  [ About NURBS](../CAACgmModel/CAACgmTaGobAboutNurbs.md)  
 ---|---  
-[2] |  [ The Objects of CATIA Geometric Modeler](../CAACgmModel/CAACgmTaGobGeoObjects.htm)  
-[3] |  [ The Curves of CATIA Geometric Modeler](../CAACgmModel/CAACgmTaGobCurves.htm)  
-[4] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[2] |  [ The Objects of CATIA Geometric Modeler](../CAACgmModel/CAACgmTaGobGeoObjects.md)  
+[3] |  [ The Curves of CATIA Geometric Modeler](../CAACgmModel/CAACgmTaGobCurves.md)  
+[4] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 History Version: **1** [Feb 2000] | Document created  
 ---|---

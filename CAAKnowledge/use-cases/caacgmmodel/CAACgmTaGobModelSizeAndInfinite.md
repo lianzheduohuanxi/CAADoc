@@ -1,24 +1,21 @@
 ---
 title: "About the Model Size and Infinite"
-category: "general"
+category: "use-case"
 module: "CAACgmModel"
 tags: ["CATIA"]
-source_file: "Doc\online\CAACgmModel\CAACgmTaGobModelSizeAndInfinite.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmTaGobModelSizeAndInfinite.md"
 converted: "2026-05-11T17:33:47.947121"
 ---
-
 # About the Model Size and Infinite  
   
 ---  
 Technical Article  
-  
 ## Abstract
 
 Models must conform to validity criteria related to their size. Two parameters drive the model validity in terms of dimensions: the model size and the "infinite". These two parameters are explained below.
     * The Model Size and Infinite Values
     * The Rules  
 ---  
-  
 ## The Model Size and Infinite Values
 
 Here are the values of the model size and infinite:
@@ -33,13 +30,10 @@ on each coordinate | [-10000 meters, + 10000 meters]
 on each coordinate  
   
 The validity of geometric objects depend on their location within the limits defined by the model size and infinite. The validity rules are explained below.
-
 ## The Rules
-
 ### Rule 1
 
 Except authorized infinite objects (see Rule 2), any relimited objects should be included in the model size. Objects that are not included in the model size are called infinite .
-
 ### Rule 2
 
 The authorized infinite objects the user can create are: the planes, lines, half-lines and points. The visualization of such objects is always reframed at most to the model size. The parts of the infinite object that are not in the model size are not seen by the user.
@@ -58,7 +52,6 @@ _Are transformations of infinite objects valid?
 _Transformation of infinite objects are valid provided their origins remain within the model size.
 
 ![Rule 2 Examples](images/CAACgmGobinfinite1.gif)
-
 ### Rule 3
 
 The mathematical definition of an object should be in the model infinite.
@@ -78,7 +71,6 @@ The figures below are examples of unauthorized geometries. On the first figure, 
 On the second figure, the model (the circle arc in blue) is in the model size but the mathematical definition does not fit in the infinite.
 
 ![Rule 3 Example](images/CAACgmGobinfinite3.gif)
-
 ### Rule 4
 
 The origin of planes and lines should be in the model size.
@@ -92,12 +84,10 @@ On the figure below, the infinite line and semi infinite line (in green) have th
 On the first figure below, the relimited line (in non dashed-green) is in the model size, but its origin (green point on its support in dashed green) is not. The plane origin (orange point) is not in the model size. On the second figure, the origins of the line and the planes are not in the model size. 
 
 ![Rule 4 Examples](images/CAACgmGobinfinite4.gif)
-
 ## References
 
-[1] | [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.htm)  
+[1] | [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.md)  
 ---|---  
-  
 ## History
 
 Version: **1** [Jul 2005] | Document created  

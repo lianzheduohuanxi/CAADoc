@@ -1,20 +1,18 @@
 ---
 title: "Product Document Automation Objects"
-category: "general"
+category: "use-case"
 module: "CAAScdPstTechArticles"
 tags: ["CATIA", "CATIAFixTogethers"]
-source_file: "Doc\online\CAAScdPstTechArticles\CAAPstTocProductDocument.htm"
+source_file: "Doc/online/CAAScdPstTechArticles/CAAPstTocProductDocument.md"
 converted: "2026-05-11T17:31:52.343589"
 ---
-
 # Product Document Automation Objects
 
-| ![](../CAAScrAutomationImages/images/proddoc.gif)[![Application Object Diagram](../CAAScrAutomationImages/images/uparrow.gif)](../CAAScdInfTechArticles/CAAInfTocApplication.htm)  
 ![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/product.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/products.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/publics.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/public.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)[![](../CAAScrAutomationImages/images/constrs.gif)](../CAAScdMmrTechArticles/CAAMmrObjConstraints.htm)  
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)[![](../CAAScrAutomationImages/images/constrs.gif)](../CAAScdMmrTechArticles/CAAMmrObjConstraints.md)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/constrnt.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/fixtgrs.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/fixtgr.gif)  
@@ -22,9 +20,9 @@ converted: "2026-05-11T17:31:52.343589"
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/position.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/analyze.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/relatns.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/relation.gif)[![Relation Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdKniTechArticles/CAAKniTocRelation.htm)  
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/relation.gif)[![Relation Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdKniTechArticles/CAAKniTocRelation.md)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/params.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/param.gif)[![Parameter Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdKniTechArticles/CAAKniTocParameter.htm)  
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/param.gif)[![Parameter Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdKniTechArticles/CAAKniTocParameter.md)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/psttechobj.gif)![](../CAAScrAutomationImages/images/anyobj.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/getitem.gif)![](../CAAScrAutomationImages/images/anyobj.gif)  
 ![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/parderim.gif)![](../CAAScrAutomationImages/images/asmconv.gif)  
@@ -57,8 +55,6 @@ The root product is retrieved by the **ProductDocument** object using its **Prod
   * **AddComponent** creates a product component from a product reference already existing in the **ProductDocument** , that is a product component of a product already created in any of the **Products** collection of the **ProductDocument** using the **AddNewProduct** method
   * **AddExternalComponent** creates a product component using the root product of another **ProductDocument**.
 
-
-
 Each product reference can have a master shape representation which defines its geometry, material properties, and so forth, and used to display or print it, and maybe more, for example to analyze or manufacture it. This is optional, but is often required to represent actual products. This master shape representation is shared by all the components pointing to this product reference, and can be a CATIA Version 4 model, a CATIA Version 5 part, a VRML file, or whatever format supported by CATIA Version 5. The methods **AddMasterShapeRepresentation** , **RemoveMasterShapeRepresentation** , and **GetMasterShapeRepresentation** manage the master shape representation.
 
 Each product component in the tree structure is positioned in the space according to the position of its own 3D-axis system with respect to the product document's 3D axis-system, this position being possibly determined according to positioning constraints relative to the product above it in the tree structure. This means that each product component is positioned with respect to the root product according to a cascading position combination from the root product to the current product across the product tree structure. Its position can be set or retrieved using the **Position** property, whatever the constraints applied. The **Move** property allows a movable object retrieval to move the product as required by a move operation while ensuring that the positioning constraints are matched. The movable object returned is the product object itself, meaning that a product is movable, but with some other applications, this could be different. For example, the movable object returned from an edge in a pad is the whole pad, since the edge cannot be moved alone and is linked to the other edges and faces in the pad. The actual move is performed using the **Apply** method. This method takes a table with twelve items as input which define the move. This table contains the move matrix elements and has the following structure, assuming that `M` is the table identifier:
@@ -75,26 +71,32 @@ The first nine items represent an axis rotation, and the last three a translatio
   * `Wx`, `Wy` and `Wz` are the components of the W vector with respect to (O,x,y,z)
   * `Tx`, `Ty` and `Tz` are the coordinates of the new origin T with respect to (O,x,y,z)
 
-
-
 ![](images/baspp3-4.gif)
 
 The two collections of **Constraint** and **FixTogether** objects can be retrieved from the root product object using its `Connections` method. For example, assuming `product1` is the root product, the **FixTogethers** collection can be retrieved as follows.
     
     
+```vbscript
     Dim fixTogethers1 As FixTogethers
     Set fixTogethers1 = product1.Connections("CATIAFixTogethers")
+
+```
 
 The **AssemblyConvertor** , **MaterialManager** , and **PositionedMaterial** objects can be retrieved from the root product using its `GetItem` method, with  the "BillOfMaterial", "CATMatManagerVBExt", and "CATMaterialVBExt" strings as argument respectively. Here is an example to retrieve the **MaterialManager** object from the **Product** object. 
     
     
+```vbscript
     Dim oRootProduct As Product
     ...
     Dim oMatManager As MaterialManager
     Set oMatManager = oRootProduct.GetItem("CATMatManagerVBExt")
+
+```
 
 Note that the **MaterialManager** and the **PositionedMaterial** objects can be retrieved the same way from the **Part** object.
 
 * * *
 
 _Copyright © 1999-2013, Dassault Systèmes. All rights reserved._
+
+```

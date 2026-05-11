@@ -3,7 +3,7 @@ title: "Converting Curves into NURBS"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CAACrvFittingToNurbsCrv", "CAAGMOperatorsCrvFittingToNurbsCrv", "CATICGMCrvFittingToNurbsCrv", "CATICGMObject", "CAAGMModelGemBrowser", "CATIA"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcFrfCrvFittingToNurbsCrv.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcFrfCrvFittingToNurbsCrv.md"
 converted: "2026-05-11T17:33:48.934549"
 ---
 
@@ -35,7 +35,7 @@ As many times as you need. The CAAGMOperatorsCrvFittingToNurbsCrv Use Case CAAGM
     1. Creates a PSpline to be converted into a Nurbs.
     2. Creates a CATICGMCrvFittingToNurbsCrv operator to be used to convert the initial curve into a rational curve _._ A constraint __ is __ set on the minimum length of an arc.
     3. Retrieves the created Nurbs.
-How to Launch CAAGMOperatorsCrvFittingToNurbsCrv To launch CAAGMOperatorsCrvFittingToNurbsCrv, you will need to set up the build time environment, then compile CAAGMOperatorsCrvFittingToNurbsCrv.m along with its prerequisites, set up the run time environment, and then execute the use case [4]. If you simply type CAAGMOperatorsCrvFittingToNurbsCrv with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsCrvFittingToNurbsCrv e:\NurbsSur.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsCrvFittingToNurbsCrv Code The CAAGMOperatorsCrvFittingToNurbsCrv use case is made of a main named CAACrvFittingToNurbsCrv.cpp located in the CAAGMOperatorsCrvFittingToNurbsCrv.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsCrvFittingToNurbsCrv.m\` where `InstallRootFolder` [4] is the folder where the API CD-ROM is installed. Step-by-Step CAAGMOperatorsCrvFittingToNurbsCrv .cpp is divided into four logical steps:
+How to Launch CAAGMOperatorsCrvFittingToNurbsCrv To launch CAAGMOperatorsCrvFittingToNurbsCrv, you will need to set up the build time environment, then compile CAAGMOperatorsCrvFittingToNurbsCrv.m along with its prerequisites, set up the run time environment, and then execute the use case [4]. If you simply type CAAGMOperatorsCrvFittingToNurbsCrv with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsCrvFittingToNurbsCrv e/NurbsSur.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsCrvFittingToNurbsCrv Code The CAAGMOperatorsCrvFittingToNurbsCrv use case is made of a main named CAACrvFittingToNurbsCrv.cpp located in the CAAGMOperatorsCrvFittingToNurbsCrv.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsCrvFittingToNurbsCrv.m\` where `InstallRootFolder` [4] is the folder where the API CD-ROM is installed. Step-by-Step CAAGMOperatorsCrvFittingToNurbsCrv .cpp is divided into four logical steps:
     1. Creating the Geometry Factory
     2. Creating the Curve to Be Converted into a NURBS
     3. Converting the Created Curve into a NURBS and Specifying a Constraint on the Minimum Length of an Arc
@@ -93,11 +93,11 @@ Writing the Model and Closing the Factory To save the model in a file, the `::CA
      //	
      **::CATCloseCGMContainer**(piGeomFactory);
 
-In Short The CATICGMCrvFittingToNurbsCrv operator allows you to convert a curve into a NURBS. Apart from the usual parameters, this operator requires you specify the maximum deviation you would like to obtain from the initial curve as well as the rationality. Constraints on the resulting curve can be specified by using Setxxx methods. References [1] |  [ About NURBS](../CAACgmModel/CAACgmTaGobAboutNurbs.htm)  
+In Short The CATICGMCrvFittingToNurbsCrv operator allows you to convert a curve into a NURBS. Apart from the usual parameters, this operator requires you specify the maximum deviation you would like to obtain from the initial curve as well as the rationality. Constraints on the resulting curve can be specified by using Setxxx methods. References [1] |  [ About NURBS](../CAACgmModel/CAACgmTaGobAboutNurbs.md)  
 ---|---  
-[2] |  [ The Objects of CATIA Geometric Modeler](../CAACgmModel/CAACgmTaGobGeoObjects.htm)  
-[3] |  [ The Curves of CATIA Geometric Modeler](../CAACgmModel/CAACgmTaGobCurves.htm)  
-[4] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-[5] | [Converting Surfaces into NURBS](CAACgmUcFrfSurFittingToNurbsSur.htm)  
+[2] |  [ The Objects of CATIA Geometric Modeler](../CAACgmModel/CAACgmTaGobGeoObjects.md)  
+[3] |  [ The Curves of CATIA Geometric Modeler](../CAACgmModel/CAACgmTaGobCurves.md)  
+[4] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[5] | [Converting Surfaces into NURBS](CAACgmUcFrfSurFittingToNurbsSur.md)  
 History Version: **1** [Feb 2000] | Document created  
 ---|---

@@ -1,9 +1,9 @@
 ---
 title: "Detail Of C++ API Changes"
-category: "general"
+category: "api-changes"
 module: "CAACenAPIChanges"
 tags: ["CAA2Usage", "CAA2Level"]
-source_file: "Doc\online\CAACenAPIChanges\CAACenAPIChangeDetail.htm"
+source_file: "Doc/online/CAACenAPIChanges/CAACenAPIChangeDetail.md"
 converted: "2026-05-11T17:33:50.031668"
 ---
 

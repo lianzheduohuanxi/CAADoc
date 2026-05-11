@@ -3,7 +3,7 @@ title: "Managing Selection"
 category: "use case"
 module: "CAADegUseCases"
 tags: ["CAADegCreatePlaneCmd", "CAAISysPoint", "CAADialogEngine", "CAAGeometry", "CAADegGeoCommands"]
-source_file: "Doc\online\CAADegUseCases\CAADegSampleSelection.htm"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleSelection.md"
 converted: "2026-05-11T17:33:49.741834"
 ---
 
@@ -28,10 +28,10 @@ Abstract This article shows how to retrieve, in a state dialog command, an exist
 
 What You Will Learn With This Use Case This use case is intended to show how to retrieve, in a state dialog command, an object that exists in a document displayed in a viewer onto which the end user left clicks. This object can be used afterwards as input for any tasks, such as creating a plane from three successive existing point selections in this example. This example shows also how a dialog agent can be reused in several states. [Top] The Plane Command Use Case The Plane command is a use case of the CAADialogEngine.edu framework that illustrates the DialogEngine framework capabilities. [Top] What Does the Plane Command Do CAADegCreatePlaneCmd is a state dialog command that creates a plane in the 3D space according to the following UML statechart diagram [1]. ![CAACreatePlaneStatechart.jpg \(17020 bytes\)](images/CAACreatePlaneStatechart.jpg) The dialog is as follows: ![CAACreatePlane1.jpg \(16513 bytes\)](images/CAACreatePlane1.jpg) | Select the plane command. Three points must exist in the document. The active state becomes GetFirstPoint.  
 ---|---  
-![CAACreatePlane2.jpg \(16566 bytes\)](images/CAACreatePlane2.jpg) | The first point is selected. The active state becomes GetSecondPoint.  
-![CAACreatePlane3.jpg \(16620 bytes\)](images/CAACreatePlane3.jpg) | The second point is selected. The active state becomes GetThirdPoint.  
-![CAACreatePlane4.jpg \(17227 bytes\)](images/CAACreatePlane4.jpg) | The third point is selected. The plane created passes by these three points. The plane symbol is located around the first selected point. The command is complete.  
-The CreatePoint command is a straightforward state dialog command with three sequential states to select the three points defining the plane. The selection agent [2] is associated with the three point selection states. It needs to be reinitialized in each transition before the next state becomes active. To simplify the `BuildGraph` method, undo/redo [3] is not taken into into account. [Top] How to Launch the Plane Command See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.htm)" use case for a detailed description of how this use case should be launched. Then, in the window where you run the mkrun command, do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following: 
+ The first point is selected. The active state becomes GetSecondPoint.  
+ The second point is selected. The active state becomes GetThirdPoint.  
+ The third point is selected. The plane created passes by these three points. The plane symbol is located around the first selected point. The command is complete.  
+The CreatePoint command is a straightforward state dialog command with three sequential states to select the three points defining the plane. The selection agent [2] is associated with the three point selection states. It needs to be reinitialized in each transition before the next state becomes active. To simplify the `BuildGraph` method, undo/redo [3] is not taken into into account. [Top] How to Launch the Plane Command See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched. Then, in the window where you run the mkrun command, do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following: 
     * Select File->New 
     * In the New box, select CAAGeometry and click OK 
     * Select Insert->Point
@@ -159,11 +159,11 @@ In Short This use case shows the objects involved in an end user selection: the 
 
 * * *
 
-References [1] | [Describing State Dialog Commands Using UML](../CAADegTechArticles/CAADegUMLDescription.htm)  
+References [1] | [Describing State Dialog Commands Using UML](../CAADegTechArticles/CAADegUMLDescription.md)  
 ---|---  
 [2] | [Managing Selection](../CAADegTechArticles/CAADegGraph.htm#510000)  
-[3] | [Managing Undo/Redo](../CAADegTechArticles/CAADegUndoRedo.htm)  
-[4] | [Implementing the Statechart Diagram](../CAADegTechArticles/CAADegGraph.htm)  
+[3] | [Managing Undo/Redo](../CAADegTechArticles/CAADegUndoRedo.md)  
+[4] | [Implementing the Statechart Diagram](../CAADegTechArticles/CAADegGraph.md)  
 [Top]  
   
 * * *

@@ -1,9 +1,10 @@
 ---
 title: "Detail Of C++ API Changes"
-category: "general"
+category: "api-changes"
 module: "CAACenAPIChangesR10"
+version: "V5R10"
 tags: ["CAA2Usage", "CATIAApplicationFrame", "CAA2Level"]
-source_file: "Doc\online\CAACenAPIChangesR10\CAACenAPIChangeDetail.htm"
+source_file: "Doc/online/CAACenAPIChangesR10/CAACenAPIChangeDetail.md"
 converted: "2026-05-11T17:33:50.095851"
 ---
 
@@ -29,48 +30,48 @@ INDM | Method is no more documented. It does not break your code in any way but 
   
 * * *
 
-AdvancedMathematics | [R10GA vs R9GA](AdvancedMathematics.htm) |   
+AdvancedMathematics | [R10GA vs R9GA](AdvancedMathematics.md) |   
 ---|---|---  
-AdvancedTopologicalOpe | [R10GA vs R9GA](AdvancedTopologicalOpe.htm) |   
-ApplicationFrame | [R10GA vs R9GA](ApplicationFrame.htm) |   
-AnalysisMeshingModel | [R10GA vs R9GA](AnalysisMeshingModel.htm) |   
-CATAnalysisBase | [R10GA vs R9GA](CATAnalysisBase.htm) |   
-CATAnalysisInterfaces | [R10GA vs R9GA](CATAnalysisInterfaces.htm) |   
-CATAnalysisResources | [R10GA vs R9GA](CATAnalysisResources.htm) |   
-CATIAApplicationFrame | [R10GA vs R9GA](CATIAApplicationFrame.htm) |   
-CATSchPlatformInterfaces | [R10GA vs R9GA](CATSchPlatformInterfaces.htm) |   
-CATTPSInterfaces | [R10GA vs R9GA](CATTPSInterfaces.htm) |   
-Dialog | [R10GA vs R9GA](Dialog.htm) |   
-DialogEngine | [R10GA vs R9GA](DialogEngine.htm) |   
-DNBInspectInterfaces | [R10GA vs R9GA](DNBInspectInterfaces.htm) |   
-DraftingInterfaces | [R10GA vs R9GA](DraftingInterfaces.htm) |   
-ENOVInterfaces | [R10GA vs R9GA](ENOVInterfaces.htm) |   
-ENOVReportSolutionServer | [R10GA vs R9GA](ENOVReportSolutionServer.htm) |   
-GeometricObjects | [R10GA vs R9GA](GeometricObjects.htm) |   
-GSMInterfaces | [R10GA vs R9GA](GSMInterfaces.htm) |   
-ManufacturingInterfaces | [R10GA vs R9GA](ManufacturingInterfaces.htm) |   
-Mathematics | [R10GA vs R9GA](Mathematics.htm) | [R10rel vs R10GA](MathematicsSP.htm)  
-MechanicalModeler | [R10GA vs R9GA](MechanicalModeler.htm) |   
-MechanicalModelerUI | [R10GA vs R9GA](MechanicalModelerUI.htm) |   
-MecModInterfaces | [R10GA vs R9GA](MecModInterfaces.htm) | [R10rel vs R10GA](MecModInterfacesSP.htm)  
-NewTopologicalObjects | [R10GA vs R9GA](NewTopologicalObjects.htm) |   
-ObjectModelerBase | [R10GA vs R9GA](ObjectModelerBase.htm) |   
-ObjectSpecsModeler | [R10GA vs R9GA](ObjectSpecsModeler.htm) |   
-Print | [R10GA vs R9GA](Print.htm) |   
-System | [R10GA vs R9GA](System.htm) |   
-SDMRuntime | [R10GA vs R9GA](SDMRuntime.htm) |   
-TopologicalOperators | [R10GA vs R9GA](TopologicalOperators.htm) |   
-Visualization | [R10GA vs R9GA](Visualization.htm) |   
-VPMInterfaces | [R10GA vs R9GA](VPMInterfaces.htm) |   
-VPMPersistency | [R10GA vs R9GA](VPMPersistency.htm) |   
-VPMServices | [R10GA vs R9GA](VPMServices.htm) |   
+AdvancedTopologicalOpe | [R10GA vs R9GA](AdvancedTopologicalOpe.md) |   
+ApplicationFrame | [R10GA vs R9GA](ApplicationFrame.md) |   
+AnalysisMeshingModel | [R10GA vs R9GA](AnalysisMeshingModel.md) |   
+CATAnalysisBase | [R10GA vs R9GA](CATAnalysisBase.md) |   
+CATAnalysisInterfaces | [R10GA vs R9GA](CATAnalysisInterfaces.md) |   
+CATAnalysisResources | [R10GA vs R9GA](CATAnalysisResources.md) |   
+CATIAApplicationFrame | [R10GA vs R9GA](CATIAApplicationFrame.md) |   
+CATSchPlatformInterfaces | [R10GA vs R9GA](CATSchPlatformInterfaces.md) |   
+CATTPSInterfaces | [R10GA vs R9GA](CATTPSInterfaces.md) |   
+Dialog | [R10GA vs R9GA](Dialog.md) |   
+DialogEngine | [R10GA vs R9GA](DialogEngine.md) |   
+DNBInspectInterfaces | [R10GA vs R9GA](DNBInspectInterfaces.md) |   
+DraftingInterfaces | [R10GA vs R9GA](DraftingInterfaces.md) |   
+ENOVInterfaces | [R10GA vs R9GA](ENOVInterfaces.md) |   
+ENOVReportSolutionServer | [R10GA vs R9GA](ENOVReportSolutionServer.md) |   
+GeometricObjects | [R10GA vs R9GA](GeometricObjects.md) |   
+GSMInterfaces | [R10GA vs R9GA](GSMInterfaces.md) |   
+ManufacturingInterfaces | [R10GA vs R9GA](ManufacturingInterfaces.md) |   
+Mathematics | [R10GA vs R9GA](Mathematics.md) | [R10rel vs R10GA](MathematicsSP.md)  
+MechanicalModeler | [R10GA vs R9GA](MechanicalModeler.md) |   
+MechanicalModelerUI | [R10GA vs R9GA](MechanicalModelerUI.md) |   
+MecModInterfaces | [R10GA vs R9GA](MecModInterfaces.md) | [R10rel vs R10GA](MecModInterfacesSP.md)  
+NewTopologicalObjects | [R10GA vs R9GA](NewTopologicalObjects.md) |   
+ObjectModelerBase | [R10GA vs R9GA](ObjectModelerBase.md) |   
+ObjectSpecsModeler | [R10GA vs R9GA](ObjectSpecsModeler.md) |   
+Print | [R10GA vs R9GA](Print.md) |   
+System | [R10GA vs R9GA](System.md) |   
+SDMRuntime | [R10GA vs R9GA](SDMRuntime.md) |   
+TopologicalOperators | [R10GA vs R9GA](TopologicalOperators.md) |   
+Visualization | [R10GA vs R9GA](Visualization.md) |   
+VPMInterfaces | [R10GA vs R9GA](VPMInterfaces.md) |   
+VPMPersistency | [R10GA vs R9GA](VPMPersistency.md) |   
+VPMServices | [R10GA vs R9GA](VPMServices.md) |   
   
 * * *
 
 References [1] | [Migration to CATBoolean](../CAACenQuickRefs/CAACenWhatsNew.htm#CATBoolean)  
 ---|---  
-[2] | [Details Of V5R7 API Changes](../CAACenAPIChangesR7/CAACenAPIChangeDetail.htm)  
-[3] | [Details Of V5R9 API Changes](../CAACenAPIChangesR9/CAACenAPIChangeDetail.htm)  
+[2] | [Details Of V5R7 API Changes](../CAACenAPIChangesR7/CAACenAPIChangeDetail.md)  
+[3] | [Details Of V5R9 API Changes](../CAACenAPIChangesR9/CAACenAPIChangeDetail.md)  
 [4] | [Split of the Visualization framework](../CAACenQuickRefs/CAACenWhatsNew.htm#VisuSplit)  
 [5] | [Move of CAA API resources from MechanicalComands into InteractiveInterfaces](../CAACenQuickRefs/CAACenWhatsNew.htm#MecComMov)  
 [Top]  

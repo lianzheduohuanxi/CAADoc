@@ -1,9 +1,10 @@
 ---
 title: "Detail Of C++ API Changes"
-category: "general"
+category: "api-changes"
 module: "CAACenAPIChangesR26"
+version: "V5R26"
 tags: ["CAA2Usage", "CATIDftDatumFeature", "CAA2Level"]
-source_file: "Doc\online\CAACenAPIChangesR26\CAACenAPIChangeDetail.htm"
+source_file: "Doc/online/CAACenAPIChangesR26/CAACenAPIChangeDetail.md"
 converted: "2026-05-11T17:33:51.846182"
 ---
 

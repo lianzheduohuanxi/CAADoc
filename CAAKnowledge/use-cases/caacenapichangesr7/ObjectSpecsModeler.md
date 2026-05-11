@@ -1,9 +1,10 @@
 ---
 title: "ObjectSpecsModeler Modifications"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR7"
+version: "V5R7"
 tags: ["CATISpecObject", "CATISpecAttribute", "CATISpecUpdate", "CATIAttrBehavior", "CATISpecAttrAccess"]
-source_file: "Doc\online\CAACenAPIChangesR7\ObjectSpecsModeler.htm"
+source_file: "Doc/online/CAACenAPIChangesR7/ObjectSpecsModeler.md"
 converted: "2026-05-11T17:33:52.197265"
 ---
 

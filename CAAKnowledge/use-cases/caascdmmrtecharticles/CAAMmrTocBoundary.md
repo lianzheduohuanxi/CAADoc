@@ -1,15 +1,14 @@
 ---
 title: "Boundary Automation Objects"
-category: "general"
+category: "use-case"
 module: "CAAScdMmrTechArticles"
 tags: []
-source_file: "Doc\online\CAAScdMmrTechArticles\CAAMmrTocBoundary.htm"
+source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrTocBoundary.md"
 converted: "2026-05-11T17:31:51.145153"
 ---
-
 # Boundary Automation Objects
 
-![](../CAAScrAutomationImages/images/boundary.gif)[![Part Document Object Diagram](../CAAScrAutomationImages/images/uparrow.gif)](CAAMmrTocPartDocument.htm)  
+![](../CAAScrAutomationImages/images/boundary.gif)[![Part Document Object Diagram](../CAAScrAutomationImages/images/uparrow.gif)](CAAMmrTocPartDocument.md)  
 ![](../CAAScrAutomationImages/images/parderim.gif)![](../CAAScrAutomationImages/images/vertex.gif)  
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parderim.gif)![](../CAAScrAutomationImages/images/vertexnotwire.gif)  
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/vertextridim.gif)  

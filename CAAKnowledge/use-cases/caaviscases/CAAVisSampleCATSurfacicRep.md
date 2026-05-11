@@ -3,18 +3,15 @@ title: "Using the CATSurfacicRep class"
 category: "use case"
 module: "CAAVisUseCases"
 tags: ["CAAVisBaseView", "CAAVisBaseDocument", "CAAVisBasics", "CATInternalSharpeEdge", "CATInternalSharpePoint", "CAAVisBaseApplication", "CAAVisBaseVisuObjectDocument", "CATInternalSmoothPoint", "CAAVisualization", "CATInternalSmoothEdge"]
-source_file: "Doc\online\CAAVisUseCases\CAAVisSampleCATSurfacicRep.htm"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleCATSurfacicRep.md"
 converted: "2026-05-11T17:31:52.081159"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## 3D Visualization
 
 | 
-
 ### Using the CATSurfacicRep class
 
 _Creating a _CATSufacicRep_ class instance to visualize a set of _CAT3DFaceGP_ and _CAT3DLineGP_ and use some of the advanced capability of this class._  
@@ -22,7 +19,6 @@ _Creating a _CATSufacicRep_ class instance to visualize a set of _CAT3DFaceGP_ a
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to create a _CATSufacicRep_ class instance to visualize a set of _CAT3DFaceGP_ and _CAT3DLineGP_ and use some of the advanced capability of this class.
@@ -41,19 +37,16 @@ This article shows how to create a _CATSufacicRep_ class instance to visualize a
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This article shows how to create a _CATSufacicRep_ class instance to visualize a set of _CAT3DFaceGP_ and _CAT3DLineGP_ and use some of the advanced capability of this class like the different topological slots available on the _CATSurfacicRep_ , and the way to persistently store in a CGR file topological informations on graphic primitives.
 
 [Top]
-
 ### The CAAVisBasics Use Case
 
 CAAVisBasics is a set of use cases of the CAAVisualization.edu framework that illustrates Vizualization framework capabilities.
 
 [Top]
-
 #### What Does CAAVisBasics Do
 
 CAAVisBasics includes a MDI interactive application that displays viewers in its document windows. The _VisuObjects_ menu allows the creation of a _CATSurfacicRep_ class instance that contains the visualization of a cylinder. This article focuses on how to create the _CATSurfacicRep_ representation associated with _CAT3DFaceGP_ and _CAT3DLineGP_ graphic primitives.
@@ -64,7 +57,6 @@ _Fig 1: The Cylinder_ ![](images/CAAVisSampleCylinder.jpg)
 ---  
   
 [Top]
-
 #### How to Launch CAAVisBasics
 
 To launch CAAVisBasics, you will need to set up the build time environment, then compile CAAVisBasics along with its prerequisites, set up the run time environment, and then execute the use case [1].
@@ -72,7 +64,6 @@ To launch CAAVisBasics, you will need to set up the build time environment, then
 A torus is displayed in a 3D navigation viewer as soon as the application is launched.
 
 Select in menu bar: VisuObject->CATSurfacicRep,  the cylinder is displayed. 
-
 #### Where to Find the CAAVisBasics Code
 
 The CAAVisBasics use case is made of several classes located in the CAAVisBasics.m module of the CAAVisualization.edu framework:
@@ -92,15 +83,12 @@ _CAAVisBaseVisuObjectDocument_ | Class for the document that allows for specific
 _CAAVisBaseView_ | Class for the document window containing a viewer to display the document  
   
 [Top]
-
 #### Using the CATSurfacicRep class
 
-This article does not focus on the details of tesselating a cylinder. A good sample that covers the subject of creating tesselated shapes using strip and fans triangles can be found [here](CAAVisSampleCAT3DFaceGP.htm).
+This article does not focus on the details of tesselating a cylinder. A good sample that covers the subject of creating tesselated shapes using strip and fans triangles can be found [here](CAAVisSampleCAT3DFaceGP.md).
 
 [Top]
-
 ### Step-by-Step
-
 # |  Step |  Where  
 ---|---|---  
 1 | Create the graphic primitive and its associated bounding box | `CreateSurfacicRep` method of _CAAVisBaseVisuObjectDocument_  
@@ -114,7 +102,6 @@ This article does not focus on the details of tesselating a cylinder. A good sam
 The cylinder is displayed when the _CATSurfacicRep_ menu item contained in the _VisuObjects_ menu is selected. The cylinder creation and display is performed in the _CAAVisBaseVisuObjectDocument_ constructor that calls the `CreateSurfacicRep` and `AddRepToViewer` methods respectively. These two methods are described below.
 
 [Top]
-
 #### Creating the Graphic Primitive and its Associated Bounding Box
 
 The graphic primitive is created using the arrays computed in the code. Feel free to have a look at this part of the code that describes how to tesselate a cylinder.
@@ -176,7 +163,6 @@ The bounding box and bounding sphere are generated automatically when a _CAT3DFa
 `void CAT3DBoundingGP::ComputeBox()` | Forces the recomputation of the bounding sphere / box.  
   
 [Top]
-
 #### Associate topological information to the graphic primitives
 
 Persistent (in the CGR file) topological informations can be stored on CATGraphicPrimitives.
@@ -237,7 +223,6 @@ Persistent (in the CGR file) topological informations can be stored on CATGraphi
 The _CATVisMeasurableGP_ can be used in order to store topological informations on any _CATGraphicPrimitive_. See the CAA documentation for more details on which type of informations can be stored.
 
 [Top]
-
 #### Creating the CATSurfacicRep Representation
     
     
@@ -252,7 +237,6 @@ The _CATVisMeasurableGP_ can be used in order to store topological informations 
 The CATSurfacicRep is a complex visualization class. It handles graphic primitives topologicaly in order to provide custom drawing algorithms. See below for a list of topological slots available on the CATSurfacicRep. We also specifie that this CATSurfacicRep is a volume, which will allow for some drawing optimizations like backface culling
 
 [Top]
-
 #### Associating the Representation with the Graphic Primitive
     
     
@@ -292,7 +276,6 @@ The type of elements (input of the method AddGeomElt) a CATSurfacicRep can handl
 `CATWireEdge` | A CAT3DLineGP that represents a wire (polyline)  
   
 [Top]
-
 #### Computing the Representation Bounding Sphere
 
 The representation needs a bounding sphere in order to be visualized.
@@ -313,7 +296,6 @@ The representation needs a bounding sphere in order to be visualized.
 Here, the global bounding sphere is computed using the bounding sphere of all the faces that makes our cylinder. This computation might not be optimal but is enough for this sample. As you can see, CAT3DBoundingSphere objects can be added to one another using `operator +=`
 
 [Top]
-
 #### Displaying the Created 3D Representation
 
 The `AddRepToViewer` method displays the created representation.
@@ -329,7 +311,6 @@ The `AddRepToViewer` method displays the created representation.
 `_pView` is a pointer to the 3D navigation viewer. The representation is assigned to this viewer thanks to the `Add3DRep` method.
 
 [Top]
-
 ### In Short
 
 This use case shows how to use some of the functionnality provided by the CATSurfacicRep object, how to create the graphic primitive and its associated bounding spheres, how to set the graphic attributes on the primitives and the representation and how to store persistent topological informations on graphic primitives. 
@@ -337,15 +318,13 @@ This use case shows how to use some of the functionnality provided by the CATSur
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] | [Creating a tesselated torus using CAT3DFaceGPs](CAAVisSampleCAT3DFaceGP.htm) [Top]
+[2] | [Creating a tesselated torus using CAT3DFaceGPs](CAAVisSampleCAT3DFaceGP.md) [Top]
 
 * * *
-
 ### History
 
 | Version: **1** [Dec 2005] | Document created  

@@ -3,7 +3,7 @@ title: "Retrieving the CATMathBox2D of An Edge or a Face "
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperators2DBoxComputation", "CAAGMOperatorsInterfaces", "CATICGM2DBoxComputation"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcMathBox2D.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcMathBox2D.md"
 converted: "2026-05-11T17:33:48.991063"
 ---
 
@@ -51,11 +51,11 @@ you retrieve a CATMathBox2D with the properties below: Low corner= ( 0 , 0 )  Hi
       
   
 ---  
-generates the same result. References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+generates the same result. References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)  
-[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)  
-[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.htm)  
-[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.htm)  
+[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)  
+[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)  
+[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.md)  
+[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.md)  
 History Version: **1** [Feb 2014] | Document created  
 ---|---

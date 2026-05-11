@@ -1,9 +1,9 @@
 ---
 title: "Assigning Resources to a State Dialog Command"
-category: "general"
+category: "use-case"
 module: "CAADegTechArticles"
 tags: ["CAAGeometry", "CAADegCreateTriangleCmd"]
-source_file: "Doc\online\CAADegTechArticles\CAADegResources.htm"
+source_file: "Doc/online/CAADegTechArticles/CAADegResources.md"
 converted: "2026-05-11T17:33:49.875645"
 ---
 
@@ -45,8 +45,7 @@ The undo/redo prompts are visible at several places in an interactive session. H
 ![](images/CAADegResourcesUndoRedoEditMenu.jpg)  
 ---  
       * In **toolbars** , when you pass over the Undo/Redo icons:
-![](images/CAADegResourcesUndoRedoTlb.jpg) | ![](images/CAADegResourcesUndoRedo2Tlb.jpg)  
----|---  
+
       * Inside  "**Undo with history** "/ "**Redo with history** "  dialog boxes. 
 ![](images/CAADegResourcesUndoRedoStackTlb.jpg)These dialog boxes are undefined commands which are accessible through the icon boxes of the Standard toolbar. ![](images/CAADegResourcesUndoRedoDlg.jpg)  
 ---  
@@ -97,8 +96,11 @@ The parameters `stFirstPointId` and `stSecondPointId` of the methods `GetInitial
     (Filename.)ClassName.StateId.Message = "The prompted message";  
   
 ---  
+```vbscript
 For example, the prompts associated with these two states in the message file for _CAADegCreateTriangleCmd_ , that is `CAADegCreateTriangleCmd.CATNls`, are as follows:
     
+```
+
     CAADegCreateTriangleCmd.stFirstPointId.Message   = "Select the first point";
     CAADegCreateTriangleCmd.stSecondPointId.Message  = "Select the second point";  
   
@@ -134,7 +136,7 @@ The undo message should not contain the "Undo" word and the redo message should 
     CAADegCreateTriangleCmd.SelStartPoint.UndoTitle  = "First point selection";  
   
 ---  
-The following pictures show the undo and the redo prompts for the `_daPathElement` agent:  ![](images/CAADegResourcesUndoAgent.jpg) | ![](images/CAADegResourcesRedoAgent.jpg)  
+The following pictures show the undo and the redo prompts for the `_daPathElement` agent:  ![](images/CAADegResourcesUndoAgent.jpg) 
 ---|---  
 Transition Undo/Redo Prompts For example, assume that the following transition is created in the `BuildGraph` method of the _CAADegCreateTriangleCmd_ dialog command:
     
@@ -165,13 +167,13 @@ The undo message should not contain the "Undo" word and the redo message should 
     CAADegCreateTriangleCmd.SecondTransition.UndoTitle  = "First line creation";  
   
 ---  
-The following pictures show the undo and the redo prompts for the  first transition of the `Triangle` command: ![](images/CAADegResourcesUndoTrans.jpg) | ![](images/CAADegResourcesRedoTrans.jpg)  
+The following pictures show the undo and the redo prompts for the  first transition of the `Triangle` command: ![](images/CAADegResourcesUndoTrans.jpg) 
 ---|---  
 ![](../CAAIcons/images/warning.gif)If a transition is triggered when a dialog agent is valued, and if both the dialog agent and the transition have prompts, only the transition prompt is displayed. Recommendations
     * The contents of each undo/redo message depends on the command, the agent and the transition, but prefer a noun to a verb. Prefer "Triangle Creation" to "Create Triangle". 
     * Do not assign a specific prompt for the redo, the same message for the undo/redo will be used
     * If you have forgot an undo/redo prompt, you can detect them thanks to the syntax used to display a default undo/redo title. 
-            The left image shows the default title, whereas the right image shows the title coming from the NLS resource file: ![](images/CAADegResourcesWithoutUndoRedo.jpg) |  ![](images/CAADegResourcesWithoutUndoRedo2.jpg)  
+            The left image shows the default title, whereas the right image shows the title coming from the NLS resource file: ![](images/CAADegResourcesWithoutUndoRedo.jpg) 
 ---|---  
 The **()** and the **[]** signs are added to the undo/redo prompts.
       * **(** xxx**) ...** where xxx is the default undo title of the command which is the short help of the last triggered command header. 
@@ -194,10 +196,10 @@ Transition | `(FileName.)ClassName.TransitionId.RedoTitle`
 
 * * *
 
-References [1] | [The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.htm)  
+References [1] | [The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)  
 ---|---  
-[2] | [Implementing the Command Statechart Diagram](CAADegGraph.htm)  
-[3] | [Assigning Resources to a Dialog Box](../CAADlgTechArticles/CAADlgResources.htm)  
+[2] | [Implementing the Command Statechart Diagram](CAADegGraph.md)  
+[3] | [Assigning Resources to a Dialog Box](../CAADlgTechArticles/CAADlgResources.md)  
 [Top]
 
 * * *

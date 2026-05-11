@@ -1,9 +1,9 @@
 ---
 title: "Type Libraries in C++ for Windows"
-category: "general"
+category: "use-case"
 module: "CAABtlTechArticles"
 tags: []
-source_file: "Doc\online\CAABtlTechArticles\CAABtlMANtlb.htm"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANtlb.md"
 converted: "2026-05-11T17:33:46.134211"
 ---
 

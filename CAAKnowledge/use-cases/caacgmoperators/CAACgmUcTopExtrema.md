@@ -3,7 +3,7 @@ title: "Extrema of a Solid"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CATICGMTopBodyExtremum", "CAAGMOperatorsBodyExtremum"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcTopExtrema.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopExtrema.md"
 converted: "2026-05-11T17:33:49.178885"
 ---
 
@@ -15,7 +15,7 @@ Abstract Given a point located in a solid, the extrema are the point(s) which ar
     * Use Case Description
     * References  
 ---  
-Operator to be Used To compute the extrema of a solid, use the CATICGMTopBodyExtremum operator in GMOperatorsInterfaces. This operator has to be created by the CATCGMCreateDirBodyExtremum global function. Use Case Description The CAAGMOperatorsBodyExtremum.m module in CAAGMOperatorsInterfaces.edu illustrates how to compute the extrema of a solid. This use case creates the data to be passed to the operator. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm). With the input data below: Fig.1 Extrema Computation : Input Data ![Extrema Input](images/CGM_extrema_0.png)  
+Operator to be Used To compute the extrema of a solid, use the CATICGMTopBodyExtremum operator in GMOperatorsInterfaces. This operator has to be created by the CATCGMCreateDirBodyExtremum global function. Use Case Description The CAAGMOperatorsBodyExtremum.m module in CAAGMOperatorsInterfaces.edu illustrates how to compute the extrema of a solid. This use case creates the data to be passed to the operator. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md). With the input data below: Fig.1 Extrema Computation : Input Data ![Extrema Input](images/CGM_extrema_0.png)  
 ---  
 and the code below:
     
@@ -73,33 +73,32 @@ and the code below:
     		[1]
     		| 
     		[
-    		Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)
+    		Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
     	  
-    ---|---  
     
     	
     		[2]
     		| 
-    		[About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)
+    		[About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)
     	  
     
     	
     		[3]
     		| 
-    		[How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)
+    		[How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)
     	  
     
     	
     		[4]
     		| 
-    		[Understanding Boolean Operators](CAACgmTaTopBoolean.htm)
+    		[Understanding Boolean Operators](CAACgmTaTopBoolean.md)
     	  
     
     
     
     		[5]
     		| 
-    		[Overview of Topological Operators](CAACgmUcTopOverview.htm)
+    		[Overview of Topological Operators](CAACgmUcTopOverview.md)
     	  
     
     	
@@ -110,7 +109,6 @@ and the code below:
     		Version: **1** [Sept 2011]
     		| Document created
     	  
-    ---|---  
     
     
     

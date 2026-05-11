@@ -3,7 +3,7 @@ title: "Implementing the Statechart Diagram"
 category: "use case"
 module: "CAADegUseCases"
 tags: ["CAADegCreateRectangleCmd", "CAAISysPlane", "CAADialogEngine", "CAAGeometry", "CAACreateRectangleCmd", "CATIndicationAgent", "CAADegGeoCommands"]
-source_file: "Doc\online\CAADegUseCases\CAADegSampleGraph.htm"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleGraph.md"
 converted: "2026-05-11T17:33:49.670669"
 ---
 
@@ -28,12 +28,12 @@ Abstract This article shows how to retrieve a point in the 3D space from an end 
 
 What You Will Learn With This Use Case This use case is intended to show how to implement the statechart diagram of a state dialog command by coding the command `BuildGraph` [1] method. `BuildGraph` is the command core. It declares the objects that make up the dialog steps and sequences, and their relationships. [Top] The Rectangle Command Use Case The Rectangle command is a use case of the CAADialogEngine.edu framework that illustrates the DialogEngine framework capabilities. [Top] What Does the Rectangle Command Do CAACreateRectangleCmd is a state dialog command that creates a rectangle in the 3D space according to the following UML statechart diagram [2]. ![CAACreateRectangleStatechart.jpg \(22767 bytes\)](images/CAACreateRectangleStatechart.jpg) The dialog is as follows: ![CAACreateRectangle1.jpg \(17043 bytes\)](images/CAACreateRectangle1.jpg) | Select the CAADegCreateRectangleCmd command. The active state is GetPlane. Select an existing plane that will be used as the rectangle plane. The selection is possible thanks to a selection agent.  
 ---|---  
-![CAACreateRectangle2.jpg \(16653 bytes\)](images/CAACreateRectangle2.jpg) | The viewpoint changes to make the selected plane and the screen plane coincide. The active state becomes GetFirstPoint.  
-![CAACreateRectangle3.jpg \(17322 bytes\)](images/CAACreateRectangle3.jpg) | Click to indicate a point for the diagonal first end point. The active state becomes GetSecondPoint. This image is captured just after the click. The indicated point is shown beside the plane. The mouse has not yet moved. The indication is enabled thanks to an indication agent.  
-![CAACreateRectangle4.jpg \(17881 bytes\)](images/CAACreateRectangle4.jpg) | Move the mouse from this point. A temporary rectangle is drawn and increases or decreases to follow the mouse moves. The active state remains GetSecondPoint. The self transition loops onto this state. The indication is enabled thanks to the second indication agent.  
-![CAACreateRectangle5.jpg \(19354 bytes\)](images/CAACreateRectangle5.jpg) | Still moving the mouse, the temporary rectangle go on increasing or decreasing to follow the mouse moves. The active state remains GetSecondPoint thank sto the self transition that loops onto this state. The indication remains enabled thanks to the second indication agent.  
-![CAACreateRectangle6.jpg \(18214 bytes\)](images/CAACreateRectangle6.jpg) | When the wished rectangle is obtained, click to create the diagonal second end point. This creates the rectangle. The indicated point is retrieved thanks to the second indication agent. The command is now complete.  
-The Rectangle command statechart diagram comprises three states in addition to the initial and final states, and four transitions including a self transition that loops onto a state to create a temporary rubber rectangle. Dialog agents with appropriate types and behaviors, associated with the states, make it possible to convert the end user input into stimuli that trigger the transitions and to retrieve the end user interaction intent, that is selecting an object for a selection agent [3] or indicating a point for an indication agent [4]. To simplify the `BuildGraph` method, undo/redo [5] is not taken into into account. [Top] How to Launch the Rectangle Command See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.htm)" use case for a detailed description of how this use case should be launched.  Then, in the window where you run the mkrun command, do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following: 
+ The viewpoint changes to make the selected plane and the screen plane coincide. The active state becomes GetFirstPoint.  
+ Click to indicate a point for the diagonal first end point. The active state becomes GetSecondPoint. This image is captured just after the click. The indicated point is shown beside the plane. The mouse has not yet moved. The indication is enabled thanks to an indication agent.  
+ Move the mouse from this point. A temporary rectangle is drawn and increases or decreases to follow the mouse moves. The active state remains GetSecondPoint. The self transition loops onto this state. The indication is enabled thanks to the second indication agent.  
+ Still moving the mouse, the temporary rectangle go on increasing or decreasing to follow the mouse moves. The active state remains GetSecondPoint thank sto the self transition that loops onto this state. The indication remains enabled thanks to the second indication agent.  
+ When the wished rectangle is obtained, click to create the diagonal second end point. This creates the rectangle. The indicated point is retrieved thanks to the second indication agent. The command is now complete.  
+The Rectangle command statechart diagram comprises three states in addition to the initial and final states, and four transitions including a self transition that loops onto a state to create a temporary rubber rectangle. Dialog agents with appropriate types and behaviors, associated with the states, make it possible to convert the end user input into stimuli that trigger the transitions and to retrieve the end user interaction intent, that is selecting an object for a selection agent [3] or indicating a point for an indication agent [4]. To simplify the `BuildGraph` method, undo/redo [5] is not taken into into account. [Top] How to Launch the Rectangle Command See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched.  Then, in the window where you run the mkrun command, do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following: 
     * Select File->New 
     * In the New box, select CAAGeometry and click OK 
     * Select Insert->Point 
@@ -188,12 +188,12 @@ In Short This use case shows the objects involved when implementing the statecha
 
 * * *
 
-References [1] | [Implementing the Command Statechart Diagram](../CAADegTechArticles/CAADegGraph.htm)  
+References [1] | [Implementing the Command Statechart Diagram](../CAADegTechArticles/CAADegGraph.md)  
 ---|---  
-[2] | [Describing State Dialog Commands Using UML](../CAADegTechArticles/CAADegUMLDescription.htm)  
+[2] | [Describing State Dialog Commands Using UML](../CAADegTechArticles/CAADegUMLDescription.md)  
 [3] | [Managing Selection](../CAADegTechArticles/CAADegGraph.htm#520000)  
 [4] | [Managing Indication](../CAADegTechArticles/CAADegGraph.htm#510000)  
-[5] | [Managing Undo/Redo](../CAADegTechArticles/CAADegUndoRedo.htm)  
+[5] | [Managing Undo/Redo](../CAADegTechArticles/CAADegUndoRedo.md)  
 [Top]  
   
 * * *

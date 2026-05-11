@@ -3,7 +3,7 @@ title: "Business Process Knowledge Template Modeler"
 category: "use cases"
 module: "CAABehBase"
 tags: []
-source_file: "Doc\online\CAABehBase\CAABehHome.htm"
+source_file: "Doc/online/CAABehBase/CAABehHome.md"
 converted: "2026-05-11T17:33:49.926688"
 ---
 
@@ -14,7 +14,7 @@ Technical Articles
   |    
 [Top]  
 Use Cases  
-[Managing Variables and Operation States for Behavior Command](../CAABehUseCases/CAABehOpAndVarMgt.htm) | How to code a CAA command launched by a behavior command and also how to manipulate variables of BKT Objects.  
+[Managing Variables and Operation States for Behavior Command](../CAABehUseCases/CAABehOpAndVarMgt.md) | How to code a CAA command launched by a behavior command and also how to manipulate variables of BKT Objects.  
 [Top]  
 Quick Reference  
 CATBehaviorInterfaces Reference | Interface reference for operation states  

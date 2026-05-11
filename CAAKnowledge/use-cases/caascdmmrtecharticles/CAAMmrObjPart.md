@@ -1,12 +1,11 @@
 ---
 title: "Part Object"
-category: "general"
+category: "use-case"
 module: "CAAScdMmrTechArticles"
 tags: []
-source_file: "Doc\online\CAAScdMmrTechArticles\CAAMmrObjPart.htm"
+source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrObjPart.md"
 converted: "2026-05-11T17:31:51.142657"
 ---
-
 # Part Object
 
 See Also | UseCases |  Properties |  Methods  
@@ -14,7 +13,7 @@ See Also | UseCases |  Properties |  Methods
   
  
 
-![](../CAAScrAutomationImages/images/partdoc.gif)[![](../CAAScrAutomationImages/images/uparrow.gif)](../CAAScdInfTechArticles/CAAInfTocApplication.htm)  
+![](../CAAScrAutomationImages/images/partdoc.gif)[![](../CAAScrAutomationImages/images/uparrow.gif)](../CAAScdInfTechArticles/CAAInfTocApplication.md)  
 ![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/partlong.gif)  
 ---  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/orelts.gif)  
@@ -25,9 +24,9 @@ See Also | UseCases |  Properties |  Methods
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/bodies.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/hybbodis.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/product.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)[![](../CAAScrAutomationImages/images/constrs.gif)](CAAMmrObjConstraints.htm)  
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)[![](../CAAScrAutomationImages/images/constrs.gif)](CAAMmrObjConstraints.md)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/dr2dlroot.gif)  
-|  ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/relatns.gif)  
+
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/params.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/shapfact.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/hsfact.gif)  

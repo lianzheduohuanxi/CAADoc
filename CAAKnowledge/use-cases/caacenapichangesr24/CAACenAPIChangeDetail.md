@@ -1,20 +1,18 @@
 ---
 title: "Detail Of C++ API Changes"
-category: "general"
+category: "api-changes"
 module: "CAACenAPIChangesR24"
+version: "V5R24"
 tags: ["CAA2Usage", "CAA2Level"]
-source_file: "Doc\online\CAACenAPIChangesR24\CAACenAPIChangeDetail.htm"
+source_file: "Doc/online/CAACenAPIChangesR24/CAACenAPIChangeDetail.md"
 converted: "2026-05-11T17:33:51.790579"
 ---
-
 #   
   
 | 
-
 ## 
 
 | 
-
 ### Detail Of V5-6R2014 C++ API Changes
 
 _What changes in the API compared with CAA V5-6R2013_  
@@ -22,7 +20,6 @@ _What changes in the API compared with CAA V5-6R2013_
 Technical Article  
   
 * * *
-
 ### Abstract
 
 This article presents by frameworks the detail of CAA C++ resources modified in V5-6R2014 and how to modify your code accordingly. Each modification is listed for a resource (file, class, method) with a classification. They will generally be detected by a recompilation of the code. Most of the time, signature modifications are obvious. Check in the framework detail how to replace deleted entities. Possibly impacting modifications are highlighted in red.  
@@ -43,22 +40,20 @@ MINMV | Method is no more virtual. If occurs on a U1 class, may require modifica
   
 * * *
 
-GSMInterfaces | [V5-6R2013 vs V5-6R2012GA](ObjectModelerBase.htm) |   
+GSMInterfaces | [V5-6R2013 vs V5-6R2012GA](ObjectModelerBase.md) |   
 ---|---|---|---|---  
-CATPDMBase | [V5-6R2013 vs V5-6R2012GA](CATPDMBase.htm) |   
+CATPDMBase | [V5-6R2013 vs V5-6R2012GA](CATPDMBase.md) |   
   
 * * *
-
 ### References
 
 [1] | [Migration to CATBoolean](../CAACenQuickRefs/CAACenWhatsNew.htm#CATBoolean)  
 ---|---  
-[2] | [Details Of V5R21 API Changes](../CAACenAPIChangesR22/CAACenAPIChangeDetail.htm)  
+[2] | [Details Of V5R21 API Changes](../CAACenAPIChangesR22/CAACenAPIChangeDetail.md)  
   |    
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Oct 2012] | Document created  

@@ -3,18 +3,15 @@ title: "Creating Dialog Boxes Automatically Resizable"
 category: "use case"
 module: "CAADlgUseCases"
 tags: ["CAADlgMoreRadioDlg", "CAADlgMoreButtonDlg", "CAADlgDemoWindow", "CAADlgDialogDemonstrator", "CAADlgDemoApplication", "CATInteractiveApplication", "CAADialog", "CAADlgTabulation", "CAADlgFrameReplaceDlg"]
-source_file: "Doc\online\CAADlgUseCases\CAADlgSampleTabulation.htm"
+source_file: "Doc/online/CAADlgUseCases/CAADlgSampleTabulation.md"
 converted: "2026-05-11T17:17:56.018174"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## User Interface - Dialogs
 
 | 
-
 ### Creating Dialog Boxes Automatically Resizable
 
 Arranging Dialog Objects Using Tabulations  
@@ -22,7 +19,6 @@ Arranging Dialog Objects Using Tabulations
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to create extendable dialog boxes. 
@@ -36,18 +32,13 @@ This article shows how to create extendable dialog boxes. 
   * **In Short**
   * **References**
 
-
-
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show you how to create Dialog boxes with dynamic frames. The frames appear and disappear and the dimensions of the dialog box are automatically redefined. For such behavior the frame positioning must be done by a tabulation layout [1] and not by a grid layout [2]. [Top]
-
 ### The CAADlgTabulation Use Case
 
 CAADlgTabulation is a use case of the CAADialog.edu framework that illustrates Dialog framework capabilities. [Top]
-
 #### What Does CAADlgTabulation Do
 
 CAADlgTabulation use case creates three Dialog boxes: 
@@ -95,8 +86,6 @@ According to the selected value in the combo, the frame under the "Combo Frame" 
 | _Fig. 3c: Between_  
 ---  
 ![](images/CAADlgTabulationFrameReplace3.jpg)  
-
-
 
 To obtain such behavior, the frames must be attached in their container by a tabulation layout. On the pictures below, the tabulations are represented by thick lines and the frame's attachments are represented by a green rectangular box.
 
@@ -149,13 +138,9 @@ _Fig. 6_
   
 The "Combo Frame" frame is always visible and attached to the first (0) horizontal line. The frame attached to the second (5) horizontal line is the frame entitled either "Coordinates Frame" (Fig. 3a) or "Circle Frame" (Fig. 3b) or ''Between Frame" (Fig. 3c) . When one of these three frames is attached and visible, the two others are invisible and detached.
 
-
-
-
 Inside the frames entitled  "Left More Frame", "Right More Frame", "Frame A" and so on, you can use the grid layout [2] to locate the different components. 
 
 [Top]
-
 #### How to Launch CAADlgTabulation
 
 To launch the use case, you will need to set up the build time environment, then compile CAADlgDialogDemonstrator along with its prerequisites, set up the run time environment, and then execute the use case [3].
@@ -180,10 +165,7 @@ When the `CAADlgDialogDemonstrator` application is launched:
   * Click **OK** or**Cancel**
   * On the**File** menu click**Exit**
 
-
-
 [Top]
-
 #### Where to Find the CAADlgTabulation Code
 
 The CAADlgTabulation use case is made of several classes located in the CAADlgDialogDemonstrator.m module of the CAADialog.edu framework:
@@ -202,10 +184,7 @@ In the LocalInterfaces and src directory, you will find the following files:
   * CAADlgFrameReplaceDlg.h/CAADlgFrameReplaceDlg.cpp : The "Frame Replacement Demonstrator" dialog box definition
   * CAADlgMoreRadioDlg.h/CAADlgMoreRadioDlg.cpp : The "More Radio Demonstrator" dialog box definition. 
 
-
-
 [Top]
-
 ### Step-by-Step
 
 There are three main steps to define the three Dialog boxes of the CAADlgTabulation use case:
@@ -214,10 +193,7 @@ There are three main steps to define the three Dialog boxes of the CAADlgTabulat
   2. Defining the Build Method 
   3. Defining the Callback Method
 
-
-
 [Top]
-
 #### Defining the Class Constructor 
     
     
@@ -242,12 +218,9 @@ Each Dialog box is a class deriving from the _CATDlgDialog_ class. The arguments
     * `CATDlgWndNoResize``:` The Dialog Box can not be resized by the end user. It is recommended option with the `CATDlgWndAutoResize` style
     * The `CATDlgGridLayout` style has not been used, and **must not be used** , to benefit of the attachment.
 
-
-
  
 
 [Top]
-
 #### Defining the Build Method 
 
 The contents of this section depends on the Dialog box. 
@@ -255,8 +228,6 @@ The contents of this section depends on the Dialog box. 
   1. The "**More/Less Push Button Demonstrato** r" Dialog box
   2. The "**More & Radio Button Demonstrator**" Dialog box
   3. The "**Frame Replacement Demonstrator** " Dialog box
-
-
 
   1. The "**More/Less Push Button Demonstrato** r" Dialog box
     
@@ -322,7 +293,10 @@ The contents of this section depends on the Dialog box. 
 
 **Arranging Dialog Objects**
 
+```vbscript
 For the "More/Less" Dialog box, the layout is the following:
+
+```
 
 ![](images/CAADlgTabulationMoreLessTech3.jpg)  
 ---  
@@ -550,11 +524,7 @@ To be advised that the end user has select a new item in the combo list, you set
      * `GetComboSelectNotification`**** is the method returning the notification class when a selection in the combo occurs. 
      * `OnComboSelectNotification`**** is the method explained in the "Defining the Callback Methods" section. 
 
-
-
-
 [Top]
-
 #### Defining the Callback Method 
 
 In this section, we describe the methods which are called when the frame layout must be changed.  
@@ -562,9 +532,6 @@ In this section, we describe the methods which are called when the frame layout 
   1. The "**More/Less Push Button Demonstrato** r" Dialog box
   2. The "**More & Radio Button Demonstrator**" Dialog box
   3. The "**Frame Replacement Demonstrator** " Dialog box
-
-
-
 
   1. The "**More/Less Push Button Demonstrator** " Dialog box
 
@@ -679,15 +646,11 @@ The code is the following: See Fig. 6
 
 `NewCurrentSelection `becomes the new current index value kept in the `_CurrentSelection `data member. 
 
-
-
-
 [Top]
 
  
 
 * * *
-
 ### In Short
 
 This use case explains how to use the tabulation layout to create dynamic dialog boxes, such as a more and less dialog box. 
@@ -695,18 +658,16 @@ This use case explains how to use the tabulation layout to create dynamic dialog
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Arranging Dialog Objects Using Tabulations](../CAADlgTechArticles/CAADlgTabLayout.htm)  
+[1] | [Arranging Dialog Objects Using Tabulations](../CAADlgTechArticles/CAADlgTabLayout.md)  
 ---|---  
-[2] | [Arranging Dialog Objects Using Grid](../CAADlgTechArticles/CAADlgGridLayout.htm)  
-[3] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-[4] | [Assigning Resources to a Dialog Box](../CAADlgTechArticles/CAADlgResources.htm)  
+[2] | [Arranging Dialog Objects Using Grid](../CAADlgTechArticles/CAADlgGridLayout.md)  
+[3] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[4] | [Assigning Resources to a Dialog Box](../CAADlgTechArticles/CAADlgResources.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Fev 2003] | Document created  

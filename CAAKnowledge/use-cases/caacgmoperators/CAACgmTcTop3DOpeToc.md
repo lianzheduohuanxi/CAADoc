@@ -1,9 +1,9 @@
 ---
 title: "3D Operations"
-category: "general"
+category: "use-case"
 module: "CAACgmOperators"
 tags: []
-source_file: "Doc\online\CAACgmOperators\CAACgmTcTop3DOpeToc.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmTcTop3DOpeToc.md"
 converted: "2026-05-11T17:33:48.754929"
 ---
 

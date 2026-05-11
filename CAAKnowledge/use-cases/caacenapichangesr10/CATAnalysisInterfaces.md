@@ -1,9 +1,10 @@
 ---
 title: "CATAnalysisInterfaces Modifications"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR10"
+version: "V5R10"
 tags: ["CATISamEditOccurrences", "CATISamAnalysisEntity"]
-source_file: "Doc\online\CAACenAPIChangesR10\CATAnalysisInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR10/CATAnalysisInterfaces.md"
 converted: "2026-05-11T17:33:50.114425"
 ---
 

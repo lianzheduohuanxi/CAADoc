@@ -3,18 +3,15 @@ title: "Visualizing Temporary Components"
 category: "use case"
 module: "CAAVisUseCases"
 tags: ["CAADegGeoCommands", "CATInstantiateComponent", "CATI3DGeoVisu", "CAAVisualization", "CAAVisWireBox", "CAAVisTextModel", "CATIndicationAgent", "CATISO", "CATIA", "CATI2DGeoVisu", "CAAIVisTextModel", "CAADialogEngine", "CAAGeometry", "CAAIVisWireBox", "CAADegClippingByBoxCmd", "CATI3GeoVisu", "CAAVisTemporaryObjects"]
-source_file: "Doc\online\CAAVisUseCases\CAAVisSampleISO.htm"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleISO.md"
 converted: "2026-05-11T17:31:52.128785"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## 3D Visualization
 
 | 
-
 ### Visualizing Temporary Components
 
 How to use the Interactive Set of Objects  
@@ -22,7 +19,6 @@ How to use the Interactive Set of Objects
 Use Case  
   
 * * *
-
 ### Abstract
 
 A temporary component is a component which is not integrated into the data model of a V5 document. In most cases it is a simple component to help the understanding of an interactive command. The CAAVisTemporaryObjects use case [1] has explained how to create temporary components, the current one details how to use the interactive Set of Objects to visualize them. To take full advantage of this article, you can first read the technical article about the Interactive Set of Objects and the temporary components [2]. 
@@ -36,21 +32,16 @@ A temporary component is a component which is not integrated into the data model
   * **In Short**
   * **References**
 
-
-
 * * *
-
 ### What You Will Learn With This Use Case
 
 The main goal of this article is to show how to use the **I** nteractive **S** et of **O** bjects. The ISO enables you to visualize the temporary components, those not included in a V5 document. These components must implement either CATI2DGeoVisu or CATI3DGeoVisu.  The ISO is a _CATISO_ class instance which is associated with the editor (_CATFrmEditor_) of each V5 document. There are three kinds of ISO: normal, furtive (XOR drawing) and background. The first two are used in this use case. Naturally, you will learn how to use the methods of the _CATISO_ class to display or erase a component, but this article goes beyond to explain the life cycle of the graphic representation associated with the components.   [Top]
-
 ### The CAADegClippingByBoxCmd Use Case
 
 CAADegClippingByBoxCmd is a use case of the CAADialogEngine.edu and CAAVisualization.edu frameworks that illustrates DialogEngine, ApplicationFrame, and Visualization frameworks capabilities. [Top]
-
 #### What Does CAADegClippingByBoxCmd Do
 
-The CAADegClippingByBoxCmd use case is a state command [3] which displays temporary components to enhance the user interface. This command is a state command to remove all the points of the document outside a given box. This clipping box is defined by the end user: first, he/she defines its location by selecting an existing point. Then, from the selected point a first wire box is displayed, and he/she can drag the mouse to increase or decrease the size of the box.  The state command creates three kinds of components: a text (right picture on Fig.1), a trihedral (middle picture on Fig.1) and a wire box (left picture on Fig.1) [1] and uses the ISO to visualize them. The first two are visualized in the normal ISO, and the last one in the furtive ISO.   Fig.1 Temporary Components | ![](images/CAAVisSampleTempObjectISOText.jpg) | ![](images/CAAVisSampleTempObjectTrihedral.jpg) | ![](images/CAAVisSampleTempObjectWireBox.jpg)  
+The CAADegClippingByBoxCmd use case is a state command [3] which displays temporary components to enhance the user interface. This command is a state command to remove all the points of the document outside a given box. This clipping box is defined by the end user: first, he/she defines its location by selecting an existing point. Then, from the selected point a first wire box is displayed, and he/she can drag the mouse to increase or decrease the size of the box.  The state command creates three kinds of components: a text (right picture on Fig.1), a trihedral (middle picture on Fig.1) and a wire box (left picture on Fig.1) [1] and uses the ISO to visualize them. The first two are visualized in the normal ISO, and the last one in the furtive ISO.   Fig.1 Temporary Components 
 ---|---|---  
   
 The text is displayed when the command is activated. It is useless for the result of the command itself, it has been added to show how select a temporary component. 
@@ -61,10 +52,9 @@ Here it is the UML diagram [4] of the CAADegClippingByBoxCmd command.
 ---  
   
 [Top]
-
 #### How to Launch CAADegClippingByBoxCmd
 
-See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.htm)" use case for a detailed description of how this use case should be launched. For the specific scenario:
+See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched. For the specific scenario:
 
 Launch CATIA. When the application is ready:
 
@@ -73,17 +63,12 @@ Launch CATIA. When the application is ready:
     * In the **Basic Elements** toolbar 
     * In the**Insert** menu, click **Point**  
 
-
   * Launch the **Clipping By Box** (![](images/CAAVisClippingByBoxIcon.jpg))command in the **Clipping** toolbar
   * Select the **ISO Selection** text located at the origin of the model (0,0,0)
-
-
 
 > After the selection, the text disappears
 
   * Select a **Point** as clipping box center
-
-
 
 > After the selection, the trihedral is displayed. 
 
@@ -91,11 +76,7 @@ Launch CATIA. When the application is ready:
 
 All points outside the clipping box are removed from the document.
 
-
-
-
 [Top]
-
 #### Where to Find the CAADegClippingByBoxCmd Code
 
 The CAADegClippingByBoxCmd use case is made of the single class named _CAADegClippingByBoxCmd_ located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework:
@@ -104,12 +85,9 @@ Windows | `InstallRootDirectory\CAADialogEngine.edu\CAADegGeoCommands.m\`
 ---|---  
 Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`  
 
-
-
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are seven main logical steps in CAADegClippingByBoxCmd:
@@ -122,10 +100,7 @@ There are seven main logical steps in CAADegClippingByBoxCmd:
   6. Managing the Wire Box Component
   7. Erasing and Deleting the Three Temporary Components
 
-
-
 [Top]
-
 #### Retrieving the Normal and Furtive ISO
 
 The interactive set of objects are managed by the _CATFrmEditor_ class [5]. In the CAADegClippingByBoxCmd class constructor they are retrieved. 
@@ -144,7 +119,6 @@ The interactive set of objects are managed by the _CATFrmEditor_ class [5]. In t
 The `GetEditor` method of the _CATStateCommand_ class, retrieves the current _CATFrmEditor_ class instance. The `GetISO `method retrieves the "normal" ISO, and the `GetFurtiveISO` method the furtive ISO. `_pISO` and `_pFurtiveISO` are data members of the state command.
 
 [Top]
-
 #### Creating the Three Temporary Components
 
 In the CAADegClippingByBoxCmd class constructor you will find the three creations.
@@ -163,7 +137,6 @@ In the CAADegClippingByBoxCmd class constructor you will find the three creation
 `_pCenterBoxModel, _pIWireBox,` and `_pITextToSelectModel` are data members of the _CAADegClippingByBoxCmd_ class. The first one is an instance of the trihedral component, the second one is an instance of the wire box component, and the last one is an instance of the text component. The referenced article [1] gives you the UML diagram of each one.
 
 [Top]
-
 #### Defining the State Chart Diagram
 
 The CAADegClippingByBoxCmd class is a state command class. It implies that the state chart is defined in the `BuildGraph` method of the _CATStateCommand_ class. Here it is an extract which shows the more interesting steps.
@@ -192,7 +165,6 @@ The CAADegClippingByBoxCmd class is a state command class. It implies that the s
 `_daTextSel, `a _CATPathElementAgent_ pointer,` `is a data member of the _CAADegClippingByBoxCmd_ class. The association of the `CATDlgEngWithPSO` and `CATDlgEngWithPrevaluation` behaviors enables us to have a visual feedback when an object is pre-selected (pre-highlight color). The `AddElementType` is the method to filter the selection. Using _CAAIVisTextModel_ , only the components implementing this interface could be selected. This interface is only implemented on text component [1].
 
 [Top]
-
 #### Managing the Text Component
 
 The text component ("ISO Selection") is managed as follows:
@@ -203,8 +175,6 @@ The text component ("ISO Selection") is managed as follows:
   * Re-Displayed/Re-Erased in case of undo/redo of the text selection- see the Undo/Redo step 
   * Re-Erased/Re-Displayed in case of deactivation/re-activation of the state command - see the Deactivation/Re-activation step 
   * Deleted at the end of the state command - see the Deleting the Three Temporary Components step
-
-
 
 Here it is the detail of the parts own to the text component. 
 
@@ -262,8 +232,6 @@ You can note that the since the `_pITextToSelectModel `component is always remov
 
   * **Deactivation/Re-activation  **
 
-
-
 > A state command can be deactivated by a shared command, and once this command is completed, our command is reactivated [6]. The management of the text component, in this case, follows the same principle as into the undo/redo methods. When the command is deactivated the text is erased without its graphic representation destruction. So in case of re-activation of the state command, the text can be re-displayed without graphic representation reconstruction.
 > 
 > However, there is a little difference with the undo/redo step. In the Deactivation method, a check of the presence into the ISO of the text is done, it enables us in the re-activation method to avoid to re-display the text if it useless. 
@@ -298,7 +266,6 @@ You can note that the since the `_pITextToSelectModel `component is always remov
 > The text is added in the ISO only if before the de-activation the text was displayed. You can note that there is no need to re-build the graphic representation of the `_pITextToSelectModel` component since in the deactivation method the last argument of the `RemoveElement` method is `1.`
 
 [Top]
-
 #### Managing the Trihedral Component
 
 The trihedral component is managed as follows:
@@ -307,8 +274,6 @@ The trihedral component is managed as follows:
   * Displayed when a point, representing the center of the clipping box, is selected - see Adding the trihedral component into the ISO step 
   * Erased/Re-Displayed when command is deactivated/re-activated - see De-activation/Re-activation step
   * Erased and Deleted at the end of the state command - see the Deleting the Three Temporary Components step
-
-
 
 Here it is the detail of the parts own to the trihedral component. 
 
@@ -331,8 +296,6 @@ The `CreateRepForCenterBox` method creates the graphic representation and associ
 The component can be now visualized. The `AddElement` method adds the component, handled by `_pCenterBoxModel`, in the normal ISO. This method will send a _CATCreate_ event to update the visualization. Refer to the technical article [2] for details.
 
   * **De-activation/Re-activation  **
-
-
 
 > When the state command is deactivated, the trihedral component must be erased. Here it is an extract of the  `Desactivate` method of the _CAADegClippingByBoxCmd_ command:
     
@@ -368,11 +331,7 @@ The trihedral component, `_pCenterBoxModel`, is re-displayed only if it was draw
 
 Before to add the component into the ISO, you must re-create the graphic representation because in the de-activation step it has been deleted by the  `RemoveElement` call.
 
-
-
-
 [Top]
-
 #### Managing the Wire Box Component
 
 The wire box component is managed as follows:
@@ -381,8 +340,6 @@ The wire box component is managed as follows:
   * Displayed when a point, representing the center of the clipping box, is selected - see Adding the wire box component into the ISO step 
   * Updated when the mouse move - see Updating the wire box graphic representation step
   * Erased and Deleted at the end of the state command - see the Deleting the Three Temporary Components step
-
-
 
 Here it is the detail of the parts own to the wire box component. 
 
@@ -438,7 +395,7 @@ At each mouse movement, the `UpdateClippingBox` method is called.
   
 The first step of this method consists in to define if the size of the box increases or decreases. The following rule has been chosen:
 
-![](images/CAAVisSampleVisuTempObjSensWireBox.jpg) |   The black trihedral represents the axis system for the value returned by the agent of indication (`_daIndication`) When the mouse goes down ( the previous Y position is upper than the the current one) the wire box increases, otherwise it decreases. But there is a lower limit: the size of the box cannot be lowest that .2f  unit model. `currentdimbox` is the new size of the wire box.   
+   The black trihedral represents the axis system for the value returned by the agent of indication (`_daIndication`) When the mouse goes down ( the previous Y position is upper than the the current one) the wire box increases, otherwise it decreases. But there is a lower limit: the size of the box cannot be lowest that .2f  unit model. `currentdimbox` is the new size of the wire box.   
 ---|---  
   
 Once the new size of the box is defined, thanks `_pIWireBox`,  the _CAAIVisWireBox_ interface pointer on the wire box component, the component can be updated. 
@@ -460,11 +417,7 @@ There remains to update the ISO. The `UpdateElement` method will send a _CATModi
   
 ![](../CAAIcons/images/warning.gif)if you use the `UpdateElement` method you must never modify "yourself" the graphic representation. The modification must be managed by the _CATVisManager_. So it is the reason why for the wire box we have chosen to create a component which OM derives from CATBaseUnknown and not from CATModelForRep3D. It is in **your** _CATI3GeoVisu_ implementation that the graphic representation is built. Refer to the technical article for complete details [2]. 
 
-
-
-
 [Top]
-
 #### Erasing and Deleting the Three Temporary Components
 
 At the end of the command, in the _CAADegClippingByBoxCmd_ destructor class, the three temporary components must be removed from the ISO and then deleted. 
@@ -502,7 +455,6 @@ In the `destructor` class, the component are deleted by releasing the handles:
 [Top]
 
 * * *
-
 ### In Short
 
 This use case has explained how to use the main methods of the _CATISO_ class:
@@ -511,26 +463,22 @@ This use case has explained how to use the main methods of the _CATISO_ class:
   * `RemoveElement` to erase a component
   * `UpdateElement` to update the graphic representation of a component already existing in the ISO.
 
-
-
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Creating Temporary Components](CAAVisSampleTempObject.htm)  
+[1] | [Creating Temporary Components](CAAVisSampleTempObject.md)  
 ---|---  
-[2] | [Interactive Set of Objects](../CAAVisTechArticles/CAAVisISO.htm)  
-[3] | [Getting Started with State Dialog Command](../CAADegTechArticles/CAADegGettingStarted.htm)  
-[4] | [Describing State Dialog Commands Using UML](../CAADegTechArticles/CAADegUMLDescription.htm)  
-[5] | [Understanding the Application Frame Layout ](../CAAAfrTechArticles/CAAAfrLayoutV5.htm)  
-[6] | [The CAA Command Model](../CAADegTechArticles/CAADegCommandModel.htm)  
-[7] | [Using the Visualization Manager](CAAVisSampleVisManager.htm)  
+[2] | [Interactive Set of Objects](../CAAVisTechArticles/CAAVisISO.md)  
+[3] | [Getting Started with State Dialog Command](../CAADegTechArticles/CAADegGettingStarted.md)  
+[4] | [Describing State Dialog Commands Using UML](../CAADegTechArticles/CAADegUMLDescription.md)  
+[5] | [Understanding the Application Frame Layout ](../CAAAfrTechArticles/CAAAfrLayoutV5.md)  
+[6] | [The CAA Command Model](../CAADegTechArticles/CAADegCommandModel.md)  
+[7] | [Using the Visualization Manager](CAAVisSampleVisManager.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Fev 2004] | Document created  

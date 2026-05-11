@@ -1,15 +1,14 @@
 ---
 title: "Analysis Document Automation Objects"
-category: "general"
+category: "use-case"
 module: "CAAScdAniTechArticles"
 tags: []
-source_file: "Doc\online\CAAScdAniTechArticles\CAAAniTocAnalysisDocument.htm"
+source_file: "Doc/online/CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md"
 converted: "2026-05-11T17:31:51.969854"
 ---
-
 # Analysis Document Automation Objects
 
-![](../CAAScrAutomationImages/images/analydol.gif)[![Application Object Diagram](../CAAScrAutomationImages/images/uparrow.gif)](../CAAScdInfTechArticles/CAAInfTocApplication.htm)  
+![](../CAAScrAutomationImages/images/analydol.gif)[![Application Object Diagram](../CAAScrAutomationImages/images/uparrow.gif)](../CAAScdInfTechArticles/CAAInfTocApplication.md)  
 ![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/anmgrl.gif)  
 ---  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/anamdls.gif)  
@@ -22,16 +21,16 @@ converted: "2026-05-11T17:31:51.969854"
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/anameshlocs.gif)  
 ![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/anameshloc.gif)  
 ![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/anasets.gif)  
-![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/anaset.gif)[![Analysis Set Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](CAAAniTocAnalysisSet.htm)  
+![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/anaset.gif)[![Analysis Set Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](CAAAniTocAnalysisSet.md)  
 ![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/ancases.gif)  
 ![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/ancase.gif)  
 ![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/anasets.gif)  
-![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/anaset.gif)[![Analysis Set Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](CAAAniTocAnalysisSet.htm)  
-|  ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/analylnkdocs.gif)  
+![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/anaset.gif)[![Analysis Set Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](CAAAniTocAnalysisSet.md)  
+
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/relatns.gif)  
-![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/relation.gif)[![Relation Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdKniTechArticles/CAAKniTocRelation.htm)  
+![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/relation.gif)[![Relation Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdKniTechArticles/CAAKniTocRelation.md)  
 ![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/params.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/param.gif)[![Parameter Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdKniTechArticles/CAAKniTocParameter.htm)   
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/param.gif)[![Parameter Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdKniTechArticles/CAAKniTocParameter.md)   
   
 **Legend**
 
@@ -51,8 +50,6 @@ converted: "2026-05-11T17:31:51.969854"
   * The relations between parameters stored in a **Relations** collection you can retrieve using the Analysis manager's Relations property
   * The parameters stored in a **Parameters** collection you can retrieve using the Analysis manager's Parameters property
 
-
-
 ![](../CAAScrAutomationImages/images/yellbox.gif)The **AnalysisModels****** collection includes **AnalysisModel** objects. 
 
 ![](../CAAScrAutomationImages/images/bluebox.gif)The **AnalysisModel** object is dedicated to include the discretization of the Analysis and its physical properties. This is called Finite Element Model in the user interface of the current applications. The **AnalysisModel** object gives access to:
@@ -62,8 +59,6 @@ converted: "2026-05-11T17:31:51.969854"
   * The **AnalysisAdaptivityManager** object for running the adaptivity process
   * A collection of **AnalysisSets**  collection (material, properties...)
   * A collection of **AnalysisCases collection.**
-
-
 
 ![](../CAAScrAutomationImages/images/bluebox.gif)The **AnalysisMeshManager** object gives access to an **AnalysisMeshParts**  collection. 
 

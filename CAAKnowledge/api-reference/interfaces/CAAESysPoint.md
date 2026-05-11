@@ -2,32 +2,22 @@
 title: "CAAESysPoint"
 type: "interface"
 module: "CAASystem"
+category: "framework"
 base: "CATBaseUnknown"
+inheritance_chain: "CAAESysPoint → CATBaseUnknown"
 method_count: 2
 visibility: "local"
+has_tie_binding: false
 verified: true
 ---
-
 # CAAESysPoint
 
 **基类**: CATBaseUnknown  
+**继承链**: CAAESysPoint → CATBaseUnknown  
 **模块**: CAASystem  
+**分类**: framework  
 **可见性**: local  
 **方法数**: 2
-
-> ===========================================================================
-
-## 方法列表
-
-### SetCoord
-```cpp
-HRESULT SetCoord(const float iX, const float iY, const float iZ);
-```
-
-### GetCoord
-```cpp
-HRESULT GetCoord(float     & oX, float     & oY, float     & oZ) const;
-```
 
 ## 依赖
 

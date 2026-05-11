@@ -3,18 +3,15 @@ title: "Creating a CAA V5 Batch"
 category: "use case"
 module: "CAABatUseCases"
 tags: ["CAABatBatchSample", "CATIBatchElementCAA", "CATIBatch", "CATIBatchCAA", "CATIBatchElementsCAA", "CAABatchInfrastructure"]
-source_file: "Doc\online\CAABatUseCases\CAABatBatchSample.htm"
+source_file: "Doc/online/CAABatUseCases/CAABatBatchSample.md"
 converted: "2026-05-11T17:33:45.740129"
 ---
-
 # Middleware
 
 | 
-
 ## BatchInfrastructure
 
 | 
-
 ### Creating a CAA V5 Batch
 
 Writing and using a CAA V5 Batch  
@@ -22,7 +19,6 @@ Writing and using a CAA V5 Batch
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article discusses the CAABatBatchSample use case. This use case explains how to implement and use a simple CAA V5 Batch.
@@ -36,10 +32,7 @@ This article discusses the CAABatBatchSample use case. This use case explains ho
   * **In Short**
   * **References**
 
-
-
 * * *
-
 ### What You Will Learn With This Use Case
 
 A V5 batch is a non interactive program which fits 3 principles.  
@@ -54,19 +47,16 @@ This use case is intended to help you to make your first steps in creating your 
         \- Write your Batch Descriptor file   
         \- Write your Batch Parameter file   
   [Top]
-
 ### The CAABatBatchSample Use Case
 
 CAABatBatchSample is a use case of the CAABatchInfrastructure.edu framework that illustrates the batch infrastructure capabilities.  
   [Top]
-
 #### What Does CAABatBatchSample Do
 
 This batch sample takes as input a list of .model files and renames it to .CATPart files.  
   
 Warning: this batch sample does not convert model file to CATPart file. It is only about renaming the files.  
  [Top]
-
 #### How to Launch CAABatBatchSample
 
 **The Parameter file**  
@@ -140,17 +130,21 @@ To launch the use case you have to follow the following steps:
   
     Change the “file1” “file2” and “file3” values, by completing the path with the full path on your machine  
   
+```vbscript
     Set up the run time environment (mkrun on build time installation and catstart on runtime installation)  
   
+```
+
     Launch the following command
     
     
     CATBatch XXX/ParamSample.xml  
   
+```
+
 ---  
   
 [Top]
-
 #### Where to Find the CAABatBatchSample
 
 The CAABatBatchSample use case is made of a single function named batchmain located in the CAABatBatchSample.m module of the CAABatchInfrastructure.edu framework:
@@ -162,7 +156,6 @@ Unix | InstallRootDirectory/CAABatchInfrastructure.edu/ CAABatBatchSample.m/
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are seven logical steps to implement _CATBatBatchSample_ :
@@ -175,10 +168,7 @@ There are seven logical steps to implement _CATBatBatchSample_ :
   6. Retrieves the output parameters
   7. Renaming input files
 
-
-
 [Top]
-
 #### Initializing the completion state
     
     
@@ -194,7 +184,6 @@ The method SetBatchState allows the batch author to set the completion state of 
 execution.
 
 [Top]
-
 #### Using the batch log
     
     
@@ -208,13 +197,12 @@ execution.
 The batch author can write in a batch log during the program execution. It allows the system to log information about  
 what the batch is doing. It can be useful if the batch end abnormally.   
 This log is written in the $BATCH_HOME/uuid/uuidLog.txt file. The default value for BATCH_HOME is /tmp (on UNIX) or  
-C:\temp (on Windows) and uuid is a generated identifier for each batch execution  
+C/temp (on Windows) and uuid is a generated identifier for each batch execution  
 The only parameter allowed in the PutInLog method is a string.
 
 [Top]
 
 * * *
-
 #### Retrieving CATIBatch Interface
     
     
@@ -227,7 +215,6 @@ The XML parameter file is read, at batch start, and an XML tree is generated in 
 Interfaces CATIBatchElementCAA (for a tag) and CATIBatchElementsCAA (for a list of tags) can be retrieved from CATIBatchCAA allowing accessing the whole XML tree
 
 [Top]
-
 #### Retrieving Input parameters 
     
     
@@ -255,7 +242,7 @@ Interfaces CATIBatchElementCAA (for a tag) and CATIBatchElementsCAA (for a list 
     
     
     // We write this path in the log of the batch available in $BATCH_HOME/uuid/uuidLog.txt 
-    // at the end of the execution. Default for BATCH_HOME is /tmp or C:\temp and uuid is a
+    // at the end of the execution. Default for BATCH_HOME is /tmp or C/temp and uuid is a
     // generated identifier for each batch execution.
     	CATBatchLogCAA::PutInLog("filepath: ");
     	CATBatchLogCAA::PutInLog(usfile_path.CastToCharPtr() );
@@ -290,7 +277,6 @@ where
 “get_Path” is a method which extracts a “file path” type argument only from <file> and <folder> tags. All those methods are listed and commented in CATIBatchElementCAA and CATIBatchElementsCAA.
 
 [Top]
-
 #### Retrieving field=value argument by its id
     
     
@@ -321,7 +307,6 @@ The tag <simple_arg> allows the batch author to describe “field=value” like 
  
 
 [Top]
-
 #### Retrieves the output parameters
     
     
@@ -346,7 +331,6 @@ The tag <simple_arg> allows the batch author to describe “field=value” like 
 The output parameters are read in the parameter file.
 
 [Top]
-
 #### Renaming input files
     
     
@@ -383,7 +367,6 @@ The output parameters are read in the parameter file.
 The input files are renamed with the .CATPart extension. This is the purpose of the batch.
 
 [Top]
-
 ### In Short
 
 This use case has demonstrated the way to create and launch a V5 batch
@@ -391,15 +374,13 @@ This use case has demonstrated the way to create and launch a V5 batch
  _[_Top]
 
 * * *
-
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [March 2006] | Document created  

@@ -1,9 +1,9 @@
 ---
 title: "Summary of Commands Around mkmk"
-category: "general"
+category: "use-case"
 module: "CAABtlQuickRefs"
 tags: []
-source_file: "Doc\online\CAABtlQuickRefs\CAABtlMANMkThemIx.htm"
+source_file: "Doc/online/CAABtlQuickRefs/CAABtlMANMkThemIx.md"
 converted: "2026-05-11T17:33:49.950844"
 ---
 
@@ -13,7 +13,7 @@ Quick Reference
   
 * * *
 
-[](CAABtlMANMkmk.htm)Mkmk being the main Code Builder tool, there exist others tools to manage either the prerequisites between frameworks or the frameworks themselves. These command are provided with mkmk so they are available as soon as [your path](../CAABtlTechArticles/CAABtlMkmk.htm#My first compilation!) has been updated to access mkmk. The commands to describe the prerequisites links are:
+[](CAABtlMANMkmk.md)Mkmk being the main Code Builder tool, there exist others tools to manage either the prerequisites between frameworks or the frameworks themselves. These command are provided with mkmk so they are available as soon as [your path](../CAABtlTechArticles/CAABtlMkmk.htm#My first compilation!) has been updated to access mkmk. The commands to describe the prerequisites links are:
       * [mkCopyPreq](CAABtlMkOthers.htm#mkCopyPreq) to copy the prerequisite frameworks into a workspace
       * [mkGetPreq](CAABtlMkOthers.htm#mkGetPreq) to construct a concatenation of prerequisites
       * [mkPrintPreq](CAABtlMkOthers.htm#mkPrintPreq) to display the direct and indirect prerequisite frameworks

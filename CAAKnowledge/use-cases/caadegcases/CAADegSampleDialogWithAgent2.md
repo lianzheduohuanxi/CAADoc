@@ -3,7 +3,7 @@ title: "Associating a Dialog Box with a Dialog Agent - 2"
 category: "use case"
 module: "CAADegUseCases"
 tags: ["CAADegHstChartWndDlg", "CAAGeometry", "CAADegHistogramChartWindowCmdDo", "CAADialogEngine", "CAADegHistogramChartWindowCmd", "CAADegEditor1DeselectedNotification", "CAADegEditor1SelectedNotification", "CAADegGeoCommands"]
-source_file: "Doc\online\CAADegUseCases\CAADegSampleDialogWithAgent2.htm"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleDialogWithAgent2.md"
 converted: "2026-05-11T17:33:49.642672"
 ---
 
@@ -25,15 +25,15 @@ Abstract This article shows how to use a dialog box to value a dialog agent. The
 
 * * *
 
-What You Will Learn With This Use Case This use case is intended to show how to use a dialog box associated with a dialog agent in a state dialog command. The dialog box values the dialog agent when the end user clicks a specific editor and any other objects of the dialog box. [Top] The CAADegHistogramChartWindowCmd Use Case CAADegHistogramChartWindowCmd  is a use case of the CAADialogEngine.edu framework that illustrates Dialog and DialogEngine framework capabilities. [Top] What Does CAADegHistogramChartWindowCmdDo The CAADegHistogramChartWindowCmd is a dialog state command enabling you to open a new window [2] to display an histogram chart view of the document.  | ![](../CAAAfrUseCases/images/CAAAfrHistoChart2.jpg) | The title of this command is "Histogram Chart Window". You find it in the "Chart Window" toolbar of the CAAGeometry document  
+What You Will Learn With This Use Case This use case is intended to show how to use a dialog box associated with a dialog agent in a state dialog command. The dialog box values the dialog agent when the end user clicks a specific editor and any other objects of the dialog box. [Top] The CAADegHistogramChartWindowCmd Use Case CAADegHistogramChartWindowCmd  is a use case of the CAADialogEngine.edu framework that illustrates Dialog and DialogEngine framework capabilities. [Top] What Does CAADegHistogramChartWindowCmdDo The CAADegHistogramChartWindowCmd is a dialog state command enabling you to open a new window [2] to display an histogram chart view of the document.  | The title of this command is "Histogram Chart Window". You find it in the "Chart Window" toolbar of the CAAGeometry document  
 ---|---  
-![](images/CAADegHistoChart1.jpg) | When you launch the "Histogram Chart Window" command, the "Customization of the Histogram Chart Window" dialog box appears. Before clicking OK, the end user can change some default parameters for the new window.    
+ When you launch the "Histogram Chart Window" command, the "Customization of the Histogram Chart Window" dialog box appears. Before clicking OK, the end user can change some default parameters for the new window.    
 ---|---  
-![](images/CAADegHistoChart3.jpg) | When the end user clicks on the OK button, a new window is created. It contains a 2D viewer with the count of point, line, plane, circle and ellipse in the document.   
+ When the end user clicks on the OK button, a new window is created. It contains a 2D viewer with the count of point, line, plane, circle and ellipse in the document.   
 ---|---  
 The CAADegHistogramChartWindowCmd command is a state dialog command according to the following UML state chart diagram [3]. ![](images/CAADegHistoChart4.jpg)  
 ---  
-[Top] How to Launch CAADegHistogramChartWindowCmd  See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.htm)" use case for a detailed description of how this use case should be launched [4]. Then, in the window where you run the mkrun command, do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following: 
+[Top] How to Launch CAADegHistogramChartWindowCmd  See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched [4]. Then, in the window where you run the mkrun command, do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following: 
     * Select **File** ->**New**
     * In the New box, select **CAAGeometry** and click OK 
     * Select **Window** ->**Histogram Chart Window**
@@ -157,7 +157,6 @@ A pointer to the dialog agent was created in the command `BuildGraph` method as 
 [Top] Creating the CAADegEditor1SelectedNotification Notification This step can be divided in two parts:
     1. Creating the Notification Header file
 The _CAADegEditor1SelectedNotification_ class derives from the _CATNotification_ class.
-    
     #include "CATNotification.h"   
     class CAADegEditor1SelectedNotification : public CATNotification
     {
@@ -175,7 +174,6 @@ The _CAADegEditor1SelectedNotification_ class derives from the _CATNotification_
 ---  
 The `CATDeclareClass` macro declares that the `CAADegEditor1SelectedNotification` class belongs to a component.
     2. Creating the Notification source file
-    
     #include "CAADegEditor1SelectedNotification.h"
     
     **CATImplementClass**(CAADegEditor1SelectedNotification,Implementation,
@@ -262,16 +260,16 @@ In Short This use case shows how:
 
 * * *
 
-References [1] | [Associating a Dialog Box with a Dialog Agent - 1](CAADegSampleDialogWithAgent.htm)  
+References [1] | [Associating a Dialog Box with a Dialog Agent - 1](CAADegSampleDialogWithAgent.md)  
 ---|---  
-[2] | [Creating a Document's Window -1](../CAAAfrUseCases/CAAAfrSampleCustomWindow1.htm)  
-[3] | [Describing State Dialog Commands Using UML](../CAADegTechArticles/CAADegUMLDescription.htm)  
-[4] | [The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.htm)  
-[5] | [Implementing the Command Statechart Diagram](../CAADegTechArticles/CAADegGraph.htm)  
-[6] | [Understanding the Application Frame Layout](../CAAAfrTechArticles/CAAAfrLayoutV5.htm)  
-[7] | [Associating a Dialog Box with a State](CAADegSampleDialogWithPanelState.htm)  
-[8] | [The Send/Receive Communication Protocol](../CAASysTechArticles/CAASysSendReceive.htm)  
-[9] | [The CAA Command Model ](../CAADegTechArticles/CAADegCommandModel.htm)  
+[2] | [Creating a Document's Window -1](../CAAAfrUseCases/CAAAfrSampleCustomWindow1.md)  
+[3] | [Describing State Dialog Commands Using UML](../CAADegTechArticles/CAADegUMLDescription.md)  
+[4] | [The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)  
+[5] | [Implementing the Command Statechart Diagram](../CAADegTechArticles/CAADegGraph.md)  
+[6] | [Understanding the Application Frame Layout](../CAAAfrTechArticles/CAAAfrLayoutV5.md)  
+[7] | [Associating a Dialog Box with a State](CAADegSampleDialogWithPanelState.md)  
+[8] | [The Send/Receive Communication Protocol](../CAASysTechArticles/CAASysSendReceive.md)  
+[9] | [The CAA Command Model ](../CAADegTechArticles/CAADegCommandModel.md)  
 [Top]  
   
 * * *

@@ -3,7 +3,7 @@ title: "Achieving a Given Continuity along a Wire"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CATICGMTopCleanCrvOperator", "CAAGMModelGemBrowser", "CATICGMTopWire", "CAAGMOperatorsCleanCrv", "CAAAdtCleanCrv"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcAdtCleanCurve.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCleanCurve.md"
 converted: "2026-05-11T17:33:48.844279"
 ---
 
@@ -36,7 +36,7 @@ Cell reduction requested
 Criteria to be met on priority is deformation  
 Maximum deformation of 0.2 specified.
     * Runs the CATICGMTopCleanCrvOperator and retrieve the resulting body.
-**Note** : This article only focuses on the operations related to the CATICGMTopCleanCrvOperator operator. Refer to "Overview of the Topological Operators" [3] for more information on the operations which are not detailed in the article. How to Launch CAAGMOperatorsCleanCrv To launch CAAGMOperatorsCleanCrv, you will need to set up the build time environment, then compile CAAGMOperatorsCleanCrv .m, set up the run time environment, and then execute the use case [2]. If you simply type CAAGMOperatorsCleanCrv with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example:  CAAGMOperatorsCleanCrv `e:\G2Wire.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsCleanCrv Code The CAAGMOperatorsCleanCrv use case is made of a main named CAAAdtCleanCrv.cpp located in the CAAGMOperatorsCleanCrv .m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsCleanCrv.m\` where `InstallRootFolder` [2] is the folder where the API CD-ROM is installed. Step-by-Step The use case is divided into the following main steps:
+**Note** : This article only focuses on the operations related to the CATICGMTopCleanCrvOperator operator. Refer to "Overview of the Topological Operators" [3] for more information on the operations which are not detailed in the article. How to Launch CAAGMOperatorsCleanCrv To launch CAAGMOperatorsCleanCrv, you will need to set up the build time environment, then compile CAAGMOperatorsCleanCrv .m, set up the run time environment, and then execute the use case [2]. If you simply type CAAGMOperatorsCleanCrv with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example:  CAAGMOperatorsCleanCrv `e/G2Wire.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsCleanCrv Code The CAAGMOperatorsCleanCrv use case is made of a main named CAAAdtCleanCrv.cpp located in the CAAGMOperatorsCleanCrv .m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsCleanCrv.m\` where `InstallRootFolder` [2] is the folder where the API CD-ROM is installed. Step-by-Step The use case is divided into the following main steps:
     * Creating the Curves Making up the Wire
     * Creating the Wire to Be Corrected
     * Creating a CATICGMTopCleanCrvOperator Operator Instance
@@ -108,8 +108,8 @@ The second derivative is always null at the vertex location, in other words ther
 The resulting curve is corrected and the cell reduction is also achieved.  
 ![Resulting Curve](images/CAACgmAdtcleancrv3.gif)  
 But after a "Porcupine" operation, the resulting body exhibits some abrupt changes in the second derivative. The resulting curve exhibits local irregularities. Using the CATICGMTopCleanCrvOperator operator requires a fine tuning of the parameters. Being G2 at all price does not mean that the quality of the resulting curve suits your application needs. The operator is best fit to work with a slight or moderate tangency angle threshold, that way you may reduce not all the vertices but obtain a better quality on the reduced portion.
-In Short The CATICGMTopCleanCrvOperator operator attempts to achieve a given geometric continuity along a wire. The cell reduction is a process whereby the topology is simplified whenever the G2 continuity is achieved at a vertex. CATICGMTopCleanCrvOperator is not really a smoothing operator, depending on the parameters specified, the resulting curve may exhibit bulges at inflexions. References [1] |  [Overview of the Topological Operators](CAACgmUcTopOverview.htm)  
+In Short The CATICGMTopCleanCrvOperator operator attempts to achieve a given geometric continuity along a wire. The cell reduction is a process whereby the topology is simplified whenever the G2 continuity is achieved at a vertex. CATICGMTopCleanCrvOperator is not really a smoothing operator, depending on the parameters specified, the resulting curve may exhibit bulges at inflexions. References [1] |  [Overview of the Topological Operators](CAACgmUcTopOverview.md)  
 ---|---  
-[2] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[2] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 History Version: **1** [Feb 2002] | Document created  
 ---|---

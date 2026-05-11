@@ -1,9 +1,9 @@
 ---
 title: "Auditing CAA Code on ProtectedInterfaces Usage"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChanges"
 tags: ["CAABlobUIIC", "CAABlob", "CATINamingPart", "CAABlobBlobize", "CAAProtectedChecker", "CAACheckPro", "CAABlobUI", "CAABlobBlobizer"]
-source_file: "Doc\online\CAACenAPIChanges\CAACenHowToAuditProtectedUsage.htm"
+source_file: "Doc/online/CAACenAPIChanges/CAACenHowToAuditProtectedUsage.md"
 converted: "2026-05-11T17:33:50.063318"
 ---
 
@@ -13,7 +13,7 @@ Technical Article
   
 * * *
 
-Abstract Your CAA application might use headers coming from the ProtectedInterfaces folders of the frameworks installed from the previous releases of CAA CD-ROMS. Refer to [ CAA V5 Authorized API Identification, Usage, Deprecation, and Stability](../CAADocTechArticles/CAADocLxUsageRules.htm) to understand why you shoud get rind of ProtetedInterfaces in your CAA applications. This article describes a procedure allowing you to effectively check such header usage in your CAA application. This procedure uses a tool that is only available on Windows.
+Abstract Your CAA application might use headers coming from the ProtectedInterfaces folders of the frameworks installed from the previous releases of CAA CD-ROMS. Refer to [ CAA V5 Authorized API Identification, Usage, Deprecation, and Stability](../CAADocTechArticles/CAADocLxUsageRules.md) to understand why you shoud get rind of ProtetedInterfaces in your CAA applications. This article describes a procedure allowing you to effectively check such header usage in your CAA application. This procedure uses a tool that is only available on Windows.
       * **Launching the Audit Procedure**
       * **Analyzing the Resulting Trace**
       * **Cleaning-up the Application**
@@ -37,7 +37,7 @@ You can also use an existing workspace. No source will be modified. A few files 
             E:> **< mkmk_install>**\intel_a\code\command\tck_init
             E:> tck_profile **TCK**
             E:> cd myWorkspace
-            E:\myWorkspace> mkGetPreq -p ...  
+            E/myWorkspace> mkGetPreq -p ...  
   
 ---  
 Where:
@@ -54,7 +54,7 @@ Where:
         * Generates a trace file called **trace_CAACheckPro.out** in the workspace root directory
 To run CAACheckPro, type:
     
-    E:\myWorkspace> CAACheckPro  
+    E/myWorkspace> CAACheckPro  
   
 ---  
 [Top] Analyzing the Resulting Trace The trace file is divided into the following parts.
@@ -66,10 +66,9 @@ To run CAACheckPro, type:
   
 ---  
       * Compilation errors issued by this first step must be ignored. Then starts the detection of included ProtectedInterfaces headers
-            
-            # Analyzing framework named: E:\mkClos4\.\CAABlobUI
-            #  NEW Identity card path name: E:\mkClos4\.\CAABlobUI\IdentityCard\IdentityCard.mk
-            #  Loading dependencies databases named: E:\mkClos4\.\CAABlobUI\IdentityCard/Objects/iintel_a/Xref/Dependencies.mkXDB ...
+            # Analyzing framework named: E/mkClos4\.\CAABlobUI
+            #  NEW Identity card path name: E/mkClos4\.\CAABlobUI\IdentityCard\IdentityCard.mk
+            #  Loading dependencies databases named: E/mkClos4\.\CAABlobUI\IdentityCard/Objects/iintel_a/Xref/Dependencies.mkXDB ...
             #   Analyzing dependencies ...
             # +  New direct prerequisite to DummyFW level Public added
             # +  New direct prerequisite to SpecialAPI level Public added
@@ -81,11 +80,10 @@ To run CAACheckPro, type:
 All the headers listed are the CAA ProtectedInterfaces files **recursively** included by the application, meaning that they may either be directly included by the application headers or included by a CAA Protectednterfaces header included by the application.  
  
       * After detection of such headers, a second build starts with the created IdentityCard files that turn the prerequisites to Dassault Systmes' frameworks to Public
-            
             ## start step: CIbuild   at 10/11/2004-14:28:53
             #make: CAABlobUI intel_a\code\productIC\CAABlobUIIC.script
             Redefinition line(54) :  AddPrereqComponent("SpecialAPI",Public,NotExported)
-            Script Error >>> file: E:\mkClos4\BlobUI\IdentityCard\IdentityCard.mk line: 0 compilation failed <<<  
+            Script Error >>> file: E/mkClos4\BlobUI\IdentityCard\IdentityCard.mk line: 0 compilation failed <<<  
   
 ---  
       * Those IdentityCard compilation errors can be ignored. Then, whenever a ProtectedInterfaces header is **directly** included in the application, the following message appears: 
@@ -96,8 +94,8 @@ All the headers listed are the CAA ProtectedInterfaces files **recursively** inc
 ---  
       * And if this file is actually needed to compile, you will have related compilation errors: 
             
-            **E:\mkClos4\.\CAABlobUI\CAABlobBlobizer.m\src\CAABlobBlobize.cpp(16) : error C2653: 'CATMfAlgoConfigServices' : is not a class or namespace name
-            E:\mkClos4\.\CAABlob\CAABlobBlobizer.m\src\CAABlobBlobize.cpp(17) : error C2065: 'CreateConfigurationData' : undeclared identifier**  
+            **E/mkClos4\.\CAABlobUI\CAABlobBlobizer.m\src\CAABlobBlobize.cpp(16) : error C2653: 'CATMfAlgoConfigServices' : is not a class or namespace name
+            E/mkClos4\.\CAABlob\CAABlobBlobizer.m\src\CAABlobBlobize.cpp(17) : error C2065: 'CreateConfigurationData' : undeclared identifier**  
   
 ---  
 **Notes** :
@@ -108,22 +106,22 @@ All the headers listed are the CAA ProtectedInterfaces files **recursively** inc
 `INCLUDEPRO` messages that are not followed by a compilation error denote unused include files. Remove them from the corresponding sources.  
  
       2. **Replace headers with CAA V5R15 Authorized APIs whenever possible** For each remaining compilation error, check:
-         1. Whether the error comes from an API change (refer to the [C++ APIs Changes](CAACenAPIChangeDetail.htm)) or is deprecated and now removed (refer to the current  Deprecated Index, and refer also to the Deprecated Indexes of the previous releases you may have online, or through the  CAA Internet Site) to know how to replace that header in error
-         2. Whether the interfaces, classes, or functions in error could be replaced with one of those listed in [ CAA Authorized APIs Replacing ProtectedInterfaces](CAACenAuditReplacingAPIs.htm)
+         1. Whether the error comes from an API change (refer to the [C++ APIs Changes](CAACenAPIChangeDetail.md)) or is deprecated and now removed (refer to the current  Deprecated Index, and refer also to the Deprecated Indexes of the previous releases you may have online, or through the  CAA Internet Site) to know how to replace that header in error
+         2. Whether the interfaces, classes, or functions in error could be replaced with one of those listed in [ CAA Authorized APIs Replacing ProtectedInterfaces](CAACenAuditReplacingAPIs.md)
          3. If an equivalent can be found in the C++ API Reference.  
  
       3. **Report the actual ProtectedInterfaces header usage  
 **Report the remaining problems through the local support that will execute the appropriate "cleaning" support process.
 **Note:** When you have corrected some or all of the errors, you may want to check your corrections. Before rebuilding your CAA application in the workspace used above, to temporarily get rid of the modifications brought by the **CAACheckPro.bat** utility, set the following variables:
     
-    E:\myWorkspace> set MKMK_EXPNOINDIRECT=yes
-    E:\myWorkspace> set MKMK_IDCARDEXTEND=.mk
+    E/myWorkspace> set MKMK_EXPNOINDIRECT=yes
+    E/myWorkspace> set MKMK_IDCARDEXTEND=.mk
 
 Then rebuild your CAA application. To resume checking for PortectedInterfaces headers usage, run again the **CAACheckPro.bat** utility. [Top]
 
 * * *
 
-References [1] |  [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] |  [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
 [2] |  CAA Internet Site  
 [Top]  

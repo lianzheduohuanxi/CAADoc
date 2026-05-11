@@ -3,7 +3,7 @@ title: "Topological Journal: Creation and Validation (2)"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMCheckForPart", "CAAGMOperatorsInterfaces", "CAAGMOperatorsCheckGnOK", "CAAGMTopDumpJournal", "CAATopCheckNoCopy", "CAAAddInputBody", "CAACheck"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcJournalChecking2.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcJournalChecking2.md"
 converted: "2026-05-11T17:33:48.974055"
 ---
 
@@ -15,7 +15,7 @@ Abstract If you create your own operator, you have generally to create also the 
     * Use Case Description
     * References  
 ---  
-Operator to be Used To check the validity of a topological journal, you can use the CAAGMCheckForPart operator in CAAGMOperatorsInterfaces.edu/PublicInterfaces. There is no creation function, the operator has to be created by using the provided constructor. Use Case Description The CAAGMOperatorsCheckGnOK.m module in CAAGMOperatorsInterfaces.edu creates a new journal which is valid. This use case creates its input topological data. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm). Note: Unlike most Geometric Modeler use cases, CAAGMOperatorsCheckGnOK is to be launched with three arguments:  `CAAGMOperatorsCheckGnOK outputfile.NCGM verdictFile.NCGM DetailedErrorFile.NCGM` With the input and output cells below: Fig.1 Journal Checking: Boolean Intersection ![Journal Checking: Boolean Operation](images/CGM_journal_checking_2.png) |  ![Journal Checking: Boolean Result](images/CGM_journal_checking_3.png)  
+Operator to be Used To check the validity of a topological journal, you can use the CAAGMCheckForPart operator in CAAGMOperatorsInterfaces.edu/PublicInterfaces. There is no creation function, the operator has to be created by using the provided constructor. Use Case Description The CAAGMOperatorsCheckGnOK.m module in CAAGMOperatorsInterfaces.edu creates a new journal which is valid. This use case creates its input topological data. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md). Note: Unlike most Geometric Modeler use cases, CAAGMOperatorsCheckGnOK is to be launched with three arguments:  `CAAGMOperatorsCheckGnOK outputfile.NCGM verdictFile.NCGM DetailedErrorFile.NCGM` With the input and output cells below: Fig.1 Journal Checking: Boolean Intersection ![Journal Checking: Boolean Operation](images/CGM_journal_checking_2.png) 
 ---|---  
 Input Bodies |  Output Solid  
 and the code below:
@@ -67,7 +67,7 @@ The code below:
       
   
 ---  
-checks the created journal and generates two output .htm files containing information on the journal.  **Step 1 -** Open the first file, you can read something like this. The journal is valid: 
+checks the created journal and generates two output .md files containing information on the journal.  **Step 1 -** Open the first file, you can read something like this. The journal is valid: 
     
     (1) - Mandatory Checking that all cells in result body can be traced back OK 
     (2) - Checking that all reported cells are of CATFace/CATEdge/CATVertex type OK
@@ -76,7 +76,7 @@ checks the created journal and generates two output .htm files containing inform
     TOPOLOGICAL JOURNAL FOR FEATURE MyFeature OK 
     
 
-The journal is valid. However, rule (3) is not fulfilled because Edge_257 is not to be reported (it is not a bording cell).  **Step 2 -** Open the second .htm file for more information. You can read something like this:
+The journal is valid. However, rule (3) is not fulfilled because Edge_257 is not to be reported (it is not a bording cell).  **Step 2 -** Open the second .md file for more information. You can read something like this:
     
     * 
     
@@ -93,14 +93,14 @@ The journal is valid. However, rule (3) is not fulfilled because Edge_257 is not
     
     
 
-References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)  
-[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)  
-[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.htm)  
-[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.htm)  
-[6] |  [Topological Journal: Principles](CAACgmTaTopJournal.htm)  
-[7] |  [Topological Journal: Methodology](CAACgmTaTopJournalMethodology.htm)  
-[8] |  [Using the Topological Journal](CAACgmUcTopJournal.htm)  
+[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)  
+[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)  
+[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.md)  
+[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.md)  
+[6] |  [Topological Journal: Principles](CAACgmTaTopJournal.md)  
+[7] |  [Topological Journal: Methodology](CAACgmTaTopJournalMethodology.md)  
+[8] |  [Using the Topological Journal](CAACgmUcTopJournal.md)  
 History Version: **1** [Sept 2011] | Document created  
 ---|---

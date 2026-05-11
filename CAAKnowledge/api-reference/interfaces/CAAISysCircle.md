@@ -2,57 +2,38 @@
 title: "CAAISysCircle"
 type: "interface"
 module: "CAASystem"
+category: "framework"
 base: "CATBaseUnknown"
+inheritance_chain: "CAAISysCircle → CATBaseUnknown"
 method_count: 6
 visibility: "public"
+has_tie_binding: true
 verified: true
 ---
+> **TIE实现**: unknown
 
 # CAAISysCircle
 
 **基类**: CATBaseUnknown  
+**继承链**: CAAISysCircle → CATBaseUnknown  
 **模块**: CAASystem  
+**分类**: framework  
 **可见性**: public  
 **方法数**: 6
 
 > Mathematics framework
 
-## 方法列表
-
-### SetCenter
-```cpp
-HRESULT SetCenter(const CATMathPoint & iCenter);
-```
-
-### GetCenter
-```cpp
-HRESULT GetCenter(CATMathPoint & oCenter) const;
-```
-
-### SetRadius
-```cpp
-HRESULT SetRadius(const float iRadius);
-```
-
-### GetRadius
-```cpp
-HRESULT GetRadius(float & oRadius) const;
-```
-
-### SetPlanar
-```cpp
-HRESULT SetPlanar(const CATMathVector & iNormal , 
-		                           const CATMathVector & iAxis);
-```
-
-### GetPlanar
-```cpp
-HRESULT GetPlanar(CATMathVector & oNormal ,
-		                           CATMathVector & oAxis) const;
-```
-
 ## 依赖
 
 - `CATBaseUnknown.h`
 - `CAASysGeoModelInf.h`
+
+## TIE实现
+
+**实现文件**:
+- `CAAISysAccess.cpp`
+- `CAAISysCircle.cpp`
+- `CAAISysCircleCenterProperties.cpp`
+- `CAAISysCollection.cpp`
+- `CAAISysColorProperties.cpp`
 

@@ -1,22 +1,20 @@
 ---
 title: "Detail Of C++ API Changes"
-category: "general"
+category: "api-changes"
 module: "CAACenAPIChangesR19"
+version: "V5R19"
 tags: ["CAA2Usage", "CAA2Level"]
-source_file: "Doc\online\CAACenAPIChangesR19\CAACenAPIChangeDetail.htm"
+source_file: "Doc/online/CAACenAPIChangesR19/CAACenAPIChangeDetail.md"
 converted: "2026-05-11T17:33:51.534157"
 ---
 
 | 
-
 # 
 
 | 
-
 ## 
 
 | 
-
 ### Detail Of V5R19 C++ API Changes
 
 _What changes in the API compared with CAA V5R18_  
@@ -24,7 +22,6 @@ _What changes in the API compared with CAA V5R18_
 Technical Article  
   
 * * *
-
 ### Abstract
 
 This article presents by frameworks the detail of CAA C++ resources modified in V5R19 and how to modify your code accordingly. Each modification is listed for a resource (file, class, method) with a classification. They will generally be detected by a recompilation of the code. Most of the time, signature modifications are obvious. Check in the framework detail how to replace deleted entities. Possibly impacting modifications are highlighted in red.  
@@ -45,24 +42,22 @@ MINMV | Method is no more virtual. If occurs on a U1 class, may require modifica
   
 * * *
 
-CATArrangementInterfaces | [R19GA vs R18GA](DNBManufacturingLayoutItf.htm) |   
+CATArrangementInterfaces | [R19GA vs R18GA](DNBManufacturingLayoutItf.md) |   
 ---|---|---  
-CATHullConceptualInterfaces | [R19GA vs R18GA](CATHullConceptualInterfaces.htm) |   
-CATxPDMInterfaces | [R19GA vs R18GA](CATPDMBaseInterfaces.htm) |   
-VisualizationBase | [R19GA vs R18GA](VisualizationBase.htm) |   
+CATHullConceptualInterfaces | [R19GA vs R18GA](CATHullConceptualInterfaces.md) |   
+CATxPDMInterfaces | [R19GA vs R18GA](CATPDMBaseInterfaces.md) |   
+VisualizationBase | [R19GA vs R18GA](VisualizationBase.md) |   
   
 * * *
-
 ### References
 
 [1] | [Migration to CATBoolean](../CAACenQuickRefs/CAACenWhatsNew.htm#CATBoolean)  
 ---|---  
-[2] | [Details Of V5R18 API Changes](../CAACenAPIChangesR18/CAACenAPIChangeDetail.htm)  
+[2] | [Details Of V5R18 API Changes](../CAACenAPIChangesR18/CAACenAPIChangeDetail.md)  
   |    
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Mar 2002] | Document created  

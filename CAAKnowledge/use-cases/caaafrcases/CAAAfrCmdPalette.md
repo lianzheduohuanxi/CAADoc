@@ -3,18 +3,15 @@ title: "Creating a Command with Options in the "Tools Palette" Toolbar"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CAADegTwoPointsBoxUncheckHdr", "CAADegGeoCommands", "CAADegOriginBoxHdr", "CAADegTwoPointsBoxCheckHdr", "CAADialogEngine", "CATIAfrPaletteOptions", "CAAAfrViewerFeedbackHdr", "CAASysCuboid", "CAADegBoxCreationChoiceNotification", "CAADegFourPointsBoxHdr", "CAAGeometry", "CAADegBoxPaletteChoiceCmd", "CAADegCreateBoxPaletteHeader", "CAADegTwoPointsBoxHdr", "CAADegThreePointsBoxHdr", "CAADegCreateBoxCmd", "CATIAfrCmdPaletteOptions"]
-source_file: "Doc\online\CAAAfrUseCases\CAAAfrCmdPalette.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrCmdPalette.md"
 converted: "2026-05-11T17:17:55.606549"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## User Interface - Frame
 
 | 
-
 ### Creating a Command with Options in the "Tools Palette" Toolbar
 
 How to implement CATIAfrCmdPaletteOptions and define options  
@@ -22,7 +19,6 @@ How to implement CATIAfrCmdPaletteOptions and define options
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how a state command can add "options" in a special toolbar during the life of the command. This special toolbar is named the "Tools Palette" and "options" are command headers. The definition and the usage of options are also explained. 
@@ -36,38 +32,28 @@ This article shows how a state command can add "options" in a special toolbar du
   * **In Short**
   * **References**
 
-
-
 * * *
-
 ### What You Will Learn With This Use Case
 
 The Tools Palette is a special toolbar which updates dynamically when:
 
   * Entering a workbench - The workbench implements the _CATIAfrPaletteOptions_ interface. [10] 
 
-
-
 > Command headers are added in the Palette once the workbench is activated, and they are removed from the toolbar after the workbench deactivation.
 
   * Executing a shared/exclusive command - The command implements the _CATIAfrCmdPaletteOptions_ interface. 
-
-
 
 > Command headers may be added when the command is activated and they are removed when the command is canceled. For a state command, there is also the possibility to add command headers for a specific state, they are removed when the state is left. When the command is deactivated, the command headers become unavailable. 
 
 This use case is intended to show you how to implement _CATIAfrCmdPaletteOptions_  and how to create options using the _CATAfrCheckHeaderAccessor_ class. 
 
-
 [Top]
-
 ### The CAADegCreateBoxCmd Use Case
 
 CAADegCreateBoxCmd is a use case of the CAADialogEngine.edu framework that illustrates ApplicationFrame framework capabilities. [Top]
-
 #### What Does CAADegCreateBoxCmd Do
 
-CAADegCreateBoxCmd is a state command to create a box. This command is defined in the CAA V5: Geometrical Creation workbench of the CAAGeometry document [1].  A box is defined by three dimensions: the width (W), the depth (D), and the height (H). The CAADegCreateBoxCmd command gives to the end user the possibility to define three kinds of boxes:                Fig.1 - left                     Fig.1 - center                Fig.1 - right | ![](images/CAACreateBoxThreeBoxes.jpg)  
+CAADegCreateBoxCmd is a state command to create a box. This command is defined in the CAA V5: Geometrical Creation workbench of the CAAGeometry document [1].  A box is defined by three dimensions: the width (W), the depth (D), and the height (H). The CAADegCreateBoxCmd command gives to the end user the possibility to define three kinds of boxes:                Fig.1 - left                     Fig.1 - center                Fig.1 - right 
 ---  
   
   * P1, the first selected point, defines a point of reference. 
@@ -82,9 +68,6 @@ If the end user finishes the command, the box is a parallelepiped where the dept
   * By indicating a forth point (P4), the distance between P3 and P4 defines the height .  
 
 The three dimensions of the box are different, it is a parallelepiped. Fig-1 right
-
-
-
 
 The choice between these three kinds of boxes is possible thanks to options set in the Palette. This palette is the "Tools Palette" toolbar. The picture below shows this toolbar and icons added by the state command:
 
@@ -101,7 +84,6 @@ These three icons are not always in the palette, it depends on the current state
   * Once P3 is indicated, the three icons disappear. The end user will create a "real" parallelepiped. 
 
   
----|---  
 ![](images/CAACreateBoxPaletteWithCircle.jpg)  
 ![](images/CAACreateBoxSwitchOrigin.jpg) is already present during the life of the command. 
 
@@ -116,10 +98,9 @@ Fig.3 ![](images/CAACreateBoxUML.jpg)
 ---  
   
 [Top]
-
 #### How to Launch CAADegCreateBoxCmd
 
-See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.htm)" use case for a detailed description of how this use case should be launched. 
+See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched. 
 
 Then, in the window where you run the mkrun command, do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following:
 
@@ -146,10 +127,7 @@ Then, in the window where you run the mkrun command, do not type the module name
     * indicate a point to define the depth
     * indicate a point to define the height
 
-
-
 [Top]
-
 #### Where to Find the CAADegCreateBoxCmd Code
 
 The CAADegCreateBoxCmd use case is made of several classes located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework:
@@ -166,7 +144,6 @@ The three icons (![](images/CAACreateBoxSwitchAgentCube.jpg),![](images/CAACreat
 
 It is a notification sent by the previous _CATCommand_ to inform the _CAADegCreateBoxCmd_   class that a check button has been pushed. The notification contains the number of the selected check button. 
 
-
 Windows | `InstallRootDirectory\CAADialogEngine.edu\CAADegGeoCommands.m\`  
 ---|---  
 Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`  
@@ -174,7 +151,6 @@ Unix | `InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are four logical steps in CAADegCreateBoxCmd:
@@ -184,18 +160,13 @@ There are four logical steps in CAADegCreateBoxCmd:
   3. Implementing the CATIAfrCmdPaletteOptions Interface
   4. Using Options
 
-
-
 [Top]
-
 #### Defining the CAADegCreateBoxCmd class
 
 The CAADegCreateBoxCmd class is a state command.
 
   1. Defining the CAADegCreateBoxCmd.h 
   2. Defining the CAADegCreateBoxCmd.cpp
-
-
 
  
 
@@ -273,7 +244,6 @@ The beginning of the source file is such as:
     **CATImplementClass**(CAADegCreateBoxCmd, Implementation,CATStateCommand, CATNull);
     
     ...
-    
     #include "CATCreateExternalObject.h"
     **CATCreateClass**(CAADegCreateBoxCmd);
     
@@ -284,10 +254,7 @@ The beginning of the source file is such as:
      * The `CATImplementClass` macro declares that the _CAADegCreateBoxCmd_ class is a component main class thanks the `Implementation` keyword, and OM-derives [5] from _CATStateCommand_. 
      * The `CATCreateClass` macro enables the _CATCommandHeader_ class to create an instance of the command by its name.
 
-
-
 [Top]
-
 #### Defining Options
 
 Options are command header instances set in the Palette toolbar. In the constructor of the _CAADegCreateBoxCmd_  class the command headers are defined. Refer to the technical article entitled "The Command Headers"  [6] for details and warnings about command header creation.
@@ -303,9 +270,6 @@ In the Managing the exclusivity between the three icons section, you will find e
   * Option to locate the newly box
 
 This option uses only one check header instance: `CAADegOriginBoxHdr`
-
-
-
 
 In these two cases, the command header is a check header  A check header being a non-exposed class, the _CATAfrCheckHeaderAccessor_ class encapsulates its creation and its access. The _CATAfrCheckHeaderAccessor_ class constructor creates a check header instance only if the instance does not already exist in the command header list associated with the current editor [6]. Consequently you can create as many _CATAfrCheckHeaderAccessor_ class instances as you want, the methods of this class are redirected on the unique check header instance of the current editor. 
 
@@ -371,9 +335,6 @@ The first argument, `TRUE`, specify that the `CAADegTwoPointsBoxHdr` check heade
 
 You can note that this initialization is done only for the first creation. When the command is re-launched, the check header already exists and it has kept the previous state. 
 
-
-
-
 **Option to locate the newly box**
     
     
@@ -430,8 +391,6 @@ When an icon (![](images/CAACreateBoxSwitchAgentCube.jpg),![](images/CAACreateBo
     * Any method will be called after the class construction (avoid public methods to ensure this point), **AND  **
     * The `RequestDelayedDestruction` is the last instruction.
 
-
-
 In the `BuildGraph` method of the _CAADegCreateBoxCmd_ command, a callback method has been declared to be inform when a `CAADegBoxCreationChoiceNotification` class notification is sent. 
     
     
@@ -447,8 +406,6 @@ In the `BuildGraph` method of the _CAADegCreateBoxCmd_ command, a callback metho
   * `CAADegBoxCreationChoiceNotification`: The notification class name
   * `BoxCreationChoiceChange`: the callback method 
   * `NULL`: no argument for the callback method
-
-
 
 The `BoxCreationChoiceChange` method unchecks the two other check buttons.
     
@@ -489,7 +446,6 @@ The `BoxCreationChoiceChange` method unchecks the two other check buttons.
 `GetChoice` retrieves the last activated check button.  `_CurrentBoxCreationTypeChoice,` a data member, keeps the current activated check button. See its usage in the Using Options- Define the way to create a box section.
 
 [Top]
-
 #### Implementing the CATIAfrCmdPaletteOptions Interface
 
 The _CAADegCreateBoxCmd_ class states that it implements the _CATIAfrCmdPaletteOptions_ interface thanks to the `TIE_CATIAfrCmdPaletteOptions` macro.
@@ -506,8 +462,6 @@ This interface has two methods:
 
   1. GetPaletteOptions
   2. GetPaletteStateOptions
-
-
 
  
 
@@ -618,19 +572,13 @@ Here is the code to process the state whose the identifier is `stWidthPoint`Id:
 
 In this state, all the possibilities to create the box are valid. The `CAADegTwoPointsBoxHdr`, `CAADegThreePointsBoxHdr`, and` CAADegFourPointsBoxHdr` command header instances are check headers to specify if the newly box should be created with two, three or four points respectively. Refer to the Defining Options section for details about the header creations.
 
-
-
-
 [Top]
-
 #### Using Options
 
 The state command has defined two options:
 
   * To locate the newly box,
   * To define the way to create a box.
-
-
 
 These two options are used in different parts of the command.
 
@@ -731,13 +679,9 @@ The `CheckChoice` method takes into the current state account, it is the last ar
 
 The `CheckChoice` method returns `TRUE` when the condition is filled otherwise `FALSE`.
 
-
-
-
 [Top]
 
 * * *
-
 ### In Short
 
 This use case has explained how to implement the _CATIAfrCmdPaletteOptions_ interface to add options in the Tools Palette toolbar. 
@@ -745,24 +689,22 @@ This use case has explained how to implement the _CATIAfrCmdPaletteOptions_ inte
 [Top]
 
 * * *
-
 ### References
 
-[1] | [The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.htm)  
+[1] | [The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)  
 ---|---  
-[2] | [Describing State Dialog Commands Using UML](../CAADegTechArticles/CAADegUMLDescription.htm)  
-[3] | [Assigning Resources to a State Dialog Command](../CAADegTechArticles/CAADegResources.htm)  
-[4] | [Implementing the Command Statechart Diagram](../CAADegTechArticles/CAADegGraph.htm)  
-[5] | [Object Modeler Inheritances](../CAASysTechArticles/CAASysOMInheritance.htm)  
-[6] | [The Command Headers](../CAAAfrTechArticles/CAAAfrCommandHeaders.htm)  
-[7] | [Creating a Check Button](CAAAfrCheckHeader.htm)  
-[8] | [Creating Resources for Command Headers](../CAAAfrTechArticles/CAAAfrI18NHeader.htm)  
-[9] | [The CAA Command Model](../CAADegTechArticles/CAADegCommandModel.htm)  
-[10] | [Using the "Tools Palette" Toolbar for a Workbench](CAAAfrSamplePaletteWkb.htm)  
+[2] | [Describing State Dialog Commands Using UML](../CAADegTechArticles/CAADegUMLDescription.md)  
+[3] | [Assigning Resources to a State Dialog Command](../CAADegTechArticles/CAADegResources.md)  
+[4] | [Implementing the Command Statechart Diagram](../CAADegTechArticles/CAADegGraph.md)  
+[5] | [Object Modeler Inheritances](../CAASysTechArticles/CAASysOMInheritance.md)  
+[6] | [The Command Headers](../CAAAfrTechArticles/CAAAfrCommandHeaders.md)  
+[7] | [Creating a Check Button](CAAAfrCheckHeader.md)  
+[8] | [Creating Resources for Command Headers](../CAAAfrTechArticles/CAAAfrI18NHeader.md)  
+[9] | [The CAA Command Model](../CAADegTechArticles/CAADegCommandModel.md)  
+[10] | [Using the "Tools Palette" Toolbar for a Workbench](CAAAfrSamplePaletteWkb.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Aug 2003] | Document created  

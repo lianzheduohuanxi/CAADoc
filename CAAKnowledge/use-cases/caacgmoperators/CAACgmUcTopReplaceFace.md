@@ -3,7 +3,7 @@ title: "Modifying the Geometry of a Face"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsFaceReplaceSurface", "CATICGMTopFaceReplaceSurface"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcTopReplaceFace.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopReplaceFace.md"
 converted: "2026-05-11T17:33:49.298443"
 ---
 
@@ -16,7 +16,7 @@ Abstract The geometry of a face, that is the surface underlying a CATFace can be
     * References  
 ---  
    
-Operator to be Used The CATICGMTopFaceReplaceSurface operator is to be used.Use Case Description The CAAGMOperatorsFaceReplaceSurface.m module in CAAGMOperatorsInterfaces.edu illustrates how to replace the geometry of a face by a new surface. This use case requires the ReplaceFace.NCGM file as input data. This file is delivered in the FunctionTests/InputData folder of CAAGMOperatorsInterfaces.edu framework.  If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm).With the input data below: Fig.1 Modify the Geometry of a Face : Input Data ![Modify the Geometry of a Face: Input Data](images/CGM_replace_face_0.png)  
+Operator to be Used The CATICGMTopFaceReplaceSurface operator is to be used.Use Case Description The CAAGMOperatorsFaceReplaceSurface.m module in CAAGMOperatorsInterfaces.edu illustrates how to replace the geometry of a face by a new surface. This use case requires the ReplaceFace.NCGM file as input data. This file is delivered in the FunctionTests/InputData folder of CAAGMOperatorsInterfaces.edu framework.  If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md).With the input data below: Fig.1 Modify the Geometry of a Face : Input Data ![Modify the Geometry of a Face: Input Data](images/CGM_replace_face_0.png)  
 ---  
 and the code below:
     
@@ -45,7 +45,6 @@ and the code below:
     	 | 
     	![Modify the Geometry of a Face: Result 2](images/CGM_replace_face_2.png)
            
-    ---|---  
     
      
     
@@ -55,33 +54,32 @@ and the code below:
     		[1]
     		| 
     		[
-    		Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)
+    		Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
     	  
-    ---|---  
     
     	
     		[2]
     		| 
-    		[About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)
+    		[About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)
     	  
     
     	
     		[3]
     		| 
-    		[How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)
+    		[How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)
     	  
     
     	
     		[4]
     		| 
-    		[Understanding Boolean Operators](CAACgmTaTopBoolean.htm)
+    		[Understanding Boolean Operators](CAACgmTaTopBoolean.md)
     	  
     
     
     
     		[5]
     		| 
-    		[Overview of Topological Operators](CAACgmUcTopOverview.htm)
+    		[Overview of Topological Operators](CAACgmUcTopOverview.md)
     	  
     
     	
@@ -92,7 +90,6 @@ and the code below:
     		Version: **1** [Oct 2011]
     		| Document created
     	  
-    ---|---  
     
     
     

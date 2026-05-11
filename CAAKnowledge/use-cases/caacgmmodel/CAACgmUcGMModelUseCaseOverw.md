@@ -3,15 +3,13 @@ title: "An Introduction to Geometric Modeler Use Cases"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CATICGMContainer", "CATICGMObject", "CAAGMModelGemBrowser"]
-source_file: "Doc\online\CAACgmModel\CAACgmUcGMModelUseCaseOverw.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelUseCaseOverw.md"
 converted: "2026-05-11T17:33:48.319640"
 ---
-
 # An Introduction to Geometric Modeler Use Cases  
   
 ---  
 Use Case  
-  
 ## Abstract
 
 This article describe the code portions which are common to most geometric modeler use cases. The purpose of use cases is to illustrate the use of CGM APIs and focus on the way to use these APIs in a geometric modeler environment. Use cases require input data which is:
@@ -23,7 +21,6 @@ This article explains how to create data from the geometry factory or retrieve s
     * Writing the Model and Closing the Factory
     * In Short  
 ---  
-  
 ## Creating Data Directly from the Geometry Factory
 
 To create data directly, you must:
@@ -45,7 +42,6 @@ To create data directly, you must:
                                                                    angleEnd);
 
 **Note** : Although geometric objects are handled by the mean of interfaces, such as `CATCartesianPoint`, `CATLine`, or `CATBody`, the pointers on these objects must not be released. In fact, they are released at the closure of the factory (the `CATCloseCGMContainer` global function).
-
 ## Retrieving Data from a Loaded NCGM Container
 
 To retrieve input data from an already existing container, you must:
@@ -78,7 +74,6 @@ To retrieve input data from an already existing container, you must:
            CATICGMObject * piCGMObj = piGeomFactory->FindObjectFromTag(curtag);
            ...
            }
-
 ## Writing the Model and Closing the Factory
 
 To save the use case result in a file, the `::CATSaveCGMContainer` global function is used. Notice that in most use cases, the save is conditioned by an input parameter representing the file inside which the model must be saved.
@@ -101,12 +96,10 @@ The use case ends with the closure of the geometry factory, done by the ` ::CATC
      // Closes the container
      //
      **::CATCloseCGMContainer**(piGeomFactory);
-
 ## In Short
 
     * In GM use cases, input data can be created by using the geometry factory APIs or by loading an NCGM container. 
     * GM use cases end by saving the result into an NCGM container and by closing the factory.
-
 ## History
 
 Version: **1** [Jan 2007] | Document created  

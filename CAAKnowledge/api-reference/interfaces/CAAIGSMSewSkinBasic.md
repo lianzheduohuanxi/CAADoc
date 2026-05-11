@@ -2,61 +2,39 @@
 title: "CAAIGSMSewSkinBasic"
 type: "interface"
 module: "CAAGSMInterfaces"
+category: "framework"
 base: "CATBaseUnknown"
+inheritance_chain: "CAAIGSMSewSkinBasic → CATBaseUnknown"
 method_count: 7
 visibility: "protected"
+has_tie_binding: true
 verified: true
 ---
+> **TIE实现**: unknown
 
 # CAAIGSMSewSkinBasic
 
 **基类**: CATBaseUnknown  
+**继承链**: CAAIGSMSewSkinBasic → CATBaseUnknown  
 **模块**: CAAGSMInterfaces  
+**分类**: framework  
 **可见性**: protected  
 **方法数**: 7
 
 > ------------------------------------------------------------------
-
-## 方法列表
-
-### SetSurfaceToSew
-```cpp
-HRESULT SetSurfaceToSew(CATISpecObject_var ispSurfaceToSew);
-```
-
-### GetSurfaceToSew
-```cpp
-HRESULT GetSurfaceToSew(CATISpecObject_var & ospSurfaceToSew);
-```
-
-### SetSurfaceSupport
-```cpp
-HRESULT SetSurfaceSupport(CATISpecObject_var  ispSupport);
-```
-
-### GetSurfaceSupport
-```cpp
-HRESULT GetSurfaceSupport(CATISpecObject_var  & ospSupport);
-```
-
-### SetOrientation
-```cpp
-HRESULT SetOrientation(CATGSMOrientation iOrientation);
-```
-
-### GetOrientation
-```cpp
-HRESULT GetOrientation(CATGSMOrientation & oOrientation);
-```
-
-### InvertOrientation
-```cpp
-HRESULT InvertOrientation();
-```
 
 ## 依赖
 
 - `CAAGsiFeaturesSplModel.h`
 - `CATGSMOrientation.h`
 - `CATBaseUnknown.h`
+
+## TIE实现
+
+**实现文件**:
+- `CAAEGSMCircleSweepTg.cpp`
+- `CAAEGSMCircleSweepTgAttrBehavior.cpp`
+- `CAAEGSMCircleSweepTgBuild.cpp`
+- `CAAEGSMCircleSweepTgMf3DBehavior.cpp`
+- `CAAEGSMCircleSweepTgReplaceUI.cpp`
 

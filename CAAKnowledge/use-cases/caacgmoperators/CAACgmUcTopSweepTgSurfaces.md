@@ -3,7 +3,7 @@ title: "Creating a Sweep from a Spine and Two Tangency Surfaces"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CATICGMTopSweepSkinSkinSegment", "CAAGMOperatorsInterfaces", "CAAGMOperatorsSweepTangentSkinSkin"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcTopSweepTgSurfaces.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopSweepTgSurfaces.md"
 converted: "2026-05-11T17:33:49.337299"
 ---
 
@@ -15,7 +15,7 @@ Abstract The profile to be swept is implicitly defined. The generated sweep is t
     * Use Case Description
     * References  
 ---  
-Operator to be Used To create a sweep tangent to two surfaces and using an implicit linear profile, use the CATICGMTopSweepSkinSkinSegment operator in GMOperatorsInterfaces. This operator has to be created by the CATCGMCreateTopSweepSkinSkinSegment global function. Use Case Description The CAAGMOperatorsSweepTangentSkinSkin.m module in CAAGMOperatorsInterfaces.edu illustrates how to create a sweep tangent to two skins. This use case creates the input data to be passed to the operator. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm). With the input data below: Fig.1 Sweep Operation: Input Data (Spine and Tangency Surfaces) ![Sweep: Tangent to Two Surfaces - Implicit Profile](images/CGM_sweep_skinskin_0.png)  
+Operator to be Used To create a sweep tangent to two surfaces and using an implicit linear profile, use the CATICGMTopSweepSkinSkinSegment operator in GMOperatorsInterfaces. This operator has to be created by the CATCGMCreateTopSweepSkinSkinSegment global function. Use Case Description The CAAGMOperatorsSweepTangentSkinSkin.m module in CAAGMOperatorsInterfaces.edu illustrates how to create a sweep tangent to two skins. This use case creates the input data to be passed to the operator. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md). With the input data below: Fig.1 Sweep Operation: Input Data (Spine and Tangency Surfaces) ![Sweep: Tangent to Two Surfaces - Implicit Profile](images/CGM_sweep_skinskin_0.png)  
 ---  
 and the code below:
     
@@ -62,13 +62,13 @@ and the code below:
       
   
 ---  
-you get this result: Fig.2 Result of Sweep Operation: Spine and Two Tangency Surfaces  ![Sweep Operation: Tangency Surfaces Result1 ](images/CGM_sweep_skinskin_1.png) |  ![Sweep Operation Spine and Tangency Surfaces: Result2](images/CGM_sweep_skinskin_2.png)  
+you get this result: Fig.2 Result of Sweep Operation: Spine and Two Tangency Surfaces  ![Sweep Operation: Tangency Surfaces Result1 ](images/CGM_sweep_skinskin_1.png) 
 ---|---  
-References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)  
-[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)  
-[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.htm)  
-[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.htm)  
+[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)  
+[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)  
+[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.md)  
+[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.md)  
 History Version: **1** [Sept 2011] | Document created  
 ---|---

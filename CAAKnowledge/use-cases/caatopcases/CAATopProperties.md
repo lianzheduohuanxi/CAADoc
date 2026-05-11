@@ -3,18 +3,15 @@ title: "Computing the Area of a CATFace and the Length of a CATEdge"
 category: "use case"
 module: "CAATopUseCases"
 tags: ["CAAGemBrowser", "CAATopologicalOperators", "CATICGMObject", "CAATopProperties"]
-source_file: "Doc\online\CAATopUseCases\CAATopProperties.htm"
+source_file: "Doc/online/CAATopUseCases/CAATopProperties.md"
 converted: "2026-05-11T17:31:50.757850"
 ---
-
 # Geometric Modeler
 
 | 
-
 ## Topology
 
 | 
-
 ### Computing the Area of a CATFace and the Length of a CATEdge
 
 _How to calculate the area of a face and the length of an edge_  
@@ -22,7 +19,6 @@ _How to calculate the area of a face and the length of an edge_
 Use Case  
   
 * * *
-
 ### Abstract
 
 The CATDynMassProperties3D class provides services whereby you can calculate the properties of a body as well as the properties of the cells making up the body. This use case explains how to calculate the area of a CATFace along with the length of a CATEdge
@@ -40,19 +36,16 @@ The CATDynMassProperties3D class provides services whereby you can calculate the
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 In this use case, you learn how to compute the area of a face as well as the length of an edge. 
 
 [Top]
-
 ### The CAATopProperties Use Case
 
 CAATopProperties is a use case of the CAATopologicalOperators.edu framework that illustrates TopologicalOperators framework capabilities.
 
 [Top]
-
 #### What Does CAATopProperties Do?
 
 This use case:
@@ -63,17 +56,14 @@ This use case:
   4. computes the length of each edge
   5. writes the model and closes the container.
 
-
-
 [Top]
-
 #### How to Launch CAATopProperties
 
 To launch CAATopProperties, you will need to set up the build time environment, then compile CAATopProperties.m along with its prerequisites, set up the run time environment, and then execute the use case [1].
 
 If you simply type CAATopProperties with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example:
 
-With Windows `CAATopProperties`` e:\Properties.NCGM`
+With Windows `CAATopProperties`` e/Properties.NCGM`
 
 With UNIX `CAATopProperties`` /u/Properties.NCGM`
 
@@ -82,7 +72,6 @@ This NCGM file can be displayed using the CAAGemBrowser use case.
  
 
 [Top]
-
 #### Where to Find the CAATopProperties Code
 
 The CAATopProperties use case is made of a main named CAATopProperties.cpp located in the CAATopProperties.m module of the CAATopologicalOperators.edu framework:
@@ -94,7 +83,6 @@ Unix | `InstallRootDirectory/CAATopologicalOperators.edu/CAATopProperties.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 The program: 
@@ -105,10 +93,7 @@ The program:
   4. Computes the length of each edge
   5. Writes the Model and Closes the Container
 
-
-
 [Top]
-
 #### Creating the Geometry Factory
 
 The geometry factory (CATGeoFactory) creates and manages all the `CATICGMObject` : it creates the points, curves, surfaces and bodies and remove them.
@@ -124,7 +109,6 @@ Notice that the factory can be defined by reading a NCGM file that was previousl
 ---  
   
 [Top]
-
 #### Creating a sphere
 
 The CATSolidSphere creation follows the scheme of all topological operators. You must create the operator by using the CATCreateSolidSphere global function, then run it and get the resulting body. 
@@ -145,14 +129,12 @@ The CATSolidSphere creation follows the scheme of all topological operators. You
 __
 
 [Top]
-
 #### Computing the area of a CATFace
 
 To retrieve a face area, you must:
 
   * use the CATDynCreateMassProperties3D function and pass as its argument the face whose area is to be calculated
   * apply the GetWetArea method to the returned CATDynMassProperties3D.
-
 
     
     
@@ -174,14 +156,12 @@ To retrieve a face area, you must:
 ---  
   
 [Top]
-
 #### Computing the length of a CATEdge
 
 To retrieve a face area, you must:
 
   * use the CATDynCreateMassProperties3D function and pass as its argument the edge whose length is to be calculated
   * apply the GetLength method to the returned CATDynMassProperties3D.
-
 
     
     
@@ -207,18 +187,17 @@ To retrieve a face area, you must:
 This is the length with is displayed on the standard output: 
 
 ![](images/edge21.gif)  
-Edge 3 length: 157.08 |  ![](images/edge22.gif)  
+Edge 3 length: 157.08 
 Edge 2 length: 157.08  
 ---|---  
 ![](images/edge23.gif)  
-Edge 5 length: 157.08 |  ![](images/edge24.gif)  
+Edge 5 length: 157.08 
 Edge 6 length: 157.08  
 ![](images/edge25.gif)  
-Edge 1 length: 314.159 |  ![](images/edge26.gif)  
+Edge 1 length: 314.159 
 Edge 4 length: 314.159  
   
 [Top]
-
 #### Writing the Model and Closing the Factory
 
 Before ending, we must first release the software configuration.
@@ -257,7 +236,6 @@ The use case ends with the closure of the geometry factory, done by the `::CATCl
 [Top]
 
 * * *
-
 ### In Short
 
 This use case explains how to compute the area of a face and the length of an edge by using the CATDynMassProperties3D class.
@@ -265,15 +243,13 @@ This use case explains how to compute the area of a face and the length of an ed
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Feb 2002] | Document created  

@@ -3,18 +3,15 @@ title: "Scanning an Edge Curve"
 category: "use case"
 module: "CAATobUseCases"
 tags: ["CAAEdgeCurve", "CAATopEdgeCurve", "CATICGMContainer", "CATICGMObject", "CATIntCurve", "CAATopologicalObjects"]
-source_file: "Doc\online\CAATobUseCases\CAATopEdgeCurve.htm"
+source_file: "Doc/online/CAATobUseCases/CAATopEdgeCurve.md"
 converted: "2026-05-11T17:33:45.859498"
 ---
-
 # Geometric Modeler
 
 | 
-
 ## Topology
 
 | 
-
 ###  Scanning an Edge Curve 
 
 _How to Use the CATEdgeCurveIterator Operator_  
@@ -22,7 +19,6 @@ _How to Use the CATEdgeCurveIterator Operator_
 Use Case  
   
 * * *
-
 ### Abstract
 
 Between the topology and the geometry, there are intermediate objects that are used by the geometric modeler to group objects with similar function. Such objects are created to join various pieces of geometry before covering them by topology. Given two faces with a common edge, the edge curve is the object which is built from the two Pcurves defining the common side. The CATEdge topological object is then created from this edge curve. In short, this is the way an edge (a topological object) is constructed from the geometry. In this use case,  no edge and no topology is created, this is the opposite which is done. From the topology (an edge), the underlying geometry is retrieved and analyzed.
@@ -39,11 +35,9 @@ Between the topology and the geometry, there are intermediate objects that are u
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to make you understand how an edge curve is constructed and how to use the _CATEdgeCurveIterator_ operator to scan an edge curve.
-
 ##### About the Edge Curve ?
 
 An edge curve is an aggregation of  several curves. The curves aggregated are the curves which define the boundaries of the adjacent faces. They can be of various type: CATPNurbs, CATLine or even CATEdgeCurve. Among the aggregated curves, there is one which is used as a reference to determine the orientation of the edge curve and if needed reparameterize the other curve, this is the "ref curve".      
@@ -68,19 +62,15 @@ To manipulate an edge curve, you must:
   2. if need be, retrieve the “ref curve” from an edge curve by using   CATEdgeCurve::GetRefCurve 
   3. retrieve the CATCurve making up the edge curve by using the CATEdgeCurveIterator operator.
 
-|  ![](images/pCurve.gif)  
----|---  
   
  
 
 [Top]
-
 ### The CAATopEdgeCurve Use Case
 
 CAATopEdgeCurve is a use case of the CAATopologicalObjects.edu framework that illustrates the NewTopologicalObjects framework capabilities.
 
 [Top]
-
 #### What Does CAATopEdgeCurve Do?
 
 The CAATopEdgeCurve use case:
@@ -89,22 +79,18 @@ The CAATopEdgeCurve use case:
   * retrieves the edge curve from to edge to be analyzed  and scans this edge curve
   * writes the model and closes the factory. Note that, in this use case the output model is the same as the input model. 
 
-
-
 [Top]
-
 #### How to Launch CAATopEdgeCurve
 
 To launch CAATopEdgeCurve , you will need to set up the build time environment, then compile CAATopEdgeCurve.m along with its prerequisites, set up the run time environment, and then execute the use case [1].
 
-With Windows CAATopEdgeCurve `e:\edgeCurve1.NCGM`
+With Windows CAATopEdgeCurve `e/edgeCurve1.NCGM`
 
 With UNIX  CAATopEdgeCurve `/u/``edgeCurve1.NCGM`
 
 where  ` edgeCurve1`.NCGM is an input file delivered in the CAATopologicalObjects.edu/FunctionTests/InputData file. 
 
 [Top]
-
 #### WWhere to Find the CAATopEdgeCurve Code
 
 The CAATopEdgeCurve use case is made of a main named CAAEdgeCurve.cpp located in the CAATopEdgeCurve.m module of the CAATopologicalObjects.edu framework:
@@ -116,7 +102,6 @@ Unix | `InstallRootDirectory/CAATopologicalObjects.edu/CAATopEdgeCurve.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are three main steps in CAATopEdgeCurve.cpp: 
@@ -139,7 +124,6 @@ Here is the input model. The edge to be analyzed is highlighted.
   1. retrieve the edge curve
   2. retrieve the "ref curve" from the edge curve
   3. scan the edge curve  
-
 
     
     
@@ -207,7 +191,7 @@ The edge curve which is scanned is itself made up of two edge curves. If you nee
 
 * * *
 
-References [1] |  [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] |  [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
 [Top]  
 ---  

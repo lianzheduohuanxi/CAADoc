@@ -3,18 +3,15 @@ title: "The Send/Receive Mechanism"
 category: "use case"
 module: "CAADlgUseCases"
 tags: ["CAADlgErrorNotification", "CAADlgViewScreen", "CAADlgElement", "CAADlgNotifError", "CAADlgAddNotification", "CAADlgNotifRemove", "CAADlgModel", "CATIA", "CAADlgNotifAdd", "CAADlgRemoveNotification", "CAADlgSendReceive", "CAADialog", "CAADlgContainer"]
-source_file: "Doc\online\CAADlgUseCases\CAADlgSampleSendReceive.htm"
+source_file: "Doc/online/CAADlgUseCases/CAADlgSampleSendReceive.md"
 converted: "2026-05-11T17:17:55.987209"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## Middleware Abstraction
 
 | 
-
 ### The Send/Receive Mechanism
 
 _Making commands collaborate_  
@@ -22,7 +19,6 @@ _Making commands collaborate_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to create and instantiate commands, and how notifications can be sent and received by commands. 
@@ -40,19 +36,16 @@ This article shows how to create and instantiate commands, and how notifications
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show you how the Send/Receive mechanism [1] works and how to use it in your own applications.
 
 [Top]
-
 ### The CAADlgSendReceive Case
 
 CAADlgSendReceive is a use case of the CAADialog.edu framework that illustrates CATIA System and Dialog frameworks capabilities.
 
 [Top]
-
 #### What Does CAADlgSendReceive Do
 
 This use case creates commands that build a command tree structure, create and send notifications, analyze them, and process them or ask the sending command to resend the notification above in the tree, possibly up to the command selector that resends the notification to the active command. The commands that send notifications are made of a model that has elements, such as points, lines, and so on. This model has a container as parent, and the container has the command selector as parent. The possibly active commands are a screen view and a plot view of the model and of its elements.
@@ -67,13 +60,11 @@ When an element is added to the model, the model notifies this event to its pare
 The notifications for which the container is transparent are resent by the model to the container's parent, that is the command selector. It is the higher object in the command tree structure and it receives all the unprocessed notifications. The command selector has no ability to process notifications, and it only resend the notification to the active command, that is, the command that has requested the focus, and that is the last chance for the notification to be processed. The screen view and the plot view are the two commands that may have the focus and that request it in turn.
 
 [Top]
-
 #### How to Launch CAADlgSendReceive
 
 To launch CAADlgSendReceive, you will need to set up the build time environment, then compile CAADlgSendReceive along with its prerequisites, set up the run time environment, and then execute the use case [2].
 
 [Top]
-
 #### Where to Find the CAADlgSendReceive Code
 
 The CAADlgSendReceive use case is made of a several classes located in the CAADlgSendReceive.m module of the CAADialog.edu framework:
@@ -85,11 +76,9 @@ Unix | `InstallRootDirectory/CAADialog.edu/CAADlgSendReceive.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 To create an event publisher, an event subscriber or listener, and a scenario to make them play together, there are four steps:
-
 # | Step | Where  
 ---|---|---  
 1 | Creating a Notification Class | _CAADlgNotifAdd_ class  
@@ -100,11 +89,9 @@ To create an event publisher, an event subscriber or listener, and a scenario to
 6 | Returning the Added or Removed Object | _CAADlgModel_ class  
   
 [Top]
-
 #### Creating a Notification Class
 
 The _CAADlgAddNotification_ class is taken as example.
-    
     
     #include "CATNotification.h"
     class CAADlgAddNotification: public **CATNotification**
@@ -122,7 +109,6 @@ The _CAADlgAddNotification_ class is taken as example.
   
 A notification is a CAA V5 component. Its class C++-derives from the notification base class _CATNotification_. The `CATDeclareClass` macro makes _CAADlgAddNotification_ __ part of a component. The copy constructor and the assignment operator are set as private and are not implemented to prevent the compiler to create one as public, and thus prevent from illegal copies of the notification instances.
     
-    
     #include "CAADlgAddNotification.h"
     
     CATImplementClass(CAADlgAddNotification, **Implementation** , CATBaseUnknown,CATNull);
@@ -139,7 +125,6 @@ The `CATImplementClass` macro declares that _CAADlgAddNotification_ __ is an `Im
 The _CAADlgAddNotification_ __ class constructor use `CATNotificationDeleteOn `as argument for the _CATNotification_ class constructor.` `It means that the notification will be automatically deleted by the system. [3] 
 
 [Top]
-
 #### Sending a Notification
 
 The model sends notifications whenever an element is added to it, or removed from it. Let's take the adding example.
@@ -168,7 +153,6 @@ The model sends notifications whenever an element is added to it, or removed fro
 When an element is successfully added, a _CAADlgAddNotification_ class instance is sent to the command parent thanks to the `SendNotification` method. The command parent is retrieved using the `GetFather` method of _CATCommand_. Otherwise, an error notification is sent. This is an instance of the _CAADlgErrorNotification_ class. Each instance is deleted as soon as it is sent, and its pointer is set to `NULL`.
 
 [Top]
-
 #### Filtering Notifications
     
     
@@ -191,7 +175,6 @@ When an element is successfully added, a _CAADlgAddNotification_ class instance 
 The container traps only the notifications that are instances of _CAADlgNotifError_ thanks to redefining the `AnalyseNotification` method of _CATCommand_. To do this, it simply returns `CATNotifDontTransmitToFather`, that stops the notification propagation above in the command tree structure. It processes the notification by simply printing out an error message. All other notifications are of no interest for the container, and returning `CATNotifTransmitToFather` requests the sending command to resend the notification to the container parent, namely the command selector.
 
 [Top]
-
 #### Taking the Focus
 
 The screen view command is taken as an example.
@@ -207,7 +190,6 @@ The screen view command is taken as an example.
 The `WantedFocus` method requests that the _CAADlgViewScreen_ instance be set as the active command using the `RequestStatusChange` method. `CATCommandMsgRequestSharedMode` means that the command runs in shared mode, that is it pushes on the command stack the previous active command without deleting it. This previous command will then take the focus again when the _CAADlgViewScreen_ instance will be deleted.
 
 [Top]
-
 #### Making the Active Command React to Notifications
 
 The active command also redefines the `AnalyseNotification` method. Here is the one of the screen view class.
@@ -240,7 +222,6 @@ The active command also redefines the `AnalyseNotification` method. Here is the 
 If the notification is of one of the expected types, the `SendObject` method is called to request the object that sends the notification to provide a pointer to the object that was either added or removed. `SendObject` calls the `SendCommandSpecificObject` that must be redefined by the sending command.
 
 [Top]
-
 #### Returning the Added or Removed Object
 
 Any command that sends notifications to state a model change can be asked to send a pointer to the object that changes the model. This is the role of `SendCommandSpecificObject`.
@@ -272,7 +253,6 @@ Any command that sends notifications to state a model change can be asked to sen
 [Top]
 
 * * *
-
 ### In Short
 
 The Send/Receive communication protocol enables commands to communicate using notifications that progress from one command to its parent in the command tree structure. A command can send notifications, and can analyze notifications to decide whether to be transparent for, or to receive them, depending on their types. If a notification reaches the command selector at the top of the command tree structure, it is sent to the active command, that is, the one that has the focus. This command in turn analyzes the notification, and can ask the sending command to send the model object for which the notification was sent.
@@ -280,17 +260,15 @@ The Send/Receive communication protocol enables commands to communicate using no
 [Top]
 
 * * *
-
 ### References
 
-[1] | [The Send/Receive Communication Protocol](../CAASysTechArticles/CAASysSendReceive.htm)  
+[1] | [The Send/Receive Communication Protocol](../CAASysTechArticles/CAASysSendReceive.md)  
 ---|---  
-[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-[3] | [Callback versus Send/Receive Mechanism](../CAASysTechArticles/CAASysCallbackversusSendReceive.htm)  
+[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[3] | [Callback versus Send/Receive Mechanism](../CAASysTechArticles/CAASysCallbackversusSendReceive.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [May 2000] | Document created  

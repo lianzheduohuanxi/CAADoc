@@ -1,9 +1,10 @@
 ---
 title: "Detail Of C++ API Changes"
-category: "general"
+category: "api-changes"
 module: "CAACenAPIChangesR8"
+version: "V5R8"
 tags: ["CAA2Usage", "CAA2Level"]
-source_file: "Doc\online\CAACenAPIChangesR8\CAACenAPIChangeDetail.htm"
+source_file: "Doc/online/CAACenAPIChangesR8/CAACenAPIChangeDetail.md"
 converted: "2026-05-11T17:33:52.391824"
 ---
 
@@ -29,62 +30,62 @@ INDM | Method is no more documented. It does not break your code in any way but 
   
 * * *
 
-AdvancedMathematics |  | [R8SP vs R8GA](AdvancedMathematicsSP.htm)  
+AdvancedMathematics |  | [R8SP vs R8GA](AdvancedMathematicsSP.md)  
 ---|---|---  
-AnalysisMeshingModel | [R8GA vs R7GA](AnalysisMeshingModel.htm) |   
-ApplicationFrame | [R8GA vs R7GA](ApplicationFrame.htm) | [R8SP vs R8GA](ApplicationFrameSP.htm)  
-BasicTopologicalOpe | [R8GA vs R7GA](BasicTopologicalOpe.htm) | [R8SP vs R8GA](BasicTopologicalOpeSP.htm)  
-CATAnalysisBase | [R8GA vs R7GA](CATAnalysisBase.htm) | [R8SP vs R8GA](CATAnalysisBaseSP.htm)  
-CATAnalysisInterfaces | [R8GA vs R7GA](CATAnalysisInterfaces.htm) | [R8SP vs R8GA](CATAnalysisInterfacesSP.htm)  
-CATAnalysisResources | [R8GA vs R7GA](CATAnalysisResources.htm) |   
-CATSchPlatformInterfaces | [R8GA vs R7GA](CATSchPlatformInterfaces.htm) |   
-CATTPSInterfaces | [R8GA vs R7GA](CATTPSInterfaces.htm) [ | R8rel vs R8GA](CATTPSInterfacesSP.htm) |   
-CDMAInteroperability | [R8GA vs R7GA](CDMAInteroperability.htm) |   
-CORBAServerBase | [R8GA vs R7GA](CORBAServerBase.htm) |   
-Dialog | [R8GA vs R7GA](Dialog.htm) | [R8SP vs R8GA](DialogSP.htm)  
-DialogEngine | [R8GA vs R7GA](DialogEngine.htm) |   
-DNBInspectInterfaces | [R8GA vs R7GA](DNBInspectInterfaces.htm) |   
-DNBInspectSharedInterfaces | [R8GA vs R7GA](DNBInspectSharedInterfaces.htm) |   
-DraftingInterfaces | [R8GA vs R7GA](DraftingInterfaces.htm) | [R8SP vs R8GA](DraftingInterfacesSP.htm)  
-ElectricalInterfaces | [R8GA vs R7GA](ElectricalInterfaces.htm) |   
-ENOVDDManager | [R8GA vs R7GA](ENOVDDManager.htm) |   
-ENOVDesktopDocument | [R8GA vs R7GA](ENOVDesktopDocument.htm) |   
-ENOVInterfaces | [R8GA vs R7GA](ENOVInterfaces.htm) | [R8SP vs R8GA](ENOVInterfacesSP.htm)  
-ENOVaultClientCPP | [R8GA vs R7GA](ENOVaultClientCPP.htm) | [R8SP vs R8GA](ENOVaultClientCPPSP.htm)  
-FreeFormOperators | [R8GA vs R7GA](FreeFormOperators.htm) |   
-GeometricObjects | [R8GA vs R7GA](GeometricObjects.htm) | [R8SP vs R8GA](GeometricObjectsSP.htm)  
-GSMInterfaces | [R8GA vs R7GA](GSMInterfaces.htm) | [R8SP vs R8GA](GSMInterfacesSP.htm)  
-GSOInterfaces | [R8GA vs R7GA](GSOInterfaces.htm) |   
-InteractiveInterfaces | [R8GA vs R7GA](InteractiveInterfaces.htm) |   
-KnowHow |  | [R8SP vs R8GA](KnowHowSP.htm)  
-LiteralFeatures | [R8GA vs R7GA](LiteralFeatures.htm) | [R8SP vs R8GA](LiteralFeaturesSP.htm)  
-ManufacturingInterfaces | [R8GA vs R7GA](ManufacturingInterfaces.htm) |   
-Mathematics | [R8GA vs R7GA](Mathematics.htm) | [R8SP vs R8GA](MathematicsSP.htm)  
-MecModInterfaces | [R8GA vs R7GA](MecModInterfaces.htm) |   
-MechanicalModeler | [R8GA vs R7GA](MechanicalModeler.htm) |   
-MechanicalModelerUI |  | [R8SP vs R8GA](MechanicalModelerUISP.htm)  
-NewTopologicalObjects | [R8GA vs R7GA](NewTopologicalObjects.htm) | [R8SP vs R8GA](NewTopologicalObjectsSP.htm)  
-ObjectModelerBase | [R8GA vs R7GA](ObjectModelerBase.htm) | [R8SP vs R8GA](ObjectModelerBaseSP.htm)  
-ObjectSpecsModeler | [R8GA vs R7GA](ObjectSpecsModeler.htm) |   
-PartInterfaces | [R8GA vs R7GA](PartInterfaces.htm) |   
-Print | [R8GA vs R7GA](Print.htm) |   
-ProductStructure | [R8GA vs R7GA](ProductStructure.htm) |   
-System | [R8GA vs R7GA](System.htm) |   
-SetcherInterfaces |  | [R8SP vs R8GA](SketcherInterfacesSP.htm)  
-Tessellation | [R8GA vs R7GA](Tessellation.htm) |   
-TopologicalOperators | [R8GA vs R7GA](TopologicalOperators.htm) |   
-Visualization | [R8GA vs R7GA](Visualization.htm) | [R8SP vs R8GA](VisualizationSP.htm)  
-VPMInterfaces | [R8GA vs R7GA](VPMInterfaces.htm) | [R8SP vs R8GA](VPMInterfacesSP.htm)  
-VPMPersistency |  | [R8SP vs R8GA](VPMPersistencySP.htm)  
-VPMDesktopServices | [R8GA vs R7GA](VPMDesktopServices.htm) | [R8SP vs R8GA](VPMDesktopServicesSP.htm)  
-VPMServices | [R8GA vs R7GA](VPMServices.htm) |   
-VPMXBom |  | [R8rel vs R8GA](VPMXBomSP.htm)  
+AnalysisMeshingModel | [R8GA vs R7GA](AnalysisMeshingModel.md) |   
+ApplicationFrame | [R8GA vs R7GA](ApplicationFrame.md) | [R8SP vs R8GA](ApplicationFrameSP.md)  
+BasicTopologicalOpe | [R8GA vs R7GA](BasicTopologicalOpe.md) | [R8SP vs R8GA](BasicTopologicalOpeSP.md)  
+CATAnalysisBase | [R8GA vs R7GA](CATAnalysisBase.md) | [R8SP vs R8GA](CATAnalysisBaseSP.md)  
+CATAnalysisInterfaces | [R8GA vs R7GA](CATAnalysisInterfaces.md) | [R8SP vs R8GA](CATAnalysisInterfacesSP.md)  
+CATAnalysisResources | [R8GA vs R7GA](CATAnalysisResources.md) |   
+CATSchPlatformInterfaces | [R8GA vs R7GA](CATSchPlatformInterfaces.md) |   
+CATTPSInterfaces | [R8GA vs R7GA](CATTPSInterfaces.md) [ | R8rel vs R8GA](CATTPSInterfacesSP.md) |   
+CDMAInteroperability | [R8GA vs R7GA](CDMAInteroperability.md) |   
+CORBAServerBase | [R8GA vs R7GA](CORBAServerBase.md) |   
+Dialog | [R8GA vs R7GA](Dialog.md) | [R8SP vs R8GA](DialogSP.md)  
+DialogEngine | [R8GA vs R7GA](DialogEngine.md) |   
+DNBInspectInterfaces | [R8GA vs R7GA](DNBInspectInterfaces.md) |   
+DNBInspectSharedInterfaces | [R8GA vs R7GA](DNBInspectSharedInterfaces.md) |   
+DraftingInterfaces | [R8GA vs R7GA](DraftingInterfaces.md) | [R8SP vs R8GA](DraftingInterfacesSP.md)  
+ElectricalInterfaces | [R8GA vs R7GA](ElectricalInterfaces.md) |   
+ENOVDDManager | [R8GA vs R7GA](ENOVDDManager.md) |   
+ENOVDesktopDocument | [R8GA vs R7GA](ENOVDesktopDocument.md) |   
+ENOVInterfaces | [R8GA vs R7GA](ENOVInterfaces.md) | [R8SP vs R8GA](ENOVInterfacesSP.md)  
+ENOVaultClientCPP | [R8GA vs R7GA](ENOVaultClientCPP.md) | [R8SP vs R8GA](ENOVaultClientCPPSP.md)  
+FreeFormOperators | [R8GA vs R7GA](FreeFormOperators.md) |   
+GeometricObjects | [R8GA vs R7GA](GeometricObjects.md) | [R8SP vs R8GA](GeometricObjectsSP.md)  
+GSMInterfaces | [R8GA vs R7GA](GSMInterfaces.md) | [R8SP vs R8GA](GSMInterfacesSP.md)  
+GSOInterfaces | [R8GA vs R7GA](GSOInterfaces.md) |   
+InteractiveInterfaces | [R8GA vs R7GA](InteractiveInterfaces.md) |   
+KnowHow |  | [R8SP vs R8GA](KnowHowSP.md)  
+LiteralFeatures | [R8GA vs R7GA](LiteralFeatures.md) | [R8SP vs R8GA](LiteralFeaturesSP.md)  
+ManufacturingInterfaces | [R8GA vs R7GA](ManufacturingInterfaces.md) |   
+Mathematics | [R8GA vs R7GA](Mathematics.md) | [R8SP vs R8GA](MathematicsSP.md)  
+MecModInterfaces | [R8GA vs R7GA](MecModInterfaces.md) |   
+MechanicalModeler | [R8GA vs R7GA](MechanicalModeler.md) |   
+MechanicalModelerUI |  | [R8SP vs R8GA](MechanicalModelerUISP.md)  
+NewTopologicalObjects | [R8GA vs R7GA](NewTopologicalObjects.md) | [R8SP vs R8GA](NewTopologicalObjectsSP.md)  
+ObjectModelerBase | [R8GA vs R7GA](ObjectModelerBase.md) | [R8SP vs R8GA](ObjectModelerBaseSP.md)  
+ObjectSpecsModeler | [R8GA vs R7GA](ObjectSpecsModeler.md) |   
+PartInterfaces | [R8GA vs R7GA](PartInterfaces.md) |   
+Print | [R8GA vs R7GA](Print.md) |   
+ProductStructure | [R8GA vs R7GA](ProductStructure.md) |   
+System | [R8GA vs R7GA](System.md) |   
+SetcherInterfaces |  | [R8SP vs R8GA](SketcherInterfacesSP.md)  
+Tessellation | [R8GA vs R7GA](Tessellation.md) |   
+TopologicalOperators | [R8GA vs R7GA](TopologicalOperators.md) |   
+Visualization | [R8GA vs R7GA](Visualization.md) | [R8SP vs R8GA](VisualizationSP.md)  
+VPMInterfaces | [R8GA vs R7GA](VPMInterfaces.md) | [R8SP vs R8GA](VPMInterfacesSP.md)  
+VPMPersistency |  | [R8SP vs R8GA](VPMPersistencySP.md)  
+VPMDesktopServices | [R8GA vs R7GA](VPMDesktopServices.md) | [R8SP vs R8GA](VPMDesktopServicesSP.md)  
+VPMServices | [R8GA vs R7GA](VPMServices.md) |   
+VPMXBom |  | [R8rel vs R8GA](VPMXBomSP.md)  
   
 * * *
 
 References [1] | [Migration to CATBoolean](../CAACenQuickRefs/CAACenWhatsNew.htm#CATBoolean)  
 ---|---  
-[2] | [Details Of V5R7 API Changes](../CAACenAPIChangesR7/CAACenAPIChangeDetail.htm)  
+[2] | [Details Of V5R7 API Changes](../CAACenAPIChangesR7/CAACenAPIChangeDetail.md)  
 [Top]  
   
 * * *

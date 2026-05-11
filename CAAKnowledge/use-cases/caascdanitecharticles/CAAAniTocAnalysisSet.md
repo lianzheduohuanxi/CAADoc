@@ -1,15 +1,14 @@
 ---
 title: "Analysis Set Automation Objects"
-category: "general"
+category: "use-case"
 module: "CAAScdAniTechArticles"
 tags: []
-source_file: "Doc\online\CAAScdAniTechArticles\CAAAniTocAnalysisSet.htm"
+source_file: "Doc/online/CAAScdAniTechArticles/CAAAniTocAnalysisSet.md"
 converted: "2026-05-11T17:31:51.975342"
 ---
-
 # Analysis Set Automation Objects
 
-![](../CAAScrAutomationImages/images/anasets.gif)[![Application Object Diagram](../CAAScrAutomationImages/images/uparrow.gif)](CAAAniTocAnalysisDocument.htm)  
+![](../CAAScrAutomationImages/images/anasets.gif)[![Application Object Diagram](../CAAScrAutomationImages/images/uparrow.gif)](CAAAniTocAnalysisDocument.md)  
 ![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/anaset.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/anasets.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/anaents.gif)  
@@ -53,8 +52,6 @@ The **AnalysisSet** object aggregates five collections:
   * An **AnalysisImages** collection
   * A **BasicComponents** collection.
 
-
-
 ![](../CAAScrAutomationImages/images/yellbox.gif)The **AnalysisEntities** collection includes **AnalysisEntity** objects. From one Analysis entity, you can read and valuate the physical data that is required for the preprocessing activity and apply the entity to a support. This support can be of several types [1]. Sensors are specific entities.
 
 ![](../CAAScrAutomationImages/images/yellbox.gif)The **AnalysisOutputEntities** collection includes **AnalysisEntity** objects that are the results of an Analysis set.
@@ -66,21 +63,24 @@ The **AnalysisSet** object aggregates five collections:
 The **AnalysisImport** and **AnalysisExport** objects can be retrieved from the **AnalysisSet** object thanks to the `GetItem` method. Here is an example with **AnalysisImport**.
     
     
+```vbscript
     Dim set As AnalysisSet
     ...
     Dim anImport As AnalysisImport
     Set anImport = set.GetItem("AnalysisImport")
+
+```
 
 Change `AnalysisImport` to `AnalysisExport` to get an **AnalysisExport** object.
 
 [Top]
 
 * * *
-
 ### References
 
-[1] | [The Physical Types for Structural Analysis](CAAAniPreprocessingFeatures.htm)  
----|---  
+[1] | [The Physical Types for Structural Analysis](CAAAniPreprocessingFeatures.md)  
+```
+
 [Top]  
   
 * * *

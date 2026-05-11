@@ -3,7 +3,7 @@ title: "Accessing Spatial Integration Data"
 category: "use case"
 module: "CAACloUseCases"
 tags: ["CAACommonLayoutItf", "CAACloPspSpatialPhysical", "CATIArrNode_var", "CAACloPspSpatialPhysicalMain", "CAACloPlacePart", "CATIPspPhysical", "CATIArrSegmentsString", "CAAPspUtilities", "CATIPspSpatial", "CATIUnknownList", "CAAPspBaseEnvProtected", "CAAPlantShipInterfaces", "CAACloPspEduIn", "CATIA"]
-source_file: "Doc\online\CAACloUseCases\CAACloPspSpatialPhysical.htm"
+source_file: "Doc/online/CAACloUseCases/CAACloPspSpatialPhysical.md"
 converted: "2026-05-11T17:33:49.507426"
 ---
 
@@ -61,7 +61,6 @@ where `InstallRootDirectory` is the root directory of your CAA V5 installation. 
     //
     //=============================================================================
     //
-    
     #include <iostream.h>
     #include <string.h>
     
@@ -277,7 +276,7 @@ After CAACloPspSpatialPhysical calls CreateCATProductEnv it calls ApplicationIni
 
 * * *
 
-References [1] | [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] | [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
   
 * * *

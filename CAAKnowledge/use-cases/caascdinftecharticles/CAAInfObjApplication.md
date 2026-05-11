@@ -1,12 +1,11 @@
 ---
 title: "Application Object"
-category: "general"
+category: "use-case"
 module: "CAAScdInfTechArticles"
 tags: ["CATIA"]
-source_file: "Doc\online\CAAScdInfTechArticles\CAAInfObjApplication.htm"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfObjApplication.md"
 converted: "2026-05-11T17:31:52.425072"
 ---
-
 # Application Object
  
  See Also | Use Cases | Properties | Methods  
@@ -16,7 +15,7 @@ converted: "2026-05-11T17:31:52.425072"
  
  ![Application object](../CAAScrAutomationImages/images/applicat.gif)  
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/docs.gif)  
-![](../CAAScrAutomationImages/images/parmult.gif)[![](../CAAScrAutomationImages/images/windows.gif)](CAAInfObjWindows.htm)  
+![](../CAAScrAutomationImages/images/parmult.gif)[![](../CAAScrAutomationImages/images/windows.gif)](CAAInfObjWindows.md)  
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/printers.gif)  
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/filesys.gif)  
 ![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/sysserv.gif)  

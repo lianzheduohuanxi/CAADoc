@@ -1,16 +1,15 @@
 ---
 title: "CAAStrCreationOfStructureObjects.CATScript"
-category: "general"
+category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CAAStrCreationOfStructureObjects", "CATIA"]
-source_file: "Doc\online\CAAScdStrUseCases\CAAStrCreationOfStructureFoundationSource.htm"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfStructureFoundationSource.md"
 converted: "2026-05-11T17:31:50.879106"
 ---
 
-
     Option Explicit
+```vbscript
     ' COPYRIGTH DASSAULT SYSTEMES 2000
-    
     ' ***********************************************************************
     '   Purpose:      Create structure foundation
     '   Assumtions:   
@@ -19,9 +18,13 @@ converted: "2026-05-11T17:31:50.879106"
     '   Locales:      English 
     '   CATIA Level:  V5R7 
     ' ***********************************************************************
+```
+
     
+```vbscript
     Sub CATMain()
     
+```vbscript
         Dim doc As Document
     
         Dim StrWorkbench As StrWorkbench
@@ -38,12 +41,10 @@ converted: "2026-05-11T17:31:50.879106"
         Set component = products.AddNewProduct("Foundation")
     
         Set strFactory = component.GetTechnologicalObject("StructureObjectFactory")
-    
         ' Creating a foundation assembly
     
         Dim foundation As StrFoundation 
         Set foundation = strFactory.ExtendProductAsFoundation("")
-    
         ' Retreiving the created foundation assembly
     
         Dim foundations As StrFoundations
@@ -51,8 +52,15 @@ converted: "2026-05-11T17:31:50.879106"
     	
         Set foundation = foundations.Item(1)
     
+```
+
+```vbscript
     End Sub
     
+```
+
     
     
     
+
+```

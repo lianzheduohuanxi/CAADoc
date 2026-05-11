@@ -1,9 +1,10 @@
 ---
 title: "Detail Of API Changes"
-category: "general"
+category: "api-changes"
 module: "CAACenAPIChangesR11"
+version: "V5R11"
 tags: []
-source_file: "Doc\online\CAACenAPIChangesR11\CAACenAPIChangeDetail_Java.htm"
+source_file: "Doc/online/CAACenAPIChangesR11/CAACenAPIChangeDetail_Java.md"
 converted: "2026-05-11T17:33:50.323517"
 ---
 

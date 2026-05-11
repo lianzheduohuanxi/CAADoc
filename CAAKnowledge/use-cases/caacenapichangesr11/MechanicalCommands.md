@@ -1,9 +1,10 @@
 ---
 title: "MechanicalCommands Modifications"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR11"
+version: "V5R11"
 tags: ["CATICCPable", "CATInteractiveInterfaces"]
-source_file: "Doc\online\CAACenAPIChangesR11\MechanicalCommands.htm"
+source_file: "Doc/online/CAACenAPIChangesR11/MechanicalCommands.md"
 converted: "2026-05-11T17:33:50.434681"
 ---
 

@@ -1,9 +1,10 @@
 ---
 title: "System Modifications"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR10"
+version: "V5R10"
 tags: []
-source_file: "Doc\online\CAACenAPIChangesR10\System.htm"
+source_file: "Doc/online/CAACenAPIChangesR10/System.md"
 converted: "2026-05-11T17:33:50.262510"
 ---
 

@@ -1,9 +1,9 @@
 ---
 title: "New C++ Authorized APIs in CAA V5-6R2012 GA"
-category: "general"
+category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIVpmLightQueryManager", "CATIPrtExplodeServices", "CATIGSMMultiSelAccess", "CATIGSMUIFactory", "CATIGSMGrid", "CATICGMObjectsSaveDiagnosis", "CATIEwrWire", "CATIGSMWorkingSupport", "CATIGSMMultiSelManager", "CATIGSMCartesianGrid", "CATIGSMAutomaticFillGeo", "CATIGSMFactoryGeo", "CATIDdeDxfSettingAtt", "CATIDdeIg2SettingAtt", "CATIGSM3DFurtiveGrid", "CATIA", "CATIGSMTransfer", "CATIGSMWorkingSupportFactory", "CATIGSMWorkingSupportSet"]
-source_file: "Doc\online\CAACenQuickRefs\CAACenV5R22GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R22GANewCPPAPI.md"
 converted: "2026-05-11T17:33:47.519115"
 ---
 
@@ -125,4 +125,4 @@ History Version: **1** [Sep 2011] | Document created
 * * *
 
 _Copyright © 1999-2011, Dassault Systèmes. All rights reserved._  
-Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.htm) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.htm) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.htm)
+Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)

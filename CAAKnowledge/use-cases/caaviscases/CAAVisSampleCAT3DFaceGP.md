@@ -3,18 +3,15 @@ title: "Tessellating and Displaying a Torus"
 category: "use case"
 module: "CAAVisUseCases"
 tags: ["CAAVisBaseView", "CAAVisBaseDocument", "CAAVisBaseDefaultDocument", "CAAVisBasics", "CAAVisBaseApplication", "CAAVisualization"]
-source_file: "Doc\online\CAAVisUseCases\CAAVisSampleCAT3DFaceGP.htm"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleCAT3DFaceGP.md"
 converted: "2026-05-11T17:31:52.036246"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## 3D Visualization
 
 | 
-
 ### Tessellating and Displaying a Torus
 
 _Creating a 3D face graphic primitive and displaying it using a 3D custom representation_  
@@ -22,7 +19,6 @@ _Creating a 3D face graphic primitive and displaying it using a 3D custom repres
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to create a _CAT3DFaceGP_ class instance to tessellate a torus and how to display it using a _CAT3DCustomRep_ instance.
@@ -41,19 +37,16 @@ This article shows how to create a _CAT3DFaceGP_ class instance to tessellate a 
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case explains how to create a _CAT3DFaceGP_ class instance to tessellate a torus and how to display it using a _CAT3DCustomRep_ instance. It show the torus tessellation using a set of triangle strips according to a given sag.
 
 [Top]
-
 ### The CAAVisBasics Use Case
 
 CAAVisBasics is a set of use cases of the CAAVisualization.edu framework that illustrates Vizualization framework capabilities.
 
 [Top]
-
 #### What Does CAAVisBasics Do
 
 CAAVisBasics includes a MDI interactive application that displays viewers in its document windows. One of these viewers is displayed when the application is launched and contains the representation of a torus. This article focuses on how to create this representation as a _CAT3DCustomRep_ instance associated with a graphic primitive that is an instance of the _CAT3DFaceGP_ class.
@@ -64,7 +57,6 @@ _Fig 1: The Torus_ ![](images/CAAVisSampleCGRFile1.jpg)
 ---  
   
 [Top]
-
 #### How to Launch CAAVisBasics
 
 To launch CAAVisBasics, you will need to set up the build time environment, then compile CAAVisBasics along with its prerequisites, set up the run time environment, and then execute the use case [1].
@@ -72,7 +64,6 @@ To launch CAAVisBasics, you will need to set up the build time environment, then
 The torus is displayed in a 3D navigation viewer as soon as the application is launched.
 
 [Top]
-
 #### Where to Find the CAAVisBasics Code
 
 The CAAVisBasics use case is made of several classes located in the CAAVisBasics.m module of the CAAVisualization.edu framework:
@@ -92,7 +83,6 @@ _CAAVisBaseDefaultDocument_ | Class for the document that creates a representati
 _CAAVisBaseView_ | Class for the document window containing a viewer to display the document  
   
 [Top]
-
 #### Tessellating a Torus
 
 A torus is a solid of rotation made by rotating a circle about an axis located in the plane of the circle.
@@ -115,9 +105,7 @@ _Fig. 3: The Triangle Strips_ ![](images/CAAVisSampleTorusTessalation.gif) | Eac
 The two important parameters of the tessellation are the number of circles, and the number of vertices per circle. The more they are circles and vertices, the more the discretization is precise, but the more the discretization and display processes are costly. In addition, depending on the current zoom, the number of circles and of vertices per circle can be changed to optimize display performance and accuracy. This is possible thanks to levels of details [2], but is not discussed here. 
 
 [Top]
-
 ### Step-by-Step
-
 # | Step | Where  
 ---|---|---  
 1 | Create a 3D navigation viewer instance | `CreateViewer` method of _CATVisBaseView_  
@@ -134,7 +122,6 @@ The two important parameters of the tessellation are the number of circles, and 
 The torus is displayed when the CAAVisBasics application is launched. The torus creation and display is performed in the _CAAVisBaseDefaultDocument_ constructor that calls the `CreateRep` and `AddRepToViewer` methods respectively. These two methods are described below.
 
 [Top]
-
 #### Creating a 3D Navigation Viewer Instance
 
 The 3D navigation viewer is an instance of the _CATNavigation3DViewer_ class. It is created in the `CreateViewer` method of the _CAAVisBaseView_ class that is called when the application is launched. 
@@ -162,7 +149,6 @@ The `_pViewer` pointer to the 3D navigation viewer is kept as a data member of t
 The `Attach4Sides` method attaches the four sides of the viewer to those of the window. This makes the viewer occupy the whole window space. 
 
 [Top]
-
 #### Creating a 3D Representation Bag
 
 The _CAAVisBaseDefaultDocument_ constructor creates the representation bag to attach to the viewer, calls `CreateRep` to create the torus representation, adds it to the representation bag, and calls `AddRepToViewer` for display.
@@ -184,7 +170,6 @@ The _CAAVisBaseDefaultDocument_ constructor creates the representation bag to at
 Let's examine what `CreateRep` does. 
 
 [Top]
-
 #### Creating and Filling in the Arrays for the Vertex Coordinates and the Normal Components
 
 First set the tessellation parameters.
@@ -212,7 +197,7 @@ The tessellation parameters are `nVertexPerCircle` (number of vertices per circl
   * **theta** is the angle between two successive vertices on a circle (`2*Pi/nVertexPerCircle`). It determines the sag parameter for the circle discretization, that is the distance between the chord joining two vertices, that is displayed to represent the circle, and the actual circle
   * **phi** determines the number of circles. It also determines sag parameters for the torus discretization.
 
-_Fig. 4: The Sag and the Angles_ ![](images/CAAVisSampleTorusSag.gif) | ![](images/CAAVisSampleTorusSag1.gif)  
+_Fig. 4: The Sag and the Angles_ ![](images/CAAVisSampleTorusSag.gif) 
 ---|---  
   
 And now fill in the arrays.
@@ -249,7 +234,6 @@ And now fill in the arrays.
 The vertex coordinates are stored in the `vertices` array. The first vertex x, y, and z coordinates are stored in the first three array elements, then the second vertex coordinates are stored in the following three array elements, and so on. The normal components are stored in the `normals` array in the same way than the vertex coordinates. The coordinates of a given vertex occupies the same array elements in the `vertices` array than the components of the normal at this vertex in the `normals` array.
 
 [Top]
-
 #### Creating and Filling in the Arrays for the Strip Triangle Vertex Indices and the Number of Vertices per Strip
 
 The vertex indices of the triangle strips are stored in the vertex index array. They are used to scan the vertex and normal arrays when the graphic primitive is built. Vertices and normals are then used for display in the order read from the vertex index array.
@@ -312,7 +296,6 @@ The vertex indices of the triangle strips are stored in the vertex index array. 
 The vertex index array to create the triangle strips is filled in following the vertex scanning order shown in Fig. 3. Each couple of adjacent circles is processed until reaching the first circle to close the torus. For each couple of circles, the indices successively stored designate a vertex on the first circle and its counterpart on the second one until reaching the first vertices on each circle. The index of a vertex is the index of its x coordinate in the `vertices` array. This table thus begins by 0, 240, 3, 243, 6, 246, ... and so on. The `(i+1)%nCircles` modulo operation always returns `i+1`, except when `i` is equal to `nCircles-1` where it returns 0 to get the first circle. The array containing the number of vertices per strip has `nCircles` elements that all have the same value `2*(nVertexPerCircle+1)`, that is 162, since the first two vertices are counted twice.
 
 [Top]
-
 #### Creating the Graphic Primitive and its Associated Bounding Box
 
 The graphic primitive is created using the arrays computed in the previous steps.
@@ -353,7 +336,6 @@ The graphic primitive is created using the arrays computed in the previous steps
 The computed arrays are passed as constructor parameters, along with their sizes. Since the graphic primitive is not built using isolated triangles or triangle fans, the corresponding arrays are passed as `NULL` pointers, and their sizes and the triangle fan number as 0. No texture coordinates are passed. The vertex and normal arrays default allocation mode is explicitly used to show that the created graphic primitive allocates the arrays. In this case, there is no need to allocate them using the new operator. The graphic primitive bounding box is computed as soon as graphic primitive is created.
 
 [Top]
-
 #### Setting Graphic Attributes to the Graphic Primitive
 
 The graphic attribute set can be customized.
@@ -377,7 +359,6 @@ The graphic attribute set can be customized.
 The value 3 passed as the parameter of `SetType` indicates that the graphic primitive is a volume and participates to the ZBuffer. The graphic primitive color scheme is set as true color, and its color is set to red using the red color RGB components (255, 0, 0). The last parameter is the default value for alpha blending.
 
 [Top]
-
 #### Creating the 3D Custom Representation
     
     
@@ -390,7 +371,6 @@ The value 3 passed as the parameter of `SetType` indicates that the graphic prim
 The custom representation to accommodate the graphic primitive is a 3D custom representation.
 
 [Top]
-
 #### Associating the Representation with the Graphic Primitive
     
     
@@ -403,7 +383,6 @@ The custom representation to accommodate the graphic primitive is a 3D custom re
 The representation is associated with the graphic primitive and its graphic attribute set.
 
 [Top]
-
 #### Computing the Representation Bounding Box
 
 The representation needs a bounding box to improve the display process.
@@ -428,7 +407,6 @@ The representation needs a bounding box to improve the display process.
 This bounding box is the sphere whose center is the torus center, and whose radius is the external torus radius.
 
 [Top]
-
 #### Displaying the Created 3D Representation
 
 The `AddRepToViewer` method displays the created representation.
@@ -446,7 +424,6 @@ The `AddRepToViewer` method displays the created representation.
 [Top]
 
 * * *
-
 ### In Short
 
 This use case shows the objects involved when tessellating a torus, and the tessellation process, namely a 3D navigation viewer instance, a 3D representation bag, how to create vertices, normals, and strip triangles, how to create the graphic primitive and its associated bounding box to accommodate the torus, how to set its graphic attributes, how to create the 3D custom representation from the graphic primitive and its graphic attributes, compute the representation bounding box, and display the representation. 
@@ -454,15 +431,13 @@ This use case shows the objects involved when tessellating a torus, and the tess
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] | [Creating Levels of Details](CAAVisSampleLOD.htm) [Top]
+[2] | [Creating Levels of Details](CAAVisSampleLOD.md) [Top]
 
 * * *
-
 ### History
 
 | Version: **1** [Feb 2000] | Document created  

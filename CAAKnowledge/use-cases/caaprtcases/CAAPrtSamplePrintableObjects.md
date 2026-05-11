@@ -3,18 +3,15 @@ title: "Making Your Components Printable"
 category: "use case"
 module: "CAAPrtUseCases"
 tags: ["CAAPrtPrintableString", "CAAPrtStringImage", "CAAPrint", "CAAPrtPrintableObjects", "CATIPrintable"]
-source_file: "Doc\online\CAAPrtUseCases\CAAPrtSamplePrintableObjects.htm"
+source_file: "Doc/online/CAAPrtUseCases/CAAPrtSamplePrintableObjects.md"
 converted: "2026-05-11T17:17:56.133823"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## 3D Visualization - Print
 
 | 
-
 ### Making Your Components Printable
 
 _Enabling your components for print_  
@@ -22,7 +19,6 @@ _Enabling your components for print_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to make your objects printable. 
@@ -40,31 +36,26 @@ This article shows how to make your objects printable.
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show how to make a component printable by making the component implement the _CATIPrintable_ interface.
 
 [Top]
-
 ### The CAAPrtPrintableObjects Use Case
 
 CAAPrtPrintableObjects is a use case of the CAAPrint.edu framework that illustrates the Print framework capabilities.
 
 [Top]
-
 #### What Does CAAPrtPrintableObjects Do
 
 CAAPrtPrintableObjects is a program that creates a simple component using a single class named _CAAPrtPrintableString_ that holds a character string. This component implements the _CATIPrintable_ interface [1] and its single method `CreatePrintableImage` that creates and returns the component printable image. This is an instance of the _CAAPrtStringImage_ class.
 
 [Top]
-
 #### How to Launch CAAPrtPrintableObjects
 
 To launch CAAPrtPrintableObjects, you will need to set up the build time environment, then compile CAAPrtPrintableObjects along with its prerequisites, set up the run time environment, and then execute the use case [2].
 
 [Top]
-
 #### Where to Find the CAAPrtPrintableObjects Code
 
 The CAAPrtPrintableObjects use case is made of a several classes located in the CAAPrtPrintableObjects.m module of the CAAPrint.edu framework:
@@ -76,11 +67,9 @@ Unix | `InstallRootDirectory/CAAPrint.edu/CAAPrtPrintableObjects.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 To make a component printable, there are four main steps:
-
 # | Step | Where  
 ---|---|---  
 1 | Makes the component implement _CATIPrintable_ | CAAPrtPrintableString class  
@@ -91,11 +80,9 @@ To make a component printable, there are four main steps:
 The CAAPrtPrintableString component is created using a single class whose name is the component name.
 
 [Top]
-
 #### Makes the Component Implement CATIPrintable
 
 The _CAAPrtPrintableString_ class header file is as follows.
-    
     
     #include "CATBaseUnknown.h"     _// To derive from CATBaseUnknown_
     #include "CATUnicodeString.h"   _// The string to represent_
@@ -122,7 +109,6 @@ The _CAAPrtPrintableString_ class header file is as follows.
 The `CATDeclareClass` macro declares that this class is part of a component. The class has a constructor that takes the character string as input parameter, a destructor, the `CreatePrintableImage` method of the _CATIPrintable_ interface, and the character string.
 
 Its source file is a follows.
-    
     
     #include "CAAPrtPrintableString.h"   _// Header of the current class_
     #include "CAAPrtStringImage.h"       _// The class of the image to print_
@@ -168,7 +154,6 @@ The framework's interface dictionary should include the following line.
 This declares that the _CATPrtPrintable_ component implements the _CATIPrintable_ interface, and that the implementation code is located in the shared library or DLL named libCAAPrtPrintableObjects. If the TIE and the method code are located in two different shared libraries or DLL, the one that must be inserted in the interface dictionary is the one that contains the TIE code.
 
 [Top]
-
 #### Creating the Printable Image Class
 
 The printable image class header file is as follows.
@@ -200,10 +185,7 @@ This class holds the character string, and has two methods
   1. `GetSize` to determine and return the printed component size
   2. `Decode` that draws the component image to print using a set of print parameters.
 
-
-
 [Top]
-
 #### Writing the GetSize Method
     
     
@@ -223,7 +205,6 @@ This class holds the character string, and has two methods
 `GetSize` determines the character string length expressed in number of characters, and computes from this length a height and a width of the character string to print.
 
 [Top]
-
 #### Writing the Decode Method
     
     
@@ -296,7 +277,6 @@ The text is drawn first in black using the `DrawGeometricText`  method, and it 
 [Top]
 
 * * *
-
 ### In Short
 
 This use case shows the objects involved and what to do to make a component printable. The component must implement the _CATIPrintable_ interface whose single method `CreatePrintableImage` returns an object that bears two methods: `GetSize` that defines the print size from the component contents, and `Decode` that decodes this component contents and that actually prints it.
@@ -304,16 +284,14 @@ This use case shows the objects involved and what to do to make a component prin
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Making Your Components Printable](../CAAPrtTechArticles/CAAPrtPrintableObjects.htm)  
+[1] | [Making Your Components Printable](../CAAPrtTechArticles/CAAPrtPrintableObjects.md)  
 ---|---  
-[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Jan 2000] | Document created  

@@ -1,20 +1,17 @@
 ---
 title: "Assigning Resources to a Dialog Box"
-category: "general"
+category: "use-case"
 module: "CAADlgTechArticles"
 tags: ["CATIconPath", "CAADegPointErrorBox", "CAADlgMoreButtonDlg", "CATIA"]
-source_file: "Doc\online\CAADlgTechArticles\CAADlgResources.htm"
+source_file: "Doc/online/CAADlgTechArticles/CAADlgResources.md"
 converted: "2026-05-11T17:17:56.085439"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## User Interface - Dialogs
 
 | 
-
 ### Assigning Resources to a Dialog Box
 
 _How to use external resources for the texts, messages, icons, and pictures_  
@@ -22,7 +19,6 @@ _How to use external resources for the texts, messages, icons, and pictures_
 Technical Article  
   
 * * *
-
 ### Abstract
 
 When you develop a client application, you need to deal with menus, dialog boxes, prompts, messages, and icons, and to ensure that the texts are enabled to be translated later on in any language your customers may want, without changing any line of code, and without the need to recompile the application. This article gives you information on how the resources are processed, and how to create your dialog objects with everything they do provide to match internationalization and localization needs from the very beginning. 
@@ -39,7 +35,6 @@ When you develop a client application, you need to deal with menus, dialog boxes
 ---  
   
 * * *
-
 ### Internationalization and Localization
 
 Even if your don't know if your client application will be used abroad and by people of a different culture and speaking a language different from yours, it is always easier, safer, and cheaper to design and code it as if it should be. Internationalizing a client application means that no assumptions are made about the language, and more generally the locale, used to run your application when you design and code it. When such an application is presented in front of end users from different countries, the same look and feel, and the same functions, are expected whatever the language and locale used. The localized versions of the application should then behave as the version in the original language.
@@ -49,10 +44,9 @@ Internationalizing an application is also called National Language enabling. Thi
 CAA V5 is natively National Language enabled, that is includes all the necessary stuff for internationalization, and provides you with any tools and mechanisms to facilitate you internationalizing job.
 
 [Top]
-
 ### Internationalization Resources and Coding Process
 
-Assume that you need to create this dialog box. |  ![CATDlgI18N2.jpg \(3254 bytes\)](images/CATDlgI18N2.jpg)  
+Assume that you need to create this dialog box. 
 ---|---  
   
 The dialog box has a title and an Apply push button. If you want to display this, you should simply assign a title to the dialog box as the second parameter of its constructor [1], and a title to the push button using the `SetTitle` method.
@@ -75,8 +69,6 @@ So, internationalizing a client application is a continuous process to execute a
   * The dialog commands: most of the texts are prompts, if we except dialog boxes
   * The dialog boxes: roughly all the controls feature at least a text, such as a push button or a label, or a set of texts, such as a combo or a selector list
 
-
-
 To manage texts outside of the code, CATIA associates a resource file with dialog objects. These resource files are stored in the CNext directory of your framework in the development file tree, and are searched for in the directory corresponding to the operating system in the run time view, such as intel_a for Windows running on machines with Intel processors, or aix_a for machines running AIX. But resources are not limited to texts. For example, icons are considered as resources for the client application. They are found using the CATMsgCatalogPath environment variables.
 
 A simple and handy mechanism enables you to simply associate to each class you create the external resource files required. One of these files contains all the strings to display which must be translated into languages, and its name is the class name suffixed by CATNls. The other contains all the strings to display which must not be translated into languages, and its name is the class name suffixed by CATRsc. These files are associated to the class thanks to the `DeclareResource` macro you should insert in the class header file.
@@ -96,11 +88,9 @@ A simple and handy mechanism enables you to simply associate to each class you c
   * MyDialogBox.CATNls for strings which must translated into languages.
   * MyDialogBox.CATRsc for strings which must not be translated into languages.
 
-
-
 The mechanism to find the text to display for a given dialog object aggregated by the class is the following: when a dialog object is instantiated by the `Build` method of the dialog box class, a name is passed as a parameter of its constructor. This name is used as an identifier for the dialog object to recognize it from the other dialog objects.
 
-The message file directory is placed in the resources directory and named `msgcatalog`. It contains the message files for the English language and the resource files. Subdirectories are available for message files for other languages are, such as French or German. |  ![CATDlgI18N5.jpg \(3627 bytes\)](images/CATDlgI18N5.jpg)  
+The message file directory is placed in the resources directory and named `msgcatalog`. It contains the message files for the English language and the resource files. Subdirectories are available for message files for other languages are, such as French or German. 
 ---|---  
   
 The contents of the message files for the dialog box above are shown below MyDialogBox.CATNls. Their contents are shown below, for the English, French, and German languages respectively, along with a snapshot of the dialog box:
@@ -109,24 +99,23 @@ The contents of the message files for the dialog box above are shown below MyDia
     Title               = "Button";
     ThePushButton.Title = "Apply";
 
-|  ![CATDlgI18N2.jpg \(3254 bytes\)](images/CATDlgI18N2.jpg)  
----|---  
       
     
     Title               = "Bouton";
     ThePushButton.Title = "Appliquer";
 
-|  ![CATDlgI18N3.jpg \(3427 bytes\)](images/CATDlgI18N3.jpg)  
       
     
     Title               = "Schaltflche";
     ThePushButton.Title = "Anwenden";
 
-|  ![CATDlgI18N4.jpg \(4091 bytes\)](images/CATDlgI18N4.jpg)  
-The correspondence between the field to fill in and the text used to fill in this field is ensured by the key placed in the file. |  ![CATDlgI18N1.gif \(2354 bytes\)](images/CATDlgI18N1.gif)  
+The correspondence between the field to fill in and the text used to fill in this field is ensured by the key placed in the file. 
 ---|---  
   
+```vbscript
 For example, the text that appears in the title bar of the dialog box, that is "Button" in English, is set using the `SetTitle` method. This method applies to `this`, instance of the dialog box. To this method applied to that instance corresponds the Title key in the file. Now let's consider the push button. It is created as the child of the window, since it has `this` as first parameter of its constructor. The second parameter is the push button name set to `ThePushButton` and used to access the push button in the parent/child dialog object tree. Using this name, the title can be referred to in the file using the `ThePushButton.Title` key.
+
+```
 
 Switching from one language to another using the LANG environment variable with UNIX, or the Regional Settings option followed by a restart with Windows, searches for texts and messages in the directory associated to the language used, and displays the dialog box with texts expressed in that language.
 
@@ -135,15 +124,11 @@ To make an international push button, you can add a file named CATDialogBox.CATR
     
     ThePushButton.Icon = "I_ControlPoints";
 
-|  ![CATDlgI18N6.jpg \(3309 bytes\)](images/CATDlgI18N6.jpg)  
----|---  
   
 This mechanism overrides the `SetTitle` method, and other methods such as `SetHelp` and `SetIcon`. If a class uses the `DeclareResource  `macro and if at run time, a resource file is found, the `SetTitle`, `SetHelp`, or `SetIcon ` methods are not taken into account.
 
 [Top]
-
 ### Internationalizing Dialog Boxes
-
 #### Character Strings
 
 Character string are read from files when the application is executed to value help and short help messages, accelerators and mnemonics, and miscellaneous other texts used for window titles, labels, or displayed with the different controls.
@@ -186,7 +171,6 @@ The frame is constructed with the window as parent, since `this` is used as firs
 `Title` applies to the window. Only the resource name is required for the class instance to which the resource file applies. ` NiceFrame.Title` sets the frame title, and ` NiceFrame.NicePushButton.Title` sets the push button title. Note that the character strings are enclosed with double quotes and ended using a semi-column.
 
 [Top]
-
 #### Declaring External Resources
 
 When deriving a Dialog framework class for your own application purpose, the resource files for this class is not automatically assigned. You need to explicitly declare it.
@@ -207,12 +191,9 @@ where:
   * `MyWindow` is the class name of your class. The external resource files name are also prefixed by `MyWindow`. They are `MyWindow.CATNls` for text resources, and `MyWindow.CATRsc` for other resources, such as icons.
   * `CATDlgDocument` is the base class for `MyWindow`, that is the class from which `MyWindow` derives. If this base class has also an external resource file declared, this file is concatenated to the `ThisClass` file.
 
-
-
 If the base class inherits from its own base class an external resource file, the `ThisClass` class also inherits from it, and so forth along the class inheritance tree.
 
 [Top]
-
 ### Understanding Resource Inheritance and Concatenation
 
 When the application requests a resource for an object in a dialog window, the resource files of the different classes that make up this dialog windows are scanned. The first resource value found is taken into account, and other possible values found in other resource files are ignored. The external resource files are scanned in the following order: 
@@ -220,8 +201,6 @@ When the application requests a resource for an object in a dialog window, the r
   * The resource value is searched for in the resource files of the class inheritance tree, starting from the class which uses the resource and up to the first base class. The first value found for this resource is taken into account
   * If the resource is not found, it is searched for in the resource files of the aggregated objects, and in their inheritance tree as well.
   * If it is not found again, the object identifier value is taken into account.
-
-
 
 The example below deals with a class CATDlgDocument, but could be applicable to any class declaring external resources, and for any kind of resources. Suppose the class MyDocument to instantiate is defined by the following diagram:
 
@@ -234,8 +213,6 @@ The Rare radio button is part of a frame class named BaseFrame that is used as b
   * Then in the DerivedFrame.CATNls file: the check button titles are found
   * Finally in the BaseFrame.CATNls file: the radio button titles are found.
 
-
-
 Suppose now that the DerivedFrame.CATNls resource file redefines the Rare radio button title. This redefined title is taken into account because the aggregated DerivedFrame resource file is searched for before its base class resource file. The dialog box looks like this:
 
 ![CATDlgI18NConcat2.gif \(24974 bytes\)](images/CATDlgI18NConcat2.gif)
@@ -245,7 +222,6 @@ Suppose now that the DerivedWindow.CATNls resource file itself redefines the Rar
 ![CATDlgI18NConcat3.gif \(25687 bytes\)](images/CATDlgI18NConcat3.gif)
 
 [Top]
-
 #### Retrieving Character Strings External Resources
 
 Character strings external resources are stored in message catalogs. The file which contains the message catalog is searched for in the directories declared in the `CATMsgCatalogPath `environment variable.
@@ -255,7 +231,6 @@ The occurrences of the same message catalog file translated in several languages
 Only the first file name occurrence is taken into account in this directory concatenation.
 
 [Top]
-
 #### Icons
 
 Icons are read from directories, each icon being stored in a file. The _CATDialog_ class declares the following common icon external resources:
@@ -272,10 +247,12 @@ Icons are retrieved from directories declared using the environment variable `CA
 As for character strings, icons are declared in the resource files using a key as follows: `key.Icon = "MyIcon";`
 
 [Top]
-
 ### Internationalizing Text
 
+```vbscript
 For some Dialog objects, such as _CATDlgCombo, CATDlgSelectorList_ or _CATDlgMultiList_ , it is necessary to create NLS texts for their items. Have a look at this sample extracted from the Burger use case [2]
+
+```
 
 ![](images/CAADlgResourcesCATMsgCat.jpg)  
 ---  
@@ -305,8 +282,6 @@ The `GetResourceValueFromKey` method of the _CATDialog_ class enables you to fin
   * `sKey` is the keyword associated with the line. Here it is Drink0, Drink1,.... Drink11
   * `usText` is the output value extracted from the NLS file declared in the `DeclareResource` macro of the class header. 
 
-
-
 In the NLS file, you have such lines:
     
     
@@ -328,8 +303,6 @@ In the NLS file, you have such lines:
   
 There is another means to create a NLS text. It is the _CATMsgCatalog_ class (System framework). Have a look at this sample extracted from the More/Less use case. [3]
 
-![](../CAADlgUseCases/images/CAADlgTabulationMoreLess1.jpg) |  ![](../CAADlgUseCases/images/CAADlgTabulationMoreLess2.jpg)  
----|---  
   
 The "More" button becomes "Less". For the same _CATDlgPushButton_ class instance, the instance identifier cannot reference two NLS texts. In this case you can always use the `GetResourceValueFromKey` method as described above or use the _CATMsgCatalog_ class. 
     
@@ -417,7 +390,6 @@ Each /p`i `will be replaced by the `i` value of the `param` array. 
 [Top]
 
 * * *
-
 ### In Short
 
 Internationalizing your application implies to separate resources from the code to enable application localization, that is, for example, titles, prompts, and message translation. Translatable resources are stored in the CATNls-suffixed files, and non translatable resources, such as icon paths, are stored in CATRsc-suffixed files.
@@ -429,17 +401,15 @@ Resources can be inherited and concatenated to enable dialog subsets reuse.
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Creating Dialog Objects](CAADlgCreatingDialogs.htm)  
+[1] | [Creating Dialog Objects](CAADlgCreatingDialogs.md)  
 ---|---  
-[2] | [The Burger Order Dialog Box](../CAADlgUseCases/CAADlgBurger.htm)  
-[3] | [ Creating Dialog Boxes Automatically Resizable](../CAADlgUseCases/CAADlgSampleTabulation.htm)  
+[2] | [The Burger Order Dialog Box](../CAADlgUseCases/CAADlgBurger.md)  
+[3] | [ Creating Dialog Boxes Automatically Resizable](../CAADlgUseCases/CAADlgSampleTabulation.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Jan 2000] | Document created  

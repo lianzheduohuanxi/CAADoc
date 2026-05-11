@@ -1,16 +1,15 @@
 ---
 title: "CAAAsmCreateAssyHole.CATScript"
-category: "general"
+category: "use-case"
 module: "CAAScdAsmUseCases"
 tags: ["CAAScdAsmUseCases", "CATIA", "CAAAsmCreateAssyHole"]
-source_file: "Doc\online\CAAScdAsmUseCases\CAAAsmCreateAssyHoleSource.htm"
+source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmCreateAssyHoleSource.md"
 converted: "2026-05-11T17:31:50.846178"
 ---
 
-
     ' COPYRIGTH DASSAULT SYSTEMES 2004
     Option Explicit
-    
+```vbscript
     ' ***********************************************************************
     '   Purpose:      Creates and modifies an assembly hole
     '   Assumtions:   Looks for AssemblyHole.CATProduct in the DocView   
@@ -19,32 +18,43 @@ converted: "2026-05-11T17:31:50.846178"
     '   CATIA Level:  V5R13
     ' ***********************************************************************
     
+```
+
     
+```vbscript
     Sub CATMain()
     
-    
+```
+
+```vbscript
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     ' ----------------------------------------------------------- 
     
     dim sDocPath As String 
     sDocPath=CATIA.SystemService.Environ("CATDocView")
+```
+
     
+```vbscript
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+```vbscript
       Err.Raise 9999,,"No Doc Path Defined"
     End If
-    
+```vbscript
     ' ----------------------------------------------------------- 
     ' Open the Product document 
     ' ----------------------------------------------------------- 
     
     Dim sFilePath
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+```
+
                 "online\CAAScdAsmUseCases\samples\AssemblyHole.CATProduct")
     
     Dim oDoc As Document
     set oDoc = CATIA.Documents.Open(sFilePath)
-    
+```vbscript
     ' --------------------------
     ' Get the different products
     ' --------------------------
@@ -60,7 +70,6 @@ converted: "2026-05-11T17:31:50.846178"
     
     Dim oPlaque2 As Product
     Set oPlaque2 = oRootProduct.Products.Item  ( "Plaque2.1" ) 
-    
     ' -----------------------------------------
     ' Get the positioning sketch to create hole 
     ' -----------------------------------------
@@ -73,14 +82,12 @@ converted: "2026-05-11T17:31:50.846178"
     
     Dim oPosSketch As Sketch
     Set oPosSketch = oBody.Sketches.Item("Positioning sketch for assembly hole")
-    
     ' -----------------------------------------
     ' Get the AssemblyFeatures technical object 
     ' -----------------------------------------
     
     Dim oAssemblyFeatures As AssemblyFeatures
     Set oAssemblyFeatures = oRootProduct.GetTechnologicalObject("AssemblyFeatures")
-    
     ' -------------------------------------------------------------
     ' Create assembly hole
     '   positioning sketch : oPosSketch
@@ -91,14 +98,17 @@ converted: "2026-05-11T17:31:50.846178"
     
     Dim oAssemblyHole As AssemblyHole
     Set oAssemblyHole = oAssemblyFeatures.AddAssemblyHole(oPosSketch, oSkeletton, 10.000000, oSkeletton)
-    
     ' ------------------------------------------------------------
     ' Affects parts to the assembly hole : Plaque1.1 and Plaque2.1
     ' ------------------------------------------------------------
+```
+
     
+```
+
     oAssemblyHole.AddAffectedComponent oPlaque1
     oAssemblyHole.AddAffectedComponent oPlaque2
-    
+```vbscript
     ' --------------------------------------------
     ' modify the hole parameters
     '   - diameter 10 mm
@@ -106,14 +116,20 @@ converted: "2026-05-11T17:31:50.846178"
     '   - V-bottom
     '   - length
     ' --------------------------------------------
+```
+
     
+```vbscript
     Dim oDiameter As Length
     Set oDiameter = oAssemblyHole.Diameter
     oDiameter.Value = 10.000000
     
+```
+
     oAssemblyHole.Type = catCounterboredHole
     oAssemblyHole.AnchorMode = catExtremPointHoleAnchor
     
+```vbscript
     Dim oHeadDiameter As Length
     Set oHeadDiameter = oAssemblyHole.HeadDiameter
     oHeadDiameter.Value = 15.000000
@@ -130,21 +146,34 @@ converted: "2026-05-11T17:31:50.846178"
     Set oDepth = oBottomLimit.Dimension
     oDepth.Value = 30.000000
     
+```
+
     oAssemblyHole.BottomType = catVHoleBottom
     
+```vbscript
     Dim oBottomAngle As Angle
     Set oBottomAngle = oAssemblyHole.BottomAngle
     oBottomAngle.Value = 120.000000
-    
+```vbscript
     ' --------------------------------------
     ' Update the Product
     ' --------------------------------------
+```
+
     
+```
+
     oRootProduct.Update 
-    
+```vbscript
     ' --------------------------------------
     ' The end...
     ' --------------------------------------
+```
+
     
+```vbscript
     End Sub
     
+```
+
+```

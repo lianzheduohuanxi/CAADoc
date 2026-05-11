@@ -3,7 +3,7 @@ title: "Boolean Intersection"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CATICGMDynBoolean", "CAAGMTopDumpJournal", "CAAGMOperatorsClashIntersect"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcIntersectClash.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcIntersectClash.md"
 converted: "2026-05-11T17:33:48.954937"
 ---
 
@@ -15,7 +15,7 @@ Abstract A Boolean intersection results in a solid which contains only the porti
     * Use Case Description
     * References  
 ---  
-Operator to be Used To perform a Boolean intersection, you must use the CATICGMDynBoolean operator which is created by the CATCGMCreateDynBoolean global function. The third argument must be set to CATBoolIntersection. Use Case Description The CAAGMOperatorsClashIntersect.m module in CAAGMOperatorsInterfaces.edu intersects two cylinders. This use case loads the BodiesForClashInput.NCGM file which contains the input data and is delivered in the FunctionTests/InputData folder of the CAAGMOperatorsInterfaces.edu framework.  If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm). With the input bodies below: Fig.1 Boolean Intersection Between Two Cylinders ![Boolean Intersection: Input Solids](images/CGM_clash_journal_0.png)  
+Operator to be Used To perform a Boolean intersection, you must use the CATICGMDynBoolean operator which is created by the CATCGMCreateDynBoolean global function. The third argument must be set to CATBoolIntersection. Use Case Description The CAAGMOperatorsClashIntersect.m module in CAAGMOperatorsInterfaces.edu intersects two cylinders. This use case loads the BodiesForClashInput.NCGM file which contains the input data and is delivered in the FunctionTests/InputData folder of the CAAGMOperatorsInterfaces.edu framework.  If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md). With the input bodies below: Fig.1 Boolean Intersection Between Two Cylinders ![Boolean Intersection: Input Solids](images/CGM_clash_journal_0.png)  
 ---  
 and the code below:
     
@@ -88,14 +88,14 @@ When displaying the lists of faces coming from each input body and the list of a
     3286
     
 
-References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)  
-[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)  
-[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.htm)  
-[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.htm)  
-[6] |  [Topological Journal: Principles](CAACgmTaTopJournal.htm)  
-[7] |  [Topological Journal: Methodology](CAACgmTaTopJournalMethodology.htm)  
-[8] |  [Using the Topological Journal](CAACgmUcTopJournal.htm)  
+[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)  
+[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)  
+[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.md)  
+[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.md)  
+[6] |  [Topological Journal: Principles](CAACgmTaTopJournal.md)  
+[7] |  [Topological Journal: Methodology](CAACgmTaTopJournalMethodology.md)  
+[8] |  [Using the Topological Journal](CAACgmUcTopJournal.md)  
 History Version: **1** [Sept 2011] | Document created  
 ---|---

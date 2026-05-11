@@ -3,7 +3,7 @@ title: "Creating a Circle Sweep with Three Guides"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsCircleSweepThreeGuidesUse", "CAAAdtCircleSweepThreeGuides", "CAADoc", "CAAGMOperatorsCircleSweepThreeGuideswith", "CAAGMOperatorsCircleSweepThreeGuidesis", "CAAGMModelGemBrowser", "CAAGMOperatorsCircleSweepThreeGuidesCode", "CAAGMOperatorsCircleSweepThreeGuides", "CATICGMFrFTopologicalSweep", "CAAGMOperatorsCircleSweepThreeGuidesDo"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcAdtCircleSwThreeGuides.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCircleSwThreeGuides.md"
 converted: "2026-05-11T17:33:48.810459"
 ---
 
@@ -28,7 +28,7 @@ What Does CAAGMOperatorsCircleSweepThreeGuidesDo ? The use case:
     * Creates the curves making up the wires to be used as guides.
     * Creates a CATICGMFrFTopologicalSweep operator instance.
     * Runs the CATICGMFrFTopologicalSweep and retrieve the resulting body.
-**Note** : This article only focuses on the operations related to the CATICGMFrFTopologicalSweep operator. Refer to "Overview of the Topological Operators" [1] for more information on the operations which are not detailed in the article. How to Launch CAAGMOperatorsCircleSweepThreeGuides  To launch CAAGMOperatorsCircleSweepThreeGuides, you will need to set up the build time environment, then compile CAAGMOperatorsCircleSweepThreeGuides.m, set up the run time environment, and then execute the use case [2]. If you simply type CAAGMOperatorsCircleSweepThreeGuideswith no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsCircleSweepThreeGuides e:\sweep.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsCircleSweepThreeGuidesCode The CAAGMOperatorsCircleSweepThreeGuides use case is made of a main named CAAAdtCircleSweepThreeGuides.cpp located in the CAAGMOperatorsCircleSweepThreeGuides.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsCircleSweepThreeGuides.m\` where `InstallRootFolder` [2] is the folder where the API CD-ROM is installed. Step-by-Step The use case is divided into the following main steps:
+**Note** : This article only focuses on the operations related to the CATICGMFrFTopologicalSweep operator. Refer to "Overview of the Topological Operators" [1] for more information on the operations which are not detailed in the article. How to Launch CAAGMOperatorsCircleSweepThreeGuides  To launch CAAGMOperatorsCircleSweepThreeGuides, you will need to set up the build time environment, then compile CAAGMOperatorsCircleSweepThreeGuides.m, set up the run time environment, and then execute the use case [2]. If you simply type CAAGMOperatorsCircleSweepThreeGuideswith no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsCircleSweepThreeGuides e/sweep.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsCircleSweepThreeGuidesCode The CAAGMOperatorsCircleSweepThreeGuides use case is made of a main named CAAAdtCircleSweepThreeGuides.cpp located in the CAAGMOperatorsCircleSweepThreeGuides.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsCircleSweepThreeGuides.m\` where `InstallRootFolder` [2] is the folder where the API CD-ROM is installed. Step-by-Step The use case is divided into the following main steps:
     * Creating the Three Guides
     * Creating a CATICGMFrFTopologicalSweep Operator Instance
     * Running the operator and retrieving the resulting body (common to all operators - not discussed below).
@@ -47,9 +47,9 @@ Creating the Three Guides The curves to be used in the wire are CATSpline that a
     CATICGMFrFTopologicalSweep * pSweepOpe = CATCGMCreateFrFTopologicalCircleSweep(piGeomFactory, 
             &topdata, &guides0);
 
-In Short The CATICGMFrFTopologicalSweep operator allows you to create sweeps. This use case is an example of how to create a circle sweep with three guides. References [1] | [Overview of the Topological Operators](CAACgmUcTopOverview.htm)  
+In Short The CATICGMFrFTopologicalSweep operator allows you to create sweeps. This use case is an example of how to create a circle sweep with three guides. References [1] | [Overview of the Topological Operators](CAACgmUcTopOverview.md)  
 ---|---  
-[2] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-[3] | [Using the Basic Topological Operators](CAACgmUcTopSpline.htm)  
+[2] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[3] | [Using the Basic Topological Operators](CAACgmUcTopSpline.md)  
 History Version: **1** [Aug 2002] | Document created  
 ---|---

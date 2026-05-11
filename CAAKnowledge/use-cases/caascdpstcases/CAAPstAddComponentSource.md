@@ -1,16 +1,15 @@
 ---
 title: "CAAPstAddComponent.CATScript"
-category: "general"
+category: "use-case"
 module: "CAAScdPstUseCases"
 tags: ["CATIA", "CAAPstAddComponent", "CAAPstFunnel", "CAAPstHull"]
-source_file: "Doc\online\CAAScdPstUseCases\CAAPstAddComponentSource.htm"
+source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddComponentSource.md"
 converted: "2026-05-11T17:31:52.316299"
 ---
 
-
     Option Explicit
+```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2000
-    
     ' *****************************************************************************
     '   Purpose:       Create A Product Structure document containing
     '                        two parts and multiply the instances of one of these parts,
@@ -23,57 +22,60 @@ converted: "2026-05-11T17:31:52.316299"
     '   CATIA Level:  V5R6 
     ' *****************************************************************************
     
+```
+
     
+```vbscript
     Sub CATMain()
-    
         ' -----------------------------------------------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
+```vbscript
         Dim sDocPath As String
         sDocPath=CATIA.SystemService.Environ("CATDocView")
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
           Err.Raise 9999,,"No Doc Path Defined"
         End If
+```vbscript
         ' ------------------------------------------------------------------------------------------------ 
-       
         'Create a new product document object by adding a document with the Product
         'type to the document collection of the CATIA application. 
         Dim oProductDoc As Document
         Set oProductDoc = CATIA.Documents.Add("Product")
-    
         'Retrieve the Titanic as the root product.
         Dim oTitanic As Product
         Set oTitanic = oProductDoc.Product
-    
         'Declare the Titanic's part number and name.
+```
+
         oTitanic.PartNumber = "Titanic"
         oTitanic.Name = "Steam_Ship_Titanic"
-        
+```vbscript
         'Retrieve the product's collection of the Titanic.
         Dim oTitanicProducts As Products
         Set oTitanicProducts = oTitanic.Products
-     
         'Add the hull as a new component in the collection with its part number 
         'and name. 
         Dim oHull As Product
         Set  oHull = oTitanicProducts.AddNewProduct("Hull_Type")
+```
+
         oHull.PartNumber = "Titanic's_Hull"
         oHull.Name = "Unsinkable_Hull"
-    
         'Add a master shape representation to the hull using an existing part and
         'reframe the viewer.
         oHull.AddMasterShapeRepresentation sDocPath & "CAAPstHull.CATPart"
         CATIA.ActiveWindow.ActiveViewer.Reframe
-        
+```vbscript
         'Add the first funnel to the Titanic's product collection, with part number
         'and name.
         Dim oFunnel1 As Product
         Set oFunnel1 = oTitanicProducts.AddNewProduct("Funnel_Type")
+```
+
         oFunnel1.PartNumber = "Titanic's_Funnel"
         oFunnel1.Name = "Fore_Funnel"
-    
         'Add a master shape representation to the funnel using an existing part
         oFunnel1.AddMasterShapeRepresentation sDocPath & "CAAPstFunnel.CATPart"
-     
         'Define the initial positioning parameters for the Funnel1 instances.
         Dim iMatrix(11)
         iMatrix(0) = 1.0
@@ -88,35 +90,47 @@ converted: "2026-05-11T17:31:52.316299"
         iMatrix(9) = 0.0
         iMatrix(10) = 0.0
         iMatrix(11) = 0.0    
-        
+```vbscript
         'Get the reference of the Funnel product
         Dim oFunnelRef As Product
         Set oFunnelRef = oFunnel1.ReferenceProduct
-    
         'Add a second component using the existing Funnel product's reference.
         Dim oFunnel2 As Product
         Set oFunnel2 = oTitanicProducts.AddComponent(oFunnelRef)
+```
+
         oFunnel2.Name = "Second_Funnel"
         'Associate the new product with a different position from its reference
         iMatrix(9) = -40.0
         oFunnel2.Move.Apply iMatrix
-    
+```vbscript
         'Add a third component using the existing Funnel product's reference.
         Dim oFunnel3 As Product
         Set oFunnel3 = oTitanicProducts.AddComponent(oFunnelRef)
+```
+
         oFunnel3.Name = "Third_Funnel"
         'Associate the new product with a different position from its reference
         iMatrix(9) = -80.0
         oFunnel3.Move.Apply iMatrix
-    
+```vbscript
         'Add a fourth component using the existing Funnel product's reference.
         Dim oFunnel4 As Product
         Set oFunnel4 = oTitanicProducts.AddComponent(oFunnelRef)
+```
+
         oFunnel4.Name = "Fourth_Funnel"
         'Associate the new product with a different position from its reference
         iMatrix(9) = -120.0
         oFunnel4.Move.Apply iMatrix
          
+```
+
+```vbscript
     End Sub
     
+```
+
     
+
+```

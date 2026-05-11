@@ -2,32 +2,22 @@
 title: "CAAESysSurfaceProperties"
 type: "interface"
 module: "CAASystem"
+category: "framework"
 base: "CATBaseUnknown"
+inheritance_chain: "CAAESysSurfaceProperties → CATBaseUnknown"
 method_count: 2
 visibility: "local"
+has_tie_binding: false
 verified: true
 ---
-
 # CAAESysSurfaceProperties
 
 **基类**: CATBaseUnknown  
+**继承链**: CAAESysSurfaceProperties → CATBaseUnknown  
 **模块**: CAASystem  
+**分类**: framework  
 **可见性**: local  
 **方法数**: 2
-
-> ===========================================================================
-
-## 方法列表
-
-### GetColor
-```cpp
-HRESULT GetColor(int & oRed, int & oGreen, int & oBlue);
-```
-
-### SetColor
-```cpp
-HRESULT SetColor(const int iRed, const int iGreen, const int iBlue);
-```
 
 ## 依赖
 

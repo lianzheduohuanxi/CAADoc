@@ -2,44 +2,22 @@
 title: "CAAESysPlane"
 type: "interface"
 module: "CAASystem"
+category: "framework"
 base: "CATBaseUnknown"
+inheritance_chain: "CAAESysPlane → CATBaseUnknown"
 method_count: 4
 visibility: "local"
+has_tie_binding: false
 verified: true
 ---
-
 # CAAESysPlane
 
 **基类**: CATBaseUnknown  
+**继承链**: CAAESysPlane → CATBaseUnknown  
 **模块**: CAASystem  
+**分类**: framework  
 **可见性**: local  
 **方法数**: 4
-
-> ===========================================================================
-
-## 方法列表
-
-### SetOrigin
-```cpp
-HRESULT SetOrigin(const CATMathPoint & iOrigin);
-```
-
-### GetOrigin
-```cpp
-HRESULT GetOrigin(CATMathPoint & oOrigin);
-```
-
-### SetPlane
-```cpp
-HRESULT SetPlane(const CATMathVector & iU ,
-	                        const CATMathVector & iV);
-```
-
-### GetPlane
-```cpp
-HRESULT GetPlane(CATMathVector & oU ,
-	                        CATMathVector & oV);
-```
 
 ## 依赖
 

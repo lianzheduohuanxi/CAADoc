@@ -3,18 +3,15 @@ title: "Editing Objects"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CAASysPoint", "CAAISysPoint", "CAAAfrGeoEdition", "CAAEAfrEditPoint", "CATIModelEvents", "CAAGeometry", "CATIEdit", "CAAAfrPointEditDlg", "CAAAfrPointEditCmd", "CAAAfrPointEditDlgId", "CAAApplicationFrame"]
-source_file: "Doc\online\CAAAfrUseCases\CAAAfrSampleObjectEdit.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleObjectEdit.md"
 converted: "2026-05-11T17:17:55.785009"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## User Interface - Frame
 
 | 
-
 ### Editing Objects
 
 _Make your objects editable_  
@@ -22,7 +19,6 @@ _Make your objects editable_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to make an object editable, and how to create the associated dialog. 
@@ -40,19 +36,16 @@ This article shows how to make an object editable, and how to create the associa
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show how to create make an object editable, and which object to provide to edit it.
 
 [Top]
-
 ### The CAAAfrGeoEdition Use Case
 
 CAAAfrGeoEdition is a use case of the CAAApplicationFrame.edu framework that illustrates the ApplicationFrame framework capabilities.
 
 [Top]
-
 #### What Does CAAAfrGeoEdition Do
 
 The CAAAfrGeoEdition use case makes the Point object an editable object, and provides it with an editing command and an editing dialog.
@@ -60,22 +53,21 @@ The CAAAfrGeoEdition use case makes the Point object an editable object, and pro
 ![CAAAfrPointEditMenu.gif \(27004 bytes\)](images/CAAAfrPointEditMenu.gif)
 
 [Top]
-
 #### How to Launch CAAAfrGeoEdition
 
-See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.htm)" use case for a detailed description of how this use case should be launched. For the specific scenario :
+See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched. For the specific scenario :
 
+```vbscript
 Do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following: 
+
+```
 
   * Select File->New
   * In the New box, select CAAGeometry and click OK
   * Create at least one point using the Basic Elements toolbar
   * Right click this point and select the Definition command.
 
-
-
 [Top]
-
 #### Where to Find the CAAAfrGeoEdition Code
 
 The CAAAfrGeoEdition use case is made of three classes located in the CAAAfrGeoEdition.m module of the CAAApplicationFrame.edu framework:
@@ -94,11 +86,9 @@ _CAAAfrPointEditCmd_ | Editing command class
 _CAAAfrPointEditDlg_ | Dialog class associated with the editing command class  
   
 [Top]
-
 ### Step-by-Step
 
 To make an object editable, there are three steps:
-
 # | Step | Where  
 ---|---|---  
 1 | Make the point object implement the _CATIEdit_ interface | _CAAEAfrEditPoint_ class  
@@ -106,7 +96,6 @@ To make an object editable, there are three steps:
 3 | Create the editing dialog | _CAAAfrPointEditDlg_ class  
   
 [Top]
-
 #### Making the Point Object Implement the _CATIEdit_ Interface
 
 The _CATIEdit_ interface mainly provides the `Activate` method that should return the _CATCommand_ class instance that actually enables the object edition. `Activate` is called whenever the end user intends to edit the object by double clicking or through the object's contextual menu.
@@ -114,7 +103,6 @@ The _CATIEdit_ interface mainly provides the `Activate` method that should retur
 To make the _CAASysPoint_ component implements the _CATIEdit_ interface, we create a class that derives from the _CATExtIEdit_ adapter class as a data extension of the _CAASysPoint_ class, and that provides code for the `Activate` method. The other methods of the _CATIEdit_ interface are inherited from _CATExtIEdit_. 
 
   1. Create the header file for the _CAAEAfrEditPoint_ class 
-         
          #include "CATExtIEdit.h"   //Needed to derive from CATExtIEdit
          
          class CAAEAfrEditPoint : public **CATExtIEdit**
@@ -139,7 +127,6 @@ The `CATDeclareClass` macro declares that _CAAEAfrEditPoint_ belongs to a compon
                            **DataExtension** ,
                            CATBaseUnknown,
                            **CAASysPoint**);
-         
          #include "TIE_CATIEdit.h"
          TIE_CATIEdit(CAAEAfrEditPoint);
          ...  
@@ -171,10 +158,7 @@ The `Activate` method:
      * Then constructs the dialog command object. This is an instance of the _CAAAfrPointEditCmd_ described in Creating the Editing Command to which the previous pointer to the object to edit is passed
      * Finally, returns the editing command pointer as a _CATCommand_ pointer.
 
-
-
 [Top]
-
 #### Creating the Editing Command
 
 The point editing command is named _CAAAfrPointEditCmd_ and directly derives from _CATCommand_. In addition to the three methods inherited from _CATCommand_ and redefined to manage its availability and lifecycle, that is, `Activate`, `Desactivate`, and `Cancel`, the command has also the `CloseBox` method that is called when the end user closes the dialog box to request the dialog destruction. The command data members are a pointer to the dialog and a pointer to the _CAAISysPoint_ interface.
@@ -285,15 +269,12 @@ These methods do the following:
   
 ---  
 
-
-
 [Top]
-
 #### Creating the Editing Dialog
 
 The editing command is the dialog box created using the `Activate` method of the _CATIEdit_ interface implementation. It highly depends on the object to edit and is designed and coded as any other dialog box, that is with an empty constructor and a `Build` method. The dialog box for the _CAASysPoint_ class is as follows:
 
-![CAAAfrPointEditor.jpg \(9014 bytes\)](images/CAAAfrPointEditor.jpg) | This dialog box shows three spinners to display and change the point x, y, and z coordinates. The OK button applies the new parameter values and closes the dialog box. The Apply button only applies the new parameter values, but the dialog box remains displayed. The Cancel button closes the window and restores the coordinate initial values.  
+ This dialog box shows three spinners to display and change the point x, y, and z coordinates. The OK button applies the new parameter values and closes the dialog box. The Apply button only applies the new parameter values, but the dialog box remains displayed. The Cancel button closes the window and restores the coordinate initial values.  
 ---|---  
   
 The _CAAAfrPointEditDlg_ class derives from the _CATDlgDialog_ class, which is the base class for all dialog boxes. The constructor takes a pointer to the _CAAISysPoint_ interface. This is the main interface implemented by the object, and this pointer will be useful to get the object's parameter values to build the dialog box, and to modify the object when the end user clicks OK or Apply.
@@ -403,12 +384,9 @@ This method hides the dialog, and sends a notification to state that the dialog 
   
 ---  
 
-
-
 [Top]
 
 * * *
-
 ### In Short
 
 Any object can be edited using a dialog when the end user double clicks a representation of the object when the Select command is the active one, or from the object contextual menu, provided the object implements the `Activate` method of the _CATIEdit_ interface.
@@ -418,14 +396,12 @@ The object editing command is then made active. This command must be created in 
 [Top]
 
 * * *
-
 ### References
 
 [Top]  
 ---  
   
 * * *
-
 ### History
 
 Version: **1** [Jan 2000] | Document created  

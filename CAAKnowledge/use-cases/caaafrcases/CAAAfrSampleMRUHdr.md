@@ -3,18 +3,15 @@ title: "Creating a Most Recent Used Command Header"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CAAAfrGeneralWksAddinHeader", "CAAAfrMRUHeader", "CAAAfrMRUAddElementCmd", "CAAAfrComboColorHeader", "CAAAfrMRURep", "CAAAfrMRUManager", "CAAAfrGetMRUManager", "CAAEAfrCommandHeaderRepForMRU", "CATIAfrCommandHeaderRep", "CAAAfrMRUHdr", "CATIniCleanerSettingCtrl", "CATINT32ToPtr", "CATIWorkbenchAddin", "CAAAfrMRUSelElementHdr", "CAAAfrMRUNotification", "CATImplementHeaderResources", "CAAAfrGeoCommands", "CAAAfrGeneralWksAddin", "CAAAfrMRUManagerNotification"]
-source_file: "Doc\online\CAAAfrUseCases\CAAAfrSampleMRUHdr.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleMRUHdr.md"
 converted: "2026-05-11T17:17:55.774532"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## User Interface - Frame
 
 | 
-
 ### Creating a Most Recent Used Command Header
 
 _How to create a command header class whose the representation is a dynamic list of items in a menu_  
@@ -22,7 +19,6 @@ _How to create a command header class whose the representation is a dynamic list
 Use Case  
   
 * * *
-
 ### Abstract
 
 This use case explains how to create a specialized command header. This command header has a customized graphic representation. In place of a push item into a menu, the graphic representation is a dynamic list of push items. 
@@ -36,69 +32,57 @@ This use case explains how to create a specialized command header. This command 
   * **In Short**
   * **References**
 
-
-
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case illustrates the creation of a customized command header. In a menu, its graphic representation is a dynamic list of push items in place of a push item, the default representation. You will learn how to create a command header such as those which displays the most recent used document in the File menu. There are three steps:
 
   * Create the component representing the command header 
 
-
-
 > It is a component which must derive from the _CATAfrDialogCommandHeader_ class. 
 
   * Create the component instantiating the graphic representation
-
-
 
 > It is a component which must derive from the _CATAfrCommandHeaderRep_ class and which instantiates one or more _CATDlgPushItem_ class __ instances. 
 
   * Create the component controlling the data used by the graphic representation
 
-
-
 > The data is a list of strings. This list is independent of an instance of a V5 document. It means that whatever the current document, or even if any document is opened, the list of strings is the same. 
 
 You can also read the CAAAfrComboColorHeader use case [1] which presents another customized command header. In this case, the graphic representation is a combo in a toolbar. Contrarily to the current use case, the data (the current color) is dependent of the document.  To take full advantage of this article, you can first read "The Command Headers" technical article [2], and precisely the "Creating Customized Command Headers" section.   [Top]
-
 ### The CAAAfrMRUHeader Use Case
 
 CAAAfrMRUHeader is a use case of the CAAApplicationFrame.edu framework that illustrates ApplicationFrame framework capabilities [Top]
-
 #### What Does CAAAfrMRUHeader Do
 
 CAAAfrMRUHeader creates a command header whose the graphic representation is a list of push items in the File menu. Before to explain the construction of such a command header, see the following scenario which shows the end user view. 
 
   1. Launch CNEXT
   2. Select **File** menu 
-| ![](images/CAAAfrSampleMRUFileMenu11.jpg) |   
----|---  
-![](images/CAAAfrSampleMRUFileMenu12.jpg) | Above **Exit** , you have a separator, and just above it the "standard" most recent used documents.  
+
+ Above **Exit** , you have a separator, and just above it the "standard" most recent used documents.  
   3. Launch **Add Item in MRU** in the **General** toolbar
-![](images/CAAAfrGeneralWksAddinToolbar2.jpg) | This toolbar comes from an Add-in of the General workshop. Refer to the referenced use case to display this toolbar [3]. The **Add Item in MRU** command is a _CATDlgDialog_ command.   
+ This toolbar comes from an Add-in of the General workshop. Refer to the referenced use case to display this toolbar [3]. The **Add Item in MRU** command is a _CATDlgDialog_ command.   
 ---|---  
   4. The following Dialog box appears
-![](images/CAAAfrSampleMRUItem1.jpg) | In the editor, enter **Item 1** , then click **OK**  
+ In the editor, enter **Item 1** , then click **OK**  
 ---|---  
   5. Select **File** menu 
-![](images/CAAAfrSampleMRUFileMenu22.jpg) | Now, after **Exit** , you have a new push item, **Item 1**  
+ Now, after **Exit** , you have a new push item, **Item 1**  
 ---|---  
   6. Launch **Add Item in MRU**(![](images/CAAAfrSampleMRUMAddItem.jpg))**** in the **General** toolbar
-![](images/CAAAfrSampleMRUItem2.jpg) | In the editor, enter **Item 2** , then click **OK**  
+ In the editor, enter **Item 2** , then click **OK**  
 ---|---  
   7. Select **File** menu 
-![](images/CAAAfrSampleMRUFileMenu32.jpg) | Now, after **Exit** , you have two push items: 
+ Now, after **Exit** , you have two push items: 
      * In first position**Item 2** : the last created (used) item, 
      * In second position **Item 1** : ****the oldest created (used) item  
 ---|---  
   8. Select **Item 1**  in **File** menu
-![](images/CAAAfrSampleMRUMSelItem1.jpg) | The **Selected item** dialog box appears. It displays the selected item (**Item 1**).**** Close the dialog box.  
+ The **Selected item** dialog box appears. It displays the selected item (**Item 1**).**** Close the dialog box.  
 ---|---  
   9. Select **File** menu 
-![](images/CAAAfrSampleMRUFileMenu42.jpg) | Now, after **Exit** , you always have two push items, but observe the new order: 
+ Now, after **Exit** , you always have two push items, but observe the new order: 
      * In first position**Item 1:** the last used item, 
      * In second position **Item 2:** the oldest used item  
 ---|---  
@@ -106,16 +90,12 @@ CAAAfrMRUHeader creates a command header whose the graphic representation is a l
   11. **New** Dialog box click any kind document type and click **OK**
   12. Select **File** menu, you have the same list of items.
 
-
-
 In this scenario, you can see that there is a **list of strings**(or item). About this list :
 
   * It is always empty at the beginning of the session (no file save in this use case)
   * It is filled up by the Add Item in MRU command
   * It is reorder to set in first position the selected string
   * It is independent of the document. Whatever the opened document, and even if no document is opened, the displayed list is the same.
-
-
 
 This list (named MRU list) is kept by a component called CAAAfrMRUManager. It controls data (list of strings)**** which are displayed in the push items of a menu through the _CAAIAfrMRUManagement_ interface. Since, the MRU list is unique, this component is unique during the session. 
 
@@ -139,13 +119,9 @@ Fig.3 Command Header Graphic Representation UML Diagram ![](images/CAAAfrSampleM
   
 The _CAAAfrMRURep_ class creates one or more _CATDlgPushItem_ [4] class instance according to the contents of the list managed by the CAAAfrMRUManager component. The _CAAAfrMRURep_ class also sets a callback method to be informed when this list changes. 
 
-
-
-
 The MRU header is instantiated in an Add-in of the General workshop [3]. The last step of the Step by Step section explains this instantiation.
 
 [Top]
-
 #### How to Launch CAAAfrMRUHeader
 
 To launch CAAAfrMRUHeader, you will need to set up the build time environment, then compile CAAAfrMRUHeader and CAAAfrGeneralWksAddin[3] along with their prerequisites, set up the run time environment, and then execute the use case [5].
@@ -169,7 +145,6 @@ In this file, remove the "**#** " character before the two following lines:
 and then run mkCreateRuntimeView. 
 
 [Top]
-
 #### Where to Find the CAAAfrMRUHeader Code
 
 The CAAAfrMRUHeader use case is made of several classes located in four modules of the CAAApplicationFrame.edu framework:
@@ -184,22 +159,17 @@ The `CAAAfrCustCommandHdrModel.m` module contains classes to define the **CAAAf
 
   * CAAAfrMRUManagerNotification.h (LocalInterfaces) and CAAAfrMRUManagerNotification.cpp (src) 
 
-
 > The notification sent when an element is added in the list, or when an element is selected (to become the first in the list)
 
   * CAAIAfrMRUManagement.cpp (src), CAAIAfrMRUManagement.h (PublicInterfaces), and TIE_CAAIAfrMRUManagement.tsrc (src) 
-
 
 > Interface to add an element, select one, retrieve the list. 
 
   * CAAAfrMRUManager.h (LocalInterfaces) and CAAAfrMRUManager.cpp (src) 
 
-
 > The CAAAfrMRUManager component itself which implements the _CAAIAfrMRUManagement_ interface.
 
   * CAAAfrGetMRUManager.cpp (src), CAAAfrGetMRUManager.h (PublicInterfaces)
-
-
 
 > The global function to retrieve the unique CAAAfrMRUManager component during the session.
 
@@ -209,17 +179,13 @@ The `CAAAfrCustomizedCommandHeader.m` module contains classes to define the **MR
   * CAAEAfrCommandHeaderRepForMRU.h (LocalInterfaces) and CAAEAfrCommandHeaderRepForMRU.cpp (src) 
   * CAAAfrMRUHeader.cpp (src),  CAAAfrMRUHeader.h (PrivateInterfaces)
 
-
-
 The `CAAfrGeoCommands.m` ****module contains** _CATCommand_ **classes 
 
   * CAAAfrMRUAddElementCmd.h (LocalInterfaces) and CAAAfrMRUAddElementCmd.cpp (src) 
 
-
 > It is a _CATDlgDialog_ class (see image)  executed when the end user clicks the "Add Item in MRU" command in the General toolbar.
 
   * CAAAfrMRUSelElementCmd.h (LocalInterfaces) and CAAAfrMRUSelElementCmd.cpp (src) 
-
 
 > It is a C _ATDlgDialog_ class (see image) executed when the end user selects an item among the MRU list.
 
@@ -227,10 +193,7 @@ The `CAAAfrGeneralWksAddin.m` module contains an Add-in of the General workshop�
 
   * CAAAfrGeneralWksAdn.h (LocalInterfaces) and CAAAfrGeneralWksAdn.cpp (src)
 
-
-
 [Top]
-
 ### Step-by-Step
 
 There are four logical steps in CAAAfrMRUHeader:
@@ -240,10 +203,7 @@ There are four logical steps in CAAAfrMRUHeader:
   3. Creating the Class Instantiating the Graphic Representation
   4. Instantiating the MRU Header Class
 
-
-
 [Top]
-
 #### Creating the CAAAfrMRUManager Component
 
 The CAAAfrMRUManager component controls the MRU list to display in a menu. This list is managed through the _CAAIAfrMRUManagement_ interface _._ The explanations about the creation of this interface are not given in this article, refer to the Creating Interfaces use case for more details [6].
@@ -288,8 +248,6 @@ The CAAAfrMRUManager component controls the MRU list to display in a menu. This 
   * `_Cleaner` keeps the pointer on the unique CAAAfrMRUManager component instance. When the session is killed, the `_Cleaner` instance is removed, and the _CAAAfrMRUManager_ class pointer is released. It avoids to have "MLK". In your own code, the static data can be directly the pointer on the _CAAAfrMRUManager_ class instance. 
   * `_NameList` is a list of _CATUnicodeString_. This list is limited to five elements (`MRU_MAX_SIZE = 5`)
 
-
-
 The source file of the _CAAAfrMRUManager_ class is as follows:
     
     
@@ -297,7 +255,6 @@ The source file of the _CAAAfrMRUManager_ class is as follows:
     **CATIniCleanerSettingCtrl** CAAAfrMRUManager::_Cleaner ;
     
     **CATImplementClass**(CAAAfrMRUManager, **Implementation** , CATBaseUnknown , CATNull);
-    
     #include <TIE_CAAIAfrMRUManagement.h>
     TIE_**CAAIAfrMRUManagement**(CAAAfrMRUManager);
     
@@ -311,7 +268,6 @@ The source file of the _CAAAfrMRUManager_ class is as follows:
   * `_Cleaner` is initialized
   * The `CATImplementClass` macro makes the class _CAAAfrMRUManager_ a component main class (`Implementation`) that OM-derives [11] from _CATBaseUnknown._
   * The _CAAAfrMRUManager_   class states that it implements the _CAAIAfrMRUManagement_ __ interface thanks to the `TIE_CAAIAfrMRUManagement`` `macro.
-
 
     
     
@@ -370,7 +326,10 @@ Now, lets us see the three methods of the _CAAIAfrMRUManagement_ __ interface. 
   
 ---  
   
+```vbscript
 While there are less than `MRU_MAX_SIZE` elements in the list, represented by `_NameList` the data member, the `AddElement` method just adds the new element (`iNewElement`) at the first position (`InsertBefore(1,...)`). But when there are already `MRU_MAX_SIZE` elements in the list, before adding the new element at the first position, the last element of the list is removed. 
+
+```
 
 The second part of the `AddElement` method consists in to send a notification thanks to the callback manager [7]. So, all objects which will subscribe for this event, published by the MRU manager, will be informed and awaked. Refer to the callback use case [8], for explanations about the creation of a notification such as the _CAAAfrMRUManagerNotification_ class, and how to send a notification using the default callback manager. 
     
@@ -420,11 +379,9 @@ The `GetElementList` method returns the contents of the list of item kept by `_N
 The `SelectElement` method consists in to set at the first position the `iPosition` element of the list. So the element is first removed from the list (`RemovePosition`),**** and then reinserted at the first position (`InsertBefore``)`. 
 
 [Top]
-
 #### Creating the Component Representing the MRU Command Header
 
 The MRU header is a component which must Object Modeler and C++ derive from _CATAfrDialogCommandHeader_ and must implement the _CATIAfrCommandHeaderRep_ interface (Fig.2).
-
 ##### **Component Creation**
 
 Here the CAAAfrMRUHeader header file:
@@ -460,17 +417,12 @@ About the mandatory public methods:
   * A `destructor`, 
   * The `Clone` method inherited from _CATCommandHeader_ and used to duplicate the command header instance. Refer to the "Customized Command Header Class Structure" section of the technical article about the command headers [2]. You will have all the details about the `Clone` method. 
 
-
-
 About the mandatory private methods:
 
   * A `constructor` taking a pointer to a _CATCommandHeader_ is dedicated to the `Clone` method. 
   * Two other `constructor` are declared in the private part, and are not implemented in the source file. This prevents the compiler from creating them as public without you know.
 
-
-
 Here the CAAAfrMRUHeader header file:
-    
     
     #include "CAAAfrMRUHeader.h"
     
@@ -606,7 +558,6 @@ You do not have to take care of the _CAAAfrMRURep_ class instance destruction, t
 The MRU header has no representation in the menu bar or in a contextual menu, so `CreateToolbarRep` and `CreateCtxMenuRep` return E_FAIL.
 
 [Top]
-
 #### Creating the Class Instantiating the Graphic Representation
 
 This class is the _CAAAfrMRURep_ class. Its main roles are:
@@ -614,8 +565,6 @@ This class is the _CAAAfrMRURep_ class. Its main roles are:
   * Set a callback to be informed when the contents or the order of the MRU list change
   * Create _CATDlgPushItem_ instances depending on the MRU list
   * Launch a command to display in a Dialog box (see picture) the selected item. 
-
-
 
 Here the CAAAfrMRURep header file:
     
@@ -664,8 +613,6 @@ Here the CAAAfrMRURep header file:
   * In data member 
     * `_pItemList` a list of _CATDlgPushItem_ class instances created in the `ModifyListItem `method.
     * `_pIAfrMRUManagement` is a _CAAIAfrMRUManagement_ interface pointer on the _CAAAfrMRUManager_ component. 
-
-
 
 Here the CAAAfrMRURep source file:
 
@@ -880,10 +827,7 @@ The `CATAfrStartCommand` is a global function which enables us to launch a comma
   
 ---  
 
-
-
 [Top]
-
 #### Instantiating the MRU Header Class
 
 The MRU header is independent of the document, so this header is instantiated in an Add-in of the General workshop [3]. Here is an extract of the _CAAAfrGeneralWksAdn_ class which is an implementation of the _CATIAfrGeneralWksAddin_ interface. 
@@ -901,9 +845,9 @@ The MRU header is independent of the document, so this header is instantiated in
   
 The MRU command header is created using the constructor class. The most important thing in the usage of the `SetVisibility` method. This method of the _CATCommandHeader_ class allows us to hide the command header instance in the Tools/Customize command. This command displays a dialog box containing tab pages. One of them, the Command tab page, displays by category, all the "visible" command header instances. The two following pictures explains the difference when the `SetVisibility` method is used or not.
 
-![](images/CAAAfrSampleMRUToolsCusto1.jpg) | This picture shows the Command tab page of the Tools/Customize command. In the All Commands category, you see that the CAAAfrMRUHdr appears. To do that we have set a comment before the `SetVisibility`  instruction. The MRU header is without NLS resources [10], so the displayed name is the internal name of the command header instance (the argument of the constructor class).  
+ This picture shows the Command tab page of the Tools/Customize command. In the All Commands category, you see that the CAAAfrMRUHdr appears. To do that we have set a comment before the `SetVisibility`  instruction. The MRU header is without NLS resources [10], so the displayed name is the internal name of the command header instance (the argument of the constructor class).  
 ---|---  
-![](images/CAAAfrSampleMRUToolsCusto2.jpg) | Now, using `SetVisibility` with `0` as argument, you can see that between Bulk Loading... and Capture,  CAAAfrMRUHdr is not there.  
+ Now, using `SetVisibility` with `0` as argument, you can see that between Bulk Loading... and Capture,  CAAAfrMRUHdr is not there.  
 ---|---  
   
 The advantage to hidde a command header, is that the end user cannot drag and drop the command in a toolbar, or it cannot launch it from the power input since it do not know its name. But caution, `SetVisibility` method do not prohibit to launch the command header in the power input, if you know the name of the command header. For the MRU header, there is no effect since there is no _CATCommand_ associated with the MRU Header.
@@ -965,7 +909,6 @@ where I_CAAMRUAddItem is the following icon: ![](images/CAAAfrSampleMRUMAddItem.
 [Top]
 
 * * *
-
 ### In Short
 
 This use case has explained how to create a command header whose the graphic representation is customized:
@@ -973,32 +916,28 @@ This use case has explained how to create a command header whose the graphic rep
   * The command header is a component which OM and C++ derives from _CATAfrDialogCommandHeader_ and implements _CATIAfrCommandHeaderRep_
   * The customized graphic representation is created by a class which must derive from _CATAfrCommandHeaderRep_
 
-
-
 The data model is kept by an unique instance during the session. 
 
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Creating a Combo Command Header](CAAAfrSampleComboHdr.htm)  
+[1] | [Creating a Combo Command Header](CAAAfrSampleComboHdr.md)  
 ---|---  
-[2] | [The Command Headers](../CAAAfrTechArticles/CAAAfrCommandHeaders.htm)  
-[3] | [Making Your Document Independent Command Available in All Workbenches](CAAAfrSampleGeneralWksAddin.htm)  
-[4] | [CATDlgPushItem](../CAADlgQuickRefs/CAADlgCATDlgPushItem.htm)  
-[5] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-[6] | [Creating Interfaces](../CAASysUseCases/CAASysSampleOMCreatingInt.htm)  
-[7] | [The Callback Mechanism](../CAASysTechArticles/CAASysCallbacks.htm) (Technical Article)  
-[8] | [The Callback Mechanism](../CAASysUseCases/CAASysSampleCallbacks.htm) (Use Case)  
-[9] | [The CAA Command Model](../CAADegTechArticles/CAADegCommandModel.htm)  
-[10] | [Creating Resources for Command Headers](../CAAAfrTechArticles/CAAAfrI18NHeader.htm)  
-[11] | [Object Modeler Inheritances](../CAASysTechArticles/CAASysOMInheritance.htm)  
+[2] | [The Command Headers](../CAAAfrTechArticles/CAAAfrCommandHeaders.md)  
+[3] | [Making Your Document Independent Command Available in All Workbenches](CAAAfrSampleGeneralWksAddin.md)  
+[4] | [CATDlgPushItem](../CAADlgQuickRefs/CAADlgCATDlgPushItem.md)  
+[5] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[6] | [Creating Interfaces](../CAASysUseCases/CAASysSampleOMCreatingInt.md)  
+[7] | [The Callback Mechanism](../CAASysTechArticles/CAASysCallbacks.md) (Technical Article)  
+[8] | [The Callback Mechanism](../CAASysUseCases/CAASysSampleCallbacks.md) (Use Case)  
+[9] | [The CAA Command Model](../CAADegTechArticles/CAADegCommandModel.md)  
+[10] | [Creating Resources for Command Headers](../CAAAfrTechArticles/CAAAfrI18NHeader.md)  
+[11] | [Object Modeler Inheritances](../CAASysTechArticles/CAASysOMInheritance.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Feb 2004] | Document created  

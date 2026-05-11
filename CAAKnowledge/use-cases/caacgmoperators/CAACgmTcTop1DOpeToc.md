@@ -1,9 +1,9 @@
 ---
 title: "1D Operations"
-category: "general"
+category: "use-case"
 module: "CAACgmOperators"
 tags: []
-source_file: "Doc\online\CAACgmOperators\CAACgmTcTop1DOpeToc.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmTcTop1DOpeToc.md"
 converted: "2026-05-11T17:33:48.739775"
 ---
 

@@ -3,18 +3,15 @@ title: "Creating a Distance Dimension on Interactive Geometry"
 category: "use case"
 module: "CAADriUseCases"
 tags: ["CATIDftStandardManager", "CATIDrwAnnotationFactory_var", "CATISheet_var", "CATIDrwAnnotationFactory", "CATIDftDocumentServices", "CATIDrwDimDimension", "CATIContainer_var", "CATIA", "CATIDrawing", "CATIStringList", "CATIView_var", "CAADrwCreateDimCmd", "CATIUnknownList", "CATISpecObject_var", "CAADrwCreateDim", "CATIUnknownListImpl", "CATI2DWFFactory_var", "CAADraftingInterfaces", "CAADRWCreateDim"]
-source_file: "Doc\online\CAADriUseCases\CAADriCreateDim.htm"
+source_file: "Doc/online/CAADriUseCases/CAADriCreateDim.md"
 converted: "2026-05-11T17:31:50.950000"
 ---
-
 # Mechanical Design
 
 | 
-
 ## Drafting
 
 | 
-
 ### Creating a Distance Dimension on Interactive Geometry
 
 _How to create a distance dimension between two 2D lines_  
@@ -22,7 +19,6 @@ _How to create a distance dimension between two 2D lines_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article discusses the CAADrwCreateDim.cpp use case. This use case explains how to edit a dimension dress-up.
@@ -40,19 +36,16 @@ This article discusses the CAADrwCreateDim.cpp use case. This use case explains 
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 In this use case you will learn how to create an associative dimension on two 2D lines.
 
 [Top]
-
 ### The CAADrwCreateDim Use Case
 
 CAADrwCreateDim is a use case of the CAADraftingInterfaces.edu framework that illustrates DraftingInterfaces framework capabilities.
 
 [Top]
-
 #### What Does CAADrwCreateDim Do
 
 This sample creates a dimension on two 2D lines in batch mode:
@@ -61,7 +54,6 @@ Fig. 2: The Model created by CAADrwCreateDim batch ![](images/CAADrwCreateDim1.j
 ---  
   
 [Top]
-
 #### How to Launch CAADrwCreateDim
 
 To launch CAADrwCreateDim, you will need to set up the build time environment, then compile CAADrwCreateDim along with its prerequisites, set up the run time environment, and then execute the use case [1].
@@ -73,10 +65,7 @@ When you launch the use case, pass the full pathname of the file into which you 
   * With UNIX  `$ CAADrwCreateDim /u/users/Result.CATDrawing`  
 ---  
 
-
-
 [Top]
-
 #### Where to Find the CAADrwCreateDim Code
 
 The CAADrwCreateDim use case is made of one source file named CAADrwCreateDim.cpp located in the CAADrwCreateDim.m module of the CAADraftingInterfaces.edu framework:
@@ -88,7 +77,6 @@ Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCreateDim.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are six steps in CAADRWCreateDim:
@@ -100,10 +88,7 @@ There are six steps in CAADRWCreateDim:
   5. Creating the distance dimension
   6. Saving the Document and Exiting
 
-
-
 [Top]
-
 #### Creating and Initializing the Document
     
     
@@ -141,7 +126,6 @@ There are six steps in CAADRWCreateDim:
 This section represents the usual sequence for creating a CATIA document.
 
 [Top]
-
 #### Accessing the Drawing in the Document
     
     
@@ -166,7 +150,6 @@ This section represents the usual sequence for creating a CATIA document.
 The root feature of a drawing document is the Drawing that is the feature that implements the CATIDrawing interface. We can get a pointer to CATIDrawing using the CATIDftDocumentServices interface, which is implemented by the document. The GetDrawing method first argument is the interface you want to get on the drawing.
 
 [Top]
-
 #### Creating the Drawing Standard for Annotations
     
     
@@ -219,7 +202,6 @@ The root feature of a drawing document is the Drawing that is the feature that i
 The reffiles directory is  accessible in runtime view.
 
 [Top]
-
 #### Creating the Geometric Elements in the Main View
     
     
@@ -261,7 +243,6 @@ The reffiles directory is  accessible in runtime view.
 To create geometric elements in a view, the view has to be current.
 
 [Top]
-
 #### Creating the Distance Dimension
     
     
@@ -301,7 +282,6 @@ To create geometric elements in a view, the view has to be current.
 ---  
   
 [Top]
-
 #### Saving the Document and Exiting
     
     
@@ -322,7 +302,6 @@ This section represents the usual sequence for saving a newly created CATIA docu
 [Top]
 
 * * *
-
 ### In Short
 
 This use case shows the objects and interfaces used when creating a dimension in a main view of a CATDrawing document. The Dimension is created using the _CATIDrwAnnotationFactory_ interface.
@@ -330,12 +309,11 @@ This use case shows the objects and interfaces used when creating a dimension in
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] | [Creating a New Document](../CAAOmbUseCases/CAAOmbNewDoc.htm)  
+[2] | [Creating a New Document](../CAAOmbUseCases/CAAOmbNewDoc.md)  
 [Top]  
   
 History

@@ -1,21 +1,18 @@
 ---
 title: "Getting Started with Automation"
-category: "general"
+category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAScdInfUseCases", "CATIA", "CAAInfGettingStarted", "CATIASketch3"]
-source_file: "Doc\online\CAAScdInfUseCases\CAAInfGettingStarted.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfGettingStarted.md"
 converted: "2026-05-11T17:31:52.374517"
 ---
 
 | 
-
 ## Infrastructure
 
 | 
-
 ## Getting Started with Automation  
   
----|---  
   
 * * *
 
@@ -25,7 +22,7 @@ The products that make up the CATIA and DELMIA applications share the same objec
 
 You can write your scripts from scratch, but you can also use the journalling facility from the **Macros ...  ** command in the **Tools** menu that records end-user scenarios in scripts you can then use as is or modify. 
 
-![](../CAAScrBase/images/awarning.gif) | Recording macros is not available in all workbenches.  
+ Recording macros is not available in all workbenches.  
 ---|---  
   
 We put here a simple script **example** , to show what is scripting, which are the different things to do to script, present briefly the scripting environment and dialog window, and what is journaling. This example is divided into the following parts:
@@ -35,20 +32,14 @@ We put here a simple script **example** , to show what is scripting, which are t
   * 3-Modifying the Generated Macro, where we'll modify the generated macro to create five similar pads
   * 4-Replaying the Modified Macro
 
-
-
-You will then find information about the scripting languages and environments, and some keys for you if you are not familiar with writing macros in [Invoking CATIA from a Scripting Language](../CAAScdInfTechArticles/CAAInfInvoking.htm).
-
+You will then find information about the scripting languages and environments, and some keys for you if you are not familiar with writing macros in [Invoking CATIA from a Scripting Language](../CAAScdInfTechArticles/CAAInfInvoking.md).
 ## 1-Recording the Scenario
 
-![](images/atarget.gif) |  This scenario creates a circle in a sketch, and uses this sketch to create a cylindric pad.  
+  This scenario creates a circle in a sketch, and uses this sketch to create a cylindric pad.  
 ---|---  
-![](images/ainfo.gif) |  The recorded macro is stored in a file, and not in the document.  
-![](images/ascenari.gif) | 
+  The recorded macro is stored in a file, and not in the document.  
 
   1. Select the **Tools- >Macro->Start Recording ... ** command to display the Record Macro dialog box:
-
-
 
 > ![](images/CAAInfRecord2.jpg) A default macro library is provided. Macro libraries are places where a macro can be stored, they can be folders, VBA project or Documents.  Depending in the library, you can select different recording languages. Select CATScript to have a result similar to what you will find below. 
 
@@ -67,12 +58,12 @@ You will then find information about the scripting languages and environments, a
 
   1. Select the xy plane in the specification tree, and select the sketcher icon
 ![](images/I_SketcherP2.gif) to create a sketch. 
-| ![](images/CAAInfRecord4.jpg)  
+
   | 
 
   1. In the sketcher toolbar, select the circle icon
 ![](images/I_CircleCtrRadP2.gif) and click twice to successively  indicate the center of the circle and a current point on the circle. 
-| ![](images/CAAInfRecord5.jpg)  
+
   | 
 
   1. Click on the sketcher exit icon ![](images/I_CloseP2.gif)
@@ -87,27 +78,22 @@ You will then find information about the scripting languages and environments, a
 
   1. In the Pad Definition dialog box, choose a length of 20 mm and click OK. The pad is created.
 
-| ![](images/CAAInfRecord6.jpg)  
   | 
 
   1. The pad creation is now complete.
 
-| ![](images/CAAInfRecord7.jpg)  
   | 
 
   1. Click **Stop Recording** in the **Stop Recording** dialog box, or select the **Tools- >Macro->Stop Recording** command. Your macro is now stored in the file you have selected.
 
 ![](images/CAAInfRecord3.jpg)    
 ![](images/aendtask.gif)  
-  
 ##   
 2-Understanding the recorded macro
 
 We detail below, line by line, what has been recorded, following the interactive steps. How to access the macro generated source is explained in the next step (Modifying the Generated Macro):
 
   1. Starting to record a macro creates the macro file and generates the first instruction stating the scripting language used and the macro entry point, the _CATMain_ sub: 
-
-
 
 > > 
 >>     Language="VBSCRIPT"
@@ -167,9 +153,6 @@ A _Sketch_ object named `Sketch1` is added to the _Sketches_ collection using th
 
 The `SetAbsoluteAxisData` method is used to define the orientation of the sketch axis, that can be on either side and can rotate inside of the support plane. A _Factory2D_ object is created by opening the sketch editor against the created sketch. This _Factory2D_ object features methods to create 2D objects.
 
-
-
-
 > > 
 >>     Dim geometricElements1 As GeometricElements
 >>     Set geometricElements1 = sketch1.GeometricElements
@@ -192,8 +175,6 @@ When the sketch is created, an axis, that is the aggregation of a center point, 
 The axis is retrieved in the _GeometricElements_ collection of the _Sketch_ object, the directions are retrieved as objects aggregated by the axis. The two lines are here assigned an identifier using their `ReportName` property that will be used by the 3D modeling services to retrieve those elements inside of the sketch. They have no end-user meaning.
 
   1. In the sketcher toolbar, select the circle icon ![](images/I_CircleCtrRadP2.gif) and click twice to indicate successively the center of the circle and a current point on the circle 
-
-
 
 > > 
 >>     Dim circle2D1 As Circle2D
@@ -219,12 +200,15 @@ The sketch editor is closed and the part udapted.
 
   2. Select the pad icon ![](images/I_PadP2.gif) to create a pad, and in the Pad Definition dialog box, choose a length of 10 mm and click OK. The pad is created. 
          
+```vbscript
          Dim shapeFactory1 As Factory
              Set shapeFactory1 = part1.ShapeFactory
              
              Dim pad1 As Pad
              Set pad1 = shapeFactory1.AddNewPad(sketch1, 20.000000)
              
+```
+
              part1.Update  
 
 The `AddNewPad` method of the _ShapeFactory_ object is used to create the pad. It is created using the sketch and the length of 20mm. The part is updated.  
@@ -232,17 +216,15 @@ The `AddNewPad` method of the _ShapeFactory_ object is used to create the pad. I
 
   3. Click **Stop Recording** in the **Stop Recording** dialog box, or point to **Stop Recording** in the Macro item of the Tools menu.
 
-
-
 This closes the macro recording sequence and saves the macro in the selected file.
 
 This is all what you performed interactively in the previous chapter.
 
+```
 ## 3-Modifying the Generated Macro
 
-![](images/atarget.gif) | This task explains how to modify the generated macro to make it loop on the creation of five identical cylindric pads.  
+ This task explains how to modify the generated macro to make it loop on the creation of five identical cylindric pads.  
 ---|---  
-![](images/ascenari.gif) | 
 
   1. Select the **Tools- >Macro->Macros... command **to display the **Macros** dialog box.
 
@@ -253,7 +235,7 @@ This is all what you performed interactively in the previous chapter.
 
 ![](images/CAAInfEdit2.jpg)    
    
-  |  ![](../CAAScrBase/images/tips.gif) | You can choose your own text editor to edit the macro by  setting the **CATMacroEditor** environment variable prior to launching CATIA with the name of the editor program:
+ You can choose your own text editor to edit the macro by  setting the **CATMacroEditor** environment variable prior to launching CATIA with the name of the editor program:
     
     
         set CATMacroEditor=NOTEPAD
@@ -271,26 +253,49 @@ On Unix. This editor must be accessible through the **PATH** environment variabl
          Language="VBSCRIPT"
          **'My macro creates five cylinders**
          
+```vbscript
          Sub CATMain()
+```
+
          **...**
+```vbscript
          Dim refer1 As AnyObject
          Set refer1 = originElements1.PlaneXY
          
+```
+
+```
+
          **x = 0**
          
+```vbscript
          Dim arrayOfVariantOfDouble1(8)
          arrayOfVariantOfDouble1(0) = 0.000000
          ...
          arrayOfVariantOfDouble1(8) = 0.000000
          
+```
+
+```
+
          **For I = 1 To 5**
          
+```vbscript
            Dim sketch1 As Sketch
            Set sketch1 = sketches1.Add(refer1)
+```
+
+```
+
            **...**
+```vbscript
            Dim circle2D1 As Circle2D
            Set circle2D1 =                   _
               factory2D1.CreateClosedCircle( _
+```
+
+```
+
                                    **x** ,        _
                                    0.000000, _
                                    10.000000)
@@ -311,19 +316,17 @@ You simply need to initialize a variable, here x, to allow for the sketch positi
   1. Save the macro using the **File- >Save** command of the Macro Editor and exit the editor using the **File- >Exit** command.
 
   
-The source of the modified macro, [CAAInfGettingStarted.CATScript](CAAInfGettingStartedSource.htm), is available in the CAAScdInfUseCases module. [Execute macro](macros/CAAInfGettingStarted.CATScript) (windows only).  ![](images/aendtask.gif)  
-  
+The source of the modified macro, [CAAInfGettingStarted.CATScript](CAAInfGettingStartedSource.md), is available in the CAAScdInfUseCases module. [Execute macro](macros/CAAInfGettingStarted.CATScript) (windows only).  ![](images/aendtask.gif)  
 ## 4-Running the Macro
 
-![](images/atarget.gif) |  This task explains how to run the modified macro.  
+  This task explains how to run the modified macro.  
 ---|---  
-![](images/ascenari.gif) |  After exiting the Macro Editor, you're back in the Macros window: ![](images/CAAInfEdit1.jpg) Your macro should be the current one. You just have to click **Run** to run this macro. Here is the result.![](images/CAAInfReplay2.jpg)    
+  After exiting the Macro Editor, you're back in the Macros window: ![](images/CAAInfEdit1.jpg) Your macro should be the current one. You just have to click **Run** to run this macro. Here is the result.![](images/CAAInfReplay2.jpg)    
 ![](images/aendtask.gif)  
   
  
 
 * * *
-
 #### In Short
 
 This use case has shown how to record a macro, modify it and then launch its execution.
@@ -331,9 +334,8 @@ This use case has shown how to record a macro, modify it and then launch its exe
 [Top]
 
 * * *
-
 #### References
 
-[1] | [Adding a Macro as a Command in a Toolbar](CAAInfAddingMacroInToolbar.htm)  
+[1] | [Adding a Macro as a Command in a Toolbar](CAAInfAddingMacroInToolbar.md)  
 ---|---  
 [Top]

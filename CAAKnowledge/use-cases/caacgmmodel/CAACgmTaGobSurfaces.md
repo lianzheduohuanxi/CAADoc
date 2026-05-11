@@ -1,19 +1,17 @@
 ---
 title: "About NURBS"
-category: "general"
+category: "use-case"
 module: "CAACgmModel"
 tags: ["CATIA"]
-source_file: "Doc\online\CAACgmModel\CAACgmTaGobSurfaces.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmTaGobSurfaces.md"
 converted: "2026-05-11T17:33:47.967121"
 ---
-
 # The Surfaces of CATIA Geometric Modeler  
   
 ---  
 Technical Article  
   
 * * *
-
 ### Abstract
 
 CGM offers a great variety of surfaces. This paper describes their common properties as well as their particular features. 
@@ -34,7 +32,6 @@ CGM offers a great variety of surfaces. This paper describes their common proper
 ---  
   
 * * *
-
 ### Introduction
 
 A surface is a function from a closed interval of R^2 to R^3. Hence, it is defined by three scalar functions of two variables. The variables are usually called **parameters** of a point on the surface and denoted through **U** and **V** , while the scalar functions represent the mapping, for each point of the surface, between the Cartesian coordinates, usually called X, Y, Z, and the corresponding parameters U and V.
@@ -49,17 +46,15 @@ Fig. 1b: Local and global parameters on a 3*2 patches surface ![Surfaces1b.gif \
 ---|---  
   
 [Top]
-
 ### Properties of the CGM Surfaces
 
 The CGM surfaces implement the CATSurface interface, which behavior is now described. The CATSurface interface inherits all the behavior of the CATGeometry interface. Therefore, the factory of the CGM objects (CATGeoFactory) handles the creation, stream, unstream and remove of the CGM surfaces. The geometric transformation and/or duplication of CGM surfaces is managed by specific processes through CATTransfoManager and CATCloneManager instances [3]. For more details about the CGM objects general properties, see [1].
 
 [Top]
-
 #### General Validity Criteria
 
     1. CGM surfaces **must be C2 continuous**. Hence, the surfaces are many infinitely differentiable with respect to the (U,V) parameters on each patch, and only twice continuously differentiable between two patches. CGM directly generates objects satisfying this criterion. If you want to introduce foreign surfaces, you have to insure that they satisfy it. If they do not satisfy it, you can cut them where they are not C2 continuous, and use topological objects to assemble the parts.  Fig. 2: Validity criteria for surfaces   
-![Surfaces4.gif \(7022 bytes\)](images/CAACgmGobSurfaces4.gif) | In addition, the surfaces must not be self intersecting, except if they are closed (as for a cylinder for example). On the other hand, they can be degenerated, but only on one or two boundaries that are not adjacent.  
+ In addition, the surfaces must not be self intersecting, except if they are closed (as for a cylinder for example). On the other hand, they can be degenerated, but only on one or two boundaries that are not adjacent.  
 ---|---  
     2. In each direction, (U and V), the curvilinear length must be greater than the resolution of the factory. The resolution defines the minimum length of a valid object, see [1].
     3. The normal to the surface must not be null (except possibly at a point on the surface boundary). This applies to degenerate isoparametric curves.
@@ -75,13 +70,11 @@ Specific objects
     3. Nurbs Surfaces: degree must be less than 15
 
 [Top]
-
 #### Class for Handling Surface Parameters
 
 The surface parameters only have sense if they are associated with the surface they parameterize. These parameters are handled through the CATSurParam instances, which are transient objects containing the parameters in each directions and a reference to the surface. In peculiar, they transform global parameters into local parameters and patches, and vice versa. The CATSurParamReference transient instance can not directly be created; the surface is responsible for retrieving a CATSurParam instance under your request.
 
 [Top]
-
 #### Limits and Bounding Box of a Surface
 
 A surface has a maximal limit, outside which it is not defined, or cannot be extrapolated. This limit is expressed in terms of a CATSurLimits transient instance, containing two CATSurParam instances.
@@ -92,7 +85,6 @@ Each surface is able to retrieve the definition of a space that surrounds it: th
 The bounding box contains two points, and can be a CATMathBox instance, if expressed with Cartesian coordinates, or a a CATSurParam instance, if expressed with parameters.
 
 [Top]
-
 #### Evaluation
 
 The main behavior of a surface, for a point lying on this surface, is to evaluate the Cartesian coordinates from its parameters and, conversely, the parameters from Cartesian coordinates: 
@@ -102,7 +94,6 @@ The main behavior of a surface, for a point lying on this surface, is to evaluat
 The surface is responsible for the mapping between the (X, Y, Z) Cartesian coordinates and the (U, V) parameters, so that no assumptions must be maid about this mapping, except for a few objects that have published their own parameterization.
 
 [Top]
-
 #### Equations
 
 It is useful to retrieve the equations representing the surface, especially when you want to operate the geometry. You can retrieve these equations as CATMathFunctionXY instances, that are transient and created under request.
@@ -127,13 +118,11 @@ In case of a modification of a surface,
     * Otherwise, the memory is freed.
 
 [Top]
-
 ### Various Types of Surfaces
 
 You find four major surface types in the CGM offering: the resolved surfaces, the sampled surfaces, the multi-represented surfaces and the procedural surfaces.You can also introduce your own class of surface, and use it as any CGM surface in all the CGM operators or as the underlying geometry of a topological object. For a detailed description of this mechanism, see [2].
 
 [Top]
-
 #### Resolved Surfaces
 
 These surfaces are only available on a mathematical form: NURBS, canonical surface (plane, cone, sphere, cylinder, torus) belongs to this type. Evaluations are made directly from the mathematical equations. The following array describes, for each resolved surface, its definition parameters, and the validity range of the definition parameters which come in addition to general validity criteria that have already been described.
@@ -200,7 +189,6 @@ CATSurLimits | `Limits` | The limits if needed
 CATNurbsSurface | NURBS definition of a curve, see [4]  
   
 [Top]
-
 #### Sampled Surfaces
 
 These surfaces result from a computation that does not lead to a canonical form. For example, a fillet with variable radius cannot be expressed in terms of a cylinder or another canonical surface. Moreover, the limiting curves in this case are defined by a Spline interpolation between marching points, obtained by a progressive algorithm. It is the reason why this type of surface is called sampled surface. For example, the CATGenericFilletSurface interface manages the behavior of a fillet surface that is not canonical, while the CATGenericRuledSurface interface manages the behavior of a draft surface that is not canonical.
@@ -216,7 +204,6 @@ CATGenericRuledSurface | Surface generated by lines passing through and delimite
 CATMathSetOfPointsND | `Limit2` | Corresponding passing points on the second limitation curve  
   
 [Top]
-
 #### Multi-represented Surfaces
 
 The multi-represented surface simply delegates, without computation, its evaluation to a pointed surface.This model allows CGM to keep as long as possible the object canonicity: for example, an object implementing the CATFilletSurface interface point to an objet implementing a canonical surface (such as CATCylinder, CATCone) or to an object implementing the CATGenericFillet if the resulting fillet is not canonical. The canonical representation, if it exists, is returned by the `CATSurface::GetGeometricRep` method.
@@ -256,7 +243,6 @@ CATSweepSurface | CATExtruder
 operator |    
   
 [Top]
-
 #### Procedural Surfaces
 
 The procedural surface uses the evaluation of another surface, call the reference, for the computation of its own evaluation. The reference can be any type of surface, even a procedural one. But in this last case, this will be more time consuming: two evaluations are done, one for each level. In case of a CATProcOffsetSurface referring another CATProcOffsetSurface however, the offset values are directly cumulated at the surface creation, so that only one evaluation is done.
@@ -294,7 +280,6 @@ CATMathNonLinearTransformation | `Transformation` | The applied transformation
 [Top]
 
 * * *
-
 ### In Short
 
     * CGM surfaces are C2 continuous. They offer you evaluators to evaluate point parameters and derivatives, and equations to use in geometric operations for example.
@@ -303,18 +288,16 @@ CATMathNonLinearTransformation | `Transformation` | The applied transformation
 [Top]
 
 * * *
-
 ### References
 
-[1] | [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.htm)  
+[1] | [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.md)  
 ---|---  
-[2] | [The Management of Foreign Data](CAACgmTaGobAttribute.htm)  
-[3] | [The Cloning and Transformation Managers](CAACgmTaGobClone.htm)  
-[4] | [About NURBS](CAACgmTaGobAboutNurbs.htm)  
+[2] | [The Management of Foreign Data](CAACgmTaGobAttribute.md)  
+[3] | [The Cloning and Transformation Managers](CAACgmTaGobClone.md)  
+[4] | [About NURBS](CAACgmTaGobAboutNurbs.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Jan 2000] | Document created  

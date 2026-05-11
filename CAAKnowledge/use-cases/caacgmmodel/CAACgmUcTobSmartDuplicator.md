@@ -3,7 +3,7 @@ title: "Using the Smart Duplicator"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CATICGMContainer", "CAADoc", "CATICGMObject", "CATICGMSmartBodyDuplicator", "CAAGMModelInterfaces", "CAATopSmartDuplicator", "CAAGMModelSmartDuplicator"]
-source_file: "Doc\online\CAACgmModel\CAACgmUcTobSmartDuplicator.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTobSmartDuplicator.md"
 converted: "2026-05-11T17:33:48.560636"
 ---
 
@@ -25,7 +25,7 @@ What You Will Learn With This Use Case This use case is intended to help you use
     * Specifies the cell to be modified in the smart duplication operation.
     * Creates a smart duplicator in order to modify the holed face and retrieves the duplicated face associated with the holed face.
     * Removes the internal loop in the duplicated face.
-How to Launch CAAGMModelSmartDuplicator  To launch CAAGMModelSmartDuplicator, you will need to set up the build time environment, then compile CAAGMModelSmartDuplicator.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. CAAGMModelSmartDuplicator `e:\partwithhole.NCGM` where `partwithhole.NCGM` is an input file delivered in the CAAGMModelInterfaces.edu/FunctionTests/InputData file. Where to Find the CAAGMModelSmartDuplicator Code The CAAGMModelSmartDuplicator use case is made of a main named CAATopSmartDuplicator.cpp located in the CAAGMModelSmartDuplicator.m module of the CAAGMModelInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMModelInterfaces.edu\CAAGMModelSmartDuplicator.m\` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step There are six main steps in CAATopSmartDuplicator.cpp:
+How to Launch CAAGMModelSmartDuplicator  To launch CAAGMModelSmartDuplicator, you will need to set up the build time environment, then compile CAAGMModelSmartDuplicator.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. CAAGMModelSmartDuplicator `e/partwithhole.NCGM` where `partwithhole.NCGM` is an input file delivered in the CAAGMModelInterfaces.edu/FunctionTests/InputData file. Where to Find the CAAGMModelSmartDuplicator Code The CAAGMModelSmartDuplicator use case is made of a main named CAATopSmartDuplicator.cpp located in the CAAGMModelSmartDuplicator.m module of the CAAGMModelInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMModelInterfaces.edu\CAAGMModelSmartDuplicator.m\` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step There are six main steps in CAATopSmartDuplicator.cpp:
     1. Loading the Container and Retrieving the Body to Be Checked
     2. Retrieving the Holed Face
     3. Touching the Topology to Be Modified
@@ -105,7 +105,7 @@ Writing the Model and Closing the Factory To save the model in a file, the `::CA
      //
      **::CATCloseCGMContainer**(piGeomFactory);
 
-The resulting body looks something like this: ![](images/CAACgmTobsmartDup2.gif) References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+The resulting body looks something like this: ![](images/CAACgmTobsmartDup2.gif) References [1] 
 ---|---  
 History Version: **1** [Jan 2009] | Document created  
 ---|---

@@ -3,18 +3,15 @@ title: "Getting Started with Dialog Boxes"
 category: "use case"
 module: "CAADlgUseCases"
 tags: ["CAADlgHelloWindow", "CAADlgHelloWindowId", "CAADlgHelloApplication", "CATInteractiveApplication", "CATIA", "CAADialog"]
-source_file: "Doc\online\CAADlgUseCases\CAADlgSampleGettingStarted.htm"
+source_file: "Doc/online/CAADlgUseCases/CAADlgSampleGettingStarted.md"
 converted: "2026-05-11T17:17:55.978720"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## User Interface - Dialogs
 
 | 
-
 ### Getting Started with Dialog Boxes
 
 _A first sample with dialog boxes_  
@@ -22,7 +19,6 @@ _A first sample with dialog boxes_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows a simple example of dialog box created using the Dialog framework. 
@@ -36,10 +32,7 @@ This article shows a simple example of dialog box created using the Dialog frame
   * **In Short**
   * **References**
 
-
-
 * * *
-
 ### What You Will Learn With This Use Case
 
 The Dialog framework is intended to help application developers to simply design an implement their dialog windows and boxes. Its main characteristics are: 
@@ -50,29 +43,28 @@ The Dialog framework is intended to help application developers to simply design
   * Versatility: it can be used as a standalone framework, along with its prerequisites, or in a CATIA Version 4 or Version 5 environment.
 
 Let's have a look at this framework through two examples. The first sample program shows how to build a very simple window and how to close it. The second sample introduces a larger number of dialog window components or objects and how to manage window layouts as well as triggering actions when clicking on Dialog framework objects [1]. [Top]
-
 ### The CAADlgHelloApplication Use Case
 
 CAADlgHelloApplication is a use case of the CAADialog.edu framework that illustrates Dialog framework capabilities. [Top]
-
 #### What Does CAADlgHelloApplication Do
 
+```vbscript
 For this example, you will simply display a prompt box that prints "Hello, CAA V5". To do this, derive your own application class, called _CAADlgHelloApplication_ , from the class _CATInteractiveApplication_ [2]. This application will: 
+
+```
 
   1. create a window to display "Hello, CAA V5" by deriving the class _CATDlgDocument_
   2. makes the window visible.
 
-In addition, the mechanism to close the application from the window is included. The window is as follows: | ![](../CAADlgTechArticles/images/CATDlgHello.jpg)  
+In addition, the mechanism to close the application from the window is included. The window is as follows: 
 ---  
   
 [Top]
-
 #### How to Launch CAADlgHelloApplication
 
 To launch CAADlgHelloApplication, you will need to set up the build time environment, then compile CAADlgHelloApplication along with its prerequisites, set up the run time environment, and then execute the use case [3].
 
 [Top]
-
 #### Where to Find the CAADlgHelloApplication Code
 
 The CAADlgHelloApplication use case is made of a several classes located in the CAADlgHelloApplication.m module of the CAADialog.edu framework:
@@ -94,7 +86,6 @@ _CAADlgHelloWindow.cpp_ | The application window source file
 The resource file CAADlgHelloWindow.CATNls is located in the CNext\resources\msgcatalog directory.
 
 [Top]
-
 ### Step-by-Step
 
 There are two logical steps in CAADlgHelloApplication:
@@ -102,14 +93,10 @@ There are two logical steps in CAADlgHelloApplication:
   1. Creating the Interactive Application
   2. Creating the Application Window
 
-
-
 [Top]
-
 #### Creating the Interactive Application
 
 Let's look at CAADlgHelloApplication.h, the application header file:
-    
     
     #include "CATInteractiveApplication.h"
     
@@ -133,10 +120,7 @@ We find here:
   * its constructor and destructor
   * the `BeginApplication` and `EndApplication` methods overridden from the _CATInteractiveApplication_ class
 
-
-
 The CAADlgHelloApplication.cpp looks like that:
-    
     
     #include "CAADlgHelloApplication.h"
     #include "CAADlgHelloWindow.h"
@@ -168,11 +152,9 @@ The CAADlgHelloApplication.cpp looks like that:
 The constructor is empty. It leaves the constructors of the inherited classes run, and it automatically runs the method `BeginApplication` which constructs the application window and makes it visible. The method `EndApplication` only returns 0 to state that all is Ok . The application run is just triggerred by the its instantiation in the last statement.
 
 [Top]
-
 #### Creating the Application Window
 
 Let's look at CAADlgHelloWindow.h, the application window header file:
-    
     
     #include "CATDlgDocument.h"   
     
@@ -214,13 +196,9 @@ We find here:
   * The `Exit` method used to close the application when the end user closes the window
   * A reference to the application.
 
-
-
 The file CAADlgHelloWindow.cpp looks like that:
     
-    
     #include "CAADlgHelloWindow.h"
-    
     #include "CATInteractiveApplication.h" 
     #include "CATDlgInclude.h"
     
@@ -272,7 +250,6 @@ The first message is the window title and has the simple key `Title`. The second
 [Top]
 
 * * *
-
 ### In Short
 
 This use case enables you to have a first approach with the Dialog framework concepts. In the `Build` method of the application window you can test the Dialog objects [4]
@@ -280,18 +257,16 @@ This use case enables you to have a first approach with the Dialog framework con
 [Top]
 
 * * *
-
 ### References
 
-[1] | [The Burger Order Dialog Box](CAADlgBurger.htm)  
+[1] | [The Burger Order Dialog Box](CAADlgBurger.md)  
 ---|---  
-[2] | [Designing Your Interactive Application](../CAADlgTechArticles/CAADlgInteractiveApplication.htm)  
-[3] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-[4] | [Dialog Overview](../CAADlgTechArticles/CAADlgOverview.htm)  
+[2] | [Designing Your Interactive Application](../CAADlgTechArticles/CAADlgInteractiveApplication.md)  
+[3] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[4] | [Dialog Overview](../CAADlgTechArticles/CAADlgOverview.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Fev 2003] | Document created  

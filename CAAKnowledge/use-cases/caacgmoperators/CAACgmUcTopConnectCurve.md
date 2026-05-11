@@ -3,7 +3,7 @@ title: "Connecting Wires"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsConnectCurve", "CATICGMTopSimilarCurve"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcTopConnectCurve.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopConnectCurve.md"
 converted: "2026-05-11T17:33:49.117320"
 ---
 
@@ -16,7 +16,7 @@ Abstract Wires can be connected. The shape of the connecting piece can be comput
     * References  
 ---  
    
-Operator to be Used The CATICGMTopSimilarCurve operator is to be used.Use Case Description The CAAGMOperatorsConnectCurve.m module in CAAGMOperatorsInterfaces.edu illustrates how to connect two wires by specifying a base curve. This use case requires the Connect-Curve-Sample.NCGM file as input data. This file is delivered in the FunctionTests/InputData folder of CAAGMOperatorsInterfaces.edu framework.  If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm).With the input data below (wires to be connected in pink, base curve in dark blue, end points in green): Fig.1 Connect Curve : Input Data ![Connect Curve: Input data](images/CGM_connect_curve_0.png)  
+Operator to be Used The CATICGMTopSimilarCurve operator is to be used.Use Case Description The CAAGMOperatorsConnectCurve.m module in CAAGMOperatorsInterfaces.edu illustrates how to connect two wires by specifying a base curve. This use case requires the Connect-Curve-Sample.NCGM file as input data. This file is delivered in the FunctionTests/InputData folder of CAAGMOperatorsInterfaces.edu framework.  If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md).With the input data below (wires to be connected in pink, base curve in dark blue, end points in green): Fig.1 Connect Curve : Input Data ![Connect Curve: Input data](images/CGM_connect_curve_0.png)  
 ---  
 and the code below:
     
@@ -43,7 +43,6 @@ and the code below:
     	 | 
     	 
            
-    ---|---  
     
      
     
@@ -53,33 +52,32 @@ and the code below:
     		[1]
     		| 
     		[
-    		Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)
+    		Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
     	  
-    ---|---  
     
     	
     		[2]
     		| 
-    		[About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)
+    		[About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)
     	  
     
     	
     		[3]
     		| 
-    		[How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)
+    		[How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)
     	  
     
     	
     		[4]
     		| 
-    		[Understanding Boolean Operators](CAACgmTaTopBoolean.htm)
+    		[Understanding Boolean Operators](CAACgmTaTopBoolean.md)
     	  
     
     
     
     		[5]
     		| 
-    		[Overview of Topological Operators](CAACgmUcTopOverview.htm)
+    		[Overview of Topological Operators](CAACgmUcTopOverview.md)
     	  
     
     	
@@ -90,7 +88,6 @@ and the code below:
     		Version: **1** [Oct 2011]
     		| Document created
     	  
-    ---|---  
     
     
     

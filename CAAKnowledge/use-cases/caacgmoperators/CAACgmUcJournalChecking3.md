@@ -3,7 +3,7 @@ title: "Topological Journal: Writing a Validation Tool "
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMCheckForPart", "CAAGMOperatorsInterfaces", "CAAGMOperatorsCheckGnOK", "CAAGMOperatorsJournalThreadOpMain", "CAAGMTopCheckForPart", "CAATopCheckNoCopy", "CAAAddInputBody", "CAAGMOperatorsCheckGnKO", "CAAGMOperatorsCheckForPart", "CAACheck"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcJournalChecking3.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcJournalChecking3.md"
 converted: "2026-05-11T17:33:48.983062"
 ---
 
@@ -19,7 +19,7 @@ The CAAGMOperatorsCheckForPart.m use case provides you with a way to write your 
     * Operator to be Used
     * References  
 ---  
-Operator to be Used The CAAGMCheckForPart operator is created in CAAGMOperatorsInterfaces.edu/PublicInterfaces. It is being used in the some use cases such as CAAGMOperatorsCheckGnKO.m, CAAGMOperatorsCheckGnOK.m or CAAGMOperatorsJournalThreadOpMain.m. Its implementation is delivered in the CAAGMTopCheckForPart.cpp file of the CAAGMOperatorsCheckForPart.m module.  Refer to: [ Topological Journal: Creation and Validation (1) ](CAACgmUcJournalChecking1.htm), [Topological Journal: Creation and Validation (2)](CAACgmUcJournalChecking2.htm), [Threading a Rod](CAACgmUcAdtThreadOperator.htm) for examples. The CAAGMCheckForPart operator is to be used like this:
+Operator to be Used The CAAGMCheckForPart operator is created in CAAGMOperatorsInterfaces.edu/PublicInterfaces. It is being used in the some use cases such as CAAGMOperatorsCheckGnKO.m, CAAGMOperatorsCheckGnOK.m or CAAGMOperatorsJournalThreadOpMain.m. Its implementation is delivered in the CAAGMTopCheckForPart.cpp file of the CAAGMOperatorsCheckForPart.m module.  Refer to: [ Topological Journal: Creation and Validation (1) ](CAACgmUcJournalChecking1.md), [Topological Journal: Creation and Validation (2)](CAACgmUcJournalChecking2.md), [Threading a Rod](CAACgmUcAdtThreadOperator.md) for examples. The CAAGMCheckForPart operator is to be used like this:
     
     // Creates the operator
     CAAGMCheckForPart * reportCheck = new CAAGMCheckForPart(JournalToBeChecked,  // The journal to be checked
@@ -38,14 +38,14 @@ Operator to be Used The CAAGMCheckForPart operator is created in CAAGMOperatorsI
       
   
 ---  
-References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)  
-[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)  
-[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.htm)  
-[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.htm)  
-[6] |  [Topological Journal: Principles](CAACgmTaTopJournal.htm)  
-[7] |  [Topological Journal: Methodology](CAACgmTaTopJournalMethodology.htm)  
-[8] |  [Using the Topological Journal](CAACgmUcTopJournal.htm)  
+[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)  
+[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)  
+[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.md)  
+[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.md)  
+[6] |  [Topological Journal: Principles](CAACgmTaTopJournal.md)  
+[7] |  [Topological Journal: Methodology](CAACgmTaTopJournalMethodology.md)  
+[8] |  [Using the Topological Journal](CAACgmUcTopJournal.md)  
 History Version: **1** [Sept 2011] | Document created  
 ---|---

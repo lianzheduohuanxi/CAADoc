@@ -1,9 +1,10 @@
 ---
 title: "GeometricObjects Modifications"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR7"
+version: "V5R7"
 tags: ["CATICGMObject"]
-source_file: "Doc\online\CAACenAPIChangesR7\GeometricObjects.htm"
+source_file: "Doc/online/CAACenAPIChangesR7/GeometricObjects.md"
 converted: "2026-05-11T17:33:52.070018"
 ---
 

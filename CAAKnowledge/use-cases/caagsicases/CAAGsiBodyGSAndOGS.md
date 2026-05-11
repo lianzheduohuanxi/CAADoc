@@ -3,18 +3,15 @@ title: "Inserting Shape Design Features in Different Geometrical Feature Sets"
 category: "use case"
 module: "CAAGsiUseCases"
 tags: ["CAAGsiCreateGeometricFeatureSets", "CATIMmiOrderedGeometricalSet_var", "CATIPrtBooleanFactory", "CATIPrtContainer", "CATIGSMSweepUnspec_var", "CAAGSMInterfaces", "CAAGsiUserTools", "CATIMechanicalTool_var", "CAAGsiServices", "CATIGSMProceduralViwe", "CATIGSMFactory", "CATIPrtFactory", "CATIGSMExtrude_var", "CATIPrtFactory_var", "CATIPrtPart_var", "CAAGsiObjectUpdate", "CATIDescendants_var", "CATIBasicTool_var", "CATISpecObject_var", "CATIMmiNonOrderedGeometricalSet_var"]
-source_file: "Doc\online\CAAGsiUseCases\CAAGsiBodyGSAndOGS.htm"
+source_file: "Doc/online/CAAGsiUseCases/CAAGsiBodyGSAndOGS.md"
 converted: "2026-05-11T17:31:50.621208"
 ---
-
 # Shape Design & Styling
 
 | 
-
 ## Generative Shape Design
 
 | 
-
 ### Inserting Shape Design Features in Different Geometrical Feature Sets
 
 _Creating of different types of Geometrical Feature sets and insert shape design features_  
@@ -22,7 +19,6 @@ _Creating of different types of Geometrical Feature sets and insert shape design
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article discusses the CAAGsiBodyGSAndOGS use case. This use case explains how to create different types of Geometrical Set and instanciate features in them. 
@@ -40,7 +36,6 @@ This article discusses the CAAGsiBodyGSAndOGS use case. This use case explains h
 ---  
   
 * * *
-
 ### What You Will You Learn With This Use Case
 
 This use case intends to illustrate creation of different geometrical feature sets , Geometrical features set are  Body, GS(Geometrical Set) and OGS(Ordered Geometrical Set).
@@ -48,7 +43,6 @@ This use case intends to illustrate creation of different geometrical feature se
 It illustrates also depending the current set or targeted set , shape design  features insertion in the procedural view 
 
 [Top]
-
 ### The CAAGsiBodyGSAndOGS Use Case
 
 CAAGsiBodyGSAndOGS is a use case of the CAAGSMInterfaces.edu framework that illustrates how and where to insert shape design features in procedural view , it uses GSMInterfaces framework and MechanicalModeler framework capabilities .
@@ -56,13 +50,11 @@ CAAGsiBodyGSAndOGS is a use case of the CAAGSMInterfaces.edu framework that illu
 ![](images/CAAGsiBodyGsAndOgs.jpg)
 
 [Top]
-
 #### What Does CAAGsiBodyGSAndOGS Do
 
 The use case creates the different type of set and insert features in it 
 
 [Top]
-
 #### How to Launch CAAGsiBodyGSAndOGS
 
 To launch CAAGsiBodyGSAndOGS, you will need to set up the build time environment, then compile CAAGsiBodyGSAndOGS along with its prerequisites, and set up the run time environment, and then execute the use case [1].
@@ -82,8 +74,6 @@ Launch the use case as follows:
   
 ---  
 
-
-
 where:
 
 `outputDirectory` | The directory into which `CAAGsiBodyGSAndOGS.CATPart is saved`  
@@ -91,7 +81,6 @@ where:
 `CAAGsiBodyGSAndOGS.CATPart` | The file that contains the part created to contain the nozzle shape result  
   
 [Top]
-
 #### Where to Find the CAAGsiBodyGSAndOGS Code
 
 The CAAGsiBodyGSAndOGS use case is made of main program located in the CAAGsiBodyGSAndOGS.m module of the CAAGSMInterfaces.edu framework:
@@ -103,7 +92,6 @@ Unix | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiBodyGSAndOGS.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are six logical step in CAAGsiBodyGSAndOGS: 
@@ -113,14 +101,11 @@ There are six logical step in CAAGsiBodyGSAndOGS:
   3. Insert of ShapeDesign feature in Body,GS And OGS 
   4. Save and close session
 
-
-
 We will now comment each of those sections by looking at the code of the main method of file CAAGsiBodyGSAndOGS.
 
 [Top]
 
 * * *
-
 #### Prolog
 
 CAAGsiBodyGSAndOGS sample first creates a session and opens the input CATPart. 
@@ -211,7 +196,6 @@ Then in the initialization phase the wireframe and shape design factory , Part D
 ---  
   
 [Top]
-
 #### Create different types of geometrical feature sets 
 
 The Type of working tool is given as input in the sample 
@@ -222,7 +206,6 @@ Three type of Geometric Feature set can be used for shape design features
 >   * Geometrical Set = Shape Design features, Points, Wires, Surfaces and Volumes can be inserted , non ordered set , not rules of creation order in the set is imposed 
 >   * Ordered Geometrical Set := Shape Design features, Points, Wires, Surfaces and Volumes can be inserted , elements are ordered and if needed absorbed depending on related defined rule on the feature (implement of CATIInputDescription interface of MecmodInterfaces frameework - for exemple "Split" feature is a modification feature thus its main input is absorbed)
 > 
-
 
 In the use case, we use a generic tool CAAGsiCreateGeometricFeatureSets to create Sets provided in 
 
@@ -267,12 +250,9 @@ Different cases can be identify depending of TopLevel , spParentForTool argument
   * Create the tool under a defined tool 
   * Create the tool under the current feature
 
-
   1. Step1 : Check and define if needed  the parent : the parent of the geometrical feature set to be create 
   2. Step2 : Check the targeted part is and available parent for the set to create
   3. Step3 : Create the set
-
-
 
 Step1 : Check and define if needed  the parent : the parent of the geometrical feature set to be create 
     
@@ -387,7 +367,6 @@ Step3 : Create the set  Create the set : Body, Geometrical Set or Ordered geomet
   
 ---  
 [Top]
-
 #### Insert of ShapeDesign feature in Body,GS And OGS 
 
 Created Point , Wires or surface can be inserted in any of Body GS or OGS 
@@ -457,7 +436,6 @@ Ex: If the set is a Body , only surfacic extrude can be insert in a Body
 ---  
   
 [Top]
-
 #### Save and close session 
 
 Save part and close the session 
@@ -487,7 +465,6 @@ Save part and close the session
 [Top]
 
 * * *
-
 ### In Short
 
 This use case has demonstrated different solution and capabilities to create Body , GS or OGS and propose depending of obejct type different solution for insert 
@@ -495,18 +472,16 @@ This use case has demonstrated different solution and capabilities to create Bod
 [Top]
 
 * * *
-
 ### References
 
-[1] |  [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] |  [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [ About Generative Shape Design Features](../CAAGsiTechArticles/CAAGsiShapeDesignFeature.htm)  
-[3] |  [ Inserting a Shape Design Feature in the procedural view](../CAAGsiTechArticles/CAAGsiInsertInProceduralView.htm)  
-[4] | [ Updating a shape Design feature ](../CAAGsiTechArticles/CAAGsiUpdateShapeDesign.htm)  
+[2] |  [ About Generative Shape Design Features](../CAAGsiTechArticles/CAAGsiShapeDesignFeature.md)  
+[3] |  [ Inserting a Shape Design Feature in the procedural view](../CAAGsiTechArticles/CAAGsiInsertInProceduralView.md)  
+[4] | [ Updating a shape Design feature ](../CAAGsiTechArticles/CAAGsiUpdateShapeDesign.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [May 2004] | Document created  

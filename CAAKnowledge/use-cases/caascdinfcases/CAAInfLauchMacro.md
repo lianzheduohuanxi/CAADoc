@@ -1,21 +1,18 @@
 ---
 title: "Adding a Macro as a Command in a Toolbar"
-category: "general"
+category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAInstallation", "CAADoc"]
-source_file: "Doc\online\CAAScdInfUseCases\CAAInfLauchMacro.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfLauchMacro.md"
 converted: "2026-05-11T17:31:52.379510"
 ---
 
 | 
-
 ## Infrastructure
 
 | 
-
 ## Launching a CAA V5 Automation Use Case  
   
----|---  
   
 * * *
 
@@ -28,7 +25,6 @@ CAA V5 Automation Uses Cases are macros that may access existing files. To make 
 > which specific setup may be required. 
 
 _Note:_ topics explained in this article, launching macros and retrieving existing files from the documentation installation, do not doesn't apply to documentation in HtmlHelp format or accessed through a http server.
-
 ### Where to find CAA V5 Automation Uses Cases macros
 
 Samples come with a documentation that most of the time contains the name of the macro and the module it belongs to.
@@ -52,16 +48,14 @@ is the documentation view of the
     `xxx/myModule/macros/myMacro.catvbs` or ` xxx/myModule/macros/myMacro.CATScript`
 
 macro.
-
 ### How to launch a macro
 
 Macros can also be launched from the V5 session.
 
  
 
-![](images/atarget.gif) |  This task explains how to launch a CAA V5 Automation Use case macro  
+  This task explains how to launch a CAA V5 Automation Use case macro  
 ---|---  
-![](images/ascenari.gif) | 
 
   1. Select the **Tools- >Macro->Macros... **command to display the Macro dialog box, 
 
@@ -75,8 +69,10 @@ Macros can also be launched from the V5 session.
   
 Please note that the Macro Library must be set to the folder containing the macro. 
 
+```vbscript
 For more details, on how to run a macro, and set macro libraries, consult in the V5 documentation, _Infrastructure Solutions_ , _Infrastructure Users Guide_ , the _Recording, Running And Editing Macros_ topic.
 
+```
 ### Specific Setups
 
 Unless explicitely specified, CAA Automation Use Cases macros that use documents search those documents in a location relative to where the documentation is installed and look for the documentation installation path in the `CATDocView` environment variable. If this variable is required by the macro but not set, when running the macro, the _No Doc Path Defined_ error message is diplayed:
@@ -86,8 +82,6 @@ Unless explicitely specified, CAA Automation Use Cases macros that use documents
 If it is set to a place where documents cannot be retrieved, an error message _Cannot Load Document_ is displayed.
 
   * If you access the CAA V5 Automation documentation in a _V5 product documentation installation_ linked to a V5 product installation, this variable is already set to
-
-
 
 > > `<DocInstallation>`
 > 
@@ -103,8 +97,11 @@ If it is set to a place where documents cannot be retrieved, an error message _C
 
 > `<CAAInstallation>/CAADoc/Doc`
 
+```vbscript
 For more details, on how to create and modifiy _Environments_ , consult in the V5 documentation, _Infrastructure Solutions_ , _Installation And Deployment Guide_ , the _Managing Environments_ topic.
  
+```
+
  ![](images/aendtask.gif)
  
  [Top]

@@ -3,7 +3,7 @@ title: "Creating a Multi Patch NURBS Surface"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsOverview", "CAAGMOperatorsInterfaces", "CAATopNurbsSurfMultiPatch", "CAADoc", "CATICGMObject", "CAAGMModelGemBrowser", "CAAGMOperatortsNurbsSurfMultiPatch", "CATICGMTopSkin", "CATIA", "CAAGMOperatorsNurbsSurfMultiPatch"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcTopNurbsSurfMultiPatch.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopNurbsSurfMultiPatch.md"
 converted: "2026-05-11T17:33:49.224912"
 ---
 
@@ -27,7 +27,7 @@ What You Will Learn With This Use Case This use case is intended to help you cre
     * Creates a rational NURBS surface and modifies one of the pole weight.
     * Creates a skin relying on the NURBS
     * Writes the model and closes the container.
-How to Launch CAAGMOperatorsNurbsSurfMultiPatch To launch CAAGMOperatortsNurbsSurfMultiPatch , you will need to set up the build time environment, then compile CAAGMOperatorsNurbsSurfMultiPatch.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. If you simply type CAAGMOperatorsNurbsSurfMultiPatch with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsNurbsSurfMultiPatch e:\NurbsSurfMultiPatch .NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsNurbsSurfMultiPatch Code The CAAGMOperatorsNurbsSurfMultiPatch use case is made of a main named CAATopNurbsSurfMultiPatch.cpp located in the CAAGMOperatorsNurbsSurfMultiPatch .m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsNurbsSurfMultiPatch.m\` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step There are six steps in CAATopNurbsSurfMultiPatch.cpp:
+How to Launch CAAGMOperatorsNurbsSurfMultiPatch To launch CAAGMOperatortsNurbsSurfMultiPatch , you will need to set up the build time environment, then compile CAAGMOperatorsNurbsSurfMultiPatch.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. If you simply type CAAGMOperatorsNurbsSurfMultiPatch with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsNurbsSurfMultiPatch e/NurbsSurfMultiPatch .NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsNurbsSurfMultiPatch Code The CAAGMOperatorsNurbsSurfMultiPatch use case is made of a main named CAATopNurbsSurfMultiPatch.cpp located in the CAAGMOperatorsNurbsSurfMultiPatch .m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsNurbsSurfMultiPatch.m\` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step There are six steps in CAATopNurbsSurfMultiPatch.cpp:
     1. Creating the Geometry Factory
     2. Creating the Knot Vector
     3. Creating the Grid of Poles
@@ -158,9 +158,9 @@ The resulting skin looks something like this (the green bullets are the control 
 
 In Short Here are a few relations to remember when creating a NURBS `**Total** number of nodes = number of poles + degree + 1`  
 `Number of poles = sum of multiplicities - last multiplicity`  
-`Number of poles = sum of multiplicities - (degree + 1)` References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+`Number of poles = sum of multiplicities - (degree + 1)` References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] | [Overview of the Topological Operators](CAACgmUcTopOverview.htm)  
-[3] |  [ About NURBS](../CAACgmModel/CAACgmTaGobAboutNurbs.htm)  
+[2] | [Overview of the Topological Operators](CAACgmUcTopOverview.md)  
+[3] |  [ About NURBS](../CAACgmModel/CAACgmTaGobAboutNurbs.md)  
 History Version: **1** [Feb 2000] | Document created  
 ---|---

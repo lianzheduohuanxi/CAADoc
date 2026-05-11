@@ -1,9 +1,10 @@
 ---
 title: "VPMInterfaces Modifications"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR12"
+version: "V5R12"
 tags: ["CATICfgMileStone"]
-source_file: "Doc\online\CAACenAPIChangesR12\VPMInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR12/VPMInterfaces.md"
 converted: "2026-05-11T17:33:50.627309"
 ---
 

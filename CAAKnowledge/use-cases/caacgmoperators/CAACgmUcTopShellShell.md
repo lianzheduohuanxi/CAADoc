@@ -3,10 +3,9 @@ title: "Corner"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CATICGMHybIntersect", "CAAGMOperatorsIntersectShellShell"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcTopShellShell.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopShellShell.md"
 converted: "2026-05-11T17:33:49.305940"
 ---
-
 
     
     
@@ -60,7 +59,7 @@ converted: "2026-05-11T17:33:49.305940"
     the intersectShellShell.NCGM input file which is delivered in 
     CAAGMOperatorsInterfaces.edu/FunctionTests/InputData. If you are not already 
     familiar with geometric modeler use cases, go to
-    [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm).
+    [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md).
     The input data are the plane in blue and the surface in yellow.
     
       Fig.1 Intersecting Shells
@@ -90,11 +89,11 @@ converted: "2026-05-11T17:33:49.305940"
       
   
 ---  
-the resulting object is the wire in purple. References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+the resulting object is the wire in purple. References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)  
-[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)  
-[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.htm)  
-[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.htm)  
+[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)  
+[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)  
+[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.md)  
+[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.md)  
 History Version: **1** [Feb 2014] | Document created  
 ---|---

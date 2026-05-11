@@ -3,18 +3,15 @@ title: "Understanding the Basics of the Visualization Process"
 category: "use case"
 module: "CAAVisUseCases"
 tags: ["CAAVisBasicApplication", "CAAVisBasicAppli", "CAAVisualization", "CAAVisBasicWindow", "CAAVisBAseView"]
-source_file: "Doc\online\CAAVisUseCases\CAAVisSampleViewerBasics.htm"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleViewerBasics.md"
 converted: "2026-05-11T17:31:52.210579"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## 3D Visualization
 
 | 
-
 ### Understanding the Basics of the Visualization Process
 
 _Creating and displaying representations in a viewer_  
@@ -22,7 +19,6 @@ _Creating and displaying representations in a viewer_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to create a _CAT3DFaceGP_ class instance to tesselate a torus and how to display it using a _CAT3DCustomRep_ instance. 
@@ -40,19 +36,16 @@ This article shows how to create a _CAT3DFaceGP_ class instance to tesselate a t
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case explains how to create representations, to set their graphic attributes, to compute their bounding sphere, and how to display them in a viewer.
 
 [Top]
-
 ### The CAAVisBasicAppli Use Case
 
 CAAVisBasicAppli is a use case of the CAAVisualization.edu framework that illustrates Vizualization framework capabilities.
 
 [Top]
-
 #### What Does CAAVisBasicAppli Do
 
 CAAVisBasicAppli includes an interactive application that displays a 3D navigation viewer in its document window. This viewer shows a simple model representation made of a cuboid and a sphere. They are displayed as soon as the application is launched.
@@ -60,13 +53,11 @@ CAAVisBasicAppli includes an interactive application that displays a 3D navigati
 ![](images/CAAVisSampleBasic.jpg)
 
 [Top]
-
 #### How to Launch CAAVisBasicAppli
 
 To launch CAAVisBasicAppli, you will need to set up the build time environment, then compile CAAVisBasicAppli along with its prerequisites, set up the run time environment, and then execute the use case [1].
 
 [Top]
-
 #### Where to Find the CAAVisBasicAppli Code
 
 The CAAVisBasicAppli use case is made of two classes named _CAAVisBasicApplication_ and _CAAVisBasicWindow_ located in the CAAVisBasicAppli.m module of the CAAVisualization.edu framework:
@@ -78,9 +69,7 @@ Unix | `InstallRootDirectory/CAAVisualization.edu/CAAVisBasicAppli.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
-
 # | Step | Where  
 ---|---|---  
 1 | Create a 3D navigation viewer instance | `CreateViewer` method  
@@ -94,7 +83,6 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 Only the cuboid is taken as an example and described. All the methods belong to the _CAAVisBasicWindow_ class.
 
 [Top]
-
 #### Creating a 3D Navigation Viewer Instance
 
 The 3D navigation viewer is an instance of the _CATNavigation3DViewer_ class. It is created in the `CreateViewer` method of the _CAAVisBasicWindow_ class that is called when the application is launched. 
@@ -123,7 +111,6 @@ The `_pViewer` pointer to the 3D navigation viewer is kept as a data member of t
 The `SetBackGroundColor` method sets the viewer background color to a shade of blue. The `Attach4Sides` method attaches the four sides of the viewer to those of the window. This makes the viewer occupy the whole window space.
 
 [Top]
-
 #### Creating a 3D Representation Bag
     
     
@@ -137,7 +124,6 @@ The `SetBackGroundColor` method sets the viewer background color to a shade of b
 The `CreateModelRepresentation` of _CAAVisBasicWindow_ begins by creating the representation bag to attach to the viewer.
 
 [Top]
-
 #### Creating the Cuboid 3D Representation
     
     
@@ -158,7 +144,6 @@ The `CreateModelRepresentation` of _CAAVisBasicWindow_ begins by creating the re
 The cuboid geometric components are created. These comprise a point and three vectors that define the three edges starting from this point. They are then passed to the _CAT3DCuboidRep_ constructor.
 
 [Top]
-
 #### Setting Graphic Attributes to the Representation
     
     
@@ -173,7 +158,6 @@ The cuboid geometric components are created. These comprise a point and three ve
 The cuboid is now yellow.
 
 [Top]
-
 #### Computing the Graphic Representation Bounding Box
 
 The graphic representation needs a bounding box to improve the display process.
@@ -191,7 +175,6 @@ The graphic representation needs a bounding box to improve the display process.
 This bounding box is sphere whose center is the cuboid center, and whose radius is the distance between this center and the point used as corner when defining the cuboid. The bounding box is used to decide whether the representation should be displayed with respect to the current viewpoint without interpreting the representation itself, thus increasing display performance.
 
 [Top]
-
 #### Adding the Representation to the Representation Bag
     
     
@@ -204,7 +187,6 @@ This bounding box is sphere whose center is the cuboid center, and whose radius 
 The created representation is added to the representation bag thanks to the `AddChild` method.
 
 [Top]
-
 #### Displaying the Representation Bag and Its Children
     
     
@@ -224,7 +206,6 @@ The representation bag is added to viewer, and the viewer is asked to draw itsel
 [Top]
 
 * * *
-
 ### In Short
 
 This use case shows the objects involved in the visualization process. A representation bag is first created to contain the other representations. Each representation is then created with its own geometric characteristics, can be assigned attributes, and its bounding sphere is computed. Each representation is added to the representation bag, and the bag is set to the viewer. Then the viewer is asked to draw itself.
@@ -232,15 +213,13 @@ This use case shows the objects involved in the visualization process. A represe
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Mar 2000] | Document created  

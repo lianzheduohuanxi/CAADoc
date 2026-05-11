@@ -1,9 +1,10 @@
 ---
 title: "MecModInterfaces Modifications"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR10"
+version: "V5R10"
 tags: ["CATITTRSList", "CATIRGETopology", "CATITTRS", "CATIGeometricalElement", "CATIRGE"]
-source_file: "Doc\online\CAACenAPIChangesR10\MecModInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR10/MecModInterfaces.md"
 converted: "2026-05-11T17:33:50.220734"
 ---
 

@@ -1,9 +1,9 @@
 ---
 title: "mkIc2Xml"
-category: "general"
+category: "use-case"
 module: "CAABtlQuickRefs"
 tags: ["CATIAR211", "CATIAR209"]
-source_file: "Doc\online\CAABtlQuickRefs\CAABtlMkIc2XmlV5.htm"
+source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkIc2XmlV5.md"
 converted: "2026-05-11T17:33:49.978874"
 ---
 
@@ -58,7 +58,6 @@ Example Conversion of frameworks A, A.tst, A.edu Identity Cards from .h to XML.
     
 
 Is not supported and will make mkIc2Xml fail. Remove such comments before using mkIc2Xml. #elsif not Supported The #elsif preprocessor directive has no match in IdentityCard.xml. The condition need to be rewritten before using mkIc2Xml. For instance
-    
     #ifdef CATIAR211
     XXX
     #elsif CATIAR209
@@ -67,9 +66,7 @@ Is not supported and will make mkIc2Xml fail. Remove such comments before using 
     ZZZ
     #endif
     
-
 #ifdef in #ifdef not Supported #ifdef in #ifdef is not supported if both are used for a level monocoding or for an operating system monocoding. For example, this is supported:
-    
     #ifdef CATIAR211
     #if os intel_a
     xxx
@@ -79,7 +76,6 @@ Is not supported and will make mkIc2Xml fail. Remove such comments before using 
     
 
 This is not supported:
-    
     #ifdef CATIAR209
     #ifdef CATIAR211
     xxx

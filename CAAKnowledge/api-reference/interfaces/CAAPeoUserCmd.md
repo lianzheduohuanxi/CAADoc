@@ -2,16 +2,20 @@
 title: "CAAPeoUserCmd"
 type: "interface"
 module: "CAAOptimizationInterfaces"
+category: "framework"
 base: "CATCommand"
+inheritance_chain: "CAAPeoUserCmd → CATCommand"
 method_count: 0
 visibility: "protected"
+has_tie_binding: false
 verified: true
 ---
-
 # CAAPeoUserCmd
 
 **基类**: CATCommand  
+**继承链**: CAAPeoUserCmd → CATCommand  
 **模块**: CAAOptimizationInterfaces  
+**分类**: framework  
 **可见性**: protected  
 **方法数**: 0
 
@@ -19,7 +23,7 @@ verified: true
 
 ## 说明
 
-该接口没有声明自定义方法，作为标记接口或配置接口使用。
+该接口作为标记接口或配置接口使用，无自定义方法。
 
 ## 依赖
 

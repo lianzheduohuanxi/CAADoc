@@ -1,22 +1,19 @@
 ---
 title: "GSMInterfaces Framework Modifications in V5R16"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR16"
+version: "V5R16"
 tags: []
-source_file: "Doc\online\CAACenAPIChangesR16\GSMInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR16/GSMInterfaces.md"
 converted: "2026-05-11T17:33:51.220152"
 ---
 
 | 
-
 # CAA C++ API Modifications
 
 | 
-
 ##  GSMInterfaces Framework Modifications in V5R16 
 
-|   
----|---|---  
   
 * * *
 

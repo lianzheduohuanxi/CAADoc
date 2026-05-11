@@ -3,18 +3,15 @@ title: "Creating an Interruptible Task"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CATIProgressTask", "CAAAfrProgressTaskSampleCmd", "CAAApplicationFrame", "CAAProgressClock", "CAAGeometry", "CAAAfrProgressTaskSampleId", "CAAAfrProgressTask", "CATIA", "CATIProgressTaskUI"]
-source_file: "Doc\online\CAAAfrUseCases\CAAAfrSampleProgressTask.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleProgressTask.md"
 converted: "2026-05-11T17:17:55.806965"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## User Interface - Frame
 
 | 
-
 ### Creating an Interruptible Task
 
 _Using CATIProgressTask, CATIProgressTaskUI,and CATTaskController_  
@@ -22,7 +19,6 @@ _Using CATIProgressTask, CATIProgressTaskUI,and CATTaskController_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to create an interruptible task with an indicator of progression. 
@@ -36,10 +32,7 @@ This article shows how to create an interruptible task with an indicator of prog
   * **In Short**
   * **References**
 
-
-
 * * *
-
 ### What You Will Learn With This Use Case
 
 Some processes can take so long that a user interface indicating the progression can be very useful. It can be also interesting to give the end user the ability to stop the task. This article shows how this information and control can be implemented by a DS component. You will need to:
@@ -48,11 +41,9 @@ Some processes can take so long that a user interface indicating the progression
   * Use the _CATTaskController_ class to launch the task.
 
 [Top]
-
 ### The CAAAfrProgressTask Use Case
 
 CAAAfrProgressTask is a use case of the CAAApplicationFrame.edu framework that illustrates ApplicationFrame framework capabilities. [Top]
-
 #### What Does CAAAfrProgressTask Do
 
 This use case simulates a long process . The task is composed of fifty steps, each step consisting in to execution of the following code: | 
@@ -77,8 +68,6 @@ In this dialog box there are four parts (surrounded in red) that the programmer 
   * The name  of the object concerned by the task
   * A comment just above the progress bar
 
-
-
 The others parts are:
 
   * Three ways of estimating the progress of the process 
@@ -86,8 +75,6 @@ The others parts are:
     * The percentage of the task already executed
     * An estimation of the remaining time 
   * A Cancel button used to stop the process ( this button is optional)
-
-
 
 This task is launched from an interactive command, that has been added to the  " CAA V5 Geometrical Analysis" workbench of the CAAGeometry document. This command, "Progress Task", has been defined in the "Analysis" menu and in the  "Mathematical Analysis"  toolbar:
 
@@ -102,13 +89,10 @@ _Fig.3: The "_Progress Task" Command ![](images/CAAAfrProgressTaskCommandDlg.jpg
   * The "Interruptible Task" check button enables the display of the  "Cancel" button in the dialog box containing the progress bar [Fig.1].
   * If the end use clicks on the "Compute" button, the task is launched.
 
-
-
 [Top]
-
 #### How to Launch CAAAfrProgressTask
 
-See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.htm)" use case for a detailed description of how this use case should be launched. For the specific scenario :
+See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched. For the specific scenario :
 
 Launch CATIA. When the application is ready:
 
@@ -126,10 +110,7 @@ Launch CATIA. When the application is ready:
     * The **Computing** Dialog box appears with the **Cancel** button. Wait until the end of the process
   * Click **Close** in the **Interruptible Task** dialog box.
 
-
-
 [Top]
-
 #### Where to Find the CAAAfrProgressTask Code
 
 The CAAAfrProgressTask use case is made of a single file located in the CAAAfrProgressTask.m module of the CAAApplicationFrame.edu framework:
@@ -141,7 +122,6 @@ Unix | `InstallRootDirectory/``CAAApplicationFrame.edu/CAAAfrProgressTask.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are two logical steps in CAAAfrProgressTask:
@@ -149,10 +129,7 @@ There are two logical steps in CAAAfrProgressTask:
   1. Creating the Interactive Command
   2. Implementing the CATIProgressTask Interface
 
-
-
 [Top]
-
 #### Creating the Interactive Command
 
 This command is called _CAAAfrProgressTaskSampleCmd_. This section describes:
@@ -160,7 +137,6 @@ This command is called _CAAAfrProgressTaskSampleCmd_. This section describes:
   1. The header file
   2. The source file
   3. The NLS resource file
-
 
   1. The header file
     
@@ -469,10 +445,7 @@ The `CAAAfrProgressTaskSampleCmd``.CATNls `file is` `located in the `CAAApplicat
   
 ---  
 
-
-
 [Top]
-
 #### Implementing the CATIProgressTask  Interface
 
 The _CAAAfrProgressTaskSampleCmd_ class implements the _CATIProgressTask_ interface. This section describes how this is done:
@@ -484,7 +457,6 @@ The _CAAAfrProgressTaskSampleCmd_ class implements the _CATIProgressTask_ interf
   5. Coding the GetIcon method
   6. Modifying the CAAAfrProgressTaskSampleCmd.CATNls file
   7. Declaring the command as a component 
-
 
   1. Declaring the methods of the _CATIProgressTask_ interface in the header file
     
@@ -673,12 +645,9 @@ The interface dictionary, the CAAApplicationFrame.edu.dico file, located in the 
   
 ---  
 
-
-
 [Top]
 
 * * *
-
 ### In Short
 
 This article shows how to create an interruptible task with an indicator of progression. The object which contains the task implements the _CATIProgressTask_ interface and the task is itself launched by an _CATTaskControler_ class instance.
@@ -686,15 +655,13 @@ This article shows how to create an interruptible task with an indicator of prog
 _[_Top]
 
 * * *
-
 ### References
 
-[1] | [Object Modeler Component and Implementation Inheritance](../CAASysTechArticles/CAASysOMInheritance.htm)  
+[1] | [Object Modeler Component and Implementation Inheritance](../CAASysTechArticles/CAASysOMInheritance.md)  
 ---|---  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Mar 2002] | Document created  

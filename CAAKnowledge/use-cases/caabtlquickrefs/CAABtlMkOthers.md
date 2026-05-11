@@ -1,9 +1,9 @@
 ---
 title: "mkmk Commands"
-category: "general"
+category: "use-case"
 module: "CAABtlQuickRefs"
 tags: ["CAA2", "CATIA"]
-source_file: "Doc\online\CAABtlQuickRefs\CAABtlMkOthers.htm"
+source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkOthers.md"
 converted: "2026-05-11T17:33:50.021658"
 ---
 
@@ -181,7 +181,7 @@ Warning
 
 `[-p Path1[:Path2]]`
 
-> Concatenate workspaces where to search for the prerequisite frameworks. `Path1` and `Path2` represent workspace root folder paths, and must be separated using a ":" (colon) with Unix and a ";" (semi-colon) with Windows. Windows workspace paths can be mapped drive paths, such a e:\WorkspaceToAdd, or UNC paths, such as \\mycomputer\home\WorkspaceToAdd.
+> Concatenate workspaces where to search for the prerequisite frameworks. `Path1` and `Path2` represent workspace root folder paths, and must be separated using a ":" (colon) with Unix and a ";" (semi-colon) with Windows. Windows workspace paths can be mapped drive paths, such a e/WorkspaceToAdd, or UNC paths, such as \\mycomputer\home\WorkspaceToAdd.
 
 `[-e]`
 
@@ -219,7 +219,7 @@ Warning
 
 Examples In the current workspace, mkGetPreq was previously run to define a dynamic search path to access the prerequisites. To basically obtain the list of prerequisites of framework SampleFramework1:
     
-    E:\MyWorkspace<mkPrintPreq Framework1
+    E/MyWorkspace<mkPrintPreq Framework1
     # Populating 2 workspace(s) with frameworks and modules ...
     # 2 workspace(s) populated with 301 frameworks and 1688 modules.
     BSFBuildtimeData
@@ -229,16 +229,16 @@ Examples In the current workspace, mkGetPreq was previously run to define a dyna
 
 To get more information:
     
-    E:\MyWorkspace<>mkprintpreq -l Framework1
+    E/MyWorkspace<>mkprintpreq -l Framework1
     # Populating 2 workspace(s) with frameworks and modules ...
     # 2 workspace(s) populated with 301 frameworks and 1688 modules.
     
     Required frameworks for: Framework1
     ------------------------------------
-    Direct   : BSFBuildtimeData in C:\Program Files\Dassault Systemes\B24\.\BSFBuildtimeData
-    Direct   : System           in C:\Program Files\Dassault Systemes\B24\.\System
-    Indirect : LCCommon         in C:\Program Files\Dassault Systemes\B24\.\LCCommon
-    Indirect : SpecialAPI       in C:\Program Files\Dassault Systemes\B24\.\SpecialAPI
+    Direct   : BSFBuildtimeData in C/Program Files\Dassault Systemes\B24\.\BSFBuildtimeData
+    Direct   : System           in C/Program Files\Dassault Systemes\B24\.\System
+    Indirect : LCCommon         in C/Program Files\Dassault Systemes\B24\.\LCCommon
+    Indirect : SpecialAPI       in C/Program Files\Dassault Systemes\B24\.\SpecialAPI
 
  **mkCopyFW**  
 ---  
@@ -457,7 +457,7 @@ Warning
       * The syntax is different between Unix and Windows: 
         * Path1:Path2:Path3 is the Unix syntax 
         * Path1;Path2;Path3 is the Windows syntax
-      * With Windows, mkrun requires the folder C:\temp. Make sure this folder exists on your computer.
+      * With Windows, mkrun requires the folder C/temp. Make sure this folder exists on your computer.
 `[-type <LLevel>]`
 
 > to indicate a list of levels of concatenation:
@@ -483,7 +483,7 @@ Warning
 
 `[-keep]`
 
-> to keep the shell which starts the command. Default the shell is removed after the run. The shell name is deduced from the environment name (-e option). Its name is $HOME/mkrun_envir.sh on Unix and C:\temp\mkrun_envir.bat on Windows This shell will use the concatenation as defined by the mkGetPreq command (Install_config file).
+> to keep the shell which starts the command. Default the shell is removed after the run. The shell name is deduced from the environment name (-e option). Its name is $HOME/mkrun_envir.sh on Unix and C/temp\mkrun_envir.bat on Windows This shell will use the concatenation as defined by the mkGetPreq command (Install_config file).
 
 `[-c command ...]`
 

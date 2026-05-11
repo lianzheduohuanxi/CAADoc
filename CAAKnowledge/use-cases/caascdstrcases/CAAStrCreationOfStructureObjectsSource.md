@@ -1,16 +1,15 @@
 ---
 title: "CAAStrCreationOfStructureObjects.CATScript"
-category: "general"
+category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CAAStrCreationOfStructureObjects", "CATIA"]
-source_file: "Doc\online\CAAScdStrUseCases\CAAStrCreationOfStructureObjectsSource.htm"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfStructureObjectsSource.md"
 converted: "2026-05-11T17:31:50.888586"
 ---
 
-
     Option Explicit
+```vbscript
     ' COPYRIGTH DASSAULT SYSTEMES 2000
-    
     ' ***********************************************************************
     '   Purpose:      Create structure objects
     '   Assumtions:   
@@ -19,9 +18,13 @@ converted: "2026-05-11T17:31:50.888586"
     '   Locales:      English 
     '   CATIA Level:  V5R6 
     ' ***********************************************************************
+```
+
     
+```vbscript
     Sub CATMain()
     
+```vbscript
         Dim doc As Document
     
         Dim StrWorkbench As StrWorkbench
@@ -36,11 +39,10 @@ converted: "2026-05-11T17:31:50.888586"
     
         Dim documents As Documents
         Set documents = CATIA.Documents
-    
+```vbscript
         '============================================================
         ' extremities definition for columns
         '============================================================
-    
         ' column 1
         Dim reference11 As Reference
         Set reference11 = rootProduct.CreateReferenceFromName("Produit1/grid/!Selection_BorderFVertex:(BEdge:(Brp:(GSMIntersect.12;(Brp:(GSMPlane.3);Brp:(GSMIntersect.10;(Brp:(GSMPlane.1);Brp:(GSMPlane.2)))));None:(Limits1:();Limits2:()));GSMIntersect.12)")
@@ -51,7 +53,6 @@ converted: "2026-05-11T17:31:50.888586"
         Set reference12 = rootProduct.CreateReferenceFromName("Produit1/grid/!Selection_BorderFVertex:(BEdge:(Brp:(GSMIntersect.11;(Brp:(xy-plane);Brp:(GSMIntersect.10;(Brp:(GSMPlane.1);Brp:(GSMPlane.2)))));None:(Limits1:();Limits2:()));GSMIntersect.11)")
         Dim extremity12 As AnyObject
         Set extremity12 = strFactory.AddDefExtFromReference(reference12, 0)
-    
         ' column 2
         Dim reference21 As Reference
         Set reference21 = rootProduct.CreateReferenceFromName("Produit1/grid/!Selection_BorderFVertex:(BEdge:(Brp:(GSMIntersect.9;(Brp:(GSMPlane.3);Brp:(GSMIntersect.7;(Brp:(GSMPlane.1);Brp:(zx-plane)))));None:(Limits1:();Limits2:()));GSMIntersect.9)")
@@ -62,7 +63,6 @@ converted: "2026-05-11T17:31:50.888586"
         Set reference22 = rootProduct.CreateReferenceFromName("Produit1/grid/!Selection_BorderFVertex:(BEdge:(Brp:(GSMIntersect.8;(Brp:(xy-plane);Brp:(GSMIntersect.7;(Brp:(GSMPlane.1);Brp:(zx-plane)))));None:(Limits1:();Limits2:()));GSMIntersect.8)")
         Dim extremity22 As AnyObject
         Set extremity22 = strFactory.AddDefExtFromReference(reference22, 0)
-    
         ' column 3
         Dim reference31 As Reference
         Set reference31 = rootProduct.CreateReferenceFromName("Produit1/grid/!Selection_BorderFVertex:(BEdge:(Brp:(GSMIntersect.5;(Brp:(xy-plane);Brp:(GSMIntersect.4;(Brp:(yz-plane);Brp:(GSMPlane.2)))));None:(Limits1:();Limits2:()));GSMIntersect.5)")
@@ -73,7 +73,6 @@ converted: "2026-05-11T17:31:50.888586"
         Set reference32 = rootProduct.CreateReferenceFromName("Produit1/grid/!Selection_BorderFVertex:(BEdge:(Brp:(GSMIntersect.6;(Brp:(GSMPlane.3);Brp:(GSMIntersect.4;(Brp:(yz-plane);Brp:(GSMPlane.2)))));None:(Limits1:();Limits2:()));GSMIntersect.6)")
         Dim extremity32 As AnyObject
         Set extremity32 = strFactory.AddDefExtFromReference(reference32, 0)
-    
         ' column 4
         Dim reference41 As Reference
         Set reference41 = rootProduct.CreateReferenceFromName("Produit1/grid/!Selection_BorderFVertex:(BEdge:(Brp:(GSMIntersect.3;(Brp:(GSMPlane.3);Brp:(GSMIntersect.1;(Brp:(yz-plane);Brp:(zx-plane)))));None:(Limits1:();Limits2:()));GSMIntersect.3)")
@@ -84,54 +83,75 @@ converted: "2026-05-11T17:31:50.888586"
         Set reference42 = rootProduct.CreateReferenceFromName("Produit1/grid/!Selection_BorderFVertex:(BEdge:(Brp:(GSMIntersect.2;(Brp:(xy-plane);Brp:(GSMIntersect.1;(Brp:(yz-plane);Brp:(zx-plane)))));None:(Limits1:();Limits2:()));GSMIntersect.2)")
         Dim extremity42 As AnyObject
         Set extremity42 = strFactory.AddDefExtFromReference(reference42, 0)
-    
         '============================================================
         ' columns creation
         '============================================================
+```
+
     
+```
+
         dim sectionName as string
-        sectionName = InputBox("Section path","Parameters", "e:\tmp\HEA120.CATPart")
-        
+        sectionName = InputBox("Section path","Parameters", "e/tmp\HEA120.CATPart")
         ' column 1    
+```vbscript
         Dim docSection1 As Document
         Set docSection1 = documents.Read(sectionName)
     
         Dim section1 As StrSection
         Set section1 = strFactory.AddSection(docSection1)
     
+```
+
         dim member1 as StrMember
+```vbscript
         Set member1 = strFactory.AddMember(section1, "catStrCenterCenter", 0, extremity11, extremity12, "Column")
-            
+```vbscript
         ' column 2
         Dim docSection2 As Document
         Set docSection2 = documents.Read(sectionName)
     
         Dim section2 As StrSection
         Set section2 = strFactory.AddSection(docSection2)
+```
+
     
+```
+
         dim member2 as StrMember
+```vbscript
         Set member2 = strFactory.AddMember(section2, "catStrCenterCenter", 0, extremity21, extremity22, "Column")
-            
+```vbscript
         ' column 3
         Dim docSection3 As Document
         Set docSection3 = documents.Read(sectionName)
     
         Dim section3 As StrSection
         Set section3 = strFactory.AddSection(docSection3)
+```
+
     
+```
+
         dim member3 as StrMember
+```vbscript
         Set member3 = strFactory.AddMember(section3, "catStrCenterCenter", 0, extremity31, extremity32, "Column")
-            
+```vbscript
         ' column 4
         Dim docSection4 As Document
         Set docSection4 = documents.Read(sectionName)
     
         Dim section4 As StrSection
         Set section4 = strFactory.AddSection(docSection4)
+```
+
     
+```
+
         dim member4 as StrMember
+```vbscript
         Set member4 = strFactory.AddMember(section4, "catStrCenterCenter", 0, extremity41, extremity42, "Column")
-    
+```vbscript
         '============================================================
         ' end plates creation
         '============================================================
@@ -147,13 +167,11 @@ converted: "2026-05-11T17:31:50.888586"
     	
         Dim plate4 As StrPlate
         Set plate4 = strFactory.AddRectangularEndPlate(member4, catEndExtremity, 0.005, 0.2, 0.2, catStrStandardOrientation, "EndPlate")
-    
         '============================================================
         ' plate creation
         '============================================================
     
         Dim contour(3) As Reference
-    
         '============================================================
         ' NOTE:
         ' Since this Macro is using Brep information to set contour, it can be run successfully only once in a session
@@ -170,9 +188,18 @@ converted: "2026-05-11T17:31:50.888586"
     
         Dim plate As StrPlate
         Set plate = strFactory.AddPlate(support, 0.005, catStrStandardOrientation, contour, 0.0, "PlateType")
+```
+
     
+```
+
+```vbscript
     End Sub
     
+```
+
     
     
     
+
+```

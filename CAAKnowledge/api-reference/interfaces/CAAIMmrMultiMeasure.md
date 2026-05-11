@@ -2,48 +2,36 @@
 title: "CAAIMmrMultiMeasure"
 type: "interface"
 module: "CAAMechanicalModeler"
+category: "framework"
 base: "CATBaseUnknown"
+inheritance_chain: "CAAIMmrMultiMeasure → CATBaseUnknown"
 method_count: 5
 visibility: "protected"
+has_tie_binding: true
 verified: true
 ---
+> **TIE实现**: unknown
 
 # CAAIMmrMultiMeasure
 
 **基类**: CATBaseUnknown  
+**继承链**: CAAIMmrMultiMeasure → CATBaseUnknown  
 **模块**: CAAMechanicalModeler  
+**分类**: framework  
 **可见性**: protected  
 **方法数**: 5
-
-## 方法列表
-
-### SetInputGeomFeature
-```cpp
-HRESULT SetInputGeomFeature(CATBaseUnknown * ipGeomFeature);
-```
-
-### GetGeomFeature
-```cpp
-HRESULT GetGeomFeature(CATISpecObject** ioGeomFeature);
-```
-
-### GetLengthParameter
-```cpp
-HRESULT GetLengthParameter(CATICkeParm_var &oLengthParm);
-```
-
-### GetWetAreaParameter
-```cpp
-HRESULT GetWetAreaParameter(CATICkeParm_var &oWetAreaParm);
-```
-
-### GetVolumeParameter
-```cpp
-HRESULT GetVolumeParameter(CATICkeParm_var &oVolumeParm);
-```
 
 ## 依赖
 
 - `CAAMmrMultiMeasureAndMeasureSet.h`
 - `CATBaseUnknown.h`
+
+## TIE实现
+
+**实现文件**:
+- `CAAEMmrMeasureSetVisu.cpp`
+- `CAAEMmrMultiMeasure.cpp`
+- `CAAEMmrMultiMeasureAndMeasureSetFactory.cpp`
+- `CAAEMmrMultiMeasureAndMeasureSetVisProperties.cpp`
+- `CAAEMmrMultiMeasureBuild.cpp`
 

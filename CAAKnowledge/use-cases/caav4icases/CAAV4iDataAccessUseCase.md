@@ -3,18 +3,15 @@ title: "Retrieving Data of an Element of a V4 Document"
 category: "use case"
 module: "CAAV4iUseCases"
 tags: ["CAADoc", "CAACATIAV4Interfaces", "CAAV4iV4DataAccess", "CAAV4iEduV4DataAccess", "CATIAV4Interfaces"]
-source_file: "Doc\online\CAAV4iUseCases\CAAV4iDataAccessUseCase.htm"
+source_file: "Doc/online/CAAV4iUseCases/CAAV4iDataAccessUseCase.md"
 converted: "2026-05-11T17:33:45.752658"
 ---
-
 # 3D PLM PPR Hub Open Gateway
 
 | 
-
 ## V4 Access
 
 | 
-
 ### Retrieving Data of an Element of a V4 Document
 
 _Get the information contained in a model_  
@@ -22,7 +19,6 @@ _Get the information contained in a model_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to retrieves data of a V4 element. 
@@ -40,19 +36,16 @@ This article shows how to retrieves data of a V4 element. 
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show you how to retrieve data of an element of a model. 
 
 [Top] 
-
 ### The CAAV4iEduV4DataAccess Use Case
 
 CAAV4iEduV4DataAccess is a use case of the CAACATIAV4Interfaces.edu framework that illustrates CATIAV4Interfaces framework capabilities. 
 
 [Top] 
-
 #### What Does CAAV4iEduV4DataAccess Do
 
 CAAV4iEduV4DataAccess begins by opening the _.model_ document.  
@@ -62,7 +55,6 @@ Finally, data of the element are retrieved : the identificator, the primary and 
 The elements are removed. 
 
 [Top] 
-
 #### How to Launch CAAV4iEduV4DataAccess
 
 To launch CAAV4iEduV4DataAccess , you will need to set up the build time environment, then compile CAAV4iEduV4DataAccess along with its prerequisites, set up the run time environment, and then execute the use case [2].  
@@ -80,10 +72,7 @@ You can use the model `CUBE.model` located in `CAADoc/``CAA``CATIAV4Interfaces``
   * Windows : `InstallRootDirectory\CAADoc\CAA``CATIAV4Interfaces``.edu\CNext\resources\graphic`
   * Unix : `InstallRootDirectory/CAADoc/CAA``CATIAV4Interfaces``.edu/CNext/resources/graphic`
 
-
-
 [Top] 
-
 #### Where to Find the CAAV4iEduV4DataAccess Code
 
 The CAAV4iEduV4DataAccess use case is made of a single file located in the CAAV4iEduV4DataAccess.m module of the CAACATIAV4Interfaces.edu framework:  
@@ -95,7 +84,6 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
  
 
 [Top] 
-
 ### Step-by-Step
 
 There are 3 logical steps in CAAV4iEduV4DataAccess : 
@@ -104,10 +92,7 @@ There are 3 logical steps in CAAV4iEduV4DataAccess :
   2. Scaning the model
   3. Retrieving the data
 
-
-
 [Top] 
-
 #### Opening the model
     
     
@@ -125,7 +110,6 @@ The path of the model passed in argument is converted to a CATString and is used
 __ 
 
 [Top] 
-
 #### Scaning the model
     
     
@@ -149,7 +133,6 @@ CATV4iGisset retrieves the first set of the workspace _masterElem_.
 CATV4iGisels retrieves the first element of the set _setElem_. 
 
 [Top] 
-
 #### Retrieving the data
     
     
@@ -177,7 +160,6 @@ _...CATV4iGirvis(..._ retrieves graphical data about the element : show, pickabl
 [Top] 
 
 * * *
-
 ### In Short
 
 This use case provides a way to retrieves information of  elements of a model. 
@@ -185,16 +167,14 @@ This use case provides a way to retrieves information of  elements of a model.
 _[_Top] 
 
 * * *
-
 ### References
 
-[1] | [Scanning the model](CAAV4iScanUseCase.htm)  
+[1] | [Scanning the model](CAAV4iScanUseCase.md)  
 ---|---  
-[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Jul 2003] | Document created  

@@ -3,7 +3,7 @@ title: "Using the Topological Objects"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CATICGMIntersectionCrvCrv", "CAADoc", "CAATobTetra", "CATICGMObject", "CATICGMProjectionPtSur", "CAAGMModelGemBrowser", "CAAGMModelCreation", "CATIntersectionSurSur", "CAAGMModelInterfaces", "CAAGMModelTetra", "CATIA"]
-source_file: "Doc\online\CAACgmModel\CAACgmUcTobTetra.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTobTetra.md"
 converted: "2026-05-11T17:33:48.580181"
 ---
 
@@ -45,7 +45,7 @@ The description of the geometry and of the cells is not sufficient to describe t
     * The relative orientation between the geometry and the topology.
     * The relative orientation of a cell inside its domain.
     * The location of a domain: does it represent an internal or external boundary?
-How to Launch CAAGMModelTetra To launch CAAGMModelTetra, you will need to set up the build time environment, then compile CAAGMModelTetra.m along with its prerequisites, set up the run time environment, and then execute the use case [5]. If you simply type CAAGMModelTetra with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMModelTetra e:\TetraCreation.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMModelTetra Code The CAAGMModelTetra use case is made of a main named CAATobTetra.cpp located in the CAAGMModelTetra.m module of the `CAAGMModelInterfaces`.edu framework: `InstallRootFolder\CAADoc\CAAGMModelInterfaces.edu\CAAGMModelTetra.m\` where `InstallRootFolder` [5] is the folder where the API CD-ROM is installed. Step-by-Step The use case is divided into the following steps:
+How to Launch CAAGMModelTetra To launch CAAGMModelTetra, you will need to set up the build time environment, then compile CAAGMModelTetra.m along with its prerequisites, set up the run time environment, and then execute the use case [5]. If you simply type CAAGMModelTetra with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMModelTetra e/TetraCreation.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMModelTetra Code The CAAGMModelTetra use case is made of a main named CAATobTetra.cpp located in the CAAGMModelTetra.m module of the `CAAGMModelInterfaces`.edu framework: `InstallRootFolder\CAADoc\CAAGMModelInterfaces.edu\CAAGMModelTetra.m\` where `InstallRootFolder` [5] is the folder where the API CD-ROM is installed. Step-by-Step The use case is divided into the following steps:
     * Creating the Geometry Factory
     * Creating the Geometry
     * Creating the Vertices
@@ -640,6 +640,7 @@ From the shell to the faces: first clean the list with `RemoveAll` that frees th
       }
     
 
+```vbscript
 For each face:
     * Recover its geometry: `CATCell::GetGeometry`.
     * Test the type of geometry (a `CATPlane` for the tetrahedron).
@@ -647,6 +648,8 @@ For each face:
       * Create it: `CATCell::CreateBoundaryIterator`.
       * Skip to the `CATBoundaryIterator::Next` cell until the last one.
       * `delete` it.  
+```
+
 Using the boundary iterator, the number of edges is computed (4 for the tetrahedron).
     
     for (int i=1;i<=nbCells;i++)
@@ -719,12 +722,12 @@ Writing the Model and Closing the Factory To save the model on a file, the `::CA
     	
      **::CATCloseCGMContainer**(piGeomFactory);
 
-In Short This use case creates a tetrahedron from scratch in order to expose the topological model of the geometric modeler. This primitive could also be created by using the topological operators in trimming a box primitive by a plane. The topology of the created tetrahedron is investigated to show different means to scan the body. References [1] | [Topology Concepts](CAACgmTaTobTopoConcepts.htm)  
+In Short This use case creates a tetrahedron from scratch in order to expose the topological model of the geometric modeler. This primitive could also be created by using the topological operators in trimming a box primitive by a plane. The topology of the created tetrahedron is investigated to show different means to scan the body. References [1] | [Topology Concepts](CAACgmTaTobTopoConcepts.md)  
 ---|---  
-[2] | [The CGM Topological Model](CAACgmTaTobTopoModel.htm)  
-[3] | [The Curves of CATIA Geometric Modeler](CAACgmTaGobCurves.htm)  
-[4] | [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.htm)  
-[5] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-[6] | [Creating and Transforming Geometry](CAACgmUcGobCreation.htm)  
+[2] | [The CGM Topological Model](CAACgmTaTobTopoModel.md)  
+[3] | [The Curves of CATIA Geometric Modeler](CAACgmTaGobCurves.md)  
+[4] | [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.md)  
+[5] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[6] | [Creating and Transforming Geometry](CAACgmUcGobCreation.md)  
 History Version: **1** [Apr 2000] | Document created  
 ---|---

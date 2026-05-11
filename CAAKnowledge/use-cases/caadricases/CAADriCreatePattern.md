@@ -3,18 +3,15 @@ title: "Creating a Hatching Pattern On 2D Geometry"
 category: "use case"
 module: "CAADriUseCases"
 tags: ["CATIDrwAnnotationFactory_var", "CATISheet_var", "CATISketch_var", "CATIDftDocumentServices", "CATI2DCurve", "CATIDftHatchingPattern", "CATIContainer_var", "CATIA", "CAADrwCreatePattern", "CATIDftAnnotationFactory", "CATIAlias_var", "CATIDrawing", "CATIView_var", "CAADRWCreatePattern", "CATISpecObject_var", "CATISpecObject", "CATIDrwBreakElem_var", "CAADraftingInterfaces", "CATIDrwAreaFill_var", "CATI2DCurve_var"]
-source_file: "Doc\online\CAADriUseCases\CAADriCreatePattern.htm"
+source_file: "Doc/online/CAADriUseCases/CAADriCreatePattern.md"
 converted: "2026-05-11T17:31:50.962468"
 ---
-
 # Mechanical Design
 
 | 
-
 ## Drafting
 
 | 
-
 ### Creating a Hatching Pattern On 2D Geometry
 
 _How to use area fill interfaces_  
@@ -22,12 +19,11 @@ _How to use area fill interfaces_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article discusses the CAADrwCreatePattern.cpp use case. This use case explains how to create a hatching pattern on 2D geometry.
 
-  * [**What You Will Learn With This Use Case**](../CAADriBase/CAADriHome.htm)
+  * [**What You Will Learn With This Use Case**](../CAADriBase/CAADriHome.md)
   * **The CAADrwCreatePattern Use Case**
     * What Does CAADrwCreatePattern Do
     * How to Launch CAADrwCreatePattern
@@ -40,19 +36,16 @@ This article discusses the CAADrwCreatePattern.cpp use case. This use case expla
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 In this use case you will learn how to create a hatching pattern on 2D geometry.
 
 [Top]
-
 ### The CAADrwCreatePattern Use Case
 
 CAADrwCreatePattern is a use case of the CAADraftingInterfaces.edu framework that illustrates DraftingInterfaces framework capabilities.
 
 [Top]
-
 #### What Does CAADrwCreatePattern Do
 
 This sample creates a hatching pattern on 2Dgeometry in batch mode:
@@ -63,7 +56,6 @@ Fig. 2: The Start Up Model processed by CAADrwCreatePattern batch.
 ![](images/CAADrwAreaFill2.jpg)  
   
 [Top]
-
 #### How to Launch CAADrwCreatePattern
 
 To launch CAADrwCreatePattern, you will need to set up the build time environment, then compile CAADrwCreatePattern along with its prerequisites, set up the run time environment, and then execute the use case [1].
@@ -81,12 +73,9 @@ When you launch the use case, pass the full pathname of the file into which you 
   
 ---  
 
-
-
  
 
 [Top]
-
 #### Where to Find the CAADrwCreatePattern Code
 
 The CAADrwCreatePattern use case is made of one source file named CAADrwCreatePattern.cpp located in the CAADrwCreatePattern.m module of the CAADraftingInterfaces.edu framework:
@@ -98,7 +87,6 @@ Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCreatePattern.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are five steps in CAADRWCreatePattern:
@@ -111,9 +99,7 @@ There are five steps in CAADRWCreatePattern:
   6. Area Fill Creation
   7. Saving the Document and Exiting 
 
-
 [Top]
-
 #### Reading the Drawing Document
     
     
@@ -157,7 +143,6 @@ There are five steps in CAADRWCreatePattern:
 This section represents the usual sequence for creating a CATIA document.
 
 [Top]
-
 #### Accessing the Drawing in the Document
     
     
@@ -183,7 +168,6 @@ This section represents the usual sequence for creating a CATIA document.
 The root feature of a drawing document is the Drawing that is the feature that implements the CATIDrawing interface. We can get a pointer to CATIDrawing using the CATIDftDocumentServices interface, which is implemented by the document. The GetDrawing method first argument is the interface you want to get on the drawing.
 
 [Top]
-
 #### Reading 2D geometry on which Area fill will be created
     
     
@@ -224,7 +208,6 @@ The root feature of a drawing document is the Drawing that is the feature that i
 The 2D geometry in the Start Up CATDrawing Document is identified by external name applied on each element. These elements are automatically arranged by the way to used to create it: Profile command in Geometry Creation Toolbar. If these elements are not arranged, the area fill will be created with a wrong display.
 
 [Top]
-
 #### Hatching Pattern Creation
     
     
@@ -254,7 +237,6 @@ The 2D geometry in the Start Up CATDrawing Document is identified by external na
 To create geometric elements in a view, the view has to be current.
 
 [Top]
-
 #### Break Elements Creation
     
     
@@ -298,7 +280,6 @@ To create geometric elements in a view, the view has to be current.
 ---  
   
 [Top]
-
 #### Area Fill Creation
     
     
@@ -336,7 +317,6 @@ To create geometric elements in a view, the view has to be current.
 ---  
   
 [Top]
-
 #### Saving the Document and Exiting
     
     
@@ -357,7 +337,6 @@ This section represents the usual sequence for saving a newly created CATIA docu
 [Top]
 
 * * *
-
 ### In Short
 
 This use case shows the objects and interfaces used when creating an area fill in a main view of a CATDrawing document. The Area fill  is created using the _CATIDftAnnotationFactory_ interface.
@@ -365,12 +344,11 @@ This use case shows the objects and interfaces used when creating an area fill i
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] | [Open a Document](../CAAOmbUseCases/CAAOmbLoadDoc.htm)  
+[2] | [Open a Document](../CAAOmbUseCases/CAAOmbLoadDoc.md)  
 [Top]  
   
 History

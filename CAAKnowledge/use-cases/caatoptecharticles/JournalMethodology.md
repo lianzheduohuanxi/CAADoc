@@ -1,20 +1,17 @@
 ---
 title: "Topological Journal Methodology"
-category: "general"
+category: "use-case"
 module: "CAATopTechArticles"
 tags: ["CAACheckForPart", "CAATopCheckGnOK", "CATIBRepAccess", "CAATopJournal", "CAATopCheckForPart", "CATIA", "CAATopCheckGnKO", "CAATopDumpJournal", "CATIMfProcReport", "CAACheck", "CAATopologicalOperators"]
-source_file: "Doc\online\CAATopTechArticles\JournalMethodology.htm"
+source_file: "Doc/online/CAATopTechArticles/JournalMethodology.md"
 converted: "2026-05-11T17:31:50.785311"
 ---
-
 # Geometric Modeler
 
 | 
-
 ## Topology
 
 | 
-
 ### Topological Journal Methodology
 
 _Tips and tricks to create a journal_  
@@ -22,7 +19,6 @@ _Tips and tricks to create a journal_
 Technical Article  
   
 * * *
-
 ### Abstract
 
 This article is intended for those of you who have to create a topological journal. A journal must comply with a set of rules otherwise it is invalid. The usual symptom revealing an invalid journal is a non appropriate selectability of cells. This problem is related to the naming mechanism of BRep features which relies on the topological journal. This article explains why in some cases a journal can be invalid and what you have to do to fix it.
@@ -62,7 +58,6 @@ This article is intended for those of you who have to create a topological journ
 ---  
   
 * * *
-
 ### Topology and Generic Naming
 
 In CATIA Version 5, a feature cannot refer directly to the topology that is used to specify it. The reason for this, is that the topology as well as the geometry can be deleted and rebuilt during the Update operation. Suppose you create a prism by extruding a simple spline. The spline is assigned a tag as well as the resulting cells of the prism. Modify the spline and update the prism, the tags will all be modified. To sort out this problem, a stable way to refer to parent objects was to be found. The generic naming is a description of the history of a cell that gets rid of tags and is stable when a feature is updated. 
@@ -72,9 +67,7 @@ When you move the mouse cursor over a geometric object or select it interactivel
 In brief, a cell name looks something like this: "Cell dimension + Parent feature + Additional information". Keeping this in mind will help you understand the journal naming rules. 
 
 [Top]
-
 ### The CGM Journal Description
-
 #### The Types of Events
 
 The only valid types of orders that can appear in a journal are the:
@@ -86,15 +79,13 @@ The only valid types of orders that can appear in a journal are the:
   * Absorption
   * and Keep orders.
 
-
-
 ##### The Creation Order (CATCGMEvent::Creation)
 
 This order notifies that a new cell has been created. A new cell can be created from scratch or from one or several cells. An additional information intended to differentiate the cells can be added to a Creation order. In the example below, "info 0" is used to differentiate the side faces, "info 1" is used to specify a bottom face and "info 2" characterizes a top face. 
 
 **_Input body_** | **_Resulting body (After CATTopPrism)_**  
 ---|---  
-![](images/InitialFace.jpg) | ![](images/PadResult.jpg)  
+
 **_Report_**  
 `[Edge_1]->Creation[Face_C] info = 0  
 [Edge_2]->Creation[Face_D] info = 0  
@@ -102,54 +93,49 @@ This order notifies that a new cell has been created. A new cell can be created 
 [Edge_4]->Creation[Face_F] info = 0  
 [Face_1]->Creation[Face_A] info = 1  
 [Face_1]->Creation[Face_B] info = 2`  
-  
 ##### The Modification Order (CATCGMJournal::Modification)
 
 This order notifies that a given cell is the result of a modification of an input cell. The Modification order is to be used whenever the geometry is re-used with different limitations. Except in very few cases, a Modification order should have no additional information.
 
 **_Input Body_** | **_Resulting Body (After CATDynFillet)_**  
 ---|---  
-![](images/InitialPadForFillet.jpg) | ![](images/FilletPad.jpg)  
+
 **_Report_**  
 `[Face_1]->Modification[Face_A]  
 [Face_1],[Face_2]->Creation[Face_C]  
 [Face_2]->Modification[Face_B]  
 [Face_3]->Modification[Face_D]  
 [Face_4]->Modification[Face_E]`  
-  
 ##### The Deletion Order (CATCGMJournal::Deletion)
 
 This order notifies that a given cell belonging to an input body in Copy Mode is to be deleted in the result body.
 
 **_Input bodies_** | **_Resulting body (After CATHybSplit)_**  
 ---|---  
-![](images/BeforeSplit.jpg) | ![](images/AfterSplit.jpg)  
+
 **_Report_**  
 `[Face_1, Edge_1] -Creation -> [Vertex_A]  
 [Vertex_1] -Deletion  
 [Edge_1] -Modification -> [Edge_A]`  
-  
 ##### The Subdivision Order (CATCGMJournal::Subdivision)
 
 This order is a particular type of Modification that notifies that one cell of an input body in Copy Mode is modified into two or more cells into the resulting body.
 
 **_Input bodies_** | **_Resulting body (After CATHybSplit)_**  
 ---|---  
-![](images/SplitSubdivideBef.jpg) | ![](images/SplitSubdivideAft.jpg)  
+
 **_Report_**  
 `[Edge_1, Edge_2] -Creation -> [Vertex_B]  
 [Edge_1, Edge_3] -Creation -> [Vertex_A]  
 [Edge_1] -Subdivision -> [Edge_A, Edge_B]`  
-  
 ##### 
-
 ##### The Absorption Order (CATCGMJournal::Absorption)
 
 This order is a particular type of Modification that notifies that two or more cells of an input body in Copy Mode are merged into one cell into the resulting body.
 
 **_Input bodies_** | **_Resulting body (After CATDynBoolean Add)_**  
 ---|---  
-![](images/AbsorbBefore.jpg) | ![](images/AbsorbAfter.jpg)  
+
 **_Report_**  
 `[Face_5] -Modification -> [Face_B]  
 [Face_6] -Deletion  
@@ -160,7 +146,6 @@ This order is a particular type of Modification that notifies that two or more c
 [Face_1, Face_7] -Absorption -> [Face_A]`  
   
 Note: In the figure above, Face_6 relies on Face_8. Face_8 is modified and becomes Face_F after the split operation while Face_6 is deleted.
-
 ##### The Keep Order (CATCGMJournal::Keep)
 
 This order specifies that a cell belonging to an input body in No Copy mode is reused in the resulting body. The CAACheck operation issues a warning whenever a cell belonging to an input body in Copy mode is declared as kept in the journal.
@@ -169,19 +154,16 @@ In the example below, the CATHybBoundary operator generates a body that shares t
 
 **_Input Body_** | **_Resulting Body (After CATHybBoundary)_**  
 ---|---  
-![](images/BoundaryAfter.jpg) | ![](images/BoundaryBefore.jpg)  
+
 **_Report_**  
 `[Edge_1]->Keep  
 [Edge_2]->Keep  
 [Edge_3]->Keep  
 [Edge_4]->Keep`  
-  
 #### The Cells Referred to in the Report
-
 ##### The Types of Cells
 
 Only CATFace, CATEdge and CATVertex objects should be referred to in the journal. To date, operators taking geometry as an argument generate journals with geometry as parent objects in orders. These operators should be considered as exceptions. It is recommended that CAA developers should not build journals reporting geometry.
-
 ##### The Backtracked Cells
 
 Only bording cells are backtracked in a journal. In summary:
@@ -191,16 +173,13 @@ Only bording cells are backtracked in a journal. In summary:
   * if the result is a wire, the journal should report only events that affect the edges and the end vertices.
   * if the result is a vertex, the journal should report only events affecting the vertex.
 
-
-
 #### The Information
-
 ##### The purpose of an information
 
 An information is a means to differentiate cells that have different dimensions and same parent features. A simple example is the circular cylinder. You cannot select the semi-cylindrical faces one-by-one because they carry the same name.
 
 **_Input body: two edges  
-_**![](images/sketchinit.jpg) | ![](images/cylinderFace0.jpg)  
+_**![](images/sketchinit.jpg) 
 ---|---  
 ![](images/cylinderFace1.jpg)  
 **_Sketch Report (closed conic) Both edges carry the same name_**  
@@ -212,7 +191,6 @@ _**![](images/sketchinit.jpg) | ![](images/cylinderFace0.jpg)
 [] -Creation -> [Face_A] Info=1  
 [Edge_1] -Creation -> [Face_D] Info=0  
 [Edge_2] -Creation -> [Face_C] Info=0`  
-  
 ##### Information in standard operators
 
 In standard operators, the value assigned to an "information" generally complies with the rule below:
@@ -237,23 +215,16 @@ Examples:
        Lateral edges for a sweep.  
        Lateral faces for a pad.
 
-
-
-
 Rules related to additional information:
 
   * The same info should not be used to name cells of different dimensions.
   * After an update, an info will not switch to a cell of different dimension.
   * Stick as long as it is possible to the info values already used for standard operators.
 
-
-
 [Top]
-
 #### The Journal Operands
 
 The journal operands are the bodies that are used as input data in your operator. You have to declare these operands whenever you carry out a check operation as well as in CATIMfProcReport::StoreProcReport method.
-
 ##### The Copy/ No Copy Mode
 
 Stating that an input body is in a Copy/No Copy mode is a strategy to reduce the number of orders in a journal. For a given operator, an input body (the operand of the operator) must be either in Copy or in No Copy Mode.
@@ -267,8 +238,6 @@ When do you have to specify the Copy/No Copy Mode of an Operand ?
   1. when you check your journal, this is done by using the CAACheckForPart::AddInputBody method.
   2. when you store the report (CATIMfProcReport::StoreProcReport).
 
-
-
 What are the specification criteria for the Copy/No Copy Mode?
 
 `No Copy` is to be used whenever there are no cell or few cells of the operand in the resulting body. `Copy` is to be used when a large number of cells providing from the operand exist in the resulting body. For example: if you split a shell by a another shell, the cutting shell is in No Copy mode while the split shell is in Copy mode. Note that you may be induced to create operators with operands having a different Copy/No Copy mode depending on the options of the operator. This is the case for the CATTopCorner standard operator.
@@ -278,7 +247,7 @@ What are the specification criteria for the Copy/No Copy Mode?
 | **_Resulting Body_**  
 ---|---  
 **_Input bodies: two wires and a support  
-![](images/CornerInitial.jpg)_** | ![](images/CornerCopy.jpg)  
+
 ![](images/CornerTrimming.jpg)  
 **_Report without trimming  
 Support: No Copy - Wires: No Copy_**  
@@ -296,17 +265,13 @@ Support: No Copy - Wires: Copy_**
 [Vertex_4] -Modification -> [Vertex_E]`  
   
 [Top]
-
 ### An Example from the CAA Forum
 
 Here above is a case that has been submitted through the CAA Forum by a developer creating a prism from an extruded skin.
-
 #### The Code Steps
 
   * Input specification (sp_IN) attribute: the initial sketch
   * Topological operations carried out in the feature build: CATTopSkin to create the skin to be extruded, CATTopPrism to extrude the skin.
-
-
 
 #### The Default Journal for the Topological Operations after the Tass Call
 
@@ -324,17 +289,14 @@ If you dump the journal on the standard output, you obtain something like this:
 [PLine_d] -Creation -> [Edge4_skin]  
 [PLine_d] -Creation -> [Face4_lateral] Info=0`  
 ---  
-  
 #### The Selectability Problems
 
 The customer complains because the faces of a prism generated from a sketch are not selectable one-by-one. Actually, the top and the bottom faces are selectable but not the lateral faces. Selecting one of the lateral faces highlights all the lateral faces.
-
 #### The Preliminary Diagnosis
 
 All the report events are ignored by the naming mechanism because there are geometric elements (PLines) in the report. You cannot help this when using the CATTopSkin and CATTopPrism operators as both operators take geometry as their input arguments. The initial geometry re-appears in the report. If you pass this default journal to the CATIMfProcReport, you won't be able to differentiate any face at selection. It is like having an empty journal.
 
 The journal checking results in a KO verdict. The warning file tells you there are cells of the resulting body that cannot be traced back.
-
 #### The Solution
 
 The remedy to this invalid default journal consists in creating a valid journal to be passed to CATIMfProcReport. In the journal below, you specify that the lateral faces of the prism are created from the sketch edges (the input specification). It is not mandatory to specify info=0 for the lateral faces but it is recommended as, further on in your application, you may need a key to distinguish the faces in the extrusion direction from the top/bottom ones. This journal is valid because all the cells of the resulting body can be traced back and they all have a different name.
@@ -346,7 +308,6 @@ The remedy to this invalid default journal consists in creating a valid journal 
 [] -Creation -> [Face_top] Info=2  
 [] -Creation -> [Face_bottom] Info=1`  
 ---  
-  
 #### Tips to Create a New Journal
 
 Dump the default one (CAATopDumpJournal if you want to dump the journal on the standard output). Dumping the journal allows you retrieve all pieces of information to be re-injected in the journal to be created. Taking a look at the default journal above (the one invalid), the lateral faces appear in the journal and can be retrieved by scanning all the constructed objects with info=0.
@@ -356,13 +317,10 @@ Check the default journal - the verdict and warning file give clues about why yo
 Suppose you are mistaken and create a new journal with the skin edges as parents of the lateral faces instead of the sketch edges, the created journal will be invalid and the lateral faces will be non backtracked (the operand is the sketch and not the skin). In this case, you won't be able to differentiate the lateral faces at selection.
 
 [Top]
-
 ### Checking your Journal
-
 #### Preliminary Operations
 
 Prior to checking a journal, you must tass it. This operation is explained below.
-
 ##### The Tass Operation
 
 When you chain operators within the same CATTopData, the resulting journal is made up of several CATCGMJournalList which are nested into each other. In this case, the journal items are arranged according to a hierarchy in which the first journal generated in the application is the one which is at the top of the hierarchy and includes all the others. The journal which is in the heart of the structure contains the events that defines how the cells of the resulting body are constructed.
@@ -395,15 +353,12 @@ A->Creation->C info 2 if info 1 == NULL
 `The info on the creation order prevails as long as it is not NULL.  
   
 [Top]
-
 ##### Dumping the journal
 
 To display a journal on the standard output, you can use the CAATopDumpJournal use case (CAATopologicalOperators.edu). This use case can be customized by those of you who want to modify or re-arrange the format of the orders.
-
 #### The CAACheck Operation
 
 To check the journal, you must use the CAATopCheckForPart use case (CAATopologicalOperators.edu).
-
 ##### The Generated Files
 
 The CAATopCheckForPart use case generates two files:
@@ -487,10 +442,7 @@ Body 29 - List of cells: 44 46 52 49 53
 TOPOLOGICAL JOURNAL FOR FEATURE MyFeature KO`  
 ---  
 
-
-
 [Top]
-
 ##### The ERRORS and WARNINGS
 
 `WARNING  
@@ -526,7 +478,6 @@ Provides you with the list of all the cells that cannot be traced back. This mes
 Provides you with the list of all the cells that are in Copy mode but not in the resulting body and not deleted OR not modified. Is associated with KO in Step1 of the verdict file.  
   
 [Top]  
-
 
 ##### The rules to be Checked
 
@@ -567,7 +518,6 @@ The couple of orders below is fine with respect to the Check operation because t
 [Top]
 
 * * *
-
 ### In Short
 
 The topological journal is used by the generic naming mechanism. Whenever you create your own operator, you must check your journal. Potential errors left in a journal may result in selectability problem.
@@ -575,18 +525,16 @@ The topological journal is used by the generic naming mechanism. Whenever you cr
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Topology Concepts](../CAATobTechArticles/TopoConcepts.htm)  
+[1] | [Topology Concepts](../CAATobTechArticles/TopoConcepts.md)  
 ---|---  
-[2] | [The CGM Topological Model](../CAATobTechArticles/TopoModel.htm)  
-[3] | [The CGM Journal](TopoJournal.htm)  
-[4] | [The CAATopJournal Use Case](../CAATopUseCases/CAATopJournal.htm)  
+[2] | [The CGM Topological Model](../CAATobTechArticles/TopoModel.md)  
+[3] | [The CGM Journal](TopoJournal.md)  
+[4] | [The CAATopJournal Use Case](../CAATopUseCases/CAATopJournal.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Mar 2000] | Document created  

@@ -1,9 +1,9 @@
 ---
 title: "New C++ Authorized APIs in CAA V5R12 GA"
-category: "general"
+category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATINT32", "CATIAVPMVDAImport", "CATIMeasurablePoint", "CATIElbFactory", "CATIRepeatableCommand", "CATIMfgNavigateMachinableFeatView", "CATIIniSearchDimensionCriterion", "CATIIniSearchIntegerCriterion", "CATIIniSearchRealCriterion", "CATIMfgTPMultipleMotionSynchro", "CATIPspPhysicalProduct", "CATIIniSearchStringCriterion", "CATIPspAttribute", "CATIPspSpatial", "CATITPSViewFactory", "CATIMeasurableCircle", "CATIMf3DAxisSystemManager", "CATISamSupportFilter", "CATIPspCntrFlow", "CATIMfgNavigateActivityView"]
-source_file: "Doc\online\CAACenQuickRefs\CAACenV5R12GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R12GANewCPPAPI.md"
 converted: "2026-05-11T17:33:47.111006"
 ---
 

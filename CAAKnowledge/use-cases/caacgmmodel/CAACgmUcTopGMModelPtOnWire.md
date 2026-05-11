@@ -3,10 +3,9 @@ title: "Creating a Point on a Wire"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMModelInterfaces", "CATICGMBodyFromLengthOnWire", "CAAGMModelBodyfromLengthOnWire"]
-source_file: "Doc\online\CAACgmModel\CAACgmUcTopGMModelPtOnWire.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTopGMModelPtOnWire.md"
 converted: "2026-05-11T17:33:48.597676"
 ---
-
 
     
     
@@ -62,7 +61,7 @@ converted: "2026-05-11T17:33:48.597676"
     is to be run with the WireBody.ncgm file which is delivered in the FunctionTests/InputData 
     folder. If you are not already 
     familiar with geometric modeler use cases, go to
-    [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm).
+    [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md).
     With the input data below:
     
       Fig.1 Create a topological point on a wire : Input Data 
@@ -99,9 +98,8 @@ converted: "2026-05-11T17:33:48.597676"
       Fig.2 Point on a Wire: Result
       
         ![Point on a Wire: Result](images/CGM_point_on_wire_2.png)
-        | ![Point on a Wire: Result](images/CGM_point_on_wire_1.png)
+
            
-    ---|---  
     
      
     
@@ -111,26 +109,25 @@ converted: "2026-05-11T17:33:48.597676"
     		[1]
     		| 
     		[
-    		Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)
+    		Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
     	  
-    ---|---  
     
     	
     		[2]
     		| 
-    		[About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)
+    		[About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)
     	  
     
     	
     		[3]
     		| 
-    		[How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)
+    		[How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)
     	  
     
     	
     		[4]
     		| 
-    		[How to Use Geometric Operators](../CAACgmModel/CAACgmUcGMModelOpeOverw.htm)
+    		[How to Use Geometric Operators](../CAACgmModel/CAACgmUcGMModelOpeOverw.md)
     	  
     
     
@@ -142,7 +139,6 @@ converted: "2026-05-11T17:33:48.597676"
     		Version: **1** [Dec 2011]
     		| Document created
     	  
-    ---|---  
     
     
     

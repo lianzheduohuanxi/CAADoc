@@ -1,9 +1,10 @@
 ---
 title: "ENOVInterfaces Modifications"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR9"
+version: "V5R9"
 tags: ["CATIEnovDDManager", "CATIEnovCMManager"]
-source_file: "Doc\online\CAACenAPIChangesR9\ENOVInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR9/ENOVInterfaces.md"
 converted: "2026-05-11T17:33:52.893327"
 ---
 

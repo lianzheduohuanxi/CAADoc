@@ -1,9 +1,10 @@
 ---
 title: "CATAnalysisInterfaces Framework Modifications in CXR14"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR14"
+version: "V5R14"
 tags: ["CATISamAnalysisManager", "CATISamAnalysisSet", "CATISamAnalysisModel", "CATISamAnalysisContext"]
-source_file: "Doc\online\CAACenAPIChangesR14\CATAnalysisInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR14/CATAnalysisInterfaces.md"
 converted: "2026-05-11T17:33:50.847843"
 ---
 

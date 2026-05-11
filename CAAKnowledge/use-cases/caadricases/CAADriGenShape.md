@@ -3,18 +3,15 @@ title: "Editing Generated Shapes in Generative Views"
 category: "use case"
 module: "CAADriUseCases"
 tags: ["CATIDftDocumentServices", "CATIDftPattern", "CATIDftView", "CATIProduct", "CATIDftDrawing", "CAADraftingInterfaces", "CATIA", "CAADrwGenShape", "CATIDrwGenDrawShape", "CATIUnknownList"]
-source_file: "Doc\online\CAADriUseCases\CAADriGenShape.htm"
+source_file: "Doc/online/CAADriUseCases/CAADriGenShape.md"
 converted: "2026-05-11T17:31:51.006322"
 ---
-
 # Mechanical Design
 
 | 
-
 ## Drafting
 
 | 
-
 ### Editing Generated Shapes in Generative Views
 
 _How to access generated shapes in generative views_  
@@ -22,7 +19,6 @@ _How to access generated shapes in generative views_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article discusses the CAADrwGenShape use case. This use case explains how to retrieve generated shapes in a generative view. A generated shape is the feature aggregating a pattern. For example, when a section view is created, a pattern is created to show the cut. Such a pattern is aggregated by a generated shape. Note: Generated Shape is called GenShape is a synonym for Generated Shape.
@@ -40,19 +36,16 @@ This article discusses the CAADrwGenShape use case. This use case explains how t
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show you how to access generated shapes in generative views.
 
 [Top]
-
 ### The CAADrwGenShape Use Case
 
 CAADrwGenShape is a use case of the CAADraftingInterfaces.edu framework that illustrates DraftingInterfaces framework capabilities.
 
 [Top]
-
 #### What Does CAADrwGenShape Do?
 
 Fig. 1: Initial Document ![](images/CAADrwGenShape.jpg)  
@@ -64,7 +57,6 @@ This Use Case shows how to retrieve contours of GenShape. In the section view of
  
 
 [Top]
-
 #### How to Launch CAADrwGenShape
 
 To launch CAADrwGenShape, you will need to set up the build time environment, then compile CAADrwGenShape along with its prerequisites, set up the run time environment, and then execute the use case [1].
@@ -74,7 +66,7 @@ When you launch the use case, pass the full pathname of the Drawing file as argu
   * With Windows 
         
         e:> mkrun -c cmd
-        CAADrwGenShape c:\...\DrawingForGenShapeUseCase.CATDrawing  
+        CAADrwGenShape c/.../DrawingForGenShapeUseCase.CATDrawing  
   
 ---  
   * With UNIX 
@@ -84,10 +76,7 @@ When you launch the use case, pass the full pathname of the Drawing file as argu
   
 ---  
 
-
-
 [Top]
-
 #### Where to Find the CAADrwGenShape Code
 
 The CAADrwGenShape use case is made of a single source file named CAADrwGenShape.cpp located in the CAADrwGenShape.m module of the CAADraftingInterfaces.edu framework:
@@ -99,7 +88,6 @@ Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwGenShape.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are seven steps in CAADrwGenShape:
@@ -112,10 +100,7 @@ There are seven steps in CAADrwGenShape:
   6. Retrieving Pattern Associated with a Generated Shape
   7. Closing the Session
 
-
-
 [Top]
-
 #### Opening a Drawing Document
     
     
@@ -153,7 +138,6 @@ There are seven steps in CAADrwGenShape:
 This section represents the usual sequence for loading a CATIA document [2].
 
 [Top]
-
 #### Accessing the Drawing in the Document
     
     
@@ -191,7 +175,6 @@ This section represents the usual sequence for loading a CATIA document [2].
 The root feature of a drawing document is the Drawing, that is, the feature that implements the _CATIDftDrawing_ interface. We can get a pointer to _CATIDftDrawing_ using the _CATIDftDocumentServices_ interface, which is implemented by the document. The `GetDrawing` method first argument is the _CATIDftDrawing_ interface IID.
 
 [Top]
-
 #### Getting all the Generated Shape in the Active View
     
     
@@ -235,7 +218,6 @@ The root feature of a drawing document is the Drawing, that is, the feature that
 A Drawing may contain several sheets, but only one is current at a time. The current sheet is the sheet containing the active view, that is the view currently edited. GetActiveView method defined in CATIDftDrawing interface returns the active view of active sheet in the drawing document. GetComponents method is a generic method to retrieve all elements identified by an IID. These elements are returned in a CATIUnknownList.
 
 [Top]
-
 #### Reading all points Defining Contours of a Generated Shape
     
     
@@ -268,9 +250,7 @@ A Drawing may contain several sheets, but only one is current at a time. The cur
   
 This sample show how to retrieve points defining the contours by using GetDescription method.  
 
-
 [Top]
-
 #### Getting Part Instance Name from a Generated Shape
     
     
@@ -297,7 +277,6 @@ This sample show how to retrieve points defining the contours by using GetDescri
 ---  
   
 [Top]
-
 #### Getting Pattern used by a Generated Shape
     
     
@@ -321,7 +300,6 @@ This section represents the usual sequence to retrieve the Pattern [3].
 [Top]
 
  
-
 #### Close the Session
     
     
@@ -345,7 +323,6 @@ This section represents the usual sequence for saving a newly created CATIA docu
 [Top]
 
 * * *
-
 ### In Short
 
 This use case shows the way to :
@@ -356,22 +333,18 @@ This use case shows the way to :
   4. Get the Part Instance pointed by the Generated Shape.
   5. Get the Pattern associated by the Generated Shape.
 
-
-
 [Top]
 
 * * *
-
 ### References
 
-[1] |  [ Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.htm)  
+[1] |  [ Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [ Load an existing Document](../CAAOmbUseCases/CAAOmbLoadDoc.htm)  
-[3] | [Creating a Pattern](CAADriCreatePattern.htm)  
+[2] |  [ Load an existing Document](../CAAOmbUseCases/CAAOmbLoadDoc.md)  
+[3] | [Creating a Pattern](CAADriCreatePattern.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [May 2004] | Document created  

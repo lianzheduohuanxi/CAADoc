@@ -3,18 +3,15 @@ title: "Determining available parsers"
 category: "use case"
 module: "CAAXmlUseCases"
 tags: ["CAAXMLInfo", "CAAXMLParser"]
-source_file: "Doc\online\CAAXmlUseCases\CAAXMLInfo.htm"
+source_file: "Doc/online/CAAXmlUseCases/CAAXMLInfo.md"
 converted: "2026-05-11T17:33:45.634065"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## Middleware Abstraction
 
 | 
-
 ### Determining Available Parsers
 
 _Listing DOM and SAX parsers installed on a machine_  
@@ -22,7 +19,6 @@ _Listing DOM and SAX parsers installed on a machine_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to determine at runtime if a given V5 XML parser component is available.
@@ -40,19 +36,16 @@ This article shows how to determine at runtime if a given V5 XML parser componen
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case shows how to determine at runtime if a given V5 XML parser component is available.
 
 [Top]
-
 ### The CAAXMLInfo Use Case
 
 The CAAXMLInfo Use Case is a use case of the CAAXMLParser.edu framework that illustrates XMLParser framework capabilities.
 
 [Top]
-
 #### What Does CAAXMLInfo Do
 
 This use case gathers information about the parsers installed on the machine and prints a report in the console.
@@ -76,7 +69,6 @@ This use case gathers information about the parsers installed on the machine and
 ---  
   
 [Top]
-
 #### How to Launch CAAXMLInfo
 
 To launch CAAXMLInfo, you will need to set up the build time environment, then compile CAAXMLInfo along with its prerequisites, set up the run time environment, and then execute the use case [1].
@@ -87,7 +79,6 @@ The use case should be launched as follows from the command line:
     CAAXMLInfo 
 
 [Top]
-
 #### Where to Find the CAAXMLInfo Code
 
 The CAAXMLInfo use case is made of one class located in the CAAXMLInfo.m module of the CAAXMLParser.edu framework:
@@ -99,18 +90,15 @@ Unix | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLInfo.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 To check the availability of XML parsers, there are two main steps:
-
 # |  Step  
 ---|---  
 1 | Check the Availability of V5 DOM Components  
 2 | Check the Availability of V5 SAX Components  
   
 [Top]
-
 #### Check the Availability of V5 DOM Components
     
     
@@ -130,7 +118,6 @@ To test the availability of V5 DOM components, use the `DetectCATIXMLDOMDocument
 The function returns E_FAIL if no suitable parser has been found. For more details on V5 DOM components, see [2].
 
 [Top]
-
 #### Check the Availability of V5 SAX Components
     
     
@@ -150,7 +137,6 @@ To test the availability of V5 SAX components, use the `DetectCATIXMLSAXFactory`
 The function returns E_FAIL if no suitable parser has been found. For more details on V5 DOM components, see [2].
 
 [Top]
-
 ### In Short
 
 This use case shows you how o determine at runtime if a given V5 XML parser component is available.
@@ -158,15 +144,13 @@ This use case shows you how o determine at runtime if a given V5 XML parser comp
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] | [ Using XML in V5](../CAAXmlTechArticles/CAAXmlV5Overview.htm)  
+[2] | [ Using XML in V5](../CAAXmlTechArticles/CAAXmlV5Overview.md)  
   
 * * *
-
 ### History
 
 Version: **1** [May 2005] | Document created  

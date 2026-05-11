@@ -3,7 +3,7 @@ title: "Managing Indication"
 category: "use case"
 module: "CAADegUseCases"
 tags: ["CAACreateCircleCmd", "CAADegCreateCircleCmd", "CAADialogEngine", "CAAGeometry", "CATIndicationAgent", "CAADegGeoCommands"]
-source_file: "Doc\online\CAADegUseCases\CAADegSampleIndication.htm"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleIndication.md"
 converted: "2026-05-11T17:33:49.684430"
 ---
 
@@ -28,11 +28,11 @@ Abstract This article shows how to retrieve a point in the 3D space from an end 
 
 What You Will Learn With This Use Case This use case is intended to show how to retrieve, in a state dialog command, a 3D point using its coordinates in the 3D space from a mouse click on the screen. This 3D point can be used afterwards as input for any object creation, modification, or analysis in the document, such as creating the center of a circle in this example. [Top] The Circle Command Use Case CAADegCreateCircleCmd creates a circle in the 3D space. We will focus on the circle center creation. [Top] What Does the Circle Command Do The Circle command is a state dialog command that creates a circle in the 3D space according to the following UML statechart diagram [1]. ![CAACreateCircleStatechart.jpg \(21192 bytes\)](images/CAACreateCircleStatechart.jpg) The dialog is as follows: ![CAACreateCircle1.jpg \(19537 bytes\)](images/CAACreateCircle1.jpg) | Select an existing plane that will be used as the circle plane. The active state becomes GetPlane.  
 ---|---  
-![CAACreateCircle2.jpg \(19058 bytes\)](images/CAACreateCircle2.jpg) | The viewpoint changes to make the selected plane and the screen plane coincide. The active state is GetCircle.  
-![CAACreateCircle3.jpg \(19295 bytes\)](images/CAACreateCircle3.jpg) | Click to indicate a point for the circle center. The active state becomes GetRadius. This image is captured just after the click. The indicated point is shown beside the plane. The mouse has not yet moved.  
-![CAACreateCircle4.jpg \(20301 bytes\)](images/CAACreateCircle4.jpg) | Move the mouse from this center. A temporary circle is drawn and increases or decreases to follow the mouse moves. The active state remains GetRadius. The self transition loops onto this state.  
-![CAACreateCircle5.jpg \(20578 bytes\)](images/CAACreateCircle5.jpg) | When the wished circle is obtained, click a point on this circle to actually create the circle. The command is now complete.  
-Indicating a point means clicking on the screen at the desired location with the left mouse key. The command retrieves from this click a geometric point with coordinates expressed in the absolute axis system. This is made possible by assigning an indication agent [2] to the state that asks for indication. This indication agent is valued by the mouse click with a point computed from the pixel coordinates of the point clicked on the screen. This point is the projection of the clicked point in the screen plane onto a specific plane associated with the indication point and therefore named the projection plane [2]. The Circle command uses this means to create the circle center and to determine the circle radius. The step by step describes the circle center creation. [Top] How to Launch the Circle Command See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.htm)" use case for a detailed description of how this use case should be launched.  Then, in the window where you run the mkrun command, do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following: 
+ The viewpoint changes to make the selected plane and the screen plane coincide. The active state is GetCircle.  
+ Click to indicate a point for the circle center. The active state becomes GetRadius. This image is captured just after the click. The indicated point is shown beside the plane. The mouse has not yet moved.  
+ Move the mouse from this center. A temporary circle is drawn and increases or decreases to follow the mouse moves. The active state remains GetRadius. The self transition loops onto this state.  
+ When the wished circle is obtained, click a point on this circle to actually create the circle. The command is now complete.  
+Indicating a point means clicking on the screen at the desired location with the left mouse key. The command retrieves from this click a geometric point with coordinates expressed in the absolute axis system. This is made possible by assigning an indication agent [2] to the state that asks for indication. This indication agent is valued by the mouse click with a point computed from the pixel coordinates of the point clicked on the screen. This point is the projection of the clicked point in the screen plane onto a specific plane associated with the indication point and therefore named the projection plane [2]. The Circle command uses this means to create the circle center and to determine the circle radius. The step by step describes the circle center creation. [Top] How to Launch the Circle Command See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched.  Then, in the window where you run the mkrun command, do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following: 
     * Select File->New
     * In the New box, select CAAGeometry and click OK
     * Select Insert->Point
@@ -150,10 +150,10 @@ In Short This use case shows the objects involved in an end user indication: the
 
 * * *
 
-References [1] | [Describing State Dialog Commands Using UML](../CAADegTechArticles/CAADegUMLDescription.htm)  
+References [1] | [Describing State Dialog Commands Using UML](../CAADegTechArticles/CAADegUMLDescription.md)  
 ---|---  
 [2] | [Managing Indication](../CAADegTechArticles/CAADegGraph.htm#510000)  
-[3] | [Implementing the Statechart Diagram](../CAADegTechArticles/CAADegGraph.htm)  
+[3] | [Implementing the Statechart Diagram](../CAADegTechArticles/CAADegGraph.md)  
 [Top]  
   
 * * *

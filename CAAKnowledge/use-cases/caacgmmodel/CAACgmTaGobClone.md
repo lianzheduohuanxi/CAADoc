@@ -1,17 +1,15 @@
 ---
 title: "The Clone and Transformation Managers"
-category: "general"
+category: "use-case"
 module: "CAACgmModel"
 tags: ["CATIA", "CATICGMObjects", "CATICGMObject"]
-source_file: "Doc\online\CAACgmModel\CAACgmTaGobClone.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmTaGobClone.md"
 converted: "2026-05-11T17:33:47.903606"
 ---
-
 # The Clone and Transformation Managers  
   
 ---  
 Technical Article  
-  
 ## Abstract
 
 The copy and paste of geometric objects that takes into account their forward linked objects, is called cloning. This process is supported by the CATCloneManager class. Moreover, the geometric objects can also be moved, with or without copy, through a specific process handled by the CATTransfoManager class. Why these classes are needed, how they are used and how a geometric object and a manager cooperate are the main topics of this paper. 
@@ -26,7 +24,6 @@ The copy and paste of geometric objects that takes into account their forward li
     * In Short
     * References  
 ---  
-  
 ## Operators to Copy or Move Objects
 
 CATCloneManager is a class representing an operator that manages the copy and paste of a set of objects implementing the CATICGMObject interface, that is to say the persistent objects provided by the CGM offering. This operation, that also takes into account the forward linked object, is called a **cloning** , and is especially useful to design your own cut, copy, paste applications.
@@ -39,7 +36,6 @@ The same frame occurs for the transformation of geometric objects implementing t
 
 Fig1: Inheritance Between CATCloneManager and CATTransfoManager ![Inheritance between CATCloneManager and CATTransfoManager](images/CAACgmGobClone1.gif)  
 ---  
-  
 ## The CATCloneManager
 
 The programmer gives to the CATCloneManager the objects to be cloned together, by calling the `CATCloneManager::Add` method. All the objects must belong to the same container (a container is an object containing other objects) to be processed in a single operation.
@@ -51,7 +47,6 @@ After the run, you can retrieve the cloned object corresponding to each object o
 If there are topological objects to clone (topological objects are kind of geometric objects), the CATCloneManager creates, under request, the topological journal associated with the cloning operation.
 
 The CATCloneManager instances are transient, and therefore cannot be streamed.
-
 ### Two Modes of Cloning
 
 The cloning process can be done as a single copy or a full copy. This mode is ruled by the **CATCloneManagerType:**
@@ -62,7 +57,6 @@ The cloning process can be done as a single copy or a full copy. This mode is ru
     Copies and pastes the objects that are `Add`ed to the CATCloneManager and their forward linked objects.
 Fig2: Behavior of the Duplication According to the CATCloneManagerType ![Behavior of the duplication according to the CATCloneManagerType](images/CAACgmGobClone2.gif) | These diagrams show the behavior of the CATCloneManager for each mode: C1 and C2 are two curves laying on the same Surface. Then, C1 and C2 have Surface as forward linked object. When C2 is selected in SingleDuplicate, its copy C2_c lays on Surface. In FullDuplicate, Surface is also duplicated in Surface_c When C1 and C2 are selected in SingleDuplicate, their copies C1_c and C2_c respectively lay on Surface. In FullDuplicate, their copies lay on Surface_c, the copy of Surface, that has been duplicated _only once_.  
 ---|---  
-  
 ### A Code Sample
 
 The following example illustrates how to copy the two curves C1 and C1 of the previous section and paste them into an other container. The result will be two new curves laying on the same new surface, with the same characteristics as the initial one.
@@ -74,7 +68,6 @@ The following example illustrates how to copy the two curves C1 and C1 of the pr
     MyManager.Run();  
     // Retrieves the copy of C1  
     CATICGMObject* ClonedObject=MyManager.ReadImage(C1);
-
 ### How a CATICGMObject and a CATCloneManager Cooperate
 
 The CATCloneManager globally manages the cloning, but delegates the copy of a single object to each object. 
@@ -102,11 +95,9 @@ Hence, there are two types of methods of a CATCloneManager:
 
 `ComputeImage`
     Called inside the code of a CATICGMObject.
-
 ## The CATTransfoManager
 
 This operator is a kind of CATCloneManager, that moves CATGeometry objects, with or without copying them. This part highlights the new properties and behaviors with respect to those inherited from CATCloneManager.
-
 ### Inherited Properties
 
 The global architecture is of course inherited. It includes: 
@@ -114,7 +105,6 @@ The global architecture is of course inherited. It includes:
     * The cooperation between the manager ant the objects it manages.
     * The behavior of "users" and "objects" methods that have already been described.
     * The fact that it cannot be streamed.
-
 ### New Properties
 
     * The first new property is obviously the transformation. The CATTransfoManager takes two types of transformations: 
@@ -154,21 +144,18 @@ The specific methods of a CATTransfoManager are
 `RetrieveTransfoW`
     Retrieves the 1D transformation to apply to an object that lays to another object that is geometrically invariant along one direction.
     * "Object methods", to use for writing the `Move3D` and `CloneAndMove3D` methods of a new class of CATGeometry you want to create: `Compute, ComputeW, ComputeUV, SetTransfoW, SetTransfoUV, IsIdentity`, `IsSimilitide, GetOrientationChange`, `IsInvariant` that are called inside the code of a CATGeometry. These methods are not seen by the CAA programmer.
-
 ## In Short
 
     * The CATCloneManager is an operator that copies and pastes a set of CATICGMObject, and their forward linked objects if needed.
     * The CATTransfoManager is a kind of CATCloneManager that also moves set of CATGeometry objects.
     * These operators cooperate with the objects for more efficiency.
-
 ## References
 
-[1] | [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.htm)  
+[1] | [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.md)  
 ---|---  
-[2] | [The Management of Foreign Data](CAACgmTaGobAttribute.htm)  
-[3] | [The Curves of CATIA Geometric Modeler](CAACgmTaGobCurves.htm)  
-[4] | [The Surfaces of CATIA Geometric Modeler](CAACgmTaGobSurfaces.htm)  
-  
+[2] | [The Management of Foreign Data](CAACgmTaGobAttribute.md)  
+[3] | [The Curves of CATIA Geometric Modeler](CAACgmTaGobCurves.md)  
+[4] | [The Surfaces of CATIA Geometric Modeler](CAACgmTaGobSurfaces.md)  
 ## History
 
 Version: **1** [Mar 2000] | Document created  

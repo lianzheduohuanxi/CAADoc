@@ -3,7 +3,7 @@ title: "Adding Business Rules to an Interactive Command"
 category: "use case"
 module: "CAADkpUseCases"
 tags: ["CATIAVPMVDALock", "CAAVPMDesktopProduct", "CAADkpCustomCommand", "CATIAVPMVDACommand", "CATIAVPMVDACommandFactory_var", "CATIVpmFactoryObject"]
-source_file: "Doc\online\CAADkpUseCases\CAADkpCustomCommand.htm"
+source_file: "Doc/online/CAADkpUseCases/CAADkpCustomCommand.md"
 converted: "2026-05-11T17:33:46.012499"
 ---
 
@@ -23,8 +23,6 @@ Abstract This article shows how to implement the ENOVICustomCommand interface, t
   * **Step-by-Step**
   * **In Short**
   * **References**
-
-
 
 * * *
 
@@ -149,7 +147,6 @@ In the header file of the class, make it derive from CATBaseUnknown, and use the
      */
     
     CATImplementClass( ENOVECreateExtension, DataExtension, CATBaseUnknown, PartMasterCATVpmVDACreate );
-    
     
     #include "TIE_ENOVICustomCommand.h"
     TIE_ENOVICustomCommand( ENOVECreateExtension );
@@ -434,7 +431,7 @@ In Short ENOVICustomCommand is an interface designed for implementing business r
 
 * * *
 
-References [1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
 [Top]  
   

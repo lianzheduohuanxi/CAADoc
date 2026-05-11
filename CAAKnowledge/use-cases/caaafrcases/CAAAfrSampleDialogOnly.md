@@ -3,18 +3,15 @@ title: "Creating a Command that Consists in a Dialog Window"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CAAAfrBoundingEltHdr", "CAAAfrBoundingElementId", "CAAAfrGeoCommands", "CAAGeometry", "CAAAfrGeoAnalysisWkbHeader", "CATISO", "CAAAfrBoundingElementCmd", "CAAAfrBoundingElement", "CAAApplicationFrame"]
-source_file: "Doc\online\CAAAfrUseCases\CAAAfrSampleDialogOnly.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleDialogOnly.md"
 converted: "2026-05-11T17:17:55.713101"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## User Interface - Command
 
 | 
-
 ### Creating a Command that Consists in a Dialog Window
 
 _Creating a command without states_  
@@ -22,7 +19,6 @@ _Creating a command without states_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to create a command without states using a single dialog box. 
@@ -40,19 +36,16 @@ This article shows how to create a command without states using a single dialog 
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show how to use a dialog box as a standalone command without states. This command is an undefined command which is unknown by the command selector [1]. It means that it can run in parallel with the active command known by the command selector. 
 
 [Top]
-
 ### The CAAAfrBoundingElementCmd Use Case
 
 CAAAfrBoundingElementCmd is a use case of the CAAApplicationFrame.edu framework that illustrates the ApplicationFrame framework capabilities.
 
 [Top]
-
 #### What Does CAAAfrBoundingElementCmd Do
 
 CAAAfrBoundingElementCmd is a dialog command made up of a dialog box. It creates a bounding element, namely a sphere, for all or some of the geometric objects currently existing in the document. While computing the bounding sphere, it displays a progress bar. 
@@ -79,24 +72,21 @@ The CAAAfrBoundingElementCmd use case explains how to create such command but do
   * How to create the progress bar. You can refer to the dedicated article [2]
   * How to create/manage the temporary circles visualized thanks to the CATISO. You can refer to the dedicated article. [3]
 
-
-
 [Top]
-
 #### How to Launch CAAAfrBoundingElementCmd
 
-See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.htm)" use case for a detailed description of how this use case should be launched. For the specific scenario :
+See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched. For the specific scenario :
 
+```vbscript
 Do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following: 
+
+```
 
   * Select Start->Infrastructure->CAA V5: Geometry Analysis
   * Create several geometric objects such as points, lines, planes, and so on, using the Basic Elements toolbar, or using the same commands in the Insert menu
   * Select Analyze->Bounding Element.
 
-
-
 [Top]
-
 #### Where to Find the CAAAfrBoundingElementCmd Code
 
 The CAAAfrBoundingElementCmd use case is made of a single class named _CAAAfrBoundingElementCmd_ located in the CAAAfrGeoCommands.m module of the CAAApplicationFrame.edu framework:
@@ -110,7 +100,6 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 CAAAfrBoundingElementCmd is part of the "CAA V5: Geometry Analysis" workbench. 
 
 [Top]
-
 ### Step-by-Step
 
 To create the CAAAfrBoundingElementCmd command, there are four steps:
@@ -120,10 +109,7 @@ To create the CAAAfrBoundingElementCmd command, there are four steps:
   3. Creating the Dialog Box Constructor
   4. Managing the Lifecycle of the Command and of its Objects
 
-
-
 [Top]
-
 #### Creating the Dialog Box Header File
 
 The CAAAfrBoundingElementCmd class header file is as follows.
@@ -167,12 +153,9 @@ This header file contains the following declaration:
   * A callback, `EditorClose` , when the current document is closed
   * The editor, associated with the document, is kept to compare which one which sends a close notification.
 
-
-
 Now, there is the description of the source file. 
 
 [Top]
-
 #### Enabling the Launching of the Command from a Command Header
 
 The CAAAfrBoundingElementCmd command is launched from a _CATCommandHeader_ class instance [5]. In the CAA V5: Geometry Analysis" workbench, you have such line:
@@ -198,7 +181,6 @@ So, to be able to create an instance of the command by its name you should have 
 ---  
   
 [Top]
-
 #### Creating the Dialog Box Constructor
 
 The CAAAfrBoundingElementCmd command is not seen by the command selector. Its starting mode is undefined: it is the default mode of a _CATDlgDialog_ class. For such commands, and contrary to the common usage with dialog boxes that use a `Build` method to instantiate the dialog objects contained in the dialog box, the constructor should perform this instantiation because the command header calls only this constructor. So the contents of the constructor is as a `Build` method [6] :
@@ -288,11 +270,7 @@ This step is mandatory. If the end user closes the current document and the comm
   
 Refer to the technical article [7] to understand the role of the unique _CATFrmLayout_ class instance. It is the object which sends the `CATFrmEditor::EDITOR_CLOSE_ENDED` notification. 
 
-
-
-
 [Top]
-
 #### Managing the Lifecycle of the Command and of its Objects
 
 The command can be deleted for two reasons:
@@ -332,9 +310,6 @@ In this case, the `ClickClose` method is called. It hides the dialog box and req
   
 The unique _CATFrmLayout_ class instance sends a "`EDITOR_CLOSE_ENDED"` notification when anything document is closed. So the `EditorClose`**** method is called.  It is necessary to check that it is the "good" editor before closing the window. `iFrom` is the editor associated with the document which is closing. If `iFrom` is the good document the dialog box deletion is requested.
 
-
-
-
 The destructor, as usual, releases the data members and set NULL the data member pointers. In addition, the current destructor must delete the callback on the _CATFrmLayout_ :
     
     
@@ -357,7 +332,6 @@ The destructor, as usual, releases the data members and set NULL the data member
 [Top]
 
 * * *
-
 ### In Short
 
 This use case shows how to create a command without state that consists only in a dialog window and that in addition, is not known by the command selector. 
@@ -365,21 +339,19 @@ This use case shows how to create a command without state that consists only in 
 [Top]
 
 * * *
-
 ### References
 
-[1] | [The CAA Command Model](../CAADegTechArticles/CAADegCommandModel.htm)  
+[1] | [The CAA Command Model](../CAADegTechArticles/CAADegCommandModel.md)  
 ---|---  
-[2] | [Creating an Interruptible Task](CAAAfrSampleProgressTask.htm)  
-[3] | [Creating Contextual Menus in a State Dialog Command](../CAADegUseCases/CAADegSampleCtxMenu.htm)  
-[5] | [The Command Headers](../CAAAfrTechArticles/CAAAfrCommandHeaders.htm)  
-[6] | [Dialog Programmer's Guide](../CAADlgTechArticles/CAADlgProgrammerGuide.htm)  
-[7] | [Understanding the Application Frame Layout](../CAAAfrTechArticles/CAAAfrLayoutV5.htm)  
-[8] | [Arranging the Dialog Objects Using the Grid Layout](../CAADlgTechArticles/CAADlgGridLayout.htm)  
-[9] | [Application Frame Overview](../CAAAfrTechArticles/CAAAfrOverview.htm)  
+[2] | [Creating an Interruptible Task](CAAAfrSampleProgressTask.md)  
+[3] | [Creating Contextual Menus in a State Dialog Command](../CAADegUseCases/CAADegSampleCtxMenu.md)  
+[5] | [The Command Headers](../CAAAfrTechArticles/CAAAfrCommandHeaders.md)  
+[6] | [Dialog Programmer's Guide](../CAADlgTechArticles/CAADlgProgrammerGuide.md)  
+[7] | [Understanding the Application Frame Layout](../CAAAfrTechArticles/CAAAfrLayoutV5.md)  
+[8] | [Arranging the Dialog Objects Using the Grid Layout](../CAADlgTechArticles/CAADlgGridLayout.md)  
+[9] | [Application Frame Overview](../CAAAfrTechArticles/CAAAfrOverview.md)  
   
 * * *
-
 ### History
 
 Version: **1** [Jan 2000] | Document created  

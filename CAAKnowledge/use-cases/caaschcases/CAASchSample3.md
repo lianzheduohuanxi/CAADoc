@@ -3,18 +3,15 @@ title: "Creating Features in an Applicative Container"
 category: "use case"
 module: "CAASchUseCases"
 tags: ["CAASchEduIn", "CAASchAppSample2", "CATISchAppObjectFactory", "CAASchAppSample3Main", "CAASchAppSample3", "CAASchSample1", "CATISchSession", "CAASCHEDU_SamplePID", "CAASchApp", "CATISchRoute", "CAASchEduOut3", "CATISchBaseFactory", "CAASchPlatformModeler", "CAASchAppUtilities", "CATInit", "CAAESchAppObjectFactory", "CAASchAppBase", "CAASchAppBaseEnv", "CAASchAppDeleteBaseUnknown"]
-source_file: "Doc\online\CAASchUseCases\CAASchSample3.htm"
+source_file: "Doc/online/CAASchUseCases/CAASchSample3.md"
 converted: "2026-05-11T17:31:51.529141"
 ---
-
 # Equipment & Systems
 
 | 
-
 ## Schematics Platform Modeler
 
 | 
-
 ### Creating Schematic Application Components
 
 _Working with Schematic Components_  
@@ -22,7 +19,6 @@ _Working with Schematic Components_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article discusses the CAASchAppSample3 use case.
@@ -40,25 +36,21 @@ This article discusses the CAASchAppSample3 use case.
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to help you understand how to use the CAA Schematic Platform Interfaces to create string class objects, or routes.
 
 [Top]
-
 ### The CAASchAppSample2 Use Case
 
 CAASchAppSample3 is a use case of the CAASchPlatformModeler.edu framework that illustrates CAASchPlatformModeler framework capabilities. The use case demonstrates the creation of a route for a sample Schematics application, _CAASCHEDU_SamplePID_.
 
 [Top]
-
 #### What Does CAASchAppSample3 Do
 
 The sample demonstrates how to create a route two different ways; by points, and from primitives.
 
 [Top]
-
 #### How to Launch CAASchAppSample3
 
 To launch CAASchAppSample3, you will need to set up the build time environment, then compile CAASchAppSample3 along with its prerequisites, set up the run time environment, and then execute the sample. This is fully described in the referenced article [1]. When launching the use case, you must pass the following arguments:
@@ -66,10 +58,7 @@ To launch CAASchAppSample3, you will need to set up the build time environment, 
   * **CAASchEduIn.CATProduct** \- the entire pathname, name and extension (.CATProduct) of the input drawing. Normally, it should be stored in the CNext/resources/graphic directory.
   * **CAASchEduOut3.CATProduct** \- the entire pathname, name and extension (.CATProduct) under which the new document is to be stored
 
-
-
 [Top]
-
 #### Where to Find the CAASchAppSample3 Code
 
 CAASchAppSample3 code is located in the CAASchAppSample3.m use case module of the CAASchPlatformModeler.edu framework:
@@ -83,7 +72,6 @@ where `InstallRootDirectory` is the root directory of your CAA V5 installation. 
 Additional prerequisite code is located in the CAASchAppUtilities.m and CAASchAppBase.m modules of the same framework.
 
 [Top]
-
 ### Step-by-Step
 
 These are the logical steps in CAASchAppSample2:
@@ -94,16 +82,12 @@ These are the logical steps in CAASchAppSample2:
   4. Creating a Route from Points
   5. Creating a Route from Primitives
 
-
-
 [Top]
-
 #### Prolog
 
 In this use case, we open an input drawing containing one main sheet and one detail sheet. The main sheet contains one component instantiated from a reference object. The detail sheet contains three views. The use case will create a new .CATProduct drawing for the sample application.
 
 [Top]
-
 #### Initializing the Environment
 
 The CAASchAppSample2 code is derived from the CAASchAppBaseEnv base class. The base class contains functionality common to the other CAASchApp samples. Initializing the environment involves the following methods:
@@ -124,10 +108,7 @@ These methods perform the following functions:
   * Initializing the document using the _CATInit_ interface.
   * Obtaining the pointer to the component reference.
 
-
-
 [Top]
-
 #### Creating the Application Route Object
 
 According to the rules for the Schematics Modeler, if you want to create a route, you must first use your application object factory to create the route (feature) object. The sample uses the _CATISchAppObjectFactory_ interface method `AppCreateRoute` to create the route object instance. The application route reference is already residing in the input model, and `AppCreateRoute` retrieves it and creates the application route instance from it.
@@ -190,7 +171,6 @@ According to the rules for the Schematics Modeler, if you want to create a route
 The method `AppCreateRoute` is implemented in the file **CAAESchAppObjectFactory.cpp**. See the the section [Creating an Application Reference Object](CAASchSample1.htm#AppReferenceObject) in CAASchSample1 for more information.
 
 [Top]
-
 #### Creating a Route from Points
 
 After the route feature object is created, the Schematics base factory interface _CATISchBaseFactory_ method `CreateSchRouteByPoints` is used to create the Route.
@@ -218,7 +198,6 @@ After the route feature object is created, the Schematics base factory interface
 ---  
   
 [Top]
-
 #### Creating a Route from Primitives
 
 Another way to create a route is using primitives. This technique involves first creating a Graphical representation for the route, and then using the Schematics base factory interface _CATISchBaseFactory_ method `CreateSchRouteByPrim.`
@@ -299,7 +278,6 @@ Another way to create a route is using primitives. This technique involves first
 [Top]
 
 * * *
-
 ### In Short
 
 This use case has demonstrated how to create a string class object, route, using two different methods. Specifically, it has illustrated:
@@ -309,19 +287,15 @@ This use case has demonstrated how to create a string class object, route, using
   * Creating a Schematics route object from a point definition
   * Creating a Schematics route object from a two graphical representation primitives
 
-
-
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
   
 * * *
-
 ### History
 
 Version: **1** [April 2001] | Document created  

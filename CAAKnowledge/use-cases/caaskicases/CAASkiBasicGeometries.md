@@ -3,18 +3,15 @@ title: "Creating Sketching Elements in a Part Document"
 category: "use case"
 module: "CAASkiUseCases"
 tags: ["CATIPrtContainer", "CATI2DConstraintFactory_var", "CATI2DTopologicalOperators_var", "CATISketch_var", "CATI2DPoint_var", "CATISketchFactory_var", "CATI2DLine_var", "CATI2DWFGeometry_var", "CATIContainerOfDocument_var", "CATIPrtPart_var", "CATIContainer", "CATInit_var", "CATISpecObject_var", "CAASketcherInterfaces", "CAASkiBasicGeometries", "CATI2DWFFactory_var", "CATI2DConstraintFactory", "CATISketch", "CATI2DCurve_var", "CATI2DAxis_var"]
-source_file: "Doc\online\CAASkiUseCases\CAASkiBasicGeometries.htm"
+source_file: "Doc/online/CAASkiUseCases/CAASkiBasicGeometries.md"
 converted: "2026-05-11T17:31:50.823243"
 ---
-
 # Mechanical Modeler
 
 | 
-
 ## Sketcher
 
 | 
-
 ### Creating Sketching Elements in a Part Document
 
 _Using sketching objects and factory to create a simple constrained sketch_  
@@ -22,7 +19,6 @@ _Using sketching objects and factory to create a simple constrained sketch_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article discusses the CAASkiBasicGeometries use case. This use case explains how to create a Part document, create geometry and constraints in sketch and make some operations: solving geometry and dimension systems and making corner.
@@ -40,7 +36,6 @@ This article discusses the CAASkiBasicGeometries use case. This use case explain
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show you how to :
@@ -50,16 +45,12 @@ This use case is intended to show you how to :
   * Solve dimension systems in different ways
   * Create a corner (relimitation) on two lines.
 
-
-
 [Top]
-
 ### The CAASkiBasicGeometries Use Case
 
 CAASkiBasicGeometries is a use case of the CAASketcherInterfaces.edu framework that illustrates the SketcherInterfaces framework capabilities.
 
 [Top]
-
 #### What Does CAASkiBasicGeometries Do
 
 Fig. 1: The Document Created by the Use Case ![](images/CAASketcherTitleBlock.jpg)  
@@ -70,10 +61,7 @@ This picture represents a CATPart document created by the use case. The program 
   * The elements directly created in edition in the sketch
   * The constraints directly created on the elements.
 
-
-
 [Top]
-
 #### How to Launch CAASkiBasicGeometries
 
 To launch CAASkiBasicGeometries , you will need to set up the build time environment, then compile CAASkiBasicGeometries along with its prerequisites, set up the run time environment, and then execute the use case [1].
@@ -91,10 +79,7 @@ When you launch the use case, pass the full pathname of the file into which you 
   
 ---  
 
-
-
 [Top]
-
 #### Where to Find the CAASkiBasicGeometries Code
 
 The CAASkiBasicGeometries use case is made of a main program located in the CAASkiBasicGeometries.m module of the CAASketcherInterfaces.edu framework:
@@ -106,7 +91,6 @@ Unix | `InstallRootDirectory/CAASketcherInterfaces.edu/CAASkiBasicGeometries.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are ten steps in CAASkiBasicGeometries:
@@ -122,10 +106,7 @@ There are ten steps in CAASkiBasicGeometries:
   9. Closing the Sketch Edition
   10. Saving the Document and Exiting
 
-
-
 [Top]
-
 #### Creating and Initializing the Document
     
     
@@ -160,7 +141,6 @@ There are ten steps in CAASkiBasicGeometries:
 This section represents the usual sequence for creating a Part document (CATPart).
 
 [Top]
-
 #### Creating and Opening the Sketch Edition
     
     
@@ -182,7 +162,6 @@ This section represents the usual sequence for creating a Part document (CATPart
 After having retrieving the reference planes of the part, we create a sketch on the first plane (xy-plane). We make it ready for edition. The sketch is created on the sketch factory (the sketch factory interface is implementing on the container).
 
 [Top]
-
 #### Getting the Geometry Factory and Creating 2D Lines
     
     
@@ -224,7 +203,6 @@ After having retrieving the reference planes of the part, we create a sketch on 
 The geometry factory is directly implemented on the sketch. After having retrieved the 2D factory, we create four points, then four lines passing by these points (these four lines make a rectangle with common points). We establish connectivity on these points. Each curve shares a starting point and end point.
 
 [Top]
-
 #### Creating 2D Constraints on Geometries
     
     
@@ -249,7 +227,6 @@ The geometry factory is directly implemented on the sketch. After having retriev
 The constraint factory is directly implemented on the sketch. After having retrieved the 2D constraint factory, we create four constraints (horizontal and vertical on lines), then we create two dimensional constraints (length on a line and distance between two other lines).
 
 [Top]
-
 #### Modifying the Position of the First Point Created
     
     
@@ -264,7 +241,6 @@ The constraint factory is directly implemented on the sketch. After having retri
 We change the coordinates of the first point created.
 
 [Top]
-
 #### Solving (Evaluating) Dimension System and Geometry
     
     
@@ -279,7 +255,6 @@ We change the coordinates of the first point created.
 We solve the dimensional system. The last point modified has the top priority. Geometry evaluation with soft reference element (`spPt_bottom_left`), solver tries to keep fixed these elements (`spPt_bottom_left` is the more prioritary). If we do not give the first point with high priority, the last modification (changing the first point position) would be useless. In this case the rectangle translates totally.
 
 [Top]
-
 #### Positioning the Rectangle Compared to the Sketch
     
     
@@ -297,7 +272,6 @@ We solve the dimensional system. The last point modified has the top priority. G
 In this example the sketch is isoconstrained because the rectangle is rigid. We position it on the sketch support (and create two constraints between the first point and H-direction and V-direction). The rectangle is fixed now and it is sufficiently constrained.
 
 [Top]
-
 #### Creating a Corner
     
     
@@ -320,7 +294,6 @@ In this example the sketch is isoconstrained because the rectangle is rigid. We 
 We create an operation on the geometry factory. This operation corresponds to a corner between two lines of the rectangle and we specify the relimitation (with all element trimed). We create two tangency, for creating a corner in tangency on the lines and we create the radius of the corner. Note that the last arguments of the `CreateConstraint` method is "1", because we want to solve the dimensional system a last once.
 
 [Top]
-
 #### Closing the Sketch Edition
     
     
@@ -333,7 +306,6 @@ We create an operation on the geometry factory. This operation corresponds to a 
 We close the sketch edition. 
 
 [Top]
-
 #### Saving the Document and Exiting
     
     
@@ -354,25 +326,21 @@ This section represents the usual sequence for saving a document.
 [Top]
 
 * * *
-
 ### In Short
 
 This use case shows the objects and interfaces used when creating a CATPart document, and when creating a Sketch containing 2D elements. A handler to the _CATISketch_ interface is the key to enter and navigate the sketcher structure, and Retrieves the 2D factory to create elements. The 2D factory also implements the _CATI2DConstraintFactory_ interface to create contrainst on the elements and also solve dimension system.  
 
-
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] | [Creating a New Document](../CAAOmbUseCases/CAAOmbNewDoc.htm)  
+[2] | [Creating a New Document](../CAAOmbUseCases/CAAOmbNewDoc.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Feb 2000] | Document created  

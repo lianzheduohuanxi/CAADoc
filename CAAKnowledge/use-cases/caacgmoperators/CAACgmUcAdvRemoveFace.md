@@ -3,7 +3,7 @@ title: "Remove Faces from a Body"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CATICGMAdvancedRemoveFaceOpe", "CAAAdvRemoveFace", "CAAGMOperatorsAdvancedRemoveFace", "CAAGMOperatorsDoc"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcAdvRemoveFace.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdvRemoveFace.md"
 converted: "2026-05-11T17:33:48.878453"
 ---
 
@@ -15,7 +15,7 @@ Abstract You can remove a set of faces from a volume or a skin, this does not ch
     * Use Case Description
     * References  
 ---  
-Operator to be Used To remove a set of faces from a body, you can use the CATICGMAdvancedRemoveFaceOpe operator. Use Case Description The CAAGMOperatorsAdvancedRemoveFace.m module in CAAGMOperatorsInterfaces.edu illustrates how to remove a set of faces from a body. This use case must be run with the CAAAdvRemoveFace.NCGM file which is delivered in the FunctionTests/InputData folder of the CAAGMOperatorsDoc.edu framework. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm). With the input data below Fig.1 Remove Face Input data  ![Remove Face Input data](images/CGM_advRemoveFace_0.png)   
+Operator to be Used To remove a set of faces from a body, you can use the CATICGMAdvancedRemoveFaceOpe operator. Use Case Description The CAAGMOperatorsAdvancedRemoveFace.m module in CAAGMOperatorsInterfaces.edu illustrates how to remove a set of faces from a body. This use case must be run with the CAAAdvRemoveFace.NCGM file which is delivered in the FunctionTests/InputData folder of the CAAGMOperatorsDoc.edu framework. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md). With the input data below Fig.1 Remove Face Input data  ![Remove Face Input data](images/CGM_advRemoveFace_0.png)   
 ---  
 and the code below:
     
@@ -30,11 +30,11 @@ and the code below:
 ---  
 you get this result: Fig.2 Remove Face Output Body  ![Remove Face Input data](images/CGM_advRemoveFace_1.png)   
 ---  
-References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)  
-[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)  
-[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.htm)  
-[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.htm)  
+[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)  
+[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)  
+[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.md)  
+[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.md)  
 History Version: **1** [Feb 2014] | Document created  
 ---|---

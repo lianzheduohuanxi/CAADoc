@@ -2,29 +2,24 @@
 title: "CAAESysGeomFactoryForGeomCont"
 type: "interface"
 module: "CAASystem"
+category: "framework"
 base: "CATBaseUnknown"
+inheritance_chain: "CAAESysGeomFactoryForGeomCont → CATBaseUnknown"
 method_count: 1
 visibility: "local"
+has_tie_binding: false
 verified: true
 ---
-
 # CAAESysGeomFactoryForGeomCont
 
 **基类**: CATBaseUnknown  
+**继承链**: CAAESysGeomFactoryForGeomCont → CATBaseUnknown  
 **模块**: CAASystem  
+**分类**: framework  
 **可见性**: local  
 **方法数**: 1
 
 > Create   -> Constructs a new CATObject
-
-## 方法列表
-
-### Create
-```cpp
-HRESULT Create(const CAAISysGeomFactory::GeomObject iObjectType, 
-                            const IID        & iRequestInterfaceIID,          
-                            CATBaseUnknown  ** oCreatedObj) const;
-```
 
 ## 依赖
 

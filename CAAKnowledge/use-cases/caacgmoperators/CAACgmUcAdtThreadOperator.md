@@ -3,7 +3,7 @@ title: "Threading a Rod"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMCheckForPart", "CAAGMOperatorsInterfaces", "CAAGMOperatorsJournalThreadOpMain", "CAADoc", "CAAGMModelGemBrowser", "CAASweepProfile", "CAAGMOperatorsJournalThreadUtility", "CAASweepCreate", "CATICGMFrFTopologicalSweep", "CAAAdtJournalThread", "CAAAdtJournalCreateThread"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcAdtThreadOperator.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtThreadOperator.md"
 converted: "2026-05-11T17:33:48.868926"
 ---
 
@@ -26,15 +26,18 @@ What You Will Learn With This Use Case In this use case, you learn how to create
     * A GetResult method.
 In addition, two global functions which are discussed later on are defined in the CAAGMOperatorsJournalThreadUtility use case. The CAAGMOperatorsJournalThreadOpMain use case contains the main program that creates the cylinder to be threaded and call the CAAAdtJournalThread operator.  This is the solid you obtain when you execute the CAAGMOperatorsJournalThreadOpMain use case.  
 ---|---  
-How to Launch CAAGMOperatorsJournalThreadOpMain You must compile CAAGMOperatorsJournalThreadUtility prior to launching CAAGMOperatorsJournalThreadOpMain. CAAGMOperatorsJournalThreadOpMain requires CAAGMOperatorsJournalThreadUtility as a module to be linked with in its Imakefile.mk file. To launch CAAGMOperatorsJournalThreadOpMain, you will need to set up the build time environment, then compile CAAGMOperatorsJournalThreadOpMain.m, set up the run time environment, and then execute the use case [1]. This use case creates its own input data. It must be executed with three arguments which are output files: `CAAGMOperatorsJournalThreadOpMain resultFile.NCGM verdictFile.htm warningFile.htm`
+How to Launch CAAGMOperatorsJournalThreadOpMain You must compile CAAGMOperatorsJournalThreadUtility prior to launching CAAGMOperatorsJournalThreadOpMain. CAAGMOperatorsJournalThreadOpMain requires CAAGMOperatorsJournalThreadUtility as a module to be linked with in its Imakefile.mk file. To launch CAAGMOperatorsJournalThreadOpMain, you will need to set up the build time environment, then compile CAAGMOperatorsJournalThreadOpMain.m, set up the run time environment, and then execute the use case [1]. This use case creates its own input data. It must be executed with three arguments which are output files: `CAAGMOperatorsJournalThreadOpMain resultFile.NCGM verdictFile.md warningFile.htm`
     * The first argument is the resulting NCGM file.
-    * The second argument is a "verdict" file in .htm format. This file tells you whether the rules a journal has to comply with to be valid are fulfilled.
-    * The third argument is a "warning" or detailed file also in .htm format. This file tells you why the journal is not valid and which statements are to be investigated to fix the journal. It also reminds the input data which have be passed to the journal checker.
+    * The second argument is a "verdict" file in .md format. This file tells you whether the rules a journal has to comply with to be valid are fulfilled.
+    * The third argument is a "warning" or detailed file also in .md format. This file tells you why the journal is not valid and which statements are to be investigated to fix the journal. It also reminds the input data which have be passed to the journal checker.
+```vbscript
 For information on journal checking, refer to:
-    * [Topological Journal: Methodology](CAACgmTaTopJournalMethodology.htm)
-    * [Topological Journal: Writing a Validation Tool](CAACgmUcJournalChecking3.htm)
-    * [Topological Journal: Creation and Validation (1)](CAACgmUcJournalChecking1.htm)
-    * [Topological Journal: Creation and Validation (2)](CAACgmUcJournalChecking2.htm)
+    * [Topological Journal: Methodology](CAACgmTaTopJournalMethodology.md)
+    * [Topological Journal: Writing a Validation Tool](CAACgmUcJournalChecking3.md)
+    * [Topological Journal: Creation and Validation (1)](CAACgmUcJournalChecking1.md)
+    * [Topological Journal: Creation and Validation (2)](CAACgmUcJournalChecking2.md)
+```
+
 This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsJournalThreadOpMain and CAAGMOperatorsJournalThreadUtility Code The CAAGMOperatorsJournalThreadOpMain use case is made of a main named CAAAdtJournalCreateThread.cpp located in the CAAGMOperatorsJournalThreadOpMain.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsJournalThreadOpMain.m\` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. This use case uses the CAAAdtJournalThread class which is defined in the CAAGMOperatorsJournalThreadUtility.m module. Step-by-Step The CAAGMOperatorsJournalThreadOpMain use case is divided into the following main steps:
     * Creation of the geometry factory (not discussed below - see for example [2]).
     * Creation of a CATSolidCylinder (see [2]).
@@ -50,13 +53,13 @@ This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where t
 The Methodology At first sight, the methodology to thread this rod would consist in removing a single triangular sweep from the cylindrical rod as indicated below: Step 1: Creating a cylindrical rod | Step 2: Sweeping a triangular profile  
 along an helix | Step 3: Boolean remove  
 ---|---|---  
-![Step 1](images/CAACgmAdtthread7.gif) |  ![Step 2](images/CAACgmAdtthread6.gif) |  ![Step 3](images/CAACgmAdtthread8.gif)  
+
 However, a usual source of problems when performing boolean operations is tangent or near-tangent surfaces. In the sequence of operations above, removing the sweep from the rod would result in a crash because the cylindrical surfaces of both operands are coincident. This problem can be worked around by creating extensions so that the sweep to be subtracted out has a diameter slightly larger that the rod diameter. Another source of problem is when one operand auto-intersects. If we make the sweep jut out from the rod, unless the sweep auto-intersects, parasite cylindrical faces will be generated in place of the outer edge of the thread. This is not what we want to obtain. To get over these two restrictions, we decided to proceed in two phases: **Phase 1** : a first sweep is created. The profile for this first sweep is a rectangular triangle as described below. This sweep is removed from the rod. Phase 1 (a): Initial rod | Phase 1 (b): First sweep | Phase 1 (c): First Boolean remove  
 ---|---|---  
-![Initial Rod](images/CAACgmAdtthread7.gif) |  ![First Sweep](images/CAACgmAdtthread0.gif) |  ![First Boolean Remove](images/CAACgmAdtthread2.gif)  
+
 **Phase 2** : a second sweep is created. A symmetrical profile is used for this second sweep. This second sweep is removed from the solid resulting from the first boolean remove. Phase 2 (a): Intermediary solid | Phase 2 (b): Second sweep | Phase 2 (c): Second Boolean remove  
 ---|---|---  
-![Intermediary Solid](images/CAACgmAdtthread2.gif) |  ![Second Sweep](images/CAACgmAdtthread1.gif) |  ![Second Boolean Remove](images/CAACgmAdtthread8.gif)  
+
 Creating the Sweeps The sweeps are created in the CAASweepCreate function. The CATICGMFrFTopologicalSweep operator is created by the CATCGMCreateFrFTopologicalSweep global function requires a guide and a profile as arguments.
     
     // a - Create the sweep operator
@@ -103,8 +106,8 @@ Specifying the Profile The profiles are defined in the CAASweepProfile function.
 Specifying the reference element In order to avoid a twisted sweep, the XOY plane must be specified as the reference element. In Short When writing an operator such as CAAAdtJournalThread, the steps requiring attention are:
     * The definition of the sweep(s). An important parameter is the reference plane. If it is not properly specified, the resulting sweep can be twisted.
     * The boolean operations: a boolean remove operation cannot complete when there are tangent or near-tangent surfaces in both operands. You must design the operand to be extracted so that it protrudes off the operand it is to be extracted from.
-References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] | [Overview of the Topological Operators](CAACgmUcTopOverview.htm)  
+[2] | [Overview of the Topological Operators](CAACgmUcTopOverview.md)  
 History Version: **1** [Mar 2002] | Document created  
 ---|---

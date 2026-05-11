@@ -3,18 +3,15 @@ title: "Creating Editors in Toolbar"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CAAAfrEltCountRep", "CAAAfrEltCountRepId", "CAAAfrMRUHeader", "CAAGeometry", "CAAAfrComboColorHeader", "CAAAfrGeoModel", "CAAAfrEdtLine", "CAAISysPoint", "CAAAfrPaletteOptions", "CATIAfrCommandHeaderRep", "CAASysCollectionModifNotif", "CAAAfrEltCountHeader", "CAAAfrEdtPoint", "CAAISysLine", "CAASysGeoModelInf", "CAAEAfrCommandHeaderRepForEltCount", "CAASysSampCont", "CATImplementHeaderResources", "CAASysGeomCont"]
-source_file: "Doc\online\CAAAfrUseCases\CAAAfrSampleEditorHdr.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleEditorHdr.md"
 converted: "2026-05-11T17:17:55.729034"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## User Interface - Frame
 
 | 
-
 ### Creating Editors in Toolbar
 
 How to create a command header class whose the representation is an editor in a toolbar?  
@@ -22,7 +19,6 @@ How to create a command header class whose the representation is an editor in a 
 Use Case  
   
 * * *
-
 ### Abstract
 
 This use case explains how to create a specialized command header. This command header has a customized graphic representation. In place of a check button into a toolbar, the graphic representation is two editors. 
@@ -36,29 +32,20 @@ This use case explains how to create a specialized command header. This command 
   * **In Short**
   * **References**
 
-
-
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case illustrates the creation of a customized command header. In a toolbar, its graphic representation is two editors in place of a check button, the default representation. You will learn how to:
 
   * Create the component representing the command header 
 
-
-
 > It is a component which must derive from the _CATAfrDialogCommandHeader_ class. 
 
   * Create the component instantiating the graphic representation
 
-
-
 > It is a component which must derive from the _CATAfrCommandHeaderRep_ class and which instantiates two _CATDlgEditor_ instances.
 
   * Create the component controlling the data used by the graphic representation
-
-
 
 > The data used by the the graphic representation is the count of lines and points in the document. This data is dependent of the instance of a V5 document. 
 
@@ -68,14 +55,12 @@ You can also read 
   * CAAAfrMRUHeader use case [2] which presents another customized command header. In this case, the graphic representation is a dynamic list of push items in a menu of the menu bar. Contrarily to the current use case, the data (a list of strings) is independent of the document. 
 
 To take full advantage of this article, you can first read "The Command Headers" technical article [3], and precisely the "Creating Customized Command Headers" section.   [Top]
-
 ### The CAAAfrEltCountHeader Use Case
 
 CAAAfrEltCountHeader is a use case of the CAAApplicationFrame.edu framework that illustrates ApplicationFrame framework capabilities. [Top]
-
 #### What Does CAAAfrEltCountHeader Do
 
-CAAAfrEltCountHeader creates a command header whose the graphic representation is two editors in a toolbar. The following picture shows the header in the "Tools Palette" toolbar [4]: Fig.1 The EltCount header | ![](images/CAAAfrSamplePaletteWkb.jpg)  
+CAAAfrEltCountHeader creates a command header whose the graphic representation is two editors in a toolbar. The following picture shows the header in the "Tools Palette" toolbar [4]: Fig.1 The EltCount header 
 ---  
   
 There is a command header displaying the count of points and lines created in the CAAGeometry document [5]
@@ -106,13 +91,11 @@ The _CAAAfrEltCountRep_ class creates _CATDlgEditor_ [6] class instances and set
 The EltCount header is instantiated in the Tools Palette for a workbench of the CAAGeometry document [4]. 
 
 [Top]
-
 #### How to Launch CAAAfrEltCountHeader
 
 See the section entitled "How to Launch CAAAfrPaletteOptions" in the use case [4] for a detailed description of how this use case should be launched.
 
 [Top]
-
 #### Where to Find the CAAAfrEltCountHeader Code
 
 The CAAAfrEltCountHeader use case is made of several classes mainly located in modules of the CAAApplicationFrame.edu framework:
@@ -133,11 +116,7 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 It is the data extension of the _CAAISysCollection_ interface implemented on the CAASysGeomCont component. Both ( component+interface) are defined in the CAASystem.edu framework. [5]
 
-
-
-
 [Top]
-
 ### Step-by-Step
 
 There are three logical steps in CAAAfrEltCountHeader:
@@ -146,10 +125,7 @@ There are three logical steps in CAAAfrEltCountHeader:
   2. Creating the Component Representing the Command Header 
   3. Creating the Class Instantiating the Graphic Representation
 
-
-
 [Top]
-
 #### Creating Component Providing Data
 
 Count of lines and points are kept by the CAASysGeomCont component which implements the _CAAISysCollection_ interface (Fig.2). When a point/Line is created/deleted in the current CAAGeometry document, a _CAASysCollectionModifNotif_ notification is sent by the callback mechanism [7]. 
@@ -221,15 +197,12 @@ The `AddObject`  method publishes the notification that states the list of elem
 Refer to the callback use case [9] which explains in detail the callback mechanism, and how the _CAASysCollectionModifNotif_**** must be created. You will learn why the _CAASysCollectionModifNotif_**** class instance is deleted just after the `DispatchCallbacks` call. 
 
 [Top]
-
 #### Creating the Component Representing the Command Header 
 
 The EltCount header is a component which must Object Modeler and C++ derive from _CATAfrDialogCommandHeader_ and must implement the _CATIAfrCommandHeaderRep_ interface (Fig.3). This paragraph is divided in two parts:
 
   * Component Creation
   * CATIAfrCommandHeaderRep implementation
-
-
 
 ##### **Component Creation**
 
@@ -267,17 +240,12 @@ About the mandatory public methods:
   * A `destructor`, 
   * The `Clone` method inherited from _CATCommandHeader_ and used to duplicate the command header instance. Refer to the "Customized Command Header Class Structure" section of the technical article about the command headers [2]. You will have all the details about the `Clone` method. 
 
-
-
 About the mandatory private methods:
 
   * A `constructor` taking a pointer to a _CATCommandHeader_ is dedicated to the `Clone` method. 
   * Two other `constructor` are declared in the private part, and are not implemented in the source file. This prevents the compiler from creating them as public without you know.
 
-
-
 Here the CAAAfrEltCountHeader header file:
-    
     
     #include "CAAAfrEltCountHeader.h"
     
@@ -309,8 +277,6 @@ Here the CAAAfrEltCountHeader header file:
   * A customized command header is a CAA component. The `CATImplementClass` macro makes the class _CAAAfrEltCountHeader_ a component main class (`Implementation`) that OM-derives [10] from _CATAfrDialogCommandHeader_. 
   * The `CATImplementHeaderResources` macro is used in conjunction with the `CATDeclareHeaderResources` macro in the header file. It states that the _CAAAfrEltCountHeader_ class derives from _CATAfrDialogCommandHeader_ , and that its associated resource file names use the class name: CAAAfrEltCountHeader.CATNls and CAAAfrEltCountHeader.CATRsc respectively. The base class name set as second argument helps to use resource concatenation. The third argument could be set to the name of another class that is associated with resource files that use its class name, or to the name, without suffix, of an already existing resource file pair.
   * The `Clone` method returns a copy construction instance of this.
-
-
 
 **_CATIAfrCommandHeaderRep_ implementation**
 
@@ -415,7 +381,6 @@ You do not have to take care of the _CAAAfrEltCountRep_ class instance, the retu
 The EltCount header has no representation in the menu bar or in a contextual menu, so `CreateMenuRep` and `CreateCtxMenuRep` return E_FAIL.
 
 [Top]
-
 #### Creating the Class Instantiating the Graphic Representation
 
 This class is the _CAAAfrEltCountRep_ class. Its main roles are:
@@ -423,8 +388,6 @@ This class is the _CAAAfrEltCountRep_ class. Its main roles are:
   * Set a callback to be informed when a modification occurs in the list of elements controlled by the CAASysGeomCont component
   * Create two _CATDlgEditor_ instances
   * Change the contents of  the _CATDlgEditor_ instances when a notification is sent by the CAASysGeomCont component
-
-
 
 Here the CAAAfrEltCountRep header file:
     
@@ -467,8 +430,6 @@ Here the CAAAfrEltCountRep header file:
   * In data member 
     * _`pEdtPoint` and `_pEdtLine, `two _CATDlgEditor_ class instance created in the `Build `method 
     * `_piSysCollection` a _CAAISysCollection_ interface pointer on the CAASysGeomCont component of the current CAAGeometry document.
-
-
 
 Here the CAAAfrEltCountRep source file:
 
@@ -630,12 +591,9 @@ This method consists in to retrieve the list of elements into the CAAGeometry do
   
 ---  
 
-
-
 [Top]
 
 * * *
-
 ### In Short
 
 This use case has explained how to create a command header whose the graphic representation is customized:
@@ -643,31 +601,27 @@ This use case has explained how to create a command header whose the graphic rep
   * The command header is a component which OM and C++ derives from CATAfrDialogCommandHeader and implements CATIAfrCommandHeaderRep
   * The customized graphic representation is created by a class which must derive from CATAfrCommandHeaderRep
 
-
-
 The component controlling the data used by the graphic representation is dependent of the document. 
 
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Creating a Combo Command Header](CAAAfrSampleComboHdr.htm)  
+[1] | [Creating a Combo Command Header](CAAAfrSampleComboHdr.md)  
 ---|---  
-[2] | [Creating a Most Recent Used Command Header](../CAADocUseCases/CAADocRunSample.htm)  
-[3] | [The Command Headers](../CAAAfrTechArticles/CAAAfrCommandHeaders.htm)  
-[4] | [Using the "Tools Palette" Toolbar for a Workbench](CAAAfrSamplePaletteWkb.htm)  
-[5] | [The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.htm)  
-[6] | [CATDlgEditor](../CAADlgQuickRefs/CAADlgCATDlgCombo.htm)  
-[7] | [The Callback Mechanism](../CAASysTechArticles/CAASysCallbacks.htm)  
-[8] | [Creating an Interface](../CAASysUseCases/CAASysSampleOMCreatingInt.htm)  
-[9] | [The Callback Mechanism](../CAASysUseCases/CAASysSampleCallbacks.htm)  
-[10] | [Object Modeler Inheritances](../CAASysTechArticles/CAASysOMInheritance.htm)  
+[2] | [Creating a Most Recent Used Command Header](../CAADocUseCases/CAADocRunSample.md)  
+[3] | [The Command Headers](../CAAAfrTechArticles/CAAAfrCommandHeaders.md)  
+[4] | [Using the "Tools Palette" Toolbar for a Workbench](CAAAfrSamplePaletteWkb.md)  
+[5] | [The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)  
+[6] | [CATDlgEditor](../CAADlgQuickRefs/CAADlgCATDlgCombo.md)  
+[7] | [The Callback Mechanism](../CAASysTechArticles/CAASysCallbacks.md)  
+[8] | [Creating an Interface](../CAASysUseCases/CAASysSampleOMCreatingInt.md)  
+[9] | [The Callback Mechanism](../CAASysUseCases/CAASysSampleCallbacks.md)  
+[10] | [Object Modeler Inheritances](../CAASysTechArticles/CAASysOMInheritance.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Fev 2004] | Document created  

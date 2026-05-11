@@ -1,17 +1,15 @@
 ---
 title: "Introduction to Multiprocessing"
-category: "general"
+category: "concept"
 module: "CAACgmModel"
 tags: ["CAAGMModelInterfaces", "CAAGMModelTesMProcImpl", "CAAGMModelTesMProcMain"]
-source_file: "Doc\online\CAACgmModel\CAACgmTaMultiProcIntro.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmTaMultiProcIntro.md"
 converted: "2026-05-11T17:33:48.005017"
 ---
-
 # Introduction to Multiprocessing  
   
 ---  
 Technical Article  
-  
 ## Abstract
 
 CGM contains a multiprocessing infrastructure called MProc. With it one can utilize available processors of a system to improve performance of compute intensive operations, or to compute tasks in the background leaving the foreground process responsive. Because the technology is based on multiple processes with inter-process communication, it does not require code to be thread-safe or reentrant. The MProc system handles the complexities of process management, communication, and scheduling, leaving a simple client implementation based on a minimal and structured interface. While the MProc system can be used for most any multi-process purpose, it has functionality to optimize the transfer of CGM objects between processes. This specialization provides an advantage that cannot be equaled with other multiprocessing tools. 
@@ -28,7 +26,6 @@ CGM contains a multiprocessing infrastructure called MProc. With it one can util
     * Debugging Techniques
     * In Short  
 ---  
-  
 ## Overview
 
 Adding multiprocessing to an algorithm requires several fundamental steps: operations must be divided into independent tasks, tasks must be distributed to available processes, and then computed, and finally the results accumulated. This requires process management, task management, and task containment. 
@@ -44,7 +41,6 @@ Additionally, an algorithm must be modified or newly developed to contain multip
 The ‘parallel region’ is handled effectively by the MProc infrastructure. It takes care of processor utilization and the CATMProcTaskManagerCGM has provisions to run the tasks sequentially when necessary. The client implementation does not need to provide special code for either scenario since it is handled transparently. 
 
 An example of MProc implementation is located in the CAAGMModelTesMProcImpl.m and CAAGMModelTesMProcMain.m modules of CAAGMModelInterfaces.edu. This article refers to this use case.
-
 ## Synchronous Multiprocessing
 
 In the typical case, multiprocessing is used to compute particular operations as quickly as possible. Consider for instance the classic example of tessellating a multi-body model (aka assembly). In the sequential workflow, the bodies are tessellated one after the other. One can easily envision a loop, iterating over a list of bodies, tessellating and rendering each one in turn. 
@@ -164,7 +160,6 @@ In our example we use the CGM functions WriteGeometry to stream the body and Rea
 The four streaming methods are not utilized in the single process case, only when multiple processes are used. This allows a single implementation to be used in both cases, which greatly simplifies the code. A final important method to mention is Release. This purpose of this method is to clean up unnecessary data after the computational task is complete. For example, it is imperative to delete all newly created CGMObjects on slave processes because of potential conflicts with persistent identifiers. CGMObjects streamed to slave processes must retain their identifiers, which would not be possible if the identifiers are already used by other objects. Ideally, only the streamed CGMObjects are retained after the operations are complete, as these are used for stream optimizations.
 
 In summary, adding a simple parallel region with the MProc system requires custom implementations of two classes: CATMProcTaskMangerCGM and CATMProcTaskContainerCGM. The NextTask and EndTask methods are required in the former - and the Run, Release, and four streaming methods are required in the later. The rest is handled by the MProc system.
-
 ### Asynchronous Multiprocessing
 
 In some cases it may be beneficial to compute operations in the background, giving priority to the task running in the foreground. Here tasks are scheduled asynchronously, and results collected when needed. With very few changes, we can modify our tessellation example to run asynchronously. This for example, will allow the end-user to interact fluidly with the application while the tessellation is computed in the background. Instead of calling the Run method we call the base class StartAsyncTasks and EndAsyncTasks methods respectively. Nothing else needs to be changed. 
@@ -194,7 +189,6 @@ With a slightly more complex implementation it is possible to avoid blocking. Bo
     }  
   
 ---  
-  
 ### Sequential Tasks
 
 In some scenarios it makes sense to schedule certain tasks on the master process instead of on a slave process. These tasks may be simple and quick to compute, and not warrant the overhead of streaming the computational data to and from slave processes. As an example, tessellating analytic bodies is very fast. The streaming overhead might be less efficient. These can be computed on the master, while more complex shapes are scheduled on slave processes. 
@@ -245,7 +239,6 @@ The ability to schedule tasks sequentially in our tessellator example is added b
     };  
   
 ---  
-  
 ### Object Relationships
 
 The MProc system requires the relationships between the task managers and task containers be stated explicitly. This information is used by slave processes to instantiate the appropriate derived class objects. Use the CATMProcRelationCGM macro to associate the custom CATMProcTaskManagerCGM class with the custom CATMProcTaskContainerCGM class. The named relationship is needed by the CATMProcTaskManagerCGM constructor and is passed on to slave processes. 
@@ -255,7 +248,6 @@ The macro, among other things, defines exported functions that instantiate the c
     CATMProcRelationCGM( CATMProcRelationCGMTessellator, CustomTessellator, CustomTask);  
   
 ---  
-  
 ### Task Manager Construction
 
 Custom task managers derive from CATMProcTaskManagerCGM. The base class has mandatory construction arguments. The first is the name of the custom CATMProcRelationCGM, the second is the name of the library that contains the custom implementation. The third argument is the current factory. The library name is needed by the slave processes in order to load the exported functions that instantiate the custom classes. 
@@ -267,15 +259,12 @@ To correct our example, we add the appropriate use of the CATMProcRelationCGM ma
     CustomTessellator MyTessellator(“CATMProcRelationCGMTessellator”,”MyDll”, Factory, BodyList);  
   
 ---  
-  
 ### Stream Optimizations
 
 The MProc system has a built-in optimization that avoids duplicate inter-process transmissions of fundamental CGM objects. A model and its supporting structures, having been sent once to a process, will not be sent again in subsequent communications. This can significantly reduce the overhead of sending data to slave processes. All objects streamed with the WriteGeometry functions participate in this optimization. 
-
 ### Process Specific Data
 
 Process specific data is optionally attached to slaves in the NextTask method using custom derived CATMProcProcessDataCGM implementations. For each slave process utilized, the pointer to the argument passed to the NextTask method will originally be NULL. Here the custom implementation can attach a derived object by setting the pointer appropriately. The specific processes can then be identified by querying the passed in pointer. This provides the ability to customize tasks for specific processes. Custom implementations must use standard new to create these objects, since they are automatically deleted by the MProc system at the end of the parallel transactions. 
-
 ### Enabling Multiprocessing
 
 Ideally, one would either enable or disable multiprocessing only once during the lifetime of an application, based upon end-user input. Applications that support multiprocessing typically expose some means of selecting the number of processors to use on a given system. The selection can then be set in the MProc system with the static function **CATMProcSystem::EnableMProc**. 
@@ -285,7 +274,6 @@ Calling this function will by default enable the use of all available processes.
 The state of the MProc system can be changed at any time, except during parallel operations. For example, the end-user might chose to use fewer processors at some point in the lifecycle of the application. This can easily be accommodated by calling **CATMProcSystem::EnableMProc** appropriately. The change will affect all subsequent parallel transactions. 
 
 It should be noted that the MProc system does **not** support nested parallelism. Parallel regions encountered within an already active parallel region, will not have access to additional proceses and will run sequentially. 
-
 ### Resource Utilization
 
 Client implementations can customize the number of processes to use in the parallel transaction by setting a minimum and/or maximum value in their derived task manager class. This should be used at the client code level, where it's possible to define an optimal number of processes to be used for a given computation, regardless of the number of physically available processors. 
@@ -302,18 +290,15 @@ To show this in an example, we can update our tessellator case to use a minimum 
     MyTessellator.Run();  
   
 ---  
-  
 ### Debugging Techniques
 
 Debugging operations that run on different processes can be challenging. To help make this easier and to help assure a correct implementation, the MProc systems provides an operational mode called MonoProcMode. Running parallel transactions with this mode enabled causes all operations that normally execute on slave processes to be exercised on the master process. This provides a straightforward debugging technique to help verify proper implementations. Enable MonoProcMode with the static method **CATMProcSystem::EnableMonoProcMode**. Once enabled, this mode cannot be disabled in the current session. 
-
 ### In Short
 
     * Use the MProc system to speed up compute intensive operations with concurrent operations on multiple processes. 
     * Compute tasks in the background with asynchronous multiprocessing. 
     * Take advantage of stream optimizations to avoid the overhead of inter-process communication. 
     * Schedule tasks additionally on the master process to optimize efficiency. 
-
 ### History
 
 Version: **1** [Oct 2011] | Document created  

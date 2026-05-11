@@ -3,15 +3,13 @@ title: "An Introduction to Geometric Modeler Use Cases"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMOperatorsOverview", "CATICGMContainer", "CAAGMOperatorsChamfer", "CATICGMObject", "CAAGMModelGemBrowser"]
-source_file: "Doc\online\CAACgmModel\CAACgmUcGMUseCases.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGMUseCases.md"
 converted: "2026-05-11T17:33:48.329658"
 ---
-
 # About Geometric Modeler Use Cases  
   
 ---  
 Use Case  
-  
 ## Abstract
 
 The purpose of geometric modeler use cases is to explain how to use CGM public APIs.  Geometric modeler use cases are intended to be used in a purely geometric modeler environment. The NCGM format is specifically dedicated to geometric modeler data. Most use cases require input data which are either created directly in the use case or retrieved from an NCGM file. Most use cases share the same code structure, are launched the same way and use operators sharing the same behavior. All this is described in this article. 
@@ -23,7 +21,6 @@ The purpose of geometric modeler use cases is to explain how to use CGM public A
     * Using Geometric Modeler Operators
     * Viewing Use Case Results  
 ---  
-  
 ## Use Case Code Structure 
 
 There are different steps in a use case:
@@ -31,7 +28,6 @@ There are different steps in a use case:
     1. Data creation from the geometry factory or data loading from an input NCGM file
     2. Data creation or operator creation, option setting, run, access to the generated result
     3. Model saving/data writing.
-
 ### Creating Data Directly from the Geometry Factory
 
 To create data directly, you must:
@@ -53,7 +49,6 @@ To create data directly, you must:
                                                                    angleEnd);
 
 **Note** : Although geometric objects are handled by the mean of interfaces, such as `CATCartesianPoint`, `CATLine`, or `CATBody`, the pointers on these objects must not be released. In fact, they are released at the closure of the factory (the `CATCloseCGMContainer` global function).
-
 ### Retrieving Data from a Loaded NCGM Container
 
 To retrieve input data from an already existing container, you must:
@@ -86,7 +81,6 @@ To retrieve input data from an already existing container, you must:
            CATICGMObject * piCGMObj = piGeomFactory->FindObjectFromTag(curtag);
            ...
            }
-
 ### Writing the Model and Closing the Factory
 
 To save the use case result in a file, the `::CATSaveCGMContainer` global function is used. Notice that in most use cases, the save is conditioned by an input parameter representing the file inside which the model must be saved.
@@ -109,47 +103,41 @@ The use case ends with the closure of the geometry factory, done by the ` ::CATC
      // Closes the container
      //
      **::CATCloseCGMContainer**(piGeomFactory);
-
 ## Using Geometric Modeler Operators
 
 Operators are objects to be used not only for 3D modeling operations but also for surfacic or wireframe operations. They can also be used for other operations which do not modify the input data (analysis for example). Operators are delivered in the GMModelInterfaces and GMOperatorsInterfaces frameworks.
 
-Refer to [How to Use Geometric Operators](../CAACgmModel/CAACgmUcGMModelOpeOverw.htm) and [How to Use Topological Operators](CAACgmTaUseTopoOperators.htm).
-
+Refer to [How to Use Geometric Operators](../CAACgmModel/CAACgmUcGMModelOpeOverw.md) and [How to Use Topological Operators](CAACgmTaUseTopoOperators.md).
 ## Building and Launching a Use case
 
-To launch a use case, you need to set up the build time environment, then compile the module which contains the use case along with its prerequisites, set up the run time environment, and then execute the use case. This is explained in detail in [Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm). 
+To launch a use case, you need to set up the build time environment, then compile the module which contains the use case along with its prerequisites, set up the run time environment, and then execute the use case. This is explained in detail in [Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md). 
 
     * If the use case creates its own data, you have to type the command name  (module name) with one argument, the name of the .NCGM output file.  
 Example:  
-`CAAGMOperatorsOverview e:\OverviewResult.NCGM`
+`CAAGMOperatorsOverview e/OverviewResult.NCGM`
     * If the use case loads data from an NCGM file, you have to type the command name with two arguments: the input file  and the output file.  
 Example:  
-`CAAGMOperatorsChamfer e:\ChamferInputs.NCGM e:\ChamferResult.NCGM`
+`CAAGMOperatorsChamfer e/ChamferInputs.NCGM e/ChamferResult.NCGM`
 
 Very few use cases load two or more input files or generate two or more files. Check the instructions and comments in the use case code for more information on how to launch the use case if this were to happen.
 
 The input files are delivered in the FunctionTests/InputData folder of the framework in which the use case is delivered. 
-
 ## Viewing Use Case Results
 
 Results produced by use cases can be stored in an NCGM container which is displayable by using the CAAGMModelGemBrowser use case.  Only topological objects can be displayed. To start the browser, just type the CAAGMModelGemBrowser command to display the application below:
 
 Fig.1 NCGM Browser  ![NCGM Browser](images/CGM_ncgm_browser_0.png)  
 ---  
-  
 ## 
 
-Not all objects can be displayed in the browser. For more information, refer to [Browsing the Geometric Container](CAACgmUcGemBrowser.htm).
-
+Not all objects can be displayed in the browser. For more information, refer to [Browsing the Geometric Container](CAACgmUcGemBrowser.md).
 ## References
 
-[1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [How to Use Geometric Operators](../CAACgmModel/CAACgmUcGMModelOpeOverw.htm)  
-[3] |  [ How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)  
-[4] |  [Browsing the Geometric Container](CAACgmUcGemBrowser.htm)  
-  
+[2] |  [How to Use Geometric Operators](../CAACgmModel/CAACgmUcGMModelOpeOverw.md)  
+[3] |  [ How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)  
+[4] |  [Browsing the Geometric Container](CAACgmUcGemBrowser.md)  
 ## History
 
 Version: **1** [Sept 2011] | Document created  

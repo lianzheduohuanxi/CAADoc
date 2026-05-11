@@ -1,12 +1,11 @@
 ---
 title: "3D Operations"
-category: "general"
+category: "use-case"
 module: "CAACgmModel"
 tags: []
-source_file: "Doc\online\CAACgmModel\CAACgmTcCanonicalSurfacesToc.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmTcCanonicalSurfacesToc.md"
 converted: "2026-05-11T17:33:48.074274"
 ---
-
 #   
   
 ---  

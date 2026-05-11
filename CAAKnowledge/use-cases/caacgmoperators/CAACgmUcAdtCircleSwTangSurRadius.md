@@ -3,7 +3,7 @@ title: "Creating a Circle Sweep with One Guide and a Tangency Surface"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CATICGMTopMultiResult", "CATICGMTopSweepWireSkinCircle", "CAAGMModelGemBrowser", "CAAGMOperatorsCircleSweepTangSurRadius", "CATICGMTopPrism"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcAdtCircleSwTangSurRadius.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCircleSwTangSurRadius.md"
 converted: "2026-05-11T17:33:48.799462"
 ---
 
@@ -28,7 +28,7 @@ What Does CAAGMOperatorsCircleSweepTangSurRadius Do ? The use case:
     * Creates the guide and the tangency surface.
     * Creates a CATICGMTopMultiResult operator instance.
     * Runs the CATICGMTopMultiResult and retrieve one of the resulting bodies.
-**Note** : This article only focuses on the operations related to the CATICGMTopMultiResult and CATICGMTopSweepWireSkinCircle operators. Refer to "Overview of the Topological Operators" [1] for more information on the operations which are not detailed in the article. How to Launch CAAGMOperatorsCircleSweepTangSurRadius To launch CAAGMOperatorsCircleSweepTangSurRadius, you will need to set up the build time environment, then compile CAAGMOperatorsCircleSweepTangSurRadius.m, set up the run time environment, and then execute the use case [2]. If you simply type CAAGMOperatorsCircleSweepTangSurRadius with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsCircleSweepTangSurRadius e:\sweep.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsCircleSweepTangSurRadius Code The CAAGMOperatorsCircleSweepTangSurRadius use case is made of a main named CAAGMOperatorsCircleSweepTangSurRadius.cpp located in the CAAGMOperatorsCircleSweepTangSurRadius.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsCircleSweepTangSurRadius.m\` where `InstallRootFolder` [2] is the folder where the API CD-ROM is installed. Step-by-Step The use case is divided into the following main steps:
+**Note** : This article only focuses on the operations related to the CATICGMTopMultiResult and CATICGMTopSweepWireSkinCircle operators. Refer to "Overview of the Topological Operators" [1] for more information on the operations which are not detailed in the article. How to Launch CAAGMOperatorsCircleSweepTangSurRadius To launch CAAGMOperatorsCircleSweepTangSurRadius, you will need to set up the build time environment, then compile CAAGMOperatorsCircleSweepTangSurRadius.m, set up the run time environment, and then execute the use case [2]. If you simply type CAAGMOperatorsCircleSweepTangSurRadius with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsCircleSweepTangSurRadius e/sweep.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsCircleSweepTangSurRadius Code The CAAGMOperatorsCircleSweepTangSurRadius use case is made of a main named CAAGMOperatorsCircleSweepTangSurRadius.cpp located in the CAAGMOperatorsCircleSweepTangSurRadius.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsCircleSweepTangSurRadius.m\` where `InstallRootFolder` [2] is the folder where the API CD-ROM is installed. Step-by-Step The use case is divided into the following main steps:
     * Creating the Guide and the Tangency Surface
     * Creating a CATICGMTopSweepWireSkinCircle Operator Instance
     * Running the Operator and Retrieving the Resulting Body.
@@ -60,9 +60,9 @@ Running the Operator and Retrieving the Resulting Body CATICGMTopSweepWireSkinCi
         }  
     ...
 
-In Short This use case is an example of how to create a circle sweep with one guide and a tangency surface by using the CATICGMTopSweepWireSkinCircle operator. References [1] | [Overview of the Topological Operators](CAACgmUcTopOverview.htm)  
+In Short This use case is an example of how to create a circle sweep with one guide and a tangency surface by using the CATICGMTopSweepWireSkinCircle operator. References [1] | [Overview of the Topological Operators](CAACgmUcTopOverview.md)  
 ---|---  
-[2] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-[3] | [Using the Basic Topological Operators](CAACgmUcTopSpline.htm)  
+[2] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[3] | [Using the Basic Topological Operators](CAACgmUcTopSpline.md)  
 History Version: **1** [Aug 2002] | Document created  
 ---|---

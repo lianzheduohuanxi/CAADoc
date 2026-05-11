@@ -1,9 +1,10 @@
 ---
 title: "VPMPersistency Modifications"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR9"
+version: "V5R9"
 tags: ["CATIContainer_var"]
-source_file: "Doc\online\CAACenAPIChangesR9\VPMPersistency.htm"
+source_file: "Doc/online/CAACenAPIChangesR9/VPMPersistency.md"
 converted: "2026-05-11T17:33:53.017379"
 ---
 

@@ -1,9 +1,9 @@
 ---
 title: "Managing Undo/Redo"
-category: "general"
+category: "use-case"
 module: "CAADegTechArticles"
 tags: ["CAACreateTriangleCmd", "CAACreateTriangleCmdGlobalUndo", "CATIUndoTransaction", "CAAIPolyline"]
-source_file: "Doc\online\CAADegTechArticles\CAADegUndoRedo.htm"
+source_file: "Doc/online/CAADegTechArticles/CAADegUndoRedo.md"
 converted: "2026-05-11T17:33:49.900168"
 ---
 

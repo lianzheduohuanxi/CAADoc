@@ -1,9 +1,9 @@
 ---
 title: "New C++ Authorized APIs in CAA V5R10 GA"
-category: "general"
+category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIMSHSelectedElement", "CATICatalogBrowserFactory", "CATIDOMDocumentType", "CATIEleUipFilteringCriteria", "CATITTRSList", "CATIElbTermination", "CATIDOMCharacterData", "CATICatalogEnable", "CATIMfgManufacturingBatch", "CATICatalogSynchronize", "CATICatalogInstantiation", "CATIGSOWrapSurface", "CATIDOMTreeWalker", "CATIDOMEntityReference", "CATIDOMEntity", "CATICatalogPersistentQuery", "CATInstanciationContext", "CATIElbEquipment", "CATIMfgUserDataFeature", "CATIDOMNodeIterator"]
-source_file: "Doc\online\CAACenQuickRefs\CAACenV5R10GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R10GANewCPPAPI.md"
 converted: "2026-05-11T17:33:47.025274"
 ---
 

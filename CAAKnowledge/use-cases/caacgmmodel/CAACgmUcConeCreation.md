@@ -3,10 +3,9 @@ title: "Cone"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMModelConeCreation", "CAAGMModelInterfaces"]
-source_file: "Doc\online\CAACgmModel\CAACgmUcConeCreation.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcConeCreation.md"
 converted: "2026-05-11T17:33:48.181947"
 ---
-
 
     
     
@@ -18,7 +17,6 @@ converted: "2026-05-11T17:33:48.181947"
     	
     		
     		
-    
     # Creating a Frustum of a Right Circular Cone
     
     
@@ -36,7 +34,6 @@ converted: "2026-05-11T17:33:48.181947"
     	
     		
     		
-    
     ## Abstract
     
     
@@ -63,7 +60,6 @@ converted: "2026-05-11T17:33:48.181947"
     
     
     
-    
     ## API to be Used
     
     
@@ -71,7 +67,6 @@ converted: "2026-05-11T17:33:48.181947"
     
     To create a cone or a frustum of a circular cone, use the CATGeoFactory::CreateCone 
     method in the GeometricObjects framework. 
-    
     
     
     
@@ -84,7 +79,7 @@ converted: "2026-05-11T17:33:48.181947"
     illustrates how to create a cone. This use case creates the input data required 
     for the cone creation. If you are not already 
     familiar with geometric modeler use cases, go to
-    [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm). 
+    [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md). 
     
     
     
@@ -123,14 +118,12 @@ The base radius relies on the plane defined by the first and second direction of
 Slant height: 62mm = slant length end (80mm) - slant length start (18mm)  
 Cone angle = 45 deg (0.25*CATPI) = angle between the cone and the base plane.   
 ---|---  
-  
 ## References
 
-[1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)  
-[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)  
-  
+[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)  
+[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)  
 ## History
 
 Version: **1** [Sept 2012] | Document created  

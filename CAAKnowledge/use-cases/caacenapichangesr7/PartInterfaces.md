@@ -1,9 +1,10 @@
 ---
 title: "PartInterfaces Modifications"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR7"
+version: "V5R7"
 tags: ["CATIPrtFactory", "CATIDraft", "CATISweep", "CATICircPatt", "CATIRectPatt", "CATIPrtToPattern", "CATIPrtManageFeatBuild"]
-source_file: "Doc\online\CAACenAPIChangesR7\PartInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR7/PartInterfaces.md"
 converted: "2026-05-11T17:33:52.210420"
 ---
 

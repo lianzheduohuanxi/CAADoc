@@ -3,7 +3,7 @@ title: "Scanning an Edge Curve"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAATopEdgeCurve", "CATICGMContainer", "CAADoc", "CAAGMModelScanEdgeCurve", "CATICGMObject", "CAAGMModelInterfaces", "CAACGMModelScanEdgeCurve", "CATIntCurve", "CAAScanEdgeCurve"]
-source_file: "Doc\online\CAACgmModel\CAACgmUcTobEdgeCurve.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTobEdgeCurve.md"
 converted: "2026-05-11T17:33:48.549132"
 ---
 
@@ -31,8 +31,7 @@ To manipulate an edge curve, you must:
     1. Retrieve the edge curve from the corresponding edge by using CATEdge::GetCurve.
     2. If need be, retrieve the “ref curve” from an edge curve by using CATEdgeCurve::GetRefCurve. 
     3. Retrieve the CATCurve making up the edge curve by using the CATEdgeCurveIterator operator.
-| ![CATCurve](images/CAACgmTobpCurve.gif)  
----|---  
+
 The CAACGMModelScanEdgeCurve Use Case CAACGMModelScanEdgeCurve is a use case of the CAAGMModelInterfaces.edu framework that illustrates how to use the CATEdgeCurveIterator which is delivered in GeometricObjects.  What Does CAACGMModelScanEdgeCurve Do? The CAACGMModelScanEdgeCurve use case:
     * Loads the container and retrieves the edge to be scanned.
     * Retrieves the edge curve from to edge to be analyzed and scans this edge curve.
@@ -108,7 +107,7 @@ The edge curve which is scanned is itself made up of two edge curves. If you nee
     //
     **::CATCloseCGMContainer**(piGeomFactory);
 
-References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
 History Version: **1** [Jan 2009] | Document created  
 ---|---

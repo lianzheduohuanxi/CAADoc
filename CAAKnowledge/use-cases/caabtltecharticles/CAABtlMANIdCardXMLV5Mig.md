@@ -1,9 +1,9 @@
 ---
 title: "Migrating Your Identity Cards to XML"
-category: "general"
+category: "use-case"
 module: "CAABtlTechArticles"
 tags: []
-source_file: "Doc\online\CAABtlTechArticles\CAABtlMANIdCardXMLV5Mig.htm"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANIdCardXMLV5Mig.md"
 converted: "2026-05-11T17:33:46.071110"
 ---
 
@@ -48,8 +48,8 @@ Using mkICE
 
 [Top] References [1] |  Framework Architecture Rules  
 ---|---  
-[2] | [mkICE](../CAABtlQuickRefs/CAABtlMkICEV5.htm)  
-[3] | [mkIc2Xml](../CAABtlQuickRefs/CAABtlMkIc2XmlV5.htm)  
+[2] | [mkICE](../CAABtlQuickRefs/CAABtlMkICEV5.md)  
+[3] | [mkIc2Xml](../CAABtlQuickRefs/CAABtlMkIc2XmlV5.md)  
 History Version: **1** [Jun 2011] | Document created  
 ---|---  
 [Top] _Copyright 2013, Dassault Systmes. All rights reserved._

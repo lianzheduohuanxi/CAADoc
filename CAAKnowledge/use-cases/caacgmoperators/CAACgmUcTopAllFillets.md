@@ -3,7 +3,7 @@ title: "Creating Fillets"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CAATopVariableFillets", "CAATopConstantFillets", "CATICGMObject", "CAAGMModelGemBrowser", "CATICGMDynFillet", "CAATopRollingEdges", "CAATopFilletsMain", "CAAGMOperatorsAllFillets"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcTopAllFillets.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopAllFillets.md"
 converted: "2026-05-11T17:33:49.071438"
 ---
 
@@ -22,9 +22,9 @@ Abstract This use case explains how to create constant fillets, variable fillets
 ---  
 What You Will Learn With This Use Case This use case is intended to help you use fillets in geometric modeler applications. The CAAGMOperatorsAllFillets Use Case CAAGMOperatorsAllFillets is a use case of the CAAGMOperatorsInterfaces.edu framework that illustrates GMOperatorsInterfaces framework capabilities. What Does CAAGMOperatorsAllFillets Do? CAAGMOperatorsAllFillets creates two solid cuboids, performs a Boolean union of the cubes, then creates fillets on the resulting solid. ![Constant Radius Fillet](images/CAACgmTopfilletconstant.gif) | The CAATopConstantFillets function which is defined in the CAATopConstantFillets.cpp file creates a constant fillet along the edges common to both cubes.  
 ---|---  
-![Constant Radius Fillet](images/CAACgmToprollingedges.gif) | The CAATopRollingEdges function which is defined in the CAATopRollingEdges.cpp file creates a fillet along the common edges and for specified rolling edges.  
-![Variable Radius Fillet](images/CAACgmTopvariableradius.gif) | The CAATopVariableFillets function which is defined in the CAATopVariableFillets.cpp file creates a variable radius fillet on one edge of the solid.  
-How to Launch CAAGMOperatorsAllFillets To launch CAAGMOperatorsAllFillets, you will need to set up the build time environment, then compile CAAGMOperatorsAllFillets.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. If you simply type CAAGMOperatorsAllFillets with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsAllFillets e:\Fillets.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsAllFillets Code The CAAGMOperatorsAllFillets use case is made of a main named CAATopFilletsMain.cpp located in the CAAGMOperatorsAllFillets.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsAllFillets.m\` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step There are seven steps in CAATopFilletsMain.cpp:
+ The CAATopRollingEdges function which is defined in the CAATopRollingEdges.cpp file creates a fillet along the common edges and for specified rolling edges.  
+ The CAATopVariableFillets function which is defined in the CAATopVariableFillets.cpp file creates a variable radius fillet on one edge of the solid.  
+How to Launch CAAGMOperatorsAllFillets To launch CAAGMOperatorsAllFillets, you will need to set up the build time environment, then compile CAAGMOperatorsAllFillets.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. If you simply type CAAGMOperatorsAllFillets with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsAllFillets e/Fillets.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsAllFillets Code The CAAGMOperatorsAllFillets use case is made of a main named CAATopFilletsMain.cpp located in the CAAGMOperatorsAllFillets.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsAllFillets.m\` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step There are seven steps in CAATopFilletsMain.cpp:
     1. Creating the Geometry Factory
     2. Creating the Solid Cuboids
     3. Performing a Boolean Union on the Cuboids
@@ -137,8 +137,8 @@ Writing the Model and Closing the Container To save the model in a file, the `::
      //
      **::CATCloseCGMContainer**(piGeomFactory);
 
-In Short To create fillets, you must specify a list of radii as well as a list of edges to be filleted. For a constant radius, the list of radii contains a single item that you can apply to one or more edges. When creating a variable fillet, you must specify the list of radii. The edge to be filleted is then specified in the radius definition. References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+In Short To create fillets, you must specify a list of radii as well as a list of edges to be filleted. For a constant radius, the list of radii contains a single item that you can apply to one or more edges. When creating a variable fillet, you must specify the list of radii. The edge to be filleted is then specified in the radius definition. References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] | [Overview of the Topological Operators](CAACgmUcTopOverview.htm)  
+[2] | [Overview of the Topological Operators](CAACgmUcTopOverview.md)  
 History Version: **1** [Mar 2002] | Document created  
 ---|---

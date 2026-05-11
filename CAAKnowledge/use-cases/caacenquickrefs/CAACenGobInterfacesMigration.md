@@ -1,9 +1,9 @@
 ---
 title: "New Geometric Modeler Interfaces Layer"
-category: "general"
+category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATICGMTopWire_h_", "CATIPGMTopBlendInt", "CAA2Usage", "CATICGMxxx", "CATIPGMOperator", "CAACGMItfVisualStudio", "CATIPGMSolidCylinder", "CAA2Level", "CATIPGMTopBlend", "CATICGMTopWire", "CAAMathematics", "CATIA", "CAACGMItfMacros", "CATICGMGeoToTopOperator"]
-source_file: "Doc\online\CAACenQuickRefs\CAACenGobInterfacesMigration.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenGobInterfacesMigration.md"
 converted: "2026-05-11T17:33:46.528911"
 ---
 
@@ -64,7 +64,6 @@ GMModelInterfaces contains interfaces previously contained in the GeometricOpera
 The New GM Interface Description vs. CAA V5 Operators
 
   * **Here is an example of a CAA V5 GM operator.**
-        
         #ifndef CATTopWire_h
         #define CATTopWire_h
         /**
@@ -99,7 +98,6 @@ The New GM Interface Description vs. CAA V5 Operators
         #endif
 
   * **Here is a CAA V6 GM interface**
-        
         #ifndef CATICGMTopWire_h_
         #define CATICGMTopWire_h_
         ...
@@ -107,7 +105,6 @@ The New GM Interface Description vs. CAA V5 Operators
          * @CAA2Level L1
          * @CAA2Usage U3
          */
-        
         #include "CATGMOperatorsInterfaces.h"
         #include "CATICGMGeoToTopOperator.h"
         ...
@@ -127,9 +124,7 @@ The New GM Interface Description vs. CAA V5 Operators
         */
         ExportedByCATGMOperatorsInterfaces 
           CATICGMTopWire *CATCGMCreateTopWire(CATGeoFactory *iFactory, ...);
-        			
         #endif
-
 
 How to Use GM Interfaces vs. CAA V5 Operators
 
@@ -184,7 +179,7 @@ Migration Tools A migration tool is provided in GeometricObjects. You can run it
 
 The Step-by-Step Migration Procedure **Step 1** Run the tck_list command to display the list of available tck profile identifiers then run the mkmk profile: `tck_profile _myProfile_`  
 ---  
-Refer to Using TCKs for Accessing Tools for more information.  You can also open a command window from MsDev by using the CAA customization. **Step 2:** Set the CGMITF_WS_DIR environment variable `set CGMITF_WS_DIR=_E:\MyWorkspace_`  
+Refer to Using TCKs for Accessing Tools for more information.  You can also open a command window from MsDev by using the CAA customization. **Step 2:** Set the CGMITF_WS_DIR environment variable `set CGMITF_WS_DIR=_E/MyWorkspace_`  
 ---  
 **Step 3:**   Run the profile below `CAAMathematics.edu\Data.d\Tools\CGMItfProfile.bat`  
 ---  
@@ -204,11 +199,13 @@ The migrated files together with the CATIA Version 5 files are displayed.
 Note: The vdiff32 tool is used by default to display the file differences. If need be, you can specify a different tool by using the `CGMITF_DIFF` environment variable. Exit the vdiff32 application. The question below is displayed:  
 Do you want to get the migrated source? Y(es)/N(o)/Q(uit) Reply:
 
+```
+
   * Y, to rename the initial CATIA V5 files with the CGMItf_save extension and replace your initial source by the new one.
   * N not to rename the CATIA V5 files, the CGMItf_new are redisplayed, the initial CATIA V5 files are not renamed.
   * Q to exit directly the vdiff32 application and only keep the CGMItf_new files.
 
-How to Fix Compilation Errors Once you have migrated your application, you have to re-build your code. The migration tools described here above can leave some compilation errors behind. If so,  here is a way to fix the major part of these compilation errors. **Step 1:** When re-compiling your frameworks, redirect the output in a text file. Example: `mkcpl _MyFramework_ >c:\temp\traces.txt`  
+How to Fix Compilation Errors Once you have migrated your application, you have to re-build your code. The migration tools described here above can leave some compilation errors behind. If so,  here is a way to fix the major part of these compilation errors. **Step 1:** When re-compiling your frameworks, redirect the output in a text file. Example: `mkcpl _MyFramework_ >c/temp\traces.txt`  
 ---  
 **Step 2:** In Visual Studio, install the CGM Interface Migration Macros. To do so, open the directory CAAMathematics.edu\Data.d\CGMItfVisualStudio in your Explorer and double-click on `CAACGMItfVisualStudio.vsmacros`  
 The `CAACGMItfMacros` macros are now installed. They can be viewed in the Visual Studio Macro Explorer (`Alt+F8`).  ![Visual Studio Macro Explorer](images/CAACenGobImg2.jpg) **Step 3:** The FixCGMItfErrors  macro should be launched first. Double-click the FixCGMItfErrors macro in the tree view above. The dialog box below is displayed.  ![Compilation traces file Dialog Box](images/CAACenGobImg1.jpg) To fill in field, enter the path of your trace file. Click OK. **Step 4:** Fix the other errors by clicking the other macros in the Macro Explorer tree structure. Here are the macro descriptions:
@@ -252,7 +249,6 @@ is modified in:
   
 ---  
 which is converted into `// CAA V6 right after migration { CATIPGMSolidCylinder cylinder1 (factory, topdata, ..., ...) ... }
-
 
 `  
 ---  
@@ -344,19 +340,17 @@ should be replaced by
 ---  
   * If the target class is a derived class, the cast should be replaced by a `QueryInterface`.
 
-
 Detail Of Interfaces Mapping Frameworks | Replaced APIs  
 ---|---  
-AdvancedTopologicalOpe | [Replaced Interfaces](CAACenBUAdvancedTopologicalOpe.htm)  
-BasicTopologicalOpe | [Replaced Interfaces](CAACenBUBasicTopologicalOpe.htm)  
-FreeFormOperators | [Replaced Interfaces](CAACenBUFreeFormOperators.htm)  
-GeometricObjects | [Replaced Interfaces](CAACenBUGeometricObjects.htm)  
-GeometricOperators | [Replaced Interfaces](CAACenBUGeometricOperators.htm)  
-NewTopologicalObjects | [Replaced Interfaces](CAACenBUNewTopologicalObjects.htm)  
-Tessellation | [Replaced Interfaces](CAACenBUTessellation.htm)  
-TopologicalOperators | [Replaced Interfaces](CAACenBUTopologicalOperators.htm)  
+AdvancedTopologicalOpe | [Replaced Interfaces](CAACenBUAdvancedTopologicalOpe.md)  
+BasicTopologicalOpe | [Replaced Interfaces](CAACenBUBasicTopologicalOpe.md)  
+FreeFormOperators | [Replaced Interfaces](CAACenBUFreeFormOperators.md)  
+GeometricObjects | [Replaced Interfaces](CAACenBUGeometricObjects.md)  
+GeometricOperators | [Replaced Interfaces](CAACenBUGeometricOperators.md)  
+NewTopologicalObjects | [Replaced Interfaces](CAACenBUNewTopologicalObjects.md)  
+Tessellation | [Replaced Interfaces](CAACenBUTessellation.md)  
+TopologicalOperators | [Replaced Interfaces](CAACenBUTopologicalOperators.md)  
 Some .h files have also been moved into other frameworks, the complete list is available [here](CAACenWhatsNew.htm#CGMArchiR20).  
-
 
 * * *
 

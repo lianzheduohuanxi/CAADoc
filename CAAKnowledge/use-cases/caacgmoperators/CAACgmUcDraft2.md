@@ -3,7 +3,7 @@ title: "Draft: Untwist"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsDraftCreation", "CATICGMDynDraft", "CAATopDraftmain", "CAATopAdvancedDraft", "CATICGMDynAdvancedDraft"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcDraft2.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcDraft2.md"
 converted: "2026-05-11T17:33:48.904800"
 ---
 
@@ -20,7 +20,7 @@ Operator to be Used To create a draft with "untwist" mode, use the CATICGMDynAdv
     1. CAATopDraftmain.cpp, the main program which calls the two other parts
     2. CreateDraft.cpp which explains how to create a basic draft
     3. CAATopAdvancedDraft.cpp which illustrates how to use the "untwist mode".
-If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm). Fig.1 Advanced Draft: Input data  ![Advanced Draft: Input Data](images/CGM_advanced_draft_0.png)  
+If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md). Fig.1 Advanced Draft: Input data  ![Advanced Draft: Input Data](images/CGM_advanced_draft_0.png)  
 ---  
 With the code below:
     
@@ -49,13 +49,13 @@ With the code below:
       
   
 ---  
-you get this result: Fig.2 Advanced Draft: No Untwist Mode and Untwist Mode  ![ Advanced Draft: No Untwist](images/CGM_advanced_draft_1.png) |  ![ Advanced Draft: Result](images/CGM_advanced_draft_2.png)  
+you get this result: Fig.2 Advanced Draft: No Untwist Mode and Untwist Mode  ![ Advanced Draft: No Untwist](images/CGM_advanced_draft_1.png) 
 ---|---  
-References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)  
-[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)  
-[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.htm)  
-[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.htm)  
+[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)  
+[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)  
+[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.md)  
+[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.md)  
 History Version: **1** [Sept 2011] | Document created  
 ---|---

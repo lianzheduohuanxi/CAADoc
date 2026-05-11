@@ -1,12 +1,11 @@
 ---
 title: "Viewers Object"
-category: "general"
+category: "use-case"
 module: "CAAScdInfTechArticles"
 tags: ["CATIA"]
-source_file: "Doc\online\CAAScdInfTechArticles\CAAInfObjViewer3D.htm"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfObjViewer3D.md"
 converted: "2026-05-11T17:31:52.429128"
 ---
-
 # Viewers Object
  
   
@@ -34,7 +33,6 @@ converted: "2026-05-11T17:31:52.429128"
  When the window displays both a **Viewer3D** and a **SpecsViewer** , or one or several **Viewer2D** s and a **SpecsViewer** , it is a **SpecsAndGeomWindow** . You can activate a given viewer in a multi-viewer window, fit all the scene in the viewer, update the display, zoom in and out, and capture the contents of the viewer as an image file.
  
  Display options depend on the viewer type. All viewers share display options such as the background color and the display on the whole screen or in a smaller window. In addition, **Viewer3D** s allow for different lighting modes and for modifying lighting intensity, and for depth effects, navigation styles, rendering modes, and clipping modes.
- 
  ## Viewpoints
  
  A viewpoint holds complementary data for viewers. A **Viewpoint2D** defines the origin of the scene to display, expressed in model units, and a zoom factor to apply for display. A **Viewpoint3D** holds in addition the sight and up directions, the target, the field of view, and projection modes.
@@ -42,7 +40,6 @@ converted: "2026-05-11T17:31:52.429128"
   
  
  ![](images/baspp1-8.gif)
- 
  ## Cameras
  
  A **Camera** is the persistent form of a viewpoint. You can create a camera from the current viewpoint using the **NewCamera** method of the **Viewer** object. The camera name is assigned by CATIA: **Camera00** , **Camera01** , and so forth, and the created camera is placed at the end of the camera collection of the active document and is displayed in the Named Views dialog box of the View menu. You can rename the cameras you create with your own names using the **Name** property. A created camera can then be assigned to a viewer to make its own viewpoint change to this of the camera. Two kinds of cameras exist: the **Camera2D** for 2D viewpoints, that is for DrawingDocument objects, and the **Camera3D** for 3D viewpoints representing the real world, that is for PartDocument and ProductDocument objects. A **Camera2D** stores a **Viewpoint2D** object and a **Camera3D** stores a **Viewpoint3D** object

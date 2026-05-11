@@ -1,9 +1,10 @@
 ---
 title: "Detail Of C++ API Changes"
-category: "general"
+category: "api-changes"
 module: "CAACenAPIChangesR14"
+version: "V5R14"
 tags: ["CAA2Usage", "CAA2Level"]
-source_file: "Doc\online\CAACenAPIChangesR14\CAACenAPIChangeDetail.htm"
+source_file: "Doc/online/CAACenAPIChangesR14/CAACenAPIChangeDetail.md"
 converted: "2026-05-11T17:33:50.826300"
 ---
 
@@ -30,27 +31,27 @@ MINMV | Method is no more virtual. If occurs on a U1 class, may require modifica
   
 * * *
 
-CATAnalysisBase | [R14GA vs R13GA](CATAnalysisBase.htm)  
+CATAnalysisBase | [R14GA vs R13GA](CATAnalysisBase.md)  
 ---|---  
-CATAnalysisInterfaces | [R14GA vs R13GA](CATAnalysisInterfaces.htm) |   
-CATSchPlatformModeler | [R14GA vs R13GA](CATSchPlatformModeler.htm) |   
-ConstraintModeler | [R14GA vs R13GA](ConstraintModeler.htm) |   
-DraftingInterfaces | [R14GA vs R13GA](DraftingInterfaces.htm) |   
-ENOVDDManager | [R14GA vs R13GA](ENOVDDManager.htm) |   
-ENOVInterfaces | [R14GA vs R13GA](ENOVInterfaces.htm) |   
-ElecDeviceItf | [R14GA vs R13GA](ElecDeviceItf.htm) |   
-ManufacturingInterfaces | [R14GA vs R13GA](ManufacturingInterfaces.htm) |   
-MechanicalModeler | [R14GA vs R13GA](MechanicalModeler.htm) |   
-ObjectSpecsModeler | [R14GA vs R13GA](ObjectSpecsModeler.htm) |   
-ProductStructure | [R14GA vs R13GA](ProductStructure.htm) |   
-VPMInterfaces | [R14GA vs R13GA](VPMInterfaces.htm) |   
-VPMDesktopObjects | [R14GA vs R13GA](VPMDesktopObjects.htm) |   
+CATAnalysisInterfaces | [R14GA vs R13GA](CATAnalysisInterfaces.md) |   
+CATSchPlatformModeler | [R14GA vs R13GA](CATSchPlatformModeler.md) |   
+ConstraintModeler | [R14GA vs R13GA](ConstraintModeler.md) |   
+DraftingInterfaces | [R14GA vs R13GA](DraftingInterfaces.md) |   
+ENOVDDManager | [R14GA vs R13GA](ENOVDDManager.md) |   
+ENOVInterfaces | [R14GA vs R13GA](ENOVInterfaces.md) |   
+ElecDeviceItf | [R14GA vs R13GA](ElecDeviceItf.md) |   
+ManufacturingInterfaces | [R14GA vs R13GA](ManufacturingInterfaces.md) |   
+MechanicalModeler | [R14GA vs R13GA](MechanicalModeler.md) |   
+ObjectSpecsModeler | [R14GA vs R13GA](ObjectSpecsModeler.md) |   
+ProductStructure | [R14GA vs R13GA](ProductStructure.md) |   
+VPMInterfaces | [R14GA vs R13GA](VPMInterfaces.md) |   
+VPMDesktopObjects | [R14GA vs R13GA](VPMDesktopObjects.md) |   
   
 * * *
 
 References [1] | [Migration to CATBoolean](../CAACenQuickRefs/CAACenWhatsNew.htm#CATBoolean)  
 ---|---  
-[2] | [Details Of V513 API Changes](../CAACenAPIChangesR11/CAACenAPIChangeDetail.htm)  
+[2] | [Details Of V513 API Changes](../CAACenAPIChangesR11/CAACenAPIChangeDetail.md)  
   |    
 [Top]  
   

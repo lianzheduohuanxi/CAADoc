@@ -3,7 +3,7 @@ title: "Part Selection"
 category: "use case"
 module: "CAACloUseCases"
 tags: ["CAACommonLayoutItf", "CAACloPartSelection", "CATICloPartSelection", "CATICatalogDescription", "CATIUnknownList", "CAAECloPartSelection", "CATICkeParm"]
-source_file: "Doc\online\CAACloUseCases\CAAECloPartSelection.htm"
+source_file: "Doc/online/CAACloUseCases/CAAECloPartSelection.md"
 converted: "2026-05-11T17:33:49.550794"
 ---
 

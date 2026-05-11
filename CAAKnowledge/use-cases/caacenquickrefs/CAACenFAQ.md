@@ -1,9 +1,9 @@
 ---
 title: "CAA V5 Frequently Asked Questions"
-category: "general"
+category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIA"]
-source_file: "Doc\online\CAACenQuickRefs\CAACenFAQ.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenFAQ.md"
 converted: "2026-05-11T17:33:46.513396"
 ---
 
@@ -23,12 +23,12 @@ The frequently asked questions are sorted by foundation and modeler. Foundations
     * Middleware Abstraction
   * **3D PLM PPR Hub Open Gateway**
     * Cax & PDM Hub
-    * [Knowledge Modeler](../CAALifQuickRefs/CAALifFaq.htm)
-    * [Feature Modeler](../CAAOsmQuickRefs/CAAOsmFaq.htm)
-    * [Product Structure Modeler](../CAAPstQuickRefs/CAAPstFaq.htm)
-    * [Process Modeler](../CAADmiQuickRefs/CAADmiFaq.htm)
+    * [Knowledge Modeler](../CAALifQuickRefs/CAALifFaq.md)
+    * [Feature Modeler](../CAAOsmQuickRefs/CAAOsmFaq.md)
+    * [Product Structure Modeler](../CAAPstQuickRefs/CAAPstFaq.md)
+    * [Process Modeler](../CAADmiQuickRefs/CAADmiFaq.md)
     * Configuration Modeler
-    * [Geometric Modeler](../CAACgmQuickRefs/CAACgmFaq.htm) (CGM)
+    * [Geometric Modeler](../CAACgmQuickRefs/CAACgmFaq.md) (CGM)
   * **RADE Tools**
     * C++ Interactive Dashboard
     * Java Interactive Dashboard
@@ -59,7 +59,7 @@ CATIA Solutions
     * DMU Kinematics
     * Knowledge Expert
   * **Analysis**
-    * [Analysis Modeler](../CAAAniQuickRefs/CAAAniFaq.htm)
+    * [Analysis Modeler](../CAAAniQuickRefs/CAAAniFaq.md)
   * **Machining**
     * NC Review
     * Prismatic Machining

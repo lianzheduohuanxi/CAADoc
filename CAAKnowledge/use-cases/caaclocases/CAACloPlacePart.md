@@ -3,7 +3,7 @@ title: "Placing Parts"
 category: "use case"
 module: "CAACloUseCases"
 tags: ["CATIArrNode_var", "CATIPspConnection", "CATIProduct", "CATIAHybridShapeFactory", "CAAPspUtilities", "CATIPspConnectable", "CATIArrSegment", "CAACloPlacePart", "CATIArrSegmentsString", "CATIPspPhysicalProduct", "CAACloEduRuns", "CATIAPart", "CATIArrSegment_var", "CATIPspPlacePartOnRun", "CATIUnknownList", "CATIPspLogicalLine", "CATIPspConnector", "CATIPspPartConnector", "CAACommonLayoutItf", "CATIUnknownListImpl"]
-source_file: "Doc\online\CAACloUseCases\CAACloPlacePart.htm"
+source_file: "Doc/online/CAACloUseCases/CAACloPlacePart.md"
 converted: "2026-05-11T17:33:49.487432"
 ---
 
@@ -558,7 +558,6 @@ The code for the support methods is shown below.
       cout << "CAACloPlacePart::GetConnectedPart rc = " << rc << endl;
       return rc;
     }
-    
     #define PointTolerance  0.01 // mm
     int ArePointsEqual(const CATMathPoint &iPoint0, 
                        const CATMathPoint &iPoint1)
@@ -2920,7 +2919,7 @@ After CAACloPlacePart places a valve in space it places a tube in space. The tub
 
 * * *
 
-References [1] | [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] | [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
   
 * * *

@@ -1,17 +1,15 @@
 ---
 title: "The CGM Topological Model"
-category: "general"
+category: "use-case"
 module: "CAACgmModel"
 tags: ["CATIA"]
-source_file: "Doc\online\CAACgmModel\CAACgmTaTobTopoModel.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmTaTobTopoModel.md"
 converted: "2026-05-11T17:33:48.051276"
 ---
-
 # The CGM Topological Model  
   
 ---  
 Technical Article  
-  
 ## Abstract
 
 This article details how CGM implements the concepts of the topology used to bound geometric objects. The topological operations are not handled here. First, the main interfaces (CATBody, CATDomain, CATCell) are presented, followed by their mutual relationships, and their validity range. The smart mechanism allowing to reuse topology from body to body is explained in a second part. The last part is more specific about the objects management.
@@ -33,11 +31,9 @@ This article details how CGM implements the concepts of the topology used to bou
     * In Short
     * References  
 ---  
-  
 ## The CGM Topological Objects
 
 The Topological Objects interfaces allow to handle the body and all the types of topological domains and cells described in Topological Concepts. They give means to navigate through the topological graph, but do not operate bodies: the operations are brought by the TopologicalOperators interfaces.
-
 ### CATBody
 
 The CATBody interface implements the concept of topological body [2]. A CATBody is a geometric object, which handles a set of non necessarily connected cells and refers, directly or indirectly, all the cells needed for its construction. It offers tools to:
@@ -52,7 +48,6 @@ The building up of a CATBody takes several steps:
     * Associate them with the underlying geometry.
     * Attach the first level of domain(s) defining the CATBody.
     * Declare the completion of the CATBody and freeze it (this will be possible only if it satisfies to all the validity criteria, see Validity of the Topological Objects). It now can be used for topological operations, but cannot be modified anymore. It is necessary to make a copy of a frozen CATBody into a non-frozen one, in order to be able to perform modifications. Hence, topological operators do never modify input bodies, but retrieve the result into a new body.
-
 ### CATDomain and CATCell
 
 CATDomain and CATCell interfaces implement the concept of topological domains and cells [2]. They offer navigation methods, and all Get and Set methods on their attributes.
@@ -91,7 +86,6 @@ Notice:
 ---  
   
 We discuss now on the relationships and relative orientations between these objects.
-
 ### Relative Orientation Between a CATCell and its Underlying Geometry
 
 A CATCell is a topological limitation of an underlying geometry (see also [3]).
@@ -110,7 +104,6 @@ The CATCell is oriented with regards to its underlying geometry.
     The cell orientation is not defined.
 Fig. 3: Orientation of the Cell with Regards to its Geometry ![Cell Orientation](images/CAACgmTobTopoModelOrientation1.gif) | The edge V1-V2 is oriented from V2 to V1. Its orientation with regards to the geometry is inverted (`CATOrientationNegative`) Face has the same orientation as the orientation of the underlying surface. (`CATOrientationPositive`).  
 ---|---  
-  
 ### Location of a CATDomain Bounding a CATCell
 
     * A CATDomain is a set of connected CATCells of same dimension that bound a cell of higher dimension. If it bounds a CATCell of dimension n, the CATDomain contains cells of dimension n-1. If immersed in a cell of dimension n, it contains cells of dimension less or equal to n-1.
@@ -118,16 +111,24 @@ Fig. 3: Orientation of the Cell with Regards to its Geometry ![Cell Orientation]
     * It is located with regards to this bounded CATCell (or CATBody) thanks to an attribute: 
 
 `CATLocationInner`
+```vbscript
     For internal boundaries (holes into a faces or cavities into a volumes).
+```
+
 `CATLocationOuter`
+```vbscript
     For external boundaries.
+```
+
 `CATLocationFull`
     All cells of the domain to create are immersed into the containing cell , but does not cut the cell in parts (non-manifold topology).
 `CATLocationIn3DSpace`
+```vbscript
     For creation into a body.
+```
+
 Fig. 4: Location of a Cell ![Cell Location](images/CAACgmTobTopoModelOrientation2.gif) | Face is bounded by 3 loop domains: L1 is its external boundary: `CATLocationOuter` L2 is an internal loop: `CATLocationInner` L3 is an immersed loop: `CATLocationFull`  
 ---|---  
-  
 ### Matter Side
 
 The relative orientation between the cell and its underlying geometry and the type of location of the boundaries are not sufficient to precisely defined the relationships between the cells. It remains to be declared on which side is the matter, when a bounding cell is run along.
@@ -145,7 +146,6 @@ The CATSide attribute defines the matter side on a bounding cell of a cell. This
 **CATEdge** | `CATSideLeft` |   |   | The vertex is at the edge beginning  
 `CATSideRight` |   |   | The vertex is at the edge end  
 `CATSideFull` |   |   | Impossible  
-  
 ### List of the CATEdges inside a CATLoop
 
 The CATEdges must always be appended inside an inner or outer CATLoop in the order found by letting the matter on the left side, when the you stand along the normal of the face. This is independent on the orientation of the CATEdge itself.
@@ -156,22 +156,22 @@ Fig. 5: Order of the Edges Inside the Loop ![Edge Order](images/CAACgmTobTopoMod
 Notice the CATSide attributes associated with the CATEdges.
 
 A boundary cell operator always returns the CATCells in the order they have been defined inside the CATLoop. When a cell bounds a domain twice, the boundary cell operator returns the cell twice: once with the `CATSideLeft` attribute, once with the `CATSideRight` attribute. This configuration, allowed by the CGM topological model, is however to avoid: some topological operators does not hold it in a first version.
-
 ### Orientation of a CATCell inside a CATDomain
 
 A CATDomain is globally oriented. Each CATCell also owns its own orientation. It is the reason why it is necessary to set the `CATOrientation` of a CATCell with regards to the CATDomain that contends it. If this CATDomain is itself a boundary, it is equivalent to give the `CATOrientation` of the CATCell with regards to the CATDomain, or to define the `CATSide` of the CATCell (see the example of the cube below).
 
 Fig. 6: Orientation of a Cell Inside a Domain ![Cell Orientation](images/CAACgmTobTopoModelOrientation3.gif) | The global orientation of the shells are represented by the black arrows. The orientation of each face is drawn in light blue. The faces S2, C2, C4 must have the attribute `CATOrientationNegative` to keep the consistency of the shell domain. The matter side is then `CATSideRight` for the faces C2 and C4, and `CATSideLeft` for the faces C1 and C3 (no matter side for S1, S2, S3, that do not bound a CATDomain).  
 ---|---  
-  
 ### Methodology
 
+```vbscript
 Do the following steps for managing the different orientations:
+
+```
 
     * Define the `CATOrientation` of the CATCell with regards to the geometry orientation (choose the orientation of the underlying geometry as much as possible).
     * Define the CATDomain that bounds the CATCell: set the type of boundary (`CATLocation`). For a CATFace, give the list of the CATEdges by letting the matter on the left when you stand along the face direction.
     * Set the matter side `CATSide` for each CATCell, with regards to its own orientation or define the `CATOrientation` of the CATCell with regards to the CATDomain it belongs to.
-
 ### Validity of the Topological Objects
 
 The validity of the objects is checked at the CATBody completion. The CATBody cannot be frozen if one of the following rules is not fulfilled:
@@ -194,7 +194,6 @@ The validity of the objects is checked at the CATBody completion. The CATBody ca
        * Cylinder with an unique closed face and two loops on the bottom and up circles.
 
 _Hence, a cell must not be bounded several times by the same cell of lower dimension._ For representing such objects, it will be necessary to use more than one cell.
-
 ## The Smart Concept
 
 The topological model allows domains to share cells with other domains (in the same body or in different bodies). This property minimizes the model size. On the other hand, a cell may belong to several domains and bodies. Hence, it is necessary to precise the context of the body or the domain, for getting its parents.
@@ -205,19 +204,15 @@ The following example shows the Boolean difference between a cuboid and a cylind
 
 Fig. 7: Illustration of the Smart Concept ![Smart Concept](images/CAACgmTobTopoSmart.gif) | This figure illustrates the smart concept: the initial bodies are not modified. A new one is created, sharing existing topology. Notice that the boundaries of the upper and lower faces of the cylinder are made of two edges, for satisfying the validity rules about closed cells.  
 ---|---  
-  
 ## The Object Management
 
 The object persistency is realized through the use of a document, that can be any user Document. A geometric container of CATGeoFactory type must be initialized to allow the creation of the geometric and topological objects.
-
 ### CATGeoFactory: the Factory of the CATBody
 
 The CATGeoFactory is the factory of all geometric objects in general hence it is the factory of the CATBody, that is a geometric object.
-
 ### CATBody: the Factory of the CATCells and CATDomains
 
 In turn, the CATBody allows to create CATCells and CATDomains of all dimensions inside a geometric container. These objects are however not directly attached to the CATBody that created them. Only the first level of domains will be directly related to the CATBody.
-
 ### Navigation
 
 Different tools allows to easily navigate though the topology.
@@ -225,7 +220,6 @@ Different tools allows to easily navigate though the topology.
     * At the CATBody level: list of all the first level domains, hash table of all the cells of a given dimension, bounding edges list of a set of faces, etc.
     * At the CATDomain level: recursive and non recursive scans of the domain cells, etc.
     * At the CATCell level: iterator of the bounding cells, search of adjacent cells, etc.
-
 ## In Short
 
     * The CATBody, CATDomain and CATCell interfaces implements the concepts of the topological objects: A CATBody is made of CATDomain(s), that contains connected bounding CATCells linked to underlying geometry, etc. Three types of relative orientations precise their relationships: 
@@ -235,14 +229,12 @@ Different tools allows to easily navigate though the topology.
     * Rules are established to insure the validity of a CATBody.
     * CATBodies may share CATCells (smart concept).
     * The CATGeoFactory creates the CATBodies, the CATBody creates the CATCells and CATDomains.
-
 ## References
 
-[1] |  [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.htm)  
+[1] |  [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.md)  
 ---|---  
-[2] | [Topology Concepts](CAACgmTaTobTopoConcepts.htm)  
-[3] | [How to Associate Topology with Geometry](CAACgmTaTobTopoCreate.htm)  
-  
+[2] | [Topology Concepts](CAACgmTaTobTopoConcepts.md)  
+[3] | [How to Associate Topology with Geometry](CAACgmTaTobTopoCreate.md)  
 ## History
 
 Version: **1** [Mar 2000] | Document created  

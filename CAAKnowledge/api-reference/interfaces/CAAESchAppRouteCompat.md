@@ -2,38 +2,22 @@
 title: "CAAESchAppRouteCompat"
 type: "interface"
 module: "CAASchPlatformModeler"
+category: "framework"
 base: "CATBaseUnknown"
+inheritance_chain: "CAAESchAppRouteCompat → CATBaseUnknown"
 method_count: 3
 visibility: "local"
+has_tie_binding: false
 verified: true
 ---
-
 # CAAESchAppRouteCompat
 
 **基类**: CATBaseUnknown  
+**继承链**: CAAESchAppRouteCompat → CATBaseUnknown  
 **模块**: CAASchPlatformModeler  
+**分类**: framework  
 **可见性**: local  
 **方法数**: 3
-
-## 方法列表
-
-### AppIsTargetOKForRoute
-```cpp
-HRESULT AppIsTargetOKForRoute(const char *iRouteCntrClassType,
-    CATIUnknownList **oLOKCntrs, boolean *oBYes);
-```
-
-### AppIsTargetOKForPlace
-```cpp
-HRESULT AppIsTargetOKForPlace(CATIUnknownList *iLCompSourceCntrs,
-    CATIUnknownList **oLTargetCntrs, boolean *oBYes);
-```
-
-### AppIsTargetOKForInsert
-```cpp
-HRESULT AppIsTargetOKForInsert(CATIUnknownList *iLCompSourceCntrs,
-    CATIUnknownList **oLSourceCntrs, boolean *oBYes);
-```
 
 ## 依赖
 

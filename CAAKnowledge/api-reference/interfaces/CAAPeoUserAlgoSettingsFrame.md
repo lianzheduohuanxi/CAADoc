@@ -2,27 +2,24 @@
 title: "CAAPeoUserAlgoSettingsFrame"
 type: "interface"
 module: "CAAOptimizationInterfaces"
+category: "framework"
 base: "CATDlgFrame"
+inheritance_chain: "CAAPeoUserAlgoSettingsFrame → CATDlgFrame"
 method_count: 1
 visibility: "local"
+has_tie_binding: false
 verified: true
 ---
-
 # CAAPeoUserAlgoSettingsFrame
 
 **基类**: CATDlgFrame  
+**继承链**: CAAPeoUserAlgoSettingsFrame → CATDlgFrame  
 **模块**: CAAOptimizationInterfaces  
+**分类**: framework  
 **可见性**: local  
 **方法数**: 1
 
 > Dialog
-
-## 方法列表
-
-### Build
-```cpp
-HRESULT Build(CATIOptAlgorithm_var spiAlgo);
-```
 
 ## 依赖
 

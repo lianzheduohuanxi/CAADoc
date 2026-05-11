@@ -1,12 +1,11 @@
 ---
 title: "Parameters Automation Objects"
-category: "general"
+category: "use-case"
 module: "CAAScdKniTechArticles"
 tags: []
-source_file: "Doc\online\CAAScdKniTechArticles\CAAKniTocParameter.htm"
+source_file: "Doc/online/CAAScdKniTechArticles/CAAKniTocParameter.md"
 converted: "2026-05-11T17:31:52.006491"
 ---
-
 # Parameters Automation Objects
 
 ![](../CAAScrAutomationImages/images/params.gif)![Multiple Object Diagrams](../CAAScrAutomationImages/images/uparrow.gif)  
@@ -18,7 +17,7 @@ converted: "2026-05-11T17:31:52.006491"
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/prop1parmsets.gif)![](../CAAScrAutomationImages/images/params.gif)  
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/prop2parmsets.gif)![](../CAAScrAutomationImages/images/params.gif)  
 ![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/param.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parderil.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/relation.gif)[![Relation Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](CAAKniTocRelation.htm)  
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parderil.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/relation.gif)[![Relation Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](CAAKniTocRelation.md)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/rparam.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parderiv.gif)![](../CAAScrAutomationImages/images/dimens.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parderil.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/unit.gif)  

@@ -1,12 +1,11 @@
 ---
 title: "mkmk and Java"
-category: "general"
+category: "use-case"
 module: "CAABtlTechArticles"
 tags: []
-source_file: "Doc\online\CAABtlTechArticles\CAABtlMANJava.htm"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANJava.md"
 converted: "2026-05-11T17:33:46.103916"
 ---
-
 
     
     
@@ -26,7 +25,6 @@ converted: "2026-05-11T17:33:46.103916"
     		_How mkmk organize Java modules_
     		
     	  
-    ---|---|---  
     
     	
     		Technical Article
@@ -145,7 +143,6 @@ converted: "2026-05-11T17:33:46.103916"
     		BUILT_OBJECT_TYPE = JAVA and TYPE unspecified
     		| /Workspace/$MkmkOS_Builtime/docs/java
     	  
-    ---|---  
     
     	
     		BUILT_OBJECT_TYPE = JAVA CLIENT
@@ -227,7 +224,6 @@ converted: "2026-05-11T17:33:46.103916"
     
     		
     	  
-    ---|---  
     
     
     Additional 
@@ -291,7 +287,6 @@ converted: "2026-05-11T17:33:46.103916"
     		Version: **1** [Jun 2003]
     		| Document created
     	  
-    ---|---  
     
     	
     		[Top]

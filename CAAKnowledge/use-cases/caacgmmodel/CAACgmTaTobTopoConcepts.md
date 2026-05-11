@@ -1,17 +1,15 @@
 ---
 title: "Topology Concepts"
-category: "general"
+category: "use-case"
 module: "CAACgmModel"
 tags: ["CATIA"]
-source_file: "Doc\online\CAACgmModel\CAACgmTaTobTopoConcepts.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmTaTobTopoConcepts.md"
 converted: "2026-05-11T17:33:48.021377"
 ---
-
 # Topology Concepts  
   
 ---  
 Technical Article  
-  
 ## Abstract
 
 This paper presents the general topological concepts that are supported by CATIA V5. After defining the topology, the basic entities (cell, domain, body) are precisely described. Then, non-manifold topologies are introduced and illustrated. A summarized chart allows the reader to visualize the links between those different concepts. 
@@ -28,12 +26,11 @@ This paper presents the general topological concepts that are supported by CATIA
     * In Short
     * References  
 ---  
-  
 ## Topology for Geometric Design
 
 Topology allows to represent objects, by detailing their boundaries and the connections between their different parts. This figure shows an example of the topological description of a simple shell object.
 
-Fig 1: A Topological Description of a Shell Object ![Shell Object Topological Description](images/CAACgmTobTopoConcepts1.gif) | 
+Fig 1: A Topological Description of a Shell Object ![Shell Object Topological Description](images/CAACgmTobTopoConcepts1.gif) 
     * The shell object is made of one topological 2D entity called a face (F).
     * The face F is the limitation of the surface S by four connected 1D boundaries called edges (E1, E2, E3, E4).
     * Each edge (E1, for example) is a limitation of a geometric curve (C), lying on the surface. It is bounded by two vertices (V1, V2).
@@ -51,7 +48,6 @@ CGM uses the technology called "cell complexes" (see the paper of Rossignac for 
 
     * Handle multidimensional concepts in an unified way
     * Represent all manifold and non-manifold objects.
-
 ## Basic Topological Objects
 
 The topology manages three types of entities: 
@@ -61,7 +57,6 @@ The topology manages three types of entities:
     * The body: the "concrete" object to model.
 
 We detail here these entities.
-
 ### Cell
 
 A _cell_ is a connected limitation of an underlying geometry.
@@ -79,7 +74,6 @@ Cells of upper dimensions are bounded by cells of lower dimensions: a volume is 
 
 Fig 3: Examples of Cells ![Cell Examples](images/CAACgmTobTopoCell.gif)  
 ---  
-  
 ### Domain
 
 A _domain_ is a set of cells of dimension n connected by cells of dimension n-1. A domain can possibly contain only one cell.
@@ -97,7 +91,7 @@ vertex in volume | one vertex | the 3D Space or a volume
   
 Lumps, shells, wires and vertices in volume are boundaries of 3D entities. Loops and vertices in faces are boundaries of 2D entities. No domain is associated to the boundaries of edges (1D entities): vertices directly bounds edges, because such domain does not bring any added value to the model.
 
-Fig 4: Examples of Domains ![Domain Examples](images/CAACgmTobTopoDomain.gif) | 
+Fig 4: Examples of Domains ![Domain Examples](images/CAACgmTobTopoDomain.gif) 
     * A loop is a set of edges connected by vertices bounding a face.
     * A shell is a set of faces connected by edges bounding a volume.
     * A wire is a set of edges connected by vertices in the 3D space.
@@ -111,7 +105,6 @@ Reading the different definitions of the domains, you can see that two faces (re
 Fig 5: Domains Define Manifold Components Inside Non-manifold Objects ![Domains](images/CAACgmTobTopoConcepts3.gif) | The cubes C1 and C2 have the face F in common. They can be grouped in the same lump.  
 ---|---  
 The cubes C3 and C4 have only the edge E in common: they must be put into different lumps, because a lump is a set of volumes connected by faces. Each lump is a manifold component of the non-manifold global object.  
-  
 ### Body
 
 A _body_ is a set of domains non necessarily connected (with non common boundary of any dimension). Bodies must satisfy the following properties: 
@@ -124,16 +117,13 @@ If faces F1 and F2 (lying on surfaces F1 and F2 respectively) are cells of the b
 ---|---  
   
 The body only references domains, even if there is only one cell in the domain. See the example of the following section: the body contains only one volume, but it contains it through the lump domain.
-
 ### Example
 
 This example shows the breaking up into cells and domains of a body representing a cuboid with a cavity. In order to keep things clear, some relations have not been displayed.
 
 Fig 7: Decomposition of a Body into Domains and Cells ![Body Decomposition ](images/CAACgmTobTopoExample.gif) | The body is composed of a Lump made of one Volume. The Volume has two shell boundaries: an inner and an outer Shell. Each Shell is made of six Faces. Each Face is bounded by a Loop. Each Loop owns 4 Edges and each Edge is bounded by two Vertices. Notice that each edge is used by two faces and each vertex is also referred three times.  
 ---|---  
-  
 ## The Manifold and Non Manifold Concepts
-
 ### Definition
 
 CGM allows you to create and use manifold and non-manifold bodies. Mathematically speaking, a N-manifold object is a set of points which neighborhood is represented by a N-dimensional bowl. Take a lump domain (resp. shell, loop). If for each point of this domain, there exists a neighborhood of the domain equivalent to _only one_ piece of a sphere (resp. disk, segment), the lump (resp. shell, loop) is 3D (resp. 2D, 1D ) -manifold. Otherwise, it is non manifold.
@@ -145,16 +135,15 @@ The following figures shows examples of manifold and non manifold objects. The p
     * General: cells of dimension n with more than 2 connections with other cells of same dimension (A2, B6).
   | Manifold | Non-manifold  
 ---|---|---  
-1D_ |  ![TopoConceptsNonManifoldA1.gif \(1273 bytes\)](images/CAACgmTobTopoConceptsNonManifoldA1.gif) |  ![TopoConceptsNonManifoldA2.gif \(1421 bytes\)](images/CAACgmTobTopoConceptsNonManifoldA2.gif)  
-2D_ |  ![TopoConceptsNonManifoldB1.gif \(1369 bytes\)](images/CAACgmTobTopoConceptsNonManifoldB1.gif) |  ![TopoConceptsNonManifoldB2.gif \(1729 bytes\)](images/CAACgmTobTopoConceptsNonManifoldB2.gif)  
-3D_ |  ![TopoConceptsNonManifoldC1.gif \(1726 bytes\)](images/CAACgmTobTopoConceptsNonManifoldC1.gif) |  ![TopoConceptsNonManifoldC2.gif \(1919 bytes\)](images/CAACgmTobTopoConceptsNonManifoldC2.gif)  
+1D_ 
+2D_ 
+3D_ 
   
 The non-manifold topology offers several benefits: 
 
     * Allows the simplified representation of parts: a very slight slot inside an object can be represented as a face immersed into a volume in an early stage of design, a stiffener can be modeled as a face, etc.
-    * Allows topological operations to always return a solution. Even if the final result is manifold, intermediate steps can be non manifold. A topological operation on manifold bodies may return non-manifold configurations: let be a cube. Let now be a cylinder which is tangent to the cube and inside it. These two objects are manifold. Operate now the union of the cube and the cylinder: the resulting body is non manifold. Split now by a plane: the final result is manifold, although an intermediate body is not. This scenario is illustrated by the following figure:  Fig 8: An Intermediate Result Is Non-manifold While the Final Result Is Manifold ![Intermediate and Final Results](images/CAACgmTobTopoConcepts4.gif) |   
+    * Allows topological operations to always return a solution. Even if the final result is manifold, intermediate steps can be non manifold. A topological operation on manifold bodies may return non-manifold configurations: let be a cube. Let now be a cylinder which is tangent to the cube and inside it. These two objects are manifold. Operate now the union of the cube and the cylinder: the resulting body is non manifold. Split now by a plane: the final result is manifold, although an intermediate body is not. This scenario is illustrated by the following figure:  Fig 8: An Intermediate Result Is Non-manifold While the Final Result Is Manifold ![Intermediate and Final Results](images/CAACgmTobTopoConcepts4.gif) 
 ---|---  
-  
 ### Dividing a Body into Domains
 
 When a body contains non connected cells, or non-manifold configurations, it will be necessary to divide it into several manifold domains. The following steps insure the unique decomposition of a body into domains: 
@@ -172,7 +161,6 @@ The face F6 (resp. F7) has two loops: one for the external boundary, the other f
 ---|---  
        2. In three parts otherwise.  Fig12: Decomposition of a General Body into Domains and Cells (Second Case) ![General Body Decomposition](images/CAACgmTobTopoConceptsDivide4.gif) | The edge E is no more immersed: it is part of the external boundaries of the three faces. In this case, the body has three shells. If the body only contains the two faces F1 and F2, it would only have a one shell made of the two faces. (In order to keep things clear, some relations have not been displayed.)  
 ---|---  
-  
 ## Restrictions Regarding Non-Manifold Bodies
 
 Most operations can be performed on non-manifold bodies, but not all. The trend is to allow the user to check whether he accepts to generate a non-manifold result. For example, you won't be able to extrude or fill a profile which has a closed portion but exhibits a free edge and unless you uncheck the "Manifold" check box, you won't be able to join a non-manifold body to another body.
@@ -183,16 +171,15 @@ Note that CGM services allow you to create non-manifold bodies while usually the
 
 **_Example 1: Using a NON-MANIFOLD Body in a Join Operation_**
 
-Create a three-edge body (see figure on the right-hand side) by assembling three concurrent wires (use CATTopWire then CATHybAssemble). This body is made up of **four vertices and three edges**. It is clearly non-manifold. You can check this by using the CATBody::GetCellsHighestDimension method.If you try to join the highlighted body (a line) with the three-edge body by using the Join interactive command, you will get the message: "Update error: Non Manifold Body". |  ![Non-manifold Body](images/CAACgmTobnonManifp.jpg)  
+Create a three-edge body (see figure on the right-hand side) by assembling three concurrent wires (use CATTopWire then CATHybAssemble). This body is made up of **four vertices and three edges**. It is clearly non-manifold. You can check this by using the CATBody::GetCellsHighestDimension method.If you try to join the highlighted body (a line) with the three-edge body by using the Join interactive command, you will get the message: "Update error: Non Manifold Body". 
 ---|---  
-Now, if you try to remove the edge that makes the resulting body non-manifold (use the "Sub-Elements to Remove" tab in the "Join Definition" dialog box), you will get the message: "Bad topology". This message tells you that the sub-element to be deleted is not _**fully**_ contained into a domain. Actually, it shares a vertex with two other wires. You cannot go further in your operation, you must rebuild the initial body to make it manifold or divide it into manifold domains as indicated above. In this case, the best would consist in dividing the body into three single-edge wires not sharing any vertices.  |  ![Non-manifold Body](images/CAACgmTobnonManifp2.jpg)  
+Now, if you try to remove the edge that makes the resulting body non-manifold (use the "Sub-Elements to Remove" tab in the "Join Definition" dialog box), you will get the message: "Bad topology". This message tells you that the sub-element to be deleted is not _**fully**_ contained into a domain. Actually, it shares a vertex with two other wires. You cannot go further in your operation, you must rebuild the initial body to make it manifold or divide it into manifold domains as indicated above. In this case, the best would consist in dividing the body into three single-edge wires not sharing any vertices.  
   
 **_Example 2: Using a MANIFOLD Body in a Join Operation (to be compared with Example 1)_**
 
-Given a three-edge manifold body looking like the one above but made up of three wires and six vertices, if you try to join the highlighted body (a line) with the three-edge body, you will get also the message: "Update error: Non Manifold Body". But now, if you try to remove the edge that makes the resulting body non-manifold (use the "Sub-Elements to Remove" tab in the "Join Definition" dialog box), CATIA will remove it and the join operation will complete. |  ![Three-edge Non-manifold Body](images/CAACgmTobnonManifp3.jpg)  
+Given a three-edge manifold body looking like the one above but made up of three wires and six vertices, if you try to join the highlighted body (a line) with the three-edge body, you will get also the message: "Update error: Non Manifold Body". But now, if you try to remove the edge that makes the resulting body non-manifold (use the "Sub-Elements to Remove" tab in the "Join Definition" dialog box), CATIA will remove it and the join operation will complete. 
 ---|---  
 When you try to create a non-manifold body by using the Sketcher commands, the created body will be non-manifold-like, but actually it will be automatically divided into manifold domains so that further operations requiring to remove unappropriate elements will be made easier. The Sketcher sticks to this strategy.  
-  
 ## In Short
 
     * The body is a set a domains, that contains connected cells , that are bounded by domains of lower dimensions, etc.
@@ -200,12 +187,10 @@ When you try to create a non-manifold body by using the Sketcher commands, the c
     * The following diagram summarizes the relations between the domains and the cells. The arrow domain->cell represents the relation 'is composed of'. The arrow cell->domain represents the relation 'is bounded by'.
 Fig13: Topological Objects Diagram ![Topological Objects Diagram](images/CAACgmTobTopoConceptsRelations.gif)  
 ---  
-  
 ## References
 
-[1] | [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.htm)  
+[1] | [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.md)  
 ---|---  
-  
 ## History
 
 Version: **1** [Mar 2000] | Document created  

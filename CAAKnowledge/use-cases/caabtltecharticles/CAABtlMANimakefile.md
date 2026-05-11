@@ -1,9 +1,9 @@
 ---
 title: "The Imakefile.mk Special File"
-category: "general"
+category: "use-case"
 module: "CAABtlTechArticles"
 tags: []
-source_file: "Doc\online\CAABtlTechArticles\CAABtlMANimakefile.htm"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANimakefile.md"
 converted: "2026-05-11T17:33:46.091758"
 ---
 
@@ -13,7 +13,7 @@ Technical Article
   
 * * *
 
-Abstract The **Imakefile.mk** file is a text file which must be defined for each module in a framework and whose purpose is to describe what must be produced (by [mkmk](CAABtlMkmk.htm)) from this module. The aim of this paper is to explain how to start with this file and secondly how to use advanced features. Before to start building your program, we advise you to read both the first part of this paper (including few samples) and the use of [mkmk](CAABtlMkmk.htm).
+Abstract The **Imakefile.mk** file is a text file which must be defined for each module in a framework and whose purpose is to describe what must be produced (by [mkmk](CAABtlMkmk.md)) from this module. The aim of this paper is to explain how to start with this file and secondly how to use advanced features. Before to start building your program, we advise you to read both the first part of this paper (including few samples) and the use of [mkmk](CAABtlMkmk.md).
 
   * **Why this kind of file?**
   * **Few samples**
@@ -48,7 +48,7 @@ If no name is defined, default names will be chosen regarding the type of data t
 > `_PACKAGE_MODULE=my.package  
 >  BUILT_OBJECT_TYPE=JAVA_`
 
-where `my.package` is the root of the packages that are to be included in the Java module. Distinguish operating systems in Imakefile.mk Even if the same Imakefile.mk file can be used on any (supported) operating systems, you may want to mark some differences regarding the current operating system. To do this, consult the [declarative file preprocessor](CAABtlMANprepro.htm) document. How to use personal preprocessing variables Preprocessing variables are often used in programs for different purposes:
+where `my.package` is the root of the packages that are to be included in the Java module. Distinguish operating systems in Imakefile.mk Even if the same Imakefile.mk file can be used on any (supported) operating systems, you may want to mark some differences regarding the current operating system. To do this, consult the [declarative file preprocessor](CAABtlMANprepro.md) document. How to use personal preprocessing variables Preprocessing variables are often used in programs for different purposes:
 
   * Debug: print messages to trace execution
   * Variants of implementation: according to the current OS or for different levels of services
@@ -86,7 +86,6 @@ Variables interpreted by mkmk Note: Variables following the flag "**internal usa
 >   * `_JAVA_` to build a Java module.
 > 
 
-
 mandatory for Java
 
 > `_PACKAGE_MODULE_`= root of the Java packages for the module to build, such as com.dev for a module containing the packages com.dev.view and com.dev.controller
@@ -106,7 +105,7 @@ optional
 
 mandatory
 
-> `_LINK_WITH = lib_1 lib_2 ... lib_n_` list of modules (i.e. libraries) to be used at link-edition time of the current module. This option is mandatory. **You must always at least include JS0GROUP in the list of load modules**. The statement becomes: `_LINK_WITH = JS0GROUP lib_2 ... lib_n_` When link-editing a module, mkmk uses the subset of libraries which belong to the prerequisite frameworks of the embedding framework of the module. mkmk only makes available the subset of libraries in the prerequisites that _`LINK_WITH`_ features. The library name to be used is either the one specified in the corresponding Imakefile.mk file or the default computed by mkmk (see PROGRAM_NAME keyword). Do not forget to referenced the prerequisite frameworks in the identity card ([IdentityCard.h](CAABtlMANIdCard.htm) file) of the framework to avoid an mkmk error (_mkmk-WARNING: .....: Modules .... in LINK_WITH was found in component .... which is not directly referenced, ignored_). **For JS0GROUP, you must reference the System framework**.
+> `_LINK_WITH = lib_1 lib_2 ... lib_n_` list of modules (i.e. libraries) to be used at link-edition time of the current module. This option is mandatory. **You must always at least include JS0GROUP in the list of load modules**. The statement becomes: `_LINK_WITH = JS0GROUP lib_2 ... lib_n_` When link-editing a module, mkmk uses the subset of libraries which belong to the prerequisite frameworks of the embedding framework of the module. mkmk only makes available the subset of libraries in the prerequisites that _`LINK_WITH`_ features. The library name to be used is either the one specified in the corresponding Imakefile.mk file or the default computed by mkmk (see PROGRAM_NAME keyword). Do not forget to referenced the prerequisite frameworks in the identity card ([IdentityCard.h](CAABtlMANIdCard.md) file) of the framework to avoid an mkmk error (_mkmk-WARNING: .....: Modules .... in LINK_WITH was found in component .... which is not directly referenced, ignored_). **For JS0GROUP, you must reference the System framework**.
 
 optional
 
@@ -118,7 +117,7 @@ optional
 
 optional
 
-> `_IMPACT_ON_IMPORT= YES_` to force the build of the modules which import this module. This solves the incoherences at runtime due to the no rebuild of libraries. The problem does not exist with C++ programs because the dependencies between modules are indicated in header files. The impact is automatically computed and the rebuild is done. But with Fortran language this problem exists as shown in the following sample. ![](images/makefile2.gif) | 
+> `_IMPACT_ON_IMPORT= YES_` to force the build of the modules which import this module. This solves the incoherences at runtime due to the no rebuild of libraries. The problem does not exist with C++ programs because the dependencies between modules are indicated in header files. The impact is automatically computed and the rebuild is done. But with Fortran language this problem exists as shown in the following sample. ![](images/makefile2.gif) 
 > 
 >   1. The m3 module in library3 has the m1 module from library1 as prerequisite.
 >   2. The s1 symbol moves from m1 (library1) to m2 (library2).
@@ -225,7 +224,6 @@ optional
           Version: **1** [Mar 2000]
           | Document created
           
-    ---|---  
     
         
           [Top]

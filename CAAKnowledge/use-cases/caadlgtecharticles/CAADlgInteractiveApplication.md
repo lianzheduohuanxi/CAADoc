@@ -1,20 +1,17 @@
 ---
 title: "Designing Your Interactive Application"
-category: "general"
+category: "use-case"
 module: "CAADlgTechArticles"
 tags: ["CAADlgWindowApplication", "CAADlgInterWindow", "CAADlgInterWindowId", "CAADlgInterApplication", "CATInteractiveApplication", "CAADialog"]
-source_file: "Doc\online\CAADlgTechArticles\CAADlgInteractiveApplication.htm"
+source_file: "Doc/online/CAADlgTechArticles/CAADlgInteractiveApplication.md"
 converted: "2026-05-11T17:17:56.042541"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## User Interface - Dialogs
 
 | 
-
 ### Designing Your Interactive Application
 
 _How to create a separate interactive application_  
@@ -22,7 +19,6 @@ _How to create a separate interactive application_
 Technical Article  
   
 * * *
-
 ### Abstract
 
 This article explains you how to create an interactive application, along with the methods you should overwrite from the interactive application base class 
@@ -35,16 +31,13 @@ This article explains you how to create an interactive application, along with t
 ---  
   
 * * *
-
 ### What Is an Interactive Application?
 
 A CAA V5 interactive application is a program that you can launch and that can execute generally with end user input until the end-user stops it. The base class for CAA V5 interactive applications is the the _CATInteractiveApplication_ class. The Dialog framework gives you some key components to design you interactive application. They include: 
 
   * The _CATInteractiveApplication_ class to derive to create your application
-  * The _[CATDlgDocument](../CAADlgQuickRefs/CAADlgCATDlgDocument.htm)_ class to derive to create your application main window and presentations
-  * The _[CATDlgDialog](../CAADlgQuickRefs/CAADlgCATDlgDialog.htm)_ class to derive to create the transient window your dialog requires.
-
-
+  * The _[CATDlgDocument](../CAADlgQuickRefs/CAADlgCATDlgDocument.md)_ class to derive to create your application main window and presentations
+  * The _[CATDlgDialog](../CAADlgQuickRefs/CAADlgCATDlgDialog.md)_ class to derive to create the transient window your dialog requires.
 
 The figure below shows the objects involved and their main methods using the Unified Modeling Language (UML).
 
@@ -55,13 +48,11 @@ The application derives from the _CATInteractiveApplication_ class while the win
 ![warning.gif \(206 bytes\)](../CAAIcons/images/warning.gif) Note that the window constructor does not include any statement. It only instantiates, that is allocates memory areas for the window and its base classes. The `Build` method is dedicated to create the objects with the proper values. This is because the external resources to allocate use virtual methods, and as long as the constructor is not exited, the virtual method table update may not be completed and thus its contents may be inaccurate. This `Build` method does not exist in any Dialog framework base class and thus can not be redefined. You must create it when deriving a Dialog framework class.
 
 [Top]
-
 ### An Interactive Application Example
 
 The following sample is a standard application skeleton with a main window. It includes the main objects shown in the figure and their related methods. You retrieve the two classes, _CAADlgInterApplication_ and _CAADlgInterWindow_ in the CAADialog.edu framework in the CAADlgInterApplication.m module.
 
 First look at the _CAADlgInterApplication_ header file:
-    
     
     #include "CATInteractiveApplication.h"
     class CAADlgInterApplication : public CATInteractiveApplication
@@ -78,7 +69,6 @@ First look at the _CAADlgInterApplication_ header file:
 ---  
   
 and at the CAADlgInterWindow header file:
-    
     
     #include "CATDlgDocument.h"
     class CATInteractiveApplication;
@@ -160,7 +150,6 @@ The _CAADlgWindowApplication_ source file is the following:
 [Top]
 
 * * *
-
 ### In Short
 
 The interactive application is simply instantiated without the need of creating any main program. The main dialog window derives from the appropriate dialog window class, and includes a Build method to create the containers and controls that make up the window, rather than using the window constructor to do this. The application and the window aggregates the other by reference.
@@ -168,7 +157,6 @@ The interactive application is simply instantiated without the need of creating 
 [Top]
 
 * * *
-
 ### History
 
 Version: **1** [Jan 2000] | Document created  

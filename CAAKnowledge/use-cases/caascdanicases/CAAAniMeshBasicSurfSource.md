@@ -1,15 +1,14 @@
 ---
 title: "CAAAniMeshBasicSurf.catvbs"
-category: "general"
+category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAAniMeshBasicSurf", "CATIA", "CAAScdAniUseCases"]
-source_file: "Doc\online\CAAScdAniUseCases\CAAAniMeshBasicSurfSource.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshBasicSurfSource.md"
 converted: "2026-05-11T17:31:51.617511"
 ---
 
-
+```vbscript
     'COPYRIGHT DASSAULT SYSTEMES 2000
-    
     '***********************************************************************
     '  Purpose:      Open an analysis document
     '                Create a basic surface mesh  
@@ -21,7 +20,10 @@ converted: "2026-05-11T17:31:51.617511"
     '  Locales:      English 
     '  CATIA Level:  V5R16
     '***********************************************************************
+```
+
     
+```vbscript
     Sub CATMain()
     '----------------------------------------------------------- 
     'Optional: allows to find the sample wherever it's installed
@@ -29,42 +31,45 @@ converted: "2026-05-11T17:31:51.617511"
       sDocPath=CATIA.SystemService.Environ("CATDocView")
     
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
         End If
+```vbscript
     '----------------------------------------------------------- 
-    
     'Open the Analysis document 
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Surface.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+```
+
     
-    
+```
+
     'Retrieve the Analysis Manager and Analysis Model
+```vbscript
     Set oAnalysisManagar = oAnalysisDocument.Analysis
-    
+```vbscript
     'Retrieve the product from Analysis manager
     Set oAnalysisLinkedDocument = oAnalysisManagar.LinkedDocuments
     Set partDocument = oAnalysisLinkedDocument.Item(1)
     Set product = partDocument.Product
-    
     'Retrieve the analysis model from the list of models
     Set oAnalysisModels = oAnalysisManagar.AnalysisModels
     Set oAnalysisModel = oAnalysisModels.Item(1)
-    
     'Retrieve mesh manager and mesh part 
     Set meshManagar = oAnalysisModel.MeshManager
     Set meshPart = meshManagar.AnalysisMeshParts
-    
     'Retrieve publications from product and retrieve the published face.
     Set publications = product.Publications
     Set pubSurf = publications.Item("Round Hole.1")
-    
     'Add the new basic surface mesh part to the list of mesh parts
     Set surfPart = meshPart.Add ("MSHPartBasicSurf") 
-    
     'Add the support from the published surface
+```
+
     surfPart.AddSupportFromPublication product, pubSurf
     
-    
+```
+
     'Set the global Specifications
     surfPart.SetGlobalSpecification "GlobalMethod", 1
     surfPart.SetGlobalSpecification "QuadsOnly", 2
@@ -86,22 +91,30 @@ converted: "2026-05-11T17:31:51.617511"
     surfPart.SetGlobalSpecification "MeshAbsSag", 1
     surfPart.SetGlobalSpecification "MeshAbsSaglValue", "1.1 mm"
     
-    
     'Create local specification
+```vbscript
     Set meshSpecs = surfPart.AnalysisMeshLocalSpecifications 
     Set spec = meshSpecs.Add("MSHTopProjectCurve") 
     spec.AddSupportFromPublication "ConnectorList", product1, pubCurve
     spec.SetAttribute "Tolerance", "500 mm" 
     
+```
+
     
     
+```vbscript
     Set spec = meshSpecs.Add("MSHTopProjectPoint")
     spec.AddSupportFromPublication "ConnectorList", product1, pubPoint
     spec.SetAttribute "Tolerance", "500 mm"
     
-    
+```
+
     'Update the mesh part
     surfPart.Update
     
+```vbscript
     End Sub
     
+```
+
+```

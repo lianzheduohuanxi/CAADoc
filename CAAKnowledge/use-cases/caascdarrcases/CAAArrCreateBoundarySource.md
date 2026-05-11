@@ -1,14 +1,14 @@
 ---
 title: "CAAArrCreateBoundary.CATScript"
-category: "general"
+category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CAAArrCreateBoundary", "CATIA"]
-source_file: "Doc\online\CAAScdArrUseCases\CAAArrCreateBoundarySource.htm"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateBoundarySource.md"
 converted: "2026-05-11T17:31:51.539115"
 ---
 
-
     Option Explicit
+```vbscript
     '// COPYRIGHT DASSAULT SYSTEMES  2000
     '******************************************************************************
     ' Purpose:       This CATScript demonstrates how to create an ArrangementBoundary
@@ -21,34 +21,41 @@ converted: "2026-05-11T17:31:51.539115"
     ' Locale     :   English
     '******************************************************************************
     
+```
+
     
+```vbscript
     Sub CATMain()
-       
+```vbscript
        ' On Error Resume Next
-    
        '----------------------------------------------
        'Create a new product document
+```
+
+```vbscript
        Dim objProdDoc        As ProductDocument
        Dim objRootProd       As Product
        Set objProdDoc      = CATIA.Documents.Add("Product")
        Set objRootProd     = objProdDoc.Product
-    
+```vbscript
        '----------------------------------------------
        'Retrieving Root Product's Relative Axis and Position Information
        Dim objMove           As Move
        Set objMove      = objRootProd.Move
-    
        '----------------------------------------------
        ' Get ArrangementProduct
        Dim objArrProd        As ArrangementProduct
        Set objArrProd   = objRootProd.GetTechnologicalObject("ArrangementProduct")
-    
        '----------------------------------------------
        ' Create ArrangementBoundary under the Root Product
        Dim dblBoundaryPoints(75)      As Double
        Dim dblMathDirection(3)        As Double
        Dim objArrBoundary             As ArrangementBoundary
+```
+
     
+```
+
     
        dblBoundaryPoints(0)   =  300.0
        dblBoundaryPoints(1)   =  100.0
@@ -155,22 +162,31 @@ converted: "2026-05-11T17:31:51.539115"
        dblMathDirection(1) = 0.0
        dblMathDirection(2) = 0.0
     
+```vbscript
        Set objArrBoundary             = objArrProd.ArrangementBoundaries.AddBoundary(objMove,dblBoundaryPoints, dblMathDirection)
-    
        '----------------------------------------------
        ' Change Properties of ArrangementBoundary
        objArrBoundary.SectionType     = CatArrangementRouteSectionRectangular
        objArrBoundary.SectionWidth    = 10.0
        objArrBoundary.SectionHeight   = 10.0 
        objArrBoundary.VisuMode        = CatArrangementRouteVisuModeSolid
-    
+```vbscript
        '----------------------------------------------
        ' Define Bend Radius of Nodes
        Dim intK  As Integer
        For intK = 1 To objArrBoundary.ArrangementNodes.Count  
+```
+
          objArrBoundary.ArrangementNodes.Item(intK).BendRadius = 10.0
        Next
     
+```
+
+```vbscript
     End Sub 
     
+```
+
     
+
+```

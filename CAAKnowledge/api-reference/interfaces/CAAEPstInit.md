@@ -2,32 +2,24 @@
 title: "CAAEPstInit"
 type: "interface"
 module: "CAAProductStructure"
+category: "framework"
 base: "CATBaseUnknown"
+inheritance_chain: "CAAEPstInit → CATBaseUnknown"
 method_count: 2
 visibility: "local"
+has_tie_binding: false
 verified: true
 ---
-
 # CAAEPstInit
 
 **基类**: CATBaseUnknown  
+**继承链**: CAAEPstInit → CATBaseUnknown  
 **模块**: CAAProductStructure  
+**分类**: framework  
 **可见性**: local  
 **方法数**: 2
 
 > CAAEPstInit:
-
-## 方法列表
-
-### Init
-```cpp
-void Init(CATBoolean iDestroyExistingData);
-```
-
-### GetRootContainer
-```cpp
-CATBaseUnknown* GetRootContainer(const CATIdent iInterfaceID);
-```
 
 ## 依赖
 

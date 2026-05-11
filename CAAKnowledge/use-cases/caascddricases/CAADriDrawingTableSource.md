@@ -1,16 +1,15 @@
 ---
 title: "CAADriDrawingTable.CATScript"
-category: "general"
+category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CATIA", "CAADriDrawingTable"]
-source_file: "Doc\online\CAAScdDriUseCases\CAADriDrawingTableSource.htm"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriDrawingTableSource.md"
 converted: "2026-05-11T17:31:51.067330"
 ---
 
-
     Option Explicit
+```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2002
-    
     ' ***********************************************************************
     '   Purpose:      This macro allows you to create a title block 
     '                       from Drawing Table
@@ -19,20 +18,22 @@ converted: "2026-05-11T17:31:51.067330"
     '   Locales:       English 
     '   CATIA Level: V5R10 
     ' ***********************************************************************
+```
+
     
+```vbscript
     Sub CATMain()
-    
         ' Set the CATIA popup file alerts to False
         ' It prevents to stop the macro at each alert during its execution
+```vbscript
         CATIA.DisplayFileAlerts = False
-    
+```vbscript
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String 
         sDocPath=CATIA.SystemService.Environ("CATDocView")
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
           Err.Raise 9999,,"No Doc Path Defined"
         End If
-    
         ' Variables declaration
         Dim oDrwDocument As DrawingDocument
         Dim oDrwSheets As DrawingSheets
@@ -40,38 +41,36 @@ converted: "2026-05-11T17:31:51.067330"
         Dim oDrwView As DrawingView
         Dim oDrwTables As DrawingTables
         Dim oDrwTable As DrawingTable
-        
         ' Create a new drawing document
         Set oDrwDocument = CATIA.Documents.Add("Drawing")
-    
         ' Set the drawing document standard
+```
+
         oDrwDocument.Standard = catISO
-        
+```vbscript
         ' Retrieve the drawing document's sheets collection
         Set oDrwSheets = oDrwDocument.Sheets
-    
         ' Retrieve the active sheet
         Set oDrwSheet = oDrwSheets.ActiveSheet
-    
         ' Set the sheet properties
+```
+
         oDrwSheet.PaperSize = catPaperA4
         oDrwSheet.Orientation = catPaperLandscape
         oDrwSheet.Scale2 = 1
-        
+```vbscript
         ' Retrieve the active view of the sheet
         Set oDrwView = oDrwSheet.Views.ActiveView
         ' Retrieve the view's tables collection
         Set oDrwTables = oDrwView.Tables
-        
         ' Create a new drawing table
         Set oDrwTable = oDrwTables.Add(107, 70, 9, 9, 5, 20)
-        
         ' Set the drawing table's name
+```
+
         oDrwTable.Name = "Title Block"
-    
         ' Do not update drawing table modifications
         oDrwTable.ComputeMode = CatTableComputeOFF
-    
         ' Merge drawing table's cells
         oDrwTable.MergeCells 1, 1, 2, 2
         oDrwTable.MergeCells 1, 3, 1, 7
@@ -90,7 +89,6 @@ converted: "2026-05-11T17:31:51.067330"
         oDrwTable.MergeCells 8, 7, 2, 1
         oDrwTable.MergeCells 8, 8, 2, 1
         oDrwTable.MergeCells 8, 9, 2, 1
-    
         ' Set the drawing table's row sizes
         oDrwTable.SetRowSize 1, 20
         oDrwTable.SetRowSize 2, 4
@@ -101,7 +99,6 @@ converted: "2026-05-11T17:31:51.067330"
         oDrwTable.SetRowSize 7, 2
         oDrwTable.SetRowSize 8, 3
         oDrwTable.SetRowSize 9, 7
-    
         ' Set the drawing table's column sizes
         oDrwTable.SetColumnSize 1, 45
         oDrwTable.SetColumnSize 2, 20
@@ -112,11 +109,16 @@ converted: "2026-05-11T17:31:51.067330"
         oDrwTable.SetColumnSize 7, 20
         oDrwTable.SetColumnSize 8, 15
         oDrwTable.SetColumnSize 9, 15
-        
         ' Update drawing table modifications
         oDrwTable.ComputeMode = CatTableComputeON
     
         CATIA.ActiveWindow.ActiveViewer.Reframe 
     
+```
+
+```vbscript
     End Sub
     
+```
+
+```

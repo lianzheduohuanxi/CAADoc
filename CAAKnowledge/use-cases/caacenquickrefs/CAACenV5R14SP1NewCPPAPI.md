@@ -1,9 +1,9 @@
 ---
 title: "New C++ Authorized APIs in CAA V5R14 SP1"
-category: "general"
+category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIMfgToolAssemblyActivityEditorCustom", "CATICfgVariabilitySpace_var", "CATIUExitCrypt", "CATIAVPMIIProductSpec", "CATIAVPMProductSpecification2", "CATICfgVariabilitySpace"]
-source_file: "Doc\online\CAACenQuickRefs\CAACenV5R14SP1NewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R14SP1NewCPPAPI.md"
 converted: "2026-05-11T17:33:47.199397"
 ---
 

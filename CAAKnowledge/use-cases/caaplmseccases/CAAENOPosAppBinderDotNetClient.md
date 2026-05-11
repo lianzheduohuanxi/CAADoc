@@ -5,18 +5,15 @@ title: "
 category: "use case"
 module: "CAAPLMSecUseCases"
 tags: ["CAAENOPosApplicationBinderImplProxy", "CAAENOPosApplicationBinderImplUseCase", "CAAENOPosAppBinderDotNet1_1ClientBase", "CAAENOPosApplicationBinderImplWrapper", "CAAENOPosAppBinderDotNet1_1Client", "CAAPLMSecurity"]
-source_file: "Doc\online\CAAPLMSecUseCases\CAAENOPosAppBinderDotNetClient.htm"
+source_file: "Doc/online/CAAPLMSecUseCases/CAAENOPosAppBinderDotNetClient.md"
 converted: "2026-05-11T17:33:45.579695"
 ---
-
 #  CAA Web Services Home 
 
 | 
-
 ##   
 
 | 
-
 ###  Consuming the ENOPosApplicationBinderImpl CAA Web Service 
 
 _Using the ENOPosApplicationBinderImpl CAA Web service in order to log on to ENOVIA LCA V5_  
@@ -24,7 +21,6 @@ _Using the ENOPosApplicationBinderImpl CAA Web service in order to log on to ENO
 Use Case   
   
 * * *
-
 ###  Abstract 
 
 This article discusses the **CAAENOPosAppBinderDotNet1_1Client** use case. It describes how to use the C# client binding that can be generated using the wsdl.exe utility in order to consume the **ENOPosApplicationBinderImpl** CAA Web service. It provides a sample usage scenario that demonstrates how to manage a session with an ENOVIA LCA V5 system. 
@@ -42,7 +38,6 @@ This article discusses the **CAAENOPosAppBinderDotNet1_1Client** use case. It de
 ---  
   
 * * *
-
 ###  What You Will Learn With This Use Case 
 
 This use case demonstrates how to write a client application that consumes the ENOPosApplicationBinderImpl CAA Web service. It helps you to: 
@@ -51,16 +46,12 @@ This use case demonstrates how to write a client application that consumes the E
   * Configure and use the generated proxy, 
   * Understand a sample usage scenario of the ENOPosApplicationBinderImpl CAA Web service. 
 
-
-
 [Top] 
-
 ###  The CAAENOPosAppBinderDotNet1_1Client Use Case 
 
 CAAENOPosAppBinderDotNet1_1Client is a use case of the CAAPLMSecurity.edu framework that illustrates the ENOPosApplicationBinderImpl CAA Web service capabilities. 
 
 [Top] 
-
 ####  What Does CAAENOPosAppBinderDotNet1_1Client Do 
 
 The sample usage scenario delivered with this use case contains the following steps: 
@@ -69,10 +60,7 @@ The sample usage scenario delivered with this use case contains the following st
   * Select the first context available from the result list and use it to log on to ENOVIA LCA V5, 
   * Log out from ENOVIA LCA V5 and terminate the opened session. 
 
-
-
 [Top] 
-
 ####  Where To Find the CAAENOPosAppBinderDotNet1_1Client Code 
 
 The CAAENOPosAppBinderDotNet1_1Client use case is made of several classes located in both **CAAENOPosAppBinderDotNet1_1Client.m** and **CAAENOPosAppBinderDotNet1_1ClientBase.m** modules of the **CAAPLMSecurity.edu** framework: 
@@ -83,8 +71,6 @@ The CAAENOPosAppBinderDotNet1_1Client use case is made of several classes locate
   
   * `_< Install>_`: the root directory where the CAA CD-ROM is installed. 
 
-
-
 The CAAENOPosAppBinderDotNet1_1ClientBase.m module (library) contains the following resources: 
 
 `_< Source>_\CAAENOPosApplicationBinderImplProxy.cs  
@@ -92,8 +78,6 @@ _< Source>_\CAAENOPosApplicationBinderImplWrapper.cs`
 ---  
   
   * `_< Source>_`: `_< Install>_\CAAPLMSecurity.edu\CAAENOPosAppBinderDotNet1_1ClientBase.m\src`. 
-
-
 
 The **CAAENOPosApplicationBinderImplProxy.cs** file contains the C# client binding generated using the wsdl.exe utility. A C# client binding consists of a proxy and several types definitions. The **CAAENOPosApplicationBinderImplWrapper.cs** file contains a class that describes how to configure the generated proxy and how to invoke its methods. 
 
@@ -105,12 +89,9 @@ _< Source>_\CAAENOPosApplicationBinderImplUseCase.cs`
   
   * `_< Source>_`: `_< Install>_\CAAPLMSecurity.edu\CAAENOPosAppBinderDotNet1_1Client.m\src`. 
 
-
-
 The **CAAENOPosAppBinderDotNet1_1Client.cs** file contains the main program. It parses the command line inputs and starts up the use case. The **CAAENOPosApplicationBinderImplUseCase.cs** file contains the sample use case scenario. 
 
 [Top] 
-
 ####  How to Launch CAAENOPosAppBinderDotNet1_1Client 
 
 To run the CAAENOPosAppBinderDotNet1_1Client use case, you will need to build both CAAENOPosAppBinderDotNet1_1ClientBase.m and CAAENOPosAppBinderDotNet1_1Client.m modules. The use case code can be built using either the CAA V5 buildtime environment, or Visual Studio .NET 2003 as explained in [1]. 
@@ -124,8 +105,6 @@ You can then execute the command described below:
   * `_< ENOVIA username>_`: is a valid username declared in the ENOVIA P&O database, 
   * `_< Basic Authentication Username>_ and _< Basic Authentication Password>_`: are a valid set of credentials for authentication on the remote Web server. 
 
-
-
 Here follows a sample command, to be updated with your own environment configuration: 
 
 `CAAENOPosAppBinderDotNet1_1Client -w http://stophe1dsy.dsy.ds:9080/B17 -e cjk -u wpsadmin -p wpsadmin`  
@@ -138,10 +117,7 @@ When building the modules with the CAA V5 buildtime environment, the CAAENOPosAp
   
   * `_< Install>_`: the root directory where the CAA CD-ROM is installed. 
 
-
-
 [Top] 
-
 ###  Step-by-step 
 
 The following section first explains how to generate the C# client binding for the ENOPosApplicationBinderImpl CAA Web service demonstrated. The remaining sections describe how to configure the generated proxy and how to consume the Web service: 
@@ -153,10 +129,7 @@ The following section first explains how to generate the C# client binding for t
   5. Logging Out From ENOVIA LCA V5
   6. Sample Usage Scenario
 
-
-
 [Top] 
-
 ####  Creating the C# Client Binding 
 
 Please refer to [2] for details on how to generate the C# client binding using the wsdl.exe utility. 
@@ -169,7 +142,6 @@ Here follows a sample command in order to generate the C# client binding for the
 The server name, port, and context root URI information must be updated to match the server where the ENOPosApplicationBinderImpl CAA Web service has been deployed. The `/username` and `/username` options are required to authenticate on the Web server hosting the Web service. 
 
 [Top] 
-
 ####  Instantiating and Configuring the Generated Proxy 
 
 In order to consume an implementation of the ENOPosApplicationBinderImpl CAA Web service deployed on a target Web server, you first need to instantiate the proxy generated using the wsdl.exe utility. This proxy must then be configured in order to manage authentication on the remote Web server, timeout, and session management. Maintaining the HTTP session state is mandatory when consuming ENOVIA LCA V5 CAA Web services. 
@@ -210,7 +182,6 @@ The generated proxy class is used in order to marshall method calls and objects 
 **(3)** : the default timeout value can be increased in order to avoid potential issues at runtime, such as losing the HTTP connection before receiving the SOAP responses. The sample value specified in the code is in milliseconds. 
 
 [Top] 
-
 ####  Retrieving User Contexts 
 
 In order to log on to ENOVIA LCA V5, you must first retrieve the contexts associated with a given user declared in the P&O (People & Organization) database. This can be achieved using the following method, which is available through the generated proxy: 
@@ -250,7 +221,6 @@ The following code demonstrates the use of the `getUserContexts` method:
 ---  
   
 [Top] 
-
 ####  Logging On To ENOVIA LCA V5 
 
 You can then log on to ENOVIA LCA V5 with one of the contexts available for the user specified using the following method: 
@@ -287,7 +257,6 @@ The following code demonstrates the use of the `bindToApplication` method:
 ---  
   
 [Top] 
-
 ####  Logging Out From ENOVIA LCA V5 
 
 You can finally log off from ENOVIA LCA V5 and terminate the opened session using the following method: 
@@ -316,7 +285,6 @@ The following code demonstrates the use of the `releaseFromApplication` method:
 ---  
   
 [Top] 
-
 ####  Sample Usage Scenario 
 
 The following code depends on the CAAENOPosApplicationBinderImplWrapper class described above. It demonstrates a sample usage scenario for the ENOPosApplicationBinderImpl CAA Web service: 
@@ -375,7 +343,6 @@ The following code depends on the CAAENOPosApplicationBinderImplWrapper class de
 [Top] 
 
 * * *
-
 ###  In Short 
 
 This use case explains how to use the C# client binding generated using the wsdl.exe utility in order to consume the ENOPosApplicationBinderImpl CAA Web service. It also gives an overview of the available methods: 
@@ -384,12 +351,9 @@ This use case explains how to use the C# client binding generated using the wsdl
   * `bindToApplication`: log on to ENOVIA LCA V5 using a specific context, 
   * `releaseFromApplication`: log off from ENOVIA LCA V5 in order to terminate an opened session. 
 
-
-
 [Top] 
 
 * * *
-
 ###  References 
 
 [1]  |  Building and Launching a CAA Web Service Use Case  
@@ -398,7 +362,6 @@ This use case explains how to use the C# client binding generated using the wsdl
 [Top]   
   
 * * *
-
 ###  History 
 
 Version: **1** [Jan 2006]  |  Document created   

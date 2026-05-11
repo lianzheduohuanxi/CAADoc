@@ -1,16 +1,15 @@
 ---
 title: "Optimizations Automation Objects"
-category: "general"
+category: "use-case"
 module: "CAAScdKniTechArticles"
 tags: []
-source_file: "Doc\online\CAAScdKniTechArticles\CAAKniTocOptimizations.htm"
+source_file: "Doc/online/CAAScdKniTechArticles/CAAKniTocOptimizations.md"
 converted: "2026-05-11T17:31:52.003484"
 ---
-
 # Optimizations Automation Objects
 
 ![](../CAAScrAutomationImages/images/relatns.gif)  
-![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/kwoptims.gif)[![Relation Object Diagram](../CAAScrAutomationImages/images/uparrow.gif)](CAAKniTocRelation.htm)  
+![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/kwoptims.gif)[![Relation Object Diagram](../CAAScrAutomationImages/images/uparrow.gif)](CAAKniTocRelation.md)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/kwoptim.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/kwoptics.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/kwoptic.gif)  
@@ -20,7 +19,7 @@ converted: "2026-05-11T17:31:52.003484"
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/kwofpars.gif)  
 ![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/kwofpar.gif)  
 ![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchila.gif)![](../CAAScrAutomationImages/images/param.gif)[![Parameter Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)  
-](CAAKniTocParameter.htm)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)ObjectiveParameter![](../CAAScrAutomationImages/images/parlina.gif)![](../CAAScrAutomationImages/images/param.gif)  
+](CAAKniTocParameter.md)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)ObjectiveParameter![](../CAAScrAutomationImages/images/parlina.gif)![](../CAAScrAutomationImages/images/param.gif)  
 ---  
   
 **Legend**

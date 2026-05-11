@@ -3,10 +3,9 @@ title: "Projecting a Point onto a Curve"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CATICGMProjectionPtCrv", "CAAGMModelInterfaces", "CAAGMModelProjectionOpe"]
-source_file: "Doc\online\CAACgmModel\CAACgmUcProjPtCrv.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcProjPtCrv.md"
 converted: "2026-05-11T17:33:48.498129"
 ---
-
 
     
     
@@ -59,7 +58,7 @@ converted: "2026-05-11T17:33:48.498129"
     illustrates how to project a Cartesian point onto a curve. This use case 
     constructs its input data. If you are not already 
     familiar with geometric modeler use cases, go to
-    [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm).
+    [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md).
     With the input data below:
     
       Fig.1 Project a Point onto a Curve:  Input 
@@ -116,27 +115,26 @@ converted: "2026-05-11T17:33:48.498129"
     		[1]
     		| 
     		[
-    		Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)
+    		Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
     	  
-    ---|---  
     
     	
     		[2]
     		| 
-    		[About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)
+    		[About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)
     	  
     
     	
     		[3]
     		| 
-    		[How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)
+    		[How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)
     	  
     
     
     
     		[4]
     		| 
-    		[How to Use Geometric Operators](CAACgmUcGMModelOpeOverw.htm)
+    		[How to Use Geometric Operators](CAACgmUcGMModelOpeOverw.md)
     	  
     
     	
@@ -147,7 +145,6 @@ converted: "2026-05-11T17:33:48.498129"
     		Version: **1** [Feb 2014]
     		| Document created
     	  
-    ---|---  
     
     
     

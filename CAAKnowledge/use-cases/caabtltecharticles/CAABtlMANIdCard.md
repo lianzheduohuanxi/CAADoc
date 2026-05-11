@@ -1,9 +1,9 @@
 ---
 title: "The IdentityCard.h Special File"
-category: "general"
+category: "use-case"
 module: "CAABtlTechArticles"
 tags: []
-source_file: "Doc\online\CAABtlTechArticles\CAABtlMANIdCard.htm"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANIdCard.md"
 converted: "2026-05-11T17:33:46.051073"
 ---
 
@@ -13,11 +13,11 @@ Technical Article
   
 * * *
 
-**Warning** : The IdentityCard.h file format is **deprecated** starting with V5R24, and is replaced with XML. You should convert your IdentityCard.h files to XML ones. Refer to [Migrating Your Identity Cards to XML](CAABtlMANIdCardXMLV5Mig.htm). The following commands help you to do this:
+**Warning** : The IdentityCard.h file format is **deprecated** starting with V5R24, and is replaced with XML. You should convert your IdentityCard.h files to XML ones. Refer to [Migrating Your Identity Cards to XML](CAABtlMANIdCardXMLV5Mig.md). The following commands help you to do this:
 
-  * The [mkICE](../CAABtlQuickRefs/CAABtlMkICEV5.htm) command enables you to interactively edit an XML Identity Card, or open a .h Identity Card to save it as an XML one.
-  * The [mkCreateIC](../CAABtlQuickRefs/CAABtlMkCreateICV5.htm) command enables you to create an empty Identity Card ready to be edited using mkICE.
-  * The [mkIc2Xml](../CAABtlQuickRefs/CAABtlMkIc2XmlV5.htm) command enables you to convert a .h Identity Card to an XML one.
+  * The [mkICE](../CAABtlQuickRefs/CAABtlMkICEV5.md) command enables you to interactively edit an XML Identity Card, or open a .h Identity Card to save it as an XML one.
+  * The [mkCreateIC](../CAABtlQuickRefs/CAABtlMkCreateICV5.md) command enables you to create an empty Identity Card ready to be edited using mkICE.
+  * The [mkIc2Xml](../CAABtlQuickRefs/CAABtlMkIc2XmlV5.md) command enables you to convert a .h Identity Card to an XML one.
 
   
 ---  
@@ -50,7 +50,10 @@ Top] Location Every framework must have an Identity Card file, named _IdentityCa
     
     **_AddPrereqComponent( "_**_< framework name>_**_" , Public);_**
 
+```vbscript
 For architecture matter, any type of framework (code, test, education) cannot declare a prerequisite on any type of framework. The following table specifies prerequisite composition rules depending on framework type.  
+```
+
 The table indicate if a a framework of type (Row header) can have a prerequisite on a framework of type (Column header).  Framework type| Code| Test (.tst)| Edu (.edu)  
 ---|---|---|---  
 Code| YES| NO| NO  

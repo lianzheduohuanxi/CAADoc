@@ -2,40 +2,22 @@
 title: "CAAVisManagerWindow"
 type: "interface"
 module: "CAAVisualization"
+category: "framework"
 base: "CATDlgDialog"
+inheritance_chain: "CAAVisManagerWindow → CATDlgDialog"
 method_count: 4
 visibility: "local"
+has_tie_binding: false
 verified: true
 ---
-
 # CAAVisManagerWindow
 
 **基类**: CATDlgDialog  
+**继承链**: CAAVisManagerWindow → CATDlgDialog  
 **模块**: CAAVisualization  
+**分类**: framework  
 **可见性**: local  
 **方法数**: 4
-
-## 方法列表
-
-### DuplicateWindow
-```cpp
-CAAVisManagerWindow * DuplicateWindow();
-```
-
-### GetEditor
-```cpp
-CAAVisManagerEditor * GetEditor();
-```
-
-### Build
-```cpp
-void Build();
-```
-
-### DeleteWindow
-```cpp
-void DeleteWindow();
-```
 
 ## 依赖
 

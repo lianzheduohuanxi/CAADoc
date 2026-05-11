@@ -1,9 +1,9 @@
 ---
 title: "How to Use the CGM Data Checker"
-category: "general"
+category: "tutorial"
 module: "CAACgmOperators"
 tags: ["CATINTCurve", "CATIntCurveType", "CATICPath", "CATIntCurve", "CATIA"]
-source_file: "Doc\online\CAACgmOperators\CAACgmTaTopDataChecker.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmTaTopDataChecker.md"
 converted: "2026-05-11T17:33:48.656134"
 ---
 
@@ -80,7 +80,7 @@ A topologically smooth edge should be geometrically smooth The edges that are co
 Short msg: = "Edge sharpness checking failed.";  
 Extended msg: "Edge sharpness on /p1 checking failed.";  
 ---  
-A loop should not be closed in 3D and open in 2D A loop relying on a surface should not be closed on itself. For example, a cylinder should not be made up of one single loop. In the right-hand side figures, the first one exhibits an invalid loop. |  ![Invalid Loop](images/CAACgmTopcyl0.jpg) |  ![Valid Loop](images/CAACgmTopcyl2.jpg)  
+A loop should not be closed in 3D and open in 2D A loop relying on a surface should not be closed on itself. For example, a cylinder should not be made up of one single loop. In the right-hand side figures, the first one exhibits an invalid loop. 
 ---|---|---  
 The CD traces are similar to the ones below: **CGM Rule: SCE_0**  
 On CGM Object: ...  
@@ -166,7 +166,7 @@ The MathRep of the canonical curves (Circle & Ellipse) should be in the model in
 (in dashed green) is in the infinite. | **Not authorized** : the complete mathematical circle  
 (in dashed green) is not in the infinite.  
 ---|---  
-![Mathematical Circle](images/CAACgmTopINF_2_OK.jpg) |  ![Complete Mathematical Circle](images/CAACgmTopINF_2_KO2.jpg)  
+
 Definition of Model Infinite & Model space   | Until CATIA V5R13 | From CATIA V5R14  
 ---|---|---  
 Model Size | [-100 meters, + 100 meters]  

@@ -1,20 +1,17 @@
 ---
 title: "CATHullConceptualInterfaces Framework Modifications in V5R19"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR19"
+version: "V5R19"
 tags: ["CATIHCDCfgWorkbenchAddin", "CATISPLDesignTabSettingAtt", "CATIHullShipInfo", "CATIHullBoundingBox", "CATIHullOrientation", "CATIHullMoldedForm"]
-source_file: "Doc\online\CAACenAPIChangesR19\CATHullConceptualInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR19/CATHullConceptualInterfaces.md"
 converted: "2026-05-11T17:33:51.543644"
 ---
-
 # CAA C++ API Modifications
 
 | 
-
 ##  CATHullConceptualInterfaces Framework Modifications in V5R19 
 
-|   
----|---|---  
   
 * * *
 

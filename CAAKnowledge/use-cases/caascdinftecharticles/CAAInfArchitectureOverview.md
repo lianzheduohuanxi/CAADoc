@@ -1,30 +1,26 @@
 ---
 title: "Object Architecture Overview"
-category: "general"
+category: "concept"
 module: "CAAScdInfTechArticles"
 tags: ["CATIA"]
-source_file: "Doc\online\CAAScdInfTechArticles\CAAInfArchitectureOverview.htm"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfArchitectureOverview.md"
 converted: "2026-05-11T17:31:52.406949"
 ---
 
 | 
- 
  ## Infrastructure
  
  | 
- 
  ## Object Architecture Overview  
    
- ---|---  
    
  * * *
  
- ![](../CAAScrBase/images/atarget.gif) |  You will find in this section how the CAA V5 exposed Automation objects are described, and get information about:
+  You will find in this section how the CAA V5 exposed Automation objects are described, and get information about:
      * **Object Diagrams, Object Descriptions and Object References** that shows you where and how objects are described
      * **About Objects, Collections, Properties, and Methods** that helps you understand the basics of the object technique required by scripting
      * **About Inheritance, Aggregation, and Object Model** that describes the two object mechanisms you need to know to write macros.  
  ---|---  
-   
  ### Object Diagrams, Object Descriptions and Object References
  
  To describe objects, their properties and methods, and the relationships between objects, we use object diagrams and object descriptions.
@@ -33,20 +29,20 @@ converted: "2026-05-11T17:31:52.406949"
  
  ![](../CAAScrAutomationImages/images/applicat.gif)  
 ![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/docs.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)[![](../CAAScrAutomationImages/images/doc.gif)](CAAInfObjDocument.htm)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parderim.gif)![](../CAAScrAutomationImages/images/partdoc.gif)[![Part Document Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdMmrTechArticles/CAAMmrTocPartDocument.htm)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)[![](../CAAScrAutomationImages/images/part.gif)](../CAAScdMmrTechArticles/CAAMmrObjPart.htm)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/proddoc.gif)[![Product Structure Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdPstTechArticles/CAAPstTocProductDocument.htm)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)[![](../CAAScrAutomationImages/images/draftdoc.gif)](../CAAScdDriTechArticles/CAADriObjDrawingDocument.htm)[![Drawing Document Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdDriTechArticles/CAADriTocDrawingDocument.htm)![](../CAAScrAutomationImages/images/space.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)[![](../CAAScrAutomationImages/images/drsheets.gif)](../CAAScdDriTechArticles/CAADriObjDrawingSheets.htm)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/analydoc.gif)[![Analysis Document Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/processdoc.gif)[![Process Document Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdDmiTechArticles/CAADmiTocActivity.htm)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/functdoc.gif)[![Functional Document Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdFsiTechArticles/CAAFsiTocFunctionalDocument.htm)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/matdoc.gif)[![Material Document Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdMatTechArticles/CAAMatTocMaterial.htm)  
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)[![](../CAAScrAutomationImages/images/doc.gif)](CAAInfObjDocument.md)  
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parderim.gif)![](../CAAScrAutomationImages/images/partdoc.gif)[![Part Document Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdMmrTechArticles/CAAMmrTocPartDocument.md)  
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)[![](../CAAScrAutomationImages/images/part.gif)](../CAAScdMmrTechArticles/CAAMmrObjPart.md)  
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/proddoc.gif)[![Product Structure Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdPstTechArticles/CAAPstTocProductDocument.md)  
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)[![](../CAAScrAutomationImages/images/draftdoc.gif)](../CAAScdDriTechArticles/CAADriObjDrawingDocument.md)[![Drawing Document Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdDriTechArticles/CAADriTocDrawingDocument.md)![](../CAAScrAutomationImages/images/space.gif)  
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)[![](../CAAScrAutomationImages/images/drsheets.gif)](../CAAScdDriTechArticles/CAADriObjDrawingSheets.md)  
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/analydoc.gif)[![Analysis Document Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md)  
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/processdoc.gif)[![Process Document Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdDmiTechArticles/CAADmiTocActivity.md)  
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/functdoc.gif)[![Functional Document Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdFsiTechArticles/CAAFsiTocFunctionalDocument.md)  
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/matdoc.gif)[![Material Document Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdMatTechArticles/CAAMatTocMaterial.md)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/cataldoc.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/select.gif)  
   
-|  **Legend** ![](../CAAScrAutomationImages/images/yellbox.gif) Collection  
+  **Legend** ![](../CAAScrAutomationImages/images/yellbox.gif) Collection  
 ![](../CAAScrAutomationImages/images/purpbox.gif) Abstract object  
 ![](../CAAScrAutomationImages/images/bluebox.gif) Object ![right arrow](../CAAScrAutomationImages/images/rtarrow.gif) Click arrow to expand chart  
 ![](../CAAScrAutomationImages/images/uparrow.gif) Click arrow to return to previous chart    
@@ -67,10 +63,15 @@ converted: "2026-05-11T17:31:52.406949"
  
  The ![](../CAAScrAutomationImages/images/rtarrow.gif) symbol shows that the object to which it refers, that is the object located just left of the symbol, is the root of an object structure expanded in another object diagram. The symbol ![](../CAAScrAutomationImages/images/uparrow.gif) shows that the root object near it can be found in one or several object diagrams as an object to expand.
  
+```vbscript
  For main objects, _Object Descriptions_ describes how to use it.
  
+```
+
+```vbscript
  For all objects, _Object References_ contains complete reference of inheritance, properties and methods, thus encompassing all other link types between objects.
  
+```
  ### About Objects, Collections, Properties, and Methods
  
  Scripting languages such as Visual Basic rely on objects. Most pieces of data you can access are objects. With CATIA or DELMIA, documents, windows, viewers, cameras, parts, sketches, pads, even lines and curves, are represented as objects in Visual Basic. An _object_ is depicted using a blue box in the object diagrams, such as ![](../CAAScrAutomationImages/images/applicat.gif) .
@@ -103,13 +104,18 @@ converted: "2026-05-11T17:31:52.406949"
  
  You will find in the **object reference** that each method is qualified as either a **Function** or a **Sub** , and with parentheses, even if they have no arguments, as follows:
      
+```vbscript
      Function NewCamera() As Camera
      
+```
+
+```vbscript
      Sub Update()
      
+```
+
  
- This is a Visual Basic notation to distinguish a method that returns a value, or **Function** , from one that doesn't, or **Sub**. Note that the returned value of a **Function** is indicated using the **As** keyword. In the example above, the **NewCamera** method is a **Function** because it returns a **Camera** object. See also **[Some Tips about Sub and Function](CAAInfSubFunction.htm) **to know more about **Sub** and **Function**.
- 
+ This is a Visual Basic notation to distinguish a method that returns a value, or **Function** , from one that doesn't, or **Sub**. Note that the returned value of a **Function** is indicated using the **As** keyword. In the example above, the **NewCamera** method is a **Function** because it returns a **Camera** object. See also **[Some Tips about Sub and Function](CAAInfSubFunction.md) **to know more about **Sub** and **Function**.
  ### About Inheritance, Aggregation, and Object Model
  
  Inheritance and aggregation are the two main kinds of relationship between objects.
@@ -121,10 +127,10 @@ converted: "2026-05-11T17:31:52.406949"
  ![](images/baspg0-36.gif) ![](../CAAScrAutomationImages/images/applicat.gif)  
 ![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/docs.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchildHigh.gif)![](../CAAScrAutomationImages/images/docWithmethod.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parderimH.gif)![](../CAAScrAutomationImages/images/partdocWithmethod.gif)[![Product Structure Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdPstTechArticles/CAAPstTocProductDocument.htm)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/proddoc.gif)[![Product Structure Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdPstTechArticles/CAAPstTocProductDocument.htm)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)[![](../CAAScrAutomationImages/images/draftdoc.gif)](../CAAScdDriTechArticles/CAADriObjDrawingDocument.htm)[![Product Structure Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdPstTechArticles/CAAPstTocProductDocument.htm)  
-| **Legend** ![](../CAAScrAutomationImages/images/yellbox.gif) Collection  
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parderimH.gif)![](../CAAScrAutomationImages/images/partdocWithmethod.gif)[![Product Structure Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdPstTechArticles/CAAPstTocProductDocument.md)  
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/proddoc.gif)[![Product Structure Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdPstTechArticles/CAAPstTocProductDocument.md)  
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)[![](../CAAScrAutomationImages/images/draftdoc.gif)](../CAAScdDriTechArticles/CAADriObjDrawingDocument.md)[![Product Structure Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdPstTechArticles/CAAPstTocProductDocument.md)  
+ **Legend** ![](../CAAScrAutomationImages/images/yellbox.gif) Collection  
 ![](../CAAScrAutomationImages/images/purpbox.gif) Abstract object  
 ![](../CAAScrAutomationImages/images/bluebox.gif) Object ![right arrow](../CAAScrAutomationImages/images/rtarrow.gif) Click arrow to expand chart  
 ![](../CAAScrAutomationImages/images/uparrow.gif) Click arrow to return to previous chart  
@@ -157,10 +163,9 @@ MyPart.Save**
  * * *
  
  ![](../CAAScrAutomationImages/images/propprism1limit.gif)
- 
  #### References
  
- [1] | [Infrastructure Automation Objects](CAAInfTocApplication.htm)  
+ [1] | [Infrastructure Automation Objects](CAAInfTocApplication.md)  
  ---|---  
    
  [Top]

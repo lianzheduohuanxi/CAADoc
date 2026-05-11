@@ -1,20 +1,17 @@
 ---
 title: "Interactive Set of Objects"
-category: "general"
+category: "use-case"
 module: "CAAVisTechArticles"
 tags: ["CATI3DGeoVisu", "CATIModelEvents", "CAAAfrBoundingElementCmd", "CATISO", "CATI2DGeoVisu", "CATICreateInstance", "CAADegClippingByBoxCmd"]
-source_file: "Doc\online\CAAVisTechArticles\CAAVisISO.htm"
+source_file: "Doc/online/CAAVisTechArticles/CAAVisISO.md"
 converted: "2026-05-11T17:31:52.295366"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## 3D Visualization
 
 | 
-
 ### Interactive Set of Objects
 
 What is the ISO and how use it?  
@@ -22,7 +19,6 @@ What is the ISO and how use it?
 Technical Article  
   
 * * *
-
 ### Abstract
 
 The Interactive Set of Objects is an interactive object used to visualize temporary components, those not kept by a V5 document. This article describes it in detail, and explains how to use it. The last section is dedicated to the temporary component creation. 
@@ -40,7 +36,6 @@ The Interactive Set of Objects is an interactive object used to visualize tempor
 ---  
   
 * * *
-
 ### A CATISO Class Instance
 
 The Interactive Set of Objects is a component [1] whose main class is the _CATISO_ class _._ It implements _CATI3DGeoVisu_ , _CATI2DGeoVisu_ , and _CATIModelEvents_ interfaces, as represented by the following UML diagram:
@@ -50,10 +45,12 @@ The Interactive Set of Objects is a component [1] whose main class is the _CATIS
   
 The implementation of the _CATI3DGeoVisu_ (or _CATI2DGeoVisu)_ interface builds a _CAT3DBagRep_ (or _CAT2DBagRep)_ class instance. This set (bag) of graphic representations contains the graphic representations of all components set in the ISO. The next section, A Bag of Components, details this notion of bag.
 
+```vbscript
 For the _CATIModelEvents_ interface, the How Does it Work ? section gives you explanations on the role of this interface.
 
-[Top]
+```
 
+[Top]
 ### A Bag of Components 
 
 The _CATISO_ class contains methods to:
@@ -61,28 +58,21 @@ The _CATISO_ class contains methods to:
   * **Add** elements in the ISO: the `AddElement `method,
   * **Remove** elements from the ISO: `RemoveElement` method.
 
-
-
 Before adding or removing an element, it is useless to test if the element already exists, because these two method do it. However, you can always need to know if a component is included in the ISO, for that there is the `IsMember` method. 
 
 The introspection methods are: 
 
   * The `InitElementList``` method.
 
-
-
 > It locates an internal "cursor" just before the first element of the ISO. To retrieve the first element of the list, call `InitElementList` and then, `GetNextElement` .
 
   * The `GetNextElement` method.
-
-
 
 > It returns the element just after the current position of the cursor, and then increases the position of the cursor. If the returned value is NULL, the end of the list is reached.
 
 The elements of the ISO are components which must at least implement the _CATI3DGeoVisu_ or the _CATI2DGeoVisu_ interface. The Creating Temporary Components section describes three kind of components that you can use or create. 
 
 [Top]
-
 ### Managed by  V5 Document Editors
 
 Each V5 document is interactively controlled by one _CATFrmEditor_ class instance called an **editor**[2] for short. When this object is instantiated, it creates three kinds of  ISO:
@@ -91,31 +81,25 @@ Each V5 document is interactively controlled by one _CATFrmEditor_ class instanc
 
 Elements contained in the normal ISO are drawn in taken their graphic attributes into account . The `GetISO` method the _CATFrmEditor_ class retrieves this specific ISO.
 
-![](../CAAVisUseCases/images/CAAVisSampleTempObjectTrihedral.jpg) | A component with three red axes.  
+ A component with three red axes.  
 ---|---  
   * **Furtive** : 
 
 Elements contained in the furtive ISO are drawn in XOR. It is useful for rubber-bending, clipping box,... for a component does not need graphic attributes, but performance. The `GetFurtiveISO` method of the _CATFrmEditor_ class retrieves this specific ISO.
 
-![](../CAAVisUseCases/images/CAAVisSampleTempObjectWireBox2.jpg) | A clipping box drawn in XOR  
+ A clipping box drawn in XOR  
 ---|---  
   * **Background** :
 
 Elements contained in the background ISO are drawn the first. So they are in the background. The `GetBackgrdISO` method of the _CATFrmEditor_ class retrieves this specific ISO.
 
-
-
-
 In the C _ATFrmEditor_ class destructor, these three interactive sets of objects are first emptied and then released. Consequently, in your command, while the editor is alive you must ensure the contents of the ISO. Refer you to the CAAAfrBoundingElementCmd use case [3] for an example.
 
 [Top]
-
 ### Like A Root Model
 
 In a V5 document, Part features and the top Product are root components. You can you refer to the referenced article [9] for a brief notion of root object.You will also learn the main role of the unique _CATVisManager_ class instance. 
 
-![](images/CAAVisISOPartRoot.jpg) | ![](images/CAAVisISOPrdRoot.jpg)  
----|---  
   
 The _CATISO_ instance class plays the same role. It means that when you want create a new window class [2] for a V5 document, if you want the elements of the ISO to be also drawn in this new window, you must do the relation between each viewer of the window and each Interactive Set of Objects. You can you refer to the use cases [4] [5] which detail the creation of a new window. In the new window class constructor you can have the following lines:
     
@@ -141,7 +125,6 @@ The `AddViewer`**** method**** calls the `AttachTo` method of the _CATVisManager
   * The viewpoint is the main 3D  (2D) viewpoint of the viewer given as an argument
   * The list of interfaces contains CATI3DGeoVisu interface (or CATI2DGeoVisu) 
   * The command selector is the one of the editor of the ISO. ( `GetCommandSelector` method of the _CATFrmEditor_ class)
-
 
     
     
@@ -180,7 +163,6 @@ This diagram shows that the complete path of an element into the ISO is first th
 Where `pComponent` is a pointer on an element contained in the ISO. 
 
 [Top]
-
 ### How Does it Work?
 
 When an element is **added** in the ISO, the _CATISO_ class instance keeps the new component in a list, and sends a _CATCreate_ notification thanks to its implementation to the _CATIModelEvents_ interface. The _CATVisManager_ receives the notification and asks the reconstruction of the graphic representation of the ISO. The `Build` method of the _CATI3DGeoVisu_ (or 2D) interface, for the _CATISO_ component, browses the internal list of the ISO, and asks the _CATVisManager_ to retrieve or build the graphic representation of each element of the list. 
@@ -189,8 +171,6 @@ When an element is **removed** from the ISO, the element is first removed from t
 
   * The value is **0**(default value): a _CATDelete_ notification is sent. The graphic representation associated with the element to remove is**deleted**. To re-visualize the same element, you must first re-create the graphic representation before using the `AddElement` method.
   * The value is **1** : A notification is sent to erase the element, but its graphic representation is **not deleted**. Consequently, to re-visualize the same element, you do not have to re-create the graphic representation before using the `AddElement` method.
-
-
 
 When an element of the ISO is **updated** , thanks to the `UpdateElement` method, a _CATModify_ notification is sent. The _CATVisManager_ will ask for the re-construction of the graphic representation associated with the element to update. This reconstruction must be absolutely done by the _CATVisManager_ thanks to the implementation of the _CATI3DGeoVisu_ (or 2D) interface on the component to update. 
 
@@ -211,7 +191,6 @@ The step 3 consists in using an interface of the component to modify one or more
 You can you refer to the CAADegClippingByBoxCmd use case [6] where elements are added into ISO, removed with or without deletion from the ISO, and updated. 
 
 [Top]
-
 ### Creating Temporary Components
 
 There are three ways to create a component which will be displayed thanks to the Interactive Set of Objects:
@@ -219,8 +198,6 @@ There are three ways to create a component which will be displayed thanks to the
   1. Create an instance of the _CATModelForRep3D_ class 
   2. Create a component which derives from the _CATModelForRep3D_ component
   3. Create a component which derives from _CATBaseUnknown_ and implements, at least, the _CATI3DGeoVisu_ interface (or 2D)
-
-
 
 Each case is in relationship to a specific usage of the component. 
 
@@ -279,15 +256,11 @@ In fact, there are the following steps:
 
 ![](../CAAIcons/images/hand.gif)You create such a component when the graphic representation can change during the life cycle of the component. See the  How does it Work section to understand the life cycle of the graphic representation. The interface of type can also be the filter interface. 
 
-
-
-
 You can refer to the CAADegClippingByBoxCmd use case [7] where these three kinds of components have been implemented.  
 
 [Top]
 
 * * *
-
 ### In Short
 
 The Interactive Set of Objects (ISO) is an interactive object handled by the _CATISO_ class. It enables you to display components which are not included in a V5 document. These components must only implement the _CATI3DGeoVisu_ (2D) interface. 
@@ -295,23 +268,21 @@ The Interactive Set of Objects (ISO) is an interactive object handled by the _CA
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Creating Components](../CAASysTechArticles/CAASysCreatingComponent.htm)  
+[1] | [Creating Components](../CAASysTechArticles/CAASysCreatingComponent.md)  
 ---|---  
-[2] | [Understanding the Application Frame Layout](../CAAAfrTechArticles/CAAAfrLayoutV5.htm)  
-[3] | [Creating a Command that Consists in a Dialog Window](../CAAAfrUseCases/CAAAfrSampleDialogOnly.htm)  
-[4] | [Creating a Document's Window-1](../CAAAfrUseCases/CAAAfrSampleCustomWindow1.htm)  
-[5] | [Creating a Document's Window-2](../CAAAfrUseCases/CAAAfrSampleCustomWindow2.htm)  
-[6] | [Visualizing Temporary Components](../CAAVisUseCases/CAAVisSampleISO.htm)  
-[7] | [Creating Temporary Components](../CAAVisUseCases/CAAVisSampleTempObject.htm)  
-[8] | [Creating Interfaces](../CAASysTechArticles/CAASysCreatingInterfaces.htm)   
-[9] | [Using the Visualization Manager](../CAAVisUseCases/CAAVisSampleVisManager.htm)  
+[2] | [Understanding the Application Frame Layout](../CAAAfrTechArticles/CAAAfrLayoutV5.md)  
+[3] | [Creating a Command that Consists in a Dialog Window](../CAAAfrUseCases/CAAAfrSampleDialogOnly.md)  
+[4] | [Creating a Document's Window-1](../CAAAfrUseCases/CAAAfrSampleCustomWindow1.md)  
+[5] | [Creating a Document's Window-2](../CAAAfrUseCases/CAAAfrSampleCustomWindow2.md)  
+[6] | [Visualizing Temporary Components](../CAAVisUseCases/CAAVisSampleISO.md)  
+[7] | [Creating Temporary Components](../CAAVisUseCases/CAAVisSampleTempObject.md)  
+[8] | [Creating Interfaces](../CAASysTechArticles/CAASysCreatingInterfaces.md)   
+[9] | [Using the Visualization Manager](../CAAVisUseCases/CAAVisSampleVisManager.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Feb 2004] | Document created  

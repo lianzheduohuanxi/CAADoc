@@ -3,15 +3,13 @@ title: "Creating a Composite Law"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMModelInterfaces", "CAAGMModelMakeLaws"]
-source_file: "Doc\online\CAACgmModel\CAACgmUcCompositeLaw.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcCompositeLaw.md"
 converted: "2026-05-11T17:33:48.173955"
 ---
-
 # Creating a Composite Law  
   
 ---  
 Use Case  
-  
 ## Abstract
 
 A composite law is made up of a set of C2 continuous laws but the connection between the pieces of the composite law is not necessarily continuous. Sub-laws can be of any type, they can be polynomial or user functions. Composite laws are used in various operations such as sweeps or variable fillets.
@@ -19,17 +17,14 @@ A composite law is made up of a set of C2 continuous laws but the connection bet
     * Use Case Description
     * References  
 ---  
-  
 ## The API to be Used
 
 Use CATGeoFactory::CreateCompositeLaw in the GeometricObjects framework.
-
 ## Use Case Description
 
 The CAAGMModelMakeLaws.m module in CAAGMModelInterfaces.edu illustrates how to manipulate mathematical functions and polynomials (CATMathFunctionX and CATMathPolynomX) as well as laws.
 
-This use case constructs its input data. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm).
-
+This use case constructs its input data. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md).
 ### Case 1: Linear functions
 
 To define a composite law from two pieces 
@@ -79,7 +74,6 @@ define the two functions f1 and f2
     
     
     
-    
     ### Case 2: User Functions
     
     
@@ -117,7 +111,6 @@ define the two functions f1 and f2
     
     
     
-    
     ## References
     
     
@@ -126,31 +119,29 @@ define the two functions f1 and f2
     		[1]
     		| 
     		[
-    		Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)
+    		Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
     	  
-    ---|---  
     
     	
     		[2]
     		| 
-    		[About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)
+    		[About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)
     	  
     
     	
     		[3]
     		| 
-    		[How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)
+    		[How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)
     	  
     
     
     
     		[4]
     		| 
-    		[How to Use Geometric Operators](CAACgmUcGMModelOpeOverw.htm)
+    		[How to Use Geometric Operators](CAACgmUcGMModelOpeOverw.md)
     	  
     
     	
-    
     
     
     ## History
@@ -161,7 +152,6 @@ define the two functions f1 and f2
     		Version: **1** [Feb 2014]
     		| Document created
     	  
-    ---|---  
     
     
     

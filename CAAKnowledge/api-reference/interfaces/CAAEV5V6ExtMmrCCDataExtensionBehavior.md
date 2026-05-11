@@ -2,65 +2,22 @@
 title: "CAAEV5V6ExtMmrCCDataExtensionBehavior"
 type: "interface"
 module: "CAAV5V6MechanicalModeler"
+category: "framework"
 base: "CATIFmFeatureBehaviorCustomization"
+inheritance_chain: "CAAEV5V6ExtMmrCCDataExtensionBehavior → CATIFmFeatureBehaviorCustomization"
 method_count: 9
 visibility: "local"
+has_tie_binding: false
 verified: true
 ---
-
 # CAAEV5V6ExtMmrCCDataExtensionBehavior
 
 **基类**: CATIFmFeatureBehaviorCustomization  
+**继承链**: CAAEV5V6ExtMmrCCDataExtensionBehavior → CATIFmFeatureBehaviorCustomization  
 **模块**: CAAV5V6MechanicalModeler  
+**分类**: framework  
 **可见性**: local  
 **方法数**: 9
-
-## 方法列表
-
-### CanBeRemoved
-```cpp
-HRESULT CanBeRemoved(CATBoolean & oDeletable) const;
-```
-
-### BeforeRemove
-```cpp
-HRESULT BeforeRemove();
-```
-
-### Build
-```cpp
-HRESULT Build();
-```
-
-### CcpRegisterAdditionalObjectsForCopy
-```cpp
-HRESULT CcpRegisterAdditionalObjectsForCopy(const CATListValCATBaseUnknown_var & iInitialSetOfObjects, CATListValCATBaseUnknown_var & oObjectToAddToBoundary) const;
-```
-
-### CcpUpdate
-```cpp
-HRESULT CcpUpdate(const CATFmCCPContext & iContext);
-```
-
-### CcpUpdate
-```cpp
-HRESULT CcpUpdate(CATFmCCPContext & iContext);
-```
-
-### CcpPaste
-```cpp
-HRESULT CcpPaste(const CATFmCCPContext & iContext);
-```
-
-### CcpPaste
-```cpp
-HRESULT CcpPaste(CATFmCCPContext & iContext);
-```
-
-### CcpRegisterAdditionalObjectsForRemove
-```cpp
-HRESULT CcpRegisterAdditionalObjectsForRemove(const CATListValCATBaseUnknown_var & iInitialSetOfObjects, CATListValCATBaseUnknown_var & oObjectToAddToBoundary) const;
-```
 
 ## 依赖
 

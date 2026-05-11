@@ -3,18 +3,15 @@ title: "Creating a Check Button"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CAACafViewerFeedbackCmd", "CAACafViewerFeedback", "CAAAfrGeneralWksAddinHeader", "CAAAfrViewerFeedbackHdr", "CAAViewerFeedback", "CATIWorkbenchAddin", "CAACafViewerFeedbackManager", "CATIAfrGeneralWksAddin", "CAACafViewerFeedbackCheckHdr", "CAACafViewerFeedbackUncheckHdr", "CAACafViewerFeedbackCmdId", "CAACafCATIAApplicationFrm", "CAAAfrGeneralWksAddin", "CAAAfrGeneralWksAdn", "CATIAApplicationFrm", "CAACATIAApplicationFrm", "CAAApplicationFrame"]
-source_file: "Doc\online\CAAAfrUseCases\CAAAfrCheckHeader.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrCheckHeader.md"
 converted: "2026-05-11T17:17:55.585103"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## User Interface - Frame
 
 | 
-
 ### Creating a Check Button
 
 _Using CATAfrCheckHeaderAccessor_  
@@ -22,7 +19,6 @@ _Using CATAfrCheckHeaderAccessor_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to integrate in a workbench a check button in order to launch a command when the button is "checked" and another one when the state of the button becomes "unchecked". 
@@ -36,19 +32,15 @@ This article shows how to integrate in a workbench a check button in order to la
   * **In Short**
   * **References**
 
-
-
 * * *
-
 ### What You Will Learn With This Use Case
 
-This use case is intended to show you how integrate in a workbench a button which launches a command when the button is checked and another one when the button is unchecked. It is possible thanks to a command header [1] whose the representation is a check button. This specialized command header is a check header. This picture below explains the internal process: | ![](images/CAAAfrCheckHeaderDiagram.jpg) | 
+This use case is intended to show you how integrate in a workbench a button which launches a command when the button is checked and another one when the button is unchecked. It is possible thanks to a command header [1] whose the representation is a check button. This specialized command header is a check header. This picture below explains the internal process: 
 
   * When the button is "checked", a command header A is started which itself launches a command 1
   * When the button is "unchecked", a command header B is started which itself launches a command 2
 
   
----|---  
   
 This article explains how to:
 
@@ -56,24 +48,18 @@ This article explains how to:
   * Create the command headers for the "check" and "uncheck" states,
   * Create the command which contains the "check" and "uncheck" behaviors.
 
-
-
 A check header can be also used without starting command headers. In this case, only the "checked" or "unchecked" state is interesting. This kind of usage is described in another use case [2] . 
 
 [Top]
-
 ### The CAAAfrViewerFeedbackHdr Use Case
 
 CAAAfrViewerFeedbackHdr is a use case of the CAAApplicationFrame.edu framework that illustrates Application framework capabilities.
 
 [Top]
-
 #### What Does CAAAfrViewerFeedbackHdr Do
 
 The CAAAfrViewerFeedbackHdr use case inserts in the General workshop [3] a check header whose the title is "Viewer Feedback demonstrator". The left picture shows the check header with the state "off", and the right picture with the state "On". In the two cases you have the representation of the header in the menu bar and the tool bar. 
 
-![](images/CAAAfrCheckHeaderAddinOff.jpg) | ![](images/CAAAfrCheckHeaderAddinOn.jpg)  
----|---  
   
 When the state is "checked", if there is a current viewer, some information, such as the mouse position, is displayed in the 2D viewpoint as the image shows it below. Refer to the "Viewer Feedback" use case for details about this rendering [4].
 
@@ -81,7 +67,6 @@ When the state is "checked", if there is a current viewer, some information, suc
 ---  
   
 [Top]
-
 #### How to Launch CAAAfrViewerFeedbackHdr
 
 To launch CAAAfrViewerFeedbackHdr, you will need to set up the build time environment, then compile CAAAfrViewerFeedbackHdr along with its prerequisites, set up the run time environment, and then execute the use case [5].
@@ -105,7 +90,6 @@ In this file, remove the "**#** " character before the two following lines:
 ---  
   
 [Top]
-
 #### Where to Find the CAAAfrViewerFeedbackHdr Code
 
 The CAAAfrViewerFeedbackHdr use case is made of several classes located :
@@ -126,13 +110,9 @@ Unix | `InstallRootDirectory/CAACafCATIAApplicationFrm.edu/CAACafViewerFeedback.
   
 There are the _CAACafViewerFeedbackCmd_ and the _CAACafViewerFeedbackManager_ classes. The first is a command which is described in this article. The second is an object to manage the viewer feedback which is only detailed in the Visualization use case [4]. 
 
-
-
-
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are four logical steps in the CAAAfrViewerFeedbackHdr use case:
@@ -142,20 +122,14 @@ There are four logical steps in the CAAAfrViewerFeedbackHdr use case:
   3. Retrieving the State of a Check Header 
   4. Creating the Check Header Resources
 
-
-
 [Top]
-
 #### Creating the Check Header Instance in Add-in
 
 The  _CAAAfrGeneralWksAdn_ class is an implementation of the _CATIAfrGeneralWksAddin_ interface which is an Add-in of the General workshop [3]. Like other Add-in implementations, there are two methods to consider:
 
   * `CreateCommands`, the method to create the command header instances,
 
-
   * `CreateToolbars`, the method to arrange the command header instances in menu bar and tool bar. Since this piece code is not in relationship with the topic of this article, refer to the CAAAfrGeneralWksAddin use case [3] for details.
-
-
 
 Extract of the `CreateCommands` method
     
@@ -206,8 +180,6 @@ The _CAAAfrGeneralWksAddinHeader_   class has been automatically created with t
   * `CAACafViewerFeedbackCmd`: name of the command which set/unset the viewer feedback. This class is explained further, see the Creating the Check/Uncheck Command section.
   * `1/2`: arguments of the `CAACafViewerFeedbackCmd` command
 
-
-
 The `SetVisibility` method of the _CATCommandHeader_ class prohibits that the two instances, `CAACafViewerFeedbackCheckHdr and CAACafViewerFeedbackUncheckHdr` appear in the Customize command. The end user which do not known the identifier of command header cannot launch them in the power input, or drag and drop the command in a toolbar. See the technical article for more information about this method [1].
 
 Associating the `CAACafViewerFeedbackCheckHdr `header instance with the "Check" state, thanks to the `SetCheckCommand` method, the _CAACafViewerFeedbackCmd_ with` 1` as argument will be finally launched when the end use will check the check button.
@@ -215,7 +187,6 @@ Associating the `CAACafViewerFeedbackCheckHdr `header instance with the "Check" 
 Associating the `CAACafViewerFeedbackUncheckHdr `header instance with the "Uncheck" state, thanks to the `SetUncheckCommand` method, the _CAACafViewerFeedbackCmd_ with `2` as argument will be finally launched when the end use will uncheck the check button.
 
 [Top]
-
 #### Creating the Check/Uncheck Command
 
 The aim of this section is to explain the command which is launched when the end user selects the "Viewer Feedback Demonstrator" check button. This command is a _CAACafViewerFeedbackCmd_ class:
@@ -223,10 +194,7 @@ The aim of this section is to explain the command which is launched when the end
   * _CAACafViewerFeedbackCmd_ header file
   * _CAACafViewerFeedbackCmd_ source file
 
-
-
 _CAACafViewerFeedbackCmd_ header file
-    
     
     #include "CATCommand.h"  
     
@@ -291,12 +259,12 @@ What it is necessary to retain in this class is the command's life cycle. The _C
   * Any method will be called after the class construction (avoid public methods to ensure this point), **AND  **
   * The `RequestDelayedDestruction` is the last instruction.
 
-
-
+```vbscript
 For details about the  _CAACafViewerFeedbackManager_ refer you to the Visualization use case [4]. 
 
-[Top]
+```
 
+[Top]
 #### Retrieving the State of a Check Header 
 
 A method of the _CAACafViewerFeedbackManager_ class needs to know the state of the check header. 
@@ -322,7 +290,6 @@ A method of the _CAACafViewerFeedbackManager_ class needs to know the state of t
 The `WindowActivatedCB` is a callback method called when a window of the frame is activated. Before launching an action, you want to know the state of the check header in the window's context, in other words the state of the check header which has been created when the document displaying in the window has been opened. The _CATAfrCheckHeaderAccessor_ class constructor tests that the check header already exists in the list of command for the current editor, before to create it. In all cases, after the  _CATAfrCheckHeaderAccessor_ constructor class, you have an access to the check header contained in the list of command headers dedicated to the current editor. Refer you to the "Life Cycle management" section of the technical article about command headers [1] to understand the relationship between editor (_CATFrmEditor_   class) and command header (_CATCommandHeader_ class). 
 
 [Top]
-
 #### Creating the Check Header Resources
 
 Previously in the "Creating the Check Header Instance in Add-in" section, just after the check header creation through the _CATAfrCheckHeaderAccessor_ class, the resource file name has been specified thanks to the `SetResourceFile` method. In this use case the prefix of the file name is "CAAAfrGeneralWksAddinHeader". You retrieve the  `CAAAfrGeneralWksAddinHeader.CATNls` and `CAAAfrGeneralWksAddinHeader.CATRsc` files in the CNext/resources/msgcatalog directory of the CAAApplicationFrame.edu framework.
@@ -356,14 +323,11 @@ where :
   * `CAAAfrViewerFeedbackHdr`**:** is the command header identifier. 
   * `Category, Title, ShortHelp, Help, `I`con.Normal` `and LongHelp` : keywords for a command header [7]
 
-
-
 [Top]
 
  
 
 * * *
-
 ### In Short
 
 This article explains how to use the _CATAfrCheckHeaderAccessor_ class to create or retrieve a check header. 
@@ -371,21 +335,19 @@ This article explains how to use the _CATAfrCheckHeaderAccessor_ class to create
 [Top]
 
 * * *
-
 ### References
 
-[1] | [The Command Headers](../CAAAfrTechArticles/CAAAfrCommandHeaders.htm)  
+[1] | [The Command Headers](../CAAAfrTechArticles/CAAAfrCommandHeaders.md)  
 ---|---  
-[2] | [Creating a Command with Options in the "Tools Palette" Toolbar](CAAAfrCmdPalette.htm)  
-[3] | [Making Your Document Independent Command Available in All Workbenches](CAAAfrSampleGeneralWksAddin.htm)  
-[4] | [ Viewer Feedback](../CAAVisUseCases/CAAVisViewerFeedback.htm)  
-[5] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-[6] | [The CAA Command Model](../CAADegTechArticles/CAADegCommandModel.htm)  
-[7] | [Creating Resources for Command Headers](../CAAAfrTechArticles/CAAAfrI18NHeader.htm)  
+[2] | [Creating a Command with Options in the "Tools Palette" Toolbar](CAAAfrCmdPalette.md)  
+[3] | [Making Your Document Independent Command Available in All Workbenches](CAAAfrSampleGeneralWksAddin.md)  
+[4] | [ Viewer Feedback](../CAAVisUseCases/CAAVisViewerFeedback.md)  
+[5] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[6] | [The CAA Command Model](../CAADegTechArticles/CAADegCommandModel.md)  
+[7] | [Creating Resources for Command Headers](../CAAAfrTechArticles/CAAAfrI18NHeader.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Aug 2003] | Document created  

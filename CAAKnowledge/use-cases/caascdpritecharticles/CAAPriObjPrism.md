@@ -1,12 +1,11 @@
 ---
 title: "Prism Object"
-category: "general"
+category: "use-case"
 module: "CAAScdPriTechArticles"
 tags: []
-source_file: "Doc\online\CAAScdPriTechArticles\CAAPriObjPrism.htm"
+source_file: "Doc/online/CAAScdPriTechArticles/CAAPriObjPrism.md"
 converted: "2026-05-11T17:31:51.237447"
 ---
-
 # Prism Object
 
 See Also | UseCases | Properties | Methods  
@@ -26,7 +25,7 @@ See Also | UseCases | Properties | Methods
   
 Represent a prism.
 
-![](images/CAAPriPrism.gif) | The **Prism** object provides to the **Pad** or to the **Pocket** the extrusion direction set or retrieved thanks to the SetDirection or GetDirection methods. This extrusion direction can be normal to the sketch plane or not. This is expressed using the CatPrismExtrusionDirection enumeration in the DirectionType property. The extrusion direction has an orientation expressed using the CatPrismOrientation enumeration in the DirectionOrientation property. The **Pad** or the **Pocket** object can be symmetric to the skecth plane. This is stored in the IsSymmetric property. Finally, the pad or the pocket has two limits stored in the FirstLimit and SecondLimit properties as Limit objects. The **Pad** and the **Pocket** objects do not hold specific properties or methods.  
+ The **Prism** object provides to the **Pad** or to the **Pocket** the extrusion direction set or retrieved thanks to the SetDirection or GetDirection methods. This extrusion direction can be normal to the sketch plane or not. This is expressed using the CatPrismExtrusionDirection enumeration in the DirectionType property. The extrusion direction has an orientation expressed using the CatPrismOrientation enumeration in the DirectionOrientation property. The **Pad** or the **Pocket** object can be symmetric to the skecth plane. This is stored in the IsSymmetric property. Finally, the pad or the pocket has two limits stored in the FirstLimit and SecondLimit properties as Limit objects. The **Pad** and the **Pocket** objects do not hold specific properties or methods.  
 ---|---  
   
 * * *

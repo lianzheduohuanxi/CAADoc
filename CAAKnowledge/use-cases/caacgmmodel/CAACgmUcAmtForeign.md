@@ -3,15 +3,13 @@ title: "Foreign Mathematical Functions"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAAmtForeign", "CAAGobForeign", "CAADoc", "CAAAmtFctMain", "CAAAdvancedMathematics", "CAAAmtForeignFunctionXY", "CAAAmtForeignFct", "CAAAmtForeignFctXY", "CAAAmtFct"]
-source_file: "Doc\online\CAACgmModel\CAACgmUcAmtForeign.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcAmtForeign.md"
 converted: "2026-05-11T17:33:48.152406"
 ---
-
 # Foreign Mathematical Functions  
   
 ---  
 Use Case  
-  
 ## Abstract
 
 The AdvancedMathematics framework mainly exposes the mathematical functions and sets of mathematical points. The mathematical functions are used as evaluators by the geometric objects. If you want to introduce your own geometric object with associated mathematical equations that are not provided by the AdvancedMathematics framework, you can derive your own mathematical function. This article discusses how to introduce your own function class. The new class is used to demonstrate how to evaluate the mathematical functions.
@@ -25,7 +23,6 @@ The AdvancedMathematics framework mainly exposes the mathematical functions and 
     * In Short
     * References  
 ---  
-  
 ## What You Will Learn With This Use Case
 
 This use case explains the introduction of a new class of mathematical function by describing all the steps of its introduction on a concrete case: the new function to introduce is a function of two parameters (called _u_ and _v_) to _R_ , and defined by:
@@ -39,7 +36,6 @@ Fig 1: The "Eggs Box" Using the New Type of Function ![Eggs Box](images/CAACgmAm
     * _FY(u,v) = a y*u + by*v + dy_
     * _FZ(u,v) = c z * cos(u)*cos(v) + dz_  
 ---|---  
-  
 ## The Principle
 
 To introduce a new class of mathematical functions, you must derive the base class of the mathematical functions:
@@ -62,18 +58,15 @@ In this case, the higher order evaluators are approximated. However, it is stron
 In these cases, the `IsOption` method must also be overridden: it defines what kind of evaluators are available.
 
 Finally, third derivatives can be provided, as well as multiple evaluations.
-
 ## The CAAAmtForeign Use Case
 
 CAAAmtForeign is a use case of the CAAAdvancedMathematics.edu framework that illustrates AdvancedMathematics framework capabilities.
-
 ### What Does CAAAmtForeign Do
 
 This use case:
 
     * First derives the new class, and provides the corresponding overridden methods.
     * Then uses the new class to evaluate the function. In this part, what is done for the foreign function is exactly the same as what must be done for any mathematical function: the use is the same.
-
 ### How to Launch CAAAmtForeign
 
 To launch CAAAmtForeign, you will need to set up the build time environment, compile CAAAmtForeignFct.m and CAAAmtFct.m along with their prerequisites, set up the run time environment, and then execute the use case by launching the executable CAAAmtFct.exe as described in [1]. The use case writes on the standard output the following line:
@@ -81,7 +74,6 @@ To launch CAAAmtForeign, you will need to set up the build time environment, com
     13.6762, 13.6762
 
 Remember that this use case only uses mathematical objects, so that nothing can be streamed. Fig.1 is a representation of the use of these mathematical functions to create new classes of geometric objects, as presented in the CAAGobForeign use case.
-
 ### Where to Find the CAAAmtForeign Code
 
 The CAAAmtForeign use case is made of:
@@ -97,7 +89,6 @@ The CAAAmtFct.m module of the CAAAdvancedMathematics.edu framework is located in
 where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed.
 
 This architecture allows us to export the definition of the new class: hence, it can be used in other frameworks, and especially in the `GeometricObjects` framework to create a new class of surface.
-
 ## Step-by-Step
 
 We first look at the header of the foreign function class: there is a constructor and the mandatory methods are overridden. Moreover, we choose to override the evaluators of the first and second derivatives, as well as the multiple evaluators: in this use case, this will allow us to have better performance, see the code.
@@ -107,7 +98,6 @@ CAAAmtForeign is made of the following steps:
     * The CAAAmtForeignFctXY.h Header
     * The CAAAmtForeignFctXY.cpp Source Code
     * The CAAAmtFctMain.cpp Main: How to Evaluate a Mathematical Function
-
 ### The CAAAmtForeignFctXY. Header h
     
     class **ExportedByCAAAmtForeignFct** CAAAmtForeignFctXY : public CATMathFunctionXY
@@ -153,11 +143,9 @@ CAAAmtForeign is made of the following steps:
     private:
       double _a, _b, _c, _Origin;
     };
-    
     #endif
 
 The `ExportedByCAAAmtForeign` variable is defined in the `CAAAmtForeignFct.h` header. `CAAAmtForeignFunctionXY` is a scalar function of two variables (named here `iX` and `iY`). When used to define the mathematical definition of a surface, this two variables are often called `iU` and `iV`.
-
 ### The CAAAmtForeignFctXY.cpp Code
 
 This section emphasizes on some methods of the .cpp. The `IsOption` method describes the type of evaluators that are overridden by the foreign surface.
@@ -273,7 +261,6 @@ Overridden the derivatives evaluators is not necessary, because there always is 
       }
       delete [] costab;
     }				
-
 ### The CAAAmtFctMain.cpp main
 
 The main first creates a CAAAmtForeignFctXY with the given input parameters. It then checks the type of the generated objects. It gets some evaluations and checks that they are correct.
@@ -347,18 +334,15 @@ The values are then compared to those obtained by a direct computation, in order
     aFu = NULL;
     delete [] aFv;
     aFv = NULL;
-
 ## In Short
 
 This use case demonstrates a concrete case of introduction of a new class of foreign functions.
 
 Moreover, it illustrates the use of any mathematical functions.
-
 ## References
 
-[1] | [Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-  
 ## History
 
 Version: **1** [Mar 2000] | Document created  

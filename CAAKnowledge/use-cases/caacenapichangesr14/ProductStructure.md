@@ -1,9 +1,10 @@
 ---
 title: "ProductStructure Framework Modifications in V5R14"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR14"
+version: "V5R14"
 tags: ["CATI3DVisuProvider", "CATINavigateProvider"]
-source_file: "Doc\online\CAACenAPIChangesR14\ProductStructure.htm"
+source_file: "Doc/online/CAACenAPIChangesR14/ProductStructure.md"
 converted: "2026-05-11T17:33:50.964232"
 ---
 

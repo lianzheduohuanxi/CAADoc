@@ -1,9 +1,9 @@
 ---
 title: "Understanding the CGM Journal"
-category: "general"
+category: "use-case"
 module: "CAACgmOperators"
 tags: []
-source_file: "Doc\online\CAACgmOperators\CAACgmTaTopJournal.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmTaTopJournal.md"
 converted: "2026-05-11T17:33:48.669001"
 ---
 
@@ -51,9 +51,12 @@ The face F8 disappears in the result.
 To clearly understand the difference between the creation and modification type, let us take an example. Fig. 2bis: Modification and creation items ![Item Creation and Modification](images/CAACgmTopTopoJournal7.gif) |  Imagine you first put a color attribute (red for exemple) on the face C1 of the initial Pad. After the pocket subtraction, you want that the faces D1 and D5 still have this red color. That is the meaning of the modification type.  
 ---|---  
 Imagine now you have put a color on the curve C1 of the profile. You do not want that the faces F1, F5 and F6 still keeps this color: in fact, what could be the color of the face F5 and F6 if C1 were red and C2 were blue? That is the meaning of the creation item.  
+```vbscript
 For each operator, the choice of the creation or modification type has been designed according to the needs of the applications. Copy or No Copy Mode The copy or no copy mode is a default that the operator takes about the writing of its journal. Take an empty journal as an input of an operator for which you have asked to fill it.
     * With the copy mode, the operator supposes that all the cells of the input bodies are in the resulting body. Let us consider the Boolean union of two bodies, such that their intersection is empty. After such an union, if the union operator is in copy mode (and it fact, it is the way it does), nothing is written into the journal: according to the copy mode, all the cells are renewed by default, and none of them are modified. because the particular position of the two bodies.
     * With the no copy mode, the operator supposes that none of the cells of the input bodies are in the resulting body. If you take the same union of the two non intersecting bodies and if the union operator worked in no copy mode, there would be as many creation item as there are faces, free vertices and edges in the two initial bodies.
+```
+
 This mode also has an influence on the item types that an operator uses to write its items. In fact, in case of copy mode, the operator writes, in general, more modification item type than it does in case of no copy mode. In case of no copy mode, on the contrary, it uses more creation items. The copy and no-copy mode as well as the detailed items is published by each operator. Examples of Use We first describe the use of the topological journal for the object naming. Then, we illustrate its use for the selection. The last part discusses on the behavior differences between the creation and modification types. The journal is written for the applications. It is the reason why these examples are taken in the field of applications to do not belong to the CGM offering. Naming The CGM journal makes it possible to build a logical identifier on the generated cells. Imagine that each curve of a profile has a logical name such as `Curve1`, ..., `CurveN`. Now, extrude the profile along a direction to build a pad. The resulting face of the extrusion of the i-th curve of the profile can be named, using the information of the corresponding topological operation, as `Pad1_Lateral_From_CurveI`. Now, the user changes the definition of `Curve_I` (a circle radius, or replaces the curve), but keeps it attached to the same label `Curve_I`. If the prism operation is replayed, the result changes but all the logical names remain the same. All information attached to a logical name is still available on the new resulting body. This principle is used by the Generic Naming to label the objects. In turn, the object names are used by the feature applications to record the order of the different topological operations. This is a main difference between the CGM modeler and the Feature modeler: the Feature modeler records the history of the operations, whereas the CGM modeler gives a transient information at the run of the operator. Fig. 3: Use of the journal for the naming ![Journal Use for Naming](images/CAACgmTopTopoJournal3.gif) | Following the items of the topological journal, the generic naming is able to propose logical names, such that a modification of a physical object (C2) attach to a logical name (`Curve_2`) does not modify the logical names of the derived objects (`Pad1_lateral_From_Curve_2`). Information attached to the logical objects are then stable if the operations are replayed in the same order.  
 ---|---  
 Selection Take the pad of Fig. 3 and split it by a plane as on Fig. 4. It is possible to explore the CGM journal and go back from the last created face G2 to the initial face of the Pad that has been modified. It is then possible to have a way of selection which leads to the selection of the initial Pad, by selecting a face of another topological object that has been build from this Pad, which is useful when you want to modify a parameter of the initial prism. Fig. 4: Use of the journal for the selection ![Journal Use for Selection](images/CAACgmTopTopoJournal4.gif) | Exploring the CGM journal makes it possible to go back from G2 to F2, and then select the initial Pad (and not the resulting body).  
@@ -70,9 +73,9 @@ The creation or modification type modifies the behavior of the operator when it 
     * The CGM journal allows applications to record the topological modifications of faces and free edges and vertices during geometric or topological operations.
     * The CGM journal is built as a composite pattern, whose leaves are the items. Each item has a type, detailing if the cell has been created, modified or deleted.
     * Each operator publishes the way it writes items.
-References [1] |  [ Topology Concepts](../CAACgmModel/CAACgmTaTobTopoConcepts.htm)  
+References [1] |  [ Topology Concepts](../CAACgmModel/CAACgmTaTobTopoConcepts.md)  
 ---|---  
-[2] |  [ The CGM Topological Model](../CAACgmModel/CAACgmTaTobTopoModel.htm)  
-[3] | [Using the Topological Journal](CAACgmUcTopJournal.htm)  
+[2] |  [ The CGM Topological Model](../CAACgmModel/CAACgmTaTobTopoModel.md)  
+[3] | [Using the Topological Journal](CAACgmUcTopJournal.md)  
 History Version: **1** [Mar 2000] | Document created  
 ---|---

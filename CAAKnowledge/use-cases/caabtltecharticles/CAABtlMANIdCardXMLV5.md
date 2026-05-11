@@ -1,9 +1,9 @@
 ---
 title: "The XML IdentityCard Special File"
-category: "general"
+category: "use-case"
 module: "CAABtlTechArticles"
 tags: []
-source_file: "Doc\online\CAABtlTechArticles\CAABtlMANIdCardXMLV5.htm"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANIdCardXMLV5.md"
 converted: "2026-05-11T17:33:46.062618"
 ---
 
@@ -46,7 +46,7 @@ You must be aware that a user has often not all frameworks in his/her own worksp
   * Using the architecture each component is known as a framework possibly having prerequisite frameworks
   * Prerequisite frameworks of a given framework are specified in its IdentityCard file.
 
-![Prequisite Frameworks](images/CAABtlIdCard02V5.png) | A logical view of the architecture, seen from the application standpoint  
+ A logical view of the architecture, seen from the application standpoint  
 ---|---  
 Each framework owns an IdentityCard file which declares its prerequisite frameworks.  
 A framework having no prerequisite at all has an empty IdentityCard file.  
@@ -76,8 +76,8 @@ Prerequisite Completeness A framework must declare Frameworks prerequisites are 
 
 Example 2: Prerequisite Completeness A framework must declare as a prerequisite any framework it will need to be built. In the following example, Framework1 must declare a prerequisite on DirectPrereqFW1 and DirectPrereqFW2 because it's header and source directly reference a .h from those frameworks but it also need to declare IndirectPrereqFW1 and IndirectPrereqFW2 because those framework will also be needed to build.  ![Prerequisite Completeness](images/CAABtlIdCard03V5.png) **Note** : Framework1 must also declare DirectPrereqFW1 as exposed but not DirectPrereqFW2. This way, the architecture is more explicit and the build is safer. **Note** : The `AddToClientPrereqs` value modifies this behavior. See [1] for guidelines on how and when to use it. [Top] References [1] |  Framework Architecture Rules  
 ---|---  
-[2] | [mkCreateIC](../CAABtlQuickRefs/CAABtlMkCreateICV5.htm)  
-[3] | [mkICE](../CAABtlQuickRefs/CAABtlMkICEV5.htm)  
+[2] | [mkCreateIC](../CAABtlQuickRefs/CAABtlMkCreateICV5.md)  
+[3] | [mkICE](../CAABtlQuickRefs/CAABtlMkICEV5.md)  
 History Version: **1** [Jun 2011] | Document created  
 ---|---  
 [Top] _Copyright 2013, Dassault Systmes. All rights reserved._

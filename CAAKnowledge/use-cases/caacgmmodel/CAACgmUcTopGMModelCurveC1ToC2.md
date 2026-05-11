@@ -3,7 +3,7 @@ title: "Breaking a C1 Curve into C2 Pieces"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMModelConvertCurveToC2", "CAAGMModelInterfaces", "CATICGMNurbsCurveTools", "CATIA", "CATICGMMathNurbsCurveTools"]
-source_file: "Doc\online\CAACgmModel\CAACgmUcTopGMModelCurveC1ToC2.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTopGMModelCurveC1ToC2.md"
 converted: "2026-05-11T17:33:48.589667"
 ---
 
@@ -15,7 +15,7 @@ Abstract The geometric modeler is designed to operate on C2 curves and surfaces.
     * Use Case Description
     * References  
 ---  
-Operator to be Used To check whether a curve is C2, use the `Check` method of CATICGMNurbsCurveTools operator. This operator is created by the CATCGMCreateNurbsCurveTools global function. To break a non-C2 curve into C2 pieces, use the `ConvertToC2NurbsCurves` method of the CATICGMMathNurbsCurveTools operator. Use Case Description The CAAGMModelConvertCurveToC2.m module in CAAGMModelInterfaces.edu illustrates how to break a non-C2 curve into C2 pieces. This use case is to be run with the RationalNurbsCurveC1.ncgm file which is delivered in the FunctionTests/InputData folder. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm). With the input data below: Fig.1 Break a C1 Curve into C2 Pieces: Input Curve  ![Break a C1 Curve into C2](images/CGM_curve_C1toC2_1.png)  
+Operator to be Used To check whether a curve is C2, use the `Check` method of CATICGMNurbsCurveTools operator. This operator is created by the CATCGMCreateNurbsCurveTools global function. To break a non-C2 curve into C2 pieces, use the `ConvertToC2NurbsCurves` method of the CATICGMMathNurbsCurveTools operator. Use Case Description The CAAGMModelConvertCurveToC2.m module in CAAGMModelInterfaces.edu illustrates how to break a non-C2 curve into C2 pieces. This use case is to be run with the RationalNurbsCurveC1.ncgm file which is delivered in the FunctionTests/InputData folder. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md). With the input data below: Fig.1 Break a C1 Curve into C2 Pieces: Input Curve  ![Break a C1 Curve into C2](images/CGM_curve_C1toC2_1.png)  
 ---  
 and the code below:
     
@@ -64,27 +64,26 @@ and the code below:
     		[1]
     		| 
     		[
-    		Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)
+    		Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
     	  
-    ---|---  
     
     	
     		[2]
     		| 
-    		[About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)
+    		[About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)
     	  
     
     	
     		[3]
     		| 
-    		[How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)
+    		[How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)
     	  
     
     
     
     		[4]
     		| 
-    		[How to Use Geometric Operators](CAACgmUcGMModelOpeOverw.htm)
+    		[How to Use Geometric Operators](CAACgmUcGMModelOpeOverw.md)
     	  
     
     	
@@ -95,7 +94,6 @@ and the code below:
     		Version: **1** [Dec 2011]
     		| Document created
     	  
-    ---|---  
     
     
     

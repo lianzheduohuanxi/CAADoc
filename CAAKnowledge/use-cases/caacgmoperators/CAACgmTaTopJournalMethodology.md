@@ -1,9 +1,9 @@
 ---
 title: "Understanding the Topological Journal"
-category: "general"
+category: "use-case"
 module: "CAACgmOperators"
 tags: ["CAATopDumpJournal", "CAATopologicalOperators", "CAACheckForPart", "CATIMfProcReport", "CAATopCheckGnOK", "CATICGMTopwire", "CAATopCheckForPart", "CATICGMTopPrism", "CATICGMTopSkin", "CATIA", "CATIBRepAccess", "CAACheck", "CAATopCheckGnKO"]
-source_file: "Doc\online\CAACgmOperators\CAACgmTaTopJournalMethodology.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmTaTopJournalMethodology.md"
 converted: "2026-05-11T17:33:48.691140"
 ---
 
@@ -56,7 +56,7 @@ The Types of Events The types of events that can appear in a journal are the
     * and Keep events.
 The Creation Order (CATCGMEvent::Creation) This order notifies that a new cell has been created by a Creation event. A new cell can be created from scratch or from one or several cells. An additional information intended to differentiate the cells can be added to a Creation order. In the example below, "info 0" is used to differentiate the side faces, "info 1" is used to specify a bottom face and "info 2" characterizes a top face. Input Body | Resulting Body (After CATTopPrism)  
 ---|---  
-![Input Body](images/CAACgmTopInitialFace.jpg) |  ![Resulting Body](images/CAACgmTopPadResult.jpg)  
+
 **Report**  
       
     [Edge_1]->Creation[Face_C] info = 0
@@ -68,7 +68,7 @@ The Creation Order (CATCGMEvent::Creation) This order notifies that a new cell h
   
 The Modification Order (CATCGMJournal::Modification) This order notifies that a given cell is the result of a modification of an input cell. The Modification order is to be used whenever the geometry is re-used with different limitations. Except in very few cases, a Modification order should have no additional information. Input Body | Resulting Body (After CATDynFillet)  
 ---|---  
-![Input Body](images/CAACgmTopInitialPadForFillet.jpg) |  ![Resulting Body](images/CAACgmTopFilletPad.jpg)  
+
 Report  
       
     [Face_1]->Modification[Face_A]
@@ -79,7 +79,7 @@ Report
   
 The Deletion Order (CATCGMJournal::Deletion) This order notifies that a given cell belonging to an input body in Copy Mode is to be deleted in the result body. Input bodies | Resulting body (After CATHybSplit)  
 ---|---  
-![Input Bodies](images/CAACgmTopBeforeSplit.jpg) |  ![Resulting Body](images/CAACgmTopAfterSplit.jpg)  
+
 Report  
       
     [Face_1, Edge_1] -Creation -> [Vertex_A]
@@ -88,14 +88,14 @@ Report
   
 The Subdivision Order (CATCGMJournal::Subdivision) This order is a particular type of Modification that notifies that one cell of an input body in Copy Mode is modified into two or more cells into the resulting body. Input bodies | Resulting body (After CATHybSplit)  
 ---|---  
-![Input Bodies](images/CAACgmTopSplitSubdivideBef.jpg) |  ![Resulting Body](images/CAACgmTopSplitSubdivideAft.jpg)  
+
 Report  
       
     [Edge_1, Edge_2] -Creation -> [Vertex_B]
     [Edge_1, Edge_3] -Creation -> [Vertex_A]
     [Edge_1] -Subdivision -> [Edge_A, Edge_B] The Absorption Order (CATCGMJournal::Absorption) This order is a particular type of Modification that notifies that two or more cells of an input body in Copy Mode are merged into one cell into the resulting body. Input bodies | Resulting body (After CATDynBoolean Add)  
 ---|---  
-![Input Bodies](images/CAACgmTopAbsorbBefore.jpg) |  ![Resulting Body](images/CAACgmTopAbsorbAfter.jpg)  
+
 Report  
       
     [Face_5] -Modification -> [Face_B]
@@ -108,7 +108,7 @@ Report
   
 **Note** : In the figure above, Face_6 relies on Face_8. Face_8 is modified and becomes Face_F after the split operation while Face_6 is deleted. The Keep Order (CATCGMJournal::Keep) This order specifies that a cell belonging to an input body in No Copy mode is reused in the resulting body. The CAACheck operation issues a warning whenever a cell belonging to an input body in Copy mode is declared as kept in the journal. In the example below, the CATHybBoundary operator generates a body that shares the bording edges with the input body which is in No Copy mode. Input Body | Resulting Body (After CATHybBoundary)  
 ---|---  
-![Input Body](images/CAACgmTopBoundaryAfter.jpg) |  ![Resulting Body](images/CAACgmTopBoundaryBefore.jpg)  
+
 Report  
       
     [Edge_1]->Keep
@@ -123,7 +123,7 @@ The Cells Referred to in the Report The Types of Cells Only CATFace, CATEdge and
     * If the result is a vertex, the journal should report only events affecting the vertex.
 The Information The Purpose of an Information An information is a means to differentiate cells that have different dimensions and same parent features. A simple example is the circular cylinder. You cannot select the semi-cylindrical faces one-by-one because they carry the same name. Input body: two edges | Resulting Body  
 ---|---  
-![Input Body](images/CAACgmTopsketchinit.jpg) |  ![Resulting Body](images/CAACgmTopcylinderFace0.jpg)  
+
 ![Resulting Body](images/CAACgmTopcylinderFace1.jpg)  
 Sketch Report (closed conic): Both edges carry the same name  
       
@@ -142,7 +142,6 @@ Information in Standard Operators In standard operators, the value assigned to a
 Denotes a starting cell.  
 Examples:  
 
-
 > Starting/initial vertex of the helix created by CATCreateTopHelix.  
 >  Starting edge of an extruded surface (CATTopExtrude).  
 >  Starting/Bottom face of a pad. 
@@ -151,14 +150,12 @@ Examples:
 Denotes an ending cell.  
 Examples:  
 
-
 > Ending vertex of the helix created by CATCreateTopHelix.  
 >  Ending edge of an extruded surface (CATTopExtrude).  
 >  Top face of a pad. 
 
     * **Info = 0**  
 Denotes a lateral cell.  
-
 
 > Examples:  
 >  Lateral edges for a sweep.  
@@ -173,7 +170,7 @@ The Journal Operands The journal operands are the bodies that are used as input 
     2. When you store the report (CATIMfProcReport::StoreProcReport).
 What are the specification criteria for the Copy/No Copy Mode? `No Copy` is to be used whenever there are no cell or few cells of the operand in the resulting body. `Copy` is to be used when a large number of cells providing from the operand exist in the resulting body. For example: if you split a shell by a another shell, the cutting shell is in No Copy mode while the split shell is in Copy mode. Note that you may be induced to create operators with operands having a different Copy/No Copy mode depending on the options of the operator. This is the case for the CATTopCorner standard operator. The CATTopCorner Example Input bodies: two wires and a support | Resulting Body  
 ---|---  
-![Input Body](images/CAACgmTopCornerInitial.jpg) |  ![Resulting Body](images/CAACgmTopCornerCopy.jpg)  
+
 ![Resulting Body](images/CAACgmTopCornerTrimming.jpg)  
 Report without trimming  
 Support: No Copy - Wires: No Copy  
@@ -378,10 +375,10 @@ will result into an error because the naming mechanism will not be able to diffe
            []->Creation [Face_1] info=1
            []->Creation [Face_2] info=1
 
-In Short The topological journal is used by the generic naming mechanism. Whenever you create your own operator, you must check your journal. Potential errors left in a journal may result in selectability problem. References [1] |  [ Topology Concepts](../CAACgmModel/CAACgmTaTobTopoConcepts.htm)  
+In Short The topological journal is used by the generic naming mechanism. Whenever you create your own operator, you must check your journal. Potential errors left in a journal may result in selectability problem. References [1] |  [ Topology Concepts](../CAACgmModel/CAACgmTaTobTopoConcepts.md)  
 ---|---  
-[2] |  [ The CGM Topological Model](../CAACgmModel/CAACgmTaTobTopoModel.htm)  
-[3] | [Understanding the CGM Journal](CAACgmTaTopJournal.htm)  
-[4] | [Using the Topological Journal](CAACgmUcTopJournal.htm)  
+[2] |  [ The CGM Topological Model](../CAACgmModel/CAACgmTaTobTopoModel.md)  
+[3] | [Understanding the CGM Journal](CAACgmTaTopJournal.md)  
+[4] | [Using the Topological Journal](CAACgmUcTopJournal.md)  
 History Version: **1** [Mar 2000] | Document created  
 ---|---

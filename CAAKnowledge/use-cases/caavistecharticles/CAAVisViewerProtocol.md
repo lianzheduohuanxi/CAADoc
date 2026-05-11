@@ -1,20 +1,17 @@
 ---
 title: "Conveying End User Intent from Mouse to Controller"
-category: "general"
+category: "use-case"
 module: "CAAVisTechArticles"
 tags: ["CATIA"]
-source_file: "Doc\online\CAAVisTechArticles\CAAVisViewerProtocol.htm"
+source_file: "Doc/online/CAAVisTechArticles/CAAVisViewerProtocol.md"
 converted: "2026-05-11T17:31:52.306819"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## 3D Visualization
 
 | 
-
 ### Conveying End User Intent from Mouse to Controller
 
 _How the end user actions on the mouse become object modifications_  
@@ -22,7 +19,6 @@ _How the end user actions on the mouse become object modifications_
 Technical Article  
   
 * * *
-
 ### Abstract
 
 The mouse is the main device used to interact with CATIA. The end user should be able to perform many kinds of actions with only three buttons and mouse moves. The mouse quickly delegates the end user intended actions to manipulators set onto the representations of the model objects. Here we present the notification protocol used to standardize the end user intents. 
@@ -35,7 +31,6 @@ The mouse is the main device used to interact with CATIA. The end user should be
 ---  
   
 * * *
-
 ### What Happens when the End User Plays with the Mouse
 
 When the end user moves the mouse above, drags, clicks or double-clicks on an object, this is to do something on this object. Manipulators allows for mapping behaviors on objects, as if they could propose themselves the available tools to manipulate objects. In addition, manipulators provide consistent user interface guidelines through the reactivity of the model objects when the mouse is located or moves on the representations which stand for them.
@@ -49,8 +44,6 @@ A representation is then controlled by the manipulator. It's the way to define w
   * The right button of the mouse is pressed on this representation: the model object is asked to show the contextual actions that can be performed against it. A contextual menu is displayed
   * The mouse is located or moves on a representation while the the help key or the F1 key is pressed: help is asked on the represented model object.
 
-
-
 The different end user actions introduced above set the manipulator in different states that we can define using a finite state machine.
 
 The state of a manipulator is composite and made of three parts: 
@@ -59,14 +52,11 @@ The state of a manipulator is composite and made of three parts:
   2. The device part describes if a manipulator is current for dragging, that is can be used from now on by non-pointing devices (devices which cannot choose objects on the screen such as key arrow or space ball). It is encoded using the MDeviceState member data of the CATManipulator class
   3. The _edit_ part describes if the popup containing the dialog for editing parameters to move or deform the object is there or not. It is encoded using the MEditState member data of the CATManipulator class.
 
-
-
 This figure shows the states of a manipulator (in boxes) and the notifications sent when shifting from one state to another (along the arrows) due to end-user interactions represented by the mouse, here with the first manipulator style used (left button pressed):
 
 ![CAAVisViewerProtocol.gif \(11027 bytes\)](images/CAAVisViewerProtocol.gif)
 
 [Top]
-
 ### The Manipulator States Reflecting the End User Interactions
 
 The following table describes the notifications received by a manipulator that controls a representation and the states it takes depending on the events due to the user interactions.
@@ -94,7 +84,10 @@ The manipulator states are fully described below.
     The mouse is not yet located above the representation controlled by the manipulator
 **MState InPreactivate**
     The mouse moves and at a given time intersects a representation controlled by the manipulator without pressing any button. At this moment, the manipulator receives a Preactivate notification, sets MState to InPreactivate and defines the preactivation of the representation. To do this, the manipulator sends a Preactivate notification to its father in the command tree structure, that is to the instance of the CATCommand class or one of its derived class used as one of the manipulator constructor arguments. This notification is an instance of the CATPreactivate class.  
+```vbscript
 For example, a manipulator used for selection will usually highlight the representation.  
+```
+
 When the mouse moves on a representation with a preactivated manipulator, that is a manipulator with MState set to InPreactivate, the viewer publishes a Move notification as long as the mouse moves and remains located above the representation.  
 When the mouse leaves the representation, the manipulator receives an EndPreactivate notification. By default, it sends an EndPreactivate notification to its father and sets MState to InNormal.
 **MState InActivate**
@@ -114,7 +107,6 @@ A non trivial use of the edit state can be to have a manipulator for selection c
 [Top]
 
 * * *
-
 ### In Short
 
 When the end user uses the mouse, the different actions are transformed into notifications the system sends to the viewer. Each notification sent reflects the mouse state and movement which themselves reflect the end user intent.
@@ -124,7 +116,6 @@ Providing manipulators which subscribe to these notifications bring to the objec
 [Top]
 
 * * *
-
 ### History
 
 Version: **1** [Jan 2000] | Document created  

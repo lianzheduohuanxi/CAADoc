@@ -1,9 +1,9 @@
 ---
 title: "New C++ Authorized APIs in CAA V5R19 SP1"
-category: "general"
+category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIEcvPercentFill", "CATIMfgPPMachine", "CATIPrintableDrafting", "CATIAV4Interfaces", "CATIA"]
-source_file: "Doc\online\CAACenQuickRefs\CAACenV5R19SP1NewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R19SP1NewCPPAPI.md"
 converted: "2026-05-11T17:33:47.444440"
 ---
 
@@ -42,4 +42,4 @@ History Version: **1** [Aug 2008] | Document created
 * * *
 
 _Copyright © 1999-2008, Dassault Systèmes. All rights reserved._  
-Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.htm) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.htm) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.htm)
+Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)

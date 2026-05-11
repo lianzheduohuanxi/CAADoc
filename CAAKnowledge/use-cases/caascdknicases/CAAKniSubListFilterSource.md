@@ -1,18 +1,18 @@
 ---
 title: "CAAKniSubListFilter.CATScript"
-category: "general"
+category: "use-case"
 module: "CAAScdKniUseCases"
 tags: ["CAAScdKniUseCases", "CATIA", "CAAKniSamplePartR13", "CAAKniSubListFilter"]
-source_file: "Doc\online\CAAScdKniUseCases\CAAKniSubListFilterSource.htm"
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniSubListFilterSource.md"
 converted: "2026-05-11T17:31:51.997304"
 ---
 
-
     Option Explicit
     ' COPYRIGHT DASSAULT SYSTEMES 2001
+```vbscript
     Dim Language as String
     Language="VBScript"
-    
+```vbscript
     ' ***********************************************************************
     '   Purpose:      You can add user parameters to a given feature by using the
     '                 Knowledge Advisor product. This macro filters the parameters
@@ -28,17 +28,20 @@ converted: "2026-05-11T17:31:51.997304"
     '   CATIA Level:  V5R6  
     '   revision V5R13
     ' ***********************************************************************
+```
+
     
+```
+
+```vbscript
     Sub CATMain()
-    
+```vbscript
      ' Set the CATIA popup file alerts to False
      ' It prevents to stop the macro at each alert during its execution
      CATIA.DisplayFileAlerts = False
-    
      ' Retrieve your active document - CATIA is your application 
      ' You get the active document by using the ActiveDocument property
      ' on your application object
-    
         ' ----------------------------------------------------------- 
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String 
@@ -48,28 +51,33 @@ converted: "2026-05-11T17:31:51.997304"
           Err.Raise 9999,,"No Doc Path Defined"
         End If
         ' ----------------------------------------------------------- 
+```
+
     
+```
+
     
+```vbscript
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
     		"online\CAAScdKniUseCases\samples\CAAKniSamplePartR13.CATPart")
         Dim oDoc As Document
         set oDoc = CATIA.Documents.Open(sFilePath)
     
+```
+
     
-     
      ' Retrieve your active document
+```vbscript
      Dim oActiveDoc As Document 
      Set oActiveDoc = CATIA.ActiveDocument 
-     
+```vbscript
      ' Check whether the document is a CATPart
      If (InStr(oActiveDoc.Name,".CATPart")) <> 0  Then 
-    
         ' Retrieve the collection object which contains
         ' all the document parameters
         Dim oParamList As Paraneters
         Set oParamList = oActiveDoc.Part.Parameters
-        
         ' Scans the collection of Bodies in a part
         Dim oBodies As Bodies
         Set oBodies = oActiveDoc.Part.Bodies
@@ -92,15 +100,25 @@ converted: "2026-05-11T17:31:51.997304"
                Dim oPad1SubList As Parameters
                Set oPad1SubList = oParamList.SubList(oBodies.item(j).Shapes.item(i), False)
                  for k = 1 to oPad1SubList.Count
+```
+
                     msgbox oPad1SubList.Item(k).name
                  next
              End if 
              Next 
         Next       
     
+```
+
      Else
         MsgBox "The active document must be a CATPart"
     End If
     
+```
+
+```vbscript
     End Sub
     
+```
+
+```

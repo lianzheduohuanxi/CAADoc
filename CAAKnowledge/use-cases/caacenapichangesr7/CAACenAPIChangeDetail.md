@@ -1,9 +1,10 @@
 ---
 title: "Detail Of API Changes"
-category: "general"
+category: "api-changes"
 module: "CAACenAPIChangesR7"
+version: "V5R7"
 tags: ["CAA2Usage", "CAA2Level"]
-source_file: "Doc\online\CAACenAPIChangesR7\CAACenAPIChangeDetail.htm"
+source_file: "Doc/online/CAACenAPIChangesR7/CAACenAPIChangeDetail.md"
 converted: "2026-05-11T17:33:51.920474"
 ---
 
@@ -29,49 +30,49 @@ INDM | Method is no more documented. It does not break your code in any way but 
   
 * * *
 
-AnalysisMeshingModel | [R7GA vs R6GA](AnalysisMeshingModel.htm) | [R7SP vs R7GA](AnalysisMeshingModelSP.htm)  
+AnalysisMeshingModel | [R7GA vs R6GA](AnalysisMeshingModel.md) | [R7SP vs R7GA](AnalysisMeshingModelSP.md)  
 ---|---|---  
-ApplicationFrame | [R7GA vs R6GA](ApplicationFrame.htm) | [R7SP vs R7GA](ApplicationFrameSP.htm)  
-BasicTopologicalOpe |  | [R7SP vs R7GA](BasicTopologicalOpeSP.htm)  
-CATAnalysisBase | [R7GA vs R6GA](CATAnalysisBase.htm) | [R7SP vs R7GA](CATAnalysisBaseSP.htm)  
-CATAnalysisInterfaces | [R7GA vs R6GA](CATAnalysisInterfaces.htm) | [R7SP vs R7GA](CATAnalysisInterfacesSP.htm)  
-CATAnalysisResources |  | [R7SP vs R7GA](CATAnalysisResourcesSP.htm)  
-CATSchPlatformInterfaces |  | [R7SP vs R7GA](CATSchPlatformInterfacesSP.htm)  
-CATTPSInterfaces | [R7GA vs R6GA](CATTPSInterfaces.htm) | [R7SP vs R7GA](CATTPSInterfacesSP.htm)  
-CORBAServerBase | [R7GA vs R6GA](CORBAServerBase.htm) |   
-Dialog | [R7GA vs R6GA](Dialog.htm) | [R7SP vs R7GA](DialogSP.htm)  
-DialogEngine |  | [R7SP vs R7GA](DialogEngineSP.htm)  
-DNBInspectSharedInterfaces |  | [R7SP vs R7GA](DNBInspectSharedInterfacesSP.htm)  
-DraftingInterfaces | [R7GA vs R6GA](DraftingInterfaces.htm) | [R7SP vs R7GA](DraftingInterfacesSP.htm)  
-ENOVDDManager | [R7GA vs R6GA](ENOVDDManager.htm) | [R7SP vs R7GA](ENOVDDManagerSP.htm)  
-ENOVDesktopDocument | [R7GA vs R6GA](ENOVDesktopDocument.htm) | [R7SP vs R7GA](ENOVDesktopDocumentSP.htm)  
-ENOVIAPlugIn | [R7GA vs R6GA](ENOVIAPlugIn.htm) |   
-ENOVInterfaces | [R7GA vs R6GA](ENOVInterfaces.htm) | [R7SP vs R7GA](ENOVInterfacesSP.htm)  
-ENOVaultClientCPP | [R7GA vs R6GA](ENOVaultClientCPP.htm) | [R7SP vs R7GA](ENOVaultClientCPPSP.htm)  
-GSMInterfaces | [R7GA vs R6GA](GSMInterfaces.htm) | [R7SP vs R7GA](GSMInterfacesSP.htm)  
-GSOInterfaces |  | [R7SP vs R7GA](GSOInterfacesSP.htm)  
-GeometricObjects | [R7GA vs R6GA](GeometricObjects.htm) | [R7SP vs R7GA](GeometricObjectsSP.htm)  
-InteractiveInterfaces |  | [R7SP vs R7GA](InteractiveInterfacesSP.htm)  
-KinematicsInterfaces | [R7GA vs R6GA](KinematicsInterfaces.htm) |   
-LiteralFeatures | [R7GA vs R6GA](LiteralFeatures.htm) | [R7SP vs R7GA](LiteralFeaturesSP.htm)  
-ManufacturingInterfaces | [R7GA vs R6GA](ManufacturingInterfaces.htm) | [R7SP vs R7GA](ManufacturingInterfacesSP.htm)  
-Mathematics |  | [R7SP vs R7GA](MathematicsSP.htm)  
-MecModInterfaces | [R7GA vs R6GA](MecModInterfaces.htm) | [R7SP vs R7GA](MecModInterfacesSP.htm)  
-MechanicalModeler | [R7GA vs R6GA](MechanicalModeler.htm) | [R7SP vs R7GA](MechanicalModelerSP.htm)  
-NewTopologicalObjects | [R7GA vs R6GA](NewTopologicalObjects.htm) |   
-ObjectModelerBase | [R7GA vs R6GA](ObjectModelerBase.htm) | [R7SP vs R7GA](ObjectModelerBaseSP.htm)  
-ObjectSpecsModeler | [R7GA vs R6GA](ObjectSpecsModeler.htm) | [R7SP vs R7GA](ObjectSpecsModelerSP.htm)  
-PartInterfaces | [R7GA vs R6GA](PartInterfaces.htm) | [R7SP vs R7GA](PartInterfacesSP.htm)  
-Print | [R7GA vs R6GA](Print.htm) | [R7SP vs R7GA](PrintSP.htm)  
-ProductStructure | [R7GA vs R6GA](ProductStructure.htm) |   
-System | [R7GA vs R6GA](System.htm) | [R7SP vs R7GA](SystemSP.htm)  
-TopologicalOperators | [R7GA vs R6GA](TopologicalOperators.htm) | [R7SP vs R7GA](TopologicalOperatorsSP.htm)  
-Tessellation |  | [R7SP vs R7GA](TessellationSP.htm)  
-VPMDesktopObjects | [R7GA vs R6GA](VPMDesktopObjects.htm) | [R7SP vs R7GA](VPMDesktopObjectsSP.htm)  
-VPMInterfaces | [R7GA vs R6GA](VPMInterfaces.htm) | [R7SP vs R7GA](VPMInterfacesSP.htm)  
-VPMXBom | [R7GA vs R6GA](VPMXBom.htm) |   
-VPMServices |  | [R7SP vs R7GA](VPMServicesSP.htm)  
-Visualization | [R7GA vs R6GA](Visualization.htm) | [R7SP vs R7GA](VisualizationSP.htm)  
+ApplicationFrame | [R7GA vs R6GA](ApplicationFrame.md) | [R7SP vs R7GA](ApplicationFrameSP.md)  
+BasicTopologicalOpe |  | [R7SP vs R7GA](BasicTopologicalOpeSP.md)  
+CATAnalysisBase | [R7GA vs R6GA](CATAnalysisBase.md) | [R7SP vs R7GA](CATAnalysisBaseSP.md)  
+CATAnalysisInterfaces | [R7GA vs R6GA](CATAnalysisInterfaces.md) | [R7SP vs R7GA](CATAnalysisInterfacesSP.md)  
+CATAnalysisResources |  | [R7SP vs R7GA](CATAnalysisResourcesSP.md)  
+CATSchPlatformInterfaces |  | [R7SP vs R7GA](CATSchPlatformInterfacesSP.md)  
+CATTPSInterfaces | [R7GA vs R6GA](CATTPSInterfaces.md) | [R7SP vs R7GA](CATTPSInterfacesSP.md)  
+CORBAServerBase | [R7GA vs R6GA](CORBAServerBase.md) |   
+Dialog | [R7GA vs R6GA](Dialog.md) | [R7SP vs R7GA](DialogSP.md)  
+DialogEngine |  | [R7SP vs R7GA](DialogEngineSP.md)  
+DNBInspectSharedInterfaces |  | [R7SP vs R7GA](DNBInspectSharedInterfacesSP.md)  
+DraftingInterfaces | [R7GA vs R6GA](DraftingInterfaces.md) | [R7SP vs R7GA](DraftingInterfacesSP.md)  
+ENOVDDManager | [R7GA vs R6GA](ENOVDDManager.md) | [R7SP vs R7GA](ENOVDDManagerSP.md)  
+ENOVDesktopDocument | [R7GA vs R6GA](ENOVDesktopDocument.md) | [R7SP vs R7GA](ENOVDesktopDocumentSP.md)  
+ENOVIAPlugIn | [R7GA vs R6GA](ENOVIAPlugIn.md) |   
+ENOVInterfaces | [R7GA vs R6GA](ENOVInterfaces.md) | [R7SP vs R7GA](ENOVInterfacesSP.md)  
+ENOVaultClientCPP | [R7GA vs R6GA](ENOVaultClientCPP.md) | [R7SP vs R7GA](ENOVaultClientCPPSP.md)  
+GSMInterfaces | [R7GA vs R6GA](GSMInterfaces.md) | [R7SP vs R7GA](GSMInterfacesSP.md)  
+GSOInterfaces |  | [R7SP vs R7GA](GSOInterfacesSP.md)  
+GeometricObjects | [R7GA vs R6GA](GeometricObjects.md) | [R7SP vs R7GA](GeometricObjectsSP.md)  
+InteractiveInterfaces |  | [R7SP vs R7GA](InteractiveInterfacesSP.md)  
+KinematicsInterfaces | [R7GA vs R6GA](KinematicsInterfaces.md) |   
+LiteralFeatures | [R7GA vs R6GA](LiteralFeatures.md) | [R7SP vs R7GA](LiteralFeaturesSP.md)  
+ManufacturingInterfaces | [R7GA vs R6GA](ManufacturingInterfaces.md) | [R7SP vs R7GA](ManufacturingInterfacesSP.md)  
+Mathematics |  | [R7SP vs R7GA](MathematicsSP.md)  
+MecModInterfaces | [R7GA vs R6GA](MecModInterfaces.md) | [R7SP vs R7GA](MecModInterfacesSP.md)  
+MechanicalModeler | [R7GA vs R6GA](MechanicalModeler.md) | [R7SP vs R7GA](MechanicalModelerSP.md)  
+NewTopologicalObjects | [R7GA vs R6GA](NewTopologicalObjects.md) |   
+ObjectModelerBase | [R7GA vs R6GA](ObjectModelerBase.md) | [R7SP vs R7GA](ObjectModelerBaseSP.md)  
+ObjectSpecsModeler | [R7GA vs R6GA](ObjectSpecsModeler.md) | [R7SP vs R7GA](ObjectSpecsModelerSP.md)  
+PartInterfaces | [R7GA vs R6GA](PartInterfaces.md) | [R7SP vs R7GA](PartInterfacesSP.md)  
+Print | [R7GA vs R6GA](Print.md) | [R7SP vs R7GA](PrintSP.md)  
+ProductStructure | [R7GA vs R6GA](ProductStructure.md) |   
+System | [R7GA vs R6GA](System.md) | [R7SP vs R7GA](SystemSP.md)  
+TopologicalOperators | [R7GA vs R6GA](TopologicalOperators.md) | [R7SP vs R7GA](TopologicalOperatorsSP.md)  
+Tessellation |  | [R7SP vs R7GA](TessellationSP.md)  
+VPMDesktopObjects | [R7GA vs R6GA](VPMDesktopObjects.md) | [R7SP vs R7GA](VPMDesktopObjectsSP.md)  
+VPMInterfaces | [R7GA vs R6GA](VPMInterfaces.md) | [R7SP vs R7GA](VPMInterfacesSP.md)  
+VPMXBom | [R7GA vs R6GA](VPMXBom.md) |   
+VPMServices |  | [R7SP vs R7GA](VPMServicesSP.md)  
+Visualization | [R7GA vs R6GA](Visualization.md) | [R7SP vs R7GA](VisualizationSP.md)  
   
 * * *
 

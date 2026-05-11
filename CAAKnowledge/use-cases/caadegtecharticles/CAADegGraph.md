@@ -1,9 +1,9 @@
 ---
 title: "Implementing the Command Statechart Diagram"
-category: "general"
+category: "use-case"
 module: "CAADegTechArticles"
 tags: ["CAACreatePolylineCmd", "CAAILine", "CATI2DPoint", "CAACommandCmd", "CAACreateCircleCmd", "CATI3DCamera", "CATI2DControlPoint", "CATIAxle", "CAAIPoint", "CAACreateLineCmd", "CATIndication", "CATICamera", "CATIndicationAgent"]
-source_file: "Doc\online\CAADegTechArticles\CAADegGraph.htm"
+source_file: "Doc/online/CAADegTechArticles/CAADegGraph.md"
 converted: "2026-05-11T17:33:49.838586"
 ---
 
@@ -76,7 +76,7 @@ Implementing the Statechart Diagram The statechart diagram is implemented using 
           CATDialogTransition * pLastTransition = AddTransition(stEndState, **NULL** , ...  
   
 ---  
-    * The Cancel state is a flavor of the final state. Like the final state, it ends the command, but in addition, it requests the [command undo](CAADegUndoRedo.htm) when the command completes. It is created using the `GetCancelState` method. 
+    * The Cancel state is a flavor of the final state. Like the final state, it ends the command, but in addition, it requests the [command undo](CAADegUndoRedo.md) when the command completes. It is created using the `GetCancelState` method. 
           
           CATDialogState * stCancelState = GetCancelState();  
   
@@ -190,12 +190,12 @@ If you do not have define an explicit plane, you retrieve the default plane, wit
     ...  
   
 ---  
-[Top] Managing Selection Selection enables the object-action paradigm, as well as the action-object paradigm: **Object-action** : The Select command and the commands that can take their input from the CSO enable the object-action paradigm. Using the Select command, the end user can select an object, that is, make this object active, and then click a command to work on this object. The command takes this object as input. ![Selection1.jpg \(44094 bytes\)](images/Selection1.jpg) | Using the Select command, provided as an arrow button in the user interface and shown here as the current command with its focused icon, the end user selects the top face of the pad. This face is put into the CSO, and its contour is highlighted. No predicate is done about what could be the next current command.    
+ Using the Select command, provided as an arrow button in the user interface and shown here as the current command with its focused icon, the end user selects the top face of the pad. This face is put into the CSO, and its contour is highlighted. No predicate is done about what could be the next current command.    
 ---|---  
-![Selection2.jpg \(53162 bytes\)](images/Selection2.jpg) | The end user clicks the Thickness command. The selected face is taken as input to be the face to thicken. If the clicked command cannot take a face as input, the selected face is ignored by the command, and is deselected, that is  removed from the CSO.  
+ The end user clicks the Thickness command. The selected face is taken as input to be the face to thicken. If the clicked command cannot take a face as input, the selected face is ignored by the command, and is deselected, that is  removed from the CSO.  
 **Action-object** : Each command that requires an end user input enables the action-object paradigm. The command can be selected first, and if no object is active, or if no active object matches the expected one(s), the active objects are deselected and the command waits for the end user to select an appropriate object, and takes this object as input. ![Selection3.jpg \(52480 bytes\)](images/Selection3.jpg) | The thickness command is clicked, but no face is selected. The command includes a selection step that lets the end user select the face to thicken.  
 ---|---  
-![Selection4.jpg \(53021 bytes\)](images/Selection4.jpg) | The end user selects a face, and the command applies to this face.  
+ The end user selects a face, and the command applies to this face.  
 To detect that the end user has selected a representation in a viewer that stands for an object that matches what your state dialog command expects in the current state, and to retrieve this object, use an instance of the _CATPathElementAgent_ class. The path element dialog agent is a generic dialog agent that interprets a user selection, that is a left click on an object's representation in a viewer, as a document's object input, such as the selection of the rear left wheel instance of a car, and of all the objects above it in the document specification tree structure. It retrieves a path element, instance of the _CATPathElement_ class, that is an object that contains an ordered list of pointers starting from the root object of the active document to the selected object. Using the path element; you can navigate to find objects that are above the selected one in the document specification tree structure. [Top] Creating a CATPathElement Instance You can create an instance of a _CATPathElement_ class by simply providing its identifier, as follows:
     
     _SelectionAgent = new CATPathElementAgent("MySelectionAgentId");  
@@ -410,8 +410,11 @@ Use the `IgnoreOnNotify` method to remove a rule from the notification pattern. 
 A dialog agent is usually associated with one state only, but you can also associate it with several states if you recycle it between two usages. Refer to Recycling a Dialog Agent. If you use it several times for the same state in a self-transition, you can set it as repeatable. Refer to Setting a Dialog Agent as Repeatable. On the other hand, several dialog agents can be associated with a single state. Refer to Concatenating Several Dialog Agents. [Top] Concatenating Several Dialog Agents You can concatenate several dialog agents plugged to the same state to filter the end user input. To understand how you can use dialog agent concatenation, remember that if several dialog agents are plugged to the same state: 
     * The end user interaction values only one of them before the transition is triggered
     * The dialog agents are scanned for setting their values in the order they are declared to the state using the `AddDialogAgent` method.
+```vbscript
 For example, assume you want to trigger a transition as soon as the end user right clicks. This is easy to do using a dialog agent valued with a `CATContext` notification sent by the right click.
     
+```
+
     _daAgent = new CATDialogAgent("RightClickAgentId");
     _daAgent->AcceptOnNotify(NULL, "CATContext");
     SourceState->AddDialogAgent(_daAgent);
@@ -526,7 +529,7 @@ Using the `AddInitialState` method to define a transition avoids repeating the t
 ---  
 To make it possible to get out of the loop, another transition from the same source state to another target state should exist. Self-transitions are also useful to visualize the object that could be created at the current mouse location if the end user requested to create it. Below are two examples. ![RubberBanding1.gif \(2520 bytes\)](images/RubberBanding1.gif) | The circle is not yet created. The circle center is already created, and the end user moves the mouse. A circle that corresponds to the current mouse location is drawn. It corresponds to the circle that would be created if the end user clicked the mouse at that location. This is made possible thanks to a self-transition looping on a state that expects the circle radius input by means of an indication.  
 ---|---  
-![RubberBanding3.gif \(2868 bytes\)](images/RubberBanding3.gif) | The state dedicated to get the circle radius has an incoming transition that comes from a previous state that is not detailed here. As long as the end user moves the mouse, the viewer sends a preactivation notification that values a dialog agent and fires the self-transition whose action creates a temporary circle that corresponds to the current mouse location. As soon as the end user indicates a point, the transition that creates the circle fires, the circle is created and the final state is reached.  
+ The state dedicated to get the circle radius has an incoming transition that comes from a previous state that is not detailed here. As long as the end user moves the mouse, the viewer sends a preactivation notification that values a dialog agent and fires the self-transition whose action creates a temporary circle that corresponds to the current mouse location. As soon as the end user indicates a point, the transition that creates the circle fires, the circle is created and the final state is reached.  
 The code to write to create the self-transition for the circle in the `BuildGraph` method is the following.
     
     _daIndicRadius = new CATIndicationAgent("GetRadiusPoint");
@@ -565,7 +568,7 @@ The transition is triggered as soon as the dialog agent is prevalued. Dialog age
 ---  
 The `UpdateElement` method updates the ISO with the modified temporary circle, and the dialog agent is recycled before the method returns. The "Get Point" state becomes active again, and the dialog agent can be reused thanks to the  `InitializeAcquisition` method. Note that if the dialog agent were set as repeatable using the `CATDlgEngRepeat` behavior parameter, it would be useless to recycle it. Here is another case with a polyline example. ![RubberBanding2.gif \(2160 bytes\)](images/RubberBanding2.gif) | The polyline is being built. Five line segments are created, and the end user moves the mouse to create the sixth one. The dashed line segment visualizes what would be this line segment if the end user clicked at the current mouse location. This is made possible thanks two self-transitions looping on a state. The first transition expects a point indication to create a line segment, the second one expects a point indication prevaluation to create the rubber band.  
 ---|---  
-![RubberBanding4.gif \(3988 bytes\)](images/RubberBanding4.gif) | The state dedicated to get a point of the polyline has an incoming transition that comes from a previous state that is not detailed here. As long as the end user moves the mouse, the viewer sends a preactivation notification that values a dialog agent and fires the self-transition whose action creates a temporary line that corresponds to the current mouse location. As soon as the end user indicates a point, another self-transition fires and the line segment is created. Due to the self-transition, the state remains active to enable another line segment creation. The final state is reached as soon as the end user right clicks.  
+ The state dedicated to get a point of the polyline has an incoming transition that comes from a previous state that is not detailed here. As long as the end user moves the mouse, the viewer sends a preactivation notification that values a dialog agent and fires the self-transition whose action creates a temporary line that corresponds to the current mouse location. As soon as the end user indicates a point, another self-transition fires and the line segment is created. Due to the self-transition, the state remains active to enable another line segment creation. The final state is reached as soon as the end user right clicks.  
 Creating Guard Conditions The guard condition is a CATBoolean expression that is evaluated as soon as the transition is triggered, and if it evaluates True, the transition fires and the associated action is executed. A guard condition is declared as the third parameter of the `AddTransition` method. A composite condition can be created by combining elementary conditions. In addition, an exit condition can be set onto the state. It is evaluated before the guard conditions, and if it evaluates False, the guard condition is not evaluated. [Top] Creating Conditions with Unconstrained Data Input An _unconstrained data input_ is either: 
     * A dataless input, that is an input without associated value
     * A data input without any constraint on the value provided by the end user.
@@ -595,8 +598,11 @@ The argument can be passed as the second argument of the `Condition` method, or 
     _MyCondition->**SetData(CAAIPoint * PointToCheck)** ;  
   
 ---  
+```vbscript
 For example, assume that a command creating a line in the 3D space needs to check that the end point input by the end user is not coincident with the start point. This can be checked in the `CheckEndPoint` method of the _CAACreateLineCmd_ class, standing for the Line command.
     
+```
+
     CATBoolean CAACreateLineCmd::CheckEndPoint(void * iDummy)
     {
       CATBoolean ret = TRUE;
@@ -685,8 +691,11 @@ Note that `_CoincidenceCondition` must be a data member of your state dialog com
     CATStateCondition * **NotCondition**(CATStateCondition * iCondition);  
   
 ---  
+```vbscript
 For example, when creating a line with two points, if you want to check that the end user has indicated a point, and that this point is not identical to the previously selected point, the condition could be expressed as follows: `[EndPoint input AND (StartPoint<>EndPoint)?]` This is implemented in this way:
     
+```
+
     AddTransition(state2, NULL,
                   **AndCondition**(
                      IsOutputSetCondition(EndPoint), // condition1: EndPoint input?
@@ -709,7 +718,7 @@ This evaluation is done prior to the guard conditions. If it evaluates False, th
     CATBoolean ActionMethod(void * iUsefulData);  
   
 ---  
-The argument can be passed as the fourth argument of the `Action` method, or using the  `SetData` method. The second and third arguments are dedicated to undo/redo. Refer to [Managing Undo/Redo](CAADegUndoRedo.htm).
+The argument can be passed as the fourth argument of the `Action` method, or using the  `SetData` method. The second and third arguments are dedicated to undo/redo. Refer to [Managing Undo/Redo](CAADegUndoRedo.md).
     
     AddTransition(...
                   **Action(**(ActionMethod) &CAACreateLineCmd::CreateLine,
@@ -719,8 +728,11 @@ The argument can be passed as the fourth argument of the `Action` method, or usi
     _MyAction->**SetData(CAAIPoint * EndPoint)** ;  
   
 ---  
+```vbscript
 For example, an action method that creates a line could be.
     
+```
+
     CATBoolean CAACreateLineCmd::CreateLine(void * iDummy)
     {
       // action task is implemented there
@@ -789,8 +801,11 @@ Note that `_CreateLineAction` must be a data member of your state dialog command
                                    CATDiaAction * iAction2);  
   
 ---  
+```vbscript
 For example, the following expression: `/action1, action2` is implemented in this way:
     
+```
+
     AddTransition(state1, state2,
                   ... ,
                   AndAction(action1, action2);  
@@ -827,8 +842,8 @@ The following code shows how to add the `_CreatedObject` to the CSO:
 
 Troubleshooting A Self-transition Loops with no Means to Get out of the Loop ![symptom.gif \(111 bytes\)](../CAAIcons/images/symptom.gif) | A self-transition loops on the same state, and whatever the end user does, there is no means to get out of the loop.  
 ---|---  
-![diagnos.gif \(130 bytes\)](../CAAIcons/images/diagnos.gif) | The state on which the self-transition loops has no dialog agent plugged, or the dialog agent is already valued, is not set as repeatable, and is not recycled.  
-![solution.gif \(218 bytes\)](../CAAIcons/images/solution.gif) | Either assign a dialog agent to the state, or recycle the existing one in the action method.  
+ The state on which the self-transition loops has no dialog agent plugged, or the dialog agent is already valued, is not set as repeatable, and is not recycled.  
+ Either assign a dialog agent to the state, or recycle the existing one in the action method.  
 [Top]
 
 * * *
@@ -837,7 +852,7 @@ In Short A dialog state command is a dialog command designed as a state machine,
 
 * * *
 
-References [1] | [Conveying End User Intent from Mouse to Controller](../CAAVisTechArticles/CAAVisViewerProtocol.htm)  
+References [1] | [Conveying End User Intent from Mouse to Controller](../CAAVisTechArticles/CAAVisViewerProtocol.md)  
 ---|---  
 [Top]  
   

@@ -1,20 +1,17 @@
 ---
 title: "CATInstantCollabDesignItf Framework Modifications in V5R17"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR17"
+version: "V5R17"
 tags: ["CATInstantCollabDesignItf"]
-source_file: "Doc\online\CAACenAPIChangesR17\CATInstantCollabDesignItf.htm"
+source_file: "Doc/online/CAACenAPIChangesR17/CATInstantCollabDesignItf.md"
 converted: "2026-05-11T17:33:51.302512"
 ---
-
 # CAA C++ API Modifications  
   
 | 
-
 ##  CATInstantCollabDesignItf Framework Modifications in V5R17 
 
-|   
----|---|---  
   
 * * *
 

@@ -1,9 +1,9 @@
 ---
 title: "New C++ Authorized APIs in CAA V5R21 GA"
-category: "general"
+category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIPspDefinePhysicalPart", "CATICGMRemoveFace", "CATIFmtMeshDomain", "CATIMfgCCPCustom", "CATIMfgMultiAxisCurveMachiningAuxDrive", "CATIMfg5AxisSpiralMilling", "CATICGMRemoveFacesInShell", "CATIPDMUEOnCancel", "CATIFmtCustomVisualization", "CATIMfgCustomizeCSOFilter", "CATIFmtMesher", "CATIFmtSelectedElement", "CATICGMObjectsLoad", "CATIFmtMeshPartOutput", "CATIFmtTrapSelector", "CATICGMRemoveEdge", "CATIUExitPVRCommands", "CATICGMThickSurfacePlus", "CATIPDMCharacteristicScm", "CATIFmtMesh"]
-source_file: "Doc\online\CAACenQuickRefs\CAACenV5R21GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R21GANewCPPAPI.md"
 converted: "2026-05-11T17:33:47.505618"
 ---
 
@@ -371,4 +371,4 @@ History Version: **1** [Mar 2011] | Document created
 * * *
 
 _Copyright © 1999-2011, Dassault Systèmes. All rights reserved._  
-Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.htm) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.htm) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.htm)
+Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)

@@ -1,9 +1,9 @@
 ---
 title: "New C++ Authorized APIs in CAA V5R15 GA"
-category: "general"
+category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATISchAppToolsOptionsData", "CATIMfgPrismaticReworkArea", "CATIBlock", "CATIMfResultManagement", "CATIDegreesOfFreedom", "CATIEwrRouteSegment", "CATISPMProcessAccess", "CATISchAppCmdInfo", "CATICATALOGWorkshopAddin", "CATIMfgMachinableGeomMngt", "CATIMfgToolAxis", "CATIMfgTPEExtraVisu", "CATIMfgMultiAxisFlankContouring", "CATIMfgUserReverseMachiningConditions", "CATIPspLightPart", "CATIPrtProceduralView", "CATIMmiTemporaryVisProperties", "CATIMfExtremity", "CATIDimCst2", "CATICfgSpecExpression"]
-source_file: "Doc\online\CAACenQuickRefs\CAACenV5R15GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R15GANewCPPAPI.md"
 converted: "2026-05-11T17:33:47.243440"
 ---
 

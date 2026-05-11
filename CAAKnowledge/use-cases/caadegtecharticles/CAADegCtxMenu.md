@@ -1,9 +1,9 @@
 ---
 title: "Creating Contextual Menus"
-category: "general"
+category: "use-case"
 module: "CAADegTechArticles"
 tags: ["CAAAnalysisEltTypeCmd", "CAAAnalysisLogCmd", "CAAILine", "CAAxxxCmd"]
-source_file: "Doc\online\CAADegTechArticles\CAADegCtxMenu.htm"
+source_file: "Doc/online/CAADegTechArticles/CAADegCtxMenu.md"
 converted: "2026-05-11T17:33:49.774351"
 ---
 
@@ -32,8 +32,10 @@ Contextual Menus with A Dialog Command You can customize contextual menus trigge
 
 * * *
 
+```vbscript
 For Objects Implementing a Given Interface The command we use as example enables the end user to right click only lines, that is object implementing the _CAAILine_ interface. A right click on such objects display a contextual menu with three items, concatenated to the items provided by the window, since we use a _CATFrmGraphAnd3DWindow_ for the document. ![](images/CAACtxMenu1.jpg) | Window's items      Contextual menu's items  
----|---  
+```
+
   Clicking on one of these items displays the start, medium, or end point of the line. To display this contextual menu whenever the end user right clicks on such an object, the following should be done: 
     * Create a selection dialog agent [1] that is dedicated to selecting objects that implement _CAAILine_
     * Create a state and a self transition [2] from/to this state triggered by the selection dialog agent valuation and whose action is to create the contextual menu
@@ -65,8 +67,11 @@ A _CATPathElement_ instance is created as a data member of the dialog command cl
 
 * * *
 
+```vbscript
 For All Objects and the Viewer Background The same command should now react to any object whose representation is right clicked. This includes the viewer background. To do this, replace the `AddElementType` method by the `AcceptOnNotify` method to make the dialog agent match any right click, and remove the `CATDlgEngWithContext` behavior from the `AddElementType` method. The rest of the method is unchanged.
     
+```
+
     void CAAxxxCmd::BuildGraph()
     {
       _daPathElement = new **CATPathElementAgent**("SelFirstLine");
@@ -88,8 +93,11 @@ For All Objects and the Viewer Background The same command should now react to a
 
 * * *
 
+```vbscript
 For the Viewer Background Only Another command should now only react to a right click in the viewer background. It proposes the following contextual menu. ![CAACtxMenu2.jpg \(2845 bytes\)](images/CAACtxMenu2.jpg) Clicking one of these items highlights the corresponding objects of the document. Below is the code to write in the `BuildGraph` method:
     
+```
+
     ...
     void CAAAnalysisEltTypeCmd::BuildGraph()
     {
@@ -125,8 +133,8 @@ In Short Contextual menus can be set onto objects by any dialog command. They ca
 
 References [1] | [Managing Selection](CAADegGraph.htm#510000)  
 ---|---  
-[2] | [Implementing the Statechart Diagram](CAADegGraph.htm)  
-[3] | [Using Callbacks to Trigger Actions](../CAADlgTechArticles/CAADlgCallbacks.htm)  
+[2] | [Implementing the Statechart Diagram](CAADegGraph.md)  
+[3] | [Using Callbacks to Trigger Actions](../CAADlgTechArticles/CAADlgCallbacks.md)  
 [Top]  
   
 * * *

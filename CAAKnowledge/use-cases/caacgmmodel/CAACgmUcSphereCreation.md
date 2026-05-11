@@ -3,7 +3,7 @@ title: "Sphere"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMModelInterfaces", "CAAGMModelSphereCreation"]
-source_file: "Doc\online\CAACgmModel\CAACgmUcSphereCreation.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcSphereCreation.md"
 converted: "2026-05-11T17:33:48.523639"
 ---
 
@@ -20,7 +20,7 @@ APIs to be Used A frustum of a sphere is defined by:
     * a radius
     * the start and end parallel angles
     * the start and end meridian angles.
-To create a frustum of a sphere, use the CATGeoFactory::CreateSphere method which takes as arguments the parallel and meridian angles. The CATGeoFactory class is in the GeometricObjects framework.  Use Case Description The CAAGMModelSphereCreation.m module in CAAGMModelInterfaces.edu illustrates how to create a frustum of a sphere. This use case creates the input data required for the sphere creation. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm).  With the code below:
+To create a frustum of a sphere, use the CATGeoFactory::CreateSphere method which takes as arguments the parallel and meridian angles. The CATGeoFactory class is in the GeometricObjects framework.  Use Case Description The CAAGMModelSphereCreation.m module in CAAGMModelInterfaces.edu illustrates how to create a frustum of a sphere. This use case creates the input data required for the sphere creation. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md).  With the code below:
     
     CATMathAxis  axis;
     CATMathDirection D1(1.,0.,0.);
@@ -46,7 +46,7 @@ To create a frustum of a sphere, use the CATGeoFactory::CreateSphere method whic
     	  
   
 ---  
-you get this result: Fig.1 Sphere: meridian and parallel angles ![Major start and end angles of a torus](images/CGM_sphere_0.png) |  ![Minor start and end angles of a torus](images/CGM_sphere_1.png)  
+you get this result: Fig.1 Sphere: meridian and parallel angles ![Major start and end angles of a torus](images/CGM_sphere_0.png) 
 ---|---  
 Meridian start angle: -72 deg   
 Meridian end angle: + 72 deg   
@@ -56,9 +56,9 @@ angle reference |  Parallel start angle: -72 deg
 Parallel end angle: + 36 deg   
 Positive angles: sphere axis direction.  
   
-References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)  
-[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)  
+[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)  
+[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)  
 History Version: **1** [Sept 2012] | Document created  
 ---|---

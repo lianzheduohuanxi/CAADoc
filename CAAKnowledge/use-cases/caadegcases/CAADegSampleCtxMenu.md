@@ -3,7 +3,7 @@ title: "Creating Contextual Menus in a State Dialog Command"
 category: "use case"
 module: "CAADegUseCases"
 tags: ["CAADegAnalysisLogCmd", "CAAISysGeomFactory", "CAAISysLine", "CAAISysPoint", "CATISO", "CAADialogEngine", "CAAGeometry", "CAADegGeoCommands"]
-source_file: "Doc\online\CAADegUseCases\CAADegSampleCtxMenu.htm"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleCtxMenu.md"
 converted: "2026-05-11T17:33:49.611686"
 ---
 
@@ -29,7 +29,7 @@ Abstract This article shows how to create, in a state dialog command, a contextu
 
 What You Will Learn With This Use Case This use case is intended to show how to create a contextual menu that displays on objects that implement a given interface. [Top] The Logical Command Case The Logical command is a use case of the CAADialogEngine.edu framework that illustrates the DialogEngine framework capabilities. [Top] What Does the Logical Command Do The Logical command is a state dialog command that creates a contextual menu, that is, a menu displayed when the end user right clicks on objects. This menu is displayed only if the object implements a given interface, namely _CAAISysLine_. A right click on such objects displays a contextual menu with three items, concatenated to the items provided by the window, since the document is displayed in a _CATFrmGraphAnd3DWindow_ instance. ![Contextual Menu](../CAADegTechArticles/images/CAACtxMenu1.jpg) | Window's items      Items added by the Logical command  
 ---|---  
-  Clicking on one of these items displays the start, medium, or end point of the line. These points are temporary points ( CAAISysPoint objects) displayed by the ISO. [Top] How to Launch the Logical Command See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.htm)" use case for a detailed description of how this use case should be launched. Then, in the window where you run the mkrun command, do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following:
+  Clicking on one of these items displays the start, medium, or end point of the line. These points are temporary points ( CAAISysPoint objects) displayed by the ISO. [Top] How to Launch the Logical Command See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched. Then, in the window where you run the mkrun command, do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following:
     * Select the Start->Infrastructure->CAA V5: Geometrical Analysis 
     * Select Insert->Line
     * Click twice to create the line
@@ -48,7 +48,6 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 6 | Manage the command lifecycle | callback method and destructor  
 7 | Release the indication agent | Destructor or `Cancel` method  
 [Top] Creating the State Dialog Command Header File Below is the header file of the _CAADegAnalysisLogCmd_ class that holds the code for this command.
-    
     #include "CATStateCommand.h"  // Needed to derive from CATStateCommand
     
     class CATPathElementAgent; 

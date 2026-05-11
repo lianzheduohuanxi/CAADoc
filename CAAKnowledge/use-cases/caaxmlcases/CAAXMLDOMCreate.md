@@ -3,18 +3,15 @@ title: "Creating XML documents with DOM"
 category: "use case"
 module: "CAAXmlUseCases"
 tags: ["CATIDOMElement", "CAAXMLParser", "CAAXMLDOMCreate", "CATIDOMComment", "CATIXMLDOMDocumentBuilder", "CATIDOMImplementation", "CATIXMLDOMDocumentBuilder_var", "CATIDOMDocument_var", "CATIDOMDocument", "CATIDOMImplementation_var", "CATIDOMDocumentType_var", "CATIDOMText_var", "CATIDOMComment_var", "CATIDOMText", "CATIDOMElement_var"]
-source_file: "Doc\online\CAAXmlUseCases\CAAXMLDOMCreate.htm"
+source_file: "Doc/online/CAAXmlUseCases/CAAXMLDOMCreate.md"
 converted: "2026-05-11T17:33:45.610569"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## Middleware Abstraction
 
 | 
-
 ### Creating XML Documents with DOM
 
 _Creating a new XML document from scratch using the DOM API_  
@@ -22,7 +19,6 @@ _Creating a new XML document from scratch using the DOM API_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to create a new DOM tree from scratch using the DOM API and how to save it to disk as an XML file.
@@ -40,19 +36,16 @@ This article shows how to create a new DOM tree from scratch using the DOM API a
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case shows how to create XML documents from scratch using the DOM API. You will learn to create the most common XML constructs: document type declarations, elements, attributes, comments, and text nodes. You will learn how to save these constructs to disk to obtain an XML file.
 
 [Top]
-
 ### The CAAXMLDOMCreate Use Case
 
 The CAAXMLDOMCreate Use Case is a use case of the CAAXMLParser.edu framework that illustrates XMLParser framework capabilities.
 
 [Top]
-
 #### What Does CAAXMLDOMCreate Do
 
 This use case creates a new XML document in memory, then saves it to disk under the specified name. Upon completion, you will obtain an XML file describing a car, created programmatically through DOM, with the following content:
@@ -71,7 +64,6 @@ This use case creates a new XML document in memory, then saves it to disk under 
 ---  
   
 [Top]
-
 #### How to Launch CAAXMLDOMCreate
 
 To launch CAAXMLDOMCreate, you will need to set up the build time environment, then compile CAAXMLDOMCreate along with its prerequisites, set up the run time environment, and then execute the use case [1].
@@ -84,7 +76,6 @@ The use case should be launched as follows from the command line:
 where `<outfilepath>` is the path of the XML file, which will be created.
 
 [Top]
-
 #### Where to Find the CAAXMLDOMCreate Code
 
 The CAAXMLDOMCreate use case is made of one file located in the CAAXMLDOMCreate.m module of the CAAXMLParser.edu framework:
@@ -96,11 +87,9 @@ Unix | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLDOMCreate.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 To create a blank XML document, populate it and save it to disk, there are seven main steps:
-
 # |  Step  
 ---|---  
 1 | Create the V5 DOM Component  
@@ -131,7 +120,6 @@ Please note that most of the APIs from the XMLParser framework return a _HRESULT
 ---  
   
 [Top]
-
 #### Create the V5 DOM Component
     
     
@@ -145,7 +133,6 @@ Please note that most of the APIs from the XMLParser framework return a _HRESULT
 The first step to work with DOM is to instantiate the V5 DOM component. The V5 DOM component can be created by calling the `CreateCATIXMLDOMDocumentBuilder` global function. This function returns a V5 handler on the _CATIXMLDOMDocumentBuilder_ interface, which is the main interface for the V5 DOM component. Using this interface you will be able to create documents (either from scratch, as here, or by parsing an existing XML file) and save existing documents to disk. Note that the code above does not specify the CLSID of the component to use, so the default DOM component (XML4C3) will be used. See [3] and [4] if you want to use another V5 DOM component.
 
 [Top]
-
 #### Obtain the DOM Implementation
     
     
@@ -159,7 +146,6 @@ The first step to work with DOM is to instantiate the V5 DOM component. The V5 D
 To create document types and documents, one uses an object, which implements the _CATIDOMImplementation_ interface. This object is obtained from the _CATIXMLDOMDocumentBuilder_ by invoking its `GetDOMImplementation` method.
 
 [Top]
-
 #### Use the DOM Implementation to Create a Document with the Proper Document Type
     
     
@@ -193,7 +179,6 @@ The `CreateDocument` method creates a new DOM document. It accepts the following
 `document` | the resulting document returned by reference.  
   
 [Top]
-
 #### Use the Document to Create Elements, Texts, and Comments
     
     
@@ -225,7 +210,6 @@ The _CATIDOMDocument_ interface acts as a factory to create all the other XML co
 Note that the DOM nodes, which we have created are just isolated building blocks at this stage. They are not yet attached to the DOM document. If we were to save the document at this point, they would not appear in the resulting XML file, since only the nodes, which are children of the document are actually saved.
 
 [Top]
-
 #### Create the Tree Structure by Positionning the Elements, Texts, and Comments with Respect to Each Other
     
     
@@ -262,7 +246,6 @@ However, DOM does not guarantee validity. Nothing will prevent you to perform th
 ---  
   
 [Top]
-
 #### Save the Document as an XML File
     
     
@@ -277,13 +260,11 @@ To create the XML document, which corresponds to the DOM tree, call the `WriteTo
 By default, the resulting document will use the default (UTF-8) encoding. Note that the "encoding" attribute will not be specified in the XML declaration. However, the XML specification indicates that if the encoding attribute is not specified, XML parsers should consider the document uses the UTF-8 encoding. See [2] and [4] for more information on XML encodings.
 
 [Top]
-
 #### Manage Errors
 
 The XMLParser framework uses the _HRESULT_ / _CATError_ mechanism to manage errors. Make sure to use the `CATError::CATGetLastError` to obtain all the available error diagnostics when using XMLParser. More information about V5 error management is available here [2] and [4].
 
 [Top]
-
 ### In Short
 
 This use case shows you how to create XML documents from scratch using the DOM API.
@@ -291,18 +272,16 @@ This use case shows you how to create XML documents from scratch using the DOM A
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] | [ Managing Errors Using HRESULT](../CAASysTechArticles/CAASysErrors.htm)  
-[3] | [ Using XML in V5](../CAAXmlTechArticles/CAAXmlV5Overview.htm)  
-[4] | [XML Tips and Tricks](../CAAXmlTechArticles/CAAXmlTipsAndTricks.htm)  
+[2] | [ Managing Errors Using HRESULT](../CAASysTechArticles/CAASysErrors.md)  
+[3] | [ Using XML in V5](../CAAXmlTechArticles/CAAXmlV5Overview.md)  
+[4] | [XML Tips and Tricks](../CAAXmlTechArticles/CAAXmlTipsAndTricks.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [May 2005] | Document created  

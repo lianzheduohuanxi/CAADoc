@@ -1,20 +1,17 @@
 ---
 title: "The Command Headers"
-category: "general"
+category: "use-case"
 module: "CAAAfrTechArticles"
 tags: ["CAAAfrNormalZHdr", "CATIAfrPaletteOptions", "CAAAfrMRUHeader", "CATIA", "CAAAfrNormalXHdr", "CAAAfrCommandHeader", "CAADegGeoCommands", "CATIAfrCommandHeaderRep", "CATINT32ToPtr", "CAAAfrMyCommandHdr", "CAAAfrGeometryWks", "CATImplementHeaderResources", "CAAAfrGeoCommands", "CAAAfrCommandClass", "CATIAfrCmdPaletteOptions", "CAAAfrPointHdr", "CAA2", "CAAAfrChangeViewNormalCmd", "CAAAfrGeometryWksHeader"]
-source_file: "Doc\online\CAAAfrTechArticles\CAAAfrCommandHeaders.htm"
+source_file: "Doc/online/CAAAfrTechArticles/CAAAfrCommandHeaders.md"
 converted: "2026-05-11T17:17:55.868797"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## User Interface - Frame
 
 | 
-
 ### The Command Headers
 
 _Objects which stand for your dialog commands_  
@@ -22,7 +19,6 @@ _Objects which stand for your dialog commands_
 Technical Article  
   
 * * *
-
 ### Abstract
 
 Command headers stand for commands in workshops and workbenches, and are loaded instead of the commands when the workshop or workbench itself is loaded. A given command is actually loaded when the end user clicks on its representation to execute it. This article explains how and where to create command headers, and how to use them. Reading the "Application Frame Overview" article [1] can be useful to take full benefit from this technical article. You will find a first approach of the command header concept, and how command header are involved in the frame architecture. 
@@ -49,7 +45,6 @@ Command headers stand for commands in workshops and workbenches, and are loaded 
 ---  
   
 * * *
-
 ### Introduction
 
 Each command you want to make available in your workshop or workbench must have a command header. The command header plays the role of your business card, which holds information such as your name, your company, your function within the company, the address where your company is located, your phone and fax numbers, and your e-mail id. This card is very useful to contact you when you are out the office, and requires a very small space. Like a business card, the **command header holds the necessary information** to load the command, such as the name of the shared library in which the command's executable code is located, the name of the command class, and the data to pass to the command code when this command becomes the current one. 
@@ -65,11 +60,9 @@ Sometimes you would like to reuse commands in your workbench, but either you hav
 At last, from R12 onwards, you can create command header instances available whatever the type of the opened document, or even if there is no opened document. There are further named **general** headers. You create them in implementations of the _CATIAfrGeneralWksAddin_ interface. Each implementation of this interface is an Add-in of the _CATAfrGeneralWks_ workshop, also named General workshop [2]. The General Command Headers section explains the specificities of these general headers, and how to create the command that they launch.
 
 [Top]
-
 ### Command Headers Management
 
 The goal of this paragraph is to explain the life cycle of a command header instance: who creates an instance and who deletes it. These explanations are illustrated by a schema Fig.1 ____ showing that all command header instances associated with a workshop are grouped together in a list. The Workbenches Loading Order paragraph explains how this list is filled up. In an interactive session, this list is displayed in the Command tab page of the Tools/Customize command. The Customize command paragraph gives you some information about the Command tab page and its contents.
-
 #### Life Cycle
 
 A V5 document is controlled by an editor [3]. Each editor, a _CATFrmEditor_ class instance, keeps a list of command header instances. To be exact, the editor keeps a list of command header instances for each workshop [1] it can manage. This is illustrated by the picture hereunder.
@@ -80,8 +73,6 @@ _Fig.1 Command Header Instances Lists_ ![](images/CAAAfrCmdHdrLifeCycle.jpg)
   * When you open a Product document, the editor, named `Editor1`, has at first a list of command headers for the Product workshop (the first yellow list). If you edit a Part of the Product, in the same window, the Part workshop is loaded, and the editor manages a second list (the first dotted-green list).
   * When you open a second Product document, the editor, named `Editor2`, has at first a list of command headers for the Product workshop (the second yellow list). If you edit a Part of the Product, in the same window, the Part workshop is loaded, and the editor manages a second list (the second dotted-green list). If you edit a Sketch of the Part, always in the same window, the Sketcher workshop is loaded, and `Editor2 `manages a third list (the dashed-pink list)
 
-
-
 Each list is filled at the _CATCommandHeader_ class **instantiation**. The new instance is inserted in the current list of the current editor. The _CATFrmEditor_ class manages the **destruction** of the _CATCommandHeader_ instances. When a document is closed, all its lists are deleted, and their content is also deleted.
 
 To avoid filling up uselessly the list of _CATCommandHeader_ instances, it is recommended to make the command header instantiation only in the following methods because these methods are called once for each editor instance:
@@ -89,12 +80,12 @@ To avoid filling up uselessly the list of _CATCommandHeader_ instances, it is re
   * `CreateCommands` of the workbench implementations [4]
   * `CreateCommands` of the add-in implementations (*) [5]
 
-
-
 (*) There is an exception for Add-ins of the CATAfrGeneralWks workshop. In this specific case, the `CreateCommands` method is called once during the life time of the session. Refer to the General Command Headers **** section which goes deeper for this specific case. 
 
+```vbscript
 For commands implementing _CATIAfrCmdPaletteOptions_ [6] or workbenches implementing _CATIAfrPaletteOptions  _[7], the code creating command header instances should first verify that the header instance does not already exist into the list of the current editor. A call to the _CATAfrGetCommandHeader_ ` `global function, which retrieves a command header instance from its identifier, enables you check this. Keep in mind that these two interfaces enables you to set command header instances into the "Tools Palette" toolbar. But even if these headers are not created in a workbench or an add-in implementation, once created, they are kept, like the others, in the current list of the current editor. 
 
+```
 #### Workbench Loading Order
 
 When an UI-active object is first UI-activated, the new list of command header instances is filled up in this order:
@@ -105,8 +96,6 @@ When an UI-active object is first UI-activated, the new list of command header i
   4. The command header instances of the current **workbench** ( DS code or CAA code)
   5. All the command header instances created in **Add-ins** of the current **workbench** (mainly CAA code)
 
-
-
 This means that once the document is opened, only a part of the command header instances are inside the list, since only one workbench has been loaded. The other workbenches and their associated add-ins are loaded only when a transition is invoked (Start menu for example).
 
 The loading of all workbenches can be forced for the following reasons:
@@ -115,8 +104,6 @@ The loading of all workbenches can be forced for the following reasons:
   * Launching the Commands List in the View menu,
   * Opening a document which contains toolbars with unknown command header instances (coming from a workbench other than the current one). In the "Re-Using Existing Command Headers" section, you will see that this kind of management implies the respect of some rules when you when re-use command header instances. 
   * Launching an unknown command in the power input.
-
-
 
 #### The Customize Command
 
@@ -136,17 +123,12 @@ However, a hidden header in the Command tab page is not "dead". If the end user 
 
 You can hide, or show again a header using the `SetVisibility` method of the _CATCommandHeader_ class. 
 
-
-
-
 [Top]
-
 ### Creating Standard Command Headers
 
 To create a standard command header class, you can use the `MacDeclareHeader` macro. It creates for you a class which derives from _CATCommandHeader_ which is the base class for command headers and should never be directly instantiated.
 
 Let's assume you want to create a command header class named _CAAAfrCommandHeader_. You simply need to create a file, say CAAAfrCommandHeader.h, with the following code:
-    
     
     #include "CATCommandHeader.h"
     
@@ -155,7 +137,6 @@ Let's assume you want to create a command header class named _CAAAfrCommandHeade
 ---  
   
 This macro creates the _CAAAfrCommandHeader_ class declaration and implementation. To instantiate this command header for a command, you should simply use the following constructor created by the macro.
-    
     
     #include "CAAAfrCommandHeader.h"
     
@@ -172,8 +153,6 @@ where:
   * `CAAAfrCommandLibName` is the name of the shared library containing the code of the command, without the prefix lib, and without the suffix depending on the operating system
   * `CAAAfrCommandClass` is the name of the class you used to create the command
   * `ipParameter`, the last argument is the possible pointer to the object to pass to the command when starting it.
-
-
 
 Different commands can share the same command header class to create their command headers. Refer to the use case that creates a workbench [4]. The following example shows how to create command header instances with and without an argument to pass to the command:
     
@@ -209,14 +188,16 @@ Different commands can share the same command header class to create their comma
 (*) `CATINT32ToPtr` is to be 64 compliant. 
 
 [Top]
-
 ### Creating Customized Command Headers
 
 There are two reasons to create a customized command header:
 
   1. When you want your command availability to depend on the context that is on what exists or what happens in the document. 
 
+```vbscript
 For example, let's assume a command applies to a given object in a document. If one or several instances of this object exist in the document, the command can be used and should be available. On the opposite, if no instance of this object exists, the command cannot execute, and it should be set unavailable. Its representation in menus and toolbars should be grayed out, and nothing should happen when the end user clicks on it. A full example describes such a customized command header [8].
+
+```
 
   2. When you want to customize the representation of a command header. 
 
@@ -224,15 +205,12 @@ Here are three examples:
 
 _Fig.3 Examples of Customized Representations_ ![](images/CAAAfrCommandHeaderComboHdr.jpg) | It is a combo header. In place of the push button, the command header instance is represented by a combo. A full example describes its creation [9].   
 ---|---  
-![](images/CAAAfrCommandHeaderMRUHdr.jpg) | It is a "Most Recent Used" header. In place of a push item, the command header instance is represented by a dynamic list of push items (Item 1 and Item 2). When end users select one of them, a command is launched to display the selected item. Refer to the referenced use case for a complete description of such a command header. [10]   
-![](images/CAAAfrCommandHeaderToolsPal.jpg) | Two editors in a toolbar. Refer to the referenced use case for more details [19].  
-
-
+ It is a "Most Recent Used" header. In place of a push item, the command header instance is represented by a dynamic list of push items (Item 1 and Item 2). When end users select one of them, a command is launched to display the selected item. Refer to the referenced use case for a complete description of such a command header. [10]   
+ Two editors in a toolbar. Refer to the referenced use case for more details [19].  
 
 #### Customized Command Header Class Structure
 
 A customized command header class cannot be created using macros. The example below is a minimum customized command header class. 
-    
     
     #include <CATCommandHeader.h>
     
@@ -261,8 +239,6 @@ The customized command header class should derive from a _CATCommandHeader_ clas
   * _CATCommandHeader_ class for a class only managing the command availability, 
   * _CATAfrDialogCommandHeader_ for a class whose graphic representation is customized.
 
-
-
 It should include the `CATDeclareClass` and `CATDeclareHeaderResources` macros. `CATDeclareClass` declares that the _MyCustomizedCommandHeader_ class belongs to a CAA component, and `CATDeclareHeaderResources` inserts the methods to manage the command header resources. [2]
 
 This class should also include in its **public** part:
@@ -271,17 +247,12 @@ This class should also include in its **public** part:
   * A `destructor`,
   * The ` clone` method inherited from _CATCommandHeader_ and used to duplicate the command header instance. This method is only used for general headers, those available whatever the document. For other command headers, the Life Cycle section has previously shown that the `CreateCommands` method is called to fill up each editor ists. However, it is strongly recommended to overwrite the ` clone` method for not pre-supposing the use of the command header class.
 
-
-
 This class should also include in its **private** part:
 
   * A ` constructor` with a pointer to a _CATCommandHeader_ is dedicated to the `Clone` method. 
   * Two other ` constructor`, declared, but not implemented in the source file. This prevents the compiler from creating them as public without you knowing.
 
-
-
 Here is an example of implementation of the _MyCustomizedCommandHeader_ class. 
-    
     
     #include "MyCustomizedCommandHeader .h"
     ...
@@ -333,7 +304,6 @@ The `Clone` method calls the constructor class with `this` as an argument. The c
     ...  
   
 ---  
-  
 #### Managing Command Availability
 
 One good reason to create explicitly a command header is the need to manage the availability of the command represented by the header. [8].
@@ -390,7 +360,6 @@ In addition, the ` constructor` , and/or methods called by it, can set a callbac
     ...  
   
 ---  
-  
 #### Creating a Customized Representation** **
 
 Before detailing how to create such a command header, a global explanation is useful. Below is a diagram introducing the main objects.
@@ -420,13 +389,9 @@ There are two cases to consider:
 
   * **V** :**** The command header instance and its graphic representation. 
 
-
-
 > Each command header instance can be represented one or several times. Each representation is the association of the command header instance with a starter. You do it in a workbench or in an Add-in, but the end user can interactively do it, by dragging and dropping a command (header) onto a toolbar.  
 
   * **C** :  The data controller
-
-
 
 It is a component that must control the data in memory. It must:
 
@@ -439,7 +404,6 @@ It is a component that must control the data in memory. It must:
 Here is an example with the combo header:
 
 ![](images/CAAAfrCommandHeaderComboMAJ.jpg) 
-
 
 The customized command header is a component [17]. Here is its UML diagram: 
 
@@ -459,8 +423,6 @@ _MyRep_ is a class which derives from the _CATAfrCommandHeaderRep_ class. The ma
   * Instantiating one or more graphic representations ( Dialog components)
   * Updating the graphic representation (s) when the controller sends a notification when the data is modified.
 
-
-
 #### Managing Contextual Help
 
 The “More Info …” shortcut from the LongHelp message is available only if the Dialog (CATDlgxxx) object SetLongHelpId method was called. On Standard command headers SetLongHelpId is automatically called on the button using the LongHelpId resource of the command header. For customized command headers the command header does not know the Dialog objects so no SetLongHelpId is called. SetLongHelpId has to be called explicitely on the Dialog objects created to represent the customized command header. 
@@ -477,9 +439,7 @@ The “More Info …” shortcut from the LongHelp message is available only if 
     }   
   
 ---  
-  
 ### [Top]
-
 ### Re-Using Existing Command Headers
 
 Until now, this article has explained how to create a command header instance to associate it with your own command. But sometimes you would like to re-use an existing command (_CATCommand_ ) without recreating a new command header instance:
@@ -487,12 +447,9 @@ Until now, this article has explained how to create a command header instance to
   * You do not know the necessary information about this command (its class name, its dll name,...)
   * You do not want to lose the resources associated with an existing header. 
 
-
-
 So you should be able to retrieve the identifier of a command header thanks to its NLS name. It is the one displayed in the Commands page of the Customize Command. The  Workshop Exposition Command resolves this problem. 
 
 However, once you have this identifier, before associating it with a starter, you should be aware of the workbench loading management. The rules to respect are detailed in the Reusability Rules paragraph.    
-
 #### The Workshop Exposition Command 
 
 The frame application provides the "Workshop Exposition" command to give the command header identifiers. You launch it as explained in the following scenario:
@@ -501,7 +458,6 @@ Launch CATIA, then, when the application is ready, 
 
   * enter **c: workshop exposition** in the power input or
 
-
   * From the **Tools** menu, click **Customize**
   * The**Customize** Dialog Box appears 
     * Click the **Command** page 
@@ -509,8 +465,6 @@ Launch CATIA, then, when the application is ready, 
     * Drag and Drop the **Workshop Exposition** command onto a toolbar 
     * Click **Close**  
   * Launch the **Workshop Exposition** command
-
-
 
 In the picture below, the current workshop is the **Part** workshop, and the current workbench is **Part Design**. 
 
@@ -528,8 +482,6 @@ This Dialog command contains: 
   * The "**Directory** " editor to enter the path where the txt files will be generated.
   * The **Print** button enables you to generate the txt files for the selected entities. Each file is named `NameOfTheEntity.txt`, ex: ` CATAfrGeneralWks.txt`
   * The **OK** and **Cancel** Buttons close the Dialog box. Note, that to switch to another workbench, it is not necessary to close the command. The Workshop Exposition Dialog box will be automatically updated if a new workbench or a new workshop is activated. 
-
-
 
 The generated files contain two types of information, one being the list of the command header identifiers.  Here is an extract of the ` CATAfrGeneralWks.txt ` file:
 
@@ -550,8 +502,6 @@ where:
   * Only the visible identifiers in the Commands tab page of the Customize command are generated in the txt files.
   * If you can safely reuse the identifier of a command header, there is no guaranty of stability with the other three parameters (DLL, Cmd, Arg).
 
-
-
 #### Reusability Rules
 
 Before associating any identifier with a starter, you must know that the workbenches (and their add-ins) are loaded when necessary. See the "Workbenches Loading Order" section. It means that, at a given time, all the command header identifiers defined in the workshop and its add-ins exist, but they are not necessary those of a workbench and its add-ins. The consequences are the followings:
@@ -564,15 +514,10 @@ When the entity (workbench/add-in) is loaded, if an identifier associated with a
 
 When the contextual menu is displayed, if an identifier associated with a starter comes from a non-loaded workbench, the starter will be not displayed.
 
-
-
-
 It gives the following advices:
 
   * **Rule 1:** In a workbench or in an Add-in (workshop/workbench) avoid using an identifier coming from another workbench or from an add-in of another workbench. 
   * **Rule 2 :** Into workbenches or contextual menus use identifiers coming from the workshop or one of its Add-ins. You can create, for example, an add-in of the workshop to group together the shared headers. This add-in will only contain command header instantiations, and will have no toolbar. 
-
-
 
 ###  General Command Headers
 
@@ -587,8 +532,6 @@ When no document is open, a command is launched from a command header instance c
 
   * For command headers launching a **shared** or **exclusive** command [15]
 
-
-
 > If the header is started when no document is open, it comes from the GeneralHdrList, the shared or exclusive command will be deleted as soon as a document is opened. 
 > 
 > If the header is started when an editor is active, it comes from a list associated with this editor, the shared or exclusive command will be also deleted as soon as another editor is activated. 
@@ -598,8 +541,6 @@ When no document is open, a command is launched from a command header instance c
 > In this situation, you also have the Dialog command with the `CATDlgWndModal` behavior. You have an example with the Add Item in MRU command of the CAAAfrMRUHeader use case [10]. The command is not described, but you will retrieve in this article the location of the code. 
 
   * For command headers launching an **undefined** command [15]
-
-
 
 > In most cases, this command is a _CATDlgDialog_ class. An example is the Search command, or the Workshop Exposition command. 
 > 
@@ -624,13 +565,9 @@ When no document is open, a command is launched from a command header instance c
 
 Before using this class,  you should be aware of this behavior: if the check header is started when no document is open, the instance in GeneralHdrList is modified. When an editor is created, its header list is initialized with the content of GeneralHdrList, Fig.6, so the initial state of the header associated with an editor depends on the current state in GeneralHdrList. It's OK. But as long as an editor is active, if the end user clicks a check button, the header of the list associated with the current editor is modified. So if you change of current document, or if no documents are open anymore, the state of the check can be different: the state is not independent of the document. So if you want a check header be independent of the document instance, you can create a customized command header, which manages the refresh between all command header instances. Refer to the Creating Customized Representation section. 
 
-
-
-
 ### [Top]
 
 * * *
-
 ### In Short
 
 A command header stands for a command and avoids loading the command when the end user does not require it. A command header is an instance of a command header class. This class can be used for several commands, and can be created either using a macro or explicitly if the command header should manage availability information or customize its representation.
@@ -640,40 +577,36 @@ It is possible to re-use command header identifiers, but there are two rules to 
   1. In a workbench or in an add-in (workshop/workbench) avoid using an identifier coming from another workbench or workbench's Add-in.
   2. In a contextual menu do not use an identifier coming from a workbench or a workbench Add-in, but only coming from the workshop or an workshop add-in.
 
-
-
 The "Workshop Exposition" command enables you to retrieve the command header identifiers.
 
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Application Frame Overview](CAAAfrOverview.htm)  
+[1] | [Application Frame Overview](CAAAfrOverview.md)  
 ---|---  
-[2] | [Creating Resources for Command Headers](CAAAfrI18NHeader.htm)  
-[3] | [Understanding the Application Frame Layout](CAAAfrLayoutV5.htm)  
-[4] | [Creating a Workbench](../CAAAfrUseCases/CAAAfrSampleWorkbench.htm)  
-[5] | [Creating an Add-in](../CAAAfrUseCases/CAAAfrSampleAddin.htm)  
-[6] | [Creating a Command with Options in the "Tools Palette" Toolbar](../CAAAfrUseCases/CAAAfrCmdPalette.htm)  
-[7] | [Using the "Tools Palette" Toolbar for a Workbench](../CAAAfrUseCases/CAAAfrSamplePaletteWkb.htm)  
-[8] | [Creating Customized Command Headers](../CAAAfrUseCases/CAAAfrSampleCustomCommandHeader.htm)  
-[9] | [Creating a Combo Command Header](../CAAAfrUseCases/CAAAfrSampleComboHdr.htm)  
-10] | [Creating a Most Recent Used Command Header](../CAAAfrUseCases/CAAAfrSampleMRUHdr.htm)  
-[11] | [Object Modeler Inheritances](../CAASysTechArticles/CAASysOMInheritance.htm)  
-[12] | [Assigning Resources to a Dialog Box](../CAADlgTechArticles/CAADlgResources.htm)  
-[13] | [Inserting Commands in Contextual Menus](../CAAAfrUseCases/CAAAfrSampleContextualMenu.htm)  
-[14] | [Making Your Document Independent Command Available in All Workbenches](../CAAAfrUseCases/CAAAfrSampleGeneralWksAddin.htm)  
-[15] | [The CAA Command Model](../CAADegTechArticles/CAADegCommandModel.htm)  
-[16] | [Creating Check Button](../CAAAfrUseCases/CAAAfrCheckHeader.htm)  
-[17] | [Creating a Component](../CAASysTechArticles/CAASysCreatingComponent.htm)  
-[18] | [The Callback Mechanism](../CAASysTechArticles/CAASysCallbacks.htm)  
-[19] | [Creating Editors in Toolbar](../CAAAfrUseCases/CAAAfrSampleEditorHdr.htm)  
+[2] | [Creating Resources for Command Headers](CAAAfrI18NHeader.md)  
+[3] | [Understanding the Application Frame Layout](CAAAfrLayoutV5.md)  
+[4] | [Creating a Workbench](../CAAAfrUseCases/CAAAfrSampleWorkbench.md)  
+[5] | [Creating an Add-in](../CAAAfrUseCases/CAAAfrSampleAddin.md)  
+[6] | [Creating a Command with Options in the "Tools Palette" Toolbar](../CAAAfrUseCases/CAAAfrCmdPalette.md)  
+[7] | [Using the "Tools Palette" Toolbar for a Workbench](../CAAAfrUseCases/CAAAfrSamplePaletteWkb.md)  
+[8] | [Creating Customized Command Headers](../CAAAfrUseCases/CAAAfrSampleCustomCommandHeader.md)  
+[9] | [Creating a Combo Command Header](../CAAAfrUseCases/CAAAfrSampleComboHdr.md)  
+10] | [Creating a Most Recent Used Command Header](../CAAAfrUseCases/CAAAfrSampleMRUHdr.md)  
+[11] | [Object Modeler Inheritances](../CAASysTechArticles/CAASysOMInheritance.md)  
+[12] | [Assigning Resources to a Dialog Box](../CAADlgTechArticles/CAADlgResources.md)  
+[13] | [Inserting Commands in Contextual Menus](../CAAAfrUseCases/CAAAfrSampleContextualMenu.md)  
+[14] | [Making Your Document Independent Command Available in All Workbenches](../CAAAfrUseCases/CAAAfrSampleGeneralWksAddin.md)  
+[15] | [The CAA Command Model](../CAADegTechArticles/CAADegCommandModel.md)  
+[16] | [Creating Check Button](../CAAAfrUseCases/CAAAfrCheckHeader.md)  
+[17] | [Creating a Component](../CAASysTechArticles/CAASysCreatingComponent.md)  
+[18] | [The Callback Mechanism](../CAASysTechArticles/CAASysCallbacks.md)  
+[19] | [Creating Editors in Toolbar](../CAAAfrUseCases/CAAAfrSampleEditorHdr.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Jan 2000] | Document created  

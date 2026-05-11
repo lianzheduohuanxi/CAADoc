@@ -1,9 +1,10 @@
 ---
 title: "Detail Of C++ API Changes"
-category: "general"
+category: "api-changes"
 module: "CAACenAPIChangesR15"
+version: "V5R15"
 tags: ["CAA2Usage", "CATIAV4Interfaces", "CAA2Level", "CAACenAPIChangeDetail"]
-source_file: "Doc\online\CAACenAPIChangesR15\CAACenAPIChangeDetail.htm"
+source_file: "Doc/online/CAACenAPIChangesR15/CAACenAPIChangeDetail.md"
 converted: "2026-05-11T17:33:51.027962"
 ---
 
@@ -30,33 +31,31 @@ MINMV | Method is no more virtual. If occurs on a U1 class, may require modifica
   
 * * *
 
-[AdvancedTopologicalOpe](AdvancedTopologicalOpe.htm) | R15GA vs R14GA  
+[AdvancedTopologicalOpe](AdvancedTopologicalOpe.md) | R15GA vs R14GA  
 ---|---  
-[CAACenAPIChangeDetail](CAACenAPIChangeDetail.htm) | R15GA vs R14GA  
-[CATAnalysisBase](CATAnalysisBase.htm) | R15GA vs R14GA](CAACgmUcSplitShell.htm)  
-[CATAnalysisInterfaces](CATAnalysisInterfaces.htm) | R15GA vs R14GA  
-[CATAnalysisResources](CATAnalysisResources.htm) | R15GA vs R14GA  
-[CATIAV4Interfaces](CATIAV4Interfaces.htm) | R15GA vs R14GA](CAACgmUcMultiProc.htm)  
-[CATSchPlatformInterfaces](CATSchPlatformInterfaces.htm) | R15GA vs R14GA](CAACgmUcMultiProc.htm)  
-[DMAPSInterfaces](DMAPSInterfaces.htm) | R15GA vs R14GA  
-[ENOVInterfaces](ENOVInterfaces.htm) | R15GA vs R14GA  
-[GeometricObjects](GeometricObjects.htm) | R15GA vs R14GA  
-[MechanicalModeler](MechanicalModeler.htm) | R15GA vs R14GA  
-[NewTopologicalObjects](NewTopologicalObjects.htm) | R15GA vs R14GA  
-[TopologicalOperators](TopologicalOperators.htm) | R15GA vs R14GA  
+[CAACenAPIChangeDetail](CAACenAPIChangeDetail.md) | R15GA vs R14GA  
+[CATAnalysisBase](CATAnalysisBase.md) | R15GA vs R14GA](CAACgmUcSplitShell.md)  
+[CATAnalysisInterfaces](CATAnalysisInterfaces.md) | R15GA vs R14GA  
+[CATAnalysisResources](CATAnalysisResources.md) | R15GA vs R14GA  
+[CATIAV4Interfaces](CATIAV4Interfaces.md) | R15GA vs R14GA](CAACgmUcMultiProc.md)  
+[CATSchPlatformInterfaces](CATSchPlatformInterfaces.md) | R15GA vs R14GA](CAACgmUcMultiProc.md)  
+[DMAPSInterfaces](DMAPSInterfaces.md) | R15GA vs R14GA  
+[ENOVInterfaces](ENOVInterfaces.md) | R15GA vs R14GA  
+[GeometricObjects](GeometricObjects.md) | R15GA vs R14GA  
+[MechanicalModeler](MechanicalModeler.md) | R15GA vs R14GA  
+[NewTopologicalObjects](NewTopologicalObjects.md) | R15GA vs R14GA  
+[TopologicalOperators](TopologicalOperators.md) | R15GA vs R14GA  
   
 * * *
-
 ### References
 
 [1] | [Migration to CATBoolean](../CAACenQuickRefs/CAACenWhatsNew.htm#CATBoolean)  
 ---|---  
-[2] | [Details Of V5R14 API Changes](../CAACenAPIChangesR14/CAACenAPIChangeDetail.htm)  
+[2] | [Details Of V5R14 API Changes](../CAACenAPIChangesR14/CAACenAPIChangeDetail.md)  
   |    
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Mar 2002] | Document created  

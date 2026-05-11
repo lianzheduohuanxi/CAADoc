@@ -3,7 +3,7 @@ title: "Extrema of a Solid"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAAOpeA", "CAAOpeB", "CAAprogressBar", "CATIA", "CAAGMOperatorsProgressBar"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcProgressBar.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcProgressBar.md"
 converted: "2026-05-11T17:33:49.019696"
 ---
 
@@ -21,11 +21,11 @@ Classes to be Used The CATCGMProgressBar class defines the geometric modeler pro
     * CAAOpeA.cpp defines an operator with a progress bar. Two progress rates are specified for operator A. Operator B is called by operator A and a nested progress bar is created for operator B. A function is associated with operator B progress bar.
     * CAAOpeB.cpp defines an operator which creates points. The number of iterations within the loop to create points is used to specify progress rates. 
     * the interruption function is defined in InterruptFc.cpp.
-This use case creates its own input data. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm). Running this use case displays the progress rates of operator A as well as the "nested" progress rates of operator B. The progress bars of operators A and B is illustrated in figure below. Fig.1 Operator B nested progress bar ![Nested Progress Bars](images/CGM_progress_bar_0.png)  
+This use case creates its own input data. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md). Running this use case displays the progress rates of operator A as well as the "nested" progress rates of operator B. The progress bars of operators A and B is illustrated in figure below. Fig.1 Operator B nested progress bar ![Nested Progress Bars](images/CGM_progress_bar_0.png)  
 ---  
-References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)  
-[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)  
+[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)  
+[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)  
 History Version: **1** [Oct 2011] | Document created  
 ---|---

@@ -1,9 +1,10 @@
 ---
 title: "CATAnalysisBase Framework Modifications in V5R14"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR14"
+version: "V5R14"
 tags: ["CATIMSHMeshManager"]
-source_file: "Doc\online\CAACenAPIChangesR14\CATAnalysisBase.htm"
+source_file: "Doc/online/CAACenAPIChangesR14/CATAnalysisBase.md"
 converted: "2026-05-11T17:33:50.841308"
 ---
 
@@ -22,14 +23,14 @@ CATAnalysisBase/Public/CATAnalysisExplicitTopology.h/CATAnalysisExplicitTopology
 CATAnalysisBase/Public/CATAnalysisExplicitAxis.h/CATAnalysisExplicitAxis/Convert  
 **Prototype:**`HRESULT Convert(int iRepeat,double ioCoordinates[3],CATBoolean iReverse = FALSE);`| GA| [INDM](CAACenAPIChangeDetail.htm#Abstract)| Deprecated with wrong syntax since V5R11. Beware: doesn't do what it is supposed to do. Use the GetImplicitDefinition method instead.  
 CATAnalysisBase/Public/CATSamDimension.h/CATSamDimension/SetNbRepeat  
-**Prototype:**`void SetNbRepeat(int iPositionIndex,int iNbRepeats,const int* const iRepeatsNumber = NULL,const CATSamAggregationMode* const iAggregationMode = NULL);`| GA| [MHBDM](CAACenAPIChangeDetail.htm#Abstract)| [Linked to V5R13 modification on CATAnalysisExplicitTopology usage.](../CAAAniQuickRefs/CAAAniFaq.htm)  
+**Prototype:**`void SetNbRepeat(int iPositionIndex,int iNbRepeats,const int* const iRepeatsNumber = NULL,const CATSamAggregationMode* const iAggregationMode = NULL);`| GA| [MHBDM](CAACenAPIChangeDetail.htm#Abstract)| [Linked to V5R13 modification on CATAnalysisExplicitTopology usage.](../CAAAniQuickRefs/CAAAniFaq.md)  
 CATAnalysisBase/Public/CATSamDimension.h/CATSamDimension/GetNbRepeat  
-**Prototype:**`int GetNbRepeat(int iPosition)const;`| GA| [MHBDM](CAACenAPIChangeDetail.htm#Abstract)| [Linked to V5R13 modification on CATAnalysisExplicitTopology usage.](../CAAAniQuickRefs/CAAAniFaq.htm)  
+**Prototype:**`int GetNbRepeat(int iPosition)const;`| GA| [MHBDM](CAACenAPIChangeDetail.htm#Abstract)| [Linked to V5R13 modification on CATAnalysisExplicitTopology usage.](../CAAAniQuickRefs/CAAAniFaq.md)  
 CATAnalysisBase/Public/CATSamDimension.h/CATSamDimension/GetRepeat  
-**Prototype:**`const int* GetRepeat(int iPosition)const;`| GA| [MHBDM](CAACenAPIChangeDetail.htm#Abstract)| [Linked to V5R13 modification on CATAnalysisExplicitTopology usage.](../CAAAniQuickRefs/CAAAniFaq.htm)  
+**Prototype:**`const int* GetRepeat(int iPosition)const;`| GA| [MHBDM](CAACenAPIChangeDetail.htm#Abstract)| [Linked to V5R13 modification on CATAnalysisExplicitTopology usage.](../CAAAniQuickRefs/CAAAniFaq.md)  
 CATAnalysisBase/Public/CATSamDimension.h/CATSamDimension/GetAggregationMode  
-**Prototype:**`const CATSamAggregationMode* GetAggregationMode(int iPosition)const;`| GA| [MHBDM](CAACenAPIChangeDetail.htm#Abstract)| [Linked to V5R13 modification on CATAnalysisExplicitTopology usage.](../CAAAniQuickRefs/CAAAniFaq.htm)  
+**Prototype:**`const CATSamAggregationMode* GetAggregationMode(int iPosition)const;`| GA| [MHBDM](CAACenAPIChangeDetail.htm#Abstract)| [Linked to V5R13 modification on CATAnalysisExplicitTopology usage.](../CAAAniQuickRefs/CAAAniFaq.md)  
 CATAnalysisBase/Public/CATSamDimension.h/CATSamDimension/GetNbValues  
-**Prototype:**`int GetNbValues(int iPosition)const;`| GA| [MHBDM](CAACenAPIChangeDetail.htm#Abstract)| [Linked to V5R13 modification on CATAnalysisExplicitTopology usage.](../CAAAniQuickRefs/CAAAniFaq.htm)  
+**Prototype:**`int GetNbValues(int iPosition)const;`| GA| [MHBDM](CAACenAPIChangeDetail.htm#Abstract)| [Linked to V5R13 modification on CATAnalysisExplicitTopology usage.](../CAAAniQuickRefs/CAAAniFaq.md)  
 CATAnalysisBase/Public/CATSamDimension.h/CATSamDimension/GetSizeValues  
-**Prototype:**`int GetSizeValues(int iPosition)const;`| GA| [MHBDM](CAACenAPIChangeDetail.htm#Abstract)| [Linked to V5R13 modification on CATAnalysisExplicitTopology usage.](../CAAAniQuickRefs/CAAAniFaq.htm)
+**Prototype:**`int GetSizeValues(int iPosition)const;`| GA| [MHBDM](CAACenAPIChangeDetail.htm#Abstract)| [Linked to V5R13 modification on CATAnalysisExplicitTopology usage.](../CAAAniQuickRefs/CAAAniFaq.md)

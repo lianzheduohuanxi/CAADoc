@@ -3,15 +3,13 @@ title: "How to Use Geometric Operators"
 category: "technical article"
 module: "CAACgmModel"
 tags: ["CATICGMProjectionCrvSur", "CATICGMProjectionPtSur", "CATICGMConfusionPtOnSurPtOnSur", "CATICGMDistanceMinPtSur", "CATICGMIntersectionSurSur", "CATICGMDistanceMinPtCrv", "CATICGMProjectionPtCrv", "CATICGMIntersectionCrvCrv", "CATICGMContainer", "CATICGMInclusionPtCrv", "CATICGMMassProperties1D", "CATICGMDistanceMinCrvCrv", "CATICGMLocalAnalysis1D", "CATIA", "CATICGMConfusionPtOnCrvPtOnCrv", "CATICGMInclusionPtSur", "CATICGMIntersectionCrvSur", "CATICGMReflectCurve", "CATICGMLocalAnalysis2D", "CATICGMEdgeCurveComputation"]
-source_file: "Doc\online\CAACgmModel\CAACgmUcGMModelOpeOverw.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelOpeOverw.md"
 converted: "2026-05-11T17:33:48.309647"
 ---
-
 # How to Use Geometric Operators  
   
 ---  
 Technical Article  
-  
 ## Abstract
 
 Geometric operators are transient objects that allow you to create new objects from existing ones or to analyze them. These operators all follow the same scheme which is described in this article.
@@ -23,7 +21,6 @@ Geometric operators are transient objects that allow you to create new objects f
     * In Short
     * References  
 ---  
-  
 ## Introduction
 
 Using geometric operators is an easy way to create or analyze geometric objects. While the geometric objects provide basic services, that are easily computed by the objects themselves, the geometric operators do more complex operations using advanced mathematics tools. As an example, evaluations from parameters to Cartesian coordinates is offered by the geometric curve or surface, whereas the torsion or curvature are computed by a geometric operator.
@@ -60,7 +57,6 @@ Here are some examples of operators dedicated to geometric analysis:
     * Global analysis of a point a a curve (`CATICGMMassProperties1D`).
 
 The geometric operators are generic: the `CATICGMIntersectionCrvSur` operator, for example, computes the intersection of any type of curves with any type of surfaces.
-
 ## How to Create and Use a Geometric Operator
 
 All the geometric operators are based on the same scheme. The geometric operator instances, created by a global function (CATCGMCreate...), are transient (that is to say, they are not streamed when streaming the geometric factory). They are used to declare an operation, to run it, and to retrieve the resulting objects.
@@ -73,7 +69,6 @@ The geometric operators can be used in two modes, BASIC (the default mode) or AD
       * An initialization of the iterator.
       * A method to increment the iterator.
       * A method to retrieve (and, hence create) the geometric result.
-
 ### The BASIC Mode
 
 To operate in this mode, you must:
@@ -95,7 +90,6 @@ To operate in this mode, you must:
 The `CATICGMContainer::Remove` method removes geometric objects from the geometry factory. Any object which is not removed is streamed when the factory is streamed. When using geometric operators, you will usually have to remove unnecessary objects by using the `CATICGMContainer::Remove` method.
 
 **Note** : Although geometric objects are handled by the mean of interfaces, such as `CATCartesianPoint`, `CATLine`, or `CATBody`, the pointers on these objects must not be released. In fact, they are released at the closure of the factory (the `CATCloseCGMContainer` global function).
-
 ### The ADVANCED Mode
 
 This mode can be used when you want to set parameters (for example limits on the geometry), or run again an operator with different input data.
@@ -134,7 +128,6 @@ To operate in this mode, you have to:
     cout << " Number of intersection points: "<< nbPoints << endl;
     long nbCurves= pIntOp->GetNumberOfCurves();
     cout << "Number of intersection curves: "<< nbCurves << endl;
-
 ## How to Delete a Geometric Operator
 
 Geometric operators should be deleted by using the **Release** method.
@@ -148,20 +141,17 @@ Geometric operators should be deleted by using the **Release** method.
     **// delete the operator**
     **pIntOp- >Release();
     pIntOp=NULL;**
-
 ## In Short
 
     * The geometric operators are transient objects used to create or analyze geometric objects. They do not modify the input operands.
     * All the geometric operators are based on the same scheme: creation, optionally set of advanced options, run, read of the results, deletion. They work inside one container.
-
 ## References
 
-[1] |  [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.htm)  
+[1] |  [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.md)  
 ---|---  
-[2] |  [The Curves of CATIA Geometric Modeler](CAACgmTaGobCurves.htm)  
-[3] |  [The Surfaces of CATIA Geometric Modeler](CAACgmTaGobSurfaces.htm)  
-[4] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-  
+[2] |  [The Curves of CATIA Geometric Modeler](CAACgmTaGobCurves.md)  
+[3] |  [The Surfaces of CATIA Geometric Modeler](CAACgmTaGobSurfaces.md)  
+[4] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ## History
 
 Version: **1** [Jan 2007] | Document created  

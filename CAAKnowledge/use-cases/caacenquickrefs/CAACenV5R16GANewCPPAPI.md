@@ -1,9 +1,9 @@
 ---
 title: "New C++ Authorized APIs in CAA V5R16 GA"
-category: "general"
+category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATITPSIDServices", "CATITrack", "CATIStmFlangeSurf", "CATIXMLInputStream", "CATITPSConstructedGeomServices", "CATIMfgVirtualActivity", "CATIShot", "CATIStrMaterialESSObjectSettingAtt", "CATIAVPMVDAReplace", "CATInstantCollabDesignCAAItf", "CATIAerospaceSheetMetalFactory", "CATIStmWeb", "CATIIniSearchSymbolCriterion", "CATIMfgActivityDefaultValuesMngt", "CATIStmJoggle", "CATIEwrFilter", "CATISamEditionControl", "CATIColMergeContextRole", "CATIVariableManagement", "CATIDftStandardMediator"]
-source_file: "Doc\online\CAACenQuickRefs\CAACenV5R16GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R16GANewCPPAPI.md"
 converted: "2026-05-11T17:33:47.268959"
 ---
 

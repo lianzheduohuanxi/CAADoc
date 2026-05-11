@@ -1,15 +1,14 @@
 ---
 title: "CAAAniMeshExtrudeSpine.catvbs"
-category: "general"
+category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAScdAniUseCases", "CAAAniMeshExtrudeSpine"]
-source_file: "Doc\online\CAAScdAniUseCases\CAAAniMeshExtrudeSpineSource.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshExtrudeSpineSource.md"
 converted: "2026-05-11T17:31:51.642594"
 ---
 
-
+```vbscript
     'COPYRIGHT DASSAULT SYSTEMES 2000
-    
     '***********************************************************************
     '  Purpose:      Open an analysis document
     '                Create Extrude mesh along a spine mesh part
@@ -21,72 +20,77 @@ converted: "2026-05-11T17:31:51.642594"
     '  Locales:      English 
     '  CATIA Level:  V5R16
     '***********************************************************************
+```
+
     
+```vbscript
     Sub CATMain()
-    
     '----------------------------------------------------------- 
     'Optional: allows to find the sample wherever it's installed
     
       sDocPath=CATIA.SystemService.Environ("CATDocView")
     
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
         End If
     '----------------------------------------------------------- 
     
-    
+```
+
     'Open the CATAnalysis Document
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Surface.CATAnalysis")
+```vbscript
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
     
-    
+```
+
     'Retrieve the analysis Manager 
+```vbscript
     Set oAnalysisManagar = oAnalysisDocument.Analysis
     Set oAnalysisSet = oAnalysisManagar.AnalysisSets
-    
+```vbscript
     'Retrieve the part document and product
     Set oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
     Set partDocument = oAnalysisLinkedDocuments.Item(1)
     Set product = partDocument.Product
-    
     'Retrieved the published line that is the
     'spine along which mesh will be extruded
     Set publications = product.Publications
     Set pubSpine = publications.Item("Spine")
-    
     'Retrieve the analysis model
     Set oAnalysisModels = oAnalysisManagar.AnalysisModels
     Set oAnalysisModel = oAnalysisModels.Item(1)
-    
     'Retrieve the mesh manager and list of mesh parts
     Set oAnalysisMeshManager = oAnalysisModel.MeshManager 
     Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
     Set surfMesh = oAnalysisMeshParts.Item("Surface Mesh.1")
-    
     'Create the reference of the surface mesh
     Set reference = oAnalysisManagar.CreateReferenceFromObject(surfMesh)
+```
+
     
-    
+```
+
     'Add the extrude with translation mesh part to the list of mesh parts
+```vbscript
     Set extrudeMesh = oAnalysisMeshParts.Add("MSHPartExtrSpine")
     
-    
+```
+
     'Assign the surface mesh part as support
     extrudeMesh.AddSupportFromReference NOTHING, reference
-    
     'Set the global specifications
     extrudeMesh.SetGlobalSpecification "Condensation", 1
     extrudeMesh.SetGlobalSpecification "Tolerance", "1.0 mm"
     extrudeMesh.SetGlobalSpecification "Length", "500.0 mm"
     extrudeMesh.SetGlobalSpecification "Lentgh1", "10.0 mm"
-    
     'Set the specification; spine along which mesh will be extruded
     extrudeMesh.SetSpecificationFromPublication "Direction", product, pubSpine, 0
-    
     'Retrieve the basic components and sub components
+```vbscript
     Set basicComps = extrudeMesh.BasicComponents
     Set subBasicComps = basicComps.Item(1).BasicComponents
-    
     'Retrieve each attribute and set its value
     
     Set subBasicComp1 = subBasicComps.Item("Type")
@@ -100,9 +104,14 @@ converted: "2026-05-11T17:31:51.642594"
     
     Set subBasicComp4 = subBasicComps.Item("Ratio")
     subBasicComp4.SetValue "", 0, 0, 0, 10
-    
     'Update the mesh
     extrudeMesh.Update
     
+```
+
+```vbscript
     End Sub
     
+```
+
+```

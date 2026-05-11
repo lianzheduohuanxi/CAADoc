@@ -3,7 +3,7 @@ title: "Overview of the Topological Operators"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CATICGMSolidCuboid", "CATICGMDynSolidCylinder", "CATICGMGeoOperator", "CATICGMDynSolidCuboid", "CATICGMIntersectionCrvCrv", "CATICGMContainer", "CAADoc", "CATICGMDynMassProperties3D", "CAAGMModelGemBrowser", "CAAGMOperatorsTopSpline", "CATICGMDynShell", "CAATopJournal", "CAAGMOperatorsOverview", "CATICGMTopSkin", "CATIA", "CATICGMTopOperator", "CATICGMSolidCylinder", "CATICGMSolidPrimitive", "CATICGMObject"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcTopOverview.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopOverview.md"
 converted: "2026-05-11T17:33:49.256937"
 ---
 
@@ -35,13 +35,13 @@ All these operators follow the smart concept [3]: they never modify the input bo
     4. Gets the result: `GetResult`: 
        * The topological result is always retrieved as a `CATBody`.
     5. Deletes the operator instance.
-Unlike the geometric operators, the topological operators do not provide a BASIC and an ADVANCED modes. The topological operators are always set in ADVANCED mode: the run is always mandatory. The CAAGMOperatorsOverview Use Case CAAGMOperatorsOverview is a use case of the CAAGMOperatorsInterfaces.edu framework that illustrates GMOperatorsInterfaces framework capabilities. What Does CAAGMOperatorsOverview Do The use case creates the body of Fig.1 by chaining topological operators. Fig. 1: The Resulting Body ![Resulting Body](images/CAACgmTopOverview1.gif) | 
+Unlike the geometric operators, the topological operators do not provide a BASIC and an ADVANCED modes. The topological operators are always set in ADVANCED mode: the run is always mandatory. The CAAGMOperatorsOverview Use Case CAAGMOperatorsOverview is a use case of the CAAGMOperatorsInterfaces.edu framework that illustrates GMOperatorsInterfaces framework capabilities. What Does CAAGMOperatorsOverview Do The use case creates the body of Fig.1 by chaining topological operators. Fig. 1: The Resulting Body ![Resulting Body](images/CAACgmTopOverview1.gif) 
     * A skin is created from a profile and extruded to produce a prism.
     * A box primitive is added and a cylinder subtracted.
     * The edges of the external loop of the upper face of the prism are filleted. This face is characterized by two holes: one for the path of the cylinder, on for the path of the box.
     * A shelling operation is applied with one opening face, the bottom face of the prism.  
 ---|---  
-How to Launch CAAGMOperatorsOverview To launch CAAGMOperatorsOverview, you will need to set up the build time environment, then compile CAAGMOperatorsOverview.m along with its prerequisites, set up the run time environment, and then execute the use case [5]. If you simply type CAAGMOperatorsOverview with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsOverview e:\Overview.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsOverview Code The CAAGMOperatorsOverview use case is made of a main named CAATopOverview.cpp located in the CAAGMOperatorsOverview.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsOverview.m\` where `InstallRootFolder` [5] is the folder where the API CD-ROM is installed. Step-by-Step The main program:
+How to Launch CAAGMOperatorsOverview To launch CAAGMOperatorsOverview, you will need to set up the build time environment, then compile CAAGMOperatorsOverview.m along with its prerequisites, set up the run time environment, and then execute the use case [5]. If you simply type CAAGMOperatorsOverview with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsOverview e/Overview.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsOverview Code The CAAGMOperatorsOverview use case is made of a main named CAATopOverview.cpp located in the CAAGMOperatorsOverview.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsOverview.m\` where `InstallRootFolder` [5] is the folder where the API CD-ROM is installed. Step-by-Step The main program:
     1. Creates the Geometry Factory
     2. Creates a Skin Body (CATICGMTopSkin)
     3. Creates a Prism (CATICGMTopPrism)
@@ -614,13 +614,13 @@ To save the model in a file, the `::CATSaveCGMContainer` global function is used
     	
      **::CATCloseCGMContainer**(piGeomFactory);
 
-In Short This use case creates a body by chaining several types of topological operations, such Boolean, Filleting or Shelling, and primitive creation. The journal is not detailed. References [1] | [Understanding the CGM Journal](CAACgmTaTopJournal.htm)  
+In Short This use case creates a body by chaining several types of topological operations, such Boolean, Filleting or Shelling, and primitive creation. The journal is not detailed. References [1] | [Understanding the CGM Journal](CAACgmTaTopJournal.md)  
 ---|---  
-[2] |  [ Topology Concepts](../CAACgmModel/CAACgmTaTobTopoConcepts.htm)  
-[3] |  [ The CGM Topological Model](../CAACgmModel/CAACgmTaTobTopoModel.htm)  
-[4] | [The Objects of CATIA Geometric Modeler](../CAACgmModel/CAACgmTaGobGeoObjects.htm)  
-[5] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-[6] | [Using the Basic Topological Operators](CAACgmUcTopSpline.htm)  
+[2] |  [ Topology Concepts](../CAACgmModel/CAACgmTaTobTopoConcepts.md)  
+[3] |  [ The CGM Topological Model](../CAACgmModel/CAACgmTaTobTopoModel.md)  
+[4] | [The Objects of CATIA Geometric Modeler](../CAACgmModel/CAACgmTaGobGeoObjects.md)  
+[5] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[6] | [Using the Basic Topological Operators](CAACgmUcTopSpline.md)  
 History Version: **1.1** [Oct 2000] | Operator configuration  
 ---|---  
 Version: **1** [May 2000] | Document created

@@ -1,16 +1,15 @@
 ---
 title: "CAAAniPreproOnProduct.catvbs"
-category: "general"
+category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATISamImportDefine", "CATIAParameter", "CATIAConstraints", "CAAScdAniUseCases", "CATIA", "CAAAniPreproOnProduct"]
-source_file: "Doc\online\CAAScdAniUseCases\CAAAniPreproOnProductSource.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnProductSource.md"
 converted: "2026-05-11T17:31:51.826370"
 ---
 
-
     Language="VBSCRIPT"
+```vbscript
     ' COPYRIGTH DASSAULT SYSTEMES 2000
-    
     ' ***********************************************************************
     '   Purpose:      Create a New Analysis document.
     '                 Import on a CATProduct document with some publication defined 
@@ -23,7 +22,10 @@ converted: "2026-05-11T17:31:51.826370"
     '   Locales:      English 
     '   CATIA Level:  V5R13
     ' ***********************************************************************
+```
+
     
+```vbscript
     Sub CATMain()
     '_____________________________________________________________________________________
     ' Optional: allows to find the sample wherever it's installed
@@ -32,51 +34,61 @@ converted: "2026-05-11T17:31:51.826370"
       sSep=CATIA.SystemService.Environ("ADL_ODT_SLASH")
     
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
         End If
+```vbscript
     '_____________________________________________________________________________________
     ' Get the collection of documents in session
       Set documents1 = CATIA.Documents
-    
     ' Create the CATAnalysis Document 
       Set TheAnalysisDoc = documents1.Add("Analysis")
-    
     ' Only one Analysis Document is required
     ' if WB name already is "GPSCfg", not to use StartWorkbench
       WBName = CATIA.GetWorkbenchId
       if (WBName <> "GPSCfg") Then
          CATIA.StartWorkbench("GPSCfg")
       End If
-    
     '_____________________________________________________________________________________
     ' Start to scan the existing structure of analysis document:  Retrieve the AnalysisManager
     ' We call the Import on CATAnalysisImport which implements CATISamImportDefine
+```
+
     
+```
+
     
+```vbscript
       Set analysisManager1 = TheAnalysisDoc.Analysis
     
+```
+
     
+```vbscript
       Dim arrayOfVariantOfShort1(0)
       analysisManager1.ImportDefineFile (sDocPath & sSep  & "online" & sSep & "CAAScdAniUseCases" & sSep & "samples" & sSep & "basic_assembly.CATProduct"),				     "
     
+```
+
     
       				     "CATAnalysisImport", arrayOfVariantOfShort1
-    
     ' _____________________________________________________________________________________
     ' Reframe All.
+```vbscript
       Set specsAndGeomWindow2 = CATIA.ActiveWindow
       Set viewer3D1 = specsAndGeomWindow2.ActiveViewer
       viewer3D1.Reframe 
     
-    
+```
+
     ' _____________________________________________________________________________________
     ' Scan the analysis document:  Retrieve the Pointed documents to extract the reference for preprocessing
+```vbscript
       Set analysisLinkedDocuments1 = analysisManager1.LinkedDocuments
       CATIA.SystemService.Print analysisLinkedDocuments1.Name
       If (analysisLinkedDocuments1.Count <> 1 ) Then
         Err.Raise 9999,,"NbDoc Li NE 1"
       End If
-    
     ' _____________________________________________________________________________________
     ' Retrieve the CATProduct Document and associated publications and constraints collection.
     
@@ -87,7 +99,7 @@ converted: "2026-05-11T17:31:51.826370"
     
       Set publications1 = product1.Publications
       Set constraints1 = product1.Connections("CATIAConstraints")
-    
+```vbscript
     ' _____________________________________________________________________________________
     ' Create a Virtual Part in the analysis model to transmit the load.
     Set analysisModels1 = analysisManager1.AnalysisModels
@@ -99,19 +111,23 @@ converted: "2026-05-11T17:31:51.826370"
     Set analysisEntities1 = analysisSet1.AnalysisEntities
     Set analysisEntity1 = analysisEntities1.Add("SAMVirPartRigid")
     Set publication1 = publications1.Item("FaceCylinderTop")
+```
+
     analysisEntity1.AddSupportFromPublication product1, publication1
     Set basicComponents1 = analysisEntity1.BasicComponents
     Set basicComponent1 = basicComponents1.GetItem("SAMRigSlavePoint.1")
     Set publication4 = publications1.Item("ForceHandler")
     basicComponent1.AddSupportFromPublication product1, publication4
-    
+```vbscript
     ' _____________________________________________________________________________________
     ' Create a Fastened connection in the analysis model to complete the constraints 
     ' definition
     Set analysisEntity2 = analysisEntities1.Add("SAMFaceFaceFastened")
     Set constraint1 = constraints1.Item("Surface contact.2")
+```
+
     analysisEntity2.AddSupportFromConstraint product1, constraint1
-    
+```vbscript
     ' _____________________________________________________________________________________
     ' Create a Static Case in the current analysis model.
     Set analysisCases1 = analysisModel1.AnalysisCases
@@ -121,25 +137,34 @@ converted: "2026-05-11T17:31:51.826370"
     Set analysisSet2 = analysisSets2.Add("RestraintSet", catAnalysisSetIn)
     Set analysisSet3 = analysisSets2.Add("LoadSet", catAnalysisSetIn)
     Set analysisSet5 = analysisCase1.AddSolution("StaticSet")
+```
+
     
-    
+```
+
     ' _____________________________________________________________________________________
     ' Create clamp boundary. Associated to a publication
+```vbscript
     Set analysisEntities2 = analysisSet2.AnalysisEntities
     Set analysisEntity3 = analysisEntities2.Add("SAMClamp")
     Set publication2 = publications1.Item("FaceToClamp")
     analysisEntity3.AddSupportFromPublication product1, publication2
-    
+```vbscript
     ' _____________________________________________________________________________________
     ' Create load boundary. Associated to the virtual part
     Set analysisEntities3 = analysisSet3.AnalysisEntities
     
     Set analysisEntity4 = analysisEntities3.Add("SAMDistributedForce")
     Set reference2 = analysisManager1.CreateReferenceFromObject(analysisEntity1)
+```
+
     analysisEntity4.AddSupportFromReference reference2, reference2
     CATIA.SystemService.Print "Name of the Reference" & reference2.DisplayName  
     
+```
+
     
+```vbscript
     Set basicComponents2 = analysisEntity4.BasicComponents
     Set basicComponent2 = basicComponents2.GetItem("SAMForceAxis.1")
     basicComponent2.SetValue "Values", 0, 0, 0, 1
@@ -148,7 +173,7 @@ converted: "2026-05-11T17:31:51.826370"
     basicComponent3.SetValue "", 1, 1, 1, 100.000000
     basicComponent3.SetValue "", 2, 1, 1, 0.000000
     basicComponent3.SetValue "", 3, 1, 1, 0.000000
-    
+```vbscript
     ' _____________________________________________________________________________________
     ' Some examples to read the data on the basic componenent
     'In this case, direct read 
@@ -160,24 +185,35 @@ converted: "2026-05-11T17:31:51.826370"
     CATIA.SystemService.Print " ForceVector Dimension " & basicComponent3.GetLinesNumber  ("")
     CATIA.SystemService.Print " ForceVector Dimension " & basicComponent3.GetColumnsNumber("")
     CATIA.SystemService.Print " ForceVector Dimension " & basicComponent3.GetLayersNumber ("")
-    
     'In this case, use the Kwe CATIAParameter interface.
     Set ParametersList = analysisManager1.Parameters
     Set SubList = ParametersList.SubList(basicComponent3,FALSE)
+```
+
     
+```
+
+```vbscript
     For i = 1 to SubList.Count
     	Set Parameter = SubList.Item(i)
     	CATIA.SystemService.Print Parameter.Name  
     	CATIA.SystemService.Print Parameter.ValueAsString
     Next
-    
     ' _____________________________________________________________________________________
     ' Launch the MeshOnly update
     analysisCase1.ComputeMeshOnly
     
-    
+```
+
     '------------------------------- END   END   END   ----------------------------
+```vbscript
       CATIA.DisplayFileAlerts = False
     
+```
+
+```vbscript
     End Sub
     
+```
+
+```

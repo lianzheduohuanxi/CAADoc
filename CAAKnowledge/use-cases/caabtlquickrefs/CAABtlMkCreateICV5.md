@@ -1,9 +1,9 @@
 ---
 title: "mkCreateIC"
-category: "general"
+category: "use-case"
 module: "CAABtlQuickRefs"
 tags: ["CAADialog"]
-source_file: "Doc\online\CAABtlQuickRefs\CAABtlMkCreateICV5.htm"
+source_file: "Doc/online/CAABtlQuickRefs/CAABtlMkCreateICV5.md"
 converted: "2026-05-11T17:33:49.959860"
 ---
 

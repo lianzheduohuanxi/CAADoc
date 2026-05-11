@@ -1,9 +1,10 @@
 ---
 title: "AnalysisMeshingModel Modifications"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR7"
+version: "V5R7"
 tags: ["CATIMSHMeshDomain"]
-source_file: "Doc\online\CAACenAPIChangesR7\AnalysisMeshingModelSP.htm"
+source_file: "Doc/online/CAACenAPIChangesR7/AnalysisMeshingModelSP.md"
 converted: "2026-05-11T17:33:51.892891"
 ---
 

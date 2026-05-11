@@ -1,9 +1,10 @@
 ---
 title: "CAA Authorized APIs Replacing ProtectedInterfaces"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR26"
+version: "V5R26"
 tags: ["CATIDOMElement", "CATIDrwSectionCallout", "CATIKinMechanism", "CATIBuildPath", "CATIMfgPrismaticReworkArea", "CATIMfResultManagement", "CATINewStream", "CATIDegreesOfFreedom", "CATILiteralsRoot", "CATIAfrCommandHeaderRep", "CATICkeFunctionFactory", "CATIEwrRouteSegment", "CATIArrNode", "CATIUuid", "CATIDOMText", "CATIRouNode", "CATIMfgActivityContainer", "CATIMfPartExtReferences", "CATISysCacheSettingAtt", "CATIDoF"]
-source_file: "Doc\online\CAACenAPIChangesR26\CAACenAuditReplacingAPIs.htm"
+source_file: "Doc/online/CAACenAPIChangesR26/CAACenAuditReplacingAPIs.md"
 converted: "2026-05-11T17:33:51.862460"
 ---
 

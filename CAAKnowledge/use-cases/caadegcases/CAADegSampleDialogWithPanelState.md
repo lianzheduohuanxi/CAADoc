@@ -3,7 +3,7 @@ title: "Associating a Dialog Box with a State"
 category: "use case"
 module: "CAADegUseCases"
 tags: ["CAADegGeoCommands", "CAADegPointEditor", "CATIndicationAgent", "CAADialogEngine", "CAAGeometry", "CAADegCreatePointCmd", "CAADegFileCmd"]
-source_file: "Doc\online\CAADegUseCases\CAADegSampleDialogWithPanelState.htm"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleDialogWithPanelState.md"
 converted: "2026-05-11T17:33:49.657183"
 ---
 
@@ -28,9 +28,9 @@ Abstract This article shows how to use a Dialog box associated with a state in a
 
 What You Will Learn With This Use Case This use case is intended to show how to use a dialog box associated with a state in a dialog command. This dialog box is used to input precise values rather than indicating a point on the screen. In addition, you will learn how to use the Cancel state. [Top] The Point Command Use Case The Point command is a use case of the CAADialogEngine.edu framework that illustrates the DialogEngine framework capabilities. [Top] What Does the Point Command Do The Point command is a state dialog command that creates a point in the 3D space according to the following UML statechart diagram [1]. ![CAACreatePointStatechart.jpg \(15193 bytes\)](images/CAACreatePointStatechart.jpg) The dialog is as follows: ![CAACreatePoint1.jpg \(19413 bytes\)](images/CAACreatePoint1.jpg) | Select the Point command. The active state becomes GetPoint, and the dialog box is displayed. You can either indicate a point or use the dialog box.  
 ---|---  
-![CAACreatePoint2.jpg \(19490 bytes\)](images/CAACreatePoint2.jpg) | Click to indicate a point. The transition loops to GetPoint and creates the point. You can click another point or use the dialog box.  
-![CAACreatePoint3.jpg \(19539 bytes\)](images/CAACreatePoint3.jpg) | Enter values in the dialog box spinners. Clicking Apply create the point whose coordinates were entered and you can again either click to indicate a point or use the dialog box. This is what's shown beside. Clicking OK creates the point and ends the command. Clicking Cancel doesn't create the point and ends the command.  
-Indicating a point [2] means clicking on the screen at the desired location with the left mouse key. This is a very handy way, but sometimes it is not accurate enough, and a dialog box in which numerical values can be entered is often needed. The Point command enables both indication and dialog box input. Only the latter is described here. [Top] How to Launch the Point Command See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.htm)" use case for a detailed description of how this use case should be launched [3]. Then, in the window where you run the mkrun command, do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following: 
+ Click to indicate a point. The transition loops to GetPoint and creates the point. You can click another point or use the dialog box.  
+ Enter values in the dialog box spinners. Clicking Apply create the point whose coordinates were entered and you can again either click to indicate a point or use the dialog box. This is what's shown beside. Clicking OK creates the point and ends the command. Clicking Cancel doesn't create the point and ends the command.  
+Indicating a point [2] means clicking on the screen at the desired location with the left mouse key. This is a very handy way, but sometimes it is not accurate enough, and a dialog box in which numerical values can be entered is often needed. The Point command enables both indication and dialog box input. Only the latter is described here. [Top] How to Launch the Point Command See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched [3]. Then, in the window where you run the mkrun command, do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following: 
     * Select **File** ->**New**
     * In the New box, select **CAAGeometry** and click **OK**
     * Select **Insert** ->**Point**
@@ -176,12 +176,12 @@ In Short This use case shows the objects involved when a dialog box is used in c
 
 * * *
 
-References [1] | [Describing State Dialog Commands Using UML](../CAADegTechArticles/CAADegUMLDescription.htm)  
+References [1] | [Describing State Dialog Commands Using UML](../CAADegTechArticles/CAADegUMLDescription.md)  
 ---|---  
 [2] | [Managing Indication](../CAADegTechArticles/CAADegGraph.htm#510000)  
-[3] | [The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.htm)  
-[4] | [Implementing the Command Statechart Diagram](../CAADegTechArticles/CAADegGraph.htm)  
-[5] | [Understanding the Application Frame Layout](../CAAAfrTechArticles/CAAAfrLayoutV5.htm)  
+[3] | [The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)  
+[4] | [Implementing the Command Statechart Diagram](../CAADegTechArticles/CAADegGraph.md)  
+[5] | [Understanding the Application Frame Layout](../CAAAfrTechArticles/CAAAfrLayoutV5.md)  
 [Top]  
   
 * * *

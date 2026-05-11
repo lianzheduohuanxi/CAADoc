@@ -1,20 +1,17 @@
 ---
 title: "Graphical Properties"
-category: "general"
+category: "use-case"
 module: "CAAVisTechArticles"
 tags: ["CATIAVisPropertySet", "CATIA", "CATIProperty", "CATIVisProperties", "CATISelectShow", "CATIVisu", "CAAEPstVisPropertiesPoint"]
-source_file: "Doc\online\CAAVisTechArticles\CAAVisGraphicProperties.htm"
+source_file: "Doc/online/CAAVisTechArticles/CAAVisGraphicProperties.md"
 converted: "2026-05-11T17:31:52.277889"
 ---
-
 #  3D PLM Enterprise Architecture
 
 | 
-
 ## 3D Visualization
 
 | 
-
 ### Graphical Properties
 
 How to use or implement the _CATIVisProperties_ Interface  
@@ -22,7 +19,6 @@ How to use or implement the _CATIVisProperties_ Interface
 Technical Article  
   
 * * *
-
 ### Abstract
 
 The first objective of this article is to understand what are the graphical properties. The second is to explain how they are integrated in the visualization process. Three interfaces are important: _CATIVisProperties_ , _CATIVisu_ and _CATIProperty_. The first enables to associate with a feature a set of graphical properties, the second uses the _CATIVisProperties_ interface to update the graphic attributes of the graphic representations, and the last stores the data. _CATIVisProperties_ is the main interface of this system.
@@ -49,7 +45,6 @@ The first objective of this article is to understand what are the graphical prop
 ---  
   
 * * *
-
 ### Principe of the Graphical Properties
 
 Before to go into all the details, a little example to set the subject. Suppose a cube feature [Fig.1 ] which is composed of two types of geometry: faces (6) and edges (12). On this feature, for the set of faces and for the set of edges, graphical properties are put. For faces, it is possible to set a color, a degree of opacity and for the lines, a color, a type and a thickness. 
@@ -72,10 +67,7 @@ On this shema, you can see that:
   * _CATIVisProperties_ is the central interface.
   * The feature doesn't implement the _CATIVisu_ interface, but an interface which C++ derives from _CATIVisu_. But to generalize the subject, in this article, only the _CATIVisu_ interface will be mentioned.
 
-
-
 You can notice that if the componant is not a feature, it can't have graphical properties because the _CATIProperty_ is to use AsIs.
-
 #### The Graphical Properties are Graphical Attributes
 
 The graphical properties are visual properties, it means that the properties can be directly use by the visualization processus. These attributs, classified by storage way, are the following:
@@ -99,9 +91,6 @@ The marker of the point is set at the _CAT3DMarkeGP_ or _CAT2DMarkerGP_ construc
 
 The number of the layer .
 
-
-
-
 To specify the type of the graphical properties, there is the _CATVisPropertyType_ enum.
 
   * `CATVPColor `for the color 
@@ -115,12 +104,9 @@ To specify the type of the graphical properties, there is the _CATVisPropertyTyp
   * `CATVPLowInt` for the lowint color flag
   * `CATVPLayer` for the layer
 
-
-
 At these values, an another one which doesn't represent a property but a set of properties: `CATVPAllProperties.`  
 
 The data for the graphical properties (the color, the flag) will be write (read) on a _CATVisPropertiesValues._ It's detailed in the "Using CATIVisProperties" section.
-
 #### The Types of Geometry
 
 The information stored on the _CATIVisProperties_ is the type (s) of geometry supported by the feature.
@@ -131,26 +117,19 @@ CATIA V5 supplies some types of geometry, those in relationship with the dimensi
   * `CATVPLine` for a wire and `CATVPEdge` for a line on a surface (1D)
   * `CATVPMesh` for a surface (2D)
 
-
-
 an another is for the assembling models:
 
   * `CATVPAsm` 
 
-
-
 At these five values, there is a last `CATVPGlobalType. `This type regroups together the graphical properties independant of the sub-types: the visibility state, the selectionnability state, the lowint color flag and the number of the layer. Actually in fact, it is not possible to set the points of a wire on a layer, and set its curves on an other layer. It is the globally the element which is on a layer. 
 
 These six types, `CATVPPoint`, `CATVPLine`  ,`CATVPEdge` ,`CATVPMesh`, `CATVPAsm`  and `CATVPGlobalType `are _CATVisGeomType_
-
 #### The Graphical Properties by Geometry Type
 
 To associate graphical properties for a type of geometry, there is the _CATVisPropertiesValues_ class. On an instance of this class, you set the color, the type of point and so on.
 
 On the _CATIProperty_ interface, a copy of this instance is stored. So, a priori, you can set any graphical properties for any type of geometry. But at last, only the graphic properties  interpretable by the process visualization are important. It means that you can set a degree of opacity for your lineic feature, but the visualization process could not translate that. The next section describes that.
-
 #### Integration of the Graphical Properties in the Visualization Process
-
 ##### Generalites
 
 In the visualization process, there are two cases to distinguish, even though they join together at the end. The total and the partial revisualization of the model. But at first, it is important to give the methods of the _CATExtIVisu_ adapter class of the _CATIVisu_ interface in relationship with the properties:
@@ -163,7 +142,6 @@ In the visualization process, there are two cases to distinguish, even though th
   * `virtual void **SetLineGraphicAttribute**(CATRep * iRep, CATVisPropertyType iPropertyType, CATVisPropertiesValues & iPropertyValues`
   * `virtual void **SetEdgeGraphicAttribute**(CATRep * iRep, CATVisPropertyType iPropertyType, CATVisPropertiesValues & iPropertyValues)`
   * `virtual void **SetAsmGraphicAttribute**(CATRep * iRep, CATVisPropertyType iPropertyType, CATVisPropertiesValues & iPropertyValues)`
-
 
   1. The total revisualization of the model
 
@@ -184,13 +162,9 @@ The `SetGraphicAttribut `method calls these methods with `CATVPAllProperties `as
 
 After a _CATModifyVisProperties_ notification, a partial revisualization of the model is done. In fact only the graphical properties are changed. This notification contains the type of the geometry and its new graphical properties. The `ModifyRep` analyzes the input's notification, and calls one of the six methods concerned by the type of geometry. The difference between the total revisualization is the second argument of these methods: it is not necessary `CATVPAllProperties, `but can be one of the _CATVisPropertyType_ enumeration as __`CATVPColor` for example. 
 
-
-
-
 In the two cases, the process converges towards the same methods. Their goal is to modify the graphic representation (and their associated graphic attributes) in taken account of the graphic properties set on the `CATVisPropertiesValues `instance`,` the third argument of these methods. It is important to know what do they do in their default implementation, because if the default behavior doesn't fit your need, you will do reimplement those concerned by the type of geometry defined by your feature. See "Implementing CATIVisProperties". 
 
 Before to detail them, we have described the second and the third argument of these six methods, there is still the first. It is a `_CATRep_ `pointer which comes from the visualization process. Indeed, it is the graphic representation created in your `BuildRep` extension. 
-
 ##### Default Behaviors of the SetxxxGraphicAttribute methods
 
   * **SetPointGraphicAttribute**
@@ -215,9 +189,6 @@ The graphical properties processed are the color, the type and the thickness of 
   * **SetAsmGraphicAttribute**
 
 The graphical properties processed are the color, the type of the line, the thickness, the degree of opacity and the inheritance.
-
-
-
 
 #### In short the Standard Graphical Properties by Type of Geometry
 
@@ -262,13 +233,10 @@ CATVPAsm |
   * Thickness
 
   
-  
 #### Automation
 
 In implementing the _CATIVisProperties_ interface on your feature, you benefit automatically of the _CATIAVisPropertySet_ automation interface . 
-
 ### The interactive Commands
-
 #### The Properties Command
 
 If your feature implements _CATIVisProperties,_ when you launch the Properties Commands, the Graphic tab page appears. Its contents depends on the type of geometry defined by the feature. There are three possible cases:
@@ -293,10 +261,7 @@ This is an example where the feature defined the types `CATVPAsm` and `CATVPGlo
 _Fig.5: The Properties Dialog Box - Case 3_ ![](images/CAAVisPropGrapEditProperties3.jpg)  
 ---  
 
-
-
 Only the "Show Pick and Layers" appears.
-
 #### The Graphic Properties Toolbar
 
 The Graphic Properties toolbar, [Fig. 6] is the following:
@@ -309,16 +274,12 @@ When a feature is selected, the toolbar is updated in taken account of the featu
   * If there are several possible values for a combo, the combo displays undefined (like the combo color in the previous picture [Fig. 6])
   * If there are more than N features selected, all combos are undefined. The value N is customizable through the Tools/Options/Display/Navigation page, in the "Limit Display to Manipulators" option .
 
-
-
 You can notice that in this toolbar, there is only one combo for each type of property. Assume that your feature defined the `CATVPPoint` and the `CATVPLine` types. These two types have in common the color property. So a choice must be done to define the type concerned by the color property. It is the goal of the `GetSubTypefromPath `method of the _CATIVisProperties_ interface. This point will be detailed in the Implementing CATIVisProperties" section.
-
 #### The Hide/Show Command
 
 The Hide/Show command enables to hide or show the selected features. But to benefit of this functionality on your feature, it must implement the _CATISelectShow  _ interface. It uses the _CATIVisProperties_ to modify the visibility state of the feature.
 
 [Top]
-
 ### Using CATIVisProperties
 
 If this section detailed the usage of the _CATIVisProperties_ interface, the "Modifying Object Graphical Properties" article [3] exposes a concrete use case. 
@@ -396,11 +357,7 @@ Caution: The contents of this table can be different between two implementations
 
 Tells if  a given type of geometry is recognized by the feature.
 
-
-
-
 [Top]
-
 ### Implementing CATIVisProperties 
 
 If this section detailed the implementation of the _CATIVisProperties_ interface, the "Implementing CATIVisProperties" article exposes a concrete use case. You will find this article in the Product Process Resouce (PPR) part of the CAA encyclopedie.
@@ -435,7 +392,6 @@ Take an example, the feature is a wire which contains lineic sub-elements (lines
     * The `SetPointGraphicAttribute` method doesn't process the _CAT3DCustomRep_ as graphic representation.
     * The `SetLineGraphicAttribute` method modifies all its graphic attributes, so the attribute for the point will be also changed.
 
-
   * `GetSubTypeFromPath`
 
 This method enables to define the type of geometry concerned by the graphic properties displayed in the Graphic Properties toolbar. See the section "The Graphic Properties Toolbar"
@@ -469,13 +425,9 @@ In the toolbar, the color and the symbol are associated to the `CATVPPoint` geom
 
 You can note that `oPropertyNumber` should be always set to zero and that the graphic properties associated to the `CATVPGlobalType` type are not processed (`CATVPShow`, `CATVPLayer`, `CATVPPick`,`CATVPLowint`), it is by default done.
 
-
-
-
 [Top]
 
 * * *
-
 ### In Short
 
 This article describes how the graphic properties are integrated in the visualization process. The principle is that a feature can have a set of graphic properties for each of its component's geometry. Each component is defined as a geometry type. Three interface are essentials:
@@ -492,24 +444,18 @@ It kepts the type of geometry defined on the feature. Its implementation asks so
 
 It uses the _CATIVisProperties_ to know the properties to associate to the graphic representation. 
 
-
-
-
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Using Graphic Attributes](../CAAVisUseCases/CAAVisSampleGraphicAtt.htm)  
+[1] | [Using Graphic Attributes](../CAAVisUseCases/CAAVisSampleGraphicAtt.md)  
 ---|---  
-[2] | [Creating Levels of Details](../CAAVisUseCases/CAAVisSampleLOD.htm)  
-[3] | [Modifying Object Graphical Properties](../CAAVisUseCases/CAAVisSampleUseCATIVisProperties.htm)  
-|   
+[2] | [Creating Levels of Details](../CAAVisUseCases/CAAVisSampleLOD.md)  
+[3] | [Modifying Object Graphical Properties](../CAAVisUseCases/CAAVisSampleUseCATIVisProperties.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Jun 2002] | Document created  

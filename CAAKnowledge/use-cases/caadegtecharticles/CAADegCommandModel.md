@@ -1,9 +1,9 @@
 ---
 title: "The CAA Command Model"
-category: "general"
+category: "use-case"
 module: "CAADegTechArticles"
 tags: []
-source_file: "Doc\online\CAADegTechArticles\CAADegCommandModel.htm"
+source_file: "Doc/online/CAADegTechArticles/CAADegCommandModel.md"
 converted: "2026-05-11T17:33:49.754845"
 ---
 
@@ -65,9 +65,9 @@ The dialog command seen by the end user and that is currently running is named t
     * **Exclusive** : an exclusive command is known by the command selector. It requests the command selector to clean the command stack before beginning to run and taking the focus, including the previous active command. All commands present in the stack are canceled, that is called on their `Cancel` method. Use `CATCommandModeExclusive` to set a command as exclusive
     * **Shared** : a shared command is known by the command selector. It coexists with other commands already present in the stack, and requests the command selector to deactivate the active command before it takes the focus. Use `CATCommandModeShared` to set a command as shared.
     * **Undefined** : an undefined command is unknown by the command selector. It can run in parallel with the active command known by the command selector. Use `CATCommandModeUndefined` to set a command as undefined. Note that a state dialog command cannot be set as undefined.
-![CAAAfrCommandTree4.gif \(3433 bytes\)](images/CAAAfrCommandTree4.gif) | **Exclusive** : The active command is run in the exclusive mode. No other command exists on the command stack.  
+ **Exclusive** : The active command is run in the exclusive mode. No other command exists on the command stack.  
 ---|---  
-![CAAAfrCommandTree3.gif \(3776 bytes\)](images/CAAAfrCommandTree3.gif) | **Shared** : The active command is run in the shared mode. Other commands can be deactivated on the command stack If any, they are all shared commands, except the lower command that may be exclusive.  
+ **Shared** : The active command is run in the shared mode. Other commands can be deactivated on the command stack If any, they are all shared commands, except the lower command that may be exclusive.  
 A dialog command known by the command selector, that is created either as exclusive or shared, is managed by the command selector using the three methods `Activate`, `Desactivate`, and `Cancel`. As a general rule, these methods do the following: 
     * `Activate` is called when the dialog command takes the focus, if it is set as an exclusive or shared command. This happens in three cases:
       1. The command is just selected by the end user. The command class is instantiated and the dialog starts from the beginning
@@ -90,12 +90,12 @@ In Short The CAA commands are key objects to provide interactivity. They can hav
 
 * * *
 
-References [1] | [Making Your Dialog Commands Available](../CAAAfrTechArticles/CAAAfrIntegratingCommand.htm)  
+References [1] | [Making Your Dialog Commands Available](../CAAAfrTechArticles/CAAAfrIntegratingCommand.md)  
 ---|---  
-[2] | [The Send/Receive Communication Protocol](../CAASysTechArticles/CAASysSendReceive.htm)  
-[3] | [Getting Started with Dialog Boxes](../CAADlgUseCases/CAADlgSampleGettingStarted.htm)  
-[4] | [Getting Started with State Dialog Commands](CAADegGettingStarted.htm)  
-[5] | [Understanding the Application Frame Layout](../CAAAfrTechArticles/CAAAfrLayoutV5.htm)  
+[2] | [The Send/Receive Communication Protocol](../CAASysTechArticles/CAASysSendReceive.md)  
+[3] | [Getting Started with Dialog Boxes](../CAADlgUseCases/CAADlgSampleGettingStarted.md)  
+[4] | [Getting Started with State Dialog Commands](CAADegGettingStarted.md)  
+[5] | [Understanding the Application Frame Layout](../CAAAfrTechArticles/CAAAfrLayoutV5.md)  
 [Top]  
   
 * * *

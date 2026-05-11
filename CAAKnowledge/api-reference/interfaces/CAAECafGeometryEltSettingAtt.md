@@ -2,72 +2,22 @@
 title: "CAAECafGeometryEltSettingAtt"
 type: "interface"
 module: "CAACATIAApplicationFrm"
+category: "framework"
 base: "CATBaseUnknown"
+inheritance_chain: "CAAECafGeometryEltSettingAtt → CATBaseUnknown"
 method_count: 10
 visibility: "local"
+has_tie_binding: false
 verified: true
 ---
-
 # CAAECafGeometryEltSettingAtt
 
 **基类**: CATBaseUnknown  
+**继承链**: CAAECafGeometryEltSettingAtt → CATBaseUnknown  
 **模块**: CAACATIAApplicationFrm  
+**分类**: framework  
 **可见性**: local  
 **方法数**: 10
-
-> ===========================================================================
-
-## 方法列表
-
-### Initialize
-```cpp
-HRESULT Initialize();
-```
-
-### GetIdentifierVisibility
-```cpp
-HRESULT GetIdentifierVisibility(CATString & oIdVisibility);
-```
-
-### SetIdentifierVisibility
-```cpp
-HRESULT SetIdentifierVisibility(const CATString & iIdVisibility);
-```
-
-### GetInfoIdentifierVisibility
-```cpp
-HRESULT GetInfoIdentifierVisibility(CATSettingInfo * oInfo);
-```
-
-### GetMaxPointCurve
-```cpp
-HRESULT GetMaxPointCurve(int & oMaxPoint);
-```
-
-### SetMaxPointCurve
-```cpp
-HRESULT SetMaxPointCurve(const int iMaxPoint);
-```
-
-### GetInfoMaxPointCurve
-```cpp
-HRESULT GetInfoMaxPointCurve(CATSettingInfo ** oInfoArray, int * oNbInfo);
-```
-
-### GetImplPointVisibility
-```cpp
-HRESULT GetImplPointVisibility(CATString & oImplPointVisibility);
-```
-
-### SetImplPointVisibility
-```cpp
-HRESULT SetImplPointVisibility(const CATString & iImplPointVisibility);
-```
-
-### GetInfoImplPointVisibility
-```cpp
-HRESULT GetInfoImplPointVisibility(CATSettingInfo * oInfo);
-```
 
 ## 依赖
 

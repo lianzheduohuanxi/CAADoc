@@ -1,9 +1,9 @@
 ---
 title: "Getting Started with State Dialog Commands"
-category: "general"
+category: "use-case"
 module: "CAADegTechArticles"
 tags: ["CAAISysPoint", "CATISO", "CAAGeometryHeader", "CAADialogEngine", "CAADegCreateLineCmd", "CATIndicationAgent", "CAADegGeoCommands"]
-source_file: "Doc\online\CAADegTechArticles\CAADegGettingStarted.htm"
+source_file: "Doc/online/CAADegTechArticles/CAADegGettingStarted.md"
 converted: "2026-05-11T17:33:49.801485"
 ---
 
@@ -88,7 +88,6 @@ And the Line command creates the line using the two points input using the mouse
   
 ---  
 The complete header file is provided below.
-    
     #include "CATStateCommand.h"
     #include "CATMathPoint.h"
     
@@ -187,7 +186,7 @@ The methods and data members that are not mentioned above are used by the dialog
   
 ---  
 Note that: 
-       * The _stStartPointId_ and _stEndPointId_ arguments are used in the CAADegCreateLineCmd.CATNls file to assign state prompts to these states. Refer to [Assigning Resources](CAADegResources.htm)
+       * The _stStartPointId_ and _stEndPointId_ arguments are used in the CAADegCreateLineCmd.CATNls file to assign state prompts to these states. Refer to [Assigning Resources](CAADegResources.md)
        * Neither the initial state nor the final state are explicitly created
        * The states are automatically deleted when the command itself is deleted.
     2. **Creating the dialog agent**. The Line command uses one instance of the CATIndicationAgent class to read the start point and the end point input by the end user. The end user clicks in the screen plane, but the indication happens in fact in a plane defined thanks to the `SetMathPlane` method that assigns this plane to the dialog agent. In this command, the plane is a projection plane  parallel to the screen plane. It is the default plane, when the `SetMathPlane` is not used.  The point clicked on the screen is projected onto this plane. 
@@ -350,7 +349,6 @@ The two action methods are as follows:
   
 ---  
 [Top] Creating the Line Command Header The command header class should be created in the chosen workshop, workbench, or add-in class using the `MacDeclareHeader` macro. The command header is an instance of this class created in the `CreateCommands` method of the workshop, workbench, or add-in class. Then the command header is associated with a command starter and arranged with the other commands in the `CreateWorkshop`, `CreateWorkbench`, or `CreateToolbars` method of the workshop, workbench, or add-in class respectively. The Line command header is created in the Geometry workshop. `MacDeclareHeader` creates the CAAGeometryHeader class for the header file, and this class is instantiated in the `CreateCommands` method. It is then put in the Insert menu, associated with a command starter and arranged after the Point command in the `CreateWorkshop` method, as follows:
-    
     #include "CATCommandHeader.h"
     MacDeclareHeader(CAAGeometryHeader);
     ...

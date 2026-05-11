@@ -1,15 +1,14 @@
 ---
 title: "CAAAniMeshExtrudeRot.catvbs"
-category: "general"
+category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAAniMeshExtrudeRot", "CATIA", "CAAScdAniUseCases"]
-source_file: "Doc\online\CAAScdAniUseCases\CAAAniMeshExtrudeRotSource.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshExtrudeRotSource.md"
 converted: "2026-05-11T17:31:51.635968"
 ---
 
-
+```vbscript
     'COPYRIGHT DASSAULT SYSTEMES 2000
-    
     '***********************************************************************
     '  Purpose:      Open an analysis document
     '                Create Extrude with Rotation mesh
@@ -21,9 +20,11 @@ converted: "2026-05-11T17:31:51.635968"
     '  Locales:      English 
     '  CATIA Level:  V5R16
     '***********************************************************************
+```
+
     
+```vbscript
     Sub CATMain()
-    
     '----------------------------------------------------------- 
     'Optional: allows to find the sample wherever it's installed
     
@@ -31,63 +32,63 @@ converted: "2026-05-11T17:31:51.635968"
       sSep=CATIA.SystemService.Environ("ADL_ODT_SLASH")
     
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
         End If
+```vbscript
     '----------------------------------------------------------- 
-    
     'Open the CATAnalysis Document
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Surface.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+```
+
     
-    
+```
+
     'Retrieve the analysis Manager 
+```vbscript
     Set oAnalysisManagar = oAnalysisDocument.Analysis
     Set oAnalysisSet = oAnalysisManagar.AnalysisSets
-    
+```vbscript
     'Retrieve the part document and product
     Set oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
     Set partDocument = oAnalysisLinkedDocuments.Item(1)
     Set product = partDocument.Product
-    
     'Retrieve the published line
     'the mesh will be rotated and extruded along this line
     Set publications = product.Publications
     Set pubAxis = publications.Item("Axis")
-    
     'Retreive the analysis model
     Set oAnalysisModels = oAnalysisManagar.AnalysisModels
     Set oAnalysisModel = oAnalysisModels.Item(1)
-    
     'Retrieve the mesh manager and list of mesh parts
     Set oAnalysisMeshManager = oAnalysisModel.MeshManager 
     Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
     Set surfMesh = oAnalysisMeshParts.Item("Surface Mesh.1")
-    
     'Create the reference of the surface mesh
     Set reference = oAnalysisManagar.CreateReferenceFromObject(surfMesh)
-    
     'Add the extrude with translation mesh part to the list of mesh parts
     Set extrudeMesh = oAnalysisMeshParts.Add("MSHPartExtrRotation")
-    
     'Assign the surface mesh part as support
+```
+
     extrudeMesh.AddSupportFromReference NOTHING, reference
-    
     'Set the global specifications
     extrudeMesh.SetGlobalSpecification "Condensation", 1
     extrudeMesh.SetGlobalSpecification "Tolerance", "1.0 mm"
     extrudeMesh.SetGlobalSpecification  "Angle", "120 deg"
     extrudeMesh.SetGlobalSpecification  "Angle1", "20 deg"
-    
     'Set the specification; the axis of rotation
     extrudeMesh.SetSpecificationFromPublication "Direction", product, pubAxis, 0
-    
+```vbscript
     'Get the basic components and sub components
     Set basicComps = extrudeMesh.BasicComponents
     Set subBasicComps = basicComps.Item(1).BasicComponents
-    
     'Retrieve each of the attributes by name and set their values
     
     Set subBasicComp1 = subBasicComps.Item("Type")
+```
+
     subBasicComp1.SetValue "", 0, 0, 0, "Arithmetic"
     
     Set subBasicComp2 = subBasicComps.Item("NbNodes")
@@ -98,11 +99,16 @@ converted: "2026-05-11T17:31:51.635968"
     
     Set subBasicComp4 = subBasicComps.Item("Ratio")
     subBasicComp4.SetValue "", 0, 0, 0, 10
-    
     'Update the mesh	
     extrudeMesh.Update
     
+```
+
     
     
+```vbscript
     End Sub
     
+```
+
+```

@@ -1,15 +1,14 @@
 ---
 title: "CAAAniMeshOctTetra.catvbs"
-category: "general"
+category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAScdAniUseCases", "CAAAniMeshOctTetra"]
-source_file: "Doc\online\CAAScdAniUseCases\CAAAniMeshOctTetraSource.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshOctTetraSource.md"
 converted: "2026-05-11T17:31:51.673241"
 ---
 
-
+```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2000
-    
     ' ***********************************************************************
     '   Purpose: Create an octree tetrahedron mesh
     '            assign the part body as support
@@ -22,54 +21,71 @@ converted: "2026-05-11T17:31:51.673241"
     '   Locales:      English 
     '   CATIA Level:  V5R16
     ' ***********************************************************************
+```
+
     
+```vbscript
     Sub CATMain()
-    
+```vbscript
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
       sDocPath=CATIA.SystemService.Environ("CATDocView")
     
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+```
+
+```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
         End If
     ' ----------------------------------------------------------- 
     
-    
+```
+
     ' Open the CATAnalysis Document
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis")
+```vbscript
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
     
-    
+```
+
     'Retrieve analysis manager
+```vbscript
     Set oAnalysisManager = oAnalysisDocument.Analysis
-    
+```vbscript
     ' Retrieve the part document and product
     Set oAnalysisLinkedDocuments = oAnalysisManager.LinkedDocuments
     Set partDocument = oAnalysisLinkedDocuments.Item(1)
     Set product = partDocument.Product
+```
+
     
-    
+```
+
     ' Retrieve the analysis model
+```vbscript
     Set oAnalysisModels = oAnalysisManager.AnalysisModels
     Set oAnalysisModel = oAnalysisModels.Item(1)
-    
+```vbscript
     ' Retrieve mesh manager and mesh part 
     Set oAnalysisMeshManager = oAnalysisModel.MeshManager
     Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
-    
     ' Retrieve publications from product and retrieve the published face.
     Set publications = product.Publications
     Set pubedge = publications.Item("Edge")
     Set pubPartBody = publications.Item("PartBody")
+```
+
     
-    
+```
+
     ' Add the new Octree tetrahedron mesh part to the list of mesh parts
+```vbscript
     Set octreePart = oAnalysisMeshParts.Add ("MSHPartOctree3D") 
-    
     ' Add reference previously created
     octreePart.AddSupportFromPublication product, pubPartBody
     
-    
+```
+
     ' Set the global Specifications
     octreePart.SetGlobalSpecification "SizeValue", "10.0 mm"
     octreePart.SetGlobalSpecification "AbsoluteSagValue", "3.0 mm"
@@ -87,15 +103,20 @@ converted: "2026-05-11T17:31:51.673241"
     octreePart.SetGlobalSpecification "MeshViolationValue", "0.5 mm"
     octreePart.SetGlobalSpecification "ProportionalSag", 1
     octreePart.SetGlobalSpecification "ProportionalSagValue", "0.5 mm"
-    
     ' Add the Mesh local size as local specifications and assign it attributes
+```vbscript
     Set meshspecs1 = octreePart.AnalysisMeshLocalSpecifications
     Set spec1 = meshspecs1.Add("MSHLocalMeshSize")
     spec1.SetAttribute "MSHMeshSizeMag", "1.5 mm"
     spec1.AddSupportFromPublication "ConnectorList", product, pubedge
-    
     'Update the mesh part
     octreePart.Update
     
+```
+
+```vbscript
     End Sub
     
+```
+
+```

@@ -1,38 +1,30 @@
 ---
 title: "Deleting Schematic Objects"
-category: "general"
+category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAADoc", "CAASCH_Delete01", "CAAScdSchUseCases", "CAASchDelete", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CATIASchRoute", "CAASchPlatformModeler", "CATIASchAppConnectable", "CAASchAppUtilities"]
-source_file: "Doc\online\CAAScdSchUseCases\CAASchDelete.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchDelete.md"
 converted: "2026-05-11T17:31:51.359152"
 ---
-
 ## Schematics Platform Modeler
 
 | 
-
 ## Deleting Schematic Objects  
   
----|---  
   
 * * *
 
-![](../CAAScrBase/images/atarget.gif) | This macro shows you how to delete Schematic objects.This macro opens the document CAASCH_Delete01.CATProduct. It contains a schematic component that is connected to a schematic route at both ends (the highlighted object in the screen shot below). Notice that the instance name of this component has the word "delete" embedded in it. This word identifies the object to be deleted to the macro. ![](images/CAASchDelete_01.jpg)  
+ This macro shows you how to delete Schematic objects.This macro opens the document CAASCH_Delete01.CATProduct. It contains a schematic component that is connected to a schematic route at both ends (the highlighted object in the screen shot below). Notice that the instance name of this component has the word "delete" embedded in it. This word identifies the object to be deleted to the macro. ![](images/CAASchDelete_01.jpg)  
 ---|---  
-![](../CAAScrBase/images/ainfo.gif) | CAASchDelete is launched in CATIA [1]. No open document is needed.Special environment must be available to successfully run this macro:
+ CAASchDelete is launched in CATIA [1]. No open document is needed.Special environment must be available to successfully run this macro:
 
   * Prerequisites:
-
-
 
 >   1. RADE must be installed.
 >   2. CAASchPlatformModeler.edu must exist in CAADoc folder.
 > 
 
-
   * Setup:
-
-
 
 >   1. Build CAASchAppBase.m and CAASchAppUtilities.m, located in CAASchPlatformModeler.edu (RADE is required). 
 >   2. Copy generated DLLs, CAASchAppBase.dll and CAASchAppUtilities.m, respectively, to the run-time environment folder "intel_a\code\bin."
@@ -40,20 +32,18 @@ converted: "2026-05-11T17:31:51.359152"
 >   4. Copy CAASchPlatformModeler.edu\CNext\code\dictionary\CAASchPlatformModeler.edu.dico to the run-time environment folder "intel_a\code\dictionary."
 > 
 
-
-[ CAASchDelete.CATScript i](CAASchDeleteSource.htm)s located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchDelete.CATScript) (Windows only).  
-![](../CAAScrBase/images/ascenari.gif) | CAASchDelete includes the following steps:
+[ CAASchDelete.CATScript i](CAASchDeleteSource.md)s located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchDelete.CATScript) (Windows only).  
+ CAASchDelete includes the following steps:
 
   1. Prolog
   2. Delete a Schematic component
   3. Delete a Schematic route
 
-
-
 #### Prolog
 
 The macro first loads CAASCH_Delete01.CATProduct. |     ...  
     ' Open the schematic document   
+```vbscript
     Dim sFilePath  
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _  
             "online\CAAScdSchUseCases\samples\CAASCH_Delete01.CATProduct")  
@@ -61,12 +51,17 @@ The macro first loads CAASCH_Delete01.CATProduct. |     ...
     Dim objSchDoc As Document  
     Set objSchDoc = CATIA.Documents.Open(sFilePath)  
     ...  
+```
+
+```
+
 ---  
   
 Next, the macro acquires the schematic root object from the document. The schematic root is the top node of the object instance tree in a schematic document.
 
     ...  
     ' Find the top node of the schematic object tree - schematic root.  
+```vbscript
     Dim objPrdRoot As Product  
     Dim objSchRoot As SchematicRoot  
     If ( Not ( objSchDoc Is Nothing ) ) Then  
@@ -76,40 +71,60 @@ Next, the macro acquires the schematic root object from the document. The schema
       End If  
     End If  
     ...  
+```
+
+```
+
 ---  
   
 Using the GetSchBaseFactory method, a SchBaseFact interface handle is obtained. The DeleteObject method of this interface is used in the next step.
 
     ...  
+```vbscript
     Dim objSchBaseFact As SchBaseFactory  
   
+```
+
+```vbscript
     If ( Not ( objSchRoot Is Nothing ) ) Then  
   
        Set objSchBaseFact = objSchRoot.GetSchBaseFactory  
     ...  
+```
+
+```
+
 ---  
-  
 #### Delete a Schematic component
 
 The macro finds the component to be deleted in the private FindComponentInst function. This is based on a naming convention on the Schematic component. FindComponentInst returns the first instance whose name has the word "delete" embedded in it. The macro calls DeleteObject to delete the component.
 
     ...  
+```vbscript
        If ( Not ( objSchBaseFact Is Nothing ) ) Then  
   
+```vbscript
           Set objSchComp = FindComponentInst (objSchRoot)  
   
+```
+
+```vbscript
           If ( Not ( objSchComp Is Nothing ) ) Then  
   
+```
+
              objSchBaseFact.DeleteObject objSchComp  
   
     ...  
+```
+
 ---  
-  
 #### Delete a Schematic route
 
 The word "inserted" in the comment below is used to describe a situation where a Schematic component is connected to two Schematic routes through two of its connectors. These connectors must be internally connected to each other by an "internal flow" object. The latter is aggregated by the Schematic component. For example, the highlighted "valve" in the screen shot of the current document above has been inserted into the route.
 
     ...  
+```vbscript
        '-----------------------------------------------------------------------  
        '  In this specific input model, we expects to find a component  
        '  instance that has been inserted into a route.  
@@ -119,12 +134,20 @@ The word "inserted" in the comment below is used to describe a situation where a
        '  system to become one.   
        '  
        '-----------------------------------------------------------------------  
+```
+
+```vbscript
        Set objLRoutes = objSchRoot.GetRoutes  
    ...  
+```
+
+```
+
 ---  
   
 This macro uses a private FindOpenConnector function to find the 2 unconnected ends of the 2 routes that are connected to each ends of the component before it is deleted. With these 2 ends, the Concatenate method of the SchRoute interface is then called to connect the 2 route into one. Note that the input SchRoute interface handle (in this case, the objRoute2) will be deleted implicitly by the Concatenate method. 
 
+```vbscript
        Set objLRoutes = objSchRoot.GetRoutes  
        If ( Not ( objLRoutes Is Nothing ) ) Then  
           intNbRouteAfter = objLRoutes.Count  
@@ -141,9 +164,15 @@ This macro uses a private FindOpenConnector function to find the 2 unconnected e
           Dim  objAppRCntr1 As SchAppConnector  
           Dim  objAppRCntr2 As SchAppConnector  
   
+```
+
           If  ( intNbRouteAfter > 0 ) Then  
+```vbscript
              Set objRoute1 = objLRoutes.Item (1, "CATIASchRoute")  
   
+```
+
+```vbscript
              If ( Not ( objRoute1 Is Nothing ) ) Then  
                 Set objRCntbl1 = objSchRoot.GetInterface ( _  
                   "CATIASchAppConnectable", objRoute1)  
@@ -160,6 +189,9 @@ This macro uses a private FindOpenConnector function to find the 2 unconnected e
                 End If  
              End If  
   
+```
+
+```vbscript
              If ( Not ( objRoute1 Is Nothing ) And _  
                    Not ( objAppRCntr1 Is Nothing ) And _  
                    Not ( objAppRCntr2 Is Nothing ) ) Then  
@@ -172,12 +204,15 @@ This macro uses a private FindOpenConnector function to find the 2 unconnected e
           End If   
        End If  '--- If ( Not ( objLRoutes Is Nothing ) ...  
     ...  
+```
+
+```
+
 ---  
   
 [Top]
 
 * * *
-
 #### In Short
 
 This use case shows how to delete Schematic objects. A message logging the status of the critical steps is displayed at the end of the use case. 
@@ -187,12 +222,10 @@ This use case shows how to delete Schematic objects. A message logging the statu
 [Top]
 
 * * *
-
 #### References
 
-[1] | [ Replaying a Macro](../CAAScdInfUseCases/CAAInfLauchMacro.htm)  
+[1] | [ Replaying a Macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)  
 ---|---  
-|   
 [Top]  
   
 * * *

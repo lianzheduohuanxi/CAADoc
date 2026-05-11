@@ -3,18 +3,15 @@ title: "Updating Shape Design Features"
 category: "technical article"
 module: "CAAGsiTechArticles"
 tags: ["CAAGSMInterfaces", "CATIPrtPart", "CAAGsiNozzle", "CATIGSMTool", "CAAAGsiService", "CAAGsiService", "CAAGsiServices", "CATIAV5", "CAAGsiObjectUpdate", "CATISpecObject_var"]
-source_file: "Doc\online\CAAGsiTechArticles\CAAGsiUpdateShapeDesign.htm"
+source_file: "Doc/online/CAAGsiTechArticles/CAAGsiUpdateShapeDesign.md"
 converted: "2026-05-11T17:31:50.677519"
 ---
-
 # Shape Design& Styling
 
 | 
-
 ## Generative Shape Design
 
 | 
-
 ### Updating Shape Design Features
 
 _Update and check linearity for Shape Design features_  
@@ -22,7 +19,6 @@ _Update and check linearity for Shape Design features_
 Technical Article  
   
 * * *
-
 ### Abstract
 
 This article discusses the CAAGsiObjectUpdate service.
@@ -38,20 +34,17 @@ This article discusses the CAAGsiObjectUpdate service.
 ---  
   
 * * *
-
 ### What is new in the update of Shape Design features 
 
 Shape Design features can now be inserted in Body, OGS and GS.  
 Body and OGS are new set of features in which shape design features can be inserted   
 They proposed enhanced mechanisms for feature (Absorbed main input, Current feature for Shapes ) that required additional actions at update for feature in Body and OGS context (GS is the former "Ooen Body") 
-
 ### The CAAGsiObjectUpdate Service of CAAGsiService,h header - Update Shape Design features 
 
 CAAGsiServices encapsulates generic sequences of code.   
 CAAGsiObjectUpdate is an update method available for Shape Design features, Part Design features to be used when features are inserted in Body, OGS and GS 
 
 [Top]
-
 #### Where to Find the CAAGsiServices Code
 
 The CAAGsiServices header export a list of self-contain tools , is located in PublicInterfaces of CAAGSMInterfaces.edu and is implements in the CAAGsiServices.m module of the CAAGSMInterfaces.edu framework:
@@ -63,7 +56,6 @@ Unix | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiServices.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 CAAGsiServices , CAAGsiObjectUpdate Step by Step 
@@ -71,12 +63,9 @@ CAAGsiServices , CAAGsiObjectUpdate Step by Step
   1. Use standard Mechanical Modeler Update on feature 
   2. Check insert location set and manage linearity if needed 
 
-
-
 [Top]
 
 * * *
-
 #### Use standard Mechanical Modeler Update on feature
 
 Mechanical Modeler update standard mechanism 
@@ -109,7 +98,6 @@ Mechanical Modeler update standard mechanism
       
   
 ---  
-  
 #### Check insert location set and manage linearity if needed 
 
 To be done after feature update 
@@ -140,24 +128,21 @@ To be done after feature update
 Most of the case, it is recommended in applicative code to call afterwards SetCurrentFeature method of CATIPrtPart Interface on the just updated object : in CATIAV5 interactive function : Object just created or just edited are set as current (Body and OGS) 
 
 * * *
-
 ### In Short
 
 This service demonstrated how to implement absorbent mechanism at feature update for shape design and part design features inserted in Body and/or OGS 
 
 [Top]
-
 ### References
 
-[1] | [About Generative Shape Design Features](CAAGsiShapeDesignFeature.htm)  
+[1] | [About Generative Shape Design Features](CAAGsiShapeDesignFeature.md)  
 ---|---  
-[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-[3] | [Creating an Open Body](CAAGsiCreateGSMTool.htm)  
-[4] | [CAAGsiNozzle Use case](../CAAGsiUseCases/CAAGsiNozzleSample.htm)  
+[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[3] | [Creating an Open Body](CAAGsiCreateGSMTool.md)  
+[4] | [CAAGsiNozzle Use case](../CAAGsiUseCases/CAAGsiNozzleSample.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [May 2004] | Document created  

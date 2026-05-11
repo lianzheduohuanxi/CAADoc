@@ -1,9 +1,10 @@
 ---
 title: "CATIAApplicationFrame Modifications"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR10"
+version: "V5R10"
 tags: ["CATIAApplicationFrame"]
-source_file: "Doc\online\CAACenAPIChangesR10\CATIAApplicationFrame.htm"
+source_file: "Doc/online/CAACenAPIChangesR10/CATIAApplicationFrame.md"
 converted: "2026-05-11T17:33:50.125665"
 ---
 

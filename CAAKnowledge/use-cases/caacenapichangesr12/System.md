@@ -1,9 +1,10 @@
 ---
 title: "System Modifications"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR12"
+version: "V5R12"
 tags: ["CATISysSettingControler", "CATIIniSettingManagement"]
-source_file: "Doc\online\CAACenAPIChangesR12\System.htm"
+source_file: "Doc/online/CAACenAPIChangesR12/System.md"
 converted: "2026-05-11T17:33:50.591299"
 ---
 

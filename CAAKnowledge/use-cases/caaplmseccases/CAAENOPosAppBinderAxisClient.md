@@ -5,18 +5,15 @@ title: "
 category: "use case"
 module: "CAAPLMSecUseCases"
 tags: ["CAAENOPosApplicationBinderImplClient", "CAAWebServices", "CAAJAXRPCHTTPSessionHandler", "CAAENOPosApplicationBinderImplUseCase", "CAAENOPosApplicationBinderImplWrapper", "CAAPLMSecurity", "CAAENOPosAppBinderImplAxis1_3Client"]
-source_file: "Doc\online\CAAPLMSecUseCases\CAAENOPosAppBinderAxisClient.htm"
+source_file: "Doc/online/CAAPLMSecUseCases/CAAENOPosAppBinderAxisClient.md"
 converted: "2026-05-11T17:33:45.558180"
 ---
-
 #  CAA Web Services Home 
 
 | 
-
 ##   
 
 | 
-
 ###  Consuming the ENOPosApplicationBinderImpl CAA Web Service 
 
 _Using the ENOPosApplicationBinderImpl CAA Web service in order to log on to ENOVIA LCA V5_  
@@ -24,7 +21,6 @@ _Using the ENOPosApplicationBinderImpl CAA Web service in order to log on to ENO
 Use Case   
   
 * * *
-
 ###  Abstract 
 
 This article discusses the **CAAENOPosAppBinderImplAxis1_3Client** use case. It describes how to use the Java client binding that can be generated using the Axis WSDL2Java emitter in order to consume the **ENOPosApplicationBinderImpl CAA Web service**. It provides a sample usage scenario that demonstrates how to manage a session with an ENOVIA LCA V5 system. 
@@ -42,7 +38,6 @@ This article discusses the **CAAENOPosAppBinderImplAxis1_3Client** use case. It 
 ---  
   
 * * *
-
 ###  What You Will Learn With This Use Case 
 
 This use case demonstrates how to write a client application that consumes the ENOPosApplicationBinderImpl CAA Web service. It helps you to: 
@@ -51,18 +46,14 @@ This use case demonstrates how to write a client application that consumes the E
   * Write a wrapper class that instantiates the generated proxy, configures it, and uses it to remotely invoke methods on the CAA Web service, 
   * Write a class that demonstrates a sample usage scenario for the ENOPosApplicationBinderImpl CAA Web service, using the wrapper class mentioned above. 
 
-
-
 This article also provides guidances on how to build and run the sample client application using **IRAD (IBM Rational Application Developer) 6.0** , although any other Java IDE (Integrated Development Environment) or stand-alone JDK/JRE (Java Development Kit/Java Runtime Environment) could be used for that purpose. 
 
 [Top] 
-
 ###  The CAAENOPosAppBinderImplAxis1_3Client Use Case 
 
 CAAENOPosAppBinderImplAxis1_3Client is a use case of the CAAPLMSecurity.edu framework that illustrates the ENOPosApplicationBinderImpl CAA Web service capabilities. 
 
 [Top] 
-
 ####  What Does CAAENOPosAppBinderImplAxis1_3Client Do 
 
 The sample usage scenario delivered with this use case contains the following steps: 
@@ -71,10 +62,7 @@ The sample usage scenario delivered with this use case contains the following st
   * Select the first context available from the result list and use it to log on to ENOVIA LCA V5, 
   * Log out from ENOVIA LCA V5 and terminate the opened session. 
 
-
-
 [Top] 
-
 ####  Where To Find the CAAENOPosAppBinderImplAxis1_3Client Code 
 
 The CAAENOPosAppBinderImplAxis1_3Client use case is made of several classes located in the **CAAENOPosAppBinderImplAxis1_3Client.mj** module of the **CAAPLMSecurity.edu** framework: 
@@ -84,8 +72,6 @@ The CAAENOPosAppBinderImplAxis1_3Client use case is made of several classes loca
 ---  
   
   * `_< Install>_`: the directory where the CAA CD-ROM is installed. 
-
-
 
 The sample Java resources generated using the Axis WSDL2Java emitter are delivered in the following directory (**Windows**): 
 
@@ -105,8 +91,6 @@ _< Source>_\_< Output-package>_\holders\StringArrayTypeHolder.java`
   * `_< Install>_`: same as above, 
   * `_< Output-package>_`: com\dassault_systemes\caaplmsecurity\caaenoposappbinderaxis1_3client\generated (based on the output package value specified when using the WSDL2Java emitter). 
 
-
-
 The CAAENOPosAppBinderImplAxis1_3Client module contains the other following resources:
 
 `_< Source>_\_< Root-package>_\CAAENOPosApplicationBinderImplClient.java  
@@ -117,14 +101,11 @@ _< Source>_\_< Root-package>_\CAAENOPosApplicationBinderImplWrapper.java`
   * `_< Source>_`: same as above, 
   * `_< Root-package>_`: com\dassault_systemes\caaplmsecurity\caaenoposappbinderaxis1_3client. 
 
-
-
 The **CAAENOPosApplicationBinderImplWrapper** class describes how to configure the generated proxy and how to invoke its methods. The **CAAENOPosApplicationBinderImplUseCase** class demonstrates a sample use case scenario of the ENOPosApplicationBinderImpl CAA Web service. The **CAAENOPosApplicationBinderImplClient** class contains the main program. It parses the command line inputs and starts up the use case. 
 
 This use case has a dependency on the **CustomSessionHandler** class which is available in the **CAAJAXRPCHTTPSessionHandler.mj** module of the **CAAWebServices.edu** framework. Please refer to [1] for details on HTTP session management and where to find the related class. 
 
 [Top] 
-
 ####  How to Launch CAAENOPosAppBinderImplAxis1_3Client 
 
 To launch the CAAENOPosAppBinderImplAxis1_3Client use case, you will need to set up a buildtime environment, build the code along with its prerequisites, set up a runtime configuration and then execute the use case. You can see [2] for details on how to perform these steps within the IRAD 6 environment. 
@@ -138,15 +119,12 @@ The sample usage scenario delivered within this use case consists of a class dec
   * `_< ENOVIA username>_`: is a valid username declared in the ENOVIA P&O database, 
   * `_< Basic Authentication Username>_ and _< Basic Authentication Password>_`: are a valid set of credentials for authentication on the remote Web server. 
 
-
-
 Here follows a sample command, to be updated with your own environment configuration: 
 
 `-w http://stophe1dsy.dsy.ds:9080/B17 -e cjk -u wpsadmin -p wpsadmin`  
 ---  
   
 [Top] 
-
 ###  Step-by-step 
 
 The following section first explains how to generate the Java client binding for the ENOPosApplicationBinderImpl CAA Web service demonstrated. The remaining sections then describe the code that must be written in order to consume this Web service: 
@@ -158,23 +136,19 @@ The following section first explains how to generate the Java client binding for
   5. Logging Out From ENOVIA LCA V5
   6. Sample Usage Scenario
 
-
-
 [Top] 
-
 ####  Creating the Java Client Binding 
 
 Please refer to [3] for details on how to generate the Java client binding using the Axis WSDL2Java emitter. 
 
 Here follows a sample command in order to generate the Java client binding for the ENOPosApplicationBinderImpl CAA Web service: 
 
-`%JDK_HOME%\bin\java org.apache.axis.wsdl.WSDL2Java -o C:\CAAPLMSecurity\src -p com.dassault_systemes.caaplmsecurity.caaenoposappbinderaxis1_3client.generated http://karindsy.dsy.ds:9080/B17/wsdl?service=urn:com:dassault_systemes:ENOPosWS:ENOPosAppliBinder:ENOPosApplicationBinderImpl`  
+`%JDK_HOME%\bin\java org.apache.axis.wsdl.WSDL2Java -o C/CAAPLMSecurity\src -p com.dassault_systemes.caaplmsecurity.caaenoposappbinderaxis1_3client.generated http://karindsy.dsy.ds:9080/B17/wsdl?service=urn:com:dassault_systemes:ENOPosWS:ENOPosAppliBinder:ENOPosApplicationBinderImpl`  
 ---  
   
 The server name, port, and context root URI information must be updated to match the server where the CAA Web service has been deployed. The list of generated resources is available from the above section: "Where To Find the CAAENOPosAppBinderImplAxis1_3Client Code". 
 
 [Top] 
-
 ####  Instantiating and Configuring the Generated Proxy 
 
 In order to be able to consume the ENOPosApplicationBinderImpl CAA Web service implementation that has been deployed on a target server, you first need to retrieve an instance of the `IApplicationBinderBindingStub` generated class (also referred to as the **proxy**). It is a common best practice to manipulate an instance through its related interface whenever available. The WSDL2Java emitter produces an interface that is implemented by the `IApplicationBinderBindingStub` class: `IApplicationBinder`. It describes the available methods for the remote CAA Web service. 
@@ -241,9 +215,7 @@ The following code describes how to instantiate the generated proxy. Such proxy 
 **(3)** : when security is enabled, it is mandatory to set the `username` and `password` attributes on the generated proxy. The values specified must match a valid set of credentials for the Basic Authentication mechanism,  
 **(4)** : the default timeout value can be increased in order to avoid potential issues at runtime, such as losing the HTTP connection before receiving the SOAP responses. The sample value specified in the code is in milliseconds.  
 
-
 [Top] 
-
 ####  Retrieving User Contexts 
 
 In order to log on to ENOVIA LCA V5, you must first retrieve the contexts associated with a given user declared in the P&O (People & Organization) database. This can be achieved using the following method, which is available through the generated `IApplicationBinder` proxy interface: 
@@ -285,7 +257,6 @@ The following code demonstrates the use of the `getUserContexts` method:
 ---  
   
 [Top] 
-
 ####  Logging On To ENOVIA LCA V5 
 
 You can then log on to ENOVIA LCA V5 with one of the contexts available for the user specified using the following method: 
@@ -328,7 +299,6 @@ The following code demonstrates the use of the `bindToApplication` method:
 ---  
   
 [Top] 
-
 ####  Logging Out From ENOVIA LCA V5 
 
 You can finally log off from ENOVIA LCA V5 and terminate the opened session using the following method: 
@@ -359,7 +329,6 @@ The following code demonstrates the use of the `releaseFromApplication` method:
 ---  
   
 [Top] 
-
 ####  Sample Usage Scenario 
 
 The following code depends on the CAAENOPosApplicationBinderImplWrapper class described above. It demonstrates a sample usage scenario for the ENOPosApplicationBinderImpl CAA Web service: 
@@ -432,7 +401,6 @@ The following code depends on the CAAENOPosApplicationBinderImplWrapper class de
 [Top] 
 
 * * *
-
 ###  In Short 
 
 This use case explains how to use the Java client binding generated using the Axis WSDL2Java emitter in order to consume the ENOPosApplicationBinderImpl CAA Web service. It also gives an overview of the available methods: 
@@ -441,22 +409,18 @@ This use case explains how to use the Java client binding generated using the Ax
   * `bindToApplication`: log on to ENOVIA LCA V5 using a specific context, 
   * `releaseFromApplication`: log off from ENOVIA LCA V5 in order to terminate an opened session. 
 
-
-
 [Top] 
 
 * * *
-
 ###  References 
 
-[1]  |  [Maintaining the Session State](../CAAWSTechArticles/CAAWSMaintainSessionWithAxis.htm)  
+[1]  |  [Maintaining the Session State](../CAAWSTechArticles/CAAWSMaintainSessionWithAxis.md)  
 ---|---  
-[2]  |  [Building and Launching a CAA Web Service Use Case](../CAAWSUseCases/CAAWSBuildAndLaunchUsingAxis.htm)  
-[3]  |  [Generating a Java Client Binding](../CAAWSTechArticles/CAAWSClientUsingAxis.htm)  
+[2]  |  [Building and Launching a CAA Web Service Use Case](../CAAWSUseCases/CAAWSBuildAndLaunchUsingAxis.md)  
+[3]  |  [Generating a Java Client Binding](../CAAWSTechArticles/CAAWSClientUsingAxis.md)  
 [Top]   
   
 * * *
-
 ###  History 
 
 Version: **1** [Apr 2005]  |  Document created   

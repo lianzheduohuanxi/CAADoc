@@ -3,7 +3,7 @@ title: "Running Light Expand"
 category: "use case"
 module: "CAADkoUseCases"
 tags: ["CATIVpmLightExpandObject", "CAAVPMDesktopObjects", "CAADkoLightExpand"]
-source_file: "Doc\online\CAADkoUseCases\CAADkoLightExpand.htm"
+source_file: "Doc/online/CAADkoUseCases/CAADkoLightExpand.md"
 converted: "2026-05-11T17:33:45.981463"
 ---
 
@@ -184,7 +184,7 @@ In Short Running Light Expand on the server consists in getting the root object 
 
 * * *
 
-References [1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
 [Top]  
   

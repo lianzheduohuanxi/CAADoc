@@ -1,9 +1,10 @@
 ---
 title: "ENOVReportSolutionServer Modifications"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR10"
+version: "V5R10"
 tags: []
-source_file: "Doc\online\CAACenAPIChangesR10\ENOVReportSolutionServer.htm"
+source_file: "Doc/online/CAACenAPIChangesR10/ENOVReportSolutionServer.md"
 converted: "2026-05-11T17:33:50.171457"
 ---
 

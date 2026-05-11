@@ -3,7 +3,7 @@ title: "Using the Basic Topological Operators"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CATICGMContainer", "CAADoc", "CATICGMTopPointOperator", "CAATopSpline", "CATICGMObject", "CATICGMTopSplineOperator", "CAAGMModelGemBrowser", "CAATGMOperatorsInterfaces", "CATICGMTopLineOperator", "CAAGMOperatorsSpline", "CATICGMSplineBody", "CATICGMLengthFromBodyOnWire"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcTopSpline.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopSpline.md"
 converted: "2026-05-11T17:33:49.328293"
 ---
 
@@ -39,7 +39,7 @@ The length analysis can be only used with the first way, except that there is no
     * `SplineBody2` is created by an operator. Tangency constraints are imposed on the extremities. The operator also returns the tangents to all the passing points, that are used to create lines.
 Moreover, the use case shows an example of the curve length computation.  
 ---|---  
-How to Launch CAAGMOperatorsSpline To launch CAAGMOperatorsSpline, you will need to set up the build time environment, then compile CAAGMOperatorsSpline.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. If you simply type CAAGMOperatorsSpline with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsSpline e:\SplineCreation.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAATopSpline Code The CAAGMOperatorsSpline use case is made of a main named CAATopSpline.cpp located in the CAAGMOperatorsSpline.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAATGMOperatorsInterfaces.edu\CAAGMOperatorsSpline.m\` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step There are six steps in CAATopSpline.cpp:
+How to Launch CAAGMOperatorsSpline To launch CAAGMOperatorsSpline, you will need to set up the build time environment, then compile CAAGMOperatorsSpline.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. If you simply type CAAGMOperatorsSpline with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsSpline e/SplineCreation.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAATopSpline Code The CAAGMOperatorsSpline use case is made of a main named CAATopSpline.cpp located in the CAAGMOperatorsSpline.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAATGMOperatorsInterfaces.edu\CAAGMOperatorsSpline.m\` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step There are six steps in CAATopSpline.cpp:
     1. Creating the Geometry Factory
     2. Directly Creating Point Bodies and a Spline Body (first way)
     3. Using a Basic Topological Operator to Create Another Spline Body (second way.) This includes: 
@@ -230,7 +230,7 @@ In Short
     * The basic topological operators are transient objects used to create basic topological objects. They work inside one container.
     * They are base on the general scheme of the GM operators: creation, optionally set of advanced options, run, read of the results, deletion
     * Basic bodies can also be directly created by a global function.
-References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
 History Version: **1** [Feb 2000] | Document created  
 ---|---

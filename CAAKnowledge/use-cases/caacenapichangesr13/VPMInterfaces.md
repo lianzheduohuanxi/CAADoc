@@ -1,9 +1,10 @@
 ---
 title: "VPMInterfaces Modifications"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR13"
+version: "V5R13"
 tags: ["CATICfgFilter", "CATICfgManager", "CATIVpmFactoryManager", "CATICfgModification", "CATIConfigurableObject"]
-source_file: "Doc\online\CAACenAPIChangesR13\VPMInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR13/VPMInterfaces.md"
 converted: "2026-05-11T17:33:50.799862"
 ---
 

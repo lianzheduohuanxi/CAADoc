@@ -2,45 +2,38 @@
 title: "CAAISysTextureProperties"
 type: "interface"
 module: "CAASystem"
+category: "framework"
 base: "CATBaseUnknown"
+inheritance_chain: "CAAISysTextureProperties → CATBaseUnknown"
 method_count: 4
 visibility: "public"
+has_tie_binding: true
 verified: true
 ---
+> **TIE实现**: unknown
 
 # CAAISysTextureProperties
 
 **基类**: CATBaseUnknown  
+**继承链**: CAAISysTextureProperties → CATBaseUnknown  
 **模块**: CAASystem  
+**分类**: framework  
 **可见性**: public  
 **方法数**: 4
 
 > System Framework
 
-## 方法列表
-
-### GetMetal
-```cpp
-HRESULT GetMetal(int & oIsMetal);
-```
-
-### SetMetal
-```cpp
-HRESULT SetMetal(const int iIsMetal);
-```
-
-### GetRough
-```cpp
-HRESULT GetRough(int & oIsMetal);
-```
-
-### SetRough
-```cpp
-HRESULT SetRough(const int iIsMetal);
-```
-
 ## 依赖
 
 - `CATBaseUnknown.h`
 - `CAASysGeoModelInf.h`
+
+## TIE实现
+
+**实现文件**:
+- `CAAISysAccess.cpp`
+- `CAAISysCircle.cpp`
+- `CAAISysCircleCenterProperties.cpp`
+- `CAAISysCollection.cpp`
+- `CAAISysColorProperties.cpp`
 

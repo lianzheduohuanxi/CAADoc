@@ -1,9 +1,9 @@
 ---
 title: "KnowledgeOptimizer Glossary"
-category: "general"
+category: "use-case"
 module: "CAAOptTechArticles"
 tags: []
-source_file: "Doc\online\CAAOptTechArticles\CAAOptGlossary.htm"
+source_file: "Doc/online/CAAOptTechArticles/CAAOptGlossary.md"
 converted: "2026-05-11T17:33:46.040567"
 ---
 
@@ -31,7 +31,7 @@ General - Product Definiton **Product Engineering Optimizer:** Product required 
 
 * * *
 
-References [1] | [ KnowledgeAdvisor Glossary](../CAAKniTechArticles/CAAKniGlossary.htm)  
+References [1] | [ KnowledgeAdvisor Glossary](../CAAKniTechArticles/CAAKniGlossary.md)  
 ---|---  
 [Top]  
   

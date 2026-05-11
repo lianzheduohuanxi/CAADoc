@@ -3,15 +3,13 @@ title: "Intersecting a Curve with a Surface"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGopIntersect", "CATICGMIntersectionCrvSur", "CAAGMModelGemBrowser", "CAAGMModelInterfaces", "CAAGMModelIntersect"]
-source_file: "Doc\online\CAACgmModel\CAACgmUcGopIntersect.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGopIntersect.md"
 converted: "2026-05-11T17:33:48.435496"
 ---
-
 # Intersecting a Curve with a Surface  
   
 ---  
 Use Case  
-  
 ## Abstract
 
 The CAAGMModelIntersect use case illustrates how to intersect a curve with a surface by using the _CATICGMIntersectionCrvSur_ operator.
@@ -24,32 +22,27 @@ The CAAGMModelIntersect use case illustrates how to intersect a curve with a sur
     * In Short
     * References  
 ---  
-  
 ## What You Will Learn With This Use Case
 
 This use case [1] is intended to help you to use the CATICGMIntersectionCrvSur operator. See [2] for an overview of this type of operators.
-
 ## The CAAGMModelIntersect Use Case
 
 CAAGMModelIntersect is a use case of the CAAGMModelInterfaces.edu framework.
-
 ### What Does CAAGMModelIntersect Do
 
 This use case creates the input data to be passed to the CATICGMIntersectionCrvSur operator (a line and a cylinder). The result can be optionally saved into an NCGM container and displayed using the CAAGMModelGemBrowser use case [3].
 
 Fig. 1: The Geometry of the CAAGMModelIntersect Use Case ![Use Case Data](images/CAACgmGopIntersect1.gif) | This use case illustrates the global scheme of the geometric operators and takes the curve-surface intersection operator as example. The curve is a line, and the surface a cylinder. The operator being independent of the type of curve or surface, any kind of curve or surface can be used in the same way.  
 ---|---  
-  
 ### How to Launch CAAGMModelIntersect 
 
 To launch CAAGMModelIntersect, you will need to set up the build time environment, then compile CAAGMModelIntersect.m along with its prerequisites, set up the run time environment, and then execute the use case [4].
 
 If you simply type CAAGMModelIntersect with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example:
 
-CAAGMModelIntersect `e:\Intersection.NCGM`
+CAAGMModelIntersect `e/Intersection.NCGM`
 
 This NCGM file can be displayed using the CAAGMModelGemBrowser use case [3].
-
 ### Where to Find the CAAGMModelIntersect Code
 
 The CAAGMModelIntersect use case is made of a main named CAAGopIntersect.cpp located in the CAAGMModelIntersect .m module of the CAAGMModelInterfaces.edu framework:
@@ -57,7 +50,6 @@ The CAAGMModelIntersect use case is made of a main named CAAGopIntersect.cpp loc
 `InstallRootDirectory\CAAGMModelInterfaces.edu\CAAGMModelIntersect.m\`
 
 where `InstallRootFolder` [4] is the folder where the API CD-ROM is installed.
-
 ## Step-by-Step
 
 The initial step which consists in creating the geometry factory as well as the last step which consists in writing the model and closing the factory are described in . The coding steps dedicated to the CATICGMIntersectionCrvSur operator are explained below:
@@ -76,7 +68,6 @@ The initial step which consists in creating the geometry factory as well as the 
        * Running again.
        * Deleting the operator.
     5. Writing the Model and Closing the Factory [1].
-
 ### Creating the Line and Cylinder to Intersect
     
     // ------------ line passing thru (0,0,0), of direction (1.,1.,0)
@@ -107,7 +98,6 @@ The initial step which consists in creating the geometry factory as well as the 
     }
 
 The geometry is created by the `CATGeoFactory` with the `CreateLine` and `CreateCylinder` methods.
-
 ### Using the BASIC Mode
 
 In this mode, you must use the operator only once with the input parameters. The results are retrieved with a point iterator which
@@ -150,7 +140,6 @@ In this mode, you must use the operator only once with the input parameters. The
     // delete the operator
     **pIntOp- >Release(); 
     pIntOp = NULL;**
-
 ### Using the ADVANCED Mode
 
 This mode can be used, in case of the curve - surface intersection:
@@ -211,20 +200,17 @@ This mode can be used, in case of the curve - surface intersection:
     
     // the limits
     CATCrvLimits crvLimits(startParam,endParam);
-
 ## In Short
 
     * CATICGMIntersectionCrvSur is a geometric operator which follows the same scheme as all geometric operators: it is a transient object and its execution does not modify the input operands. It must be operated within a single container.
     * CATICGMIntersectionCrvSur can be used in BASIC and ADVANCED modes. The ADVANCED mode allows you to specify new parameters (new limits or a new curve to be intersected) and re-run the operator with these parameters.
-
 ## References
 
-[1] | [An Introduction to Geometric Modeler Use Cases](CAACgmUcGMModelUseCaseOverw.htm)  
+[1] | [An Introduction to Geometric Modeler Use Cases](CAACgmUcGMModelUseCaseOverw.md)  
 ---|---  
-[2] | [How to Use Geometric Operators](CAACgmUcGMModelOpeOverw.htm)  
-[3] | [Browsing the Geometric Container](CAACgmUcGemBrowser.htm)  
-[4] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-  
+[2] | [How to Use Geometric Operators](CAACgmUcGMModelOpeOverw.md)  
+[3] | [Browsing the Geometric Container](CAACgmUcGemBrowser.md)  
+[4] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ## History
 
 Version: **1** [Jan 2007] | Document created  

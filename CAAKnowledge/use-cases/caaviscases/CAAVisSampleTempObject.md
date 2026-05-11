@@ -3,18 +3,15 @@ title: "Creating Temporary Components"
 category: "use case"
 module: "CAAVisUseCases"
 tags: ["CATInstantiateComponent", "CATI3DGeoVisu", "CAAVisWireBoxComp", "CAAVisualization", "CAAVisTemporaryObjects", "CAADegGeoCommands", "CAAEVisCreateInstanceForWireBox", "CAAVisModelForRep", "CATIA", "CAAIVisTextModel", "CAAGeometry", "CAAIVisWireBox", "CAAEVisWireBox", "CAAEVisVisuWireBox", "CAAVisWireBox", "CAAVisTextModel", "CAADialogEngine", "CATICreateInstance", "CAADegClippingByBoxCmd"]
-source_file: "Doc\online\CAAVisUseCases\CAAVisSampleTempObject.htm"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleTempObject.md"
 converted: "2026-05-11T17:31:52.178221"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## 3D Visualization
 
 | 
-
 ### Creating Temporary Components
 
 How to create displayable component   
@@ -22,7 +19,6 @@ How to create displayable component 
 Use Case  
   
 * * *
-
 ### Abstract
 
 A temporary component is a component which is not integrated into the data model of a V5 document. In most cases it is a simple component to help the understanding of an interactive command. This article shows how to create a such object depending on its usage. To take full advantage of this article, you can first read the technical article about the Interactive Set of Objects and the temporary components [1]. 
@@ -36,41 +32,30 @@ A temporary component is a component which is not integrated into the data model
   * **In Short**
   * **References**
 
-
-
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show you how create temporary components depending on their usage:
 
   * A component which only needs to be visualized but not to be selected
 
-
-
 > It is simple instance of the _CATModelForRep3D_ class
 
   * A component which needs to be visualized and to be selected
-
-
 
 > It is a component which derives from the _CATModelForRep3D_ component. Consequently, it already implements _CATI3DGeoVisu._ So you have only to create and implement a specific interface which will be the discriminant interface for the agent of selection.  
 
   * A component whose the graphic representation can be modified while it is always in the ISO
 
-
-
 > The usage of the _CATModelForRep3D_ is not recommended for this last case. Refer you to the referenced article [1] for details about the reason. So, the component is a simple component which implements _CATI3DGeoVisu_ and an interface of type. A such interface sets  and gets the "intrinsic" data of the component, and enables us to build the graphic representation.  
 
 These temporary components are visualized thanks the Interactive Set of Objects. The "Visualizing Temporary Components" article [2] details how to insert, remove, update a component of the ISO.  [Top]
-
 ### The CAAVisTemporaryObjects Use Case
 
 CAAVisTemporaryObjects is a use case of the CAADialogEngine.edu and CAAVisualization.edu frameworks that illustrates DialogEngine, ApplicationFrame, and Visualization frameworks capabilities. [Top]
-
 #### What Does CAAVisTemporaryObjects Do
 
-CAAVisTemporaryObjects creates three temporary components. There are used in the **Clipping By Box** command of the CAAGeometry document [3]. The referenced article [2] details the state chart of this command. But to sum up, this command is a state command to remove all the points of the document outside a given box. This clipping box is defined by the end user: first, he/she defines its location by selecting an existing point. Then, from the selected point a first clipping box is displayed, and he/she can move the mouse to increase or decrease the size of the box. Now, let us see how the temporary components are used in this command. At the beginning of the command, the following text is displayed in (0,0,0):  | ![](images/CAAVisSampleTempObjectISOText.jpg)  
+CAAVisTemporaryObjects creates three temporary components. There are used in the **Clipping By Box** command of the CAAGeometry document [3]. The referenced article [2] details the state chart of this command. But to sum up, this command is a state command to remove all the points of the document outside a given box. This clipping box is defined by the end user: first, he/she defines its location by selecting an existing point. Then, from the selected point a first clipping box is displayed, and he/she can move the mouse to increase or decrease the size of the box. Now, let us see how the temporary components are used in this command. At the beginning of the command, the following text is displayed in (0,0,0):  
 ---  
   
 Once the text is selected, the end user must select a point to define the center of the wire box. At this point location, a trihedral is displayed
@@ -117,10 +102,9 @@ The CAAVisWireBox component implements the _CATI3DGeoVisu_ to build the graphic 
 At last, the CAAVisWireBox component implements the _CATICreateInstance_ interface to avoid to export the component implementation class. 
 
 [Top]
-
 #### How to Launch CAAVisTemporaryObjects
 
-See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.htm)" use case for a detailed description of how this use case should be launched. For the specific scenario:
+See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched. For the specific scenario:
 
 Launch CATIA. When the application is ready:
 
@@ -129,17 +113,12 @@ Launch CATIA. When the application is ready:
     * In the **Basic Elements** toolbar 
     * In the**Insert** menu, click **Point**  
 
-
   * Launch the **Clipping By Box** (![](images/CAAVisClippingByBoxIcon.jpg))command in the **Clipping** toolbar
   * Select the **ISO Selection** text located at the origin of the model (0,0,0)
-
-
 
 > After the selection, the text diseappears
 
   * Select a **Point** as clipping box center
-
-
 
 > After the selection, the trihedral is displayed. 
 
@@ -147,11 +126,7 @@ Launch CATIA. When the application is ready:
 
 All points outside the clipping box are removed from the current CAAGeometry document.
 
-
-
-
 [Top]
-
 #### Where to Find the CAAVisTemporaryObjects Code
 
 The CAAVisTemporaryObjects use case is made of several classes located:
@@ -177,13 +152,9 @@ Unix | `InstallRootDirectory/CAAVisualization.edu/CAAVisWireBoxComp.m/`
   
 This module contains the creation of the  "wire box" component. 
 
-
-
-
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are three logical steps in CAAVisTemporaryObjects:
@@ -192,10 +163,7 @@ There are three logical steps in CAAVisTemporaryObjects:
   2. Creating the Text Component
   3. Creating the Wire Box Component
 
-
-
 [Top]
-
 #### Creating the Trihedral Component
 
 The Trihedral component is a simple _CATModelForRep3D_ class instance. In the _CAADegClippingByBoxCmd_ class constructor you have the following instruction:
@@ -261,7 +229,6 @@ The graphic representation, `pRepForCenter`, of the trihedral is composed of thr
 The `SetRep` method of the _CATModelForRep3D_ class enables you to associate with the component the graphic representation. You do not have to release the `pRepForCenter` pointer. 
 
 [Top]
-
 #### Creating the Text Component
 
 The text (ISO Selection) component, named CAAVisTextModel, is a component which derives from the _CATModelForRep3D_ component. There are six sub-steps:
@@ -272,8 +239,6 @@ The text (ISO Selection) component, named CAAVisTextModel, is a component which 
   4. Updating the Interface Dictionary
   5. Instantiating the Component 
   6. Creating the Graphic Representation
-
-
 
  
 
@@ -323,9 +288,7 @@ Here it is the CAAVisTextModel.h ` `file. 
 The _CAAVisTextModel_ class derives from the _CATModelForRep3D_ class. The `CATDeclareClass` macro declares that the _CAAVisTextModel_ class belongs to a component. Note that the copy constructor and the assignment operator are set as private, and are not implemented in the source file. This prevents the compiler from creating them as public without you know. The `SetGraphicRepresentation` method is the only one method of the _CAAIVisTextModel_ interface. 
 
 Here it is now the source file, CAAVisTextModel.cpp 
-    
     #include "CAAVisTextModel.h"
-    
     #include "TIE_CAAIVisTextModel.h"
     TIE_**CAAIVisTextModel**(CAAVisTextModel);
     
@@ -362,8 +325,11 @@ Refer to "Creating a Component" article [6] for details about the creation of th
 
   4. **Updating the Interface Dictionary**
 
+```vbscript
 Do not forget to update the interface dictionary, here it is an extract of the CAAVisualization.edu.dico file located in the CAAVisualization.edu/CNext/code/dictionary directory.
     
+```
+
     CAAVisTextModel        CAAIVisTextModel         libCAAVisModelForRep
     CAAVisTextModel        CATICreateInstance       libCAAVisModelForRep  
   
@@ -410,11 +376,7 @@ The graphic representation of the CAAVisTextModel component, `pRepForText,` is a
 
 `pRepForText`, is associated with the CAAVisTextModel component thanks the `SetGraphicRepresentation` method of the _CAAIVisTextModel_ interface. Once done, the graphic representation is "hold" by the CATModelForRep3D component (upper component of the CAAVisTextModel component). You do not have to release the `pRepForText` pointer. 
 
-
-
-
 [Top]
-
 #### Creating the Wire Box Component
 
 The "Wire box" component is named CAAVisWireBox. There are six sub-steps to define it:
@@ -430,7 +392,6 @@ The "Wire box" component is named CAAVisWireBox. There are six sub-steps to defi
   1. **Creating the CAAVisWireBox Component**
 
 Here it is the CAAVisWireBox.h file 
-    
     #include "CATBaseUnknown.h"
     
     class  **CAAVisWireBox** : public CATBaseUnknown
@@ -452,7 +413,6 @@ Here it is the CAAVisWireBox.h file 
 The _CAAVisWireBox_ class derives from the _CATBaseUnknown_ class. The `CATDeclareClass` macro declares that the _CAAVisWireBox_ class belongs to a component. Note that the copy constructor and the assignment operator are set as private, and are not implemented in the source file. This prevents the compiler from creating them as public without you know. 
 
 Here it is the CAAVisWireBox.cpp file 
-    
     #include "CAAVisWireBox.h"
     
     **CATImplementClass**(CAAVisWireBox,Implementation,CATBaseUnknown,CATNull);
@@ -508,7 +468,6 @@ The CAAEVisWireBox class is the implementation of the  CAAIVisWireBox interface 
 Since the CAAVisWireBox component does not derive from the CATModelForRep3D component, you must implement the _CATI3DGeoVisu_ interface to set the component into the ISO. 
 
 Here it is the CAAEVisVisuWireBox.h file:
-    
     #include "CATExtIVisu.h"   // Need to derive from
     
     class CAAEVisVisuWireBox : public CATExtIVisu 
@@ -612,20 +571,20 @@ The CAAIVisWireBox enables us to retrieve the size and the location of the wire 
 
   6. **Updating the Interface Dictionary**
 
+```vbscript
 Do not forget to update the interface dictionary, here it is an extract of the CAAVisualization.edu.dico file located in the CAAVisualization.edu/CNext/code/dictionary directory.
     
+```
+
     CAAVisWireBox CAAIVisWireBox         libCAAVisModelForRep
     CAAVisWireBox CATICreateInstance     libCAAVisModelForRep
     CAAVisWireBox CATI3DGeoVisu          libCAAVisModelForRep  
   
 ---  
 
-
-
 [Top]
 
 * * *
-
 ### In Short
 
 The use case has detailed how to create three kinds of temporary components depending on their usage:
@@ -634,25 +593,21 @@ The use case has detailed how to create three kinds of temporary components depe
   * A component deriving from CATModelForRep3D, for displayable and selectable component 
   * A component deriving from CATBaseUnknown and implementing _CATI3DGeoVisu_ , for a component whose the graphic representation can change while the component is into the ISO.
 
-
-
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Interactive Set of Objects](../CAAVisTechArticles/CAAVisISO.htm)  
+[1] | [Interactive Set of Objects](../CAAVisTechArticles/CAAVisISO.md)  
 ---|---  
-[2] | [Visualizing Temporary Components](CAAVisSampleISO.htm)  
-[3] | [The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.htm)  
-[4] | [Implementing the Command Statechart Diagram](../CAADegTechArticles/CAADegGraph.htm)  
-[5] | [Creating Components](../CAASysTechArticles/CAASysCreatingComponent.htm)  
-[6] | [Creating Components](../CAASysUseCases/CAASysSampleOMCreatingCmp.htm)  
+[2] | [Visualizing Temporary Components](CAAVisSampleISO.md)  
+[3] | [The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)  
+[4] | [Implementing the Command Statechart Diagram](../CAADegTechArticles/CAADegGraph.md)  
+[5] | [Creating Components](../CAASysTechArticles/CAASysCreatingComponent.md)  
+[6] | [Creating Components](../CAASysUseCases/CAASysSampleOMCreatingCmp.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Fev 2004] | Document created  

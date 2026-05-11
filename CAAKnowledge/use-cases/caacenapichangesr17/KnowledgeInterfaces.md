@@ -1,20 +1,17 @@
 ---
 title: "KnowledgeInterfaces Framework Modifications in V5R17"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR17"
+version: "V5R17"
 tags: ["CATILieKnowledgeSheetSettingAtt"]
-source_file: "Doc\online\CAACenAPIChangesR17\KnowledgeInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR17/KnowledgeInterfaces.md"
 converted: "2026-05-11T17:33:51.342726"
 ---
-
 # CAA C++ API Modifications  
   
 | 
-
 ##  KnowledgeInterfaces Framework Modifications in V5R17 
 
-|   
----|---|---  
   
 * * *
 

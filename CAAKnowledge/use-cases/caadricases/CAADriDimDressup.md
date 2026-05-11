@@ -3,18 +3,15 @@ title: "Editing Dimension Dress-Up"
 category: "use case"
 module: "CAADriUseCases"
 tags: ["CAADrwDimDressupCmduse", "CAAUseCaseCommands", "CATIDrwDimDimension", "CATIDrwDimFormat", "CAADrwAddin", "CATIDrwDimValueComponent_var", "CATIDrwDimText_var", "CATIDrwDimExtensionLine", "CATIDrwDimExtensionLine_var", "CATIA", "CATIDrwDimExtensionLineLinear", "CATIDrwDimDimensionLine_var", "CATIDrwDimDimensionLine", "CATIDrwDimText", "CATIDrwDimValue_var", "CATIDrwDimValue", "CAADrwDimDressupCmd", "CATIDrwDimExtensionLineLinear_var", "CATISpecObject_var", "CAADrwDimDressup"]
-source_file: "Doc\online\CAADriUseCases\CAADriDimDressup.htm"
+source_file: "Doc/online/CAADriUseCases/CAADriDimDressup.md"
 converted: "2026-05-11T17:31:50.992103"
 ---
-
 # Mechanical Design
 
 | 
-
 ## Drafting
 
 | 
-
 ### Editing Dimension Dress-Up
 
 _How to use dimension interfaces_  
@@ -22,7 +19,6 @@ _How to use dimension interfaces_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article discusses the CAADrwDimDressupCmd.cpp use case. This use case explains how to edit a dimension dress-up.
@@ -41,37 +37,32 @@ This article discusses the CAADrwDimDressupCmd.cpp use case. This use case expla
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 In this use case you will learn how to modify the dimension dress-up parameters.
 
 [Top]
-
 ### The Main Dimension Interfaces
 
 Fig. 1: The Dimension Interfaces UML Diagram ![](images/CAADrwDimDressup2.jpg)  
 ---  
   
 [Top]
-
 ### The CAADrwDimDressupCmd Use Case
 
 CAADrwDimDressupCmd is a use case of the CAADraftingInterfaces.edu framework that illustrates DraftingInterfaces framework capabilities.
 
 [Top]
-
 #### What Does CAADrwDimDressupCmd Do
 
 This sample waits for a dimension selection and modifies the dress-up as follows:
 
-Fig. 2: The Dimension After and Before Dress-Up ![](images/CAADrwDimDressup1.jpg) | 
+Fig. 2: The Dimension After and Before Dress-Up ![](images/CAADrwDimDressup1.jpg) 
 
 **Texts**     Prefix = L=, main text upper = Up main text lower = Down **Dual value**     On, in inch, side by side **Tolerance**     main and dual, alpha-numerical **Dimension Line**     Thickness = 0.2, color = blue **Extension Line**     Funnel, thickness = 0.2, color = yellow, over-run = 4, blanking = 4 **Symbol**     Circled cross, thickness = 0.2 color = green **Font**     5mm, color = red **Frame :**     Rectangle   
 ---|---  
   
 [Top]
-
 #### How to Launch CAADrwDimDressupCmd
 
 To launch CAADrwDimDressupCmd, you will need to set up the build time environment, then compile CAADrwDimDressupCmd and CAADrwAddin along with its prerequisites, set up the run time environment, and then include the command in a workbench [1].
@@ -80,10 +71,7 @@ To launch CAADrwDimDressupCmd, you will need to set up the build time environmen
   2. Right-click on Drafting workshop to activate CAAUseCaseCommands toolbar.
   3. Launch the DimDressup use case command, and select the annotation.
 
-
-
 [Top]
-
 #### Where to Find the CAADrwDimDressupCmd Code
 
 The CAADrwDimDressupCmduse case is made of two source files named CAADrwDimDressupCmd.h and CAADrwDimDressupCmd.cpp located in the CAADrwDimDressup.m module of the CAADraftingInterfaces.edu framework:
@@ -95,7 +83,6 @@ Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwDimDressup.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are 11 steps in CAADrwDimDressupCmd:
@@ -112,10 +99,7 @@ There are 11 steps in CAADrwDimDressupCmd:
   10. Setting the Funnel
   11. Building the Dimension and Exit
 
-
-
 [Top]
-
 #### Building the State Chart and Creating the Appropriate Selection Agent
     
     
@@ -145,7 +129,6 @@ There are 11 steps in CAADrwDimDressupCmd:
 In this section we create a _CATPathElementAgent_ and set the corresponding element type to _CATIDrwDimDimension_. So only dimensions could be selected.
 
 [Top]
-
 #### Retrieving the Selection
     
     
@@ -176,7 +159,6 @@ In this section we create a _CATPathElementAgent_ and set the corresponding elem
 The acquisition agent did put the selected dimension into the CSO. So we get the set of object and loop on it.
 
 [Top]
-
 #### Editing the Text
     
     
@@ -195,7 +177,6 @@ The acquisition agent did put the selected dimension into the CSO. So we get the
 The dimension implements the _CATIDrwTextProperties_ interface. Using this interface, we modify the font size, color and the text frame format.
 
 [Top]
-
 #### Setting the Dual Value
     
     
@@ -209,7 +190,6 @@ The dimension implements the _CATIDrwTextProperties_ interface. Using this inter
 The dual value is set using the _CATIDrwDimDimension_ interface.
 
 [Top]
-
 #### Adding the Tolerance
     
     
@@ -223,7 +203,6 @@ The dual value is set using the _CATIDrwDimDimension_ interface.
 The tolerance is set using the _CATIDrwDimDimension_ interface.
 
 [Top]
-
 #### Editing the Main Value
     
     
@@ -246,8 +225,6 @@ The _CATGraphicAttributeSet_ will be used to convert RGBA data from a 4-integer 
   * The prefix
   * The suffix.
 
-
-
 Using `SetBAULText` we set:
 
   * The text before
@@ -255,10 +232,7 @@ Using `SetBAULText` we set:
   * The text upper
   * The text lower.
 
-
-
 [Top]
-
 #### Editing the Dual Value
     
     
@@ -274,7 +248,6 @@ Using `SetBAULText` we set:
 We get the dual value from the dimension value and modify the format putting the unit to "INCH".
 
 [Top]
-
 #### Editing the Dimension Line
     
     
@@ -301,10 +274,7 @@ We get the dimension line interface from the dimension. Using the _CATIDrwDimDim
   * Both symbols
   * The symbol graphic parameters.
 
-
-
 [Top]
-
 #### Editing the Extension Line
     
     
@@ -325,10 +295,7 @@ Using the _CATIDrwDimExtensionLine_ interface we modify :
   * The color and thickness (using the _CATGraphicAttributeSet_)
   * The gap and over-run.
 
-
-
 [Top]
-
 #### Setting the Funnel
     
     
@@ -343,7 +310,6 @@ Using the _CATIDrwDimExtensionLine_ interface we modify :
 This is a distance dimension. So the extension line implements _CATIDrwDimExtensionLine_. `CATIDrwDimExtensionLineLinear::SetFunnel(1)` sets the funnel at true.
 
 [Top]
-
 #### Building the Dimension and Exit
     
     
@@ -369,7 +335,6 @@ We have to update the dimension to take into account the dress-up modifications.
 [Top]
 
 * * *
-
 ### In Short
 
 This use case shows how to edit a dimension dress-up. The main dimension interfaces are _CATIDrwDimDimension, CATIDrwTextProperties, CATIDrwDimValue, CATIDrwDimValueComponent, CATIDrwDimText, CATIDrwDimFormat, CATIDrwDimDimensionLine, CATIDrwDimExtensionLine, CATIDrwDimExtensionLineLinear_ and _CATISpecObject_.
@@ -377,16 +342,14 @@ This use case shows how to edit a dimension dress-up. The main dimension interfa
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] | [Implementing the Statechart Diagram](../CAADegUseCases/CAADegSampleGraph.htm)  
+[2] | [Implementing the Statechart Diagram](../CAADegUseCases/CAADegSampleGraph.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Jan 2000] | Document created  

@@ -3,7 +3,7 @@ title: "Associating a Dialog Box with a Dialog Agent - 1"
 category: "use case"
 module: "CAADegUseCases"
 tags: ["CAADegCreatePolylineCmd", "CAADegPointEditor", "CAADialogEngine", "CAAGeometry", "CAADegCreatePointCmd", "CAADegGeoCommands"]
-source_file: "Doc\online\CAADegUseCases\CAADegSampleDialogWithAgent.htm"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleDialogWithAgent.md"
 converted: "2026-05-11T17:33:49.626183"
 ---
 
@@ -28,11 +28,11 @@ Abstract This article shows how to use a dialog box to value a dialog agent. The
 
 What You Will Learn With This Use Case This use case is intended to show how to use a dialog box associated with a dialog agent in a state dialog command. The dialog box values the dialog agent when the end user presses the OK push button. This dialog box is used to input precise values rather than using the mouse to indicate a point on the screen. [Top] The Polyline Command Use Case The Polyline command is a use case of the CAADialogEngine.edu framework that illustrates the DialogEngine framework capabilities. [Top] What Does the Polyline Command Do The Polyline command creates a polyline by successively indicating or selecting points, or entering their coordinates using a dialog box. A right click stops the polyline creation and exits the command. The Polyline command is a state dialog command according to the following UML statechart diagram [1]. ![CAACreatePolylineStatechart.jpg \(26086 bytes\)](images/CAACreatePolylineStatechart.jpg) The dialog is as follows: ![CAACreatePolyline1.jpg \(18852 bytes\)](images/CAACreatePolyline1.jpg) | Select the Polyline command. The active state becomes StartState, and the dialog box is displayed. You can either indicate or select a point, or use the dialog box.  
 ---|---  
-![CAACreatePolyline2.jpg \(18952 bytes\)](images/CAACreatePolyline2.jpg) | Click to indicate a point. The point is created. The transition makes the RepeatState the active state. The self transition that creates a temporary line is triggered as long as the mouse moves, even to locate it in the dialog box.  
-![CAACreatePolyline3.jpg \(19140 bytes\)](images/CAACreatePolyline3.jpg) | Enter values in the dialog box spinners. Clicking OK creates the point whose coordinates were entered and creates a line segment between the two points. You can again either click to indicate or select a point, or use the dialog box.  
-![CAACreatePolyline4.jpg \(19380 bytes\)](images/CAACreatePolyline4.jpg) | Enter another set of values in the dialog box spinners and click OK. A third point and a second line segment is created.  
-![CAACreatePolyline5.jpg \(19706 bytes\)](images/CAACreatePolyline5.jpg) | Enter another set of values in the dialog box spinners and click OK. A fourth point and a third line segment is created. Go on indicating or selecting points, or entering values in the dialog box and clicking OK to add line segments to the polyline, or right click to end the command  
-Indicating a point [2] means clicking on the screen at the desired location with the left mouse key. Selecting a point [3] means clicking on an existing point. A third way to create points is to enter their absolute coordinates in a dialog box. The dialog box is associated with a dialog agent and pressing OK in the dialog box values the dialog agent. This triggers a transition that creates a point with the entered coordinates, and that creates a line segment using the last two created points. We focus on the RepeatState and its self transition that is triggered by the dialog box. [Top] How to Launch the Polyline Command See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.htm)" use case for a detailed description of how this use case should be launched. Then, in the window where you run the mkrun command, do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following: 
+ Click to indicate a point. The point is created. The transition makes the RepeatState the active state. The self transition that creates a temporary line is triggered as long as the mouse moves, even to locate it in the dialog box.  
+ Enter values in the dialog box spinners. Clicking OK creates the point whose coordinates were entered and creates a line segment between the two points. You can again either click to indicate or select a point, or use the dialog box.  
+ Enter another set of values in the dialog box spinners and click OK. A third point and a second line segment is created.  
+ Enter another set of values in the dialog box spinners and click OK. A fourth point and a third line segment is created. Go on indicating or selecting points, or entering values in the dialog box and clicking OK to add line segments to the polyline, or right click to end the command  
+Indicating a point [2] means clicking on the screen at the desired location with the left mouse key. Selecting a point [3] means clicking on an existing point. A third way to create points is to enter their absolute coordinates in a dialog box. The dialog box is associated with a dialog agent and pressing OK in the dialog box values the dialog agent. This triggers a transition that creates a point with the entered coordinates, and that creates a line segment using the last two created points. We focus on the RepeatState and its self transition that is triggered by the dialog box. [Top] How to Launch the Polyline Command See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched. Then, in the window where you run the mkrun command, do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following: 
     * Select **File** ->**New**
     * In the New box, select **CAAGeometry** and click **OK**
     * Select **Insert** ->**Multi Lines** ->**Polyline**
@@ -140,12 +140,12 @@ In Short This use case shows how to valuate a dialog agent by a notification sen
 
 * * *
 
-References [0] | [Associating a Dialog Box with a Dialog Agent - 2](CAADegSampleDialogWithAgent2.htm)  
+References [0] | [Associating a Dialog Box with a Dialog Agent - 2](CAADegSampleDialogWithAgent2.md)  
 ---|---  
-[1] | [Describing State Dialog Commands Using UML](../CAADegTechArticles/CAADegUMLDescription.htm)  
+[1] | [Describing State Dialog Commands Using UML](../CAADegTechArticles/CAADegUMLDescription.md)  
 [2] | [Managing Indication](../CAADegTechArticles/CAADegGraph.htm#510000)  
 [3] | [Managing Selection](../CAADegTechArticles/CAADegGraph.htm#520000)  
-[4] | [Implementing the Command Statechart Diagram](../CAADegTechArticles/CAADegGraph.htm)  
+[4] | [Implementing the Command Statechart Diagram](../CAADegTechArticles/CAADegGraph.md)  
 [Top]  
   
 * * *

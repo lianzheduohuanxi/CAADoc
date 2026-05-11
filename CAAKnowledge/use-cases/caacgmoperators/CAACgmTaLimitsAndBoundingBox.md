@@ -1,9 +1,9 @@
 ---
 title: "Limits and Bounding Boxes of Geometrical Objects "
-category: "general"
+category: "use-case"
 module: "CAACgmOperators"
 tags: ["CATICGMProjectionPtCrv", "CATICGMInclusionPtCrv", "CATICGMInclusionPtSur", "CATICGMProjectionCrvSur", "CATICGMTopExtrapolWireOpe", "CATICGMIntersectionCrvSur", "CATICGMDistanceMinPtSur", "CATICGMReflectCurve", "CATICGMIntersectionSurSur", "CATICGMEdgeCurveComputation", "CATICGMDistanceMinCrvCrv", "CATICGMTopSkin", "CATICGMDistanceMinPtCrv"]
-source_file: "Doc\online\CAACgmOperators\CAACgmTaLimitsAndBoundingBox.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmTaLimitsAndBoundingBox.md"
 converted: "2026-05-11T17:33:48.626586"
 ---
 
@@ -21,9 +21,9 @@ Abstract Geometrical objects such as curves and surfaces are constructed which i
     * In Short  
 ---  
 Different Kinds of Limits Curves and surfaces have two types of limits: 
-    1. the maximum limits, outside of which no valid topology can be created. These limits are the ones computed at creation. Creating or extending a topology beyond the geometry maximum limits is not permitted. The [Data Checker](CAACgmTaTopDataChecker.htm) detects such abnormalities. In order to achieve topology extension, operators dedicated to extrapolation (for example CATICGMTopExtrapolWireOpe) can modify the maximum limits of the underlying geometry. The maximum limits are described by the `CATCrvLimit` class. 
+    1. the maximum limits, outside of which no valid topology can be created. These limits are the ones computed at creation. Creating or extending a topology beyond the geometry maximum limits is not permitted. The [Data Checker](CAACgmTaTopDataChecker.md) detects such abnormalities. In order to achieve topology extension, operators dedicated to extrapolation (for example CATICGMTopExtrapolWireOpe) can modify the maximum limits of the underlying geometry. The maximum limits are described by the `CATCrvLimit` class. 
     2. the current limits which are limits which have been redefined after creation. Their purpose is to restrict the geometry to be taken into account for an operation. Current limits are also handled by the `CATCrvLimit` class and they must be created within the range of maximum limits.
-Dealing with Limits When dealing with curves and surfaces, the initial or maximum limits may not suit your application needs, just because your application has to run on a restricted portion of the geometries.  Fig.1 Computing the minimum distance between two curves with maximum limits and restricted portion of the geometries ![DistanceMin before SetLimits](images/CGM_curvelimit_0.png)  | ![DistanceMin After SetLimits](images/CGM_curvelimit_1.png)   
+Dealing with Limits When dealing with curves and surfaces, the initial or maximum limits may not suit your application needs, just because your application has to run on a restricted portion of the geometries.  Fig.1 Computing the minimum distance between two curves with maximum limits and restricted portion of the geometries ![DistanceMin before SetLimits](images/CGM_curvelimit_0.png)  
 ---|---  
 CASE A  
 Curve in yellow and curve in green  
@@ -47,7 +47,7 @@ To do this, you must use the `SetLimits` method which is provided by some operat
     * CATICGMTopSkin
 provide a `SetLimits` method. To compute the minimum distance between two curves (Fig.1), you have to use the `CATICGMDistanceMinCrvCrv::SetLimits` method. **WARNING**   
 Current limits should only be used as temporary repository in applications which control completely all the calls and operations onto geometry. Note that this is not the case when a geometric modeler operator is called as no operator guarantees the stability of current limits. Any call to a geometric modeler operator can potentially modify the current limits of the input curves or surfaces.   
-Manipulating Maximum Limits The maximum limits remain data attached to the geometry. However, they can be modified by extrapolation operators (CATICGMTopExtrapolWireOpe for example). If a wire (topological object) relying on a curve is to be extended beyond the curve maximum limits, the operator extrapolates the curve. The maximum limits should be used with care for geometry which is essentially infinite. For example, the maximum limits of planes and lines extend across the entire model domain (see [About Model Size and Infinite](../CAACgmModel/CAACgmTaGobModelSizeAndInfinite.htm)).  Bounding Boxes of Curves and Surfaces External or Global Bounding Box This is a bounding box encompassing the global geometry with its maximum limits or its current limits, depending of the limits which are passed to the `CATCurve::GetBox` (or `CATSurface::GetBox)`.   Fig. 2 Maximum and current external bounding boxes ![curve maximum bounding box](images/CGM_curve_maxBB_0.png)  | ![curve current bounding boxes](images/CGM_curve_currentBB_0.png)   
+Manipulating Maximum Limits The maximum limits remain data attached to the geometry. However, they can be modified by extrapolation operators (CATICGMTopExtrapolWireOpe for example). If a wire (topological object) relying on a curve is to be extended beyond the curve maximum limits, the operator extrapolates the curve. The maximum limits should be used with care for geometry which is essentially infinite. For example, the maximum limits of planes and lines extend across the entire model domain (see [About Model Size and Infinite](../CAACgmModel/CAACgmTaGobModelSizeAndInfinite.md)).  Bounding Boxes of Curves and Surfaces External or Global Bounding Box This is a bounding box encompassing the global geometry with its maximum limits or its current limits, depending of the limits which are passed to the `CATCurve::GetBox` (or `CATSurface::GetBox)`.   Fig. 2 Maximum and current external bounding boxes ![curve maximum bounding box](images/CGM_curve_maxBB_0.png)  
 ---|---  
 Curve max bounding box,   
 corresponds to the creation limits.  

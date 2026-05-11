@@ -3,7 +3,7 @@ title: "Fill"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CATICGMPowerFill", "CAAGMOperatorsPowerFill"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcTopPowerFill.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopPowerFill.md"
 converted: "2026-05-11T17:33:49.275425"
 ---
 
@@ -15,7 +15,7 @@ Abstract A fill is a two-dimensional region whose boundaries are defined by a se
     * Use Case Description
     * References  
 ---  
-Operator to be Used To create a fill, use the CATICGMPowerFill operator found in GMOperatorsInterfaces. This operator has to be created by the CATCGMCreatePowerFill global function. Use Case Description The CAAGMOperatorsPowerFill.m module in CAAGMOperatorsInterfaces.edu illustrates how to create a fill. This use case is to be run with the PowerFill.NCGM input file which is delivered in CAAGMOperatorsInterfaces.edu/FunctionTests/InputData. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm). With the input data below: Fig.1 Fill Operation: Input Data ![Fill inputs](images/CGM_fill_0.png)  
+Operator to be Used To create a fill, use the CATICGMPowerFill operator found in GMOperatorsInterfaces. This operator has to be created by the CATCGMCreatePowerFill global function. Use Case Description The CAAGMOperatorsPowerFill.m module in CAAGMOperatorsInterfaces.edu illustrates how to create a fill. This use case is to be run with the PowerFill.NCGM input file which is delivered in CAAGMOperatorsInterfaces.edu/FunctionTests/InputData. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md). With the input data below: Fig.1 Fill Operation: Input Data ![Fill inputs](images/CGM_fill_0.png)  
 ---  
 and the code below:
     
@@ -36,11 +36,11 @@ and the code below:
 ---  
 you get this result: Fig.2 Fill Operation: Output Data ![Fill output](images/CGM_fill_1.png)  
 ---  
-References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)  
-[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)  
-[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.htm)  
-[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.htm)  
+[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)  
+[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)  
+[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.md)  
+[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.md)  
 History Version: **1** [Feb 2013] | Document created  
 ---|---

@@ -1,12 +1,11 @@
 ---
 title: "3D Operations"
-category: "general"
+category: "use-case"
 module: "CAACgmModel"
 tags: []
-source_file: "Doc\online\CAACgmModel\CAACgmTcForeignToc.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmTcForeignToc.md"
 converted: "2026-05-11T17:33:48.076769"
 ---
-
 #   
   
 ---  

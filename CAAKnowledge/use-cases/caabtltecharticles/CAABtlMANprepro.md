@@ -1,12 +1,11 @@
 ---
 title: "The Declarative File Preprocessor"
-category: "general"
+category: "use-case"
 module: "CAABtlTechArticles"
 tags: []
-source_file: "Doc\online\CAABtlTechArticles\CAABtlMANprepro.htm"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANprepro.md"
 converted: "2026-05-11T17:33:46.116441"
 ---
-
 
     
     
@@ -25,7 +24,6 @@ converted: "2026-05-11T17:33:46.116441"
           The Declarative File Preprocessor
           _How to distinguish specific operating system sections_
         
-    ---|---|---  
     
       
         Technical Article
@@ -80,7 +78,6 @@ converted: "2026-05-11T17:33:46.116441"
          
         | **#define** _FlagName_
         
-    ---|---  
     
       
          
@@ -132,7 +129,6 @@ converted: "2026-05-11T17:33:46.116441"
         | **& &**
         | (AND)
         
-    ---|---|---  
     
       
          
@@ -157,7 +153,6 @@ converted: "2026-05-11T17:33:46.116441"
          
         | **defined** _FlagName_
         
-    ---|---  
     
       
          
@@ -176,7 +171,7 @@ converted: "2026-05-11T17:33:46.116441"
     
       
          
-        | test predefined flags set by [mkmk](CAABtlMkmk.htm),
+        | test predefined flags set by [mkmk](CAABtlMkmk.md),
           depending on the operating system it is executed. Such flags names
           correspond to value of environment variables _MkmkOS_NAME_ (platform
           notion) and _MkmkOS_Buildtime_ (targeted operating system notion, the
@@ -192,7 +187,6 @@ converted: "2026-05-11T17:33:46.116441"
         Operating system
         | Value of OSName flag
         
-    ---|---  
     
       
         AIX (IBM)

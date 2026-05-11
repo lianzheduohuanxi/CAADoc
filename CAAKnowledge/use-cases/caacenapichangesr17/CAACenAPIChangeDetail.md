@@ -1,22 +1,20 @@
 ---
 title: "Detail Of C++ API Changes"
-category: "general"
+category: "api-changes"
 module: "CAACenAPIChangesR17"
+version: "V5R17"
 tags: ["CAA2Usage", "CAA2Level", "CATInstantCollabDesignCAAItf"]
-source_file: "Doc\online\CAACenAPIChangesR17\CAACenAPIChangeDetail.htm"
+source_file: "Doc/online/CAACenAPIChangesR17/CAACenAPIChangeDetail.md"
 converted: "2026-05-11T17:33:51.251570"
 ---
 
 | 
-
 # 
 
 | 
-
 ## 
 
 | 
-
 ### Detail Of V5R17 C++ API Changes
 
 _What changes in the API compared with CAA V5R16_  
@@ -24,7 +22,6 @@ _What changes in the API compared with CAA V5R16_
 Technical Article  
   
 * * *
-
 ### Abstract
 
 This article presents by frameworks the detail of CAA C++ resources modified in V5R17 and how to modify your code accordingly. Each modification is listed for a resource (file, class, method) with a classification. They will generally be detected by a recompilation of the code. Most of the time, signature modifications are obvious. Check in the framework detail how to replace deleted entities. Possibly impacting modifications are highlighted in red.  
@@ -45,29 +42,27 @@ MINMV | Method is no more virtual. If occurs on a U1 class, may require modifica
   
 * * *
 
-CATAnalysisInterfaces | [R17GA vs R16GA](CATAnalysisInterfaces.htm) |   
+CATAnalysisInterfaces | [R17GA vs R16GA](CATAnalysisInterfaces.md) |   
 ---|---|---  
-CATInstantCollabDesignCAAItf | [R17GA vs R16GA](CATInstantCollabDesignCAAItf.htm) |   
-CATxPDMInterfaces |  | [R17 vs R17GA](CATxPDMInterfacesSP.htm)  
-ElecFlatteningItf | [R17GA vs R16GA](ElecFlatteningItf.htm) |   
-ElecHarnessItf | [R17GA vs R16GA](ElecHarnessItf.htm) |   
-ObjectSpecsModeler | [R17GA vs R16GA](ObjectSpecsModeler.htm) |   
-StructureInterfaces | [R17GA vs R16GA](StructureInterfaces.htm) |   
-System | [R17GA vs R16GA](System.htm) |   
-VPMPosManager | [R17GA vs R16GA](VPMPosManager.htm) |   
+CATInstantCollabDesignCAAItf | [R17GA vs R16GA](CATInstantCollabDesignCAAItf.md) |   
+CATxPDMInterfaces |  | [R17 vs R17GA](CATxPDMInterfacesSP.md)  
+ElecFlatteningItf | [R17GA vs R16GA](ElecFlatteningItf.md) |   
+ElecHarnessItf | [R17GA vs R16GA](ElecHarnessItf.md) |   
+ObjectSpecsModeler | [R17GA vs R16GA](ObjectSpecsModeler.md) |   
+StructureInterfaces | [R17GA vs R16GA](StructureInterfaces.md) |   
+System | [R17GA vs R16GA](System.md) |   
+VPMPosManager | [R17GA vs R16GA](VPMPosManager.md) |   
   
 * * *
-
 ### References
 
 [1] | [Migration to CATBoolean](../CAACenQuickRefs/CAACenWhatsNew.htm#CATBoolean)  
 ---|---  
-[2] | [Details Of V5R16 API Changes](../CAACenAPIChangesR16/CAACenAPIChangeDetail.htm)  
+[2] | [Details Of V5R16 API Changes](../CAACenAPIChangesR16/CAACenAPIChangeDetail.md)  
   |    
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Mar 2002] | Document created  

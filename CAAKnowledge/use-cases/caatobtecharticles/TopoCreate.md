@@ -1,9 +1,9 @@
 ---
 title: "How to Associate Topology With Geometry"
-category: "general"
+category: "tutorial"
 module: "CAATobTechArticles"
 tags: ["CATIntCurve"]
-source_file: "Doc\online\CAATobTechArticles\TopoCreate.htm"
+source_file: "Doc/online/CAATobTechArticles/TopoCreate.md"
 converted: "2026-05-11T17:33:45.903936"
 ---
 
@@ -55,9 +55,7 @@ Introduction The topology is a building set for limiting the space. Vertex bound
   * If the vertex will be drowned in a face (it will belong to a CATVertexInFace domain): the macro point represents (at least) a CATPointOnSurface. Note that for the moment, the CATVertexInFace also directly refers to the CATPointOnSurface, but this will be removed.
   * If the vertex will be drowned in a volume (it will belong to a CATPointInVolume domain): the macro-point represents (at least) any type of CATPoints.
 
-[Top] Diagrams The following diagrams summarize the different configurations between the geometry and the topology. Fig. 1: Geomery associated with topology: the case of the Shell domain ![](images/TopoGeom1.gif) |   
----|---  
-Fig. 2: Geomery associated with topology: the case of the Wire and VertexInVolume domain ![](images/TopoGeom2.gif) |   
+Fig. 2: Geomery associated with topology: the case of the Wire and VertexInVolume domain ![](images/TopoGeom2.gif) 
 ---|---  
 [Top] Main Steps to Create Cells Related to Geometry We suppose in all these examples that a CATGeoFactory and a CATBody have been already created. These examples only detail the cell construction. You must then create the domain (Lump, Shell, Wire, VertexInVolume) containing the cells and add it to the body to complete it. For code examples, see. [Top] Main Steps to Create a Vertex
 
@@ -136,7 +134,6 @@ Note: A CATEdgeCurve cannot be directly created. Only its derived types (CATSimC
     
     Body->AddDomain(Wire);
 
-
 ** Note**: This was detailed for explaining all the capabilities of the topological objects. You can use operators such as CATWireOperator or CATSkinOperator to directly create domains from geometry. [Top]
 
 * * *
@@ -151,10 +148,10 @@ In Short
 
 * * *
 
-References [1] | [The CGM Objects](../CAAGobTechArticles/GeoObjects.htm)  
+References [1] | [The CGM Objects](../CAAGobTechArticles/GeoObjects.md)  
 ---|---  
-[2] | [Topology Concepts](TopoConcepts.htm)  
-[3] | [The CGM Topological Model](TopoModel.htm)  
+[2] | [Topology Concepts](TopoConcepts.md)  
+[3] | [The CGM Topological Model](TopoModel.md)  
 [Top]  
   
 * * *

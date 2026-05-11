@@ -1,24 +1,23 @@
 ---
 title: "Shape Automation Objects"
-category: "general"
+category: "use-case"
 module: "CAAScdPriTechArticles"
 tags: []
-source_file: "Doc\online\CAAScdPriTechArticles\CAAPriTocShapes.htm"
+source_file: "Doc/online/CAAScdPriTechArticles/CAAPriTocShapes.md"
 converted: "2026-05-11T17:31:51.248415"
 ---
-
 # Shape Automation Objects
 
-![](../CAAScrAutomationImages/images/shapelon.gif)[![Part Document Object Diagram](../CAAScrAutomationImages/images/uparrow.gif)](../CAAScdMmrTechArticles/CAAMmrTocPartDocument.htm)  
+![](../CAAScrAutomationImages/images/shapelon.gif)[![Part Document Object Diagram](../CAAScrAutomationImages/images/uparrow.gif)](../CAAScdMmrTechArticles/CAAMmrTocPartDocument.md)  
 ---  
 ![](../CAAScrAutomationImages/images/parderim.gif)![](../CAAScrAutomationImages/images/sketshap.gif)  
-![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parderil.gif)![](../CAAScrAutomationImages/images/parchila.gif)![](../CAAScrAutomationImages/images/sketch.gif)[![Sketch Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdMmrTechArticles/CAAMmrTocSketch.htm)  
-![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)[![](../CAAScrAutomationImages/images/prism.gif)](CAAPriObjPrism.htm)  
+![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parderil.gif)![](../CAAScrAutomationImages/images/parchila.gif)![](../CAAScrAutomationImages/images/sketch.gif)[![Sketch Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdMmrTechArticles/CAAMmrTocSketch.md)  
+![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)[![](../CAAScrAutomationImages/images/prism.gif)](CAAPriObjPrism.md)  
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parderil.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/propprism1limit.gif)![](../CAAScrAutomationImages/images/limit.gif)  
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/propprism2limit.gif)![](../CAAScrAutomationImages/images/limit.gif)  
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/pad.gif)  
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/pocket.gif)  
-![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)[![](../CAAScrAutomationImages/images/hole.gif)](CAAPriObjHole.htm)  
+![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)[![](../CAAScrAutomationImages/images/hole.gif)](CAAPriObjHole.md)  
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/limit.gif)  
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/revolut.gif)  
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parderim.gif)![](../CAAScrAutomationImages/images/groove.gif)  
@@ -26,7 +25,7 @@ converted: "2026-05-11T17:31:51.248415"
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/stiffen.gif)  
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/solidcmb.gif)  
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/sweep.gif)  
-![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parderil.gif)![](../CAAScrAutomationImages/images/parchila.gif)![](../CAAScrAutomationImages/images/sketch.gif)[![Sketch Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdMmrTechArticles/CAAMmrTocSketch.htm)  
+![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parderil.gif)![](../CAAScrAutomationImages/images/parchila.gif)![](../CAAScrAutomationImages/images/sketch.gif)[![Sketch Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdMmrTechArticles/CAAMmrTocSketch.md)  
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/rib.gif)  
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/slot.gif)  
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/boolshap.gif)  
@@ -38,7 +37,7 @@ converted: "2026-05-11T17:31:51.248415"
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/trim.gif)  
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/shapeinstance.gif)  
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/affinity.gif)  
-![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/axistoaxis.gif) |  ![](../CAAScrAutomationImages/images/parderim.gif)![](../CAAScrAutomationImages/images/dresshap.gif)  
+
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parderim.gif)![](../CAAScrAutomationImages/images/chamfer.gif)  
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/draft.gif)  
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/drafdoms.gif)  
@@ -67,7 +66,7 @@ converted: "2026-05-11T17:31:51.248415"
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parderim.gif)![](../CAAScrAutomationImages/images/cirpat.gif)  
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/rectpat.gif)  
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/userpat.gif)  
-![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/parchila.gif)![](../CAAScrAutomationImages/images/sketch.gif)[![Sketch Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdMmrTechArticles/CAAMmrTocSketch.htm)  
+![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/parchila.gif)![](../CAAScrAutomationImages/images/sketch.gif)[![Sketch Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdMmrTechArticles/CAAMmrTocSketch.md)  
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/surfshap.gif)  
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parderim.gif)![](../CAAScrAutomationImages/images/closesuf.gif)  
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/sewing.gif)  
@@ -75,12 +74,12 @@ converted: "2026-05-11T17:31:51.248415"
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/thicksur.gif)  
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/replaceface.gif)  
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/loft.gif)  
-![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchila.gif)![](../CAAScrAutomationImages/images/hybshape.gif)[![HybridShape Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdGsiTechArticles/CAAGsiTocHybridShape.htm)  
+![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchila.gif)![](../CAAScrAutomationImages/images/hybshape.gif)[![HybridShape Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdGsiTechArticles/CAAGsiTocHybridShape.md)  
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/scaling2.gif)  
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/symm.gif)  
-![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchila.gif)![](../CAAScrAutomationImages/images/hybshape.gif)[![HybridShape Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdGsiTechArticles/CAAGsiTocHybridShape.htm)  
+![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchila.gif)![](../CAAScrAutomationImages/images/hybshape.gif)[![HybridShape Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdGsiTechArticles/CAAGsiTocHybridShape.md)  
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/translat.gif)  
-![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchila.gif)![](../CAAScrAutomationImages/images/hybshape.gif)[![HybridShape Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdGsiTechArticles/CAAGsiTocHybridShape.htm)  
+![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchila.gif)![](../CAAScrAutomationImages/images/hybshape.gif)[![HybridShape Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](../CAAScdGsiTechArticles/CAAGsiTocHybridShape.md)  
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/rotat.gif)  
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/thread.gif)  
 ![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/solid.gif)  

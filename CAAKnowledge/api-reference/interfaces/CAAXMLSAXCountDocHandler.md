@@ -2,49 +2,24 @@
 title: "CAAXMLSAXCountDocHandler"
 type: "interface"
 module: "CAAXMLParser"
+category: "framework"
 base: "CATSAXHandlerBase"
+inheritance_chain: "CAAXMLSAXCountDocHandler → CATSAXHandlerBase"
 method_count: 5
 visibility: "local"
+has_tie_binding: false
 verified: true
 ---
-
 # CAAXMLSAXCountDocHandler
 
 **基类**: CATSAXHandlerBase  
+**继承链**: CAAXMLSAXCountDocHandler → CATSAXHandlerBase  
 **模块**: CAAXMLParser  
+**分类**: framework  
 **可见性**: local  
 **方法数**: 5
 
 > interfaces from which it is convenient to
-
-## 方法列表
-
-### Characters
-```cpp
-HRESULT Characters(const CATUnicodeString & iCharacters);
-```
-
-### EndDocument
-```cpp
-HRESULT EndDocument();
-```
-
-### IgnorableWhiteSpace
-```cpp
-HRESULT IgnorableWhiteSpace(const CATUnicodeString & iCharacters);
-```
-
-### ProcessingInstruction
-```cpp
-HRESULT ProcessingInstruction(const CATUnicodeString & iTarget,
-			const CATUnicodeString & iData);
-```
-
-### StartElement
-```cpp
-HRESULT StartElement(const CATUnicodeString & iName, 
-			const CATISAXAttributeList_var& iAttributes);
-```
 
 ## 依赖
 

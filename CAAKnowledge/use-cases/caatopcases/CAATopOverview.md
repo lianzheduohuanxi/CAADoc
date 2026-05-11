@@ -3,18 +3,15 @@ title: "Overview of the Topological Operators"
 category: "use case"
 module: "CAATopUseCases"
 tags: ["CAAGemBrowser", "CATICGMObject", "CAATopJournal", "CAATopSpline", "CAATopOverview", "CATIA", "CATIntersectionCrvCrv", "CAATopologicalOperators", "CATICGMContainer"]
-source_file: "Doc\online\CAATopUseCases\CAATopOverview.htm"
+source_file: "Doc/online/CAATopUseCases/CAATopOverview.md"
 converted: "2026-05-11T17:31:50.750855"
 ---
-
 # Geometric Modeler
 
 | 
-
 ## Topology
 
 | 
-
 ### Overview of the Topological Operators
 
 _How to use them to create bodies_  
@@ -22,7 +19,6 @@ _How to use them to create bodies_
 Use Case  
   
 * * *
-
 ### Abstract
 
 Build on a common scheme, the topological operators are transient objects used to create bodies. The use case illustrates their use in chaining them to create bodies: primitive creation (`CATSolidCylinder`, `CATSolidCuboid`), skin body creation (`CATTopSkin`), prism (`CATTopPrism`), Boolean operation (`CATDynBoolean`), filleting (`CATDynFillet`) and shelling (`CATDynShell`). The volume of the resulting body is also computed (`CATDynMassProperties3D`). The use of the journal, describing the topological modifications from the input bodies to the resulting body, is not described here. See the dedicated use case "Managing the Journal" [1] to have more information on this point. 
@@ -41,7 +37,6 @@ Build on a common scheme, the topological operators are transient objects used t
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 In this use case, the general scheme of the topological operators is explained. 
@@ -50,8 +45,6 @@ Using topological operators is an easy way to create new consistent topological 
 
   * The operators building topology from geometry. They derive from the `CATGeoToTopOperator` class ( to create wire bodies or skin bodies) or from `CATSolidPrimitive` (to create basic primitives such as cylinder, box, sphere).
   * The operators only operating on topological objects. They derive from the `CATTopOperator` class. Some of them allows you to create simple bodies (point, line and spline bodies), see the `CAATopSpline` use case [9].
-
-
 
 All these operators follow the smart concept [3]: they never modify the input bodies. They always create new topological objects, which share topological cells to reduce the model size.
 
@@ -62,7 +55,6 @@ The topological operators are transient objects used to define topological opera
 The AdvancedTopologicalOpe framework provides advanced topological operators in surface design. They follow the general scheme of the topological operators, but are not described here. 
 
 [Top]
-
 ### The General Scheme
 
 All the operators are based on the same scheme as follow that: 
@@ -78,23 +70,19 @@ All the operators are based on the same scheme as follow that:
      * the topological result is always retrieved as a `CATBody`
   5. Deletes the operator instance.
 
-
-
 Unlike the geometric operators, the topological operators do not provide a BASIC and an ADVANCED modes. The topological operators are always set in ADVANCED mode: the run is always mandatory.
 
 [Top]
-
 ### The CAATopOverview Use Case
 
 CAATopOverview is a use case of the CAATopologicalOperators.edu framework that illustrates TopologicalOperators framework capabilities.
 
 [Top]
-
 #### What Does CAATopOverview Do
 
 The use case creates the body of Fig.1 by chaining topological operators.
 
-Fig. 1: The Resulting Body ![](images/CAATopOverview1.gif) | 
+Fig. 1: The Resulting Body ![](images/CAATopOverview1.gif) 
 
   * A skin is created from a profile and extruded to produce a prism
   * A box primitive is added and a cylinder subtracted
@@ -102,17 +90,15 @@ Fig. 1: The Resulting Body ![](images/CAATopOverview1.gif) |
   * A shelling operation is applied with one opening face, the bottom face of the prism.
 
   
----|---  
   
 [Top]
-
 #### How to Launch CAATopOverview
 
 To launch CAATopOverview, you will need to set up the build time environment, then compile CAATopOverview.m along with its prerequisites, set up the run time environment, and then execute the use case [8].
 
 If you simply type CAATopOverview with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example:
 
-With Windows `CAATopOverview e:\Overview.NCGM`
+With Windows `CAATopOverview e/Overview.NCGM`
 
 With UNIX `CAATopOverview /u/Overview.NCGM`
 
@@ -121,7 +107,6 @@ This NCGM file can be displayed using the CAAGemBrowser use case.
  
 
 [Top]
-
 #### Where to Find the CAATopOverview Code
 
 The CAATopOverview use case is made of a main named CAATopOverview.cpp located in the CAATopOverview.m module of the CAATopologicalOperators.edu framework:
@@ -133,7 +118,6 @@ Unix | `InstallRootDirectory/CAATopologicalOperators.edu/CAATopOverview.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 The main program: 
@@ -148,10 +132,7 @@ The main program:
   8. Computes the Volume (CATDynMassProperties3D)
   9. Writes the Model and Closes the Container
 
-
-
 [Top]
-
 #### Creating the Geometry Factory
 
 The geometry factory (CATGeoFactory) creates and manages all the `CATICGMObject` : it creates the points, curves, surfaces and bodies and remove them [7].
@@ -167,7 +148,6 @@ Notice that the factory can be defined by reading a NCGM file that was previousl
 ---  
   
 [Top]
-
 #### Creating a Skin Body
 
 This section illustrates the use of the type of topological operators that derive from `CATGeoToTopOperator`. There are two ways to create a skin body:
@@ -178,7 +158,6 @@ This section illustrates the use of the type of topological operators that deriv
     * Creating the curves on the surface (`CATPLine` and `CATPCircle`)
     * Defining the orientation of each curve: in fact, the `CreatePCircle` method always creates circles in the direct sense, even if the limits are given clockwise while `CATTpoSkin` requires to have curves such that the end of one curve (after orientation) is the end of the next curve
     * Using `CATTopSkin`.
-
 
   1. _Creating the Surface_
          
@@ -361,11 +340,7 @@ The operator configuration is the level of software you want to use to run this 
 
 The configuration must be released after use. Here, it is released after the call to the last operator.
 
-
-
-
 [Top]
-
 #### Creating a Prism
 
 The created `SkinBody` is now extruded to create a prism with `CATTopPrism`. To use it: 
@@ -374,7 +349,6 @@ The created `SkinBody` is now extruded to create a prism with `CATTopPrism`. To 
   * Run it
   * Get the resulting body (`MainBody1`). This body is created by `CATTopOperator` using `CATGeoFactory`, that manages the life cycle of the CGM objects: in fact, if you want to delete the created body, call the `CATICGMContainer::Remove` method with the `CATICGMContainer::RemoveDependancies` option.
   * Delete it.
-
 
     
     
@@ -415,7 +389,6 @@ The created `SkinBody` is now extruded to create a prism with `CATTopPrism`. To 
 As the body to extrude is a skin body, `MainBody1` is a volume body. If the body to extrude were a wire body, the result would be a skin body. Other types of prism operations can be defined, especially "until" operations: the limits of the prism are reached when encountering another body. This case is detailed in the `CAATopJournal` use case [1].
 
 [Top]
-
 #### Creating a Box and a Cylinder Primitives
 
 This section illustrates the use of `CATSolidPrimitive` operators: no run is called to do the operation, that is done at the operator creation.
@@ -425,7 +398,6 @@ To create a box, use `CATSolidCuboid`:
   * Create it with the global function `CATCreateSolidCuboid`. The points that are given are four corners of the box. The operation is automatically run.
   * Get the resulting body (`CuboidBody`). This body is created by `CATSolidCuboid` using `CATGeoFactory`, that manages the life cycle of the CGM objects: in fact, if you want to delete the created body, call the `CATICGMContainer::Remove` method with the `CATICGMContainer::RemoveDependancies` option.
   * Delete it.
-
 
     
     
@@ -461,7 +433,6 @@ To create a cylinder, use `CATSolidCylinder` :
   * Get the resulting body (`CylinderBody`). This body is created by `CATSolidCylinder` using `CATGeoFactory`, that manages the life cycle of the CGM objects: in fact, if you want to delete the created body, call the `CATICGMContainer::Remove` method with the `CATICGMContainer::RemoveDependancies` option.
   * Delete it.
 
-
     
     
     CATMathPoint axisStart ( -20,  10,  20 ),  axisEnd( -20,  10, 32 );
@@ -496,7 +467,6 @@ To create a cylinder, use `CATSolidCylinder` :
 See the `CAATopJournal` use case [1] to see how to create a skin body cylinder.
 
 [Top]
-
 #### Adding and Subtracting
 
 To use CATDynBoolean: 
@@ -505,8 +475,6 @@ To use CATDynBoolean:
   * Run it
   * Get the resulting body (`MainBody2`). This body is created by `CATDynBoolean` using `CATGeoFactory`, that manages the life cycle of the CGM objects: in fact, if you want to delete the created body, call the `CATICGMContainer::Remove` method with the `CATICGMContainer::RemoveDependancies` option.
   * Delete it.
-
-
 
 This code also shows an example of use the `CATICGMContainer::Remove` method to suppress the no more used bodies: the `RemoveDependancies` option declares that not only the body, but also its domains, cells and geometry are removed, except if they were used by other CGM entities.
     
@@ -585,7 +553,6 @@ The same is done for a Boolean subtract: the option `CATBoolRemoval` is used. `M
 ---  
   
 [Top]
-
 #### Filleting
 
 First define the edges to fillet. These edges are the external boundary of the upper face of the prism after the two Boolean operations, in other words in our case, the face with 2 holes (the paths of the cylinder and the box). To retrieve them: 
@@ -593,7 +560,6 @@ First define the edges to fillet. These edges are the external boundary of the u
   * Get all the faces (the dimension of a face is 2, see [2]) of the body `MainBody3` with the` CATBody::GetAllCells` method
   * Select the face with two holes (i.e. three domains) (use of `CATCell::GetNbDomains`)
   * For each domain of the selected face, count the number of edges: the loop with five edges is the external one. One can also ask for the location of the domain to directly have the external domain. Get the edges.
-
 
     
     
@@ -643,7 +609,6 @@ A filleting operation is defined by affecting (possibly variable) radius to edge
   * The definition of the edges to fillet according to a given radius law is called ribbon and managed by the `CATDynFilletRibbon` object: there can be several ribbons in one fillet operation, but in the use case, only one is defined.  
 The `CATDynFilletRibbon::SetSegmentationMode` option indicates that the computed ribbon must be delimited on the main part.
 
-
     
     
     _// for a constant radius, only the first argument is useful_
@@ -680,8 +645,6 @@ The fillet operation can now be defined and run. To use it
   * Run it
   * Get the resulting body (`MainBody4`). This body is created by `CATDynFillet` using `CATGeoFactory`, that manages the life cycle of the CGM objects: in fact, if you want to delete the created body, call the `CATICGMContainer::Remove` method with the `CATICGMContainer::RemoveDependancies` option.
   * Delete it.
-
-
 
 Also deletes the no more used object (radius, ribbon) and removes the old body (`MainBody3`).
     
@@ -725,7 +688,6 @@ Also deletes the no more used object (radius, ribbon) and removes the old body (
 ---  
   
 [Top]
-
 #### Shelling
 
 Take two offset bodies of one initial body. The shelling operation digs a volume by removing one offset body (internal) from the other one (external). Some faces can also be not offset: these faces are called openings. In the use case, the opening face is the bottom face of the prism: it is the unique face with five edges and one domain. The way to retrieve it is similar to the way used in the section Fillets. First void the list (`RemoveAll`), and remember that the list begins at 1!
@@ -758,8 +720,6 @@ The shelling operation can now be defined and run. To use it:
   * Run it
   * Get the resulting body (`MainBody5`). This body is created by `CATDynShell` using `CATGeoFactory`, that manages the life cycle of the CGM objects: in fact, if you want to delete the created body, call the `CATICGMContainer::Remove` method with the `CATICGMContainer::RemoveDependancies` option.
   * Delete it.
-
-
 
 Also removes the old body (`MainBody4`).
     
@@ -801,7 +761,6 @@ Also removes the old body (`MainBody4`).
 ---  
   
 [Top]
-
 #### Computing the Volume
 
 `CATDynMassProperties3D` is an operator to analyze a body. Here we ask for the computation of the volume of the body, result of all the operations. To use it: 
@@ -809,7 +768,6 @@ Also removes the old body (`MainBody4`).
   * Create it with the `::CATDynCreateMassProperties3D` global function
   * Get the needed characteristics
   * Delete it.
-
 
     
     
@@ -824,7 +782,6 @@ Also removes the old body (`MainBody4`).
 ---  
   
 [Top]
-
 #### Writing the Model and Closing the Factory
 
 Before ending, we must first release the software configuration.
@@ -865,7 +822,6 @@ The use case ends with the closure of the geometry factory, done by the `::CATCl
 [Top]
 
 * * *
-
 ### In Short
 
 This use case creates a body by chaining several types of topological operations, such Boolean, Filleting or Shelling, and primitive creation. The journal is not detailed.
@@ -873,23 +829,21 @@ This use case creates a body by chaining several types of topological operations
 [Top]
 
 * * *
-
 ### References
 
-[1] | [How to Use the Topological Journal](CAATopJournal.htm)  
+[1] | [How to Use the Topological Journal](CAATopJournal.md)  
 ---|---  
-[2] | [Topology Concepts](../CAATobTechArticles/TopoConcepts.htm)  
-[3] | [The CGM Topological Model](../CAATobTechArticles/TopoModel.htm)  
-[4] | [The CGM Journal](../CAATopTechArticles/TopoJournal.htm)  
-[5] | [The Geometric Operators](../CAAGopUseCases/CAAGopIntersect.htm)  
-[6] | [The Boolean Operators](../CAATopTechArticles/TopoBoolean.htm)  
-[7] | [The Objects of CATIA Geometric Modeler](../CAATopTechArticles/TopoBoolean.htm)  
-[8] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-[9] | [Basic Topological Operators](CAATopSpline.htm)  
+[2] | [Topology Concepts](../CAATobTechArticles/TopoConcepts.md)  
+[3] | [The CGM Topological Model](../CAATobTechArticles/TopoModel.md)  
+[4] | [The CGM Journal](../CAATopTechArticles/TopoJournal.md)  
+[5] | [The Geometric Operators](../CAAGopUseCases/CAAGopIntersect.md)  
+[6] | [The Boolean Operators](../CAATopTechArticles/TopoBoolean.md)  
+[7] | [The Objects of CATIA Geometric Modeler](../CAATopTechArticles/TopoBoolean.md)  
+[8] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[9] | [Basic Topological Operators](CAATopSpline.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1.1** [Oct 2000] | Operator configuration  

@@ -3,7 +3,7 @@ title: "Dumping the Topological Journal"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMDumpJournal", "CAAGMOperatorsInterfaces", "CAAGMOperatorsCheckGnOK", "CAAGMTopDumpJournal", "CAAGMOperatorsClashIntersect", "CAAGMOperatorsBoundaryCreation", "CAAGMOperatorsCheckGnKO", "CAAGMOperatorsDumpJournal"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcTopDumpJournal.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopDumpJournal.md"
 converted: "2026-05-11T17:33:49.148870"
 ---
 
@@ -25,7 +25,6 @@ What You Will Learn With This Use Case The primary goal of the use case is to he
     * how to retrieve the parent objects for a given statement by using `CATCGMJournalListItem::GetFirstObjs`
     * or how to retrieve the children object by using `CATCGMJournalListItem::GetLastObjs.`
 See "Topological Journal Principles" [1]  "Topological Journal Methodology" [2] for more information about this subject. The CAAGMOperatorsDumpJournal Use Case CAAGMOperatorsDumpJournal is a use case to be used as a **shared library**. It is delivered in the CAAGMOperatorsInterfaces.edu framework that illustrates the GMOperatorsInterfaces framework capabilities. What Does CAAGMOperatorsDumpJournal Do It dumps the topological journal on the standard output. How to Call It CAAGMOperatorsDumpJournal is a **shared library** which has to be included in the Imakefile.mk file of your application, then you call the global function CAAGMTopDumpJournal to dump the journal:
-    
     #include CAAGMDumpJournal.h
     ...
     CATCGMJournalList* pJournalToDump = ...;
@@ -72,8 +71,8 @@ which are all in the CAAGMOperatorsInterfaces.edu framework. Step-by-Step
               const CATCGMJournalInfo * journalInfo = pJournalItem->GetAssociatedInfo();
               
 
-References [1] | [Topological Journal Principles](CAACgmTaTopJournal.htm)  
+References [1] | [Topological Journal Principles](CAACgmTaTopJournal.md)  
 ---|---  
-[2] |  [ Topological Journal Methodology](CAACgmTaTopJournalMethodology.htm)  
+[2] |  [ Topological Journal Methodology](CAACgmTaTopJournalMethodology.md)  
 History Version: **1** [May 2014] | Document created  
 ---|---

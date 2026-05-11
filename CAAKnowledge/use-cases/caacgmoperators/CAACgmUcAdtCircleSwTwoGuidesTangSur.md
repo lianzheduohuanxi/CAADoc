@@ -3,7 +3,7 @@ title: "Creating a Circle Sweep with Two Guides and a Tangency Surface"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CAAGMOperatorsCircleSweepTwoEdgesTangSur", "CAAGMModelGemBrowser", "CAAAdtCircleSweepTwoEdgesTangSur", "CATICGMFrFTopologicalSweep", "CATIA", "CATICGMTopPrism"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcAdtCircleSwTwoGuidesTangSur.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCircleSwTwoGuidesTangSur.md"
 converted: "2026-05-11T17:33:48.833466"
 ---
 
@@ -28,7 +28,7 @@ What Does CAAGMOperatorsCircleSweepTwoEdgesTangSur Do ? The use case:
     * Creates the curves and tangency surface to be used as input data.
     * Creates a CATICGMFrFTopologicalSweep operator instance.
     * Runs the CATICGMFrFTopologicalSweep and retrieve the resulting body.
-**Note** : This article only focuses on the operations related to the CATICGMFrFTopologicalSweep operator. Refer to "Overview of the Topological Operators" [1] for more information on the operations which are not detailed in the article. How to Launch CAAGMOperatorsCircleSweepTwoEdgesTangSur To launch CAAGMOperatorsCircleSweepTwoEdgesTangSur, you will need to set up the build time environment, then compile CAAGMOperatorsCircleSweepTwoEdgesTangSur.m, set up the run time environment, and then execute the use case [2]. If you simply type CAAGMOperatorsCircleSweepTwoEdgesTangSur with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: CAAGMOperatorsCircleSweepTwoEdgesTangSur `e:\sweep.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsCircleSweepTwoEdgesTangSur Code The CAAGMOperatorsCircleSweepTwoEdgesTangSur use case is made of a main named CAAAdtCircleSweepTwoEdgesTangSur.cpp located in the CAAGMOperatorsCircleSweepTwoEdgesTangSur.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsCircleSweepTwoEdgesTangSur.m\` where `InstallRootFolder` [2] is the folder where the API CD-ROM is installed. Step-by-Step The use case is divided into the following main steps:
+**Note** : This article only focuses on the operations related to the CATICGMFrFTopologicalSweep operator. Refer to "Overview of the Topological Operators" [1] for more information on the operations which are not detailed in the article. How to Launch CAAGMOperatorsCircleSweepTwoEdgesTangSur To launch CAAGMOperatorsCircleSweepTwoEdgesTangSur, you will need to set up the build time environment, then compile CAAGMOperatorsCircleSweepTwoEdgesTangSur.m, set up the run time environment, and then execute the use case [2]. If you simply type CAAGMOperatorsCircleSweepTwoEdgesTangSur with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: CAAGMOperatorsCircleSweepTwoEdgesTangSur `e/sweep.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsCircleSweepTwoEdgesTangSur Code The CAAGMOperatorsCircleSweepTwoEdgesTangSur use case is made of a main named CAAAdtCircleSweepTwoEdgesTangSur.cpp located in the CAAGMOperatorsCircleSweepTwoEdgesTangSur.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsCircleSweepTwoEdgesTangSur.m\` where `InstallRootFolder` [2] is the folder where the API CD-ROM is installed. Step-by-Step The use case is divided into the following main steps:
     * Creating the two guides and the tangency surface
     * Creating a CATICGMFrFTopologicalSweep operator instance
     * Setting the parameters
@@ -62,9 +62,9 @@ Setting the Parameters The SetLimitGuideSlopeCondition method enables you to:
     int rank = 2;
     pSweepOpe->SetLimitGuideSlopeCondition(rank, referenceElement,pCompLaw );
 
-In Short This use case is an example of how to create a circle sweep with two guides and a tangency surface. References [1] |  [Overview of the Topological Operators](CAACgmUcTopOverview.htm)  
+In Short This use case is an example of how to create a circle sweep with two guides and a tangency surface. References [1] |  [Overview of the Topological Operators](CAACgmUcTopOverview.md)  
 ---|---  
-[2] |  [Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-[3] |  [Using the Basic Topological Operators](CAACgmUcTopSpline.htm)  
+[2] |  [Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[3] |  [Using the Basic Topological Operators](CAACgmUcTopSpline.md)  
 History Version: **1** [Aug 2002] | Document created  
 ---|---

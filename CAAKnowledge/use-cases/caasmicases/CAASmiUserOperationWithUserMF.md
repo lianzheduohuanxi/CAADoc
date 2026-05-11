@@ -3,18 +3,15 @@ title: "Managing Geometry with User Machining Features"
 category: "use case"
 module: "CAASmiUseCases"
 tags: ["CAASmiUserOperationGeometryPanel", "CATISmgNcGeometryManager", "CAAManufacturing", "CATIMfgViewAccess_var", "CATISmgNcGeometryParameter", "CAASmgOperation", "CATISmgFactory", "CATIMfgGeometryActivity", "CAASmiUserOperationGeomUI", "CATIMfgViewAccess", "CAASmiUserOperationGeometrySelCom", "CAASmiUserMachFeatureCatalog", "CATIEdit", "CATIMfgActivity", "CAASmgMachiningFeature", "CAAESmiUserOperationGeometryEditor", "CATISpecObject_var", "CATISmgNcGeometryManager_var", "CAASmgGuide", "CAASurfaceMachiningItf"]
-source_file: "Doc\online\CAASmiUseCases\CAASmiUserOperationWithUserMF.htm"
+source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithUserMF.md"
 converted: "2026-05-11T17:31:51.281341"
 ---
-
 # Machining
 
 | 
-
 ## 3 Axis Surface Machining
 
 | 
-
 ### Managing Geometry with User Machining Features
 
 _Customize the geometry tab page of a surface machining operation with user machining features_  
@@ -22,7 +19,6 @@ _Customize the geometry tab page of a surface machining operation with user mach
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article discusses the CAASmiUserOperationWithUserMF use case. It explains how to customize the default geometry tab page of a surface machining operation to be able to select geometry through an user machining feature's geometry attribute. This paper accompanies the first scenario of _Surface Machining Operation Sample_ [1].
@@ -40,7 +36,6 @@ This article discusses the CAASmiUserOperationWithUserMF use case. It explains h
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to help you to manage geometry of a surface machining operation with a machining feature geometry attribute.
@@ -52,16 +47,12 @@ More specifically, the CAASmiUserOperationWithUserMF Use Case shows how to:
   * Connect a machining feature with a surface machining operation.
   * Manage geometry selection of surface machining geometry attributes.
 
-
-
 [Top]
-
 ### The CAASmiUserOperationWithUserMF Use Case
 
 CAASmiUserOperationWithUserMF is a use case of the CAASurfaceMachiningItf.edu framework that illustrates Surface Machining capabilities. It is a part of the sample described in the technical article [1].
 
 [Top]
-
 #### What Does CAASmiUserOperationWithUserMF Do
 
 This use case customizes the default geometry tab page of **CAASmgOperation**.
@@ -72,7 +63,7 @@ CAASmgMachiningFeature has a geometry attribute : **CAASmgGuide**. This paramete
 
 The geometry management is done by several functionalities:
 
-![](images/CAASmiOperationWithuserMFPanel.jpg) | Description of functionalities illustrated: 
+ Description of functionalities illustrated: 
 
   * _Select a curve_ : select an edge with the edge selection toolbar.
   * _Select a set of curves_ : select a NC Geometry Feature of edges.
@@ -81,10 +72,8 @@ The geometry management is done by several functionalities:
   * _Export curves in a new set_ : create an NC Geometry Feature with the edges previously selected.
 
   
----|---  
   
 [Top]
-
 #### How to Launch CAASmiUserOperationWithUserMF
 
 This use case is a part of _Surface Machining Operation Sample_ [1]. You should build all the modules of this sample at a time to be able to launch it [2].
@@ -98,7 +87,6 @@ Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed, and uncomment the appropriate lines by removing the '#' character.
 
 [Top]
-
 #### Where to Find the CAASmiUserOperationWithUserMF Code
 
 This use case is made of source files located in the CAASmiUserOperationGeomUI.m module of the CAASurfaceMachiningItf.edu framework :
@@ -110,7 +98,6 @@ Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CAASmiUserOperationGeomU
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 CAASmiUserOperationWithUserMF is divided into the following steps:
@@ -126,12 +113,9 @@ CAASmiUserOperationWithUserMF is divided into the following steps:
     * Geometry Management: Coding NewZone
     * Geometry Management: Coding Export
 
-
-
 We now comment each of those sections by looking at the code.
 
 [Top]
-
 #### Declaring CATIMfgGeometryActivity Implementation
 
 To overload the geometry tab page, we should create an extension class that will implement _CATIMfgGeometryActivity_ :
@@ -146,7 +130,6 @@ To overload the geometry tab page, we should create an extension class that will
 ---  
   
 [Top]
-
 #### Coding GetMainPanelEditor
 
 In _GetMainPanelEditor,_ we create a new **CAASmgMachiningFeature** and we associate it with **CAASmgOperation**. Then we call the geometry dialog frame described below.
@@ -180,7 +163,6 @@ In _GetMainPanelEditor,_ we create a new **CAASmgMachiningFeature** and we assoc
 ---  
   
 [Top]
-
 #### Creating a New Machining Feature CAASmgMachiningFeature
 
 The _CreateCAAMachiningFeature_ method is used to create **CAASmgMachiningFeature**.
@@ -245,7 +227,6 @@ Finally, we add our feature in the Manufacturing Container.
 ---  
   
 [Top]
-
 #### Geometry Management: Coding SelectCurve
 
 In _CAASmiUserOperationGeometryPanel_ class, _SelectCurve_ is called whenever the user clicks on "_Select a curve_ " button. It calls the _CAASmiUserOperationGeometrySelCom_ command that manages the selection of standard geometries (edge or curve).
@@ -259,7 +240,6 @@ In _CAASmiUserOperationGeometryPanel_ class, _SelectCurve_ is called whenever th
 ---  
   
 [Top]
-
 #### Geometry Management: Coding SelectZone
 
 In _CAASmiUserOperationGeometryPanel_ class, _SelectZone_ is called whenever the user clicks on "_Select a set of curves_ " button. It activates the standard dialog editor of NC Geometry Features management via the _CATIEdit_ interface.
@@ -280,7 +260,6 @@ In _CAASmiUserOperationGeometryPanel_ class, _SelectZone_ is called whenever the
 ---  
   
 [Top]
-
 #### Geometry Management: Coding RemoveAll
 
 In _CAASmiUserOperationGeometryPanel_ class, _RemoveAll_ is called whenever the user clicks on "_Remove all_ " button. It uses the _RemoveAll_ method of _CATISmgNcGeometryParameter_ interface.
@@ -300,7 +279,6 @@ In _CAASmiUserOperationGeometryPanel_ class, _RemoveAll_ is called whenever the 
 ---  
   
 [Top]
-
 #### Geometry Management: Coding NewZone
 
 In _CAASmiUserOperationGeometryPanel_ class, _NewZone_ is called whenever the user clicks on "_Add a empty set_ " button. A Nc Geometry Feature is created by the _CreateNcGeometryFeature_ method of _CATISmgFactory_. The Nc Geometry Feature is added with _Add_ method of _CATISmgNcGeometryParameter_.
@@ -334,7 +312,6 @@ In _CAASmiUserOperationGeometryPanel_ class, _NewZone_ is called whenever the us
 ---  
   
 [Top]
-
 #### Geometry Management: Coding Export
 
 In _CAASmiUserOperationGeometryPanel_ class, _Export_ is called whenever the user clicks on "_Export curves in a new set_ " button. It uses the _Export_ method of _CATISmgNcGeometryParameter_ interface.
@@ -356,7 +333,6 @@ In _CAASmiUserOperationGeometryPanel_ class, _Export_ is called whenever the use
 [Top]
 
 * * *
-
 ### In Short
 
 This use case has demonstrated how to manage surface machining operation geometry interactive with a geometry attribute of an user machining feature.
@@ -365,24 +341,20 @@ This use case has demonstrated how to manage surface machining operation geometr
   * Then, it shows how to create its own machining feature with a surface machining geometry attribute.
   * Finally, it describes geometry management illustrating the use of _CATISmgNcGeometryParameter_ , _CATISmgNcGeometryManager_ and _CATISmgFactory_ interfaces.
 
-
-
 We will see now how to compute the tool path of our operation [3].
 
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Surface Machining Operation Sample Overview](../CAASmiTechArticles/CAASmiOperationSampleOverview.htm)  
+[1] | [Surface Machining Operation Sample Overview](../CAASmiTechArticles/CAASmiOperationSampleOverview.md)  
 ---|---  
-[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-[3] | [Computing a Tool Path with User Machining Features](CAASmiUserOperationWithUserMFToolPath.htm)  
+[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[3] | [Computing a Tool Path with User Machining Features](CAASmiUserOperationWithUserMFToolPath.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Mar 2002] | Document created  

@@ -3,18 +3,15 @@ title: "Inserting Commands in Contextual Menus"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CAASysEllipse", "CAAAfrEllipseHdr", "CAACafContextualMenu", "CAA2", "CAAEMmrCombinedCurveContSubMenu", "CAAECafContextualMenuEllipse", "CAACafContextualMenuCircleStr", "CAAAfrCircleHdr", "CAAAfrGeometryWks", "CAAGeometry", "CAACafContextualMenuEllipseStr", "CAACafContextualMenuSep", "CATIContextualMenu", "CATIA", "CATIAApplicationFrm", "CAACATIAApplicationFrm", "CATIAApplicationFrame"]
-source_file: "Doc\online\CAAAfrUseCases\CAAAfrSampleContextualMenu.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleContextualMenu.md"
 converted: "2026-05-11T17:17:55.668604"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## User Interface - Frame
 
 | 
-
 ### Inserting Commands in Contextual Menus
 
 _Implementing CATIContextualMenu_  
@@ -22,7 +19,6 @@ _Implementing CATIContextualMenu_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to insert commands in the contextual menu when the Select command is the active one. 
@@ -36,21 +32,16 @@ This article shows how to insert commands in the contextual menu when the Select
   * **In Short**
   * **References**
 
-
-
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show you how insert commands in the contextual menu of an object when the Select command is the current command. So in other words this article explains how to implement the _CATIContextualMenu_   interface.  [Top]
-
 ### The CAACafContextualMenu Use Case
 
 CAACafContextualMenu is a use case of the CAACATIAApplicationFrm.edu framework that illustrates CATIAApplicationFrame framework capabilities. [Top]
-
 #### What Does CAACafContextualMenu Do
 
-CAACafContextualMenu enables you to display the following contextual menu when you right click on an Ellipse during  the Select command life: | ![](images/CAACafEllipseContextualMenu.jpg)  
+CAACafContextualMenu enables you to display the following contextual menu when you right click on an Ellipse during  the Select command life: 
 ---  
   
 This menu is separated in third parts: 
@@ -58,8 +49,6 @@ This menu is separated in third parts: 
   1. The items added in the menu by the current window. `Center Graph, Reframe On` ... are items added by the _CATFrmGraphAnd3DWindow_ class. This part is independent of the _CATIContextualMenu_ implementation on the Ellipse. 
   2. The items defined in the contextual menu of the UIActive object [1] and added in the menu by the _CATIContextualMenu_ implementation on the Ellipse 
   3. The items defined and added by the _CATIContextualMenu_ implementation on the Ellipse in the menu
-
-
 
 These two commands are `Ellipse` and `Circle`, two commands defined in the workshop of the "CAA Geometry" document. To reuse it, you should retrieve their command header identifiers [2].  The "Workshop Exposition" command enables you to find them.
 
@@ -80,20 +69,15 @@ Launch CATIA, when the application is ready:
     * Click **Print  \- **The **CAAAfrGeometryWks****.txt** file is generated
     * Click**OK**
 
-
-
 In the **CAAAfrGeometryWks****.txt** find out the "`Ellipse` " and "`Circle`" strings: 
 
-![](images/CAACafContextualMenuEllipseHdr.jpg) | ![](images/CAACafContextualMenuCircleHdr.jpg)  
----|---  
   
 The identifiers of the command header instances are the **Id** strings, so **CAAAfrEllipseHdr** and **CAAAfrCircleHdr****** for the "`Ellipse` " and "`Circle`" commands respectively. These two identifiers will be associated with the starters of the menu. 
 
 [Top]
-
 #### How to Launch CAACafContextualMenu
 
-See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.htm)" use case for a detailed description of how this use case should be launched. For the specific scenario :
+See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched. For the specific scenario :
 
   * On the **File** menu click **New**
   * In the **File New   **Dialog box select **CAAGeometry** and click **OK**
@@ -102,10 +86,7 @@ See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The C
   * Create an **Ellipse**
   * Right click on the **Ellipse** and select the **Circle** command
 
-
-
 [Top]
-
 #### Where to Find the CAACafContextualMenu Code
 
 The CAACafContextualMenu use case is made of one single class, the CAAECafContextualMenuEllipse class, located in the CAACafContextualMenu.m module of the CAACATIAApplicationFrm.edu framework:
@@ -117,7 +98,6 @@ Unix | `InstallRootDirectory/CAACATIAApplicationFrm.edu/CAACafContextualMenu``.m
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 To implement the _CATIContextualMenu_ interface, there are two steps: 
@@ -125,14 +105,10 @@ To implement the _CATIContextualMenu_ interface, there are two steps: 
   1. Creating the Contextual Menu Description Class
   2. Creating the Contextual Menu 
 
-
-
 [Top]
-
 #### Creating the Contextual Menu Description Class
 
   1. Create the CAAECafContextualMenuEllipse.h file
-    
     #include "CATExtIContextualMenu.h"
     
     class CAAECafContextualMenuEllipse : public **CATExtIContextualMenu**
@@ -156,14 +132,12 @@ To implement the _CATIContextualMenu_ interface, there are two steps: 
 The implementation class derives from the _CATExtIContextualMenu_ adapter class.
 
   2. Create the CAAECafContextualMenuEllipse.cpp file
-    
     #include "CAAECafContextualMenuEllipse.h"
     #include "CATCreateWorkshop.h"
     
     **CATImplementClass**(CAAECafContextualMenuEllipse, 
                             DataExtension,CATBaseUnknown,
                             **CAASysEllipse**);
-    
     #include "TIE_CATIContextualMenu.h"
     TIE_**CATIContextualMenu**(CAAECafContextualMenuEllipse);
     ...  
@@ -195,8 +169,6 @@ Update the interface dictionary, that is a file named, for example, CAACATIAAppl
     CAASysEllipse CATIContextualMenu libCAACafContextualMenu  
   
 ---  
-
-
 
 #### Creating the  Contextual Menu 
 
@@ -248,9 +220,6 @@ Refer to the technical article entitled "The Command Headers" [2] for complete d
 
 The `AddAccessChild` macro enables you to link the `pStEllipse`` `access to the last access of `_pMenu`. The `SetAccessNext` macro enables you to chain the other accesses to the `pStEllipse` access.
 
-
-
-
 The picture below shows `_pMenu` before and after :
 
 ![](images/CAACafContextualMenuChain.jpg)  
@@ -265,7 +234,6 @@ The picture below shows `_pMenu` before and after :
 [Top]
 
 * * *
-
 ### In Short
 
 This use case explains how to implement a contextual menu and how to retrieve command header identifiers. 
@@ -273,16 +241,14 @@ This use case explains how to implement a contextual menu and how to retrieve co
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Application Frame Overview](../CAAAfrTechArticles/CAAAfrOverview.htm)  
+[1] | [Application Frame Overview](../CAAAfrTechArticles/CAAAfrOverview.md)  
 ---|---  
-[2] | [The Command Headers](../CAAAfrTechArticles/CAAAfrCommandHeaders.htm)  
+[2] | [The Command Headers](../CAAAfrTechArticles/CAAAfrCommandHeaders.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Fev 2003] | Document created  

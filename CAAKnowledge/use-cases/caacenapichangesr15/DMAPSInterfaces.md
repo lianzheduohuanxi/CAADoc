@@ -1,22 +1,19 @@
 ---
 title: "DMAPSInterfaces Framework Modifications in V5R15"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR15"
+version: "V5R15"
 tags: ["CATISPPItemMgt"]
-source_file: "Doc\online\CAACenAPIChangesR15\DMAPSInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR15/DMAPSInterfaces.md"
 converted: "2026-05-11T17:33:51.084972"
 ---
 
 | 
-
 # CAA C++ API Modifications
 
 | 
-
 ##  DMAPSInterfaces Framework Modifications in V5R15 
 
-|   
----|---|---  
   
 * * *
 

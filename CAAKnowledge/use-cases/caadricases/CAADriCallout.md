@@ -3,18 +3,15 @@ title: "Editing Callout in Generative Views"
 category: "use case"
 module: "CAADriUseCases"
 tags: ["CATIDftDocumentServices", "CATIGenerSpec", "CATIDrwSimpleText", "CATIDrwAnnotationComponent", "CATIDftView", "CATIDftDrawing", "CATIDrwSubText_var", "CAADraftingInterfaces", "CATIA", "CATIDftText", "CAADrwCallout", "CATIUnknownList", "CATIDrwCalloutAccess"]
-source_file: "Doc\online\CAADriUseCases\CAADriCallout.htm"
+source_file: "Doc/online/CAADriUseCases/CAADriCallout.md"
 converted: "2026-05-11T17:31:50.931544"
 ---
-
 # Mechanical Design
 
 | 
-
 ## Drafting
 
 | 
-
 ### Editing Callout in Generative Views
 
 _How to access and modify callouts in generative view_  
@@ -22,7 +19,6 @@ _How to access and modify callouts in generative view_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article discusses the CAADrwCallout use case. This use case explains how to retrieve these elements in a generative view.
@@ -40,19 +36,16 @@ This article discusses the CAADrwCallout use case. This use case explains how to
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show you how to access callouts in generative views.
 
 [Top]
-
 ### The CAADrwCallout Use Case
 
 CAADrwCallout is a use case of the CAADraftingInterfaces.edu framework that illustrates DraftingInterfaces framework capabilities.
 
 [Top]
-
 #### What Does CAADrwCallout Do?
 
 Fig. 1: Initial Document  
@@ -72,7 +65,6 @@ Fig. 2 represents the Drawing document modified by the use case program.  All Ca
  
 
 [Top]
-
 #### How to Launch CAADrwCallout
 
 To launch CAADrwCallout, you will need to set up the build time environment, then compile CAADrwCallout along with its prerequisites, set up the run time environment, and then execute the use case [1].
@@ -82,7 +74,7 @@ When you launch the use case, pass the full pathname of the Drawing file as argu
   * With Windows 
         
         e:> mkrun -c cmd
-        CAADrwCallout c:\...\DrawingForCalloutUseCase.CATDrawing c:\DrawingTestOutput.CATDrawing  
+        CAADrwCallout c/.../DrawingForCalloutUseCase.CATDrawing c/DrawingTestOutput.CATDrawing  
   
 ---  
   * With UNIX 
@@ -92,10 +84,7 @@ When you launch the use case, pass the full pathname of the Drawing file as argu
   
 ---  
 
-
-
 [Top]
-
 #### Where to Find the CAADrwCallout Code
 
 The CAADrwCallout use case is made of a single source file named CAADrwCallout.cpp located in the CAADrwCallout.m module of the CAADraftingInterfaces.edu framework:
@@ -107,7 +96,6 @@ Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCallout.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are seven steps in CAADrwCallout:
@@ -120,10 +108,7 @@ There are seven steps in CAADrwCallout:
   6. Modifying Callout Representation
   7. Saving the Document and Exiting
 
-
-
 [Top]
-
 #### Opening a Drawing Document
     
     
@@ -163,7 +148,6 @@ There are seven steps in CAADrwCallout:
 This section represents the usual sequence for loading a CATIA document [2].
 
 [Top]
-
 #### Accessing the Drawing Root in the Document
     
     
@@ -184,7 +168,6 @@ This section represents the usual sequence for loading a CATIA document [2].
 The root feature of a Drawing document is the Drawing itself, that is, the feature that implements the _CATIDftDrawing_ interface. We can get a pointer to _CATIDftDrawing_ using the _CATIDftDocumentServices_ interface, which is implemented by the document. The `GetDrawing` method first argument is the _CATIDftDrawing_ interface IID.
 
 [Top]
-
 #### Accessing all Callout in the Drawing Document
     
     
@@ -242,7 +225,6 @@ The root feature of a Drawing document is the Drawing itself, that is, the featu
 The GetViews method returns the list of all views in Drawing document. The GetComponents method of CATIDftView interface is a generic method to return elements identified by his IID.
 
 [Top]
-
 #### Getting the View from Associated Callout
     
     
@@ -263,7 +245,6 @@ The GetViews method returns the list of all views in Drawing document. The GetCo
 GetAssociatedView method defined in CATIDrwCalloutAccess interface returns the View from which Callout is defined. In case of Broken View, Callout are created in the same View, So GetAssociatedView is useless.
 
 [Top]
-
 #### Getting Geometric Information of a Profile Associated to a Generative View
     
     
@@ -311,7 +292,6 @@ From the Associated view to the Callout, It is possible to retrieve the definiti
 Note: depli and vecpro arguments are dedicated to give information about the type of the profile (Aligned Section View or Offset Section View)
 
  
-
 #### Modifying the Callout Representation.
     
     
@@ -399,7 +379,6 @@ Note: depli and vecpro arguments are dedicated to give information about the typ
 Note: Up to V5R13, associated texts to the Callout may be based on simple text instance.
 
 [Top]
-
 #### Saving the Document and Exiting
     
     
@@ -423,7 +402,6 @@ This section represents the usual sequence for saving a newly created CATIA docu
 [Top]
 
 * * *
-
 ### In Short
 
 This use case shows the way to :
@@ -435,21 +413,17 @@ This use case shows the way to :
   5. Read and modify representation of a Callout
   6. Save the document.
 
-
-
 [Top]
 
 * * *
-
 ### References
 
-[1] |  [ Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.htm)  
+[1] |  [ Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [ Load an existing Document](../CAAOmbUseCases/CAAOmbLoadDoc.htm)  
+[2] |  [ Load an existing Document](../CAAOmbUseCases/CAAOmbLoadDoc.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [May 2004] | Document created  

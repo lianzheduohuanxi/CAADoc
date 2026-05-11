@@ -3,18 +3,15 @@ title: "Reading XML from a custom source"
 category: "use case"
 module: "CAAXmlUseCases"
 tags: ["CATISAXXMLReader", "CATIXMLInputStream_var", "CAAXMLParser", "CATIXMLSAXFactory", "CATIXMLInputStream", "CAAXMLMultiFileStream", "CATIXMLDOMDocumentBuilder", "CATISAXParser", "CATIXMLDOMDocumentBuilder_var", "CATISAXInputSource", "CATIDOMDocument_var", "CATISAXInputSource_var", "CATIXMLSAXFactory_var", "CAAXMLCustomStream"]
-source_file: "Doc\online\CAAXmlUseCases\CAAXMLCustomStream.htm"
+source_file: "Doc/online/CAAXmlUseCases/CAAXMLCustomStream.md"
 converted: "2026-05-11T17:33:45.595301"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## Middleware Abstraction
 
 | 
-
 ### Reading XML from a Custom Source
 
 _Parsing XML from a user-defined source with DOM or SAX_  
@@ -22,7 +19,6 @@ _Parsing XML from a user-defined source with DOM or SAX_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to create your own XML source to feed XML directly to a DOM or a SAX parser.
@@ -40,25 +36,21 @@ This article shows how to create your own XML source to feed XML directly to a D
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 The XML parsers provided in the XMLParser framework know how to parse XML from various sources: files, URLs and memory buffers. This use case shows how to create your own XML sources and use them with a DOM or a SAX parser. This use case also shows you how to save your DOM tree as XML in a memory buffer.
 
 [Top]
-
 ### The CAAXMLCustomStream Use Case
 
 The CAAXMLCustomStream Use Case is a use case of the CAAXMLParser.edu framework that illustrates XMLParser framework capabilities.
 
 [Top]
-
 #### What Does CAAXMLCustomStream Do
 
 This use case provides an implementation of a new XML source. The XML source is capable of fetching a large XML document split over several files (each file contains a chunk of the complete XML document). The use case instantiates a DOM parser, instantiates the XML source with the files passed as an argument in the command line, parses the contents of the supplied source to build a DOM tree, and finally dumps the content of the DOM tree in the console.
 
 [Top]
-
 #### How to Launch CAAXMLCustomStream
 
 To launch CAAXMLCustomStream, you will need to set up the build time environment, then compile CAAXMLCustomStream along with its prerequisites, set up the run time environment, and then execute the use case [1].
@@ -87,10 +79,7 @@ where:
     * `intel_a` for 32-bit Windows
     * `win_b64` for 64-bit Windows
 
-
-
 [Top]
-
 #### Where to Find the CAAXMLCustomStream Code
 
 The CAAXMLCustomStream use case is made of several classes located in the CAAXMLCustomStream.m module of the CAAXMLParser.edu framework:
@@ -102,11 +91,9 @@ Unix | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLCustomStream.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 To create your own XML source and use it to parse XML, there are six main steps:
-
 # |  Step  
 ---|---  
 1 | Implement an XML Custom Stream  
@@ -137,7 +124,6 @@ Please note that most of the APIs from the XMLParser framework return a _HRESULT
 ---  
   
 [Top]
-
 #### Implement an XML Custom Stream
 
 Custom streams enable you to access XML, which is stored in a location you cannot access with the default types of input sources available in the XMLParser framework, such as a relational database or an encrypted file. In theory, the same result can be achieved by first fetching the whole XML into a memory buffer and then parsing the XML from that memory buffer. However, such a solution creates memory peaks and does not perform as well as the custom stream approach. To create a custom stream, you need to declare and define a V5 component, which implements the _CATIXMLInputStream_ interface.
@@ -194,7 +180,6 @@ The method accepts the following parameters:
 `oSizeRead` | The size of the fragment returned to the parser. Returning a zero-length read size signals the end of the XML input to the parser.  
   
 [Top]
-
 #### Create a V5 DOM Component and a V5 SAX Component
     
     
@@ -220,7 +205,6 @@ To provide the XML, you will need to provide a custom input source to the DOM pa
 Note that the above code does not specify the CLSID of the component to use, so the default DOM and SAX components (XML4C3) will be used. See [3] and [4] if you want to use another V5 DOM or SAX component.
 
 [Top]
-
 #### Use the V5 SAX Component to Create a SAX Input Source Based on Your XML Stream
     
     
@@ -241,7 +225,6 @@ To create a custom XML source, you first need to instantiate your custom XML str
 ![warning.gif \(206 bytes\)](../CAAIcons/images/warning.gif) The lifecycle of your _CATIXMLInputStream_ implementation depends on the lifecycle the _CATISAXInputSource_ object. As soon as the _CATISAXInputSource_ goes out of scope, the destructor of the _CATIXMLInputStream_ implementation will be called, provided that you do not have any other references on it. You can they perform cleanup and release resources in this destructor.
 
 [Top]
-
 #### Parse the Custom Source Using DOM
     
     
@@ -262,7 +245,6 @@ To parse the custom input source, you need to invoke the `Parse` method of the _
 The DOM parser can run in two modes: non-validating and validating. You determine what mode is used in the `Parse` method using the `"CATDoValidation"` option. Options are passed to the parser using two _CATListOfCATUnicodeStrings_. The first one contains the option names, the second one contains the option values. For a discussion of non-validating parsers versus validating parsers and how to choose which parser to instantiate, please see [3] and [4].
 
 [Top]
-
 #### Dump Your DOM Tree in the Console
     
     
@@ -278,13 +260,11 @@ The DOM parser can run in two modes: non-validating and validating. You determin
 To obtain an XML representation of your DOM tree, call the `Write` method of the _CATIXMLDOMDocumentBuilder_ interface. The resulting XML is returned in a CATUnicodeString. For a discussion of supported encodings and write options, see [3] and [4].
 
 [Top]
-
 #### Manage Errors
 
 The XMLParser framework uses the _HRESULT_ / _CATError_ mechanism to manage errors. Make sure to use the `CATError::CATGetLastError` to obtain all the available error diagnostics when using XMLParser. More information about V5 error management is available here [2] and [4].
 
 [Top]
-
 ### In Short
 
 This use case shows you how to create your own XML sources and use them with a DOM or a SAX parser.
@@ -292,18 +272,16 @@ This use case shows you how to create your own XML sources and use them with a D
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] | [ Managing Errors Using HRESULT](../CAASysTechArticles/CAASysErrors.htm)  
-[3] | [ Using XML in V5](../CAAXmlTechArticles/CAAXmlV5Overview.htm)  
-[4] | [XML Tips and Tricks](../CAAXmlTechArticles/CAAXmlTipsAndTricks.htm)  
+[2] | [ Managing Errors Using HRESULT](../CAASysTechArticles/CAASysErrors.md)  
+[3] | [ Using XML in V5](../CAAXmlTechArticles/CAAXmlV5Overview.md)  
+[4] | [XML Tips and Tricks](../CAAXmlTechArticles/CAAXmlTipsAndTricks.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [May 2005] | Document created  

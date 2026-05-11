@@ -3,18 +3,15 @@ title: "Scanning a Model to Retrieve V4 Elements"
 category: "use case"
 module: "CAAV4iUseCases"
 tags: ["CATIAV4Interfaces", "CAACATIAV4Interfaces", "CAAV4iEduModelScan", "CAAV4iModelScan"]
-source_file: "Doc\online\CAAV4iUseCases\CAAV4iScanUseCase.htm"
+source_file: "Doc/online/CAAV4iUseCases/CAAV4iScanUseCase.md"
 converted: "2026-05-11T17:33:45.798397"
 ---
-
 # 3D PLM PPR Hub Open Gateway
 
 | 
-
 ## V4 Access
 
 | 
-
 ### Scanning a Model to Retrieve V4 Elements
 
 _Working with the elements of model_  
@@ -22,7 +19,6 @@ _Working with the elements of model_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to scan a model. 
@@ -40,19 +36,16 @@ This article shows how to scan a model. 
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show you how to retrieve elements of a model. 
 
 [Top] 
-
 ### The CAAV4iEduModelScan Use Case
 
 CAAV4iEduModelScan is a use case of the CAACATIAV4Interfaces.edu framework that illustrates CATIAV4Interfaces framework capabilities. 
 
 [Top] 
-
 #### What Does CAAV4iEduModelScan Do
 
 The scaning functions retrieve the elements by creating object of the CATV4iV4Element class.  
@@ -84,7 +77,6 @@ At the end of CAAV4iEduModelScan using the input model DITTOS.model, the output 
 >  \------*SOL13 
 
 [Top] 
-
 #### How to Launch CAAV4iEduModelScan
 
 To launch CAAV4iEduModelScan , you will need to set up the build time environment, then compile CAAV4iEduModelScan along with its prerequisites, set up the run time environment, and then execute the use case [1].  
@@ -102,10 +94,7 @@ You can use the model `DITTOS.model` located in `CAA``CATIAV4Interfaces``.edu/In
   * Windows : `InstallRootDirectory\CAA``CATIAV4Interfaces``.edu\InputData`
   * Unix : `InstallRootDirectory/CAA``CATIAV4Interfaces``.edu/InputData`
 
-
-
 [Top] 
-
 #### Where to Find the CAAV4iEduModelScan Code
 
 The CAAV4iEduModelScan use case is made of a single file located in the CAAV4iEduModelScan.m module of the CAACATIAV4Interfaces.edu framework:  
@@ -116,7 +105,6 @@ Unix | `InstallRootDirectory/CAACATIAV4Interfaces.edu/`CAAV4iEduModelScan`.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed. 
 
 [Top] 
-
 ### Step-by-Step
 
 There are 4 logical steps in CAAV4iEduModelScan : 
@@ -127,10 +115,7 @@ There are 4 logical steps in CAAV4iEduModelScan :
   4. Retrieving the sets
   5. Retrieving the elements
 
-
-
 [Top] 
-
 #### Opening the output file
     
     
@@ -143,7 +128,6 @@ There are 4 logical steps in CAAV4iEduModelScan :
 The second argument of CAAV4iEduModelScan is the full path of the output file. 
 
 [Top] 
-
 #### Opening the model
     
     
@@ -160,7 +144,6 @@ To access to the data of the model, a CATDocument is needed.
 The path of the model passed in argument is converted to a CATString and is used to open the model in "read only" mode. 
 
 [Top] 
-
 #### Retrieving the workspaces
     
     
@@ -191,7 +174,6 @@ _CATV4iGetMaster(doc, wspElem, ier)_ retrieves the MASTER workspace in wspElem.
 Then, while _endWsp_ is false, the identificator of the workspace is printed in the output file and the next workspace is searched using _CATV4iGiswsp_
 
 [Top] 
-
 #### Retrieving the sets
     
     
@@ -222,7 +204,6 @@ _CATV4iGisset(wspElem, setElem, endSet, ier)_ retrieves the first set of the wor
 Then, while _endSet_ is false, the identificator of the set is printed in the output file and the next set is searched using _CATV4iGisset(setElem, nextSetElem, endSet, ier)_
 
 [Top] 
-
 #### Retrieving the elements
     
     
@@ -253,7 +234,6 @@ Then, while _endEls_ is false, the identificator of the element is printed in th
 [Top] 
 
 * * *
-
 ### In Short
 
 These sample show a way to retrieve an element of a model by scaning all the model. 
@@ -261,15 +241,13 @@ These sample show a way to retrieve an element of a model by scaning all the mod
 _[_Top] 
 
 * * *
-
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Jul 2003] | Document created  

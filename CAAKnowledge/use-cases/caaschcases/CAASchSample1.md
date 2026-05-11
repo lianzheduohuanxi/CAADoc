@@ -3,18 +3,15 @@ title: "Creating Features in an Applicative Container"
 category: "use case"
 module: "CAASchUseCases"
 tags: ["CAASchEduIn", "CAASchAppSample1", "CAASCHEDUApp", "CATISchAppObjectFactory", "CATISchSession", "CATIContainer_var", "CAASCHEDU_SamplePID", "CAASchAppBaseServices", "CAASchApp", "CATISchCompFlow", "CAASchEduOut1", "CATIExtendable_var", "CATISchBaseFactory", "CAASchAppSample1Main", "CAASchPlatformModeler", "CATISpecObject_var", "CAASchAppUtilities", "CATISpecObject", "CATISchAppConnectable", "CATISchComponent"]
-source_file: "Doc\online\CAASchUseCases\CAASchSample1.htm"
+source_file: "Doc/online/CAASchUseCases/CAASchSample1.md"
 converted: "2026-05-11T17:31:51.513274"
 ---
-
 # Equipment & Systems
 
 | 
-
 ## Schematics Platform Modeler
 
 | 
-
 ### Creating Schematic Application Components
 
 _Working with Schematic Components_  
@@ -22,7 +19,6 @@ _Working with Schematic Components_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article discusses the CAASchAppSample1 use case.
@@ -40,19 +36,16 @@ This article discusses the CAASchAppSample1 use case.
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to help you understand how to use the CAA Schematic Platform Interfaces to create Schematic components.
 
 [Top]
-
 ### The CAASchAppSample1 Use Case
 
 CAASchAppSample1 is a use case of the CAASchPlatformModeler.edu framework that illustrates CAASchPlatformModeler framework capabilities. The use case demonstrates the creation of a component for a sample Schematics application, CAASCHEDU_SamplePID.
 
 [Top]
-
 #### What Does CAASchAppSample1 Do
 
 The sample will create a component (feature reference) with two connectors and an internal flow. An Instance of the component is then created on the main sheet of the output drawing.
@@ -63,7 +56,6 @@ Fig.1: CAASCHEDUApp.CATfct Catalog Contents ![](images/CAASchCATFct.gif)
 ---  
   
 [Top]
-
 #### How to Launch CAASchAppSample1
 
 To launch CAASchAppSample1, you will need to set up the build time environment, then compile CAASchAppSample1 along with its prerequisites, set up the run time environment, and then execute the sample. This is fully described in the referenced article [1]. When launching the use case, you must pass the following arguments:
@@ -71,10 +63,7 @@ To launch CAASchAppSample1, you will need to set up the build time environment, 
   * **CAASchEduIn.CATProduct** \- the entire pathname, name and extension (.CATProduct) of the input drawing. Normally, it should be stored in the CNext/resources/graphic file directory.
   * **CAASchEduOut1.CATProduct** \- the entire pathname, name and extension (.CATProduct) under which the new document is to be stored.
 
-
-
 [Top]
-
 #### Where to Find the CAASchAppSample1 Code
 
 CAASchAppSample1 code is located in the CAASchAppSample1.m use case module of the CAASchPlatformModeler.edu framework:
@@ -88,7 +77,6 @@ where `InstallRootDirectory` is the root directory of your CAA V5 installation. 
 Additional prerequisite code is located in the CAASchAppUtilities.m and CAASchAppBase.m modules of the same framework.
 
 [Top]
-
 ### Step-by-Step
 
 There are eight logical steps in CAASchAppSample1:
@@ -102,16 +90,12 @@ There are eight logical steps in CAASchAppSample1:
   7. Adding an Internal Flow to the Component Reference Object
   8. Placing an Instance of the Component on the Main Sheet
 
-
-
 [Top]
-
 #### Prolog
 
 In this use case, we open an input drawing containing one main sheet and one detail sheet. The detail sheet contains three views. The use case will create a new .CATProduct drawing for the sample application.
 
 [Top]
-
 #### Initializing the Environment
 
 The CAASchAppSample1 code is derived from the CAASchAppBaseEnv base class. The base class contains functionality common to the other CAASchApp samples. Initializing the environment involves the following methods:
@@ -134,10 +118,7 @@ These methods perform the following functions:
   * Retrieving the pointer to the root container object.
   * Obtaining the pointer to the detail sheet, etc.
 
-
-
 [Top]
-
 #### Creating an Application Reference Object
 
 According to the rules of the Schematics Platform, a reference component is required before a component can be created and placed. The reference component is created by the _CATISchBaseFactory_ interface method CreateSchComponent. This method builds the component reference object from the application reference and a list of graphical representations. It is the responsibility of the Schematics application, in this case CAASCHEDU_SamplePID, to retrieve the application reference object.
@@ -205,7 +186,6 @@ _CAASCHEDU_SamplePID_ implements the _CATISchAppObjectFactory_ in the files **CA
 ---  
   
 [Top]
-
 #### Determining the Graphical Representation for the Reference Object
 
 If a component is to be visualized, it needs Graphical Representation (GRR). A component may have more than one GRR, but can only display one GRR for a given instance. For this sample, the Component Reference Object to be created will have only one GRR. The GRR is the geometry shown in the first view on the detail sheet.
@@ -228,7 +208,6 @@ If a component is to be visualized, it needs Graphical Representation (GRR). A c
 ---  
   
 [Top]
-
 #### Creating a Component Reference Object
 
 According to the rules of the Schematics Platform, a component reference object is required before a component can be created and placed. The reference component is created by the _CATISchBaseFactory_ interface method CreateSchComponent. This method builds the component reference object from the application reference and a list of graphical representations.
@@ -253,7 +232,6 @@ According to the rules of the Schematics Platform, a component reference object 
 ---  
   
 [Top]
-
 #### Adding Connectors to Component Reference Object
 
 A component such as a valve can have connectors. Some components may have multiple connectors. This sample adds two connectors to the Component Reference Object. In order to do this, the code must use the _CATISchCompConnector_ interface method AddConnector. Once the connector is created, it must be aligned, ( i.e. horizontally, vertically, etc.) See the code for more detail.
@@ -277,7 +255,6 @@ A component such as a valve can have connectors. Some components may have multip
 ---  
   
 [Top]
-
 #### Adding an Internal Flow to the Component Reference Object
 
 A component may have an internal flow. An internal flow represents a flow between pairs of connectors of a component. The sample creates an internal flow between the two connectors added to the component. To do this, the _CATISchCompFlow_ interface must be obtained from the component reference object.
@@ -321,7 +298,6 @@ The sample uses the  AddInternalFlow method of the _CATISchCompFlow_ __ interfac
 ---  
   
 [Top]
-
 #### Placing an Instance of the Component on the Main Sheet
 
 The component reference can now be instantiated on the main sheet of the drawing. This is done with the _CATISchComponent_ interface. The PlaceInSpace __ method is used to do this.
@@ -339,7 +315,6 @@ Note the aDb6Axis array contains the vector (1.0,0.0) representing the X axis, t
 [Top]
 
 * * *
-
 ### In Short
 
 This use case has demonstrated how to create a component reference object and instantiate it on the main sheet of the drawing for a sample Schematics application. Specifically, it has illustrated:
@@ -351,19 +326,15 @@ This use case has demonstrated how to create a component reference object and in
   * Adding connectors and internal flow to a component reference
   * Placing a component
 
-
-
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
   
 * * *
-
 ### History
 
 Version: **1** [April 2001] | Document created  

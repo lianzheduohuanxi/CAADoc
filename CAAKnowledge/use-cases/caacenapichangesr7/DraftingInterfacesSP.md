@@ -1,9 +1,10 @@
 ---
 title: "DraftingInterfaces Modifications"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR7"
+version: "V5R7"
 tags: ["CATIDrwAnnotationFactory", "CATIGenerSpec"]
-source_file: "Doc\online\CAACenAPIChangesR7\DraftingInterfacesSP.htm"
+source_file: "Doc/online/CAACenAPIChangesR7/DraftingInterfacesSP.md"
 converted: "2026-05-11T17:33:52.016727"
 ---
 

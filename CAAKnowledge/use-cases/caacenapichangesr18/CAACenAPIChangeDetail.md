@@ -1,22 +1,20 @@
 ---
 title: "Detail Of C++ API Changes"
-category: "general"
+category: "api-changes"
 module: "CAACenAPIChangesR18"
+version: "V5R18"
 tags: ["CAA2Usage", "CAA2Level"]
-source_file: "Doc\online\CAACenAPIChangesR18\CAACenAPIChangeDetail.htm"
+source_file: "Doc/online/CAACenAPIChangesR18/CAACenAPIChangeDetail.md"
 converted: "2026-05-11T17:33:51.416222"
 ---
 
 | 
-
 # 
 
 | 
-
 ## 
 
 | 
-
 ### Detail Of V5R18 C++ API Changes
 
 _What changes in the API compared with CAA V5R17_  
@@ -24,7 +22,6 @@ _What changes in the API compared with CAA V5R17_
 Technical Article  
   
 * * *
-
 ### Abstract
 
 This article presents by frameworks the detail of CAA C++ resources modified in V5R18 and how to modify your code accordingly. Each modification is listed for a resource (file, class, method) with a classification. They will generally be detected by a recompilation of the code. Most of the time, signature modifications are obvious. Check in the framework detail how to replace deleted entities. Possibly impacting modifications are highlighted in red.  
@@ -45,27 +42,25 @@ MINMV | Method is no more virtual. If occurs on a U1 class, may require modifica
   
 * * *
 
-CATArrangementInterfaces | [R18GA vs R17GA](CATArrangementInterfaces.htm) |   
+CATArrangementInterfaces | [R18GA vs R17GA](CATArrangementInterfaces.md) |   
 ---|---|---  
-CATxPDMInterfaces | [R18GA vs R17GA](CATxPDMInterfaces.htm) |   
-DialogEngine | [R18GA vs R17GA](DialogEngine.htm) |   
-DraftingInterfaces | [R18GA vs R17GA](DraftingInterfaces.htm) |   
-DNBD5IInterfaces | [R18GA vs R17GA](DNBD5IInterfaces.htm) |   
-MecModInterfaces | [R18GA vs R17GA](MecModInterfaces.htm) |   
-TopologicalOperators | [R18GA vs R17GA](TopologicalOperators.htm) |   
+CATxPDMInterfaces | [R18GA vs R17GA](CATxPDMInterfaces.md) |   
+DialogEngine | [R18GA vs R17GA](DialogEngine.md) |   
+DraftingInterfaces | [R18GA vs R17GA](DraftingInterfaces.md) |   
+DNBD5IInterfaces | [R18GA vs R17GA](DNBD5IInterfaces.md) |   
+MecModInterfaces | [R18GA vs R17GA](MecModInterfaces.md) |   
+TopologicalOperators | [R18GA vs R17GA](TopologicalOperators.md) |   
   
 * * *
-
 ### References
 
 [1] | [Migration to CATBoolean](../CAACenQuickRefs/CAACenWhatsNew.htm#CATBoolean)  
 ---|---  
-[2] | [Details Of V5R17 API Changes](../CAACenAPIChangesR17/CAACenAPIChangeDetail.htm)  
+[2] | [Details Of V5R17 API Changes](../CAACenAPIChangesR17/CAACenAPIChangeDetail.md)  
   |    
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Mar 2002] | Document created  

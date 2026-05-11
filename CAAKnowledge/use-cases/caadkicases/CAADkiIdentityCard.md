@@ -3,7 +3,7 @@ title: "How to use the Identity Card Interface"
 category: "use case"
 module: "CAADkiUseCases"
 tags: ["CAADkiNotesTab", "CAADkiIdentityCard", "CAAVPMDesktop"]
-source_file: "Doc\online\CAADkiUseCases\CAADkiIdentityCard.htm"
+source_file: "Doc/online/CAADkiUseCases/CAADkiIdentityCard.md"
 converted: "2026-05-11T17:33:45.939442"
 ---
 
@@ -290,7 +290,7 @@ In Short Use the _ENOVIIdentityCardInterface_ interface to create and display ad
 
 * * *
 
-References [1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
 [Top]  
   

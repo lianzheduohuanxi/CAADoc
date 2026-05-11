@@ -1,9 +1,9 @@
 ---
 title: "New C++ Authorized APIs in CAA V5-6R2017 GA"
-category: "general"
+category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATICGMPolyhedralBodyDecimator", "CATIA", "CATIMmiUsePartColorsTab", "CATIPDMSaveUERevisionVersion"]
-source_file: "Doc\online\CAACenQuickRefs\CAACenV5R27GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R27GANewCPPAPI.md"
 converted: "2026-05-11T17:33:47.584972"
 ---
 
@@ -62,4 +62,4 @@ History Version: **1** [Oct 2016] | Document created
 * * *
 
 _Copyright © 1999-2016, Dassault Systèmes. All rights reserved._  
-Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.htm) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.htm) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.htm)
+Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)

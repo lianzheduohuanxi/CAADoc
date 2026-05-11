@@ -1,9 +1,10 @@
 ---
 title: "ENOVDDManager Modifications"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR8"
+version: "V5R8"
 tags: []
-source_file: "Doc\online\CAACenAPIChangesR8\ENOVDDManager.htm"
+source_file: "Doc/online/CAACenAPIChangesR8/ENOVDDManager.md"
 converted: "2026-05-11T17:33:52.531156"
 ---
 

@@ -1,20 +1,18 @@
 ---
 title: "Detail Of C++ API Changes"
-category: "general"
+category: "api-changes"
 module: "CAACenAPIChangesR25"
+version: "V5R25"
 tags: ["CATICfgInterval", "CATIConfigurable", "CAA2Usage", "CATICfgFilter", "CATICfgManager", "CATIVpmAttribute", "CAA2Level", "CATICfgAttachable", "CATIVpmAFLManager", "CATICfgSimpleSpecification", "CATICfgUEValidateEff", "CATIVpmFactoryObject", "CATIEnovCMManager"]
-source_file: "Doc\online\CAACenAPIChangesR25\CAACenAPIChangeDetail.htm"
+source_file: "Doc/online/CAACenAPIChangesR25/CAACenAPIChangeDetail.md"
 converted: "2026-05-11T17:33:51.832518"
 ---
-
 #   
   
 | 
-
 ## 
 
 | 
-
 ### Detail Of V5-6R2015 C++ API Changes _What changes in the API compared with CAA V5-6R2014_  
 ---|---|---  
 Technical Article  

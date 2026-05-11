@@ -1,20 +1,17 @@
 ---
 title: "Warm Start Incremental Backup"
-category: "general"
+category: "use-case"
 module: "CAAAfrTechArticles"
 tags: ["CATIContainer", "CATIdent", "CAAMyCommand", "CATInit"]
-source_file: "Doc\online\CAAAfrTechArticles\CAAAfrWarmstart.htm"
+source_file: "Doc/online/CAAAfrTechArticles/CAAAfrWarmstart.md"
 converted: "2026-05-11T17:17:55.951704"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## User Interface
 
 | 
-
 ### Warm Start Incremental Backup
 
 _Principles and CAA Integration_  
@@ -22,7 +19,6 @@ _Principles and CAA Integration_
 Technical Article  
   
 * * *
-
 ### Abstract
 
 This article first presents principles and mechanisms for warm start incremental backup. Then it explains what you should do to make sure the workbench or command you create supports warm start. 
@@ -47,7 +43,6 @@ This article first presents principles and mechanisms for warm start incremental
 ---  
   
 * * *
-
 ### Incremental Warm Start Principles
 
 Until now, warm start meant simply automatically saving all documents every xx minutes. Auto save operations on large amounts of data can take a long time, even lasting several minutes, and all interactions since the last auto save are lost. The auto save feature can also be deactivated by users who prefer to save their documents frequently and manually to avoid losing data.
@@ -56,8 +51,6 @@ To resolve these problems the incremental warm start has been created. Its objec
 
   * No CPU over cost perceptible for the end user,
   * No loss of interactions.
-
-
 
 All open documents are copied in a temporary directory, and all modifications since the document was opened are logged in a log file. These operations involve a minimum inconvenience for the end user when opening documents (direct copy without loading), and the logging of document modifications at each interaction is not perceptible. 
 
@@ -70,8 +63,6 @@ Regarding the restore behavior:
     * all modifications made by users (including test/try, mistakes, etc.) are replayed 
     * time is needed to replay necessary updates.
 
-
-
 Most of the logged data correspond to operations done in commands. Some of them are not always replayable. When it is the case, the warm start mechanism is deactivated to avoid a bad restoration in case of crash.
 
 A "warm start compliant" workbench means that for any commands defined inside the workbench:
@@ -79,42 +70,32 @@ A "warm start compliant" workbench means that for any commands defined inside th
   * either the command is warm start compliant, it means that the command does not execute operations preventing a complete restoration, 
   * or the command deactivates the warm start.
 
-
-
 The incremental warm start mechanism is available for all Dassault Systemes workbenches of the following document types [1]:
 
   * Part, 
   * Product, 
   * Drawing.
 
-
-
 This incremental warm start is activated through the Options command.  
 
 Fig.1 Activation through Tools/Options ![](images/CAAAfrWarmStartTOEntoure.jpg)  
 ---  
 
-
-
 [Top]
-
 ### Technical Description
 
 The aim of this section is first to give an internal description of the data which allow us to support the incremental warm start, and then to explain how this data is used during a session. 
-
 #### Backup Data
 
 Data to do an incremental backup is stored in the CNext02.roll directory located in the `CATTemp` environment variable which is by default:
 
 Unix | : | $HOME/CATTemp  
 ---|---|---  
-Windows | : | DriveName:\Documents and Settings\LogonName\Local Settings\Application Data\DassaultSystemes\CATTemp  
+Windows | : | DriveName/Documents and Settings\LogonName\Local Settings\Application Data\DassaultSystemes\CATTemp  
   
 CNext02.roll contains:
 
   * **Documents**  
-
-
 
 > These are copies of all opened documents in session, no matter if those are visible or not. A copy is done either from the original file location ( in file environment) , or from a database (in ENOVIA environment). The name of each copy is an internal name, without relationship with the document original name.  
 
@@ -132,10 +113,8 @@ The Autosave.log file stores operations without taking into account the undo or 
 
 The Undoredo.log file, smaller than the Autosave.log file, contains information on each transaction contained in the Autosave.log file. It also keeps track of the last closed (or validated) transaction. An opened transaction is a no validated transaction, and therefore not replayed at the restoration stage. It is detailed in the Transaction section.
 
-
 Fig.2 Warm start Data Diagram ![](images/CAAAfrWarmStartDiagram.jpg)  
 ---  
-  
 #### Activation,  Deactivation,  Re-initialization Mechanisms
 
 Now that backup data is described, we can explained how it is used according to end user interactions.
@@ -209,8 +188,6 @@ A copy of the document exists in the backup directory. There are two cases to co
      * If all other documents are saved, the warm start will be re-initialized,
      * Otherwise, i.e. at least one document is still dirty, the copy of the closed document is not deleted, and the operations are recorded in the Autosave.log and Undoredo.log files.
 
-
-
 #### Transaction
 
 We have previously seen that the Autosave.log file contains the operations recorded during the session, and that they are grouped together in transactions Fig.2. A transaction is a lot which corresponds to a logical set of operations. When operations are replayed, only full lots are redone. It also means that if the last lot is not "closed", it will be not replayed.    
@@ -223,7 +200,6 @@ CATStateCommand   | When the command is ended
 CATDlgDialog or CATCommand  | When the next command will open a new transaction (*)  
   
 (*) For CAA commands, it can be only a state command since the transactional mechanism is not opened, and only the state commands open natively a transaction when they are activated. 
-
 ##### Here is the particular case of the Copy and Cut Command. 
 
   1. ##### Clipboard not kept
@@ -234,11 +210,7 @@ Suppose that the end user launches the Cut or the Copy command, if the applicati
 
 No data is lost.
 
-
-
-
 [Top]
-
 ### CAA Workbench Integration
 
 You are making a new workbench [3], you should considerer its warm start integration. There are two cases to consider:
@@ -248,8 +220,6 @@ You are making a new workbench [3], you should considerer its warm start integra
 You have nothing to do. By default, a workbench is not warm start compliant, so warm start will be not activated in this new workbench. 
 
   * It is a workbench of a warm start compliant document (Part, Product, Drawing) 
-
-
 
 > You should declare that the new CAA workbench is warm start compliant. It is done by adding the following line in the CATRsc resource file of the workbench [4]:
 >     
@@ -263,25 +233,23 @@ You have nothing to do. By default, a workbench is not warm start compliant, so 
 > The warm start compatibility will be checked on each command such as described in the next section.
 
 [Top]
-
 ### CAA Command Integration
 
 Once you have created a command [5], you should check its integration in the warm start mechanism. This section explains you which commands are concerned, and if any, how you can use the _CATOmbWarmStartServices_ class to activate, deactivate the warm start, or validate a transaction. Commands which create applicative container, or use non V5 documents, end this section. 
-
 #### **What are Commands to Take Into Account?**
 
 Any command which modifies a V5 document, launched from a command header [6] or not, is concerned by the warm start. However, these two following cases can be excluded:
 
   1. Undefined command
 
+```vbscript
 For recall, an undefined command is a command which is not seen by the focus manager [2]. It means that such command are never activated, deactivated or killed by this object. An example is the Search command [7]. These commands should not be concerned by the warm start, because they should not contain operations on document. Two commands should not work on the same object at the same time. 
+
+```
 
   2. Command launched from a no warm start document
 
 Please note that if today the document does not support warm start, one day it could do it. If now, you can exclude the command, it is only because the warm start will be first deactivated by the workbench of the document.
-
-
-
 
 #### Why and How to Deactivate the Warm Start?
 
@@ -302,8 +270,6 @@ All the following operations are re-playable:
 
 It is available on any features: Dassault Systemes and CAA features
 
-
-
   * **List of operations which are not w****arm start compliant  **
 
 If one of the operations which follow is carried out in the command, the warm start will have to be deactivated.
@@ -313,8 +279,6 @@ If one of the operations which follow is carried out in the command, the warm st
     * Applicative container creation outside a state command,
     * Graphical property modification on some Drafting elements
     * Document creation by the `NewFrom` method of the _CATDocumentServices_ class
-
-
 
 To deactivate the warm start, you should use the `Deactivate` method of the _CATOmbWarmStartServices_ class _._ This call must be done in the command activation. Here is an code example:
     
@@ -361,18 +325,19 @@ _CAAMyCommand_ derives from CATCommand, but it can be _CATStateCommand_ or _CATD
   
 ---  
   
-Before deactivating the warm start, you can test that it is not already deactivated. The `Deactivate` method returns a message that you should display to inform the end user. This message, Fig.4, is displayed through a _[CATDlgNotify](../CAADlgQuickRefs/CAADlgCATDlgNotify.htm)_ class instance: 
+Before deactivating the warm start, you can test that it is not already deactivated. The `Deactivate` method returns a message that you should display to inform the end user. This message, Fig.4, is displayed through a _[CATDlgNotify](../CAADlgQuickRefs/CAADlgCATDlgNotify.md)_ class instance: 
 
   * The dialog parent of the _CATDlgNotify_ class instance is the object returned by the `GetMainWindow` method of the _CATApplicationFrame_ class. Refer to the technical article entitled "Understanding the Application Frame Layout " for complete details about the dialog parent of a dialog box. [8]
   * `AutoSaveId` is the identifier of the dialog box
   * `CATDlgNfyInformation,CATDlgNfyOK `and `CATDlgWndModal` are the information style  
 
-
-
 The `DisplayBlocked` method usage avoids setting a callback to close the window. The `RequestDelayedDestruction` call will be executed after the closure of the window by the end user.  The first argument of the `DisplayBlocked` method is the message to display, and the second one is the title of the window. 
 
+```vbscript
 For the title of the window, you can set for example the command's NLS name. If the command is activated from a command header [6], this NLS name is the title of the command header instance [9]. 
     
+```
+
     
     ...
           CATUnicodeString NotifyWindowTitle= "CommandClassName";
@@ -389,8 +354,6 @@ where 
   * `xxx` is the command header resource file name.
   * `yyy` is the command header instance (which the command class is associated with).
 
-
-
 #### Why and How to Activate or Re-initialize the Warm Start?
 
 If the command saves or closes one or several documents, it can try to activate or re-initialize the warm start. The activation will succeed if the following conditions are met:
@@ -398,8 +361,6 @@ If the command saves or closes one or several documents, it can try to activate 
   1. Warm Start option is activated, Fig.1 
   2. Command is launched from a workbench which authorizes the warm start,
   3. All documents in session are saved, or not dirty. If you close or save all the loaded documents, this last condition is of course always true. 
-
-
 
 The `Activate` method of the _CATOmbWarmStartServices_ class enables you to try to reactivate the warm start. This call must be done just after the last closure or saving. Here is a piece of code:
     
@@ -429,13 +390,11 @@ The `Activate` method of the _CATOmbWarmStartServices_ class enables you to try 
 ---  
   
 Refer to the previous section for details. 
-
 #### Why and How to Commit a Transaction?
 
 Normally the operations inside a command are validated at the end of the command for a state command, or at the activation of the next state command for the others type of commands. That means that as long as the validation is not made, if the V5 session is broken, the last operations will be not replayed at the backup. However, you can force this validation during a command if it is necessary.
 
 The `CommitTransaction` method of the _CATOmbWarmStartServices_ class enables you to do so. This call must be done just after the last validated operation.  
-
 #### Commands Creating Applicative Container
 
 The method to create an applicative container is the _CATCreateApplicativeContainer_ global function [10]. Once the applicative container is created you have in this order to:
@@ -447,7 +406,6 @@ You call it only if the container implements the _CATInit_ interface. Inside thi
   2. Call the _CATOmbPerformAfterContainerCreation_ global function
 
 This call enables the application to initialize the undo/redo and the transactional mechanism on the container. This call must always be called **after** the container initialization. If you do it before the operations done in the `Init` method will be stored in the backup data. So when the document will be reloaded, the operations in the `Init` method will be executed twice: first by the warm start restoration and a second time, by the automatically call to the `Init` method. 
-
 
 Here is an extract of code to create an applicative container inside a command: 
     
@@ -483,7 +441,6 @@ Here is an extract of code to create an applicative container inside a command:
     ...                   
   
 ---  
-  
 #### **Commands Using Non V5 Documents**
 
 The warm start architecture is not able to manage modifications in non-V5 documents. This kind of command needs to be checked individually. 
@@ -491,7 +448,6 @@ The warm start architecture is not able to manage modifications in non-V5 docume
 [Top]
 
 * * *
-
 ### In Short
 
 The incremental backup is a mean to distribute the "automatic save" time along the session. The principle is to keep a copy of the loaded documents and to store the modifications done on these documents. In case of crash, it is possible to restore the model such as it was before the interruption of the session, except the last non validated transaction.
@@ -501,25 +457,23 @@ However, some operations on data are not re-playable. If the warm start is not s
 [Top]
 
 * * *
-
 ### References
 
 [1] | Document Overview  
 ---|---  
-[2] | [The CAA Command Model](../CAADegTechArticles/CAADegCommandModel.htm)  
-[3] | [Creating a Workbench](../CAAAfrUseCases/CAAAfrSampleWorkbench.htm)  
-[4] | [Creating Resources for Workbenches](CAAAfrI18NWorkshop.htm)  
-[5] | [Getting Started with State Dialog Commands](../CAADegTechArticles/CAADegGettingStarted.htm)  
-[6] | [The Command Headers](CAAAfrCommandHeaders.htm)  
-[7] | [Search Overview](../CAACafTechArticles/CAACafSearch.htm)  
-[8] | [Understanding the Application Frame Layout ](CAAAfrLayoutV5.htm)  
-[9] | [Creating Resources for Command Headers](CAAAfrI18NHeader.htm)  
+[2] | [The CAA Command Model](../CAADegTechArticles/CAADegCommandModel.md)  
+[3] | [Creating a Workbench](../CAAAfrUseCases/CAAAfrSampleWorkbench.md)  
+[4] | [Creating Resources for Workbenches](CAAAfrI18NWorkshop.md)  
+[5] | [Getting Started with State Dialog Commands](../CAADegTechArticles/CAADegGettingStarted.md)  
+[6] | [The Command Headers](CAAAfrCommandHeaders.md)  
+[7] | [Search Overview](../CAACafTechArticles/CAACafSearch.md)  
+[8] | [Understanding the Application Frame Layout ](CAAAfrLayoutV5.md)  
+[9] | [Creating Resources for Command Headers](CAAAfrI18NHeader.md)  
 [10] | Creating Features in Applicative Container  
 [11] | Creating New Features "From Scratch" in a Product Document  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Sep 2003] | Document created  

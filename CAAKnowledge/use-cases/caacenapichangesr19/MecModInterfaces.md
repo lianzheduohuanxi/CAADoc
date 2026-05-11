@@ -1,22 +1,19 @@
 ---
 title: "MecModInterfaces Framework Modifications in V5R19"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR19"
+version: "V5R19"
 tags: []
-source_file: "Doc\online\CAACenAPIChangesR19\MecModInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR19/MecModInterfaces.md"
 converted: "2026-05-11T17:33:51.572750"
 ---
 
 | 
-
 # CAA C++ API Modifications
 
 | 
-
 ##  MecModInterfaces Framework Modifications in V5R19 
 
-|   
----|---|---  
   
 * * *
 

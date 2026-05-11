@@ -3,18 +3,15 @@ title: "The Burger Order Dialog Box"
 category: "use case"
 module: "CAADlgUseCases"
 tags: ["CAABurgerApplication", "CAABurgerApplication_h", "CAABurgerDialogBox_h", "CATInteractiveApplication", "CATIA", "CAADlgBurger", "CAADialog", "CAABurgerDialogBox"]
-source_file: "Doc\online\CAADlgUseCases\CAADlgBurger.htm"
+source_file: "Doc/online/CAADlgUseCases/CAADlgBurger.md"
 converted: "2026-05-11T17:17:55.961678"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## User Interface - Dialogs
 
 | 
-
 ### The Burger Order Dialog Box
 
 _A comprehensive dialog box sample_  
@@ -22,7 +19,6 @@ _A comprehensive dialog box sample_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article discusses the _CAADlgBurger.m_ module of the CAADialog.edu framework. It shows how to create a dialog box, and the interactive application needed to display and run it. It includes and explains most of the Dialog framework mechanisms. 
@@ -40,7 +36,6 @@ This article discusses the _CAADlgBurger.m_ module of the CAADialog.edu framewor
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This integration example is intended to cover the scope of programming tasks to create a dialog box. These tasks are: 
@@ -51,16 +46,12 @@ This integration example is intended to cover the scope of programming tasks to 
   * Setting callbacks onto controls
   * Internationalizing the texts and messages.
 
-
-
 [Top]
-
 ### The CAADlgBurger Use Case
 
 CAADlgBurger is a use case of the CAADialog.edu framework that illustrates Dialog framework capabilities.
 
 [Top]
-
 #### What Does CAADlgBurger Do
 
 This example introduces some objects of the Dialog framework, how to arrange them in a dialog box, and a key mechanism of the interactive application architecture as well: the callback mechanism. The window is a fast-food order dialog box. It allows you to select what you want to eat and drink, and generates the order in a message window if you click the Apply push button.
@@ -78,13 +69,11 @@ Checking, selecting, or entering values display traces in the command prompt win
 ![CATDlgBurger2.jpg \(8252 bytes\)](images/CATDlgBurger2.jpg)
 
 [Top]
-
 #### How to Launch CAADlgBurger
 
 To launch CAADlgBurger, you will need to set up the build time environment, then compile CAADlgBurger along with its prerequisites, set up the run time environment, and then execute the use case [1].
 
 [Top]
-
 #### Where to Find the CAADlgBurger Code
 
 The CAADlgBurger use case is made of a several classes located in the CAADlgBurger.m module of the CAADialog.edu framework:
@@ -106,7 +95,6 @@ _CAABurgerDialogBox.cpp_ | The dialog box source file
 The resource file CAABurgerDialogBox.CATNls is located in the CNext\resources\msgcatalog directory.
 
 [Top]
-
 ### Step-by-Step
 
   1. Creating an Interactive Application to Display the Dialog Box
@@ -115,14 +103,10 @@ The resource file CAABurgerDialogBox.CATNls is located in the CNext\resources\ms
   4. Setting Callbacks onto Controls
   5. Internationalizing the Texts and Messages
 
-
-
 [Top]
-
 #### Creating an Interactive Application to Display the Dialog Box
 
 Thanks to an interactive application, the Burger dialog box can be displayed and run as a standalone application. This interactive application is made of the class _CAABurgerApplication_ that derives from _CATInteractiveApplication_. Its header file is as follows.
-    
     
     #ifndef CAABurgerApplication_h
     #define CAABurgerApplication_h  _// To prevent from multiple inclusion_
@@ -148,8 +132,6 @@ In addition to the constructor and destructor, this interactive application clas
 
   * `BeginApplication`, called by CATIA just after the application constructor. This method is dedicated to create the different objects managed by the application, namely here the dialog box
   * `EndApplication`, called by CATIA when the application destruction is requested. This method is dedicated to deallocate objects or close files. Note that the application dialog windows and boxes declared as the application class data members are automatically deleted.
-
-
 
 The dialog box is created in the `BeginApplication` method, and the `EndApplication` has nothing to deallocate since the only data member is this dialog box.
     
@@ -178,8 +160,6 @@ Note that the dialog box class is first instantiated, then initialized using its
   2. The identifier used to set its resources from the resource files
   3. The style, set here to enable the dialog window children objects to be arranged using the grid layout.
 
-
-
 The application is simply instantiated as follows. CATIA creates the main program from this instance.
     
     
@@ -189,15 +169,12 @@ The application is simply instantiated as follows. CATIA creates the main progra
 ---  
   
 [Top]
-
 #### Creating Dialog Objects and Setting their Behaviors and Styles
 
 The file CAABurgerDialogBox.h contains the following:
     
-    
     #ifndef CAABurgerDialogBox_h
     #define CAABurgerDialogBox_h   _// To prevent from multiple inclusion_
-    
     #include "CATDlgDocument.h"
     
     class CATDlgFrame;
@@ -274,14 +251,11 @@ All the methods are not listed here. The method to execute when a given control 
   * the notification sent by the control when it is activated
   * possibly useful data.
 
-
-
 Such a method is automatically called because we'll set callbacks that refer to these methods. See Setting Callbacks onto Controls.
 
 Some variables are declared to manage the different things you can order, and one method is dedicated to each action associated with a given control.
 
 [Top]
-
 #### Arranging the Dialog Objects in the Dialog Box
 
 Let's have a look at the beginning of CAABurgerDialogBox.cpp:
@@ -411,12 +385,9 @@ The controls of the Hamburger frame are instantiated by passing their father in 
   * It spans over one grid cell in the row 0, and one grid cell in the column 0\. This is declared using the third and fourth argument of `SetGridConstraints`
   * It is attached the object to the left side of the cell thanks to the last argument. 
 
-
-
 The other controls are instantiated and placed in the frame in the same way. The slider is set vertical and ranges from 0 to 10 with 10 steps and no decimal point. It thus takes the values 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, and 10.
 
 [Top]
-
 #### Setting Callbacks onto Controls
 
 We will now set the callbacks to trigger the appropriate method when a specific control is activated. Have a look at what happens with the hamburger frame for the hamburger cooking radio buttons:
@@ -433,8 +404,11 @@ We will now set the callbacks to trigger the appropriate method when a specific 
   
 ---  
   
+```vbscript
 For example, if the Rare radio button is clicked, or if another radio button is clicked while Rare was checked, Rare creates and sends a radio button modification notification that is an instance of the class CATDlgRadBModifyNotification. The `AddAnalyseNotificationCB` method sets a callback to enable a parent class of the radio button, that is in this case the dialog box itself, to be called to execute a method whenever the radio button is checked or unchecked. This callback associates the method `Rare` of the dialog box class with the Rare button sending a CATDlgRadBModifyNotification. `Rare` is triggered when the Rare button is clicked, that is when the `GetRadBModifyNotification` method returns a radio button modification notification. We now need to code `Rare`:
     
+```
+
     
     void CAABurgerDialogBox::Rare(CATCommand           * pSendingCommand,
                                   CATNotification      * pSentNotification,
@@ -455,7 +429,6 @@ For example, if the Rare radio button is clicked, or if another radio button is 
 This method simply writes a trace in the command window. It retrieves from the object that sends the notification, that is the rare radio button, its title and whether it is checked, and make two CATUnicodeString instances from this information, creates the output message by retrieving a standard message from the resource file and customizign it with the two parameters.
 
 [Top]
-
 #### Internationalizing the Texts and Messages
 
 The file that contains texts and messages is named CAADlgBurger.CATNls and is stored in CNext\resources\msgcatalog directory.
@@ -483,22 +456,19 @@ The standard message for radio buttons is referred to using the `RadioButtonNoti
 [Top]
 
 * * *
-
 ### In Short
 
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] | [Arranging Dialog Objects Using Grid](../CAADlgTechArticles/CAADlgGridLayout.htm)  
+[2] | [Arranging Dialog Objects Using Grid](../CAADlgTechArticles/CAADlgGridLayout.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Jan 2000] | Document created  

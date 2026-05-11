@@ -1,20 +1,17 @@
 ---
 title: "Making Your Components Printable"
-category: "general"
+category: "use-case"
 module: "CAAPrtTechArticles"
 tags: ["CAACmp", "CAAECmpPrintable", "CAACmpInstanceToPrint", "CATIPrintable", "CAACmpImage"]
-source_file: "Doc\online\CAAPrtTechArticles\CAAPrtPrintableObjects.htm"
+source_file: "Doc/online/CAAPrtTechArticles/CAAPrtPrintableObjects.md"
 converted: "2026-05-11T17:17:56.147286"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## 3D Visualization - Print
 
 | 
-
 ### Making Your Components Printable
 
 _How to enable your components for printing_  
@@ -22,7 +19,6 @@ _How to enable your components for printing_
 Technical Article  
   
 * * *
-
 ### Abstract
 
 This article explains how you can make your own components printable. 
@@ -33,10 +29,7 @@ This article explains how you can make your own components printable.
   * **In Short**
   * **References**
 
-
-
 * * *
-
 ### Understanding Printable Components and Images
 
 An component becomes printable when you can build a printable image of it. As an example, a _CATViewer_ instance is a printable component because you can build from it its printable image companion, that is a _CATPrintViewerImage_ instance able to decode the contents of the viewer and to perform rendering not on the screen but on the paper. The Print framework provides the following classes to make printable the main CAA V5 components:
@@ -62,12 +55,9 @@ This class should implement two methods:
 
 These methods are called by the `Print` method of the _CATPrinterDevice_ or of the _CATPrintImage_ classes when the print is requested.
 
-
-
 Assume that the component to make printable is represented by the main class _CAACmp_. This component must implements the _CATIPrintable_ interface, for example using the _CAAECmpPrintable_ code extension class of _CAACmp_. Then, the _CAACmpImage_ class, printable image companion class of _CAACmp_ , will do the printing job.
 
 [Top] 
-
 ### Implementing the CATIPrintable Interface
 
 _CATIPrintable_ includes the single `CreatePrintableImage` method that should return a pointer to an instance of the printable image class associated with the component.
@@ -75,7 +65,6 @@ _CATIPrintable_ includes the single `CreatePrintableImage` method that should re
 ![](images/CAACATIPrintable.gif)
 
 The _CAAECmpPrintable_ header file is as follows:
-    
     
     #include "CATBaseUnknown.h"
     class CAAECmpPrintable : public CATBaseUnknown
@@ -96,7 +85,6 @@ The `CATDeclareClass` macro [1] declares that _CAAECmpPrintable_   is part of a
 
 The _CAAECmpPrintable_ source file is as follows:
     
-    
     #include "CAACmp.h"
     #include "CAACmpImage.h"
     #include "CAAECmpPrintable.h"
@@ -105,7 +93,6 @@ The _CAAECmpPrintable_ source file is as follows:
                       CodeExtension,     // Code extension
                       CATBaseUnknown,    // Always OM-derive extensions from CATBaseUnknown
                       CAACmp);           // Main class of the extended component
-    
     #include "TIE_CATIPrintable.h"       // Declares that CAAECmpPrintable implements
     TIE_CATIPrintable(CAAECmpPrintable); // CATIPrintable
     
@@ -122,7 +109,6 @@ The _CAAECmpPrintable_ source file is as follows:
 The `CATImplementClass` macro [1] is used as usual to declare the extension class name, the extension type, the OM-derived component that must always be _CATBaseUnknown_ for extensions, and the extended component. `CreatePrintableImage` simply returns a pointer to the instance of the component printable image class it has just created. 
 
 [Top] 
-
 ### Creating the Printable Image Class
 
 The _CAACmpImage_ printable image class should include a constructor, a destructor, and the two methods `GetSize` and `Decode`. Below is the _CAACmpImage_ header file:
@@ -151,8 +137,6 @@ Note that:
   * The `GetSize` method returns the width and the height of the image
   * The `Decode` method is called by the `Print` method of the _CATPrinterDevice_ or of the _CATPrintImage_ class. Its parameters are the requested generator or driver, and the print parameters. Its job is to actually draw the image by using the generator drawing methods, according to the print parameters.
 
-
-
 The constructor and the destructor of this class should be as follows:
     
     
@@ -180,7 +164,6 @@ The `GetSize` and `Decode` methods are component dependent. Refer to the example
 [Top] 
 
 * * *
-
 ### In Short
 
 Any CAA V5 component for which it makes sense, that is, usually those that can be displayed, can be made printable. This is possible thanks to the _CATIPrintable_ interface that the component should implement, possibly by means of a code extension, which role is to return a printable image class associated with the component that has the know-how of decoding the component contents and of printing it. The methods of this class are directly called by the print process.
@@ -188,16 +171,14 @@ Any CAA V5 component for which it makes sense, that is, usually those that can b
 Top
 
 * * *
-
 ### References
 
-[1] | [Creating Components](../CAASysTechArticles/CAASysCreatingComponent.htm)  
+[1] | [Creating Components](../CAASysTechArticles/CAASysCreatingComponent.md)  
 ---|---  
-[2] | [Making Your Components Printable](../CAAPrtUseCases/CAAPrtSamplePrintableObjects.htm)  
+[2] | [Making Your Components Printable](../CAAPrtUseCases/CAAPrtSamplePrintableObjects.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Mar 2000] | Document created  

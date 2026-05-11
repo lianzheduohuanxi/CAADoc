@@ -3,7 +3,7 @@ title: "Creating a Blend"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsBlendWithCouplingModes", "CATICGMTopBlend", "CAAGMOperatorsBlendWithCouplingLines"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcTopBlend.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopBlend.md"
 converted: "2026-05-11T17:33:49.079944"
 ---
 
@@ -15,7 +15,7 @@ Abstract A blend is a surface that connects two wires with a skin. If the input 
     * Use Case Description
     * References  
 ---  
-Operator to be Used To create a blend, use the CATICGMTopBlend operator in GMOperatorsInterfaces. This operator has to be created by the CATCGMCreateTopBlend global function. Use Case Description The CAAGMOperatorsBlendWithCouplingLines.m and CAAGMOperatorsBlendWithCouplingModes.m modules in CAAGMOperatorsInterfaces.edu illustrate how to create a blend. These use cases create the input data to be passed to the operator. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm). Case 1: With Coupling Lines With the input data below: Fig.1 Blend Operation: Input Data (Three Guides and Supporting Surfaces)  ![Blend Operation: Three Guides](images/CGM_blend_coupling_lines_0.png)  
+Operator to be Used To create a blend, use the CATICGMTopBlend operator in GMOperatorsInterfaces. This operator has to be created by the CATCGMCreateTopBlend global function. Use Case Description The CAAGMOperatorsBlendWithCouplingLines.m and CAAGMOperatorsBlendWithCouplingModes.m modules in CAAGMOperatorsInterfaces.edu illustrate how to create a blend. These use cases create the input data to be passed to the operator. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md). Case 1: With Coupling Lines With the input data below: Fig.1 Blend Operation: Input Data (Three Guides and Supporting Surfaces)  ![Blend Operation: Three Guides](images/CGM_blend_coupling_lines_0.png)  
 ---  
 and the code below:
     
@@ -60,11 +60,11 @@ and the code below:
   
 you get this result:   Fig.4 Result of Blend Operation with Coupling Mode ![Blend Operation: Result Coupling Mode](images/CGM_blend_coupling_mode_1.png)  
 ---  
-References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)  
-[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)  
-[5] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.htm)  
-[6] |  [Overview of Topological Operators](CAACgmUcTopOverview.htm)  
+[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)  
+[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)  
+[5] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.md)  
+[6] |  [Overview of Topological Operators](CAACgmUcTopOverview.md)  
 History Version: **1** [Sept 2011] | Document created  
 ---|---

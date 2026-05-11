@@ -1,9 +1,10 @@
 ---
 title: "ApplicationFrame Modifications"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR7"
+version: "V5R7"
 tags: ["CATIWorkbench", "CATIAfrDialog", "CATIWorkbenchAddin"]
-source_file: "Doc\online\CAACenAPIChangesR7\ApplicationFrame.htm"
+source_file: "Doc/online/CAACenAPIChangesR7/ApplicationFrame.md"
 converted: "2026-05-11T17:33:51.897529"
 ---
 

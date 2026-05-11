@@ -3,18 +3,15 @@ title: "Retrieving Data of an Element of a V4 Document"
 category: "use case"
 module: "CAAV4iUseCases"
 tags: ["CAADoc", "CAACATIAV4Interfaces", "CAAV4iEduV4GetTubingData", "CAAV4iEduGetTubingData", "CAAV4iEduV4DataAccess", "CAAV4iGetTubingData", "CATIAV4Interfaces"]
-source_file: "Doc\online\CAAV4iUseCases\CAAV4iGetTubingDataUseCase.htm"
+source_file: "Doc/online/CAAV4iUseCases/CAAV4iGetTubingDataUseCase.md"
 converted: "2026-05-11T17:33:45.764869"
 ---
-
 # 3D PLM PPR Hub Open Gateway
 
 | 
-
 ## V4 Access
 
 | 
-
 ### Retrieving Tubing Data From a V4 Document
 
 _Get the information contained in a model_  
@@ -22,7 +19,6 @@ _Get the information contained in a model_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to retrieve tubing data from a V4 document. 
@@ -40,19 +36,16 @@ This article shows how to retrieve tubing data from a V4 document. 
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show you how to retrieve tubing data from a V4 model. 
 
 [Top] 
-
 ### The CAAV4iEduGetTubingData Use Case
 
 CAAV4iEduGetTubingData is a use case of the CAACATIAV4Interfaces.edu framework that illustrates CATIAV4Interfaces framework capabilities. 
 
 [Top] 
-
 #### What Does CAAV4iEduGetTubingData Do
 
 CAAV4iEduGetTubingData begins by opening the _.model_ document.  
@@ -62,7 +55,6 @@ Finally, tubing data of the element are retrieved : the tubing line name, the di
 The elements are removed. 
 
 [Top] 
-
 #### How to Launch CAAV4iEduGetTubingData
 
 To launch CAAV4iEduGetTubingData , you will need to set up the build time environment, then compile CAAV4iEduGetTubingData along with its prerequisites, set up the run time environment, and then execute the use case [2].  
@@ -80,10 +72,7 @@ You can use the model TUBING`.model` and TUBING2.model located in `CAADoc/``CAA`
   * Windows : `InstallRootDirectory\CAADoc\CAA``CATIAV4Interfaces``.edu\CNext\resources\graphic`
   * Unix : `InstallRootDirectory/CAADoc/CAA``CATIAV4Interfaces``.edu/CNext/resources/graphic`
 
-
-
 [Top] 
-
 #### Where to Find the CAAV4iEduGetTubingData Code
 
 The CAAV4iEduGetTubingData use case is made of a single file located in the CAAV4iEduGetTubingData.m module of the CAACATIAV4Interfaces.edu framework:  
@@ -95,7 +84,6 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
  
 
 [Top] 
-
 ### Step-by-Step
 
 There are 3 logical steps in CAAV4iEduV4DataAccess : 
@@ -104,10 +92,7 @@ There are 3 logical steps in CAAV4iEduV4DataAccess :
   2. Scanning the model
   3. Retrieving the data
 
-
-
 [Top] 
-
 #### Opening the model
     
     
@@ -125,7 +110,6 @@ The path of the model passed in argument is converted to a CATString and is used
 __ 
 
 [Top] 
-
 #### Scaning the model
     
     
@@ -149,7 +133,6 @@ CATV4iGisset retrieves the first set of the workspace _masterElem_.
 CATV4iGisels retrieves the first element of the set _setElem_. 
 
 [Top] 
-
 #### Retrieving the data
 
 // Get the tubing line Outside Diameter double Diameter = 0.0; double BendRadius = 0.0; double Angle = 0.0; double Extremity1[3]; double Extremity2[3]; double Center[3]; double Udir[3]; double Vdir[3]; int iReturnElbowTubeData = CATV4iGetElbowTubeData (element, Diameter, BendRadius, Angle, Extremity1,  Extremity2, Center, Udir, Vdir); if (iReturnElbowTubeData == -1)  outputFile << "CATV4iGetElbowTubeData failed" << endl; else if (iReturnElbowTubeData == 0) { outputFile << "CATV4iGetElbowTubeData succeeded" << endl; outputFile << "Elbow tube Diameter = " << Diameter << endl; outputFile << "Elbow tube BendRadius = " << BendRadius << endl; outputFile << "Elbow tube Angle = " << Angle << endl;
@@ -168,7 +151,6 @@ _...CATV4iGirvis(..._ retrieves graphical data about the element : show, pickabl
 [Top] 
 
 * * *
-
 ### In Short
 
 This use case provides a way to retrieve tubing information from elements in a V4 model. 
@@ -176,16 +158,14 @@ This use case provides a way to retrieve tubing information from elements in a V
 _[_Top] 
 
 * * *
-
 ### References
 
-[1] | [Scanning the model](CAAV4iScanUseCase.htm)  
+[1] | [Scanning the model](CAAV4iScanUseCase.md)  
 ---|---  
-[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Jul 2003] | Document created  

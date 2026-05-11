@@ -3,18 +3,15 @@ title: "Creating a Document's Window - Part 1"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CATIDocumentEdit", "CAAGeometry", "CAAxx", "CATISO", "CAAIVisHistogramChartVisu", "CAADegGeoCommands", "CAAxxx", "CAADialogEngine", "CAAyyy", "CAADegHistogramChartWindowCmd", "CATIEditor", "CAAAfrHistogramChartWindow", "CAASysGeoModelInf", "CAAVisualization", "CAAISysDocumentChartWindow", "CAAVisGeoModelInt", "CATI3DGeoVisu", "CAASystem", "CAAApplicationFrame"]
-source_file: "Doc\online\CAAAfrUseCases\CAAAfrSampleCustomWindow1.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleCustomWindow1.md"
 converted: "2026-05-11T17:17:55.693605"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## User Interface - Frame
 
 | 
-
 ### Creating a Document's Window - Part 1
 
 _Enabling a document to be displayed in the V5 application frame_  
@@ -22,7 +19,6 @@ _Enabling a document to be displayed in the V5 application frame_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to create a new window class to display an existing document and how to instantiate it from a command. In the other hand, the use case described in the "Creating a Document's Window - Part 2" article [1] explains more precisely the specificity of a multi-viewers window. 
@@ -40,7 +36,6 @@ This article shows how to create a new window class to display an existing docum
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 A document, visualized in the V5 application frame, implements the _CATIDocumentEdit_ interface. This interface provides the default window to display it. This use case is intended to show how to create a new type of window for an existing document. 
@@ -51,23 +46,19 @@ You will learn all the steps to visualize a document with a none-standard way:
   2. How to manage the MVC  paradigm by using the _CATVisManager_ ,
   3. How to create instances of the window.
 
-
-
 At last, before getting in this use case, refer to the technical article [2], to have a complete viewpoint of all the objects implicated in the V5 layout. 
 
 [Top]
-
 ### The CAAAfrHistogramChartWindow Use Case
 
 CAAAfrHistogramChartWindow is a use case of the CAAApplicationFrame.edu framework that illustrates the ApplicationFrame framework capabilities.
 
 [Top]
-
 #### What Does CAAAfrHistogramChartWindow Do
 
 The CAAAfrHistogramChartWindow use case creates a document window for CAAGeometry documents. This new window is launched from the "Histogram Chart Window" command. Refer to the use case entitled "Associating a Dialog Box with a Dialog Agent-2" [3].
 
-![](images/CAAAfrHistoChart2.jpg) | The "Histogram Chart Window" command in the Chart Window toolbar  
+ The "Histogram Chart Window" command in the Chart Window toolbar  
 ---|---  
   
 The top window on the picture below is the default window those created by the _CATIDocumentEdit_ interface. The bottom window, named Model Histogram Chart, is those created by the "Histogram Chart Window" command.
@@ -80,27 +71,24 @@ The two windows displayed the same document (six points, one line and one plane)
   * In the top window, the elements of the model are visualized in 3D with the _CATI3DGeoVisu_ interface.
   * In the bottom window, the elements are visualized in 2D with the _CAAIVisHistogramChartVisu_**** interface.
 
-
-
 The CAAGeometry document implements the _CATIDocumentEdit_ to create the default window. To create the _CAAAfrHistogramChartWindow_ window we have chosen to create a new interface for this document. This interface, _CAAISysDocumentChartWindow_ , enables you to have no link between the framework which contains the definition window (CAAApplicationFrame.edu) and those which contains the command to create a window's instance (CAADialogEngine.edu ). 
 
 [Top]
-
 #### How to Launch CAAAfrHistogramChartWindow
 
-See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.htm)" use case for a detailed description of how this use case should be launched. For the specific scenario :
+See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched. For the specific scenario :
 
+```vbscript
 Do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following: 
+
+```
 
   * On the **File** menu click **New**
   * In the New box, select CAAGeometry and click **OK**
   * Select **Window** ->**Histogram Chart Window**
   * Click **OK**
 
-
-
 [Top]
-
 #### Where to Find the CAAAfrHistogramChartWindow Code
 
 The CAAAfrHistogramChartWindow use case is made up of several classes and interfaces:
@@ -109,8 +97,6 @@ The CAAAfrHistogramChartWindow use case is made up of several classes and interf
   * _CAAISysDocumentChartWindow :_ The interface to create a document's window class instance
   * _CAAIVisHistogramChartVisu_**** : The interface to visualized in 2D the document's elements  (not explained here)
   * _CAADegHistogramChartWindowCmd_ : The state command to create a document's window class instance thanks to the _CAAISysDocumentChartWindow  _
-
-
 
 There are respectively located in the CAAAfrGeoWindows.m, CAASysGeoModelInf.m, CAAVisGeoModelInt.m and CAADegGeoCommands.m modules of the CAAApplicationFrame.edu, CAASystem.edu, CAAVisualization.edu and CAADialogEngine.edu frameworks:
 
@@ -121,7 +107,6 @@ Unix | `InstallRootDirectory/CAAxx.edu/CAAyyy.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed. 
 
 [Top]
-
 ### Step-by-Step
 
 To create the Histogram Chart window, there are two steps which can be divided in sub-steps:
@@ -139,10 +124,7 @@ To create the Histogram Chart window, there are two steps which can be divided i
 7 | Implementing the _CAAISysDocumentChartWindow_ interface   
 8 | Using the _CAAISysDocumentChartWindow_ interface  
 
-
-
 [Top]
-
 #### Creating the Histogram Chart Window Class
 
 This document window includes one viewer. The class for this window is _CAAAfrHistogramChartWindow_ , whose header file is as follows.
@@ -176,8 +158,6 @@ _CAAAfrHistogramChartWindow_   derives from the _CATFrmWindow_ class. This base
   * A `DeleteWindow` to delete or release the specific data of the window. 
   * The `Build` method, as usual for a Dialog class, creates and arranges the dialog objects, and for a document's window manages the interactivity. 
 
-
-
 This class keeps in data member the viewer and the root of the document to display. 
 
 The constructor class is simple:
@@ -192,7 +172,6 @@ The constructor class is simple:
 ---  
   
 [Top]
-
 #### Providing the Dialog Object Behavior
 
 The dialog object behavior consists in: 
@@ -200,8 +179,6 @@ The dialog object behavior consists in:
   * Instantiating the viewer to display
   * Arranging the viewer in the document window
   * Setting the current viewer
-
-
 
 The `Build` method creates the viewer, arranges it in the window and sets it the current viewer. 
 
@@ -250,11 +227,7 @@ The `Attach4Sides` method attaches `_pViewer` to the four sides of the `pFrameWi
   
 The `Reframe` method ensures that the whole contents of `_pViewer` is displayed, while the `SetViewer` method sets `_pViewer` as the current viewer. We have now a nice document window, but few interactive mechanisms are available. Let's assign them now.
 
-
-
-
 [Top]
-
 #### Providing the MDI Document Window Behavior
 
 The MDI document window behavior consists in: 
@@ -262,7 +235,6 @@ The MDI document window behavior consists in:
   * Retrieving the visualization manager and the document root object
   * Requesting the document to create its graphics representation and attaching them to the visualization manager
   * Managing the links between these objects and all the other objects enabling interactivity.
-
 
   1. Retrieving the visualization manager and the document root object 
 
@@ -334,11 +306,7 @@ The Interactive Set of Objects (ISO) is also retrieved. These objects are those 
 
 The document window `Build` method is now complete.
 
-
-
-
 [Top]
-
 #### Duplicating the Window
 
 This is done thanks to the `Duplicate` method.
@@ -374,7 +342,6 @@ The `SetBaseName` method enables to update the title of the first windows if onl
 The title of the first window becomes "Model Histogram Chart:1" and the title of the second window is " Model Histogram Chart:2".
 
 [Top]
-
 #### Deleting the Window
     
     
@@ -424,7 +391,6 @@ The destructor simply deletes the path to the root object. No need to delete the
 ---  
   
 The document's window class is now complete. You will learn how to create instances. 
-
 #### Creating the _CAAISysDocumentChartWindow_ interface 
 
 This new interface [6] has only one method, the `CreateHistogramWindow` method. 
@@ -442,7 +408,6 @@ This new interface [6] has only one method, the `CreateHistogramWindow` method.�
     ...      
   
 ---  
-  
 #### Implementing the _CAAISysDocumentChartWindow_ interface
 
 This interface is implemented on the CAAGeometry document. The last argument of the `CATImplementClass` macro is the suffix of the document. It is `CAAGeom` for  the CAAGeometry  and `CATPart` for a Part document. 
@@ -521,9 +486,6 @@ In the CNext\Resources\msgcatalog directory of the CAAApplicationFrame.edu frame
 
   * Set the current window has current in the V5 application. In other words, the new window has the focus. The windows management is the role of the unique _CATFrmLayout_ class instance [2].
 
-
-
-
 #### Using the _CAAISysDocumentChartWindow_ interface
 
 In the _CAADegHistogramChartWindowCmd_ state command [3], there is a transition with the `CreateHistogramChartWindow` action method:
@@ -553,7 +515,6 @@ In the _CAADegHistogramChartWindowCmd_ state command [3], there is a transition 
 [Top]
 
 * * *
-
 ### In Short
 
 Documents of the same type are always displayed in similar windows. You can instantiate the _CATFrmGraphAnd3DWindow_ class and the _CATFrmGraphAnd2DWindow_ class provided by CAA V5, or create your own window which should derive from the _CATFrmWindow_ base class. 
@@ -563,18 +524,16 @@ Document windows are instantiated in the `CreateDefaultWindow` method of the _CA
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Creating a Document's Window - Part 2](CAAAfrSampleCustomWindow1.htm)  
+[1] | [Creating a Document's Window - Part 2](CAAAfrSampleCustomWindow1.md)  
 ---|---  
-[2] | [Understanding the Application Frame Layout](../CAAAfrTechArticles/CAAAfrLayoutV5.htm)  
-[3] | [Associating a Dialog Box with a Dialog Agent - Part 2](../CAADegUseCases/CAADegSampleDialogWithAgent2.htm)  
-[4] | [The CAA Command Model](../CAADegTechArticles/CAADegCommandModel.htm)  
+[2] | [Understanding the Application Frame Layout](../CAAAfrTechArticles/CAAAfrLayoutV5.md)  
+[3] | [Associating a Dialog Box with a Dialog Agent - Part 2](../CAADegUseCases/CAADegSampleDialogWithAgent2.md)  
+[4] | [The CAA Command Model](../CAADegTechArticles/CAADegCommandModel.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Fev 2003] | Document created  

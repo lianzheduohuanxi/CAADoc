@@ -1,20 +1,17 @@
 ---
 title: "Using XML in V5"
-category: "general"
+category: "use-case"
 module: "CAAXmlTechArticles"
 tags: ["CATIDOMElement", "CATIDOM", "CATIXMLSAXFactory_var", "CATISAXDocumentHandler", "CATIXML", "CATIDOMNode_var", "CATISAXAttributeList_var", "CATIDOMImplementation", "CATIDOMDocument_var", "CATISAXErrorHandler", "CATISAXInputSource_var", "CATIDOMXXX_var", "CATIXMLSAXFactory", "CATISAXYYY_var", "CATIXMLDOMDocumentBuilder", "CATISAXInputSource", "CATIDOMDocumentType_var", "CATIDOMElement_var", "CATIXMLDOMDocumentBuilder_var", "CATISAXEntityResolver"]
-source_file: "Doc\online\CAAXmlTechArticles\CAAXmlV5Overview.htm"
+source_file: "Doc/online/CAAXmlTechArticles/CAAXmlV5Overview.md"
 converted: "2026-05-11T17:33:45.712135"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## Middleware Abstraction
 
 | 
-
 ### Using XML in V5
 
 _Description of the XML infrastructure available in V5_  
@@ -22,7 +19,6 @@ _Description of the XML infrastructure available in V5_
 Technical Article  
   
 * * *
-
 ### Abstract
 
 This article explains what is an XML parser. It describes the parsers available in V5, lists their capabilities and discusses how to create them. It also discusses how these V5 parsers integrate existing XML standards.
@@ -41,7 +37,6 @@ This article explains what is an XML parser. It describes the parsers available 
 ---  
   
 * * *
-
 ### V5 XML Parser Components
 
 The component, which processes raw XML content and allows the developer to access and manipulate this content from a DOM or a SAX API is called an XML parser. Rather than developing its own XML parser, Dassault Systèmes chooses to rely on its software partners and integrate existing parsers. All these parsers support the DOM and SAX APIs, but there are differences between them:
@@ -49,24 +44,18 @@ The component, which processes raw XML content and allows the developer to acces
   * They do not use the C++ language in the same way: due to the lack of universal conventions in C++, each parser defines its own string class, its own way to manage errors, its own way to represent an interface, etc.
   * They have different features: support for DTD validation, support for schema validation, availability for a given operating system, etc.
 
-
-
 To make the development of XML-based solutions easier for CAA developers, the XMLParser framework provides CAA developers with the following functionality:
 
   * An API to instantiate the various XML parsers available in V5.
   * A set of V5 interfaces (based on the DOM or the SAX models) to access all the parsers in a uniform, v5-friendly way.
   * An adaptor layer which makes the various XML parsers accessible through the V5 interfaces in a uniform way.
 
-
-
 ![xmlparsers.png \(9296 bytes\)](images/xmlparsers.png)
-
 #### Support for Multiple Parsers
 
 Each parser component in the XMLParser framework is identified by a GUID. To instantiate the parser, developers invoke a global function, passing it the identifier of the parser they want to use. Since there are two families of APIs (DOM and SAX), there are two global functions. If the developer fails to pass an identifier, a default value is used (corresponding to the XML4C3 parser).
 
 The following sample shows how to instantiate a DOM parser backed by the XML4C5 parser component:
-    
     
     #include "CATIXMLDOMDocumentBuilder.h"  // To create the DOM objects
     
@@ -76,7 +65,6 @@ The following sample shows how to instantiate a DOM parser backed by the XML4C5 
 ---  
   
 The following sample shows how to instantiate a SAX parser backed by the XML4C5 parser component:
-    
     
     #include "CATIXMLSAXFactory.h"       // To create the SAX objects
     
@@ -92,7 +80,6 @@ _Compatibility between parsers_
 ![warning.gif \(206 bytes\)](../CAAIcons/images/warning.gif) V5 parsers are not interoperable: you cannot append a _CATIDOMElement_ created with XML4C3 to a _CATIDOMElement_ created with XML4C5. However, several parsers can coexist in the same process.
 
 [Top]
-
 #### Choosing the Right Parser
 
 The following table gives an overview of the features supported by each parser.
@@ -116,18 +103,13 @@ Windows availability | Yes | Yes | Yes | Yes | Yes
   6. Schema validation is not supported
   7. Not supported for SAX1 and SAX2
 
-
-
 In summary, you can use the following rules to choose the parser, which best suits your needs:
 
   * **Use XML4C3:** for simple DOM or SAX1 applications, which do not require XSD schema validation.
   * **Use XML4C5:** for DOM or SAX2 applications, which require XSD schema validation.
   * **Use MSXML, with the highest possible level installed on the machine:** for Windows-only applications, which download code and want to minize the downloaded code size (browser plug-ins). Indeed, these parsers are often pre-installed with Windows.
 
-
-
 [Top]
-
 ### Use of XML Standards in V5
 
 The XMLParser framework defines two classes of XML APIs: standard APIs and additional APIs created by Dassault Systèmes.
@@ -135,12 +117,9 @@ The XMLParser framework defines two classes of XML APIs: standard APIs and addit
   * The standard APIs are the exact image of the W3C DOM specification or the SAX specification. Nothing has been added to or removed from the specification. Therefore, the information you can find on DOM or SAX in books, magazine or on-line tutorials can directly be put in practice in a V5 context using these APIs. To recognize these APIs more easily, the following naming patterns are used: DOM interfaces use the prefix **CATIDOM** ; DOM classes use the prefix **CATDOM** ; SAX interfaces use the prefix **CATISAX** ; SAX classes use the prefix **CATSAX**.
   * Additional APIs were created by Dassault Systèmes to fulfil two needs. First, fill the gaps of the DOM and SAX standards, which do not define the mechanisms to create a DOM or a SAX parsers or to configure them. Second, add useful functionalities, which were missing from the standard, for instance the capabilty to create an XML document from a DOM tree. To recognize these APIs more easily, the following naming pattern is used: additional XML interfaces use the prefix **CATIXML**. 
 
-
-
 The following two sections give you more information as to how XML standard specifications have been adapted for V5.
 
 [Top]
-
 #### V5 C++ Bindings for DOM
 
 The DOM specification uses OMG IDL to define its APIs in an abstract, platform-neutral way. It is then up to each platform to define a binding, that is a concrete version of the APIs using the language and data types native to the platform. The following table explains how this is done for V5 in C++.
@@ -202,7 +181,6 @@ In V5, you will manipulate the following V5 interface
 ---  
   
 [Top]
-
 #### V5 C++ Bindings for SAX
 
 The SAX specification uses Java to define its APIs. Platforms, which do not use Java as their programming language define a binding for their language, that is a version of the APIs using the language and data types native to the platform. The following table explains how this is done for V5 in C++.
@@ -249,14 +227,12 @@ In V5, you will manipulate the following V5 interface
 ---  
   
 [Top]
-
 ### Supported XML Encodings
 
 The XML specification defines the XML syntax using the character model defined by the Unicode specification. XML contents however can be stored in text using any encoding (code page) provided that the underlying parsers support them. To use a given encoding for an XML file, you need to:
 
   1. Encode the file with this encoding.
   2. Indicate in the XML declaration the encoding you have used.
-
 
     
     
@@ -267,7 +243,6 @@ The XML specification defines the XML syntax using the character model defined b
 ---  
   
 [Top]
-
 #### UTF-8
 
 The XML specification mandates that XML parsers support UTF-8. Therefore, this encoding is universally available. Furthermore, this encoding supports the whole Unicode standard, which guarantees that national characters can be read and written on any machine in the world without loss or corruption, or need to install a specific code page configuration file.
@@ -275,7 +250,6 @@ The XML specification mandates that XML parsers support UTF-8. Therefore, this e
 ![warning.gif \(206 bytes\)](../CAAIcons/images/warning.gif)When you have the choice of the encoding, use the UTF-8 encoding.
 
 [Top]
-
 #### Other Supported Encodings
 
 A few other encodings are also supported by the XMLParser framework. 
@@ -290,7 +264,6 @@ SHIFT_JIS
 [Top]
 
 * * *
-
 ### In Short
 
 The XMLParser framework provides several parsers. All these parsers are accessible through the same V5 DOM or SAX APIs. Choice of the parser depends on requirements of the target application.
@@ -298,14 +271,12 @@ The XMLParser framework provides several parsers. All these parsers are accessib
 [Top]
 
 * * *
-
 ### References
 
-[1] | [ Managing Errors Using HRESULT](../CAASysTechArticles/CAASysErrors.htm)  
+[1] | [ Managing Errors Using HRESULT](../CAASysTechArticles/CAASysErrors.md)  
 ---|---  
   
 * * *
-
 ### History
 
 Version: **1** [Apr 2005] | Document created  

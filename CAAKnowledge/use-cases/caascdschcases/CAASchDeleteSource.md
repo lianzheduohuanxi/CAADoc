@@ -1,37 +1,45 @@
 ---
 title: "CAASchDelete.CATScript"
-category: "general"
+category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CATIAProduct", "CAASCH_Delete01", "CAAScdSchUseCases", "CAASchDelete", "CATIA", "CATIASchRoute", "CATIASchComponent", "CATIASchAppConnector", "CATIASchAppConnectable"]
-source_file: "Doc\online\CAAScdSchUseCases\CAASchDeleteSource.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchDeleteSource.md"
 converted: "2026-05-11T17:31:51.365141"
 ---
 
-
     Option Explicit
+```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2004
-    
     ' *****************************************************************************
     '   Purpose:      Delete objects.
     '   Languages:    VBScript
     '   Locales:      English 
     '   CATIA Level:  V5R15 
     ' *****************************************************************************
+```
+
     
+```vbscript
     Sub CATMain()
-    
+```vbscript
         ' ------------------------------------------------------------------------- 
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String 
         sDocPath=CATIA.SystemService.Environ("CATDocView")
     
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+```
+
+```vbscript
           Err.Raise 9999,sDocPath,"No Doc Path Defined"
         End If
+```vbscript
         ' ------------------------------------------------------------------------- 
         ' Open the schematic document 
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+```
+
                 "online\CAAScdSchUseCases\samples\CAASCH_Delete01.CATProduct")
     
         Dim objSchDoc As Document
@@ -39,12 +47,14 @@ converted: "2026-05-11T17:31:51.365141"
     
         Dim strMessage As String
     
+```
+
         strMessage = _
           "--------------------------------------------------------------------" & vbCr
         strMessage = strMessage & _
           "Output traces from CAASchDelete.CATScript" & vbCrLf
-    
         ' Find the top node of the schematic object tree - schematic root.
+```vbscript
         Dim objPrdRoot As Product
         Dim objSchRoot As SchematicRoot
         If ( Not ( objSchDoc Is Nothing ) ) Then
@@ -56,6 +66,9 @@ converted: "2026-05-11T17:31:51.365141"
     
         Dim objSchBaseFact As SchBaseFactory
     
+```
+
+```vbscript
         If ( Not ( objSchRoot Is Nothing ) ) Then
     
            Set objSchBaseFact = objSchRoot.GetSchBaseFactory 
@@ -64,7 +77,7 @@ converted: "2026-05-11T17:31:51.365141"
            Dim objLRoutes As SchListOfObjects
            Dim intNbRouteBefore As Integer
            Dim intNbRouteAfter As Integer
-    
+```vbscript
            '-----------------------------------------------------------------------
            '  In this specific input model, we expects to find a component
            '  instance that has been inserted into a route.
@@ -80,21 +93,35 @@ converted: "2026-05-11T17:31:51.365141"
               strMessage = strMessage & "before deleting an inserted component " 
               strMessage = strMessage & " = " & intNbRouteBefore & vbCr
            End If 
+```
+
     
+```
+
+```vbscript
            If ( Not ( objSchBaseFact Is Nothing ) ) Then
     
               Set objSchComp = FindComponentInst (objSchRoot)
     
+```
+
+```vbscript
               If ( Not ( objSchComp Is Nothing ) ) Then
     
+```
+
                  objSchBaseFact.DeleteObject objSchComp
     
                  strMessage = strMessage & "Component instance deleted from the model " & vbCr
     
+```vbscript
               End If 
     
+```
+
+```vbscript
            End If '--- If ( Not ( objSchBaseFact Is Nothing ...
-    
+```vbscript
            '-----------------------------------------------------------------------
            '  Concatenate the 2 members
            '  The first member will be extended and the 2 member will be
@@ -115,10 +142,18 @@ converted: "2026-05-11T17:31:51.365141"
     
               Dim objAppRCntr1 As SchAppConnector
               Dim objAppRCntr2 As SchAppConnector
+```
+
     
+```
+
+```vbscript
               If ( intNbRouteAfter > 0 ) Then
                  Set objRoute1 = objLRoutes.Item (1, "CATIASchRoute")
     
+```
+
+```vbscript
                  If ( Not ( objRoute1 Is Nothing ) ) Then
                     Set objRCntbl1 = objSchRoot.GetInterface ( _
                       "CATIASchAppConnectable", objRoute1)
@@ -135,6 +170,9 @@ converted: "2026-05-11T17:31:51.365141"
                     End If
                  End If
     
+```
+
+```vbscript
                  If ( Not ( objRoute1 Is Nothing ) And _
                        Not ( objAppRCntr1 Is Nothing ) And _
                        Not ( objAppRCntr2 Is Nothing ) ) Then
@@ -147,14 +185,20 @@ converted: "2026-05-11T17:31:51.365141"
               End If 
            End If '--- If ( Not ( objLRoutes Is Nothing ) ...
            
+```
+
+```vbscript
         End If '--- If ( Not ( objSchRoot Is Nothing )...
     
+```
+
         strMessage = strMessage & _
           "--------------------------------------------------------------------" & vbCr
         MsgBox strMessage
     
+```vbscript
     End Sub
-    
+```vbscript
     ' -----------------------------------------------------------------------------
     ' | Find a component instance with a specific name 
     ' | (contains "delete" sub-string)
@@ -165,7 +209,12 @@ converted: "2026-05-11T17:31:51.365141"
     
        Dim objLCompInst As SchListOfObjects
        Dim intNbComp As Integer
+```
+
     
+```
+
+```vbscript
        If ( Not ( objSchRootArg Is Nothing ) ) Then
           Set objLCompInst = objSchRootArg.GetComponents
           If ( Not ( objLCompInst Is Nothing ) ) Then
@@ -179,60 +228,96 @@ converted: "2026-05-11T17:31:51.365141"
        Dim strInstName As String
        Dim intFound As Integer
     
+```
+
+```vbscript
        If (Not ( objLCompInst Is Nothing ) ) Then
-    
+```vbscript
           '------------------------------------------------------------------------
           '  Loop through the members in the list and find s component that
           '  has"delete" as part of its product instance name
           '------------------------------------------------------------------------
+```
+
     
+```
+
+```vbscript
           For intIndex = 1 To intNbComp
     
+```
+
             intFound = 0
             strInstName = ""
     
+```vbscript
             Set objSchComp = objLCompInst.Item (intIndex,"CATIASchComponent")
     
+```
+
+```vbscript
             If ( Not ( objSchComp Is Nothing ) ) Then
     
                Set objPrd = objSchRootArg.GetInterface ( _
                  "CATIAProduct", objSchComp)
     
+```
+
+```vbscript
                If ( Not ( objPrd Is Nothing ) ) Then
                   strInstName = objPrd.Name
                   intFound  = Instr (1, strInstName, "_Delete", 1)  
                End If 
     
+```
+
+```vbscript
                If ( intFound > 0 ) Then
     
                   Set FindComponentInst = objSchRootArg.GetInterface ( _
                     "CATIASchComponent", objSchComp)
     
+```
+
                   Exit For  
                End If          
     
+```
+
+```vbscript
             End If '--- If ( Not ( objSchComp Is Nothing ) ...
     
+```
+
           Next
     
+```vbscript
        End If '--- If (Not ( objLCompInst Is Nothing ) ...
     End Function
     
+```
+
     
-    
+```vbscript
     ' -----------------------------------------------------------------------------
     ' | Find a connector in a route that is not connected to another object.
     ' | Input: objSchRoute:  the route object.
     ' | Returns: the open connector
     ' -----------------------------------------------------------------------------
     Private Function FindOpenConnector (objSchRootArg As SchematicRootArg, _
+```
+
       objRCntblArg As SchAppConnectable) As SchAppConnector
     
+```vbscript
        Dim objLAppCntr As SchListOfObjects
        Dim intNbCntr As Integer
        Dim objLFilter As SchListOfBSTRs
        Set objLFilter = Nothing
     
+```
+
+```vbscript
        If ( Not ( objRCntblArg Is Nothing ) ) Then
           Set objLAppCntr = objRCntblArg.AppListConnectors (objLFilter)
           If ( Not ( objLAppCntr Is Nothing ) ) Then
@@ -244,36 +329,62 @@ converted: "2026-05-11T17:31:51.365141"
        Dim objAppCntr As SchAppConnector
        Dim bIsConnected As Boolean
     
+```
+
+```vbscript
        If (Not ( objLAppCntr Is Nothing ) And ( intNbCntr > 0 ) And _
            Not ( objSchRootArg Is Nothing ) ) Then
-    
+```vbscript
           '------------------------------------------------------------------------
           '  Loop through the members in the list and find an unconnected connector
           '------------------------------------------------------------------------
+```
+
     
+```
+
+```vbscript
           For intIndex = 1 To intNbCntr
     
             Set objAppCntr = objLAppCntr.Item (intIndex,"CATIASchAppConnector")
     
+```
+
+```vbscript
             If ( Not ( objAppCntr Is Nothing ) ) Then
     
+```
+
                objAppCntr.AppIsCntrConnected bIsConnected
     
+```vbscript
                If ( Not ( bIsConnected ) )Then
     
                   Set FindOpenConnector = objSchRootArg.GetInterface ( _
                     "CATIASchAppConnector", objAppCntr)
     
+```
+
                   Exit For  
                End If          
     
+```
+
+```vbscript
             End If '--- If ( Not ( objAppCntr Is Nothing ) ...
     
+```
+
           Next
     
+```vbscript
        End If '--- If (Not ( objLAppCntr Is Nothing ) ...
     End Function
     
+```
+
     
     
     
+
+```

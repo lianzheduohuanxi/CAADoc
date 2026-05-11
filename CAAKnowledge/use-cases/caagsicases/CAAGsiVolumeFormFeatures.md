@@ -3,18 +3,15 @@ title: "Creating Volume Form Features"
 category: "use case"
 module: "CAAGsiUseCases"
 tags: ["CATIGSMProceduralView_var", "CATICkeParm_var", "CATIPrtBooleanFactory", "CATIPrtContainer", "CATIGSMSweepUnspec_var", "CAAGsiVolumeFormFeature", "CAAGSMInterfaces", "CAAGsiVolumeFormFeatures", "CATIMf3DBehavior2", "CATIGSMFactory", "CATIPrtFactory", "CATIGSMProceduralView", "CATIGSMExtrude_var", "CATIPrtFactory_var", "CATIPrtPart_var", "CAAGsiObjectUpdate", "CAAGsiStartVolume", "CATISpecObject_var", "CATIGSMLoft_var", "CATInit"]
-source_file: "Doc\online\CAAGsiUseCases\CAAGsiVolumeFormFeatures.htm"
+source_file: "Doc/online/CAAGsiUseCases/CAAGsiVolumeFormFeatures.md"
 converted: "2026-05-11T17:31:50.653046"
 ---
-
 # Shape Design & Styling
 
 | 
-
 ## Generative Shape Design
 
 | 
-
 ### Creating Volume Form Features
 
 _Using the Shape Design and the Part Design factories, create volume form features_  
@@ -22,7 +19,6 @@ _Using the Shape Design and the Part Design factories, create volume form featur
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article discusses the CAAGsiVolumeFormFeatures use case. This use case explains how to create volume shape features. 
@@ -40,7 +36,6 @@ This article discusses the CAAGsiVolumeFormFeatures use case. This use case expl
 ---  
   
 * * *
-
 ### What You Will You Learn With This Use Case
 
 This use case shows how to use shape design and part design factories to create volumes. The volume features can be created in Shape Design factory or in Part Design factory.  
@@ -50,14 +45,12 @@ This use case shows how to use shape design and part design factories to create 
 >   * Part Design Closed Volumes, Thick volumes, Draft, Draft Angle, Draft ReflectLine, Sew Volumes, and Shell.
 > 
 
-
 ### The CAAGsiVolumeFormFeatures Use Case
 
 CAAGsiVolumeFormFeatures is a use case of the CAAGSMInterfaces.edu framework that illustrates creation of volumes using Shape Design and Part Design   
 (Extrude, Revol, Thick, Close, Multi-Sections Volume, and Sweep). 
 
 ![](images/CAAGsiVolumeForms.jpg)
-
 #### What Does CAAGsiVolumeFormFeatures Do
 
 The goal of CAAGsiVolumeFormFeatures is to illustrate how to create volume either using shape design factory or part design factory.   
@@ -71,16 +64,13 @@ Volume created using shape design factory (CATIGSMFactory)
 >   * Once created the volume have to be insert in the procedural view using the CATIGSMProceduralView Interfaces, if the current tool is a body, automatically an OGS will be create in the Body to insert the volume underneath 
 > 
 
-
 Volume created using part design factory (CATIPrtFactory or CATIPrtBooleanFactory) 
 
 >   * Part Design factories  propose dedicated methods to create volume feature (ex: CreateVolumicCloseSurface.), 
 >   * Part design factory volumes methods automatically insert resulting feature in the procedural view at creation , the feature just have then to be updated ,if the current tool is a body, automatically an OGS will be create in the Body to insert the volume underneath. The CAAGsiObjectUpdate service can be used 
 > 
 
-
 [Top]
-
 #### How to Launch CAAGsiVolumeFormFeatures
 
 To launch CAAGsiVolumeFormFeatures, you will need to set up the build time environment, then compile CAAGsiVolumeFormFeatures along with its prerequisites, and set up the run time environment, and then execute the use case [1].
@@ -89,7 +79,7 @@ Launch the use case as follows:
 
   * With Windows 
         
-        e:\CAAGsiVolumeFormFeatures InstallDir\CAAGSMInterfaces.edu\Data.d\CAAGsiStartVolume.CATPart outputDirectory\CAAGsiVolumeFormFeatures.CATPart  
+        e/CAAGsiVolumeFormFeatures InstallDir\CAAGSMInterfaces.edu\Data.d\CAAGsiStartVolume.CATPart outputDirectory\CAAGsiVolumeFormFeatures.CATPart  
   
 ---  
   * With UNIX 
@@ -97,8 +87,6 @@ Launch the use case as follows:
         \CAAGsiVolumeFormFeatures InstallDir\CAAGSMInterfaces.edu\Data.d\CAAGsiStartVolume.CATPart outputDirectory/CAAGsiVolumeFormFeatures.CATPart  
   
 ---  
-
-
 
 where:
 
@@ -108,7 +96,6 @@ where:
 `CAAGsiVolumeFormFeatures.CATPart` | The file that contains the part created with the datum surface t  
   
 [Top]
-
 #### Where to Find the CAAGsiVolumeFormFeatures Code
 
 The CAAGsiVolumeFormFeatures use case is made of main program located in the CAAGsiVolumeFormFeatures.m module of the CAAGSMInterfaces.edu framework:
@@ -126,7 +113,6 @@ Unix | ` InstallRootDirectory/CAAGSMInterfaces.edu/Data.d/CAAGsiStartVolume.CATP
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are eight logical step in CAAGsiVolumeFormFeatures: 
@@ -140,12 +126,9 @@ There are eight logical step in CAAGsiVolumeFormFeatures:
   7. Create a volume thick feature
   8. Save and close session
 
-
-
 We will now comment each of those sections by looking at the code of the main method of file CAAGsiVolumeFormFeatures.
 
 [Top]
-
 #### Prolog
 
 CAAGsiVolumeFormFeatures sample first creates a session and opens the input CATPart. 
@@ -227,7 +210,6 @@ Then in the initilization phasis the wireframe and shape design and Part Design 
 ---  
   
 [Top]
-
 #### Create extrude volume feature 
 
 Create extrude volume using CreateExtrude method of CATIGSMFactory
@@ -273,7 +255,6 @@ Create extrude volume using CreateExtrude method of CATIGSMFactory
 ---  
   
 [Top]
-
 #### Create revolve volume feature 
 
 Create revolve volume using CreateRevol method of CATIGSMFactory
@@ -321,7 +302,6 @@ Create revolve volume using CreateRevol method of CATIGSMFactory
 ---  
   
 [Top]
-
 #### Create multi-sections volume feature 
 
 Create multi-sections volume using CreateLoft method of CATIGSMFactory
@@ -366,7 +346,6 @@ Create multi-sections volume using CreateLoft method of CATIGSMFactory
 ---  
   
 [Top]
-
 #### Create volume sweep feature 
 
 Create volume sweep using CreateSweep method of CATIGSMFactory
@@ -401,7 +380,6 @@ Create volume sweep using CreateSweep method of CATIGSMFactory
 ---  
   
 [Top]
-
 #### Create volume thick feature 
 
 Create volume thick using CreateVolumicOffset method of CATIPrtFactory
@@ -423,7 +401,6 @@ Note: Insert in procedural view is done at creation under the current geometrica
 ---  
   
 [Top]
-
 #### Create volume close feature 
 
 Create volume close using CreateVolumicCloseSurface method of CATIPrtFactory
@@ -444,7 +421,6 @@ Note: Insert in procedural view is done at creation under the current geometrica
 ---  
   
 [Top]
-
 #### Save and close session 
 
 Save part and close the session 
@@ -474,7 +450,6 @@ Save part and close the session
 [Top]
 
 * * *
-
 ### In Short
 
 This use case has demonstrated the way to create a volume features thanks to shape design and part design. 
@@ -487,18 +462,16 @@ Note : The BRep features are retrieved in interactive commands through in select
 [Top]
 
 * * *
-
 ### References
 
-[1] |  [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] |  [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [ About Generative Shape Design Features](../CAAGsiTechArticles/CAAGsiShapeDesignFeature.htm)  
-[3] |  [ Inserting a Shape Design Feature in the procedural view](../CAAGsiTechArticles/CAAGsiInsertInProceduralView.htm)  
-[4] | [ Updating a shape Design feature ](../CAAGsiTechArticles/CAAGsiUpdateShapeDesign.htm)  
+[2] |  [ About Generative Shape Design Features](../CAAGsiTechArticles/CAAGsiShapeDesignFeature.md)  
+[3] |  [ Inserting a Shape Design Feature in the procedural view](../CAAGsiTechArticles/CAAGsiInsertInProceduralView.md)  
+[4] | [ Updating a shape Design feature ](../CAAGsiTechArticles/CAAGsiUpdateShapeDesign.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [May 2004] | Document created  

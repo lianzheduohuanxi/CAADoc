@@ -3,18 +3,15 @@ title: "Creating Customized Command Headers"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CAAFindP2", "CAAAfrDumpCommandHeader", "CAASysCollectionEmptyNotif", "CAAAfrGeometryWksHeader", "CAAAfrGeometryWks", "CATImplementHeaderResources", "CAAAfrGeometryWshop", "CAAGeometry", "CAAAfrGeoCommands", "CAASysCollectionFilledNotif", "CAAAfrDumpCmd", "CAAAfrDumpHdr", "CAAISysCollection", "CAAApplicationFrame"]
-source_file: "Doc\online\CAAAfrUseCases\CAAAfrSampleCustomCommandHeader.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleCustomCommandHeader.md"
 converted: "2026-05-11T17:17:55.679598"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## User Interface - Frame
 
 | 
-
 ### Creating Customized Command Headers
 
 _Exposing your commands and managing their availability_  
@@ -22,7 +19,6 @@ _Exposing your commands and managing their availability_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to create a customized command header class to expose a command and manage its availability. 
@@ -40,22 +36,19 @@ This article shows how to create a customized command header class to expose a c
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show how to create a customized command header class to expose a command and manage its availability.
 
 [Top]
-
 ### The CAAAfrDumpCommandHeader Use Case
 
 CAAAfrDumpCommandHeader is a use case of the CAAApplicationFrame.edu framework that illustrates the ApplicationFrame framework capabilities.
 
 [Top]
-
 #### What Does CAAAfrDumpCommandHeader Do
 
-![CAAAfrDump.jpg \(9085 bytes\)](images/CAAAfrDump.jpg) | The CAAAfrDumpCommandHeader use case creates command header class to manage the availability of the Element Count command. Element Count scans the active CAAGeometry document and prints in a dialog box a bill of the objects contained in the document. This makes sense only if the document is not empty, otherwise the command is made unavailable. The Element Count command availability is managed by its command header.  
+ The CAAAfrDumpCommandHeader use case creates command header class to manage the availability of the Element Count command. Element Count scans the active CAAGeometry document and prints in a dialog box a bill of the objects contained in the document. This makes sense only if the document is not empty, otherwise the command is made unavailable. The Element Count command availability is managed by its command header.  
 ---|---  
   
 The CAAAfrDumpCommandHeader customized command header class plays the following roles: 
@@ -63,15 +56,15 @@ The CAAAfrDumpCommandHeader customized command header class plays the following 
   * It is a command header as those created using the `MacDeclareHeader` macro. This is possible by deriving the command header class from _CATCommandHeader_
   * It should in addition make the command available when the document contains at least one object, and unavailable otherwise. This is the role of the `BecomeAvailable` and `BecomeUnavailable` methods of _CATCommandHeader_.
 
-
-
 [Top]
-
 #### How to Launch CAAAfrDumpCommandHeader
 
-See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.htm)" use case for a detailed description of how this use case should be launched. For the specific scenario :
+See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched. For the specific scenario :
 
+```vbscript
 Do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following: 
+
+```
 
   * On the **File** menu, click **New**
   * In the **New** box, select **CAAGeometry** and click **OK**
@@ -79,10 +72,7 @@ Do not type the module name on the command line, but type CNEXT instead. When th
   * On the **Tools** menu, click **Element Count**. A dialog box displays the element count for each element type.  
 Note that if the document is empty, the **Element Count** command is greyed and cannot be triggerred.
 
-
-
 [Top]
-
 #### Where to Find the CAAAfrDumpCommandHeader Code
 
 The CAAAfrDumpCommandHeader use case is made of a single class named _CAAAfrDumpCommandHeader_ located in the CAAAfrGeometryWshop.m module of the CAAApplicationFrame.edu framework:
@@ -96,11 +86,9 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 CAAAfrDumpCommandHeader is part of the CAA Geometry Creation workshop where it is instantiated. 
 
 [Top]
-
 ### Step-by-Step
 
 To create the command header for the Element Count command of the CAAAfrGeometryWshop workshop, there are six steps:
-
 # | Step | Where  
 ---|---|---  
 1 | Create the command header class header file | LocalInterfaces  
@@ -112,11 +100,9 @@ To create the command header for the Element Count command of the CAAAfrGeometry
 7 | Assign resources to the command header instance | Resource files  
   
 [Top]
-
 #### Creating the Command Header Class
 
 The CAAAfrDumpCommandHeader header file is as follows:
-    
     
     #include <CATCommandHeader.h>
     ...
@@ -157,19 +143,14 @@ About the mandatory public methods:
   * A `destructor`, 
   * The `Clone` method inherited from _CATCommandHeader_ and used to duplicate the command header instance. Refer to the "Customized Command Header Class Structure" section of the technical article about the command headers [2]. You will have all the details about the `Clone` method. 
 
-
-
 About the mandatory private methods:
 
   * A `constructor` taking a pointer to a _CATCommandHeader_ is dedicated to the `Clone` method. 
   * Two other `constructor` are declared in the private part, and are not implemented in the source file. This prevents the compiler from creating them as public without you know.
 
-
-
 Two callback methods, `AnalyzeFilledCB` and `AnalyzeEmptyCB`, are declared to be called when the document contains objects or when it is empty respectively. `_pCollection` is a pointer to the collection of objects in the document, and is document dependent.
 
 [Top]
-
 #### Declaring the Command Header Class Resources
 
 The CAAAfrDumpCommandHeader source file contains the resource declaration:
@@ -187,7 +168,6 @@ The CAAAfrDumpCommandHeader source file contains the resource declaration:
 A customized command header is a CAA component. The `CATImplementClass` macro makes the class _CAAAfrDumpCommandHeader_ a component main class (`Implementation`) that OM-derives [1] from _CATCommandHeader_. The `CATImplementHeaderResources` macro is used in conjunction with the `CATDeclareHeaderResources` macro in the header file. It states that the _CAAAfrDumpCommandHeader_ class derives from _CATCommandHeader_ , and that its associated resource file names use the class name: CAAAfrDumpCommandHeader.CATNls and CAAAfrDumpCommandHeader.CATRsc respectively. The base class name set as second argument helps to use resource concatenation. The third argument could be set to the name of another class that is associated with resource files that use its class name, or to the name, without suffix, of an already existing resource file pair.
 
 [Top]
-
 #### Setting the Callbacks to the Appropriate Events and Initializing the Command Availability
 
 This is done in the _CAAAfrDumpCommandHeader_ as follows:
@@ -252,7 +232,6 @@ The constructor finally asks the collection interface pointer to know whether th
 Don't forget to remove the subscriptions in the destructor using the `RemoveSubscriberCallbacks` method.
 
 [Top]
-
 #### Creating the Copy Constructor, the Clone Method, and the Destructor
 
 This is done in the _CAAAfrDumpCommandHeader_ as follows:
@@ -286,7 +265,6 @@ The `Clone` method uses the copy constructor.
 Don't forget to remove the subscriptions in the destructor using the `RemoveSubscriberCallbacks` method.
 
 [Top]
-
 #### Creating the Callback Methods that Manage the Command Availability
 
 This is done in the _CAAAfrDumpCommandHeader_ as follows:
@@ -316,7 +294,6 @@ This is done in the _CAAAfrDumpCommandHeader_ as follows:
 These two methods have the classical signatures of callback methods. Depending on the notification sent, they simply set the command availability accordingly.
 
 [Top]
-
 #### Instantiating the Command Header Class
 
 To instantiate this command header, the `CreateCommands` method of the _CAAAfrGeometryWks_ workshop class should call its constructor with the command header identifier as parameter.
@@ -333,15 +310,12 @@ To instantiate this command header, the `CreateCommands` method of the _CAAAfrGe
 where `CAAAfrDumpHdr` is the identifier assigned to the command header. It will be used afterwards to associate the command starters defined to put the command in a menu and in toolbars with the command header. This identifier is also used to build the variables that define the command header resources, such as the name seen by the end user in his/her own language in the menu, or the icon to display in a toolbar. 
 
 [Top]
-
 #### Assigning Resources to the Command Header Instance
 
 The _CAAAfrDumpCommandHeader_ class is automatically associated with two resources files whose names are built using the class name: 
 
   * CAAAfrDumpCommandHeader.CATNls for titles and help message that can be translated
   * CAAAfrDumpCommandHeader.CATRsc for other resources, such as the icons to display in the toolbars
-
-
 
 The resources are designated using a key built as a concatenation of the command header class name, the command header instance identifier, and the resource keyword, separated by dots. The CAAAfrDumpCommandHeader.CATNls file includes the following for the Point command:
     
@@ -357,12 +331,12 @@ The resources are designated using a key built as a concatenation of the command
   
 These resources are:
 
-Title | ![](images/CAAAfrDumpTitle.jpg) | Text displayed in the Tools menu for the command  
+Title | Text displayed in the Tools menu for the command  
 ---|---|---  
-ShortHelp | ![](images/CAAAfrDumpShortHelp.jpg) | Text displayed in a balloon as the command short help message when the mouse moves over the command when this command is in a toolbar. This is not applicable to commands located in the menu bar  
-Help | ![](images/CAAAfrDumpHelp.jpg) | Text displayed in the status bar as the command help message when the mouse moves over the command. This is not applicable to commands located only in the menu bar, but is applicable for commands located in both the menu bar and a toolbar  
-LongHelp | ![](images/CAAAfrDumpLongHelp.jpg) | Text displayed in a balloon when the end user clicks ![I_WhatsThisP2.gif \(235 bytes\)](images/I_WhatsThisP2.gif), which turns the mouse cursor as a question mark, and then clicks on the icon representing the command. This is not applicable to commands located in the menu bar  
-Category | ![](images/CAAAfrDumpCategory.jpg) | An attribute associated with the command and used to sort the commands in the Commands tab page of the Customize window  
+ShortHelp | Text displayed in a balloon as the command short help message when the mouse moves over the command when this command is in a toolbar. This is not applicable to commands located in the menu bar  
+Help | Text displayed in the status bar as the command help message when the mouse moves over the command. This is not applicable to commands located only in the menu bar, but is applicable for commands located in both the menu bar and a toolbar  
+LongHelp | Text displayed in a balloon when the end user clicks ![I_WhatsThisP2.gif \(235 bytes\)](images/I_WhatsThisP2.gif), which turns the mouse cursor as a question mark, and then clicks on the icon representing the command. This is not applicable to commands located in the menu bar  
+Category | An attribute associated with the command and used to sort the commands in the Commands tab page of the Customize window  
   
 The CAAAfrGeometryWksHeader.CATRsc file includes the following for the Point command:
     
@@ -374,14 +348,13 @@ The CAAAfrGeometryWksHeader.CATRsc file includes the following for the Point com
   
 These are the file names of the icons used to show the Element Count command in the toolbar:
 
-Icon.Normal | ![CAAAfrDumpIconNormal.jpg \(1056 bytes\)](images/CAAAfrDumpIconNormal.jpg) | Icon associated with the command and used in toolbars when the command is available. The greyed icon associated with the command when it is unavailable is computed from this one. In a P2 session, the shadowed icon displayed for default state and the Pressed and Focused icons are computed from the Normal one too.  
+Icon.Normal | Icon associated with the command and used in toolbars when the command is available. The greyed icon associated with the command when it is unavailable is computed from this one. In a P2 session, the shadowed icon displayed for default state and the Pressed and Focused icons are computed from the Normal one too.  
 ---|---|---  
 LongHelpId |  | Identifier associated with the command and that calls the command help when the F1 key is pressed while the command is active  
   
 [Top]
 
 * * *
-
 ### In Short
 
 A command header stands for a command and avoids to load the command when the end user does not require it. A command header is an instance of a command header class. A customized command header created by deriving the _CATCommandHeader_ class can manage the command availability with respect to the document contents or to any other criterion using the `BecomeAvailable` and `BecomeUnavailable` methods.
@@ -389,16 +362,14 @@ A command header stands for a command and avoids to load the command when the en
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Object Modeler Component and Implementation Inheritances](../CAASysTechArticles/CAASysOMInheritance.htm)  
+[1] | [Object Modeler Component and Implementation Inheritances](../CAASysTechArticles/CAASysOMInheritance.md)  
 ---|---  
-[2] | [The Command Headers](../CAAAfrTechArticles/CAAAfrCommandHeaders.htm)  
+[2] | [The Command Headers](../CAAAfrTechArticles/CAAAfrCommandHeaders.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Jan 2000] | Document created  

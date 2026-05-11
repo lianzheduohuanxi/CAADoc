@@ -3,7 +3,7 @@ title: "Splitting a Wire"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsSplitWire", "CATICGMHybSplit"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcSplitWire.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcSplitWire.md"
 converted: "2026-05-11T17:33:49.056921"
 ---
 
@@ -18,7 +18,7 @@ Abstract A wire can be split by another wire, a shell or a vertex.
       * Case 3: Split a Wire by a Vertex
     * References  
 ---  
-Operator to be Used To split a wire, use the CATICGMHybSplit operator in GMOperatorsInterfaces. This operator is created by the CATCGMCreateTopSplitWire global function in which the last argument (CATHybSelectionMode) defines the partitions to be kept.  Use Case Description The CAAGMOperatorsSplitWire.m module in CAAGMOperatorsInterfaces.edu framework illustrates how split a wire. This use case is to be run with the splitWireInputs.NCGM input file which is delivered in CAAGMOperatorsInterfaces.edu/FunctionTests/InputData.  If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm). Case 1: Split a Wire by a Shell when the Shell does not Cut the Wire The CATHybSelectionMode identifies which partitions of the split body are kept. For a wire cut by a shell: 
+Operator to be Used To split a wire, use the CATICGMHybSplit operator in GMOperatorsInterfaces. This operator is created by the CATCGMCreateTopSplitWire global function in which the last argument (CATHybSelectionMode) defines the partitions to be kept.  Use Case Description The CAAGMOperatorsSplitWire.m module in CAAGMOperatorsInterfaces.edu framework illustrates how split a wire. This use case is to be run with the splitWireInputs.NCGM input file which is delivered in CAAGMOperatorsInterfaces.edu/FunctionTests/InputData.  If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md). Case 1: Split a Wire by a Shell when the Shell does not Cut the Wire The CATHybSelectionMode identifies which partitions of the split body are kept. For a wire cut by a shell: 
 
 POSITIVE_POSITIVE_SIDE or POSITIVE_NEGATIVE_SIDE
     The partitions to keep are pointed to by the shell orientation.
@@ -97,11 +97,11 @@ and the code below:
 ---  
 you get this result: Fig.6 Split a wire by a vertex: result  ![Split a wire by a vertex: Result](images/CGM_splitWireByVertex_1.png)   
 ---  
-References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)  
-[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)  
-[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.htm)  
-[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.htm)  
+[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)  
+[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)  
+[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.md)  
+[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.md)  
 History Version: **1** [Feb 2012] | Document created  
 ---|---

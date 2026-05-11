@@ -1,9 +1,10 @@
 ---
 title: "GSOInterfaces Modifications"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR13"
+version: "V5R13"
 tags: ["CATIGSMUnfold"]
-source_file: "Doc\online\CAACenAPIChangesR13\GSOInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR13/GSOInterfaces.md"
 converted: "2026-05-11T17:33:50.720984"
 ---
 

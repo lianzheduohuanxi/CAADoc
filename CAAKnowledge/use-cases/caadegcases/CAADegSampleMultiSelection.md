@@ -3,7 +3,7 @@ title: "Managing Multi-Selection"
 category: "use case"
 module: "CAADegUseCases"
 tags: ["CAADegCreateNumericCmd", "CAADegAnalysisNumericCmd", "CAADegChoiceBehaviorDlg", "CAADialogEngine", "CAAGeometry", "CAADegAnalysisNumericDlg", "CAADegGeoCommands"]
-source_file: "Doc\online\CAADegUseCases\CAADegSampleMultiSelection.htm"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleMultiSelection.md"
 converted: "2026-05-11T17:33:49.728334"
 ---
 
@@ -88,9 +88,9 @@ Notice that you have always the possibility to use the Search command to fill th
 
 > If the end user pushes the "Control Mode" button the "Selection" editor, the "List Of Selected Item" and "Finish" buttons are available.
 
-The active state is `StEndChoiceState`. The end user has finished the selection. The count by type of selected elements are displayed in the "Count of Selected Element" dialog box: ![](images/CAADlgMultiSel_9.jpg)Fig.4 | ![](images/CAADlgMultiSel_8.jpg)  
+The active state is `StEndChoiceState`. The end user has finished the selection. The count by type of selected elements are displayed in the "Count of Selected Element" dialog box: ![](images/CAADlgMultiSel_9.jpg)Fig.4 
 ---|---  
-If the end user clicks the Close button, the Numeric command is canceled. [Top] How to Launch the Numeric Command See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.htm)" use case for a detailed description of how this use case should be launched. Then, in the window where you run the mkrun command, do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following: 
+If the end user clicks the Close button, the Numeric command is canceled. [Top] How to Launch the Numeric Command See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched. Then, in the window where you run the mkrun command, do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following: 
     * On the **Start** menu, select **Infrastructure** and click **CAA V5: Geometrical Analysis**
     * Launch the **Point** command and indicates some points in the viewer 
     * Click **OK** or **Cancel** in the Point Definition dialog box 
@@ -300,7 +300,7 @@ In Short This use case shows how to use a _CATPathElementAgent_ to have multi-se
 
 * * *
 
-References [1] | [Describing State Dialog Commands Using UML](../CAADegTechArticles/CAADegUMLDescription.htm)  
+References [1] | [Describing State Dialog Commands Using UML](../CAADegTechArticles/CAADegUMLDescription.md)  
 ---|---  
 [Top]  
   

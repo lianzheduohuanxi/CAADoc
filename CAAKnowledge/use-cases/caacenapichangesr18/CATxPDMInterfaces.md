@@ -1,22 +1,19 @@
 ---
 title: "CATxPDMInterfaces Framework Modifications in V5R18"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR18"
+version: "V5R18"
 tags: ["CATIxPDMProductItem"]
-source_file: "Doc\online\CAACenAPIChangesR18\CATxPDMInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR18/CATxPDMInterfaces.md"
 converted: "2026-05-11T17:33:51.453533"
 ---
 
 | 
-
 # CAA C++ API Modifications
 
 | 
-
 ##  CATxPDMInterfaces Framework Modifications in V5R18 
 
-|   
----|---|---  
   
 * * *
 

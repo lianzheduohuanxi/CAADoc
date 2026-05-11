@@ -1,15 +1,15 @@
 ---
 title: "BasicTopologicalOpe Changed Classes or Interfaces"
-category: "general"
+category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATICGMTopLineTangentCrvCrvOperator", "CATICGMTopPolarExtremumOperator", "CATICGMTopSurToNurbsSurOperator", "CATICGMTopCrvToNurbsCrvOperator", "CATICGMTopPointOperator", "CATICGMTopCurveOperator", "CATICGMTopSplineOperator", "CATICGMTopHelixOperator", "CATICGMTopLineOperator", "CATICGMTopEdgePropagation", "CATICGMTopGeodesicLineOperator", "CATICGMComputePointOnWire", "CATICGMTopLineTangentPtCrvOperator", "CATICGMLengthFromBodyOnWire"]
-source_file: "Doc\online\CAACenQuickRefs\CAACenBUBasicTopologicalOpe.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenBUBasicTopologicalOpe.md"
 converted: "2026-05-11T17:33:46.253424"
 ---
 
 BasicTopologicalOpe Changed Classes or Interfaces  
 ---  
-This table summarizes the CAA V5 BasicTopologicalOpe classes, interfaces, methods, and global functions that you may have used in your applications built on top of CAA V5 and that have been replaced in the [New V5R20 CGM Interfaces Layer](CAACenGobInterfacesMigration.htm). For each of these:
+This table summarizes the CAA V5 BasicTopologicalOpe classes, interfaces, methods, and global functions that you may have used in your applications built on top of CAA V5 and that have been replaced in the [New V5R20 CGM Interfaces Layer](CAACenGobInterfacesMigration.md). For each of these:
 
   * If a one-to-one mapping exists to replacing classes, interfaces, methods, or global functions, links to these substitutes are listed and pointed to
   * Otherwise, an article is pointed to to explain how to replace or get rid of them.

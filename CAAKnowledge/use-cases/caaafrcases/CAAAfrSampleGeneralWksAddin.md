@@ -3,18 +3,15 @@ title: "Making Your Document Independent Command Available in All Workbenches"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CAAAfrGeneralWksAddinHeader", "CAAAfrGeneralViewFBStr", "CAAAfrViewerFeedbackStr", "CAAAfrGeneralView", "CAAAfrGeneralWksTlb", "CAAAfrGeneralWksMbr", "CATIWorkbenchAddin", "CAAMmrGeneralSearchStr", "CAAAfrGeneralEditMnu", "CAAAfrViewerFeedbackHdr", "CAAAfrGeneralEditSearchStr", "CAASearch", "CAAAfrGeneralWksAddin", "CAACafSearchCmd", "CAAApplicationFrame", "CAACafSearch", "CAAAfrSearchHdr", "CAAAfrSearchStr", "CATIAfrGeneralWksAddin"]
-source_file: "Doc\online\CAAAfrUseCases\CAAAfrSampleGeneralWksAddin.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleGeneralWksAddin.md"
 converted: "2026-05-11T17:17:55.744995"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## User Interface - Frame
 
 | 
-
 ### Making Your Document Independent Command Available in All Workbenches
 
 _Using CATIAfrGeneralWksAddin_  
@@ -22,7 +19,6 @@ _Using CATIAfrGeneralWksAddin_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to insert a document independent command in all workbenches of a V5 application. 
@@ -36,39 +32,29 @@ This article shows how to insert a document independent command in all workbench
   * **In Short**
   * **References**
 
-
-
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show you how to create a toolbar and modify the menu bar to integrate your document independent command in all workbenches. You will learn to implement an interface, the _CATIAfrGeneralWksAddin interface,_ which is an Add-in [1] of the "General" workshop [2]. This workshop contains the commands which are always available even if no document is open: New, Open, Cut,....  [Top]
-
 ### The CAAAfrGeneralWksAddin Use Case
 
 CAAAfrGeneralWksAddin is a use case of the CAAApplicationFrame.edu framework that illustrates ApplicationFrame framework capabilities. [Top]
-
 #### What Does CAAAfrGeneralWksAddin Do
 
 The CAAAfrGeneralWksAddin creates an add-in to the **General** workshop. Is is made up of: 
 
   * a single toolbar
-| ![](images/CAAAfrGeneralWksAddinToolbar.jpg)  
+
 ---  
   
 The **General** toolbar. It contains in first position the Search Demonstrator [3] command, then the Viewer Feedback demonstrator [9] command, and at last the "Add Item in MRU" command [11].
 
   * menu items 
-![](images/CAAAfrGeneralWksAddinmenubar.jpg) | ![](images/CAAAfrGeneralWksAddinmenubar2.jpg)  
----|---  
+
   
 The Search Demonstrator command is included in the Edit menu, just before Search, whereas the Viewer Feedback demonstrator command is set in the View menu.
 
-
-
-
 [Top]
-
 #### How to Launch CAAAfrGeneralWksAddin
 
 To launch CAAAfrGeneralWksAddin , you will need to set up the build time environment, then compile CAAAfrGeneralWksAddin along with its prerequisites, set up the run time environment, and then execute the use case [4].
@@ -92,7 +78,6 @@ In this file, remove the "**#** " character before the two following lines:
 and run mkCreateRuntimeView.
 
 [Top]
-
 #### Where to Find the CAAAfrGeneralWksAddin Code
 
 The CAAAfrGeneralWksAddin use case is made of a single class named _CAAAfrGeneralWksAdn_ located in the CAAAfrGeneralWksAddin.m module of the CAAApplicationFrame.edu framework:
@@ -104,7 +89,6 @@ Unix | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeneralWksAddin.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 To create the add-in, you should create the module directory to store the add-in code along with its two subdirectories LocalInterfaces and src. For this example, this directory is named CAAAfrGeneralWksAddin.m and can be found in the CAAApplicationFrame.edu framework. Then you will need to create the following files.
@@ -137,7 +121,6 @@ In the CNext\resources\msgcatalog directory, referenced at run time using the CA
 | The command header resource files  
   
 There are four logical steps in CAAAfrGeneralWksAddin:
-
 # | Step | Where  
 ---|---|---  
 1 | Create the add-in description class | LocalInterfaces and src  
@@ -146,11 +129,9 @@ There are four logical steps in CAAAfrGeneralWksAddin:
 4 | Provide the resources  
   
 [Top]
-
 #### Create the add-in description class
 
   1. Create the CAAAfrGeneralWksAdn.h file 
-         
          #include "CATBaseUnknown.h"
          
          class CATCmdContainer;
@@ -195,7 +176,6 @@ There are four logical steps in CAAAfrGeneralWksAddin:
     
     CATImplementClass(CAAAfrGeneralWksAdn, DataExtension,
                       CATBaseUnknown, **CAAAfrGeneralWksAddin**);
-    
     #include <TIE_**CATIAfrGeneralWksAddin**.h>
     TIE_CATIAfrGeneralWksAddin(CAAAfrGeneralWksAdn);
     
@@ -230,11 +210,7 @@ Update the interface dictionary, that is a file named, for example, CAAApplicati
   
 Note that the component main class name is used to refer to the component in the interface dictionary, and never the extension class names. Note also that the shared library or DLL to associate with the component/interface pair is the one that contains the code created by the call to the TIE macro (This is generally the same library than the one that contains the interface implementation code, since the TIE macro is usually included in the extension class source file.) This is because when a client asks a component for an interface pointer, the TIE class is instantiated first, and it either retrieves the existing instance of the appropriate extension class, or otherwise instantiates it.
 
-
-
-
 [Top]
-
 #### Create the command headers
 
 Before reading this section, you can you refer to the "The Command Headers" article [5] to have an overview of the command header concepts, and more precisely you have the "Defining Headers in CATIAfrGeneralWksAddin implementations" section, which details the specificities of command headers created in this general add-in.  
@@ -244,7 +220,6 @@ This is done by the `CreateCommands` method. Each command available in your add-
 The command header class, named CAAAfrGeneralWksAddinHeader, is created using the `MacDeclareHeader` macro. 
 
   1. Create the CAAAfrGeneralWksAddinHeader command header class. To do this, add the following lines in CAAAfrGeneralWksAdn.cpp: 
-         
          #include "CATCommandHeader.h"
          MacDeclareHeader(CAAAfrGeneralWksAddinHeader);  
   
@@ -273,8 +248,6 @@ The command header constructor has the following arguments:
      * `CAACafSearchCmd` is the name of the Search Demonstrator command class 
      * the last argument is the possible pointer to the object to pass to the command when executing it. 
 
-
-
 The command header associated with the Viewer Feedback demonstrator - see What Does CAAAfrGeneralWksAddin Do \- is described in the use case [10].
 
 The command header associated with the Most Recent Used header is described in the use case [11].
@@ -282,7 +255,6 @@ The command header associated with the Most Recent Used header is described in t
 [Top]
 
  
-
 #### Create the add-in and arrange the commands
 
 Finally, we'll create the toolbar and arrange the commands. This is the job of the `CreateToolbars` method.
@@ -372,11 +344,7 @@ In this case, a last macro has been used: `NewAccessAnchorName `which enables yo
   
 The first chained toolbar, `pCAAAfrGeneralWksTlb`,  is returned by this method.
 
-
-
-
 [Top]
-
 #### Provide the resources
 
 You should provide the resources for the toolbar, the menu and for all its commands. They are classified into the following: 
@@ -409,14 +377,11 @@ The CAAAfrGeneralWksAddinHeader.CATRsc:
   
 ---  
 
-
-
 > For the resources of the CAAAfrViewerFeedbackHdr command header, refer to the CAAAfrViewerFeedbackHdr use case [10].
 
 [Top]
 
 * * *
-
 ### In Short
 
 This use case explains how by implementing the _CATIAfrGeneralWksAddin_ interface you can add your document independent command in all workbenches. 
@@ -424,25 +389,23 @@ This use case explains how by implementing the _CATIAfrGeneralWksAddin_ interfac
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Creating an Add-in](CAAAfrSampleAddin.htm)  
+[1] | [Creating an Add-in](CAAAfrSampleAddin.md)  
 ---|---  
-[2] | [ApplicationFrame Overview](../CAAAfrTechArticles/CAAAfrOverview.htm)  
-[3] | [Creating Search Queries ](../CAACafUseCases/CAACafSampleSearch.htm)  
-[4] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-[5] | [The Command Headers](../CAAAfrTechArticles/CAAAfrCommandHeaders.htm)  
-[6] | [Checklist for CAA V5 C++ Naming Rules](../CAADocQuickRefs/CAADocCppNamingRulesChecklist.htm)  
-[7] | [Creating Resources for Workshop and Workbenches](../CAAAfrTechArticles/CAAAfrI18NWorkshop.htm)  
-[8] | [Creating Resources for Command Headers](../CAAAfrTechArticles/CAAAfrI18NHeader.htm)  
-[9] | [Viewer Feedback](../CAAVisUseCases/CAAVisViewerFeedback.htm)  
-[10] | [Creating Check Button](CAAAfrCheckHeader.htm)  
-[11] | [Creating a Most Recent Used command Header](CAAAfrSampleMRUHdr.htm)  
+[2] | [ApplicationFrame Overview](../CAAAfrTechArticles/CAAAfrOverview.md)  
+[3] | [Creating Search Queries ](../CAACafUseCases/CAACafSampleSearch.md)  
+[4] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[5] | [The Command Headers](../CAAAfrTechArticles/CAAAfrCommandHeaders.md)  
+[6] | [Checklist for CAA V5 C++ Naming Rules](../CAADocQuickRefs/CAADocCppNamingRulesChecklist.md)  
+[7] | [Creating Resources for Workshop and Workbenches](../CAAAfrTechArticles/CAAAfrI18NWorkshop.md)  
+[8] | [Creating Resources for Command Headers](../CAAAfrTechArticles/CAAAfrI18NHeader.md)  
+[9] | [Viewer Feedback](../CAAVisUseCases/CAAVisViewerFeedback.md)  
+[10] | [Creating Check Button](CAAAfrCheckHeader.md)  
+[11] | [Creating a Most Recent Used command Header](CAAAfrSampleMRUHdr.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [May 2003] | Document created  

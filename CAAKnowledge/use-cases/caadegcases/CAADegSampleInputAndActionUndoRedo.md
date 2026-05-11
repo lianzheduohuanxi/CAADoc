@@ -3,7 +3,7 @@ title: "Managing Undo/Redo of Input and Actions"
 category: "use case"
 module: "CAADegUseCases"
 tags: ["CAADegCreatePolylineCmd", "CATIUndoTransaction", "CAADialogEngine", "CAAGeometry", "CAADegGeoCommands"]
-source_file: "Doc\online\CAADegUseCases\CAADegSampleInputAndActionUndoRedo.htm"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleInputAndActionUndoRedo.md"
 converted: "2026-05-11T17:33:49.696437"
 ---
 
@@ -28,10 +28,10 @@ Abstract This article shows how to add undo/redo capabilities to a command to en
 
 What You Will Learn With This Use Case This use case is intended to show how to fit out you command with input and action undo/redo capabilities. It deals with a non transactional document model, that is a document model that doesn't include document object undo/redo by means of the _CATIUndoTransaction_ interface implementation. As a consequence, the document object undo/redo must be coded in the undo/redo methods. [Top] The Polyline Command Use Case The Polyline command is a use case of the CAADialogEngine.edu framework that illustrates the DialogEngine framework capabilities. [Top] What Does the Polyline Command Do The Polyline commmand creates a polyline by successively indicating or selecting points, or entering their coordinates using a dialog box. A right click stops the polyline creation and exits the command. During the polyline creation process, the Undo and Redo commands are available to undo each point and line segment creation, possibly up to the first point created, and to redo each point and line segment creation from this first point to the last one. Undoing the first point creation, that is undoing the first input, exits the command. The Polyline command is a state dialog command that creates a polyline according to the following UML statechart diagram [1]. ![CAACreatePolylineStatechart.jpg \(26086 bytes\)](images/CAACreatePolylineStatechart.jpg) Each end user input and associated action can be undone and redone, as shown by the scenario below: ![CAAInputUndo1.jpg \(18521 bytes\)](images/CAAInputUndo1.jpg) | The end user has already created a polyline with four points and thus three line segments. The fifth point is not yet clicked, but a rubber line segment joins the fourth point and the mouse location. The dialog loops onto the RepeatState.  
 ---|---  
-![CAAInputUndo2.jpg \(17132 bytes\)](images/CAAInputUndo2.jpg) | The end user has clicked Undo. The rubber segment has disappeared, the fourth point and the third line segment are erased from the document.  
-![CAAInputUndo3.jpg \(17407 bytes\)](images/CAAInputUndo3.jpg) | The end user has clicked Undo again. The third point and the second line segment are erased from the document.  
-![CAAInputUndo4.jpg \(17640 bytes\)](images/CAAInputUndo4.jpg) | The end user has clicked Redo. The third point and the second line segment are recreated.  
-Any created point and line segment of the polyline can be undone as long as the command is active. This is a sequential process that enables the end user to go back to a previous state by successively going through the states from the current one. Redo is the process that recreates what was undone in the undo reverse order. This is input undo and action undo, because it is dedicated to undo the end user input, and the possible associated action. [Top] How to Launch the Polyline Command See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.htm)" use case for a detailed description of how this use case should be launched. Then, in the window where you run the mkrun command, do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following: 
+ The end user has clicked Undo. The rubber segment has disappeared, the fourth point and the third line segment are erased from the document.  
+ The end user has clicked Undo again. The third point and the second line segment are erased from the document.  
+ The end user has clicked Redo. The third point and the second line segment are recreated.  
+Any created point and line segment of the polyline can be undone as long as the command is active. This is a sequential process that enables the end user to go back to a previous state by successively going through the states from the current one. Redo is the process that recreates what was undone in the undo reverse order. This is input undo and action undo, because it is dedicated to undo the end user input, and the possible associated action. [Top] How to Launch the Polyline Command See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched. Then, in the window where you run the mkrun command, do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following: 
     * Select File->New 
     * In the New box, select CAAGeometry and click OK 
     * Select Insert->Multi Lines->Polyline
@@ -97,9 +97,9 @@ In Short This use case shows how to include input and action undo/redo capabilit
 
 * * *
 
-References [1] | [Describing State Dialog Commands Using UML](../CAADegTechArticles/CAADegUMLDescription.htm)  
+References [1] | [Describing State Dialog Commands Using UML](../CAADegTechArticles/CAADegUMLDescription.md)  
 ---|---  
-[2] | [Implementing the Statechart Diagram](../CAADegTechArticles/CAADegGraph.htm)  
+[2] | [Implementing the Statechart Diagram](../CAADegTechArticles/CAADegGraph.md)  
 [Top]  
   
 * * *

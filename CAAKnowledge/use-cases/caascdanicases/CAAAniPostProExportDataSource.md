@@ -1,15 +1,14 @@
 ---
 title: "CAAAniPostProExportData.catvbs"
-category: "general"
+category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniPostProExportData", "CAAScdAniUseCases"]
-source_file: "Doc\online\CAAScdAniUseCases\CAAAniPostProExportDataSource.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProExportDataSource.md"
 converted: "2026-05-11T17:31:51.749542"
 ---
 
-
+```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2000
-    
     ' ***********************************************************************
     '   Purpose:      Export data on image
     '   Assumptions:  
@@ -18,9 +17,11 @@ converted: "2026-05-11T17:31:51.749542"
     '   Locales:      English 
     '   CATIA Level:  V5R16
     ' ***********************************************************************
+```
+
     
+```vbscript
     Sub CATMain()
-    
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
     
@@ -28,45 +29,46 @@ converted: "2026-05-11T17:31:51.749542"
       sOut = CATIA.SystemService.Environ("CATTemp")
     
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
         End If
     ' ----------------------------------------------------------- 
     
-    
+```
+
     ' Open the CATAnalysis Document
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis")
+```vbscript
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
-    
+```vbscript
     ' Retrieve the Analysis Manager
     Set oAnalysisManager = oAnalysisDocument.Analysis
-    
     ' Retrieve the analysis model from the list of models
     Set oAnalysisModels = oAnalysisManager.AnalysisModels
     Set oAnalysisModel = oAnalysisModels.Item(1)
-    
     ' Retrieve the analysis cases and the first analysis case
     Set oAnalysisSets = oAnalysisModel.AnalysisSets
     Set oAnalysisSet = oAnalysisSets.ItemByType("PropertySet")
     
     Set oAnalysisImages = oAnalysisSet.AnalysisImages
     Set oAnalysisImage = oAnalysisImages.Add("Material_Fringe", False, False, True)
-    
     ' Retrieve the folder stored in sOut
     Set fileSystem1 = CATIA.FileSystem
     Set folder1 = fileSystem1.GetFolder(sout)
+```
+
     
-    
+```
+
     
     'export data in exportfile1.txt (format txt)
     '==============================
     oAnalysisImage.ExportData folder1, "exportfile1", "txt"
     
     
-    
     'export data in exportfile2.xls (format xls)
     '==============================
     oAnalysisImage.ExportData folder1, "exportfile2", "xls"
-    
     
     
     
@@ -76,10 +78,13 @@ converted: "2026-05-11T17:31:51.749542"
     
     
     
-    
     'export data (with mesh part id) in exportfile4.xls (format xls) 
     '==================================================
     oAnalysisImage.ExportDataWithMeshPartId folder1, "exportfile4", "xls"
     
+```vbscript
     End Sub
     
+```
+
+```

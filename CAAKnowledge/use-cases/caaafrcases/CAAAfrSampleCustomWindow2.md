@@ -3,18 +3,15 @@ title: "Creating a Document's Window - Part 2"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CATI2DGeoVisu", "CAAGeometry", "CATISO", "CATI3DGeoVisu", "CAASample", "CAAAfrCustomWindow", "CAAApplicationFrame", "CAAAfrGeoWindows"]
-source_file: "Doc\online\CAAAfrUseCases\CAAAfrSampleCustomWindow2.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleCustomWindow2.md"
 converted: "2026-05-11T17:17:55.703896"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## User Interface - Frame
 
 | 
-
 ### Creating a Document's Window - Part 2
 
 _How to create a multi-viewers window_  
@@ -22,7 +19,6 @@ _How to create a multi-viewers window_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to create a window to display a document. It explains more precisely the specificity of a multi-viewers window. In the other hand, the use case described in the "Creating a Document's Window - Part 1" article [1] enables you to understand how to launch a document's window from a command. 
@@ -40,19 +36,16 @@ This article shows how to create a window to display a document. It explains mor
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show how to create a window with several viewers for document of a given type [2].
 
 [Top]
-
 ### The CAAAfrCustomWindow Use Case
 
 CAAAfrCustomWindow is a use case of the CAAApplicationFrame.edu framework that illustrates the ApplicationFrame framework capabilities.
 
 [Top]
-
 #### What Does CAAAfrCustomWindow Do
 
 The CAAAfrCustomWindow use case creates a document window for CAASample documents.
@@ -60,20 +53,19 @@ The CAAAfrCustomWindow use case creates a document window for CAASample document
 ![CAAAfrCustomWindow.jpg \(42069 bytes\)](images/CAAAfrCustomWindow.jpg)
 
 [Top]
-
 #### How to Launch CAAAfrCustomWindow
 
-See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.htm)" use case for a detailed description of how this use case should be launched. For the specific scenario :
+See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched. For the specific scenario :
 
+```vbscript
 Do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following: 
+
+```
 
   * Select **File** ->**New**
   * In the New box, select **CAASample** and click **OK**
 
-
-
 [Top]
-
 #### Where to Find the CAAAfrCustomWindow Code
 
 The CAAAfrCustomWindow use case is made up of a single class named CAAAfrCustomWindow located in the CAAAfrGeoWindows.m module of the CAAApplicationFrame.edu framework:
@@ -85,11 +77,9 @@ Unix | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeoWindows.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed. It includes the CAAAfrCustomWindow.h  header file in the PrivateInterfaces directory of the CAAApplicationFrame.edu framework and the CAAAfrCustomWindow.cpp source file in the src directory.
 
 [Top]
-
 ### Step-by-Step
 
 To create the custom window, there are five steps:
-
 # | Step | Where  
 ---|---|---  
 1 | Create the custom window class | LocalInterfaces and src  
@@ -99,7 +89,6 @@ To create the custom window, there are five steps:
 5 | Delete the window | `DeleteWindow` and Destructor  
   
 [Top]
-
 #### Creating the Custom Window Class
 
 This document window includes two 3D viewers of different sizes located in the upper part of the window, and a 2D viewer located in the lower part of the window. The class for this window is _CAAAfrCustomWindow_ , whose header file is as follows.
@@ -138,8 +127,6 @@ _CAAAfrCustomWindow_ has 
   * a `GetViewers` method to retrieve pointers to its three viewers. 
   * Its data members are the three navigation viewers and the root model to display.
 
-
-
 The constructor class is simple.
     
     
@@ -154,7 +141,6 @@ The constructor class is simple.
 ---  
   
 [Top]
-
 #### Providing the Dialog Object Behavior
 
 The dialog object behavior consists in: 
@@ -162,8 +148,6 @@ The dialog object behavior consists in:
   * Instantiating the different viewers to display
   * Arranging these viewers in the document window
   * Setting the current viewer
-
-
 
 The constructor creates the viewers, arranges them in the window and sets one of them the current viewer. 
 
@@ -230,11 +214,7 @@ The `Reframe` method ensures that the whole contents of `_pViewer1` is displayed
 
 We have now a nice document window, but few interactive mechanisms are available. Let's assign them now.
 
-
-
-
 [Top]
-
 #### Providing the MDI Document Window Behavior
 
 The MDI document window behavior consists in: 
@@ -242,7 +222,6 @@ The MDI document window behavior consists in:
   * Retrieving the visualization manager and the document root object
   * Requesting the document to create its graphics representation(s) and attaching them to the visualization manager
   * Managing the links between these objects and all the other objects enabling interactivity.
-
 
   1. Retrieving the visualization manager and the document root object 
 
@@ -322,11 +301,7 @@ The Interactive Set of Objects (ISO) is also retrieved. These objects are those 
 
 The document window `Build` method is now complete.
 
-
-
-
 [Top]
-
 #### Duplicating a Document Window
 
 This is done thanks to the Duplicate method.
@@ -366,8 +341,6 @@ The `Duplicate` method is now complete. It performs the following:
   * Retrieves the created window viewers
   * Sets the retrieved background color to the first viewer of the created window
 
-
-
 This method uses the `GetViewers` method below:
     
     
@@ -383,7 +356,6 @@ This method uses the `GetViewers` method below:
 ---  
   
 [Top]
-
 #### Deleting the Window
     
     
@@ -445,7 +417,6 @@ The document window is deleted thanks to the `DeleteWindow` method, that removes
 [Top]
 
 * * *
-
 ### In Short
 
 This use case explains the structure of a document's window class:
@@ -456,23 +427,19 @@ This use case explains the structure of a document's window class:
   * A `DuplicateWindow` method to create a new instance from an existing one. 
   * A `DeleteWindow` method to detach the root's document and the Interactive Set Objects from the command tree. 
 
-
-
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Creating a Document's Window - Part 1](CAAAfrSampleCustomWindow1.htm)  
+[1] | [Creating a Document's Window - Part 1](CAAAfrSampleCustomWindow1.md)  
 ---|---  
-[2] | [Understanding the Application Frame Layout](../CAAAfrTechArticles/CAAAfrLayoutV5.htm)  
-[3] | [Arranging Dialog Objects](../CAADlgTechArticles/CAADlgObjectLayout.htm)  
-[4] | [The CAA Command Model](../CAADegTechArticles/CAADegCommandModel.htm)  
+[2] | [Understanding the Application Frame Layout](../CAAAfrTechArticles/CAAAfrLayoutV5.md)  
+[3] | [Arranging Dialog Objects](../CAADlgTechArticles/CAADlgObjectLayout.md)  
+[4] | [The CAA Command Model](../CAADegTechArticles/CAADegCommandModel.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Jan 2000] | Document created  

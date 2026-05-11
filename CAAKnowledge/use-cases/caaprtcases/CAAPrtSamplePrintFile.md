@@ -3,18 +3,15 @@ title: "Printing Files"
 category: "use case"
 module: "CAAPrtUseCases"
 tags: ["CAAPrtPrintFile", "CAAPrint"]
-source_file: "Doc\online\CAAPrtUseCases\CAAPrtSamplePrintFile.htm"
+source_file: "Doc/online/CAAPrtUseCases/CAAPrtSamplePrintFile.md"
 converted: "2026-05-11T17:17:56.141802"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## 3D Visualization - Print
 
 | 
-
 ### Printing Files
 
 _Creating a paper output from your files_  
@@ -22,7 +19,6 @@ _Creating a paper output from your files_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to print a given object on a printer. 
@@ -40,25 +36,21 @@ This article shows how to print a given object on a printer.
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show how to print a given object on a printer.
 
 [Top]
-
 ### The CAAPrtPrintFile Use Case
 
 CAAPrtPrintFile is a use case of the CAAPrint.edu framework that illustrates the Print framework capabilities.
 
 [Top]
-
 #### What Does CAAPrtPrintFile Do
 
 CAAPrtPrintFile is a batch program that reads a JPEG file from the command line and prints it on the chosen printer.
 
 [Top]
-
 #### How to Launch CAAPrtPrintFile Use
 
 To launch CAAPrtPrintFile Use, you will need to set up the build time environment, then compile CAAPrtPrintFile Use along with its prerequisites, set up the run time environment, and then execute the use case [1].
@@ -76,8 +68,6 @@ You can launch CAAPrtPrintFile using a JPEG file as argument. The use case lists
   
 ---  
 
-
-
 where:
 
   * `InstallRootDirectory` is the directory into which the CAA CD-ROM were unloaded 
@@ -87,7 +77,6 @@ _The CAAPrtPrintFile.jpg File_ ![](images/CAASamplePrtPrintFile.jpg)
 ---  
   
 [Top]
-
 #### Where to Find the CAAPrtPrintFile Use Code
 
 The CAAPrtPrintFile use case is made of a several classes located in the CAAPrtPrintFile.m module of the CAAPrint.edu framework:
@@ -99,11 +88,9 @@ Unix | `InstallRootDirectory/CAAPrint.edu/CAAPrtPrintFile.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 To print a JPEG file on aprinter, there are seven main steps:
-
 # | Step | Where  
 ---|---|---  
 1 | Displays the List of Printers | main  
@@ -117,11 +104,9 @@ To print a JPEG file on aprinter, there are seven main steps:
 The preliminary task that consist in retrieving the input file name from the command line is not described. The input file name is retrieved from the command line in the `InputName` variable, such as TestFile.jpg.
 
 [Top]
-
 #### Displaying the List of Printers
 
 As soon as the input file is retrieved, the list of available printers is displayed.
-    
     
     #include "CATPrintFileImage.h"   _// To create an image from the input file_
     #include "CATPrintParameters.h"  _// To define print parameters_
@@ -157,7 +142,6 @@ As soon as the input file is retrieved, the list of available printers is displ
 This printer manager is initialized using the static `Begin` method. Then for each available printer, the printer description is retrieved using the `GetDescription` method of the CATPrinter class, and displayed, associated with its number. The static `GetPrinterCount` method returns the number of available printers.
 
 [Top]
-
 #### Asking the End User for a Printer Choice
 
 The end user should now select a printer.
@@ -173,7 +157,6 @@ The end user should now select a printer.
 The printer is selected using its index. This index is used to retrieve the printer. As soon as this is done, the printer manager becomes useless and can freed using the static `End` method.
 
 [Top]
-
 #### Creating a Print File Image from the Input File
 
 The print file image can now be built from the input file.
@@ -190,7 +173,6 @@ A print parameter object should be defined to be associated with the print file 
 This print file image is an instance of the CATPrintFileImage class instantiated from the input file. The input file format is passed as the second argument, here JPEG. The print file image created holds the input file in memory and the JPEG interpreter to enable the file interpretation as soon as this will be asked.
 
 [Top]
-
 #### Creating a Printer Device
 
 The printer device should be next instantiated.
@@ -205,7 +187,6 @@ The printer device should be next instantiated.
 The printer device is created using the selected printer as input. It is made of a generator for the printer format, and of of a stream into which the created file will be written.
 
 [Top]
-
 #### Defining Print Parameters
 
 A print parameter object should be defined to be associated with the print file image to print.
@@ -227,12 +208,9 @@ The print parameters are taken into account to create the printed output. The fo
   * The image is resized to match the paper size
   * The margins are set to 20 mm for left and right margins, and to 10 mm for top and bototom margins.
 
-
-
 Other print parameters take their default values.
 
 [Top]
-
 #### Printing the Image
 
 The file conversoin can now take place.
@@ -247,7 +225,6 @@ The file conversoin can now take place.
 The `Print` method converts the print file image from JPEG to the printer format, usually PostScript, and prints the file using the parameters set.
 
 [Top]
-
 #### Cleaning the Application
     
     
@@ -264,7 +241,6 @@ Simply don't forget to delete allocated objects, and return the appropriate retu
 [Top]
 
 * * *
-
 ### In Short
 
 This use case shows the objects involved when printing a file, here encoded using JPEG, on a printer. These objects are the pinter manager, the printer, print file image, the printer device, and the set of parameters that are needed to print.
@@ -272,15 +248,13 @@ This use case shows the objects involved when printing a file, here encoded usin
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Jan 2000] | Document created  

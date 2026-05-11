@@ -1,20 +1,18 @@
 ---
 title: "Detail Of C++ API Changes"
-category: "general"
+category: "api-changes"
 module: "CAACenAPIChangesR16"
+version: "V5R16"
 tags: ["CAA2Usage", "CAA2Level"]
-source_file: "Doc\online\CAACenAPIChangesR16\CAACenAPIChangeDetail.htm"
+source_file: "Doc/online/CAACenAPIChangesR16/CAACenAPIChangeDetail.md"
 converted: "2026-05-11T17:33:51.177760"
 ---
-
 #   
   
 | 
-
 ## 
 
 | 
-
 ### Detail Of V5R16 C++ API Changes
 
 _What changes in the API compared with CAA V5R15_  
@@ -22,7 +20,6 @@ _What changes in the API compared with CAA V5R15_
 Technical Article  
   
 * * *
-
 ### Abstract
 
 This article presents by frameworks the detail of CAA C++ resources modified in V5R16 and how to modify your code accordingly. Each modification is listed for a resource (file, class, method) with a classification. They will generally be detected by a recompilation of the code. Most of the time, signature modifications are obvious. Check in the framework detail how to replace deleted entities. Possibly impacting modifications are highlighted in red.  
@@ -43,25 +40,23 @@ MINMV | Method is no more virtual. If occurs on a U1 class, may require modifica
   
 * * *
 
-[CATAnalysisBase](CATAnalysisBase.htm) | R16GA vs R15GA  
+[CATAnalysisBase](CATAnalysisBase.md) | R16GA vs R15GA  
 ---|---  
-[ENOVaultClientCPP](ENOVaultClientCPP.htm) | R16GA vs R15GA  
-[GSMInterfaces](GSMInterfaces.htm) | R16GA vs R15GA  
-[TopologicalOperators](TopologicalOperators.htm) | R16GA vs R15GA  
-[VisualizationBase](VisualizationBase.htm) | R16GA vs R15GA  
+[ENOVaultClientCPP](ENOVaultClientCPP.md) | R16GA vs R15GA  
+[GSMInterfaces](GSMInterfaces.md) | R16GA vs R15GA  
+[TopologicalOperators](TopologicalOperators.md) | R16GA vs R15GA  
+[VisualizationBase](VisualizationBase.md) | R16GA vs R15GA  
   
 * * *
-
 ### References
 
 [1] | [Migration to CATBoolean](../CAACenQuickRefs/CAACenWhatsNew.htm#CATBoolean)  
 ---|---  
-[2] | [Details Of V5R15 API Changes](../CAACenAPIChangesR15/CAACenAPIChangeDetail.htm)  
+[2] | [Details Of V5R15 API Changes](../CAACenAPIChangesR15/CAACenAPIChangeDetail.md)  
   |    
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Mar 2002] | Document created  

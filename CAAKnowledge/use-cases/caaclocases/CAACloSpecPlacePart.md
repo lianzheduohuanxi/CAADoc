@@ -3,7 +3,7 @@ title: "Placing Spec Parts"
 category: "use case"
 module: "CAACloUseCases"
 tags: ["CAACommonLayoutItf", "CATIPspDefinePhysicalPart", "CAACloSpecPlace", "CATIProduct", "CAACloPlacePart", "CAACloEduRuns", "CAACloSpecPlacePartMain", "CAAPspUtilities", "CATIPspPlacePartOnRun", "CAAPlantShipInterfaces", "CAAPspBaseEnvProtected", "CAACloSpecPlacePart", "CATIPspLogicalLine", "CATICloPartRules", "CATIA"]
-source_file: "Doc\online\CAACloUseCases\CAACloSpecPlacePart.htm"
+source_file: "Doc/online/CAACloUseCases/CAACloSpecPlacePart.md"
 converted: "2026-05-11T17:33:49.530102"
 ---
 
@@ -417,7 +417,7 @@ In Short This use case has demonstrated how to use the CATIPspDefinePhysicalPart
 
 * * *
 
-References [1] |  [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] |  [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
   
 * * *

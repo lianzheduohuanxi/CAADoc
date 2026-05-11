@@ -3,18 +3,15 @@ title: "Creating Fillets"
 category: "use case"
 module: "CAATopUseCases"
 tags: ["CAAGemBrowser", "CATICGMObject", "CAAATopAllFillets", "CAATopConstantFillets", "CAATopAllFillet", "CAATopRollingEdges", "CAATopAllFillets", "CAATopologicalOperators", "CAATopFillet", "CAATopVariableFillets"]
-source_file: "Doc\online\CAATopUseCases\CAATopAllFillets.htm"
+source_file: "Doc/online/CAATopUseCases/CAATopAllFillets.md"
 converted: "2026-05-11T17:31:50.684779"
 ---
-
 # Geometric Modeler
 
 | 
-
 ## Topology
 
 | 
-
 ### Creating Fillets
 
 _How to create constant and variable radius fillets_  
@@ -22,7 +19,6 @@ _How to create constant and variable radius fillets_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This use case explains how to create constant fillets, variable fillets and fillets with rolling edges.
@@ -40,44 +36,39 @@ This use case explains how to create constant fillets, variable fillets and fill
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to help you use fillets in geometric modeler applications.
 
 [Top]
-
 ### The CAATopAllFillets Use Case
 
 CAATopAllFillets is a use case of the CAATopologicalOperators.edu framework that illustrates TopologicalOperators framework capabilities.
 
 [Top]
-
 #### What Does CAATopAllFillets Do?
 
 CAATopAllFillets creates two solid cuboids, performs a boolean union of the cubes, then creates fillets on the resulting solid.
 
-![](images/filletconstant.gif) | The CAATopConstantFillets function which is defined in the CAATopConstantFillets.cpp folder creates a constant fillet along the edges common to both cubes.  
+ The CAATopConstantFillets function which is defined in the CAATopConstantFillets.cpp folder creates a constant fillet along the edges common to both cubes.  
 ---|---  
-![](images/rollingedges.gif) | The CAATopRollingEdges function which is defined in the  CAATopRollingEdges.cpp folder creates a fillet along the common edges and specifies rolling edges.  
-![](images/variableradius.gif) | The CAATopVariableFillets function which is defined in the CAATopVariableFillets.cpp folder creates a variable radius fillet on one edge of the solid.  
+ The CAATopRollingEdges function which is defined in the  CAATopRollingEdges.cpp folder creates a fillet along the common edges and specifies rolling edges.  
+ The CAATopVariableFillets function which is defined in the CAATopVariableFillets.cpp folder creates a variable radius fillet on one edge of the solid.  
   
 [Top]
-
 #### How to Launch CAATopAllFillets
 
 To launch CAATopAllFillets, you will need to set up the build time environment, then compile CAATopAllFillets.m along with its prerequisites, set up the run time environment, and then execute the use case [1].
 
 If you simply type CAATopAllFillets with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example:
 
-With Windows `CAATopAllFillets`` e:\Fillets.NCGM`
+With Windows `CAATopAllFillets`` e/Fillets.NCGM`
 
 With UNIX `CAATopAllFillets`` /u/Fillets.NCGM`
 
 This NCGM file can be displayed using the CAAGemBrowser use case.
 
 [Top]
-
 #### Where to Find the CAATopAllFillets Code
 
 The CAATopAllFillets use case is made of a main named CAATopAllFillets.cpp located in the CAATopAllFillets.m module of the CAATopologicalOperators.edu framework:
@@ -89,7 +80,6 @@ Unix | `InstallRootDirectory/CAATopologicalOperators.edu/CAATopAllFillets.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are six steps in CAATopAllFillets.cpp:
@@ -102,10 +92,7 @@ There are six steps in CAATopAllFillets.cpp:
   6. Creating a variable radius fillet.
   7. Writing the model and closing the Container
 
-
-
 [Top]
-
 #### Creating the Geometry Factory
 
 The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
@@ -117,19 +104,16 @@ The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. 
 ---  
   
 [Top]
-
 #### Creating the solid cuboids
 
 See [2] which illustrates how to create a solid cuboid.
 
 [Top]
-
 #### Performing a boolean union on the cuboids
 
 See also [2].
 
 [Top]
-
 #### Creating a constant radius fillet
 
 To create a constant radius fillet, you must:
@@ -168,10 +152,7 @@ The arguments two, three and four of the constructor are only to be specified wh
   
 ---  
 
-
-
 [Top]
-
 #### Creating a constant radius fillet with rolling edges
 
 To create a variable radius fillet, you must:
@@ -186,12 +167,8 @@ To create a variable radius fillet, you must:
   
 ---  
 
-
-
 [Top]
-
 ####  
-
 #### Creating a variable radius fillet
 
 To create a variable radius fillet, you must:
@@ -246,10 +223,7 @@ The second and third arguments of the constructor must be specified when the fil
   
 ---  
 
-
-
 [Top]
-
 #### Writing the Model and Closing the Factory
 
 To save the model in a file, the `::CATSaveCGMContainer` global function is used. Notice that in the use case, the save is conditioned by an input parameter representing the file inside which the model must be saved.
@@ -279,7 +253,6 @@ The use case ends with the closure of the geometry factory, done by the `::CATCl
 [Top]
 
 * * *
-
 ### In Short
 
 To create fillets, you must specify a list of radii as well as a list of edges to be filleted. For a constant radius, the list of radii contains a single item that you can apply to one or more edges. When creating a variable fillet, you must specify the list of radii. The edge to be filleted is then specified in the radius definition.
@@ -287,16 +260,14 @@ To create fillets, you must specify a list of radii as well as a list of edges t
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] | [Overview of the Topological Operators](CAATopOverview.htm)  
+[2] | [Overview of the Topological Operators](CAATopOverview.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [March 2002] | Document created  

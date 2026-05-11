@@ -1,19 +1,16 @@
 ---
 title: "About Subs and Functions"
-category: "general"
+category: "use-case"
 module: "CAAScdInfTechArticles"
 tags: ["CATIA"]
-source_file: "Doc\online\CAAScdInfTechArticles\CAAInfSubFunction.htm"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfSubFunction.md"
 converted: "2026-05-11T17:31:52.446744"
 ---
-
 ## Infrastructure
  
  | 
- 
  ## About Subs and Functions  
    
- ---|---  
    
  * * *
  
@@ -29,8 +26,11 @@ converted: "2026-05-11T17:31:52.446744"
  But use parentheses with a **Function** :
 
 > Dim ReturnedObject As AnyObject
+```vbscript
     Set ReturnedObject = Object.Function (arg1, arg2, arg3)
  
+```
+
  You must use **Set** only if the returned value is an object, but not if it is a character string or a number. Nevertheless, character string and number defined as CATIA literals are objects and **Set** must be used if a **Function** returns a literal object.
  
  Finally, you don't have to use **Set** if you store your return value in a **Property** :
@@ -48,3 +48,5 @@ converted: "2026-05-11T17:31:52.446744"
  * * *
  
  _Copyright 1994-2004, Dassault Systmes. All rights reserved._
+
+```

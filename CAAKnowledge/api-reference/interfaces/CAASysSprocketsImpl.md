@@ -2,51 +2,22 @@
 title: "CAASysSprocketsImpl"
 type: "interface"
 module: "CAASystem"
+category: "framework"
 base: "CATBaseCollection"
+inheritance_chain: "CAASysSprocketsImpl → CATBaseCollection"
 method_count: 6
 visibility: "local"
+has_tie_binding: false
 verified: true
 ---
-
 # CAASysSprocketsImpl
 
 **基类**: CATBaseCollection  
+**继承链**: CAASysSprocketsImpl → CATBaseCollection  
 **模块**: CAASystem  
+**分类**: framework  
 **可见性**: local  
 **方法数**: 6
-
-## 方法列表
-
-### get_Name
-```cpp
-HRESULT __stdcall get_Name(CATBSTR & oNameBSTR);
-```
-
-### get__NewEnum
-```cpp
-HRESULT __stdcall get__NewEnum(IUnknown *& oEnumerator);
-```
-
-### get_Count
-```cpp
-HRESULT __stdcall get_Count(CATLONG & oCount);
-```
-
-### Item
-```cpp
-HRESULT __stdcall Item(const CATVariant & iIndex, 
-      CAAIASysSprocket *& oSprocket);
-```
-
-### AddAll
-```cpp
-HRESULT __stdcall AddAll(const CATSafeArrayVariant & iSprocketArray);
-```
-
-### ToArray
-```cpp
-HRESULT __stdcall ToArray(CATSafeArrayVariant & ioArray);
-```
 
 ## 依赖
 

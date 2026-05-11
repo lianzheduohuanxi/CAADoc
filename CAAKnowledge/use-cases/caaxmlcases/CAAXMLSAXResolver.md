@@ -3,18 +3,15 @@ title: "Resolving external entities with SAX"
 category: "use case"
 module: "CAAXmlUseCases"
 tags: ["CAAXMLSAXResolverMain", "CATISAXParser_var", "CAAXMLParser", "CATIXMLSAXFactory", "CATISAXEntityResolver_var", "CAAXMLSAXResolverHandlers", "CATISAXParser", "CATISAXInputSource", "CATISAXEntityResolver", "CAAXMLSAXResolver", "CATISAXErrorHandler_var", "CATISAXErrorHandler", "CATISAXInputSource_var", "CATIXMLSAXFactory_var", "CATISAXDTDHandler", "CATISAXDocumentHandler"]
-source_file: "Doc\online\CAAXmlUseCases\CAAXMLSAXResolver.htm"
+source_file: "Doc/online/CAAXmlUseCases/CAAXMLSAXResolver.md"
 converted: "2026-05-11T17:33:45.664165"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## Middleware Abstraction
 
 | 
-
 ### Fetching an External Entity with SAX
 
 _Using a SAX entity resolver to fetch an external entity_  
@@ -22,7 +19,6 @@ _Using a SAX entity resolver to fetch an external entity_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to specify an entity resolver and how to use it with a SAX parser. Entity resolvers are invoked by the XML parser to obtain the source of external entities they cannot find by themselves.
@@ -40,25 +36,21 @@ This article shows how to specify an entity resolver and how to use it with a SA
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case shows how to specify an entity resolver and how to use it with a SAX parser. You will learn to create two different kinds of event handlers for SAX: **error handlers** are invoked to process errors raised by the parser if the XML input is not well-formed or is invalid; **entity resolvers** are invoked when the parser encounters an external entity reference it cannot find by itself. You will learn how to register your handlers with the parser. Finally, the use case will show you how to run the SAX parser configurated with your handlers to parse a file with validation.
 
 [Top]
-
 ### The CAAXMLSAXResolver Use Case
 
 The CAAXMLSAXResolver Use Case is a use case of the CAAXMLParser.edu framework that illustrates XMLParser framework capabilities.
 
 [Top]
-
 #### What Does CAAXMLSAXResolver Do
 
 This use case reads an existing XML file using SAX and validates it with a DTD stored in a database. The SAX parser has to use an entity resolver to fetch the DTD from the database. For the sake of simplicity, the database is just a directory somewhere on the disk. The system ID of the DTDs must begin with the string: "sql://". If the document is not well formed or invalid, the program displays an error message in the console.
 
 [Top]
-
 #### How to Launch CAAXMLSAXResolver
 
 To launch CAAXMLSAXResolver, you will need to set up the build time environment, then compile CAAXMLSAXResolver along with its prerequisites, set up the run time environment, and then execute the use case [1].
@@ -86,10 +78,7 @@ where:
     * `intel_a` for 32-bit Windows
     * `win_b64` for 64-bit Windows
 
-
-
 [Top]
-
 #### Where to Find the CAAXMLSAXResolver Code
 
 The CAAXMLSAXResolver use case is made of several classes located in the CAAXMLSAXResolver.m module of the CAAXMLParser.edu framework:
@@ -101,11 +90,9 @@ Unix | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLSAXResolver.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 To create a SAX parser, create and register event handlers with this parser, and parse a file, there are six main steps:
-
 # |  Step  
 ---|---  
 1 | Implement a V5 Entity Resolver and Error Handler component  
@@ -116,7 +103,6 @@ To create a SAX parser, create and register event handlers with this parser, and
 6 | Manage Errors  
   
 [Top]
-
 #### Implement a V5 Entity Resolver and Error Handler Component
 
 The SAX API uses an event-oriented API to process XML documents. The XML SAX parser reads XML documents sequentially and invokes callback functions to indicate the XML construct it comes across. Each invocation is called a SAX event. The SAX API defines V5 interfaces, which specify the signature of the SAX callback functions and group them per theme. The _CATISAXEntityResolver_ interface defines the `ResolveEntity` function. This function is invoked by the parser when it encounters an external entity reference it cannot find by itself. The function must fetch the external entity and return it to the parser in the form of a SAX input source. Other SAX interfaces (_CATISAXDTDHandler_ , _CATISAXErrorHandler_ , _CATISAXDocumentHandler_) define additional events. To make the work easier for the developer, the SAX API provides a _CATSAXHandlerBase_ component, which already provides an empty implementation of all the SAX interfaces. ![saxhandlerbase.png \(3148 bytes\)](images/saxhandlerbase.png).
@@ -212,7 +198,6 @@ The method must return the source of the corresponding entity in the form of a _
 To create an input source for this file, invoke the `CreateInputSourceFromFile` of the _CATIXMLSAXFactory_ object. To get a _CATIXMLSAXFactory_ object, use the global function **CreateCATIXMLSAXFactory** (more on this in the next section).
 
 [Top]
-
 #### Create a V5 SAX Component
     
     
@@ -227,7 +212,6 @@ To create an input source for this file, invoke the `CreateInputSourceFromFile` 
 To work with SAX, you need to instantiate the V5 SAX component. The V5 SAX component can be created by calling the `CreateCATIXMLSAXFactory` global function. This function returns a V5 handler on the _CATIXMLSAXFactory_ interface, which is the main interface for the V5 SAX component. Using this interface you will be able to create SAX1 and SAX2 parsers and to create input source to feed XML to the parser. Note that the code above does not specify the CLSID of the component to use, so the default SAX component (XML4C3) will be used. See [3] and [4] if you want to use another V5 SAX component.
 
 [Top]
-
 #### Create and Configure a V5 SAX Parser
     
     
@@ -240,7 +224,6 @@ To work with SAX, you need to instantiate the V5 SAX component. The V5 SAX compo
 To create a SAX1 parser, one simply invokes the `CreateParser` on the _CATIXMLSAXFactory_ object. There are two kinds of SAX1 parsers, non-validating SAX1 parsers and validating SAX1 parsers. If you do specify optional arguments to your `CreateParser` call, a validating parser will be created. See [3] and [4] if you want to use another V5 SAX component.
 
 [Top]
-
 #### Create the Entity Resolver and Error Handler Components and Register Them With the Parser
 
 The SAX1 parser created in the previous section is not yet usable as it does not yet know any other objects to which it can send the events it generates. The SAX1 parser can accept up to four event handlers (one for each event interface), as shown in the diagram below. ![saxsaxparser.png \(3115 bytes\)](images/saxparser.png)
@@ -269,7 +252,6 @@ To instantiate the entity resolver and the error handler you have defined in the
 To register your entityResolver handler, call the `SetEntityResolver` method of the _CATISAXParser_ interface. To register your error handler, call the `SetErrorHandler` method of the _CATISAXParser_ interface. Passing `NULL_var` to these methods unregisters the previously registered handlers.
 
 [Top]
-
 #### Parse the XML File
     
     
@@ -280,13 +262,11 @@ To register your entityResolver handler, call the `SetEntityResolver` method of 
 To parse the XML file, call the `Parse` method of the _CATISAXParser_ interface. Pass the path of the file to read as a parameter. The method will read the file from top to bottom and generate the corresponding events, calling your event handlers for all the events you want to manage.
 
 [Top]
-
 #### Manage Errors
 
 The XMLParser framework uses the _HRESULT_ / _CATError_ mechanism to manage errors. Make sure to use the `CATError::CATGetLastError` to obtain all the available error diagnostics when using XMLParser. More information about V5 error management is available here [2] and [4].
 
 [Top]
-
 ### In Short
 
 This use case shows you how to parse XML documents using the SAX API.
@@ -294,18 +274,16 @@ This use case shows you how to parse XML documents using the SAX API.
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] | [ Managing Errors Using HRESULT](../CAASysTechArticles/CAASysErrors.htm)  
-[3] | [ Using XML in V5](../CAAXmlTechArticles/CAAXmlV5Overview.htm)  
-[4] | [XML Tips and Tricks](../CAAXmlTechArticles/CAAXmlTipsAndTricks.htm)  
+[2] | [ Managing Errors Using HRESULT](../CAASysTechArticles/CAASysErrors.md)  
+[3] | [ Using XML in V5](../CAAXmlTechArticles/CAAXmlV5Overview.md)  
+[4] | [XML Tips and Tricks](../CAAXmlTechArticles/CAAXmlTipsAndTricks.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [May 2005] | Document created  

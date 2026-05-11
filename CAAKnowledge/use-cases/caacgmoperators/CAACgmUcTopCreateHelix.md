@@ -3,7 +3,7 @@ title: "Creating an Helix"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsOverview", "CAAGMOperatorsInterfaces", "CAAGMOperatorsCreateHelix", "CAADoc", "CATICGMDynMassProperties1D", "CATICGMObject", "CAAGMModelGemBrowser", "CAATopCreateHelix"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcTopCreateHelix.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopCreateHelix.md"
 converted: "2026-05-11T17:33:49.138578"
 ---
 
@@ -24,7 +24,7 @@ What You Will Learn With This Use Case This use case is intended to help you cre
     * Creates an helix with a constant pitch and a constant radius and creates the body associated with the helix.
     * Creates an helix with a variable pitch and a constant radius and creates the body associated with the helix.
     * Writes the model and closes the container.
-How to Launch CAAGMOperatorsCreateHelix To launch CAAGMOperatorsCreateHelix, you will need to set up the build time environment, then compile CAAGMOperatorsCreateHelix.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. If you simply type CAAGMOperatorsCreateHelix with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsCreateHelix e:\helix.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAATopCreateHelix Code The CAAGMOperatorsCreateHelix use case is made of a main named CAATopCreateHelix.cpp located in the CAAGMOperatorsCreateHelix.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsCreateHelix.m\` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step The use case is divided into the following steps:
+How to Launch CAAGMOperatorsCreateHelix To launch CAAGMOperatorsCreateHelix, you will need to set up the build time environment, then compile CAAGMOperatorsCreateHelix.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. If you simply type CAAGMOperatorsCreateHelix with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsCreateHelix e/helix.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAATopCreateHelix Code The CAAGMOperatorsCreateHelix use case is made of a main named CAATopCreateHelix.cpp located in the CAAGMOperatorsCreateHelix.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsCreateHelix.m\` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step The use case is divided into the following steps:
     * Creating the Geometry Factory, CATSoftwareConfiguration and CATTopData
     * Creating an Helix with a Constant Pitch and Constant Radius
     * Creating an Helix with a Variable Pitch and a Variable Radius
@@ -91,7 +91,10 @@ Setting the New Helix Parameters The arguments 4 to 6 allow you to modify the he
                     90*CATDegreeToRadian,   // the start angle
                     1);                     // the orientation
 
+```vbscript
 For how to create a skin, see the CAAGMOperatorsOverview use case [2]. The Created Helix constant radius = 100.0  
+```
+
 Z = 0.02*CATCrvParam 2  
 ThetaLaw = linear [0, 9 * 360deg]  
 CATCrvParam Max = 125.664 -> Z max = 315.827  
@@ -132,8 +135,8 @@ Writing the Model and Closing the Container To save the model in a file, the `::
      //	
      **::CATCloseCGMContainer**(piGeomFactory);
 
-References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] | [Overview of the Topological Operators](CAACgmUcTopOverview.htm)  
+[2] | [Overview of the Topological Operators](CAACgmUcTopOverview.md)  
 History Version: **1** [Jul 2005] | Document created  
 ---|---

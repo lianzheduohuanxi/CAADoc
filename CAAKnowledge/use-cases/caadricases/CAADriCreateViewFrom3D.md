@@ -3,18 +3,15 @@ title: "Creating a View from 3D"
 category: "use case"
 module: "CAADriUseCases"
 tags: ["CATIDftStandardManager", "CATIDftDrawing", "CATIDftDocumentServices", "CATIContainer_var", "CATIA", "CATITPSList", "CATITPSDocument", "CAADrwCreateViewFrom3D", "CATIStringList", "CATIDftView", "CATITPSView", "CATITPSComponent", "CATISpecObject", "CAADrwCreatViewFrom3D", "CATInit", "CATIDftGenViewFactory", "CAADraftingInterfaces", "CATITPSSet", "CATIDftSheet"]
-source_file: "Doc\online\CAADriUseCases\CAADriCreateViewFrom3D.htm"
+source_file: "Doc/online/CAADriUseCases/CAADriCreateViewFrom3D.md"
 converted: "2026-05-11T17:31:50.983117"
 ---
-
 # Mechanical Design
 
 | 
-
 ## Drafting
 
 | 
-
 ### Creating a View from 3D
 
 _How_ _to create a view from 3D with annotations created by the Functional and Tolerancing and Annotation workbench_  
@@ -22,7 +19,6 @@ _How_ _to create a view from 3D with annotations created by the Functional and T
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article discusses the CAADrwCreateViewFrom3D use case. This use case explains how to create _a view from 3D_ with annotations created by Functional and Tolerancing and Annotation workbench.
@@ -40,7 +36,6 @@ This article discusses the CAADrwCreateViewFrom3D use case. This use case explai
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show you how to create a Drawing generative view from a TPS view. A TPS view __ is defined in a 3D part, product or process that is assigned 3D tolerance specifications and annotations. The Drawing generative View will be associated to the part document and the TPS view. All the modifications applied in the TPS view will be propagated in the Drawing generative view by update. 
@@ -50,13 +45,11 @@ _Fig 1: The part document containing a TPS View (Front View.1)_
 ![](images/CAACreateVIewFrom3D1.jpg)  
   
 [Top]
-
 ### The CAADrwCreateViewFrom3D Use Case
 
 CAADrwCreateViewFrom3D is a use case of the CAADraftingInterfaces.edu framework that illustrates DraftingInterfaces framework capabilities.
 
 [Top]
-
 #### What Does CAADrwCreateViewFrom3D Do?
 
   _Fig. 2: Drawing Document with the view from 3D_  
@@ -66,7 +59,6 @@ CAADrwCreateViewFrom3D is a use case of the CAADraftingInterfaces.edu framework 
 Fig. 2 represents the Drawing document in which a front view has been created from the active TPS view of Annotation Set in the Part document. Note: A red cross is created to inform the end user that the text leader is associative to hidden geometry in the view.
 
 [Top]
-
 #### How to Launch CAADrwCreateViewFrom3D
 
 To launch CAADrwCreateViewFrom3D, you will need to set up the build time environment, then compile CAADrwCreateViewFrom3D along with its prerequisites, set up the run time environment, and then execute the use case [1].
@@ -76,7 +68,7 @@ When you launch the use case, pass the full pathname of the Drawing file as argu
   * With Windows 
         
         e:> mkrun -c cmd
-        CAADrwCreateViewFrom3D c:\...\PadWith3DAnnotations.CATPart c:\DrawingTestOutput.CATDrawing  
+        CAADrwCreateViewFrom3D c/.../PadWith3DAnnotations.CATPart c/DrawingTestOutput.CATDrawing  
   
 ---  
   * With UNIX 
@@ -86,10 +78,7 @@ When you launch the use case, pass the full pathname of the Drawing file as argu
   
 ---  
 
-
-
 [Top]
-
 #### Where to Find the CAADrwCreateViewFrom3D Code
 
 The CAADrwCreateViewFrom3D use case is made of a single source file named CAADrwCreateViewFrom3D .cpp located in the CAADrwCreateViewFrom3D.m module of the CAADraftingInterfaces.edu framework:
@@ -101,7 +90,6 @@ Unix | ` InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCreateViewFrom3D.m
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are five steps in CAADrwCreatViewFrom3D:
@@ -112,10 +100,7 @@ There are five steps in CAADrwCreatViewFrom3D:
   4. Creating the View from 3D
   5. Saving the Document and Exiting
 
-
-
 [Top]
-
 #### Creating and Initializing the Document
     
     
@@ -144,7 +129,6 @@ There are five steps in CAADrwCreatViewFrom3D:
 This section represents the usual sequence for loading a CATIA document [2].
 
 [Top]
-
 #### Creating the Drawing in the Document
     
     
@@ -160,7 +144,6 @@ This section represents the usual sequence for loading a CATIA document [2].
 The other steps to fully initialize the Drawing document are included in the specific sub program, `CreateViewFrom3DInDrawingDoc`.
 
 [Top]
-
 #### Retrieving the Part Document and  the Active View of the TPS Annotation Set
     
     
@@ -208,7 +191,6 @@ The other steps to fully initialize the Drawing document are included in the spe
  
 
 [Top]
-
 #### Creating the View from 3D
     
     
@@ -312,9 +294,7 @@ The sub program `CreateViewFrom3DInDrawingDoc` creates a View from 3D by using t
 
 **Note** : Before the creation of the Drawing View, the Drawing Standard has to be correctly initialized. **It must be identical to the Standard used by the Annotation Set aggregating the TPS View in the 3D document** [3].  
 
-
 [Top]
-
 #### Saving the Document and Exiting
     
     
@@ -342,7 +322,6 @@ This section represents the usual sequence for saving a newly created CATIA docu
 [Top]
 
 * * *
-
 ### In Short
 
 This use case shows the way to:
@@ -353,22 +332,18 @@ This use case shows the way to:
   4. Create a view from 3D by using the `CreateViewFrom3D` method defined in CATIDftGenViewFactory
   5. Save the Drawing document.
 
-
-
 [Top]
 
 * * *
-
 ### References
 
-[1] |  [ Building and Launching a CAA Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] |  [ Building and Launching a CAA Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [ Loading a Document](../CAAOmbUseCases/CAAOmbLoadDoc.htm)  
+[2] |  [ Loading a Document](../CAAOmbUseCases/CAAOmbLoadDoc.md)  
 [3] |  Technological Product Specification Overview  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Jan 2005] | Document created  

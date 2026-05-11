@@ -1,18 +1,18 @@
 ---
 title: "CAAKniFilterRightBelowRoot.CATScript"
-category: "general"
+category: "use-case"
 module: "CAAScdKniUseCases"
 tags: ["CAAKniFilterRightBelowRoot", "CATIA", "CAAKniClash", "CAAScdKniUseCases"]
-source_file: "Doc\online\CAAScdKniUseCases\CAAKniFilterRightBelowRootSource.htm"
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniFilterRightBelowRootSource.md"
 converted: "2026-05-11T17:31:51.981824"
 ---
 
-
     Option Explicit
     ' COPYRIGHT DASSAULT SYSTEMES 2001
+```vbscript
     Dim Language as String
     Language="VBScript"
-    
+```vbscript
     ' ***********************************************************************
     '   Purpose:      Given a CATProduct document,
     '                 this macro filters the parameters right below the root 
@@ -37,9 +37,14 @@ converted: "2026-05-11T17:31:51.981824"
     '   Locales:      English (United States)
     '   CATIA Level:  V5R6 
     ' ***********************************************************************
+```
+
     
+```
+
+```vbscript
     Sub CATMain()
-    
+```vbscript
         ' ----------------------------------------------------------- 
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String 
@@ -48,18 +53,18 @@ converted: "2026-05-11T17:31:51.981824"
           Err.Raise 9999,,"No Doc Path Defined"
         End If
         ' ----------------------------------------------------------- 
-    
         ' Open the Part document 
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+```
+
     		"online\CAAScdKniUseCases\samples\CAAKniClash.CATProduct")
         Dim oDoc As Document
         set oDoc = CATIA.Documents.Open(sFilePath)
-    
+```vbscript
      ' Set the CATIA popup file alerts to False
      ' It prevents to stop the macro at each alert during its execution
      CATIA.DisplayFileAlerts = False
-    
      ' Retrieve your active document - CATIA is your application 
      ' You get the active document by using the ActiveDocument property
      ' on your application object
@@ -70,7 +75,6 @@ converted: "2026-05-11T17:31:51.981824"
      Dim BelongToComp As Integer
      ' Check whether the document is a CATProduct
      If (InStr(oActiveDoc.Name,".CATProduct")) <> 0  Then 
-    
         ' Scan the complete list of parameters                          
         Dim oProductList As Products
         Set oProductList = oActiveDoc.Product.Products
@@ -88,12 +92,17 @@ converted: "2026-05-11T17:31:51.981824"
               if  S1 = oProductList.Item(j).Parameters.Item(k).name then 
               BelongToComp = 1
               end if 
+```
+
               next
            Next  
+```vbscript
             ' if the flag is set to 0 - the document parameter
             ' does not belong to ant sub-component 
             ' Conclusion: it is right below the root
             if BelongToComp = 0 then
+```
+
             msgbox S1
            end if
         Next    
@@ -101,5 +110,11 @@ converted: "2026-05-11T17:31:51.981824"
         MsgBox "The active document must be a CATProduct"
     End If
     
+```
+
+```vbscript
     End Sub
     
+```
+
+```

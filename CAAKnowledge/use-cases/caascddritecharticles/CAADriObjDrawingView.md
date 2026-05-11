@@ -1,12 +1,11 @@
 ---
 title: "DrawingView Object"
-category: "general"
+category: "use-case"
 module: "CAAScdDriTechArticles"
 tags: ["CATIA"]
-source_file: "Doc\online\CAAScdDriTechArticles\CAADriObjDrawingView.htm"
+source_file: "Doc/online/CAAScdDriTechArticles/CAADriObjDrawingView.md"
 converted: "2026-05-11T17:31:51.127693"
 ---
-
 # DrawingView Object
 
  
@@ -16,7 +15,7 @@ See Also | UseCases | Properties | Methods
   
  
 
-[![](../CAAScrAutomationImages/images/drviews.gif)](CAADriObjDrawingViews.htm)  
+[![](../CAAScrAutomationImages/images/drviews.gif)](CAADriObjDrawingViews.md)  
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/dractview.gif)![](../CAAScrAutomationImages/images/drview.gif)  
 ![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/drview.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/drrefview.gif)![](../CAAScrAutomationImages/images/drview.gif)  
@@ -76,18 +75,21 @@ The other views are all defined by giving the **DrawingViewGenerativeBehavior** 
   * a detail view is defined from a parent view and using a clipping circle
   * an auxiliary view is defined from a parent view and using a line which defines the trace of the auxiliary view projection plane in the parent view.
 
-
-
 ## Using the DrawingView Object
 
 Use x and y properties to set or retrieve the x and y coordinates of the view coordinate system. The following example sets these coordinates to 260mm and 120mm respectively.
     
     
+```vbscript
     Dim myView As Object
     Set myView = CATIA.Documents(2).ActiveSheet.ActiveView
     myView.x = 260
     myView.y = 120
 
+```
+
 * * *
 
 _Copyright 1999-2013, Dassault Syst èmes. All rights reserved._
+
+```

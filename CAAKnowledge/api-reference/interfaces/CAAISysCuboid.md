@@ -2,49 +2,38 @@
 title: "CAAISysCuboid"
 type: "interface"
 module: "CAASystem"
+category: "framework"
 base: "CATBaseUnknown"
+inheritance_chain: "CAAISysCuboid → CATBaseUnknown"
 method_count: 4
 visibility: "public"
+has_tie_binding: true
 verified: true
 ---
+> **TIE实现**: unknown
 
 # CAAISysCuboid
 
 **基类**: CATBaseUnknown  
+**继承链**: CAAISysCuboid → CATBaseUnknown  
 **模块**: CAASystem  
+**分类**: framework  
 **可见性**: public  
 **方法数**: 4
 
 > Mathematics Framework
 
-## 方法列表
-
-### SetOrigin
-```cpp
-HRESULT SetOrigin(const CATMathPoint & iOrigin);
-```
-
-### GetOrigin
-```cpp
-HRESULT GetOrigin(CATMathPoint & oOrigin) const;
-```
-
-### SetVectors
-```cpp
-HRESULT SetVectors(const CATMathVector & iV1,
-		                 const CATMathVector & iV2,
-						 const CATMathVector & iV3);
-```
-
-### GetVectors
-```cpp
-HRESULT GetVectors(CATMathVector & oV1,
-		                 CATMathVector & oV2,
-						 CATMathVector & oV3) const;
-```
-
 ## 依赖
 
 - `CATBaseUnknown.h`
 - `CAASysGeoModelInf.h`
+
+## TIE实现
+
+**实现文件**:
+- `CAAISysAccess.cpp`
+- `CAAISysCircle.cpp`
+- `CAAISysCircleCenterProperties.cpp`
+- `CAAISysCollection.cpp`
+- `CAAISysColorProperties.cpp`
 

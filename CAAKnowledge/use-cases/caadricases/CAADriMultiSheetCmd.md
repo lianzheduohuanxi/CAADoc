@@ -3,18 +3,15 @@ title: "Creating a Multi Sheet Interactive Command"
 category: "use case"
 module: "CAADriUseCases"
 tags: ["CATIADocument", "CATIModelEvents_var", "CAADrwMultiSheetCmd", "CAADrwAddin", "CAAUseCaseCommands", "CATIADrawingDocument", "CAADraftingInterfaces", "CATIA", "CATIDftMultiSheetCmd", "CATIDrwText", "CATIDftMultiSheetMode", "CATIAApplication"]
-source_file: "Doc\online\CAADriUseCases\CAADriMultiSheetCmd.htm"
+source_file: "Doc/online/CAADriUseCases/CAADriMultiSheetCmd.md"
 converted: "2026-05-11T17:31:51.012436"
 ---
-
 # Mechanical Design
 
 | 
-
 ## Drafting
 
 | 
-
 ### Creating a Multi Sheet Interactive Command
 
 _How to create an interactive command working on several sheets_  
@@ -22,7 +19,6 @@ _How to create an interactive command working on several sheets_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article discusses the CAADrwMultiSheetCmd use case. This use case explains how to create a command working on several sheets.
@@ -40,19 +36,16 @@ This article discusses the CAADrwMultiSheetCmd use case. This use case explains 
 ---  
   
 * * *
-
 ### What You Will You With This Use Case
 
 In this use case you will learn how to create an interactive command working on several sheets.
 
 [Top]
-
 ### The CAADrwMultiSheetCmd Use Case
 
 CAADrwMultiSheetCmd is a use case of the CAADraftingInterfaces.edu framework that illustrates DraftingInterfaces framework capabilities.
 
 [Top]
-
 #### What Does CAADrwMultiSheetCmd Do
 
 This use case shows a command working on several sheets. The use case interactive command has two steps:
@@ -60,10 +53,7 @@ This use case shows a command working on several sheets. The use case interactiv
   1. Select a reference text
   2. Select a text to move. The text position is modified according to the reference text position.
 
-
-
 [Top]
-
 #### How to Launch CAADrwMultiSheetCmd
 
 To launch CAADrwMultiSheetCmd, you will need to set up the build time environment, then compile CAADrwMultiSheetCmd and CAADrwAddin along with its prerequisites, set up the run time environment, and then include the command in a workbench [1].
@@ -86,7 +76,6 @@ Fig 3: Sheet.2 is the current sheet ![](images/CAADrwMultiSheet3.jpg)
 ---  
   
 [Top]
-
 #### Where to Find the CAADrwMultiSheetCmd Code
 
 The CAADrwMultiSheetCmd use case is made of two source files named CAADrwMultiSheetCmd.h and CAADrwMultiSheetCmd.cpp located in the CAADrwMultiSheetCmd.m module of the CAADraftingInterfaces.edu framework:
@@ -98,7 +87,6 @@ Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwMultiSheetCmd.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are seven steps in CAADrwMultiSheetCmd:
@@ -111,10 +99,7 @@ There are seven steps in CAADrwMultiSheetCmd:
   6. Select the Text to Move and Store the New Position
   7. Restore the Previous Multi Sheet Mode Value
 
-
-
 [Top]
-
 #### Retrieving the Current Drawing from the Frame
     
     
@@ -155,7 +140,6 @@ There are seven steps in CAADrwMultiSheetCmd:
 ---  
   
 [Top]
-
 #### Reading the Current Multi Sheet Mode
     
     
@@ -182,7 +166,6 @@ There are seven steps in CAADrwMultiSheetCmd:
 ---  
   
 [Top]
-
 #### Activating the Multi Sheet Mode
     
     
@@ -206,7 +189,6 @@ There are seven steps in CAADrwMultiSheetCmd:
 ---  
   
 [Top]
-
 #### Building the State Chart and Creating the Appropriate Selection Agent
 
 ![](images/CAADrwMultiSheet4.jpg)  
@@ -246,7 +228,6 @@ There are seven steps in CAADrwMultiSheetCmd:
 In this section we create a CATPathElementAgent and set the corresponding element type to CATIDrwText. So only Complex Texts could be selected.
 
 [Top]
-
 #### Selecting the Reference Text and Storing its Coordinates
     
     
@@ -285,7 +266,6 @@ In this section we create a CATPathElementAgent and set the corresponding elemen
 The acquisition agent did put the selected text into the CSO. So we get the set of object and loop on it.
 
 [Top]
-
 #### Selecting the Text to Move and Storing the New Position
     
     
@@ -327,7 +307,6 @@ The acquisition agent did put the selected text into the CSO. So we get the set 
 **Note** : When a text is modified and needs to regenerate its graphical representations, it just has to send CATModify event to warn all its.
 
 [Top]
-
 #### Restoring the Previous Multi Sheet Mode Value
     
     
@@ -344,7 +323,6 @@ The acquisition agent did put the selected text into the CSO. So we get the set 
 [Top]
 
 * * *
-
 ### In Short
 
 This use case shows how to create a command working on several sheets: Retrieve current drawing, manage the multi sheet Mode and move a text.
@@ -352,16 +330,14 @@ This use case shows how to create a command working on several sheets: Retrieve 
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] | [Implementing the Statechart Diagram](../CAADegUseCases/CAADegSampleGraph.htm)  
+[2] | [Implementing the Statechart Diagram](../CAADegUseCases/CAADegSampleGraph.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Aug 2000] | Document created  

@@ -1,14 +1,15 @@
 ---
 title: "CAAStrCreateCoping.CATScript"
-category: "general"
+category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CATIA", "CATIAStrFeatureFactory", "CAAStrCreateCoping"]
-source_file: "Doc\online\CAAScdStrUseCases\CAAStrCreationOfCopingSource.htm"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfCopingSource.md"
 converted: "2026-05-11T17:31:50.868630"
 ---
 
-
+```vbscript
     Sub CATMain()
+```vbscript
     Dim StrWorkbench As StrWorkbench
     Dim strFactory As StrObjectFactory
     
@@ -23,7 +24,7 @@ converted: "2026-05-11T17:31:50.868630"
        
     Dim strMembers As strMembers
     Set strMembers = rootProduct.GetTechnologicalObject("StructureMembers")
-    
+```vbscript
     'Case1: When Plate is limited by other Plate and Surface
     'Get The Factory from Selection Method
     Dim PlateToNibble As StrPlate
@@ -31,11 +32,13 @@ converted: "2026-05-11T17:31:50.868630"
     
     Dim PlateSelection As Selection
     Set PlateSelection = CATIA.ActiveDocument.Selection
+```
+
     PlateSelection.Add PlateToNibble
       
     Dim FactoryForPlate As StrFeatureFactory
     Set FactoryForPlate = PlateSelection.FindObject("CATIAStrFeatureFactory")
-    
+```vbscript
     'Define the Limits for PlateToNibble
     Dim Limitplate1 As StrPlate
     Set Limitplate1 = strPlates.Item("Shell_002.1")
@@ -48,17 +51,18 @@ converted: "2026-05-11T17:31:50.868630"
     
     Set Listoflimits1(0) = Limitplate1
     Set Listoflimits2(0) = LimitSurface1
-    
     'Create Nibbling by defining Type and SubType
     Dim NibblingFeature1, NibblingFeature2 As StrNibblingFeature
     
     Set NibblingFeature1 = FactoryForPlate.AddNibbling(Listoflimits1, "Remove")
+```
+
     NibblingFeature1.SubType = "ButtButt"
     
     Set NibblingFeature2 = FactoryForPlate.AddNibbling(Listoflimits2, "Remove")
     NibblingFeature2.SubType = "CurrCurr"
-    
     '*******************************************************************
+```vbscript
     'Case2: When Member is limited by 2 Members and One Plate
     'Get The Factory from Selection Method
     Dim MembertoNibble1 As StrMember
@@ -66,11 +70,13 @@ converted: "2026-05-11T17:31:50.868630"
     
     Dim MemberSelection As Selection
     Set MemberSelection = CATIA.ActiveDocument.Selection
+```
+
     MemberSelection.Add MembertoNibble1
     
     Dim FactoryForMember As StrFeatureFactory
     Set FactoryForMember = MemberSelection.FindObject("CATIAStrFeatureFactory")
-    
+```vbscript
     'Define the Limits for  MembertoNibble1
     Dim L1 As StrMember
     Set L1 = strMembers.Item("Shell_VStf_006.1")
@@ -88,16 +94,17 @@ converted: "2026-05-11T17:31:50.868630"
     Set Listoflimits5(0) = L3
     Set Listoflimits3(0) = L1
     Set Listoflimits4(0) = L2
-    
     'Create Nibbling by defining Type and SubType
     Dim NibblingFeature3, NibblingFeature4, NibblingFeature5 As StrNibblingFeature
     
     Set NibblingFeature3 = FactoryForMember.AddNibbling(Listoflimits3, "WeldCut")
     Set NibblingFeature4 = FactoryForMember.AddNibbling(Listoflimits4, "LongPoint")
+```
+
     NibblingFeature4.Type = "ShortPoint"
     Set NibblingFeature5 = FactoryForMember.AddNibbling(Listoflimits5, "Remove")
-    
     '*******************************************************************
+```vbscript
     'Case3: When Member is limited by Lateral Face of of Plate
     'Get The Factory from Selection Method
     Dim MembertoNibble2 As StrMember
@@ -105,22 +112,31 @@ converted: "2026-05-11T17:31:50.868630"
     
     Dim Member2Sel As Selection
     Set Member2Sel = CATIA.ActiveDocument.Selection
+```
+
     Member2Sel.Add MembertoNibble2
     
     Dim FactoryForMember2 As StrFeatureFactory
     Set FactoryForMember2 = Member2Sel.FindObject("CATIAStrFeatureFactory")
-    
+```vbscript
     'Define the Limits for  MembertoNibble2
     Dim L4 As StrPlate
     Set L4 = strPlates.Item("Deck_014.2")
     
     Dim ListofLimits6(0) As Variant
     Set ListofLimits6(0) = L4
-    
     'Create Nibbling by defining the Extrapolation Offset
     Dim NibblingFeature6 As StrNibblingFeature
     Set NibblingFeature6 = FactoryForMember2.AddNibbling(ListofLimits6, "Remove")
+```
+
     NibblingFeature6.GetOffsetForExtrapolate ("25mm")
     
+```
+
+```vbscript
     End Sub
     
+```
+
+```

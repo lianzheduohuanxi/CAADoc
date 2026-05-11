@@ -1,20 +1,18 @@
 ---
 title: "CAA Authorized APIs Replacing ProtectedInterfaces"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR24"
+version: "V5R24"
 tags: ["CATIDOMElement", "CATIDrwSectionCallout", "CATIKinMechanism", "CATIBuildPath", "CATIMfgPrismaticReworkArea", "CATIMfResultManagement", "CATINewStream", "CATIDegreesOfFreedom", "CATILiteralsRoot", "CATIAfrCommandHeaderRep", "CATICkeFunctionFactory", "CATIEwrRouteSegment", "CATIArrNode", "CATIUuid", "CATIDOMText", "CATIRouNode", "CATIMfgActivityContainer", "CATIMfPartExtReferences", "CATISysCacheSettingAtt", "CATIDoF"]
-source_file: "Doc\online\CAACenAPIChangesR24\CAACenAuditReplacingAPIs.htm"
+source_file: "Doc/online/CAACenAPIChangesR24/CAACenAuditReplacingAPIs.md"
 converted: "2026-05-11T17:33:51.807975"
 ---
-
 # CAA V5 Encyclopedia
 
 | 
-
 ##  
 
 | 
-
 ### CAA Authorized APIs Replacing ProtectedInterfaces
 
 _Mapping reported ProtectedInterfaces to CAA Authorized APIs_  

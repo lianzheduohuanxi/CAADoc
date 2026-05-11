@@ -1,9 +1,9 @@
 ---
 title: "New C++ Authorized APIs in CAA V5-6R2015 GA"
-category: "general"
+category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIThreadManagement", "CATICGMDistanceBodyBody", "CATITPSExtendedCylinder", "CATIACbdUserImportIDF", "CATIPrdHandlePDMObject", "CATIAVPMVDACreateExtension", "CATIA", "CATICGMHealGaps", "CATIPDMSaveContext", "CATIAV4Interfaces", "CATIMfgSpiralMilling3x"]
-source_file: "Doc\online\CAACenQuickRefs\CAACenV5R25GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R25GANewCPPAPI.md"
 converted: "2026-05-11T17:33:47.564481"
 ---
 
@@ -82,4 +82,4 @@ History Version: **1** [Jul 2014] | Document created
 * * *
 
 _Copyright © 1999-2014, Dassault Systèmes. All rights reserved._  
-Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.htm) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.htm) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.htm)
+Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)

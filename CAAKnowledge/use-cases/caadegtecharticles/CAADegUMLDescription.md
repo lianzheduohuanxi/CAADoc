@@ -1,9 +1,9 @@
 ---
 title: "Describing State Dialog Commands Using UML"
-category: "general"
+category: "use-case"
 module: "CAADegTechArticles"
 tags: []
-source_file: "Doc\online\CAADegTechArticles\CAADegUMLDescription.htm"
+source_file: "Doc/online/CAADegTechArticles/CAADegUMLDescription.md"
 converted: "2026-05-11T17:33:49.888146"
 ---
 
@@ -36,11 +36,11 @@ Abstract State dialog commands can be easily designed using state machines, and 
 State Machines A _state machine_ reacts to events applied to it by external objects, according to the Unified Modeling Language (UML) semantics [1]. Dialog state commands are modeled as state machines. A state machine describes an object's behavior as a graph made of _states_ linked between them using incoming and outgoing _transitions_. A transition is usually triggered thanks to an _event_ , and usually checks that a _guard condition_ evaluates to true before executing the _action_ associated with the state. The transition _source state_ becomes _inactive_ and the transition _target state_ becomes _active_. The _initial state_ and the _final state_ are _pseudo states_ between which the state machine states range. A state machine is divided into _steps_ , and the fundamental assumption is that events are processed in sequence. Each event stimulates a _run-to-completion_ step. This simplifies transitions in a state machine, since any incoming event is processed only after the state machine has reached a stable _state configuration_. Transitions can be triggered not only by events, but also by conditions, or both. They can be also automatically triggered, or  automatically triggered with respect to a guard condition. A state can be decomposed into substates, and is there called a _composite state_. Two refinement ways are possible: sequential substates, that is substates that are linked with transitions in sequence, one being active at a given instant, and concurrent substates that are mutually exclusive substates that are active at the same time. Each substate can be in turn refined. Transitions can be assembled in clusters of transitions named _compound_ transitions, or _complex_ transitions by UML notation. [Top] Statechart Diagrams A statechart diagram is intended to graphically represent a state machine. [Top] Example of the Line Command UML provides a means to describe and graphically represent state machines using statechart diagrams, that prove useful when designing dialog state commands. Let's take the example of the Line command [2]. The Line command, as any state dialog command, could be described as a state machine and represented using the UML notation [3] as shown in Fig. 1. ![GettingStartedStateChart.gif \(9621 bytes\)](images/GettingStartedStateChart.gif)  
 ---  
 _Fig. 1: The Line Command Statechart Diagram_  
-The state machine progresses from the initial state to the final state. The dialog flow starts with the initial state, which is a pseudo state that has no incoming transition. The command is never in the initial state that automatically skips to the first state. This first state is dedicated to the start point input and is shown as a state vertex using a round corner box that displays the state name. A prompt linked to the first state can invite the end user to indicate this start point. The transition between the first state and the second state is triggered as soon as the end user indicates a valid point. This happens when the expected event is detected (the mouse left key is pressed), and when the guard condition is satisfied. The transition action, that is create a temporary point, is executed. A prompt linked to the second state can then invite the end user to indicate the end point. The transition to the final state is triggered as soon as the end user indicates a valid point. This creates the line. The final state is reached, and the command completes. [Top] Graphical Notation Standard We use the UML notation [3] _State vertices_ | Round corner boxes showing the state name | ![SMState.jpg \(2385 bytes\)](images/SMState.jpg)  
+The state machine progresses from the initial state to the final state. The dialog flow starts with the initial state, which is a pseudo state that has no incoming transition. The command is never in the initial state that automatically skips to the first state. This first state is dedicated to the start point input and is shown as a state vertex using a round corner box that displays the state name. A prompt linked to the first state can invite the end user to indicate this start point. The transition between the first state and the second state is triggered as soon as the end user indicates a valid point. This happens when the expected event is detected (the mouse left key is pressed), and when the guard condition is satisfied. The transition action, that is create a temporary point, is executed. A prompt linked to the second state can then invite the end user to indicate the end point. The transition to the final state is triggered as soon as the end user indicates a valid point. This creates the line. The final state is reached, and the command completes. [Top] Graphical Notation Standard We use the UML notation [3] _State vertices_ | Round corner boxes showing the state name 
 ---|---|---  
-_Transitions_ | Arrows between state vertices | ![SMTransition.jpg \(883 bytes\)](images/SMTransition.jpg)  
-_Initial state_ | A small solid filled circle | ![SMInitialState.jpg \(905 bytes\)](images/SMInitialState.jpg)  
-_Final state_ | A circle surrounding a small solid filled circle | ![SMFinalState.jpg \(1124 bytes\)](images/SMFinalState.jpg)  
+_Transitions_ | Arrows between state vertices 
+_Initial state_ | A small solid filled circle 
+_Final state_ | A circle surrounding a small solid filled circle 
 _Events_ | Text | left-mouse-down  
 _Guard conditions_ | Text between square brackets | [point indicated && point valid]  
 _Actions_ | Text beginning with a slash | / create line  
@@ -69,7 +69,7 @@ In Short A state dialog command is modeled as a state machine and can be graphic
 
 References [1] | Unified Modeling Language - UML Semantics version 1.1  
 ---|---  
-[2] | [Getting Started with State Dialog Commands](CAADegGettingStarted.htm)  
+[2] | [Getting Started with State Dialog Commands](CAADegGettingStarted.md)  
 [3] | Unified Modeling Language - UML Notation Guide version 1.1  
 [Top]  
   

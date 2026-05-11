@@ -1,15 +1,14 @@
 ---
 title: "Arrangement Automation Objects"
-category: "general"
+category: "use-case"
 module: "CAAScdArrTechArticles"
 tags: ["CATIA"]
-source_file: "Doc\online\CAAScdArrTechArticles\CAAArrTocArrProduct.htm"
+source_file: "Doc/online/CAAScdArrTechArticles/CAAArrTocArrProduct.md"
 converted: "2026-05-11T17:31:51.588556"
 ---
-
 # Arrangement Automation Objects
 
-![](../CAAScrAutomationImages/images/product.gif)[![Product Document Object Diagram](../CAAScrAutomationImages/images/uparrow.gif)](../CAAScdPstTechArticles/CAAPstTocProductDocument.htm)  
+![](../CAAScrAutomationImages/images/product.gif)[![Product Document Object Diagram](../CAAScrAutomationImages/images/uparrow.gif)](../CAAScdPstTechArticles/CAAPstTocProductDocument.md)  
 ![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/anyobj.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/arrprod.gif)  
 ![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/arrareas.gif)  
@@ -32,7 +31,7 @@ converted: "2026-05-11T17:31:51.588556"
 ![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/arrbnd.gif)  
 ![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/arrnodes.gif)  
 ![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/arrnode.gif)  
-|  ![](../CAAScrAutomationImages/images/doc.gif)[![Application Object Diagram](../CAAScrAutomationImages/images/uparrow.gif)](../CAAScdInfTechArticles/CAAInfTocApplication.htm)  
+
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/workbch.gif)  
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/arrwkb.gif)  
 ![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/arrnomentree.gif)  
@@ -57,23 +56,36 @@ The **GetTechnologicalObject** method of the **Product** object allows to retrie
 
 The **GetWorkbench** method applied to a **ProductDocument** object with the `"ArrWorkbench"` parameter value allows you to retrieve an **ArrWorkbench** object. This object aggregates the **ArrNomenclatureTree** object, which in turn aggregates the **ArrNomenclatures** collection of **ArrNomenclature** objects.
 
+```vbscript
 For example, to retrieve the **ArrangementProduct** object from the root product, write: 
     
+```
+
     
+```vbscript
     Sub CATMain()
     
+```vbscript
       Dim pro As Product
       Set pro=CATIA.ActiveDocument.Product
     
       Dim arrPrd As **ArrangementProduct**
       Set arrPrd=pro.GetTechnologicalObject("**ArrangementProduct** ")
     
+```
+
+```vbscript
     End Sub
     
+```
 
+```vbscript
 For example, to retrieve the **ArrWorkbench** object in the active Product document, and then to retrieve the **ArrNomenclatureTree** object, write: 
     
+```
+
     
+```vbscript
     Sub CATMain()
     
     Dim doc As Document
@@ -85,9 +97,15 @@ For example, to retrieve the **ArrWorkbench** object in the active Product docum
     Dim arr As ArrNomenclatureTree
     Set arr=wkb.ArrNomenclatureTree
     
+```
+
+```vbscript
     End Sub
     
+```
 
 * * *
 
 _Copyright 1994-2003, Dassault Systmes. All rights reserved._
+
+```

@@ -3,18 +3,15 @@ title: "Inserting Boolean Operations on Volume Features"
 category: "use case"
 module: "CAAGsiUseCases"
 tags: ["CAAGSMInterfaces", "CATIPrtBooleanFactory", "CATIPrtContainer", "CAAGsiStartVolumeForBoolean", "CAAGsiVolumeOpe", "CATIPrtPart_var", "CATInit", "CATISpecObject_var", "CATIPrtBooleanFactory_var", "CAAGsiStartForBoolean", "CAAGsiVolumeFormFeatures", "CAAGsiObjectUpdate", "CAAGsiVolumeBooleanOpe"]
-source_file: "Doc\online\CAAGsiUseCases\CAAGsiVolumeBooleanOpe.htm"
+source_file: "Doc/online/CAAGsiUseCases/CAAGsiVolumeBooleanOpe.md"
 converted: "2026-05-11T17:31:50.644673"
 ---
-
 # Shape Design & Styling
 
 | 
-
 ## Generative Shape Design
 
 | 
-
 ### Inserting Boolean Operations on Volume Features
 
 _Using the Part Design Boolean factory, add, remove , intersect operations on volume features_  
@@ -22,7 +19,6 @@ _Using the Part Design Boolean factory, add, remove , intersect operations on vo
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article discusses the CAAGsiVolumeBooleanOpe use case. This use case explains how to boolean operation on volume. 
@@ -40,7 +36,6 @@ This article discusses the CAAGsiVolumeBooleanOpe use case. This use case explai
 ---  
   
 * * *
-
 ### What You Will You Learn With This Use Case
 
 This use case learns how to use Part Design Boolean factory to create boolean operations between volumes   
@@ -49,9 +44,7 @@ Note : Creations of volume and use of boolean operations on volumes  are licens
 >   * Add , Remove , Intersect, Union trim are the supported operation on volumes 
 > 
 
-
 [Top]
-
 ### The CAAGsiVolumeBooleanOpe Use Case
 
 CAAGsiVolumeBooleanOpe is a use case of the CAAGSMInterfaces.edu framework that illustrates boolean operations on volumes using Part Design 
@@ -62,13 +55,11 @@ Boolean operation on volume are propose in the CATIPrtBooleanFactory, use also f
 Note : The sample uses a C++ "#define" to be valuated to 4 for volume named BOOLEAN_OPE_ON_VOLUME 
 
 [Top]
-
 #### What Does CAAGsiVolumeBooleanOpe Do
 
 CAAGsiVolumeOpe creates different operations on volumes using  CATIPrtBooleanFactory 
 
 [Top]
-
 #### How to Launch CAAGsiVolumeBooleanOpe
 
 To launch CAAGsiVolumeBooleanOpe, you will need to set up the build time environment, then compile CAAGsiVolumeBooleanOpe along with its prerequisites, and set up the run time environment, and then execute the use case [1].
@@ -86,8 +77,6 @@ Launch the use case as follows:
   
 ---  
 
-
-
 where:
 
 `inputDirectory` | The directory into which `CAAGsiStartForBoolean.CATPart is found `  
@@ -96,7 +85,6 @@ where:
 `CAAGsiVolumeBooleanOpe.CATPart` | The file that contains the part created with the datum surface t  
   
 [Top]
-
 #### Where to Find the CAAGsiVolumeBooleanOpe Code
 
 The CAAGsiVolumeBooleanOpe use case is made of main program located in the CAAGsiVolumeBooleanOpe.m module of the CAAGSMInterfaces.edu framework:
@@ -114,7 +102,6 @@ Unix | `InstallRootDirectory/CAAGSMInterfaces.edu/Data.d/CAAGsiStartForBoolean.C
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are five logical step in CAAGsiVolumeBooleanOpe: 
@@ -125,14 +112,11 @@ There are five logical step in CAAGsiVolumeBooleanOpe:
   4. Create intersect operation on volume 
   5. Save and close session
 
-
-
 We will now comment each of those sections by looking at the code of the main method of file CAAGsiVolumeBooleanOpe.
 
 [Top]
 
 * * *
-
 #### Prolog
 
 CAAGsiVolumeBooleanOpe sample first creates a session and opens the input CATPart. 
@@ -206,7 +190,6 @@ Then in the initialization phase the wire frame and shape design and Part Design
 ---  
   
 [Top]
-
 #### Create add operation on volume 
 
 Create add operation using CreateAdd method of CATIPrtBooleanFactory
@@ -231,7 +214,6 @@ Note: Insert in procedural view is done at creation under the current geometrica
 ---  
   
 [Top]
-
 #### Create remove operation on volume 
 
 Create remove operation using CreateRemove method of CATIPrtBooleanFactory
@@ -255,7 +237,6 @@ Note: Insert in procedural view is done at creation under the current geometrica
 ---  
   
 [Top]
-
 #### Create intersect operation on volume 
 
 Create intersect operation using CreateIntersect method of CATIPrtBooleanFactory
@@ -278,7 +259,6 @@ Create intersect operation using CreateIntersect method of CATIPrtBooleanFactory
 ---  
   
 [Top]
-
 #### Save and close session 
 
 Save part and close the session 
@@ -308,7 +288,6 @@ Save part and close the session
 [Top]
 
 * * *
-
 ### In Short
 
 This use case has demonstrated the way to perform boolean operation on volume thanks to part design boolean factory. resulting feature add, remove , intersect and Union-Trin are inserted in GS or OGS When then are inserted in OGS the boolean operation are 'absorbant' features 
@@ -324,18 +303,16 @@ Note : The BRep features are retrieved in interactive commands through in select
 [Top]
 
 * * *
-
 ### References
 
-[1] |  [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] |  [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [ About Generative Shape Design Features](../CAAGsiTechArticles/CAAGsiShapeDesignFeature.htm)  
-[3] |  [ Inserting a Shape Design Feature in the procedural view ](../CAAGsiTechArticles/CAAGsiInsertInProceduralView.htm)  
-[4] | [ Updating a shape Design feature ](../CAAGsiTechArticles/CAAGsiUpdateShapeDesign.htm)  
+[2] |  [ About Generative Shape Design Features](../CAAGsiTechArticles/CAAGsiShapeDesignFeature.md)  
+[3] |  [ Inserting a Shape Design Feature in the procedural view ](../CAAGsiTechArticles/CAAGsiInsertInProceduralView.md)  
+[4] | [ Updating a shape Design feature ](../CAAGsiTechArticles/CAAGsiUpdateShapeDesign.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [May 2004] | Document created  

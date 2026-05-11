@@ -3,18 +3,15 @@ title: "Creating an Open Body"
 category: "technical article"
 module: "CAAGsiTechArticles"
 tags: ["CATIPrtPart", "CAAGsiNozzle", "CATIPrtManagement_var", "CATIPrtContainer", "CATIMechanicalRootFactory", "CAAGSMInterfaces", "CAAGsiUserTools", "CATIContainer_var", "CATIA", "CATIGSMFactory", "CATIGSMTool", "CATIPrtPart_var", "CATIDescendants_var", "CATInit_var", "CATIBasicTool_var", "CATISpecObject_var", "CATIDescendants", "CAAGsiToolkit", "CATIBasicTool", "CATIPrtManagement"]
-source_file: "Doc\online\CAAGsiTechArticles\CAAGsiCreateGSMTool.htm"
+source_file: "Doc/online/CAAGsiTechArticles/CAAGsiCreateGSMTool.md"
 converted: "2026-05-11T17:31:50.660543"
 ---
-
 # Shape Design & Styling
 
 | 
-
 ## Generative Shape Design
 
 | 
-
 ### Creating an Open Body
 
 _How to create a GSMTool in a Part document_  
@@ -22,7 +19,6 @@ _How to create a GSMTool in a Part document_
 Technical Article  
   
 * * *
-
 ### Abstract
 
 This article discusses the Open Body The class CAAGsiUserTools Objec explains how to create an open body feature that is bound to imbed Shape Design Features. 
@@ -39,7 +35,6 @@ This article discusses the Open Body The class CAAGsiUserTools Objec explains ho
 ---  
   
 * * *
-
 ### What is an Open Body
 
 An "Open Body" is a mechanical modeler object required as father for any GSD feature to be insert in a part document.
@@ -49,7 +44,6 @@ This article is intended to help you make your first steps in programming with C
 Before creating this open body, you will have to navigate through the feature model of CATIA V5 to find the objects that will enable you to create this open body (also called a GSMTool object) under the part feature.
 
 [Top]
-
 ### The CAAGsiUserTools Object - Creating an OpenBody
 
 CAAGsiUserTools is a usefull class in CAAGsiToolkit.m module of the CAAGSMInterfaces.edu framework that illustrates GSMInterfaces framework object standard use.
@@ -60,13 +54,11 @@ CAAGsiUserTools is a toolkit object that encapsulate three aspects of CAA develo
   * Inserting a Wireframe and Shape Design feature in an OpenBody 
   * Creating Wireframe and shape Design feature using GSMInterface framework Interfaces 
 
-
 Two first aspects are general behaviors to re-use to instanciate any GSD features of GSMInterfaces in CATIA V5 frame.
 
 The first aspect is presented in this article
 
 [Top]
-
 #### What Does CAAGsiUserTools Do
 
 The goal of CAAGsiUserTools Object is to show how to create an open body feature, which is the first common step before creating shape design features in a part document. We enrich the sample code CAAGsiUserTools.cpp(.h) and illustrates some backbone concepts thats are shared by all Mechanical Applications. 
@@ -74,7 +66,6 @@ The goal of CAAGsiUserTools Object is to show how to create an open body feature
 CAAGsiUserTools is used in CAAGsiNozzle sample
 
 [Top]Top]
-
 #### Where to Find the CAAGsiUserTools Code
 
 The CAAGsiUserTools Object is made of a single class named CAAGsiUserTools located in the CAAGsiToolkit.m module of the CAAGSMInterfaces.edu framework:
@@ -86,7 +77,6 @@ Unix | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiToolkit.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are six logical steps illustrated in CAAGsiUserTools for creating an Open Body :
@@ -98,12 +88,9 @@ There are six logical steps illustrated in CAAGsiUserTools for creating an Open 
   5. Creating a GSMTool Feature Instance
   6. Setting the Created Tool as Current
 
-
-
 We will now first comment the Part document creation and intialization in the method `CAAGsiUserTools::Init` in the prolog, and then each of these steps by looking at the code of the method `CAAGsiUserTools::CreateGSMTool`.
 
 [Top]
-
 #### Prolog
 
 We first have created a Part document handled using the `_pDoc` smart pointer. We have stored the `_pFact` pointer in the _CAAGsiUserTools_ class in the method `Init` that has to be called before doing anything with a _CAAGsiUserTools_ object.
@@ -127,7 +114,6 @@ We first have created a Part document handled using the `_pDoc` smart pointer. W
 Once the Part document is created, it must be initialized thanks to the `Init` method of the _CATInit_ interface. This method creates the document's root container. Then, the root container is retrieved as a pointer to the _CATIPrtContainer_ interface using the `GetRootContainer` method of the the _CATInit_ interface. This root container implements also the _CATIGSMFactory_ interface. A pointer to _CATIGSMFactory_ is retrieved from on root container and stored as a data member to be used later.
 
 [Top]
-
 #### Retrieving the Part Container Feature
 
 We need a _CATIPrtPart_ interface pointer onto the Part Container feature to be able to get the current Tool Feature.
@@ -147,7 +133,6 @@ We need a _CATIPrtPart_ interface pointer onto the Part Container feature to be 
 We first get a smart pointer to _CATIPrtContainer_ from the stored pointer `_pFact`, then we get the Part **root** feature from the Part container as a smart pointer to the _CATIPrtPart_ interface.
 
 [Top]
-
 #### Retrieving the Current Tool
 
 Now that we have retrieved the Part feature, we can retrieve the current tool, that can be a MechanicalTool or a GSMTool.
@@ -169,7 +154,6 @@ The _CATIPrtPart_ interface enables us to retrieve the current tool (One always 
 At this stage, we have to check that the tool retrieved is not the open body dedicated to store external references (Multi-model links) If it is the case, we set `spTool` to `NULL_var` which means that we need to create another GSMTool feature for our need. 
 
 [Top]
-
 #### Locating the Tool Under the Part Feature
 
 ![](../CAAIcons/images/key.gif)We show here how to get the position of a feature in the descendants' list of the part feature, using the _CATIDescendants_ interface.
@@ -207,7 +191,6 @@ In case of a current feature that is different from the current tool and if `iTo
 Note: In retrieving the require tool it is needed to check that the body is not a body used for "ExternalReferences" generated in assembly context when selecting geometry in a different part as of the current one.
 
 [Top]
-
 #### Creating a GSMTool Feature Instance
 
 We can now create a new GSMTool feature instance by giving its name, parent reference and position under its parent.
@@ -226,7 +209,6 @@ We can now create a new GSMTool feature instance by giving its name, parent refe
 We get the _CATIMechanicalRootFactory_ interface from the `spCont` smart pointer. The GSMTool is created by giving the smart pointer of its parent, that is, either the part feature or a GSMTol instance, and the position of the new tool under its parent. 0 will create the Tool directly under `spParentForGSMTool`.
 
 [Top]
-
 #### Setting the Created Tool as Current
 
 ![](../CAAIcons/images/information.gif)Now that we have created this new tool, we have to set it as the current tool, if we want to automatically create skin and wireframe features under this open body.
@@ -249,7 +231,6 @@ We check that we want to set the spTool smart pointer as the current tool by tes
 [Top]
 
 * * *
-
 ### In Short
 
 This article has demonstrated the way to create an open body in a part document. We illustrate how some management interfaces on the part feature can be used like _CATIPrtPart_ , _CATIPrtManagement_ , _CATIMechanicalRootFactory_. We also illustrate the way to get the feature position in the descendant list of its parent using _CATIDescendants_.
@@ -257,17 +238,15 @@ This article has demonstrated the way to create an open body in a part document.
 [Top]
 
 * * *
-
 ### References
 
-[1] | [About Generative Shape Design Features](CAAGsiShapeDesignFeature.htm)  
+[1] | [About Generative Shape Design Features](CAAGsiShapeDesignFeature.md)  
 ---|---  
-[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-[3] | [CAAGsiNozzle Use case](../CAAGsiUseCases/CAAGsiNozzleSample.htm)  
+[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[3] | [CAAGsiNozzle Use case](../CAAGsiUseCases/CAAGsiNozzleSample.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Apr 2000] | Document created  

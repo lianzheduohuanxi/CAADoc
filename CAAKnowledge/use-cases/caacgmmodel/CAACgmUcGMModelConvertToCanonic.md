@@ -3,15 +3,13 @@ title: "Extracting the Canonical Representation of a Curve"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMModelInterfaces", "CATICGMConvertCurveToCanonic", "CAAGMModelConvertToCanonic"]
-source_file: "Doc\online\CAACgmModel\CAACgmUcGMModelConvertToCanonic.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelConvertToCanonic.md"
 converted: "2026-05-11T17:33:48.288651"
 ---
-
 # Extracting the Canonical Representation of a Curve  
   
 ---  
 Use Case  
-  
 ## Abstract
 
 Given a curve representing a line or a circle but not defined as a line or a circle, you can extract the canonical definition of the curve or circle.
@@ -19,14 +17,12 @@ Given a curve representing a line or a circle but not defined as a line or a cir
     * Use Case Description
     * References  
 ---  
-  
 ## Operator to be Used
 
 Use the CATICGMConvertCurveToCanonic operator in GMModelInterfaces. This operator is created by the CATCGMCreateConvertCurveToCanonic global function. 
-
 ## Use Case Description
 
-The CAAGMModelConvertToCanonic.m module in CAAGMModelInterfaces.edu illustrates how to extract the canonical definition of a line which is basically created as a spline. This use case creates its own input data: a spline curve. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm).
+The CAAGMModelConvertToCanonic.m module in CAAGMModelInterfaces.edu illustrates how to extract the canonical definition of a line which is basically created as a spline. This use case creates its own input data: a spline curve. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md).
 
 With the code below:
     
@@ -73,15 +69,13 @@ The code below creates a curve whose type is CATLineType
 ---  
   
 Replacing the coordinates of Points[3] with {40,40,0.05} makes impossible the extraction of the canonical line definition as the new point is not aligned with the others. 
-
 ## References
 
-[1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)  
-[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)  
-[4] |  [How to Use Geometric Operators](CAACgmUcGMModelOpeOverw.htm)  
-  
+[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)  
+[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)  
+[4] |  [How to Use Geometric Operators](CAACgmUcGMModelOpeOverw.md)  
 ## History
 
 Version: **1** [Dec 2011] | Document created  

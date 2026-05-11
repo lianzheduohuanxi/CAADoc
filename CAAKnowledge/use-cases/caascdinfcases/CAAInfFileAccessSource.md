@@ -1,16 +1,15 @@
 ---
 title: "CAAInfFileAccess.CATScript"
-category: "general"
+category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CATIA", "CAAInfFileAccess"]
-source_file: "Doc\online\CAAScdInfUseCases\CAAInfFileAccessSource.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfFileAccessSource.md"
 converted: "2026-05-11T17:31:52.364041"
 ---
 
-
     Option Explicit
+```vbscript
     ' COPYRIGTH DASSAULT SYSTEMES 2001
-    
     ' ***********************************************************************
     '   Purpose:      Create a text file, duplicate it and read the result.
     '   Assumtions:      
@@ -20,20 +19,23 @@ converted: "2026-05-11T17:31:52.364041"
     '   CATIA Level:  V5R6 
     ' ***********************************************************************
     
+```
+
     
+```vbscript
     Sub CATMain()
     
+```vbscript
         Dim sLF As String
         sLF = Chr(10) 
     
         Dim sMessage As String
         sMessage = InputBox ("Enter a message", "Message", "Hello World")
-    
+```vbscript
         ' ------------------------------------------
         ' Get the file system object
         Dim oFileSys As FileSystem
         Set oFileSys = CATIA.FileSystem
-    
         ' ------------------------------------------
         ' Retrieve a folder for temporary files
         Dim sTmpPath As String 
@@ -41,12 +43,13 @@ converted: "2026-05-11T17:31:52.364041"
         If (Not oFileSys.FolderExists(sTmpPath)) Then
           Err.Raise 9999,,"No Tmp Path Defined"
         End If
-    
         ' ------------------------------------------
         ' Delete possibly existing input and output files
         Dim sFilOu As String ' Output file full path
         sFilOu = CATIA.FileSystem.ConcatenatePaths(sTmpPath, "caatmpfilou.txt")
         If (oFileSys.FileExists(sFilou)) Then 
+```
+
             oFileSys.DeleteFile sFilOu
         End If
     
@@ -55,24 +58,25 @@ converted: "2026-05-11T17:31:52.364041"
         If (oFileSys.FileExists(sFilIn)) Then 
             oFileSys.DeleteFile sFilIn
         End If
-    
+```vbscript
         ' ---------------------------------------
         ' Create file FilIn  
         Dim oFilIn As File    
         Set oFilIn = oFileSys.CreateFile(sFilIn, FALSE)
         Dim oStream As TextStream
         Set oStream = oFilIn.OpenAsTextStream("ForWriting")
+```
+
         oStream.Write "<MESSAGE>"  & sLF
         oStream.Write "<VALUE>"
         oStream.Write sMessage 
         oStream.Write "</VALUE>"   & sLF
         oStream.Write "</MESSAGE>" & sLF
         oStream.Close
-    
         ' ---------------------------------------
         ' Duplicate FilIn in FilOu 
         oFileSys.CopyFile sFilIn, sFilOu, FALSE
-    
+```vbscript
         ' ---------------------------------------
         ' Get the result from the output file  
         Dim oFilOu As File
@@ -85,12 +89,21 @@ converted: "2026-05-11T17:31:52.364041"
         Do  Until oStream.AtEndOfStream
             sMessage = sMessage & sBuffer 
             sBuffer = oStream.ReadLine
+```
+
         Loop
     
+```
+
         oStream.Close
     
         msgbox sMessage
     
+```vbscript
     End Sub
     
+```
+
     
+
+```

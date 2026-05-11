@@ -1,12 +1,11 @@
 ---
 title: "Advanced Mathematics"
-category: "general"
+category: "use-case"
 module: "CAACgmModel"
 tags: []
-source_file: "Doc\online\CAACgmModel\CAACgmTcAmtAdvancedMathematics.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmTcAmtAdvancedMathematics.md"
 converted: "2026-05-11T17:33:48.067272"
 ---
-
 # Advanced Mathematics  
   
 ---  
@@ -16,4 +15,4 @@ This section deals with Advanced Mathematics.
   
 ---  
 In this section:
-    * [Foreign Mathematical Functions](CAACgmUcAmtForeign.htm) is an example of creating your own geometric object with its associated mathematical functions.
+    * [Foreign Mathematical Functions](CAACgmUcAmtForeign.md) is an example of creating your own geometric object with its associated mathematical functions.

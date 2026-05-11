@@ -3,18 +3,15 @@ title: "Creating a Product Line Visual Identity"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CAADecorationP1", "CAADecorationP2", "CAAProductLine", "CAABackgroundNT", "CAAProduct", "CAALogoP1IX", "CAALogoP1NT", "CAAAfrProductLine", "CAABackgroundIX", "CAALogoP2NT", "CAALogoP2IX", "CAASplash", "CAAApplicationFrame"]
-source_file: "Doc\online\CAAAfrUseCases\CAAAfrSampleVisualIdentity.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleVisualIdentity.md"
 converted: "2026-05-11T17:17:55.820891"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## User Interface - Frame
 
 | 
-
 ### Creating a Product Line Visual Identity
 
 _Differentiating your own product line from others_  
@@ -22,7 +19,6 @@ _Differentiating your own product line from others_
 Use Case  
   
 * * *
-
 ### Abstract
 
 A product line should be easily recognized from others using some visual features discerningly chosen, such as its launching icon or splash screen. This article shows you how to implement the visual identity components for your product line. 
@@ -40,33 +36,31 @@ A product line should be easily recognized from others using some visual feature
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show you how to create a load module to launch the application and how to create the visual identity resources [1] for a fictitious product line named CAAProductLine.
 
 [Top]
-
 ### The CAAAfrProductLine Use Case
 
 CAAAfrProductLine is a use case of the CAAApplicationFrame.edu framework that illustrates the ApplicationFrame framework capabilities.
 
 [Top]
-
 #### What Does CAAAfrProductLine Do
 
 The CAAAfrProductLine use case creates the load module that launches the product line application CAAProductLine, and includes all the resources to customize this product line visual identity.
 
 [Top]
-
 #### How to Launch CAAAfrProductLine
 
 To launch CAAAfrProductLine, you will need to set up the build time environment, then compile CAAAfrProductLine along with its prerequisites, set up the run time environment, and then execute the use case [2].
 
+```vbscript
 Do not type the module name on the command line, but type the **product name**. 
 
-[Top]
+```
 
+[Top]
 #### Where to Find the CAAAfrProductLine Code
 
 The CAAAfrProductLine use case is made of a single source file named _CAAAfrProductLine.cpp_ located in the CAAAfrProductLine.m module of the CAAApplicationFrame.edu framework:
@@ -80,7 +74,6 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 With Windows, other files are needed to launch the application from a desktop shortcut. These files are also located in CAAAfrProductLine.m. 
 
 [Top]
-
 ### Step-by-Step
 
 Creating the visual identity components is divided into the following steps: 
@@ -89,18 +82,14 @@ Creating the visual identity components is divided into the following steps:
   * Providing the graphic resources
   * Creating the resource file
 
-
-
 Assume the product line is named CAAProductLine.
 
 [Top]
-
 #### Creating the Main Program to Launch Your Application
 
 To create this main program, you should first create its module directory, such as CAAAfrProductLine.m. This module directory should contain: 
 
   * An Imakefile.mk file like the following: 
-        
         #
         # LOAD MODULE FOR CAAAfrProductLine
         #
@@ -111,7 +100,6 @@ To create this main program, you should first create its module directory, such 
 ---  
   * In the src directory 
     * A C++ file that only instantiates the CNext class using the product line name as parameter, such as CAAAfrProductLine.cpp
-    
     #include "CNext.h"
     
     CNext Product ("CAAProductLine");  
@@ -131,7 +119,6 @@ When the icon is created, use Save As to save the icon in the src directory of y
            //Microsoft Developer Studio generated resource script.
            //
            #include "resource.h"
-           
            #define APSTUDIO_READONLY_SYMBOLS
            /////////////////////////////////////////////////////////////////////////////
            //
@@ -144,7 +131,6 @@ When the icon is created, use Save As to save the icon in the src directory of y
            
            /////////////////////////////////////////////////////////////////////////////
            // English (U.S.) resources
-           
            #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
            #ifdef _WIN32
            LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
@@ -162,7 +148,6 @@ When the icon is created, use Save As to save the icon in the src directory of y
            
            **// Add this line to have the icon on the desktop and by-pass a Windows bug 
            IDI_ICON2               ICON    DISCARDABLE "icon1.ico"**
-           
            #ifdef APSTUDIO_INVOKED
            /////////////////////////////////////////////////////////////////////////////
            //
@@ -185,12 +170,9 @@ When the icon is created, use Save As to save the icon in the src directory of y
                "\r\n"
                "\0"
            END
-           
            #endif    // APSTUDIO_INVOKED
-           
            #endif    // English (U.S.) resources
            /////////////////////////////////////////////////////////////////////////////
-           
            
            
            #ifndef APSTUDIO_INVOKED
@@ -226,12 +208,9 @@ When the icon is created, use Save As to save the icon in the src directory of y
   
 ---  
 
-
-
 Move the resource.h file to the LocalInterfaces directory, and build the module file using mkmk -u.
 
 [Top]
-
 #### Providing the Graphic Resources
 
 The graphic resources to provide should be copied into the CNext\resources\graphic directory or in its subdirectories of the framework used. They are: 
@@ -239,13 +218,18 @@ The graphic resources to provide should be copied into the CNext\resources\graph
   * **The product line icon** for the window title bars: CAAProduct.bmp. Its characteristics are the following for both Window and UNIX: 
     * ![](images/CAAAfrVIIcon.jpg) width: 16 pixels; height: 17 pixels; resolution: 96 pixels per inch; 16 indexed color image.
   * **The product line logo**. It should be copied in the CNext\resources\graphic\icons directory. It can be different for P1 and P2 looks. Its characteristics are the following: 
-    * Window: width: 130 pixels; height: 29 pixels; resolution: 72 pixels per inch; real color 24 bits image  For Windows with P1 look: CAALogoP1NT.bmp | ![](images/CAAAfrVILogoP1NT.jpg)  
+    * Window: width: 130 pixels; height: 29 pixels; resolution: 72 pixels per inch; real color 24 bits image  For Windows with P1 look: CAALogoP1NT.bmp 
 ---|---  
-For Windows with P2 look: CAALogoP2NT.bmp | ![](images/CAAAfrVILogoP2NT.jpg)  
-    * UNIX: width: 130 pixels; height: 29 pixels; resolution: 72 pixels per inch; 256 indexed color image.  For UNIX with P1 Look: CAALogoP1IX.bmp | ![](images/CAAAfrVILogoP1IX.jpg)  
----|---  
-For UNIX with P2 Look: CAALogoP2IX.bmp | ![](images/CAAAfrVILogoP2IX.jpg)  
+```vbscript
+For Windows with P2 look: CAALogoP2NT.bmp 
+    * UNIX: width: 130 pixels; height: 29 pixels; resolution: 72 pixels per inch; 256 indexed color image.  For UNIX with P1 Look: CAALogoP1IX.bmp 
+```
+
+```vbscript
+For UNIX with P2 Look: CAALogoP2IX.bmp 
   * **The product line splash screen** : a bit map and an animation: CAASplash.bmp and CAASplash.avi. They should be copied in the CNext\resources\graphic\splashscreens directory 
+
+```
 
 ![](images/CAAAfrVISplash.jpg)
 
@@ -255,17 +239,13 @@ For UNIX with P2 Look: CAALogoP2IX.bmp | ![](images/CAAAfrVILogoP2IX.jpg)
     * UNIX (CAABackgroundIX.bmp): width: 1280 pixels; height: 1024 pixels; resolution: 254 pixels per inch; real color 24 bits image. It is shown below as 320x256 pixels  
 ![](images/CAAAfrVIBkgIX.jpg)
 
-
   * **The product line dialog box background image** , available with Windows NT only. It should be copied in the CNext\resources\graphic\icons directory.  Its characteristics are the following: 
     * P1 (CAADecorationP1.bmp): width: 500 pixels; height: 36 pixels; resolution: 72 pixels per inch; 256 indexed color image  
 ![](images/CAAAfrVIDecorationP1.jpg)
     * P2 (CAADecorationP2.bmp): width: 55 pixels; height: 1000 pixels; resolution: 72 pixels per inch; real color 24 bits image. It is shown cropped to its lower part  
 ![](images/CAAAfrVIDecorationP2Crop.jpg)
 
-
-
 [Top]
-
 #### Creating the Resource File
 
 The resource file must have the name you choose for the product line, here CAAProductLine. This file is: 
@@ -292,14 +272,11 @@ The resource file must have the name you choose for the product line, here CAAPr
   
 ---  
 
-
-
 You can now launch your application using the shortcut in the desktop and see its different visual identity components.
 
 [Top]
 
 * * *
-
 ### In Short
 
 To provide a visual identity to your product line, you can, with Windows only, create an EXE to launch your application associated with an icon of your own that can also be used as a shortcut in the desktop. You can create with UNIX and Windows text and graphic resources to display with your applications.
@@ -307,17 +284,15 @@ To provide a visual identity to your product line, you can, with Windows only, c
 [Top]
 
 * * *
-
 ### References
 
-[1] | [What Is the Product Line Visual Identity](../CAAAfrTechArticles/CAAAfrVisualIdentity.htm)  
+[1] | [What Is the Product Line Visual Identity](../CAAAfrTechArticles/CAAAfrVisualIdentity.md)  
 ---|---  
-[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-[3] | [Contextual Help](../CAAAfrTechArticles/CAAAfrHelpOnLine.htm)  
+[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[3] | [Contextual Help](../CAAAfrTechArticles/CAAAfrHelpOnLine.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Jul 2000] | Document created  

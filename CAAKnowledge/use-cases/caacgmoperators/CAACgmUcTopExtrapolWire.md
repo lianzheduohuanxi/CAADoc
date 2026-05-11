@@ -3,10 +3,9 @@ title: "Extrapolating a Wire"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CATICGMExtrapolateBody", "CATICGMWireExtrapolationOp", "CAATopTangExtrapol", "CAAGMOperatorsTangExtrapol"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcTopExtrapolWire.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopExtrapolWire.md"
 converted: "2026-05-11T17:33:49.169875"
 ---
-
 
     
     
@@ -60,7 +59,7 @@ converted: "2026-05-11T17:33:49.169875"
     illustrates how to extrapolate a wire. The wire to be extrapolated is a spline 
     which is created in CAATopTangExtrapol.cpp by using the CATCGMCreateTopSpline function.
     If you are not already 
-    familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm).
+    familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md).
     
       Fig.1 The spline to be extrapolated
       
@@ -109,11 +108,11 @@ Curvature Extrapolation With the code below:
 ---  
 you get this result: Fig.2 The extrapolated spline (curvature extrapolation) ![curvature extrapolation](images/CGM_extrapolWire_2.png)  
 ---  
-References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)  
-[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)  
-[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.htm)  
-[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.htm)  
+[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)  
+[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)  
+[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.md)  
+[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.md)  
 History Version: **1** [Feb 2014] | Document created  
 ---|---

@@ -3,7 +3,7 @@ title: "Creating a Non-Manifold Wire "
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsTopWireAssembly", "CAAGMOperatorsInterfaces", "CATICGMHybAssemble", "CATICGMHybProject"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcTopNonManifoldWire.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopNonManifoldWire.md"
 converted: "2026-05-11T17:33:49.211399"
 ---
 
@@ -18,7 +18,7 @@ If the command cannot complete due to the non-manifold nature of the input bodie
     * Use Case Description
     * References  
 ---  
-Operator to be Used You can create a non-manifold wire by assembling lines using the CATICGMHybAssemble operator. This wire can be projected onto a surface by using the CATICGMHybProject operator. Use Case Description The CAAGMOperatorsTopWireAssembly.m module in CAAGMOperatorsInterfaces.edu illustrates how to create a non-manifold wire and project it onto a plane.If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm). The code below creates a multi-domain wire from three lines:
+Operator to be Used You can create a non-manifold wire by assembling lines using the CATICGMHybAssemble operator. This wire can be projected onto a surface by using the CATICGMHybProject operator. Use Case Description The CAAGMOperatorsTopWireAssembly.m module in CAAGMOperatorsInterfaces.edu illustrates how to create a non-manifold wire and project it onto a plane.If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md). The code below creates a multi-domain wire from three lines:
     
     CATICGMHybAssemble* pHybOp = ::CATCGMCreateTopAssemble(piGeomFactory, &topdata;,&bodies;);	  
     if (NULL!=pHybOp)
@@ -33,11 +33,11 @@ Operator to be Used You can create a non-manifold wire by assembling lines using
 ---  
 you get this result: Fig.1 The non-manifold wire ![non manifold wire](images/CGM_nonManifold_0.png)   
 ---  
-The created non-manifold wire can be projected onto the plane. References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+The created non-manifold wire can be projected onto the plane. References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)  
-[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)  
-[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.htm)  
-[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.htm)  
+[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)  
+[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)  
+[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.md)  
+[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.md)  
 History Version: **1** [Feb 2014] | Document created  
 ---|---

@@ -1,15 +1,16 @@
 ---
 title: "CAAStrEditCoping.CATScript"
-category: "general"
+category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CATIA", "CAAStrEditCoping"]
-source_file: "Doc\online\CAAScdStrUseCases\CAAStrModificationOfCopingSource.htm"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfCopingSource.md"
 converted: "2026-05-11T17:31:50.893073"
 ---
 
-
+```vbscript
     Sub CATMain()
     
+```vbscript
     Dim StrWorkbench As StrWorkbench
     Dim strFactory As StrObjectFactory
     
@@ -28,15 +29,24 @@ converted: "2026-05-11T17:31:50.893073"
     Dim selection1 As Selection
     Set selection1 = doc.Selection
     
+```
+
     selection1.Search "Name='Coping.1',all"
     
+```vbscript
     Dim NibblingToEdit As StrNibblingFeature
     Set NibblingToEdit = selection1.Item(1).Value
     
     Dim SubTypeOFNibbling As String
     SubTypeOFNibbling = NibblingToEdit.SubType
     
+```
+
     NibblingToEdit.SubType = "CurrCurr"
     
+```vbscript
     End Sub
     
+```
+
+```

@@ -1,12 +1,11 @@
 ---
 title: "Geometric Element Automation Objects"
-category: "general"
+category: "use-case"
 module: "CAAScdMmrTechArticles"
 tags: []
-source_file: "Doc\online\CAAScdMmrTechArticles\CAAMmrTocGeometricElement.htm"
+source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrTocGeometricElement.md"
 converted: "2026-05-11T17:31:51.147648"
 ---
-
 # Geometric Element Automation Objects
 
 ![](../CAAScrAutomationImages/images/geoelt.gif)![Multiple Object Diagrams](../CAAScrAutomationImages/images/uparrow.gif)  

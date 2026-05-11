@@ -1,20 +1,17 @@
 ---
 title: "Creating Resources for Command Headers"
-category: "general"
+category: "use-case"
 module: "CAAAfrTechArticles"
 tags: ["CAAAfrPointHdr", "CAAGeometryWksHeader", "CAAAfrGeometryWksHeader", "CAAAfrCircleHdr", "CAAPoint", "CATImplementHeaderResources", "CAAAfrQueryExploreHdr", "CAACircle"]
-source_file: "Doc\online\CAAAfrTechArticles\CAAAfrI18NHeader.htm"
+source_file: "Doc/online/CAAAfrTechArticles/CAAAfrI18NHeader.md"
 converted: "2026-05-11T17:17:55.887253"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## User Interface - Frame
 
 | 
-
 ### Creating Resources for Command Headers
 
 _How to provide the title, help messages, and icons for command headers_  
@@ -22,7 +19,6 @@ _How to provide the title, help messages, and icons for command headers_
 Technical Article  
   
 * * *
-
 ### Abstract
 
 This article shows how to create the resource files, and fill them in with the resources, for command headers. It is in connection with the article describing the workshop creation [1], since it uses as examples command headers created with this workshop. 
@@ -38,7 +34,6 @@ This article shows how to create the resource files, and fill them in with the r
 ---  
   
 * * *
-
 ### Declaring the Command Header Resource Files
 
 If you use the macros `MacDefineHeader` and `MacImplementHeader`, or `MacDeclareHeader`, the resource files searched for at run time should have the same name than you command header class. This is the case of the CAAGeometryWksHeader [1].
@@ -73,19 +68,14 @@ where:
   * `BaseCommandHeaderClass` is the command header class from which `CommandHeaderClass` derives
   * `ResourceFile` is the name used to build the names of the resource files associated with `CommandHeaderClass`. Using the `CommandHeaderClass` name for this file in this macro is recommended.
 
-
-
 There are two command header resource files: 
 
   1. The resource file containing the title and help messages in the English language, and that can be translated into other languages. It is suffixed using CATNls
   2. The resource file containing the icons and other resources that should not be translated. It suffixed by CATRsc
 
-
-
 The two resource files for the CAAGeometryWksHeader command header are then: CAAGeometryWksHeader .CATNls and CAAGeometryWksHeader .CATRsc. These files are located in the CNext\resources\msgcatalog directory of the framework containing the module where the command header source files are located. This directory includes subdirectories, one for each language into which the title and messages of the CAAGeometryWksHeader .CATNls file can be translated.
 
 [Top]
-
 ### Filling in the Command Header CATNls File
 
 This file contains the resources for each of the command header instances: title and help messages, and category.
@@ -102,8 +92,6 @@ where:
   * CAAGeometryWksHeader is the command header resource file name
   * CAAAfrQueryExploreHdr is the identifier of the CAAGeometryWksHeader class instance created for the Query command
   * `Title` is the keyword dedicated to the title of the command
-
-
 
 The following is an extract of CAAGeometryWksHeader.CATNls, showing the resources for the Point and Circle commands:
     
@@ -153,7 +141,6 @@ Mnemonic | An "Alt+key" keystroke combination that activates menus, submenus, an
 Category | An attribute associated with the command and used to sort the commands in the Command tab page of the Customize window.  
   
 [Top]
-
 ### Filling in the Command Header CATRsc File
 
 This file contains the icon names to be associated with the command header and displayed in the toolbars and in the menus. It can also include the LongHelpId, an pointer to the the URL where the file documenting the command is located. 
@@ -165,8 +152,11 @@ Each icon resource is provided using a key and a file name without suffix separa
   
 ---  
   
+```vbscript
 For the URL, 
     
+```
+
     
     CCAAAfrGeometryWksHeader.CAAAfrPointHdr.LongHelpId      = "CAAAfrGeometryWksHeader.CAAAfrPointHdr" ;  
   
@@ -200,7 +190,6 @@ Accelerator | A keystroke combination, such as "Ctrl+key", used to activate the 
 LongHelpId | Identifier to associate a URL to the command. The URL is stored in a  mapping file.   
   
 [Top]
-
 ### Providing the Icon Files
 
 The icons are bit map files, suffixed by bmp. They must be provided in "normal" and "small" sizes. "Normal" size and "small" size icon files are respectively contained in the CNext\resources\graphic\icons\normal and CNext\resources\graphic\icons\small directories of the framework containing the module where the command headers are created. "Normal" icons, that is corresponding to default button state, must respectively have a size of 22 by 22 pixels and 16 by 16 pixels for "normal" and "small" sizes. When specified, the Pressed and Focused icons must respectively have a size of 24 by 24 pixels and 18 by 18 pixels for "normal" and "small" sizes.
@@ -208,7 +197,6 @@ The icons are bit map files, suffixed by bmp. They must be provided in "normal" 
 [Top]
 
 * * *
-
 ### In Short
 
 The command header resources are provided in two files whose names are the command header class, or the name set by the `CATImplementHeaderResources` macro in the command header cpp file. One file is for those that can be translated and is suffixed CATNls, the other for the icon names or pointer to a help file and is suffixed CATRsc. The resources are provided using keys built with the identifier of the object to which they apply.
@@ -216,16 +204,14 @@ The command header resources are provided in two files whose names are the comma
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Application Frame Overview](CAAAfrOverview.htm)  
+[1] | [Application Frame Overview](CAAAfrOverview.md)  
 ---|---  
-[2] | [Creating a Workbench](../CAAAfrUseCases/CAAAfrSampleWorkbench.htm)  
+[2] | [Creating a Workbench](../CAAAfrUseCases/CAAAfrSampleWorkbench.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Jan 2001] | Document created  

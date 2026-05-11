@@ -1,15 +1,14 @@
 ---
 title: "CAAAniMeshOctTriangle.catvbs"
-category: "general"
+category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshOctTriangle", "CAAScdAniUseCases"]
-source_file: "Doc\online\CAAScdAniUseCases\CAAAniMeshOctTriangleSource.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshOctTriangleSource.md"
 converted: "2026-05-11T17:31:51.679720"
 ---
 
-
+```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2000
-    
     ' ***********************************************************************
     '   Purpose:      Open an analysis document
     '                 Create an octree triangle mesh  
@@ -21,50 +20,53 @@ converted: "2026-05-11T17:31:51.679720"
     '   Locales:      English 
     '   CATIA Level:  V5R16
     ' ***********************************************************************
-    
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
       sDocPath=CATIA.SystemService.Environ("CATDocView")
+```
+
     
+```vbscript
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
         End If
     ' ----------------------------------------------------------- 
     
+```
+
+```vbscript
     Sub CATMain()
-    
+```vbscript
     'Open the analysis document
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Surface.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
-    
     ' Retrieve the Analysis Manager and Analysis Model
     Set oAnalysisManager = oAnalysisDocument.Analysis
-    
     ' Retrieve the part document and product from Analysis manager
     Set oAnalysisLinkedDocuments = oAnalysisManager.LinkedDocuments
     Set partDocument1 = oAnalysisLinkedDocuments.Item(1)
     Set Product = partDocument1.Product
-    
     ' Retrieve the analysis model from the list of models
     Set oAnalysisModels = oAnalysisManager.AnalysisModels
     Set oAnalysisModel = oAnalysisModels.Item(1)
-    
     ' Retrieve mesh manager and mesh part 
     Set meshManagar = oAnalysisModel.MeshManager
     Set meshPart = meshManagar.AnalysisMeshParts
-    
     ' Retrieve publications from product and retrieve the published face.
     Set Publications = Product.Publications
     Set pubSurf = Publications.Item("Round Hole.1")
     Set pubEdge = Publications.Item("Edge")
+```
+
     
-    
+```
+
     ' Add the new Octree Triangle part to the list of mesh parts
+```vbscript
     Set octreePart = meshPart.Add ("MSHPartOctree2D") 
-    
     ' Add the support from the published surface
     octreePart.AddSupportFromPublication Product, pubSurf
-    
     ' Set the global Specifications
     octreePart.SetGlobalSpecification "SizeValue", "10.0 mm"
     octreePart.SetGlobalSpecification "AbsoluteSageValue", "3.0 mm"
@@ -82,15 +84,22 @@ converted: "2026-05-11T17:31:51.679720"
     octreePart.SetGlobalSpecification "InteriorSizeValue", "5.0 mm"
     octreePart.SetGlobalSpecification "MinJacobian", 0.3
     octreePart.SetGlobalSpecification "MaxAttempts", 2
-    
+```vbscript
     ' Add the domain specifications as local specifications and assign it attributes
     Set meshspecs1 = octreePart.AnalysisMeshLocalSpecifications
     Set spec1 = meshspecs1.Add("MSHLocalMeshSize")
+```
+
     spec1.SetAttribute "MSHMeshSizeMag", "1.0 mm"
     spec1.AddSupportFromPublication "ConnectorList", Product, pubEdge
-    
     'Update mesh part
     octreePart.Update
     
+```
+
+```vbscript
     End Sub
     
+```
+
+```

@@ -1,20 +1,17 @@
 ---
 title: "The Versioning of the Topological Operators"
-category: "general"
+category: "use-case"
 module: "CAATopTechArticles"
 tags: []
-source_file: "Doc\online\CAATopTechArticles\TopoVersioning.htm"
+source_file: "Doc/online/CAATopTechArticles/TopoVersioning.md"
 converted: "2026-05-11T17:31:50.815757"
 ---
-
 # Geometric Modeler
 
 | 
-
 ## Topology
 
 | 
-
 ### The Versioning of the Topological Operators
 
 _Migration principles_  
@@ -22,7 +19,6 @@ _Migration principles_
 Technical Article  
   
 * * *
-
 ### Abstract
 
 The topological operators create new bodies from input bodies, depending on an internal algorithm. For maintenance or enhancement reasons, this internal algorithm may change, so that the results could not be exactly the same after the code modification. The operator versioning is a way to always replay an operator with the same level of software. This can be needed by applications that store the specifications of their operations, such as the feature applications. To put this mechanism in place, existing interfaces are modified, and the migration process is explained. 
@@ -42,13 +38,11 @@ The topological operators create new bodies from input bodies, depending on an i
 ---  
   
 * * *
-
 ### Principle
 
 If an application stores the way to build an object, and gives the mean to replay this definition, it expects that the replay always gives the same result. Up to now, for maintenance or enhancement reasons, the software modifications could lead to slightly different results. To avoid this situation, the current software configuration of an operator is accessible, and an operator can be replayed with a given software configuration: we call that the operator versioning.
 
 [Top]
-
 #### The CATSoftwareConfiguration Class
 
 The class that manages the operator versioning is the _CATSoftwareConfiguration_ class of the Mathematics framework. This class 
@@ -57,8 +51,6 @@ The class that manages the operator versioning is the _CATSoftwareConfiguration_
   * Creates a closed configuration (that can be read from a previously streamed configuration with a specific method. See also the Part documentation.)
   * Streams an existing configuration
   * Tests whether a configuration is supported by the current software.
-
-
 
 To create an open configuration (a configuration for the current software level), use the default constructor. Notice that you must use the `new` operator. 
     
@@ -79,15 +71,12 @@ The configuration must be released after use in the following way:
 ---  
   
 [Top]
-
 #### The CATTopData Class
 
 Once created, the configuration instance is given to the topological operator to inform it of the level of software it must use during its run. The software configuration is not given directly to the operator, but by the mean of the class _CATTopData_ that contains: 
 
   * A pointer to the configuration, that must be not `NULL`
   * A pointer to the journal [1] of the operator. This pointer can be `NULL` : in this case, the journal is not filled.
-
-
 
 We give here an example for creating a `CATTopSkin` operator, that is fully commented in _Overview of the topological operators_ [2]. 
     
@@ -108,13 +97,11 @@ We give here an example for creating a `CATTopSkin` operator, that is fully comm
 All the operators are based on the same frame: the pointer to the factory for the creation of the resulting body is the first argument, the not `NULL` pointer to the topological data containing the configuration and the journal is the second argument. 
 
 [Top]
-
 ### Migration
 
 As now an operator must know the configuration software on which it must run, this argument becomes mandatory. The following table indicates the correspondence between the old signature and the new signature for the operators of the TopologicalOperators, AdvancedTopologicalOpe, BasicTopologicalOpe frameworks. Be careful that migration can also affect the class of the operator.
 
 [Top]
-
 #### Topological Operators
 
 Deprecated Signature | New Signature  
@@ -679,7 +666,6 @@ Deprecated Signature | New Signature
                      short* iOrientations)  
   
 [Top]
-
 #### AdvancedTopologicalOpe
 
 Deprecated Signature | New Signature  
@@ -883,7 +869,6 @@ Deprecated Signature | New Signature
                       CATBody* iProfile)  
   
 [Top]
-
 #### BasicTopologicalOpe
 
 Deprecated Signature | New Signature  
@@ -1049,7 +1034,6 @@ Deprecated Signature | New Signature
                                const long* iImposition)  
   
 [Top]
-
 #### Case of the Journal
 
 If you directly create a CATCGMJournalList, you must now give the software configuration that must be use.
@@ -1071,27 +1055,22 @@ Deprecated Signature | New Signature
 [Top]
 
 * * *
-
 ### In Short
 
   * The versioning allows an operator to be replayed with a special software configuration. The software configuration is given to the operator by the mean of a CATTopData instance.
   * This enhancement leads to interface modifications, and the correspondence of the deprecated and new methods is given.
 
-
-
 [Top]
 
 * * *
-
 ### References
 
-[1] | [The CGM Journal](TopoJournal.htm)  
+[1] | [The CGM Journal](TopoJournal.md)  
 ---|---  
-[2] | [Overview of the Topological Operators](../CAATopUseCases/CAATopOverview.htm)  
+[2] | [Overview of the Topological Operators](../CAATopUseCases/CAATopOverview.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Oct 2000] | Document created  

@@ -3,7 +3,7 @@ title: "Integrating a New Mechanical Feature in the CAA Exposed Model"
 category: "use case"
 module: "CAAOmmUseCases"
 tags: ["CATIContainer_var", "CAAOmmverticalLine", "CATISpecObject", "CATIAReferences", "CAAOllTypeLib", "CAAEOmmBuildVerticalLine", "CAAOmmVerticalLine", "CATIAReference", "CAAOmmCatalog", "CATIAHybriShape", "CATIPartRequest", "CATIAPart", "CATIAHybridShape", "CAAIOmmFactory", "CAAIAOmmFactory", "CATIBuild", "CAAIA", "CAAIOmmVerticalLine", "CAAOmm", "CATIAlias"]
-source_file: "Doc\online\CAAOmmUseCases\CAAOmmIntegration.htm"
+source_file: "Doc/online/CAAOmmUseCases/CAAOmmIntegration.md"
 converted: "2026-05-11T17:33:46.031570"
 ---
 
@@ -39,7 +39,9 @@ Once all the modules contained in CAAOLE4MecMod.edu have been compiled, you have
     
     Language="VBSCRIPT"
     
+```vbscript
     Sub CATMain()
+```vbscript
       Dim doc0 As Document
       Set doc0 = CATIA.Documents.Add("Part")
     
@@ -54,9 +56,12 @@ Once all the modules contained in CAAOLE4MecMod.edu have been compiled, you have
       Set point2 = doc0.Part.HybridShapeFactory.AddNewPointCoord( -30., 80., 0. )
       body1.AppendHybridShape point2
     
+```
+
       doc0.Part.InWorkObject = point2
       doc0.Part.Update
     
+```vbscript
       Dim Reference1 As Reference
       Set Reference1 = doc0.Part.CreateReferenceFromGeometry ( point1 )
     
@@ -70,10 +75,17 @@ Once all the modules contained in CAAOLE4MecMod.edu have been compiled, you have
       Set line1 = CustFact0.AddNewVerticalLine( Reference1, Reference2 )
       body1.AppendHybridShape line1
     
+```
+
       line1.Compute
     
+```vbscript
     End Sub  
   
+```
+
+```
+
 ---  
 [Top] Where to Find the CAAOmm Code The CAAOmm use case is made of several modules located in the CAAOLE4MecMod.edu framework: Windows | `InstallRootDirectory\CAAOLE4MecMod.edu\`  
 ---|---  
@@ -139,7 +151,6 @@ The IDL is close to common object programming languages such as Java or C++. Mos
   * Argument direction (in, out) must be declared 
   * A special comment, /* IDLRETVAL */, can be inserted before the last out argument of an interface. It allows this argument to be used as a lvalue in an expression, like in
 
-
     
     
     ...
@@ -163,7 +174,6 @@ It contains the GUID of the automation class, its name and the name of the featu
     
       HRESULT get_Point1(out /*IDLRETVAL*/ CATIAReference opiReferenceOnPoint1);
       HRESULT put_Point1(in CATIAReference ipiReferenceOnPoint1);
-    
       #pragma PROPERTY Point2
       HRESULT get_Point2(out /*IDLRETVAL*/ CATIAReference opiReferenceOnPoint2);
       HRESULT put_Point2(in CATIAReference ipiReferenceOnPoint2);
@@ -197,16 +207,12 @@ What actually happens is an encapsulation by the interface of all the calls to g
 
 So, the next step is to compile our two interfaces into a typelib. Creating a new typelib requires a little directives to be given to our IDL compiler thanks to a couple of new #pragmas. Here is the source code for the file containing those directives. This file has a .tlb extension and is to be put in the src directory of a specific module whose Imakefile.mk type is TYPELIB. Here it's called CAAIAOmmTypeLib.tlb in the CAAOllTypeLib.m module.
     
-    
     #pragma REPID CAAOmm "DCE:872b73b0-1538-11d4-9eea00508b675465"
     #pragma REPBEGIN CAAOmm
-    
     #pragma REPREQ InfTypeLib
     #pragma REPREQ MecModTypeLib
-    
     #include "CAAIAOmmVerticalLine.idl"
     #include "CAAIAOmmFactory.idl"
-    
     #pragma REPEND CAAOmm  
   
 ---  
@@ -423,11 +429,11 @@ In Short This article explains what has to be done in order to integrate a new f
 
 * * *
 
-References [1] |  [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] |  [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [ Creating Interfaces for Automation](../CAASysTechArticles/CAASysAutomationItf.htm)  
-[3] |  [ Implementing Interfaces for Automation](../CAASysTechArticles/CAASysAutomationImpl.htm)  
-[4] |  [ The CAA V5 IDL Compiler](../CAASysTechArticles/CAASysIDLCompiler.htm)  
+[2] |  [ Creating Interfaces for Automation](../CAASysTechArticles/CAASysAutomationItf.md)  
+[3] |  [ Implementing Interfaces for Automation](../CAASysTechArticles/CAASysAutomationImpl.md)  
+[4] |  [ The CAA V5 IDL Compiler](../CAASysTechArticles/CAASysIDLCompiler.md)  
 [Top]  
   
 * * *

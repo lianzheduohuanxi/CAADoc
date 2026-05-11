@@ -2,46 +2,22 @@
 title: "CAAESysCuboid"
 type: "interface"
 module: "CAASystem"
+category: "framework"
 base: "CATBaseUnknown"
+inheritance_chain: "CAAESysCuboid → CATBaseUnknown"
 method_count: 4
 visibility: "local"
+has_tie_binding: false
 verified: true
 ---
-
 # CAAESysCuboid
 
 **基类**: CATBaseUnknown  
+**继承链**: CAAESysCuboid → CATBaseUnknown  
 **模块**: CAASystem  
+**分类**: framework  
 **可见性**: local  
 **方法数**: 4
-
-> ===========================================================================
-
-## 方法列表
-
-### SetOrigin
-```cpp
-HRESULT SetOrigin(const CATMathPoint & iOrigin);
-```
-
-### GetOrigin
-```cpp
-HRESULT GetOrigin(CATMathPoint & oOrigin) const;
-```
-
-### SetVectors
-```cpp
-HRESULT SetVectors(const CATMathVector & iV1 ,
-                                  const CATMathVector & iV2,
-                                  const CATMathVector & iV3);
-```
-
-### GetVectors
-```cpp
-HRESULT GetVectors(CATMathVector & oV1 ,
-                                 CATMathVector & oV2,
-                                 CATMathVector & oV3) const;
-```
 
 ## 依赖
 

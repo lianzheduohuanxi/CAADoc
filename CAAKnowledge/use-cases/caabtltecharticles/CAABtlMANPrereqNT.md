@@ -1,9 +1,9 @@
 ---
 title: "The Prerequisites on Windows NT"
-category: "general"
+category: "use-case"
 module: "CAABtlTechArticles"
 tags: []
-source_file: "Doc\online\CAABtlTechArticles\CAABtlMANPrereqNT.htm"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANPrereqNT.md"
 converted: "2026-05-11T17:33:46.125203"
 ---
 

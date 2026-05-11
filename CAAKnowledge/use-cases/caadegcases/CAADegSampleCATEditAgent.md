@@ -3,7 +3,7 @@ title: "Editing Object During a Command"
 category: "use case"
 module: "CAADegUseCases"
 tags: ["CAAPriPrtCfgAddin", "CAAPriEditSketchCmd", "CAAPriEditSketch", "CAAPriPrtCfgAdn", "CATISpecObject", "CATIBuildPath", "CATIWorkbenchAddin", "CATISketch", "CAAPriEditSketchNotification", "CATIPrtCfgAddin", "CAAPartInterfaces", "CAAPriCommands", "CAAPriEditSketchDlg", "CATIPad"]
-source_file: "Doc\online\CAADegUseCases\CAADegSampleCATEditAgent.htm"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleCATEditAgent.md"
 converted: "2026-05-11T17:33:49.575815"
 ---
 
@@ -30,7 +30,7 @@ What You Will Learn With This Use Case This use case is intended to show you how
     * Specify the workbench,
     * Specify and manage the object to edit, 
     * Specify available commands in the stacked workbench thanks to the _CATStackableCommandSet_ class.
-[Top] The CAAPriEditSketch Use Case CAAPriEditSketch is a use case of the CAAPartInterfaces.edu framework that illustrates DialogEngine and ApplicationFrame framework capabilities. [Top] What Does CAAPriEditSketch Do CAAPriEditSketch is a use case which edits a Pad. This command is integrated in a Part Design add-in.  _Fig.1: The Part Design Add-in_ | ![](images/CAADegEditAgentToolbar.jpg)  
+[Top] The CAAPriEditSketch Use Case CAAPriEditSketch is a use case of the CAAPartInterfaces.edu framework that illustrates DialogEngine and ApplicationFrame framework capabilities. [Top] What Does CAAPriEditSketch Do CAAPriEditSketch is a use case which edits a Pad. This command is integrated in a Part Design add-in.  _Fig.1: The Part Design Add-in_ 
 ---  
 This add-in contains one toolbar (the "Frame tools" toolbar) which has one command the "Part Modification" command ![](images/CAADegCATEditAgentIcon.jpg). This command enables the end user to edit a pad which has a sketch as profile. _Fig.2: The Part Modification Command_ ![](images/CAADegEditAgentDlg.jpg)  
 ---  
@@ -258,14 +258,14 @@ In Short This use case explains how to create a dialog agent to stack a workbenc
 
 * * *
 
-References [1] | [Describing State Dialog Command Using UML](../CAADegTechArticles/CAADegUMLDescription.htm)  
+References [1] | [Describing State Dialog Command Using UML](../CAADegTechArticles/CAADegUMLDescription.md)  
 ---|---  
-[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 [3] | Creating an Add-in of the Part Design Workbench  
-[4] | [Implementing the Statechart Diagram](CAADegSampleGraph.htm)  
-[5] | [Application Frame overview](../CAAAfrTechArticles/CAAAfrOverview.htm)  
-[6] | [The Command Headers](../CAAAfrTechArticles/CAAAfrCommandHeaders.htm)  
-[7] | [Associating a Dialog Box with a State](CAADegSampleDialogWithPanelState.htm)  
+[4] | [Implementing the Statechart Diagram](CAADegSampleGraph.md)  
+[5] | [Application Frame overview](../CAAAfrTechArticles/CAAAfrOverview.md)  
+[6] | [The Command Headers](../CAAAfrTechArticles/CAAAfrCommandHeaders.md)  
+[7] | [Associating a Dialog Box with a State](CAADegSampleDialogWithPanelState.md)  
 [Top]  
   
 * * *

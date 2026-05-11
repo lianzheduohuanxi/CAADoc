@@ -3,18 +3,15 @@ title: "How to Use the Topological Journal"
 category: "use case"
 module: "CAATopUseCases"
 tags: ["CAAErrorTopStif7", "CAATopJournal", "CAAErrorTopStif6", "CAAErrorTopStif2", "CAAErrorTopStif5", "CAATopOperator", "CATICGMObject", "CAATopOverview", "CATIntersectionCrvCrv", "CAAErrorTopStif3", "CAAErrorTopStifx", "CAATopStifferner", "CAATopologicalOperators", "CATICGMContainer", "CAAGemBrowser", "CAATopStiffener", "CAAErrorTopStif1", "CAATopStiffner", "CAATeopJournal"]
-source_file: "Doc\online\CAATopUseCases\CAATopJournal.htm"
+source_file: "Doc/online/CAATopUseCases/CAATopJournal.md"
 converted: "2026-05-11T17:31:50.719384"
 ---
-
 # Geometric Modeler
 
 | 
-
 ## Topology
 
 | 
-
 ### How to Use the Topological Journal
 
 _Reading data and creating the journal of a sequence of topological operations_  
@@ -22,7 +19,6 @@ _Reading data and creating the journal of a sequence of topological operations_
 Use Case  
   
 * * *
-
 ### Abstract
 
 The journal describes the topological modifications brought to the input bodies to get the resulting body during a topological operation. The journal is filled under request by the topological operators. The use case proposes a way to define a topological operator by chaining a sequence of topological operators. In this sequence, data necessary to operations are read in the journal of previous operations. The journal of the global operation is filled. 
@@ -41,15 +37,12 @@ The journal describes the topological modifications brought to the input bodies 
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 In this use case, you learn how to create a new topological operator (`CAATopStiffner`) by chaining several CGM topological operators. In the sequence, 
 
   * The journal of the CGM operators is read to recover data needed to the operations
   * The journal corresponding to the global operation is created.
-
-
 
 Meanwhile, the use of the some topological operators is detailed such as: 
 
@@ -58,12 +51,9 @@ Meanwhile, the use of the some topological operators is detailed such as:
   * The creation of a prism with "until" limits
   * The filleting of non connected edges in a single operation.
 
-
-
 See "Overview of the Topological Operators" [3] to have the general scheme of the topological operators and other use examples.
 
 [Top]
-
 ### The Principle
 
 A topological operator operates on topological objects to create new topological objects. Most of the time, these topological objects are bodies (a body is a set of connected (or not) volumes, faces, edges and vertices [1]). A topological operator does never modify the input bodies: the resulting body is a new one, but it can share cells with the input bodies, if these cells are not touched by the operation. This is called the smart concept [2]. On request, the operator can describe the way to go from the initial objects to the resulting body. This information is then put by each operator into a topological journal.
@@ -75,13 +65,11 @@ This journal is transient. You have to create it before its use and delete it wh
 As said, each topological operator is able to write the journal corresponding to its operation. So that the journal of the new operator is the concatenation of the journals of each called CGM operator, as demonstrated in the use case.
 
 [Top]
-
 ### The CAATopJournal Use Case
 
 CAATopJournal is a use case of the CAATopologicalOperators.edu framework that illustrates TopologicalOperators framework capabilities.
 
 [Top]
-
 #### What Does CAATopJournal Do
 
 The use case defines a new topological operator `CAATopStiffener`, that follows the general scheme of the topological operators: 
@@ -91,11 +79,9 @@ The use case defines a new topological operator `CAATopStiffener`, that follows 
   * Get the result
   * Delete.
 
-
-
 This operator defines a stiffener between two thin cylinder bodies ("wings") as displayed on Fig.1.
 
-Fig. 1: The Resulting Body ![](images/CAATopJournal1.gif) | 
+Fig. 1: The Resulting Body ![](images/CAATopJournal1.gif) 
 
   * A rectangular `SkinBody` is extruded along the `z` direction to create a prism until `FirstCylinderBody` and `SecondCylinderBody` are reached
   * From the journal of this operation, the large lateral faces of the prim are retrieved. On these faces, holes could be created, that are only sketched here by circles to lighten the presentation
@@ -104,17 +90,15 @@ Fig. 1: The Resulting Body ![](images/CAATopJournal1.gif) |
   * The journal corresponding to this sequence of operations is filled.
 
   
----|---  
   
 [Top]
-
 #### How to Launch CAATopJournal
 
 To launch CAATopJournal, you will need to set up the build time environment, then compile CAATopJournal.m and CAATopOperator.m along with its prerequisites, set up the run time environment, and then execute the use case [5].
 
 If you simply type CAATopJournal with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example:
 
-With Windows `CAATopJournal e:\ExJournal.NCGM`
+With Windows `CAATopJournal e/ExJournal.NCGM`
 
 With UNIX `CAATopJournal /u/ExJournal.NCGM`
 
@@ -123,7 +107,6 @@ This NCGM file can be displayed using the CAAGemBrowser use case.
  
 
 [Top]
-
 #### Where to Find the CAATeopJournal Code
 
 The CAATopJournal use case is made of a main named CAATopJournal.cpp located in the CAATopJournal.m module of the CAATopologicalOperators.edu framework:
@@ -141,7 +124,6 @@ Windows | `InstallRootDirectory\CAATopologicalOperators.edu\CAATopOperator.m\`
 Unix | `InstallRootDirectory/CAATopologicalOperators.edu/CAATopOperator.m/`  
   
 [Top]
-
 ### Step-by-Step
 
 The CAATopStiffener header declares the new class, the corresponding code implements it and CAATopJournal.cpp is a main to run the new operator.
@@ -164,10 +146,7 @@ The use case is divided into the following steps:
     * Running the New Operator
     * Writing the Model and Closes the Container
 
-
-
 [Top]
-
 #### CAATopStiffener: a New Class
 
 We first look at the header of the new class.
@@ -277,8 +256,6 @@ We can now concentrate on the important part of the operator: the `Run` method, 
   6. Searching Inside the Journal For the Face of the Upper Wing
   7. Filleting (CATDynFillet)
   8. Returning the Journal Operator
-
-
 
 [Top]
 
@@ -555,7 +532,7 @@ Example: Let the following journal sequence: `F1 -> F2 -> F3 -> F4 -> F5`
       }  
   
 ---  
-Fig. 2: The Journal and Boolean Journal of CATTopPrism ![](images/CAATopJournal2.gif) | 
+Fig. 2: The Journal and Boolean Journal of CATTopPrism ![](images/CAATopJournal2.gif) 
      * In the journal relative to the prism creation, `FindLasts` finds the cell `FromHeight1` resulting from `Height1`. The `ThroughCreateAndModify` option indicates that the search is done among the creation and modification items. At this stage, the cells are already delimited on the limiting body, but not glued.
      * In the journal relative to the Boolean union, `FindLasts` finds the cell `BooleanFromHeight1` from `FromHeight1`. This cell is the cell on which `CAATopStifferner` creates a circle. The `ThroughModify` option indicates that the search is done among the modification items only. After the Boolean operation, the prism and the limiting bodies are glued.  
 ---|---  
@@ -644,7 +621,7 @@ Now, the face of the wing is searched for: this face has been modified by the Bo
            
   
 ---  
-Fig. 3: Use Of the Boolean Journal to Recover the Upper Wing ![](images/CAATopJournal3.gif) | 
+Fig. 3: Use Of the Boolean Journal to Recover the Upper Wing ![](images/CAATopJournal3.gif) 
      * All the faces of `FirstLimitBody` are first got. For each face `listCells[i]`, `FindLasts` searches for a cell resulting from a modification of `listCells[i]`. The resulting cells are put in the list `pFaces`, that is first cleaned (`RemoveAll`). `FindLasts` does never return a void `pFaces` list. If it does not find any solution, it returns the initial face `listCells[i]`. It is the reason why the returned solutions must be compared to the initial face.  
 ---|---  
   
@@ -793,11 +770,7 @@ Notice the general scheme of the operator. To use it:
   
 As seen in step 2, `pJournal` was internally allocated to contain the items of the prism, Boolean union and filleting operations. If the caller of `CAATopStiffener` operator asks for the report of the modifications, the items must be copied inside the journal allocated by the caller, which address is stored in `_pData`. `pJournal` can then be deallocated.
 
-
-
-
 [Top]
-
 #### CAATopJournal: Use of the New Class
 
 To use the new operator, one must go through the following steps: 
@@ -807,8 +780,6 @@ To use the new operator, one must go through the following steps:
   * Creating the Skin Body to Extrude
   * Running the New Operator
   * Writing the Model and Closes the Container
-
-
 
 [Top]
 
@@ -1113,12 +1084,9 @@ The sample ends with the closure of the geometry factory, done by the `::CATClos
   
 ---  
 
-
-
 [Top]
 
 * * *
-
 ### In Short
 
 The journal follows the topological modification from the input bodies (that are never modified) to the output body. This journal is read to recover topological entities, that can be later used in other topological operations.
@@ -1128,20 +1096,18 @@ New operator classes can be developed, by chaining several topological operation
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Topology Concepts](../CAATobTechArticles/TopoConcepts.htm)  
+[1] | [Topology Concepts](../CAATobTechArticles/TopoConcepts.md)  
 ---|---  
-[2] | [The CGM Topological Model](../CAATobTechArticles/TopoModel.htm)  
-[3] | [Overview of the Topological Operators](CAATopOverview.htm)  
-[4] | [The CGM Journal](../CAATopTechArticles/TopoJournal.htm)  
-[5] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-[6] | [The versioning of the operators](../CAATopTechArticles/TopoVersioning.htm)  
+[2] | [The CGM Topological Model](../CAATobTechArticles/TopoModel.md)  
+[3] | [Overview of the Topological Operators](CAATopOverview.md)  
+[4] | [The CGM Journal](../CAATopTechArticles/TopoJournal.md)  
+[5] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[6] | [The versioning of the operators](../CAATopTechArticles/TopoVersioning.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1.1** [Oct 2000] | Operator configuration  

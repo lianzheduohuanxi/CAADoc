@@ -1,38 +1,30 @@
 ---
 title: "Inserting a Schematic Component into a Schematic Route"
-category: "general"
+category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAASCH_Sample", "CAADoc", "CATIASchComponent", "CAAScdSchUseCases", "CAASCH_RouteForPlacement", "CATIA", "CAASchAppBase", "CAASchAppUtilities", "CAASCHEDUApp", "CAASchPlatformModeler", "CAASchInsertComponent"]
-source_file: "Doc\online\CAAScdSchUseCases\CAASchInsertComponent.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchInsertComponent.md"
 converted: "2026-05-11T17:31:51.373120"
 ---
-
 ## Schematics Platform Modeler
 
 | 
-
 ## Inserting a Schematic Component into a Schematic Route  
   
----|---  
   
 * * *
 
-![](../CAAScrBase/images/atarget.gif) | This macro shows you how to insert a Schematic component into a Schematic route. The word "insert" refers to a process by which a Schematic route is split at a specific location (creating a new route) and a Schematic component is connected to the two routes, creating two connections. These connections are created through two connectors of the schematic component. These two connectors must be internally connected to each other by an "internal flow" object, which is aggregated by the Schematic component. This macro opens two documents: CAASCH_Sample.catalog and CAASCH_RouteForPlacement.CATProduct.  Notice the x-y coordinates of a point (80,50), as indicated in the screen shots. They will be used later in this use case. ![](images/CAASchInsertComponent_01.jpg) In this use case, two Schematic components are inserted into route using two different approaches.  
+ This macro shows you how to insert a Schematic component into a Schematic route. The word "insert" refers to a process by which a Schematic route is split at a specific location (creating a new route) and a Schematic component is connected to the two routes, creating two connections. These connections are created through two connectors of the schematic component. These two connectors must be internally connected to each other by an "internal flow" object, which is aggregated by the Schematic component. This macro opens two documents: CAASCH_Sample.catalog and CAASCH_RouteForPlacement.CATProduct.  Notice the x-y coordinates of a point (80,50), as indicated in the screen shots. They will be used later in this use case. ![](images/CAASchInsertComponent_01.jpg) In this use case, two Schematic components are inserted into route using two different approaches.  
 ---|---  
-![](../CAAScrBase/images/ainfo.gif) | CAASchInsertComponent is launched in CATIA [1]. No open document is needed.Special environment must be available to successfully run this macro:
+ CAASchInsertComponent is launched in CATIA [1]. No open document is needed.Special environment must be available to successfully run this macro:
 
   * Prerequisites:
-
-
 
 >   1. RADE must be installed.
 >   2. CAASchPlatformModeler.edu must exist in CAADoc folder.
 > 
 
-
   * Setup:
-
-
 
 >   1. Build CAASchAppBase.m and CAASchAppUtilities.m, located in CAASchPlatformModeler.edu (RADE is required). 
 >   2. Copy generated DLLs, CAASchAppBase.dll and CAASchAppUtilities.m, respectively, to the run-time environment folder "intel_a\code\bin."
@@ -40,16 +32,13 @@ converted: "2026-05-11T17:31:51.373120"
 >   4. Copy CAASchPlatformModeler.edu\CNext\code\dictionary\CAASchPlatformModeler.edu.dico to the run-time environment folder "intel_a\code\dictionary."
 > 
 
-
-[CAASchInsertComponent.CATScript i](CAASchInsertComponentSource.htm)s located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchInsertComponent.CATScript) (Windows only).  
-![](../CAAScrBase/images/ascenari.gif) | CAASchInsertComponent includes the following steps:
+[CAASchInsertComponent.CATScript i](CAASchInsertComponentSource.md)s located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchInsertComponent.CATScript) (Windows only).  
+ CAASchInsertComponent includes the following steps:
 
   1. Prolog
   2. Get the Schematic reference component from the catalog
   3. Insert an instance of the Schematic reference component - approach 1
   4. Insert an instance of the Schematic reference component - approach 2
-
-
 
 #### Prolog
 
@@ -59,6 +48,7 @@ The macro first loads two documents. CAASCH_Sample.catalog and CAASCH_RouteForPl
         ...
         ' ------------------------------------------------------------------------- 
         ' Open the catalog document 
+```vbscript
         Dim sCtlgFilePath
         sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
                 "online\CAAScdSchUseCases\samples\CAASCH_Sample.catalog")
@@ -66,9 +56,11 @@ The macro first loads two documents. CAASCH_Sample.catalog and CAASCH_RouteForPl
         Dim objSchCtlgDoc As Document
         Set objSchCtlgDoc = CATIA.Documents.Open(sCtlgFilePath)
          
-    
+```
+
     
         ' Open main schematic design document (for new component instances created here)
+```vbscript
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
                 "online\CAAScdSchUseCases\samples\CAASCH_RouteForPlacement.CATProduct")
@@ -77,6 +69,10 @@ The macro first loads two documents. CAASCH_Sample.catalog and CAASCH_RouteForPl
         Set objSchDoc = CATIA.Documents.Open(sFilePath)
         ...  
   
+```
+
+```
+
 ---  
   
 Next, the macro acquires the schematic root object from the document. The schematic root is the top node of the object instance tree in a schematic document. 
@@ -84,6 +80,7 @@ Next, the macro acquires the schematic root object from the document. The schema
     
         ...
         ' Find the top node of the schematic object tree - schematic root.
+```vbscript
         Dim objPrdRoot As Product
         Dim objSchRoot As SchematicRoot
         If ( Not ( IsEmpty ( objSchDoc ) ) Then
@@ -93,52 +90,78 @@ Next, the macro acquires the schematic root object from the document. The schema
           End If
         End If
     
+```
+
     
         ...  
   
+```
+
 ---  
   
 The SchematicRoot interface provides a method to retrieve the graphical representation of a reference component from the catalog by name. This graphical representation is associated to a reference component in the catalog.
     
     
         ...
+```vbscript
         Dim objSchGRRCVCtlg As SchGRR 
     
+```
+
     
         ...
     
+```vbscript
         If ( Not ( IsEmpty ( objSchRoot ) ) ) Then
-    
+```vbscript
            '-----------------------------------------------------------------------
            ' Get the symbol of a component from the component catalog.
            '-----------------------------------------------------------------------
            Set objSchGRRCVCtlg = objSchRoot.GetCompSymbolFromCatalog ("Control Valve",objSchCtlgDoc)
+```
+
         ...  
   
+```
+
+```
+
 ---  
-  
 #### Get the Schematic reference component from the catalog
 
 Given the graphical representation (symbol) from the previous step, the macro calls GetSchObjOwner to get the Schematic reference component that the symbol is associated with.
 
     ...  
+```vbscript
          '---------------------------------------------------------------------  
          ' Get the owner of the symbol. That is, a reference component,  
          ' in the catalog.  
          '---------------------------------------------------------------------  
+```
+
+```vbscript
          Set objSchCntblCVRef = objSchGRRCVCtlg.GetSchObjOwner  
     ...  
+```
+
+```
+
 ---  
   
 Through the GetInterface method, the macro obtains a handle on the SchComponent interface, which is needed for creating an instance of the Schematic reference component from the catalog.
 
     ...  
+```vbscript
          If ( Not ( IsEmpty ( objSchCntblCVRef ) ) ) Then  
   
+```vbscript
            Set objSchCompCVRef = objSchRoot.GetInterface ("CATIASchComponent",objSchCntblCVRef)  
     ...  
+```
+
+```
+
 ---  
-  
 #### Insert an instance of the Schematic reference component - approach 1
 
 The "insert" process includes the following.
@@ -168,6 +191,7 @@ The "insert" process includes the following.
     
     
              ...  
+```vbscript
                   '----------------------------------------------------------------  
                   '  Insert a component into a route.  
                   '  
@@ -197,39 +221,46 @@ The "insert" process includes the following.
                   '     The new component instance will be connected to the  
                   '     2 routes on each of the 2 sides (left and right).    
                   '----------------------------------------------------------------  
-      
                   ' -- step 1   
+```
+
+```vbscript
                   Set objCompRefPlaceInfo = objSchCompCVRef.QueryConnectAbility _  
                     (objSchGRRCVCtlg)   
-      
                   ' -- step 2   
                   objSchCompatRoute.IsTargetOKForInsert objCompRefPlaceInfo, _  
                     objCompatInfo, bYesCompat  
       
                   Dim db2Pt(2) As CATSafeArrayVariant  
-      
                   '-- a point at the middle of the route  
                   db2Pt(0) = 80.0  
                   db2Pt(1) = 50.0  
       
+```
+
       
+```vbscript
                   If ( bYesCompat ) Then  
         ...  
                      bFindAllSolutions = false  
-      
                      ' -- step 3   
                      objSchCompatRoute.GetBestFitInsertInfo db2Pt, objCompatInfo, _  
                        objFinalInsertInfo, bFindAllSolutions  
       
+```
+
+```vbscript
                      If ( Not ( IsEmpty ( objFinalInsertInfo ) ) ) Then  
-      
                         ' -- step 4   
                         objSchCompCVRef.InsertIntoRouteWithInfo objFinalI
     nsertInfo, _  
                           objSchCompInst,objSchRouteInst  
         ...  
+```
+
+```
+
     ---  
-      
     #### Insert an instance of the Schematic 
          reference component - approach 2
     
@@ -244,6 +275,7 @@ The "insert" process includes the following.
     
     
              ...  
+```vbscript
                      Dim db6Matrix(6) As CATSafeArrayVariant  
                      db6Matrix(0)=1.0  
                      db6Matrix(1)=0.0  
@@ -252,9 +284,13 @@ The "insert" process includes the following.
                      db6Matrix(4)=db2Pt(0)  
                      db6Matrix(5)=db2Pt(1)  
       
+```
+
                      objSchCompCVRef.PlaceOnObject objSchGRRCVCtlg, db6Matrix, _  
                        objSchCntblRouteInst, objSchCompInst2  
         ...  
+```
+
     ---  
       
     To figure out the placement location of the component instance, the 
@@ -281,7 +317,6 @@ The "insert" process includes the following.
     
      
      
-    
     #### In Short
     
     
@@ -307,7 +342,6 @@ The "insert" process includes the following.
     
      
      
-    
     #### References
     
     
@@ -315,9 +349,8 @@ The "insert" process includes the following.
        
          [1]
          | [
-         Replaying a Macro](../CAAScdInfUseCases/CAAInfLauchMacro.htm)
+         Replaying a Macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)
          
-    ---|---  
     
        
          

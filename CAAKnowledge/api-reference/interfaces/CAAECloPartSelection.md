@@ -2,55 +2,24 @@
 title: "CAAECloPartSelection"
 type: "interface"
 module: "CAACommonLayoutItf"
+category: "framework"
 base: "CATECloPartSelectionAdapter"
+inheritance_chain: "CAAECloPartSelection → CATECloPartSelectionAdapter"
 method_count: 3
 visibility: "local"
+has_tie_binding: false
 verified: true
 ---
-
 # CAAECloPartSelection
 
 **基类**: CATECloPartSelectionAdapter  
+**继承链**: CAAECloPartSelection → CATECloPartSelectionAdapter  
 **模块**: CAACommonLayoutItf  
+**分类**: framework  
 **可见性**: local  
 **方法数**: 3
 
 > -----------------------------------------------------------------------
-
-## 方法列表
-
-### FilterPartSelection
-```cpp
-HRESULT FilterPartSelection(const CATUnicodeString& iuStandard,
-                                            const CATUnicodeString& iuSpec,
-                                            const CATUnicodeString& iuPartType,
-                                            const CATIUnknownList *iLFilterParameters,
-                                            const CATIUnknownList *iLSortParameters,
-                                            const CATIUnknownList *iListDescription,
-                                            CATIUnknownList*& oListDescription);
-```
-
-### IsExternalProgramNeeded
-```cpp
-HRESULT IsExternalProgramNeeded(const CATUnicodeString &iuApplicationContext,
-                                          const CATUnicodeString &iuStandard,
-                                          const CATUnicodeString &iuSpec,
-                                          const CATUnicodeString &iuPartType,
-                                          int &oiActivate);
-```
-
-### RefinePartSelection
-```cpp
-HRESULT RefinePartSelection(const CATUnicodeString &iuApplicationContext,
-                                          const CATUnicodeString &iuStandard,
-                                          const CATUnicodeString &iuSpec,
-                                          const CATUnicodeString &iuPartType,
-                                          const CATIUnknownList *iLEnvironmentParameters,
-                                          const CATIUnknownList *iLFilterParameters,
-                                          const CATIUnknownList *iLSortParameters,
-                                          const IUnknown *ipiCatalogObjectToBeSearched,
-                                          CATListValCATUnicodeString &opListPartNumbersFound);
-```
 
 ## 依赖
 

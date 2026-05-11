@@ -1,22 +1,19 @@
 ---
 title: "CATArrangementInterfaces Framework Modifications in V5R18"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR18"
+version: "V5R18"
 tags: ["CATIArrIgpAttachment", "CATIArrAttachmentFactory", "CATIArrAttachSubscriber"]
-source_file: "Doc\online\CAACenAPIChangesR18\CATArrangementInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR18/CATArrangementInterfaces.md"
 converted: "2026-05-11T17:33:51.431093"
 ---
 
 | 
-
 # CAA C++ API Modifications
 
 | 
-
 ##  CATArrangementInterfaces Framework Modifications in V5R18 
 
-|   
----|---|---  
   
 * * *
 

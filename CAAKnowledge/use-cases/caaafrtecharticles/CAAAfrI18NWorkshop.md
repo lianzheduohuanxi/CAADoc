@@ -1,20 +1,17 @@
 ---
 title: "Creating Resources for Workshops or Workbenches"
-category: "general"
+category: "use-case"
 module: "CAAAfrTechArticles"
 tags: ["CAAAfrSubmenuId", "CAAAfrWorkbenchId", "CAAAfrIconBoxId", "CAAAfrWorkBenchPointer", "CAAAfrMenuId", "CAAAfrWorkbenchPointer", "CAAAfrToolbarId"]
-source_file: "Doc\online\CAAAfrTechArticles\CAAAfrI18NWorkshop.htm"
+source_file: "Doc/online/CAAAfrTechArticles/CAAAfrI18NWorkshop.md"
 converted: "2026-05-11T17:17:55.896732"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## User Interface - Frame
 
 | 
-
 ### Creating Resources for Workshops or Workbenches
 
 _How to provide the title, help messages, and icons for workshops or workbenches_  
@@ -22,7 +19,6 @@ _How to provide the title, help messages, and icons for workshops or workbenches
 Technical Article  
   
 * * *
-
 ### Abstract
 
 This article shows how to create the resource files, and fill them in with the appropriate resources, for a workshop or a workbench. 
@@ -38,7 +34,6 @@ This article shows how to create the resource files, and fill them in with the a
 ---  
   
 * * *
-
 ### Creating the Resource Files
 
 The resource files must have the workshop or workbench identifier as name. This identifier is declared in the `CreateWorkshop` or `CreateWorkbench` method of the workshop or workbench description class, as the third parameter of the `NewAccess` macro that creates the workshop or workbench. For example, for a workbench:
@@ -54,14 +49,10 @@ where:
   * `pCAAAfrWorkbenchPointer` is a pointer to the `CATCmdWorkbench` class instance that the macro creates
   * `**CAAAfrWorkbenchId**` is the workbench identifier.
 
-
-
 There are two workbench resource files:
 
   1. The resource file containing the title and help messages in the English language, and that can be translated into other languages. It is suffixed using CATNls
   2. The resource file containing the icons and other resources that should not be translated. It suffixed by CATRsc. This file is required to make the workshop or the workbench appear in the Start menu. If a workshop has workbenches, these workbenches are displayed in place of the workshop in the **Start** menu, and this workshop resource file is unused and can be omitted.
-
-
 
 The two resource files for the CAAAfrWorkbenchId workshop or workbench are then: CAAAfrWorkbenchId.CATNls and CAAAfrWorkbenchId.CATRsc. These files are located in the CNext\resources\msgcatalog directory of the framework containing the workshop or workbench module. This directory includes subdirectories, one for each language into which the title and messages of the CAAAfrWorkbenchId.CATNls file can be translated.
 
@@ -73,7 +64,6 @@ Each resource is provided using a key and a text, or a file name without suffix,
 ---  
   
 [Top]
-
 ### Filling in the CATNls Resource File
 
 This file contains: 
@@ -115,8 +105,6 @@ This file contains:
   
 ---  
 
-
-
 Below is a reminder of the keywords used in the resource keys that can be found in the CATNls resource file.
 
 Title | Text displayed: 
@@ -127,14 +115,12 @@ Title | Text displayed:
   * as the menu or submenu title
 
   
----|---  
 Help | Text displayed in the status bar when the mouse moves over the workshop or workbench name or icon in the Start menu, or over the icon in the workshop or workbench toolbar  
 ShortHelp | Text displayed in a balloon as the workshop or workbench short help message when the mouse moves over the icon in the workshop or workbench toolbar  
 LongHelp | Text displayed in a balloon when the end user clicks ![](../CAAIcons/images/I_WhatsThisP2.gif), which turns the mouse cursor as a question mark, and then clicks on the icon representing the workshop or workbench in the Welcome dialog box workshop or workbench toolbar  
 Mnemonic | An "Alt+key" keystroke combination that activates menus, submenus, and menu items. The key character is underlined in the menu, submenu, or menu item title, and therefore must belong to this title. No duplicates should exist in the set of mnemonic keys for a given menu or submenu. The case is ignored when using the mnemonic. The mnemonic is declared in the workshop or workbench resource file for menus and submenus only. It is declared in the command header resource file for menu items.  
   
 [Top]
-
 ### Filling in the CATRsc Resource File
 
 This file contains:
@@ -206,8 +192,6 @@ In this case, you have to create 2 resources files for the subcategory to specif
   
 **Remark:** The position resource is a string and the ordering is done alphabetically. The subcategory can be at first position in its category though its position resource is "3" if its position is the first one in the alphabetical order.
 
-
-
 This is valid if the workshop doesn't not include any workbench. Otherwise, those of the workbenches are used and the workshop does not appear in the **Start** menu, in the Welcome window, and has no toolbar.
 
 The files containing the icon bit maps are named, for example, I_CtxGeometry.bmp for the icon to be displayed in the Start menu, usually located in the CNext\resources\graphic\icons\normal.
@@ -233,7 +217,6 @@ Category | An attribute associated with the the workshop or workbench to make it
   * Safework
 
   
----|---  
 Subcategory | An attribute associated with the workbench to classify them more precisely under the previous category  
 Position | An attribute to specify the position of a workbench in its subcategory if it has one, or else in its category  
 Transient | An attribute to specify if the workbench should be displayed in the **Start** menu  
@@ -248,28 +231,24 @@ Icon.PressedRep | Icon replacing the "NormalRep" icon when the end user clicks o
 Icon.FocusedRep | Icon replacing the "NormalRep" icon when the end user moves the mouse over it  
   
 [Top]
-
 ### Providing the Icon Files
 
 The icons are bit map files, suffixed by bmp. They should have a size of 24 by 24 pixels. The icon files are contained in the CNext\resources\graphic\icons\normal directory of the framework containing the workshop module.
 
 * * *
-
 ### In Short
 
 The workshop resources are provided in two files whose names are the workshop identifier. One file is for those that can be translated and is suffixed CATNls, the other for the icon names and is suffixed CATRsc. The resources are provided using keys built with the identifier of the object to which they apply.
 
 * * *
-
 ### References
 
-[1] | [Creating a Workbench](../CAAAfrUseCases/CAAAfrSampleWorkbench.htm)  
+[1] | [Creating a Workbench](../CAAAfrUseCases/CAAAfrSampleWorkbench.md)  
 ---|---  
-[2] | [Assigning Resources to a Dialog Box](../CAADlgTechArticles/CAADlgResources.htm)  
+[2] | [Assigning Resources to a Dialog Box](../CAADlgTechArticles/CAADlgResources.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Jan 2000] | Document created  

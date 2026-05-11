@@ -2,43 +2,36 @@
 title: "CAAIV5V6ExtMmrCombinedCurve"
 type: "interface"
 module: "CAAV5V6MechanicalModeler"
+category: "framework"
 base: "CATBaseUnknown"
+inheritance_chain: "CAAIV5V6ExtMmrCombinedCurve → CATBaseUnknown"
 method_count: 4
 visibility: "public"
+has_tie_binding: true
 verified: true
 ---
+> **TIE实现**: unknown
 
 # CAAIV5V6ExtMmrCombinedCurve
 
 **基类**: CATBaseUnknown  
+**继承链**: CAAIV5V6ExtMmrCombinedCurve → CATBaseUnknown  
 **模块**: CAAV5V6MechanicalModeler  
+**分类**: framework  
 **可见性**: public  
 **方法数**: 4
-
-## 方法列表
-
-### SetCurve
-```cpp
-HRESULT SetCurve(int iNum , CATBaseUnknown *ipCurve);
-```
-
-### GetCurve
-```cpp
-HRESULT GetCurve(int iNum, CATBaseUnknown *&opCurve);
-```
-
-### SetDirection
-```cpp
-HRESULT SetDirection(int iNum, CATBaseUnknown *ipDirection);
-```
-
-### GetDirection
-```cpp
-HRESULT GetDirection(int iNum , CATBaseUnknown *&opDirection);
-```
 
 ## 依赖
 
 - `CAAV5V6ExtMmrCombinedCurve.h`
 - `CATBaseUnknown.h`
+
+## TIE实现
+
+**实现文件**:
+- `CAAEV5V6ExtMmrCombCrvCkeFeature.cpp`
+- `CAAEV5V6ExtMmrCombCrvFactory.cpp`
+- `CAAEV5V6ExtMmrCombCrvInputDescription.cpp`
+- `CAAEV5V6ExtMmrCombCrvMf3DBehavior.cpp`
+- `CAAEV5V6ExtMmrCombinedCurve.cpp`
 

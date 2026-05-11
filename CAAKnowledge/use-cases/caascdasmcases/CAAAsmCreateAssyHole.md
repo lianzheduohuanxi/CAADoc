@@ -1,44 +1,43 @@
 ---
 title: "Creating and Modifying an Assembly Hole"
-category: "general"
+category: "use-case"
 module: "CAAScdAsmUseCases"
 tags: ["CAAScdAsmUseCases", "CATIA", "CAAAsmCreateAssyHole"]
-source_file: "Doc\online\CAAScdAsmUseCases\CAAAsmCreateAssyHole.htm"
+source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmCreateAssyHole.md"
 converted: "2026-05-11T17:31:50.843187"
 ---
-
 ## Assembly
 
 | 
-
 ## Creating and Modifying an Assembly Hole  
   
----|---  
   
 * * *
 
-![](../CAAScrBase/images/atarget.gif) |  This macro shows you how to create an assembly hole and valuate its parameters. This macro opens the [AssemblyHole.CATProduct](samples/AssemblyHole.CATProduct) document that contains three parts: a skeletton, Skeletton.CATPart, and two plates, Plaque1.CATPart and Plaque2.CATPart.  
+  This macro shows you how to create an assembly hole and valuate its parameters. This macro opens the [AssemblyHole.CATProduct](samples/AssemblyHole.CATProduct) document that contains three parts: a skeletton, Skeletton.CATPart, and two plates, Plaque1.CATPart and Plaque2.CATPart.  
 It retrieves each _Product_ object corresponding to the product instances in the assembly and the _Sketch_ object which will define the position of the assembly hole. It creates an _AssemblyHole_ object in the assembly. It sets the main parameters of the new _AssemblyHole_ object. To finish the whole assembly is updated.    
 ---|---  
-![](../CAAScrBase/images/ainfo.gif) |  CAAAsmCreateAssyHole is launched in CATIA [1]. No open document is needed. [CAAAsmCreateAssyHole.CATScript](CAAAsmCreateAssyHoleSource.htm) is located in the CAAScdAsmUseCases module. [Execute macro](macros/CAAAsmCreateAssyHole.CATScript) (Windows only).    
-![](../CAAScrBase/images/ascenari.gif) |  CAAAsmCreateAssyHole includes the following steps:
+  CAAAsmCreateAssyHole is launched in CATIA [1]. No open document is needed. [CAAAsmCreateAssyHole.CATScript](CAAAsmCreateAssyHoleSource.md) is located in the CAAScdAsmUseCases module. [Execute macro](macros/CAAAsmCreateAssyHole.CATScript) (Windows only).    
+  CAAAsmCreateAssyHole includes the following steps:
 
   1. Prolog
   2. Creating Assembly Hole
   3. Setting Assembly Hole parameters
 
-
-
 #### Prolog
 
-The macro first loads AssemblyHole.CATProduct that contains three parts: a skeletton, Skeletton.CATPart, and two plates, Plaque1.CATPart and Plaque2.CATPart. ![](images/AssyHoleBefore.jpg) | 
+The macro first loads AssemblyHole.CATProduct that contains three parts: a skeletton, Skeletton.CATPart, and two plates, Plaque1.CATPart and Plaque2.CATPart. ![](images/AssyHoleBefore.jpg) 
     
     
     ...
+```vbscript
     ' --------------------------
     ' Get the different products
     ' --------------------------
+```
+
     
+```vbscript
     Dim oRootProduct As Product
     Set oRootProduct = CATIA.ActiveDocument.Product
     
@@ -52,16 +51,24 @@ The macro first loads AssemblyHole.CATProduct that contains three parts: a skele
     Set oPlaque2 = oRootProduct.Products.Item  ( "Plaque2.1" ) 
     ...  
   
+```
+
+```
+
 ---  
   
 Once the product document has been loaded, the `oSkeletton`, `oPlaque1` and `oPlaque2` variables are declared to receive the instances of Skeletton, Plaque1 and Plaque2. Those instances are fetched in the _Products_ collection [2] of the root _Product_ [2] using their names.
     
     
     ...
+```vbscript
     ' -----------------------------------------
     ' Get the positioning sketch to create hole 
     ' -----------------------------------------
+```
+
     
+```vbscript
     Dim oSkelDocument As PartDocument
     Set oSkelDocument = CATIA.Documents.Item("Skeletton.CATPart")
     
@@ -72,21 +79,28 @@ Once the product document has been loaded, the `oSkeletton`, `oPlaque1` and `oPl
     Set oPosSketch = oBody.Sketches.Item("Positioning sketch for assembly hole")
     ...  
   
+```
+
+```
+
 ---  
   
 The `oPosSketch` object will be used to determine the positioning point of the hole. The sketch only needs to contain one point.
-
 #### Creating Assembly Hole.
     
     
     ...
+```vbscript
     ' -----------------------------------------
     ' Get the AssemblyFeatures technical object 
     ' -----------------------------------------
+```
+
     
+```vbscript
     Dim oAssemblyFeatures As AssemblyFeatures
     Set oAssemblyFeatures = oRootProduct.GetTechnologicalObject("AssemblyFeatures")
-    
+```vbscript
     ' -------------------------------------------------------------
     ' Create assembly hole
     '   positioning sketch : oPosSketch
@@ -97,15 +111,20 @@ The `oPosSketch` object will be used to determine the positioning point of the h
     
     Dim oAssemblyHole As AssemblyHole
     Set oAssemblyHole = oAssemblyFeatures.AddAssemblyHole(oPosSketch, oSkeletton, 10.000000, oSkeletton)
-    
     ' ------------------------------------------------------------
     ' Affects parts to the assembly hole : Plaque1.1 and Plaque2.1
     ' ------------------------------------------------------------
+```
+
     
+```
+
     oAssemblyHole.AddAffectedComponent oPlaque1
     oAssemblyHole.AddAffectedComponent oPlaque2
     ...  
   
+```
+
 ---  
   
 The _AssemblyFeatures_ collection [2] `oAssemblyFeatures` is retrieved from the root _Product_ using the method `GetTechnologicalObject`. This object allows you to retrieve all the assembly features of `oRootProduct` and to create new ones.
@@ -115,11 +134,11 @@ A new _AssemblyHole_ object [2] is created using the `AddAssemblyHole` method.
 The first and second arguments define the positioning _Sketch_ [2] and one _Product_ containing it; is could be any instance of Skeletton.CATPart. The third argument is the depth of the hole as a double. The fourth argument is a _Product_ instance of Skeletton.CATPart defining the real position of the hole in the assembly context.
 
 The two _product_ Plaque1.1 and Plaque2.1 are affected using the `AddAffectedComponent` method.
-
 #### Setting Assembly Hole parameters
     
     
     ...
+```vbscript
     ' --------------------------------------------
     ' modify the hole parameters
     '   - diameter 10 mm
@@ -127,14 +146,20 @@ The two _product_ Plaque1.1 and Plaque2.1 are affected using the `AddAffectedCom
     '   - V-bottom
     '   - length
     ' --------------------------------------------
+```
+
     
+```vbscript
     Dim oDiameter As Length
     Set oDiameter = oAssemblyHole.Diameter
     oDiameter.Value = 10.000000
     
+```
+
     oAssemblyHole.Type = catCounterboredHole
     oAssemblyHole.AnchorMode = catExtremPointHoleAnchor
     
+```vbscript
     Dim oHeadDiameter As Length
     Set oHeadDiameter = oAssemblyHole.HeadDiameter
     oHeadDiameter.Value = 15.000000
@@ -151,13 +176,20 @@ The two _product_ Plaque1.1 and Plaque2.1 are affected using the `AddAffectedCom
     Set oDepth = oBottomLimit.Dimension
     oDepth.Value = 30.000000
     
+```
+
     oAssemblyHole.BottomType = catVHoleBottom
     
+```vbscript
     Dim oBottomAngle As Angle
     Set oBottomAngle = oAssemblyHole.BottomAngle
     oBottomAngle.Value = 120.000000
     ...  
   
+```
+
+```
+
 ---  
   
 The diameter of the hole is set using the `Diameter` property and the _Length_ object [2].
@@ -168,9 +200,12 @@ The Limit is defined by `BottomLimit` property and _Limit_ object [2].
     
     
     ...
+```vbscript
     ' --------------------------------------
     ' Update the Product
     ' --------------------------------------
+```
+
     
     oRootProduct.Update 
     ...  
@@ -186,7 +221,6 @@ The root _Product_ is then updated; it propagates the Update to the affected par
 [Top]
 
 * * *
-
 #### In Short
 
 This use case has shown how to create an assembly hole and set its parameters using macros.
@@ -194,10 +228,9 @@ This use case has shown how to create an assembly hole and set its parameters us
 [Top]
 
 * * *
-
 #### References
 
-[1] | [Replaying a Macro](../CAAScdInfUseCases/CAAInfLauchMacro.htm)  
+[1] | [Replaying a Macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)  
 ---|---  
 [2] | _Products_ _,_ _Product_ _,_ _AssemblyFeatures_ _,_ _AssemblyHole_ _,_ _Sketch_ _,_ _CatHoleType_ _,_ _CatHoleAnchorMode_ _,_ _Limit_ _,_ _Length_ _,_ _Angle_ _._  
 [Top]

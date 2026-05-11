@@ -2,27 +2,24 @@
 title: "CAAEVisVisuCylinder"
 type: "interface"
 module: "CAAVisualization"
+category: "framework"
 base: "CATExtIVisu"
+inheritance_chain: "CAAEVisVisuCylinder → CATExtIVisu"
 method_count: 1
 visibility: "local"
+has_tie_binding: false
 verified: true
 ---
-
 # CAAEVisVisuCylinder
 
 **基类**: CATExtIVisu  
+**继承链**: CAAEVisVisuCylinder → CATExtIVisu  
 **模块**: CAAVisualization  
+**分类**: framework  
 **可见性**: local  
 **方法数**: 1
 
 > Main Method:
-
-## 方法列表
-
-### BuildRep
-```cpp
-CATRep * BuildRep();
-```
 
 ## 依赖
 

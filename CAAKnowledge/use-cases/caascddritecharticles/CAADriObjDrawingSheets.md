@@ -1,12 +1,11 @@
 ---
 title: "DrawingSheets Collection"
-category: "general"
+category: "use-case"
 module: "CAAScdDriTechArticles"
 tags: []
-source_file: "Doc\online\CAAScdDriTechArticles\CAADriObjDrawingSheets.htm"
+source_file: "Doc/online/CAAScdDriTechArticles/CAADriObjDrawingSheets.md"
 converted: "2026-05-11T17:31:51.123204"
 ---
-
 # DrawingSheets Collection
 
  
@@ -16,13 +15,12 @@ See Also | UseCases | Properties | Methods
   
  
 
-[![](../CAAScrAutomationImages/images/draftdoc.gif)](CAADriObjDrawingDocument.htm)  
+[![](../CAAScrAutomationImages/images/draftdoc.gif)](CAADriObjDrawingDocument.md)  
 ![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/drsheets.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)[![](../CAAScrAutomationImages/images/drsheet.gif)](CAADriObjDrawingSheet.htm)  
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)[![](../CAAScrAutomationImages/images/drsheet.gif)](CAADriObjDrawingSheet.md)  
 ---  
   
-A collection of all the [DrawingSheet](CAADriObjDrawingSheet.htm) objects that are currently open in a [DrawingDocument](CAADriObjDrawingDocument.htm) object.
-
+A collection of all the [DrawingSheet](CAADriObjDrawingSheet.md) objects that are currently open in a [DrawingDocument](CAADriObjDrawingDocument.md) object.
 ## Using the DrawingSheets Collection
 
 Use the Add method to create a new, empty drawing sheet and add it to the collection. The following example adds a new, empty drawing sheet to the active drawing document.
@@ -42,7 +40,10 @@ Use the Item method to retrieve a drawing sheet from the collection.
 
 where index is the drawing sheet name or index number in the DrawingSheets collection. 
 
-For more information about using a single DrawingSheet object, see the [DrawingSheet](CAADriObjDrawingSheet.htm) object.
+```vbscript
+For more information about using a single DrawingSheet object, see the [DrawingSheet](CAADriObjDrawingSheet.md) object.
+
+```
 
 * * *
 

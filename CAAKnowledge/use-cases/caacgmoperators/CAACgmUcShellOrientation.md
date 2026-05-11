@@ -3,7 +3,7 @@ title: "Modifying the Faces Orientation in a Shell"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CATICGMTopShellOrientation", "CAAGMOperatorsInterfaces", "CAAGMOperatorsShellOrientation"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcShellOrientation.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcShellOrientation.md"
 converted: "2026-05-11T17:33:49.037216"
 ---
 
@@ -15,7 +15,7 @@ Abstract The faces in a shell do not have necessarily the same orientation as th
     * Use Case Description
     * References  
 ---  
-Operator to be Used To modify the orientation of faces so that they all have the same orientation as the shell, you must use the CATICGMTopShellOrientation operator which is created by the CATCGMCreateTopShellOrientation global function. This is the only way to modify the orientation of faces in a shell. Use Case Description The CAAGMOperatorsShellOrientation.m module in CAAGMOperatorsInterfaces.edu illustrates how to modify face orientations. This use case is to be run with the FaceOrientation.NCGM input file which is delivered in CAAGMOperatorsInterfaces.edu/FunctionTests/InputData. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm). With the input data below: Fig.1 Face Orientation: Input Data ![Shell orientation](images/CGM_shellOrient_input_0.png) |  ![Shell orientation](images/CGM_shellOrient_input_1.png) |  ![Shell orientation](images/CGM_shellOrient_input_2.png)  
+Operator to be Used To modify the orientation of faces so that they all have the same orientation as the shell, you must use the CATICGMTopShellOrientation operator which is created by the CATCGMCreateTopShellOrientation global function. This is the only way to modify the orientation of faces in a shell. Use Case Description The CAAGMOperatorsShellOrientation.m module in CAAGMOperatorsInterfaces.edu illustrates how to modify face orientations. This use case is to be run with the FaceOrientation.NCGM input file which is delivered in CAAGMOperatorsInterfaces.edu/FunctionTests/InputData. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md). With the input data below: Fig.1 Face Orientation: Input Data ![Shell orientation](images/CGM_shellOrient_input_0.png) 
 ---|---|---  
 and the code below:
     
@@ -29,11 +29,11 @@ and the code below:
 ---  
 you get this result: Fig.2 Result after modifying the face orientation ![Shell Orientation Output Faces](images/CGM_shellOrient_output_0.png)  
 ---  
-References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)  
-[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)  
-[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.htm)  
-[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.htm)  
+[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)  
+[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)  
+[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.md)  
+[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.md)  
 History Version: **1** [Feb 2014] | Document created  
 ---|---

@@ -1,9 +1,9 @@
 ---
 title: "New C++ Authorized APIs in CAA V5R9 GA"
-category: "general"
+category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIFunctActionsGroup", "CATITPSView", "CATIAVPMVDAImport", "CATIFunctVariant", "CATIMfgTPModification", "CATISchRouteAlternateGraphic", "CATIFunctAction", "CATIKnowledgeAdvisorAddin", "CATIMfgGeometryTabPage", "CATIVpmSCLogin", "CATIValue", "CATISchGRRRouteAlternate", "CATIFunctVariants", "CATISmgMachiningAreaChecks", "CATIFunctDocument", "CATIMfgManufacturingUtilities", "CATIFunctElement", "CATIInstance", "CATISchAppReplace", "CATIFunctFacetMgr"]
-source_file: "Doc\online\CAACenQuickRefs\CAACenV5R9GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R9GANewCPPAPI.md"
 converted: "2026-05-11T17:33:47.676659"
 ---
 

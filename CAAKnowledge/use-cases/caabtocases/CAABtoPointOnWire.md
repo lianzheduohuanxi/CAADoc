@@ -3,7 +3,7 @@ title: "Creating a Point on a Wire"
 category: "use case"
 module: "CAABtoUseCases"
 tags: ["CAATopComputePointOnWire", "CATICGMObject", "CAABasicTopoOpe", "CAAGemBrowser"]
-source_file: "Doc\online\CAABtoUseCases\CAABtoPointOnWire.htm"
+source_file: "Doc/online/CAABtoUseCases/CAABtoPointOnWire.md"
 converted: "2026-05-11T17:33:46.169729"
 ---
 
@@ -38,7 +38,7 @@ What You Will Learn With This Use Case This use case is intended to help you use
 
 Note: Unlike in most topological operators, there is no GetResult method whereby you access a CATBody. There is no BASIC or ADVANCED mode to be defined either. [Top] The CAATopComputePointOnWire Use Case CAATopComputePointOnWire is a use case of the CAABasicTopoOpe.edu framework that illustrates the Basic Topological Operators framework capabilities. [Top] What Does CAATopComputePointOnWire Do Fig. 1: The Geometry of the CAATopComputePointOnWire Use Case ![](images/CAAComputePointOnWire.gif) | This use case creates a CATMathPoint at a ratio of 0.5 from the start extremity of the CATWire. To visualize this point a cartesian point is created at the CATMathPoint location.  
 ---|---  
-[Top] How to Launch CAATopComputePointOnWire To launch CAATopComputePointOnWire, you will need to set up the build time environment, then compile CAATopComputePointOnWire.m along with its prerequisites, set up the run time environment, and then execute the use case [3]. If you simply type CAATopComputePointOnWire with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: With Windows CAATopComputePointOnWire `e:\PointOnWire.NCGM` With UNIX CAATopComputePointOnWire `/u/PointOnWire.NCGM` This NCGM file can be displayed using the CAAGemBrowser use case. [Top] Where to Find the CAATopComputePointOnWire Code The CAATopComputePointOnWire use case is made of a main named CAATopComputePointOnWire.cpp located in the CAATopComputePointOnWire.m module of the CAABasicTopoOpe.edu framework: Windows | `InstallRootDirectory\CAABasicTopoOpe.edu\CAATopComputePointOnWire.m\`  
+[Top] How to Launch CAATopComputePointOnWire To launch CAATopComputePointOnWire, you will need to set up the build time environment, then compile CAATopComputePointOnWire.m along with its prerequisites, set up the run time environment, and then execute the use case [3]. If you simply type CAATopComputePointOnWire with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: With Windows CAATopComputePointOnWire `e/PointOnWire.NCGM` With UNIX CAATopComputePointOnWire `/u/PointOnWire.NCGM` This NCGM file can be displayed using the CAAGemBrowser use case. [Top] Where to Find the CAATopComputePointOnWire Code The CAATopComputePointOnWire use case is made of a main named CAATopComputePointOnWire.cpp located in the CAATopComputePointOnWire.m module of the CAABasicTopoOpe.edu framework: Windows | `InstallRootDirectory\CAABasicTopoOpe.edu\CAATopComputePointOnWire.m\`  
 ---|---  
 Unix | `InstallRootDirectory/CAABasicTopoOpe.edu/CAATopComputePointOnWire.m/`  
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed. [Top] Step-by-Step CAATopComputePointOnWire.cpp is divided into four logical steps: 
@@ -115,10 +115,10 @@ In Short The CATComputePointOnWire topological operators allows you to create a 
 
 * * *
 
-References [1] | [The CGM Objects](../CAAGobTechArticles/GeoObjects.htm)  
+References [1] | [The CGM Objects](../CAAGobTechArticles/GeoObjects.md)  
 ---|---  
-[2] | [The CGM Curves](../CAAGobTechArticles/Curves.htm)  
-[3] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[2] | [The CGM Curves](../CAAGobTechArticles/Curves.md)  
+[3] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 [Top]  
   
 * * *

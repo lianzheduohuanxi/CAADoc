@@ -3,18 +3,15 @@ title: "Using the Topological Objects"
 category: "use case"
 module: "CAATobUseCases"
 tags: ["CAATobTetra", "CATICGMObject", "CAAGemBrowser", "CAAGobCreation", "CATIntersectionSurSur", "CATIntersectionCrvCrv", "CATIA", "CAATopologicalObjects"]
-source_file: "Doc\online\CAATobUseCases\CAATobTetra.htm"
+source_file: "Doc/online/CAATobUseCases/CAATobTetra.md"
 converted: "2026-05-11T17:33:45.845499"
 ---
-
 # Geometric Modeler
 
 | 
-
 ## Topology
 
 | 
-
 ### Using the Topological Objects
 
 _Creation of and navigation in a tetrahedron_  
@@ -22,7 +19,6 @@ _Creation of and navigation in a tetrahedron_
 Use Case  
   
 * * *
-
 ### Abstract
 
 The goal of this use case is to understand the topological model of the CATIA geometric modeler, by creating a tetrahedron only with the TopologicalObjects resources. Topological objects can also be directly created by topological operators, and the use of topological operators is the recommended way rather than using the basic tools of the TopologicalObjects framework. The navigation in a topological structure is also discussed. 
@@ -41,13 +37,11 @@ The goal of this use case is to understand the topological model of the CATIA ge
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 The topological model is fully described in technical articles [1] [2]. The use case shows how to use the TopologicalObjects interfaces to create and explore topological objects.
 
 [Top]
-
 ### The Principle
 
 The intent of this section is to recall some important notions about the topological model.
@@ -61,8 +55,6 @@ A _cell_ is the lowest level of topological objects. There are four types of cel
   * An _edge_ is a part of curve bounded by vertices
   * A _vertex_ is the topology of the point.
 
-
-
 Connected cells of same dimension are grouped into _domains_ to define the boundary of another cell. We can now detail the above definitions: 
 
   * A set of connected volumes is called a _lump_
@@ -73,18 +65,14 @@ Connected cells of same dimension are grouped into _domains_ to define the bound
   * A set of connected edges that does not bound a face is called a _wire_
   * A vertex alone in the space is a _vertex in volume._
 
-
-
 The _body_ is the highest level of topological object: it is a set of lumps, shells, wires, and vertices in volume. The topological operators operate on bodies,... and it is often much more simpler to use a topological operator than to create the topology from scratch!
 
 [Top]
-
 ### The CAATobTetra Use Case
 
 CAATobTetra is a use case of the CAATopologicalObjects.edu framework that illustrates TopologicalObjects framework capabilities.
 
 [Top]
-
 #### What Does CAATobTetra Do
 
 The use case details the creation of the geometry and of the topology of the tetrahedron. Moreover, it scans the created topology.
@@ -106,24 +94,20 @@ The description of the geometry and of the cells is not sufficient to describe t
   * The relative orientation of a cell inside its domain
   * The location of a domain: does it represent an internal or external boundary?
 
-
-
 [Top]
-
 #### How to Launch CAATobTetra
 
 To launch CAATobTetra, you will need to set up the build time environment, then compile CAATobTetra.m along with its prerequisites, set up the run time environment, and then execute the use case [5].
 
 If you simply type CAATobTetra with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example:
 
-With Windows `CAATobTetra e:\TetraCreation.NCGM`
+With Windows `CAATobTetra e/TetraCreation.NCGM`
 
 With UNIX `CAATobTetra /u/TetraCreation.NCGM`
 
 This NCGM file can be displayed using the CAAGemBrowser use case.
 
 [Top]
-
 #### Where to Find the CAATobTetra Code
 
 The CAATobTetra use case is made of a main named CAATobTetra.cpp located in the CAATobTetra.m module of the CAATopologicalObjects.edu framework:
@@ -135,7 +119,6 @@ Unix | `InstallRootDirectory/CAATopologicalObjects.edu/CAATobTetra.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 The use case is divided into the following steps: 
@@ -152,10 +135,7 @@ The use case is divided into the following steps:
   * Scanning the Topological Structure
   * Writing the Model and Closing the Container
 
-
-
 [Top]
-
 #### Creating the Geometry Factory
 
 The geometry factory (CATGeoFactory) creates and manages all the `CATICGMObject` (and the curves and surfaces in particular) [4]. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
@@ -167,7 +147,6 @@ The geometry factory (CATGeoFactory) creates and manages all the `CATICGMObject`
 ---  
   
 [Top]
-
 #### Creating the Geometry
 
 The topology is a logical information describing the boundary of geometric objects: so, first create the geometry!
@@ -201,8 +180,6 @@ Now, create `CATPLine` on the planes. A `CATPLine` is a line defined in the para
   * To project a 3D point on the surface with the geometric operator `CATProjectionPtSur`
   * To use the `CATSurface::GetParam` method (only for canonical surfaces and a point that is known to be on the surface): It is the way used in the use case
   * To use the barycentric constructor, after retrieving the limits (`CATSurface::GetLimits`) of the surface: this way is illustrated in the `CAAGobCreation` use case [6].
-
-
 
 The following code creates the `CATPLine`.
     
@@ -487,7 +464,6 @@ Appending the points on the edge curves in the corresponding macro points, and t
 ---  
   
 [Top]
-
 #### Creating the Vertices
 
 Before creating any topological entity, you first must create the factory of these entity: this factory is a CATBody, and not the CATGeoFactory. The factory of the CATBody, however, still is the CATGeoFactory.
@@ -528,7 +504,6 @@ Using `Tetra` as the cell factory, we can now create the vertices, and associate
 ---  
   
 [Top]
-
 #### Creating the Edges
 
 First create them void.
@@ -563,7 +538,6 @@ Now, for each edge:
     * The "end" attribute is given by the matter side set to `CATSideRight`
     * The `NULL` argument states the fact that no domain is associated with a vertex
     * The last argument states which poec of the macro point is the end of the edge curve
-
 
     
     
@@ -606,7 +580,6 @@ Now, for each edge:
 ---  
   
 [Top]
-
 #### Creating the Loops and Faces
 
 Once again, first create a void topology. For the loop, indicates whether the loop defines an inner (hole) or outer boundary. In the case of the tetrahedron, the faces do not have any holes, all the loops are external.
@@ -642,7 +615,6 @@ Now, for each face:
     * At the same time, the corresponding loop is updated
     * The last argument details which PCurve of the edge curve is the geometry of the boundary.
   * Declare the completion of the loop (`Done`)
-
 
     
     
@@ -693,7 +665,6 @@ Now, for each face:
 ---  
   
 [Top]
-
 #### Creating the Shell
 
 In the use case, the shell is aimed to bound a volume, it is an external boundary of a future volume (CATLocationOuter). To create a skin body, use the CATLocationIn3DSpace value instead, and directly attach the shell to the body (i.e.: go to step 9 and attach the shell to the body. But you still have to add the face inside the shell with the `AddCell` method)
@@ -705,7 +676,6 @@ In the use case, the shell is aimed to bound a volume, it is an external boundar
 ---  
   
 [Top]
-
 #### Creating the Volume
 
 After creating a void volume (`CreateVolume`), add it in the already created shell (`AddDomain`). As before, bound the volume by the faces by using the `AddBoundingCell` method: 
@@ -713,7 +683,6 @@ After creating a void volume (`CreateVolume`), add it in the already created she
   * The orientation is right, according to the previously face orientation
   * The shell is automatically updated
   * The geometry of the face is detailed.
-
 
     
     
@@ -738,7 +707,6 @@ After creating a void volume (`CreateVolume`), add it in the already created she
 ---  
   
 [Top]
-
 #### Creating the Lump
 
 After creating a void lump (`CreateLump`), add it the already created volume (`AddCell`).
@@ -757,7 +725,6 @@ After creating a void lump (`CreateLump`), add it the already created volume (`A
 ---  
   
 [Top]
-
 #### Completing and Freezing the Body
 
 Adds the lump to the body (`AddDomain`). The topological structure is finished.
@@ -784,7 +751,6 @@ It remains to declare this completion with the `Completed` method. As this metho
 The `Freeze` method declares that the body cannot be modified anymore. Using a frozen body in a topological operation leads to the duplication in the resulting body of the cells and domains that must be modified. The resulting body shares with the initial body the cells and domains that are not touched by the operation.
 
 [Top]
-
 #### Scanning the Topological Structure
 
 To retrieve the number of domains of a body, use the `CATBody::GetNbDomains` method. In case of the tetrahedron, only one domain is created.
@@ -863,7 +829,10 @@ From the shell to the faces: first clean the list with `RemoveAll` that frees th
   
 ---  
   
+```vbscript
 For each face, 
+
+```
 
   * Recover its geometry: `CATCell::GetGeometry`
   * Test the type of geometry (a `CATPlane` for the tetrahedron)
@@ -872,7 +841,6 @@ For each face,
     * Skip to the `CATBoundaryIterator::Next` cell until the last one
     * `delete` it.  
 Using the boundary iterator, the number of edges is computed (4 for the tetrahedron).
-
 
     
     
@@ -929,7 +897,6 @@ Using the boundary iterator, the number of edges is computed (4 for the tetrahed
 ---  
   
 [Top]
-
 #### Writing the Model and Closing the Factory
 
 To save the model on a file, the `::CATSaveCGMContainer` global function is used. Notice that in the use case, the save is conditioned by an input parameter representing the file inside which the model must be saved.
@@ -960,7 +927,6 @@ The use case ends with the closure of the geometry factory, done by the `::CATCl
 [Top]
 
 * * *
-
 ### In Short
 
 This use case creates a tetrahedron from scratch in order to expose the topological model of CATIA geometric modeler a basic 3D primitive. This primitive could also be created by using the topological operators in trimming a box primitive by a plane.
@@ -970,20 +936,18 @@ The topology of the created tetrahedron is investigated to show different means 
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Topology Concepts](../CAATobTechArticles/TopoConcepts.htm)  
+[1] | [Topology Concepts](../CAATobTechArticles/TopoConcepts.md)  
 ---|---  
-[2] | [The CGM Topological Model](../CAATobTechArticles/TopoModel.htm)  
-[3] | [The Curves of the CATIA Geometric Modeler](../CAAGobTechArticles/Curves.htm)  
-[4] | [The Objects of the CATIA Geometric Modeler](../CAAGobTechArticles/GeoObjects.htm)  
-[5] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-[6] | [How to Create and Transform Geometry](../CAAGobUseCases/CAAGobCreation.htm)  
+[2] | [The CGM Topological Model](../CAATobTechArticles/TopoModel.md)  
+[3] | [The Curves of the CATIA Geometric Modeler](../CAAGobTechArticles/Curves.md)  
+[4] | [The Objects of the CATIA Geometric Modeler](../CAAGobTechArticles/GeoObjects.md)  
+[5] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[6] | [How to Create and Transform Geometry](../CAAGobUseCases/CAAGobCreation.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Apr 2000] | Document created  

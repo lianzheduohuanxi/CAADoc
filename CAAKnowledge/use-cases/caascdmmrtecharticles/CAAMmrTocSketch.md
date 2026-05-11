@@ -1,20 +1,19 @@
 ---
 title: "Sketch Automation Objects"
-category: "general"
+category: "use-case"
 module: "CAAScdMmrTechArticles"
 tags: []
-source_file: "Doc\online\CAAScdMmrTechArticles\CAAMmrTocSketch.htm"
+source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrTocSketch.md"
 converted: "2026-05-11T17:31:51.158125"
 ---
-
 # Sketch Automation Objects
 
 ![](../CAAScrAutomationImages/images/sketch.gif)![Multiple Object Diagrams](../CAAScrAutomationImages/images/uparrow.gif)  
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/fact2d.gif)  
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/geoelts.gif)  
-![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/geoelt.gif)[![GeometricElement Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](CAAMmrTocGeometricElement.htm)  
-![](../CAAScrAutomationImages/images/parmult.gif)[![](../CAAScrAutomationImages/images/constrs.gif)](CAAMmrObjConstraints.htm)  
-![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)[![](../CAAScrAutomationImages/images/constrnt.gif)](CAAMmrObjConstraints.htm)  
+![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/geoelt.gif)[![GeometricElement Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)](CAAMmrTocGeometricElement.md)  
+![](../CAAScrAutomationImages/images/parmult.gif)[![](../CAAScrAutomationImages/images/constrs.gif)](CAAMmrObjConstraints.md)  
+![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)[![](../CAAScrAutomationImages/images/constrnt.gif)](CAAMmrObjConstraints.md)  
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/line2d.gif)  
 ![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/axis2d.gif)  
 **Legend** ![](../CAAScrAutomationImages/images/yellbox.gif) Collection  

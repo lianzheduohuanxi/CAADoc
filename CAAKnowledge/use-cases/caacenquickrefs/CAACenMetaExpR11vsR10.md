@@ -1,9 +1,9 @@
 ---
 title: "Changes to ENOVIA LCA Metadata in V5R11 Compared with V5R10"
-category: "general"
+category: "use-case"
 module: "CAACenQuickRefs"
 tags: []
-source_file: "Doc\online\CAACenQuickRefs\CAACenMetaExpR11vsR10.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenMetaExpR11vsR10.md"
 converted: "2026-05-11T17:33:46.563961"
 ---
 

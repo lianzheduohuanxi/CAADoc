@@ -3,18 +3,15 @@ title: "Launching CAA V5 Batch"
 category: "use case"
 module: "CAABatUseCases"
 tags: ["CATIBatchElementCAA", "CAABatBatchInfrastructure", "CATIBatchCAA", "CATIBatchElementsCAA", "CAABatchInfrastructure", "CAABatBatchLauncherSample"]
-source_file: "Doc\online\CAABatUseCases\CAABatBatchLauncherSample.htm"
+source_file: "Doc/online/CAABatUseCases/CAABatBatchLauncherSample.md"
 converted: "2026-05-11T17:33:45.726629"
 ---
-
 # Middleware
 
 | 
-
 ## BatchInfrastructure
 
 | 
-
 ### Launching CAA V5 Batch
 
 _Launching a CAA V5 Batch from a code source._  
@@ -22,7 +19,6 @@ _Launching a CAA V5 Batch from a code source._
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to launch a CAA V5 Batch from a code source. 
@@ -39,21 +35,17 @@ This article shows how to launch a CAA V5 Batch from a code source.
 |   
 
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show you how to launch CAA V5 Batch in a code source, using the Batch APIs. [Top]
-
 ### The CAABatBatchLauncherSample Use Case
 
 CAABatBatchLauncherSample is a use case of the CAABatBatchInfrastructure.edu framework that illustrates Batch infrastructure capabilities. [Top]
-
 #### What Does CAABatBatchLauncherSample Do
 
 The CAABatBatchLauncherSample 's purpose is to show how to launch and monitor a CAA V5 Batch. The example batch takes as input  a list of .model files and renames them to .CATPart files.  To do this, the use case will show how to :     \- generate a XML describing the input files.     \- use callback to be notified of the end of the batch replay     \- analyze the generated XML file describing the outputs.   
 **_Warning_** : this batch sample does not convert model files to CATPart files. It is only about renaming the files.  
   [Top]
-
 #### How to Launch CAABatBatchLauncherSample
 
 To launch CAABatBatchLauncherSample , you will need to set up the build time environment ,then compile CAABatBatchLauncherSample along with its prerequisites, set up the run time environment :            -     set ADL_ODT_IN variable to the directory where the input files to rename are located : | Windows |  InstallRootDirectory\CAABatchInfrastructure.edu\Data.d\  
@@ -67,7 +59,6 @@ Unix |  InstallRootDirectory/CAABatchInfrastructure.edu/Data.d/
             -     launch the start command mkrun -c  CAABatBatchLauncherSample
 
 [Top]
-
 #### Where to Find the CAABatBatchLauncherSample Code
 
 The CAABatBatchLauncherSample use case is made of a single function named batchmain located in the CAABatBatchLauncherSample.m module of the CAABatchInfrastructure.edu framework:
@@ -79,7 +70,6 @@ Unix |  InstallRootDirectory/CAABatchInfrastructure.edu/ CAABatBatchLauncherSamp
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are seven logical steps in CAABatBatchLauncherSample:
@@ -92,10 +82,7 @@ There are seven logical steps in CAABatBatchLauncherSample:
   6. Analyzing output files and result check
   7. Cleaning up
 
-
-
 [Top]
-
 #### Generating the input XML input
     
     
@@ -134,14 +121,11 @@ This XML file contains :
     * _BeginInput_() and _EndInput_() are used at the beginning and the end of the input data section. 
     * _BeginOutput_() and _EndOutput_() methods are used at the beginning and the end of output data section. 
 
-
-
 The Parameters.dtd file used to check the xml files syntax is provided by the Batch Infrastructure and is used for all batches.
 
 More details about the parameter file can be found in the use case "Creating a CAA V5 Batch".[1]
 
 [Top]
-
 #### Retrieving the CATBatClientMonitorCAA interface
     
     
@@ -154,9 +138,7 @@ More details about the parameter file can be found in the use case "Creating a C
 ---  
   
 The method  _GetTheClientMonitorCAA_ returns a pointer to the interface CATBatClientMonitorCAA. 
-
 ####  
-
 #### Initialization of the CATBatClientMonitorCAA
     
     
@@ -169,7 +151,6 @@ The method  _GetTheClientMonitorCAA_ returns a pointer to the interface CATBatC
 The method _InitializeV5Monitoring_ initializes the ability of monitoring CAA V5 Batchs.
 
  
-
 #### Initialization of callbacks
     
     
@@ -186,7 +167,6 @@ The initialization of the call is done with the AddCallback method that is calle
 The CATBatchEventWatcher  class is defined in an other source of this sample (CATBatchEventWatcher.h and CATBatchEventWatcher.cpp). It contains the call back definition and the notification emission when the batch replay is finished.
 
  
-
 #### Starting the CAA V5 Batch
     
     
@@ -206,11 +186,8 @@ The method _GetFullPath_ retrieves the full path of the previously generated XML
 _SetUUID_ is called after we start the CAA V5 Batch because we need to know the batch identifier, uuid, which is an output argument retrieved by a call to the _StartV5Batch_ method _._ It is a unique identifier that identifies the running batch. It is used as an input argument to get information about the batch execution. In this example, it is used in the _SetUUID_ method to tell the CATBatchEventWatcher which CATBatchEventNotif it must expect.
 
 At the end of the batch replay, a notification is received by the CATBatchEventWatcher (the callback was initialized in the previous step). The UUID is used to check which batch is ending, and avoids confusion if there are several bachs running at the same time.
-
 ####  
-
 #### Analyzing output files and result check
-
 ####  
     
     
@@ -259,7 +236,6 @@ We create an access to the CATIBatchCAA  interface to call the methods that wil
 
 To check if the sample has done its work correctly, open the $BATCH_HOME directory and check there are the 3 renamed files :  
 ATTRIBUTCXR1.CATPart, CUBE.CATPart and BOBINE.CATPart.
-
 #### Cleaning up
     
     
@@ -276,7 +252,6 @@ _CATDeleteFile_ deletes the input parameter file. The method _DeleteLogs_ from t
 [Top]
 
 * * *
-
 ### In Short
 
 A CAA V5 batch can be launched in source code using APIs provided by the CATBatClientMonitorCAA interface.
@@ -284,15 +259,13 @@ A CAA V5 batch can be launched in source code using APIs provided by the CATBatC
 _[_Top]
 
 * * *
-
 ### References
 
-[1] | [Creating a CAA V5 Batch](CAABatBatchSample.htm)  
+[1] | [Creating a CAA V5 Batch](CAABatBatchSample.md)  
 ---|---  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Jan 2007] | Document created  

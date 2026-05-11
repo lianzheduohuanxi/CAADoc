@@ -3,18 +3,15 @@ title: "Creating Frames and Title Blocks in a CATDrawing Document"
 category: "use case"
 module: "CAADriUseCases"
 tags: ["CATIDrwAnnotationFactory_var", "CATISheet_var", "CATIDftTextProperties", "CATIDftText", "CATIDrwAnnotationFactory", "CAADrwTitleBlock", "CATIDftDocumentServices", "CATI2DWFFactory", "CAA2", "CATIA", "CAADRWTitleBlock", "CATIDrawing", "CATIView_var", "CATIDrwAxisLine_var", "CATISpecObject_var", "CATIView", "CATIDrwSubString", "CATI2DWFFactory_var", "CATIDrwCenterLine_var", "CAADraftingInterfaces"]
-source_file: "Doc\online\CAADriUseCases\CAADriTitleBlock.htm"
+source_file: "Doc/online/CAADriUseCases/CAADriTitleBlock.md"
 converted: "2026-05-11T17:31:51.027919"
 ---
-
 # Mechanical Design
 
 | 
-
 ## Drafting
 
 | 
-
 ### Creating Frames and Title Blocks in a CATDrawing Document
 
 _How to create drawing geometry and annotations_  
@@ -22,7 +19,6 @@ _How to create drawing geometry and annotations_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article discusses the CAADrwTitleBlock use case. This use case explains how to read a CATDrawing document, get the sheet background view, and create geometry and annotations in it.
@@ -40,19 +36,16 @@ This article discusses the CAADrwTitleBlock use case. This use case explains how
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show you how to navigate through drawing sheets and views as well as how to get and use geometrical and annotation factories.
 
 [Top]
-
 ### The CAADrwTitleBlock Use Case
 
 CAADrwTitleBlock is a use case of the CAADraftingInterfaces.edu framework that illustrates DraftingInterfaces framework capabilities.
 
 [Top]
-
 #### What Does CAADrwTitleBlock Do?
 
 Fig. 1: Initial Document ![](images/CAADrwTitleBlock1.jpg)  
@@ -70,12 +63,9 @@ The two views are:
   1. The main view which contains the elements directly created in the sheet
   2. The background view, which is dedicated to the frames and title blocks.
 
-
-
 These two views are part of the sheet. So they cannot be deleted and they are not shown in the graph. Then the program gets the background view and creates a frame using 2D lines and a text in the bottom right corner.
 
 [Top]
-
 #### How to Launch CAADrwTitleBlock
 
 To launch CAADrwTitleBlock, you will need to set up the build time environment, then compile CAADrwTitleBlock along with its prerequisites, set up the run time environment, and then execute the use case [1].
@@ -85,7 +75,7 @@ When you launch the use case, pass the full pathname of the file into which you 
   * With Windows 
         
         e:> mkrun -c cmd
-        CAADrwTitleBlock c:\DrawingTest.CATDrawing c:\DrawingTestwithtitleblocks.CATDrawing  
+        CAADrwTitleBlock c/DrawingTest.CATDrawing c/DrawingTestwithtitleblocks.CATDrawing  
   
 ---  
   * With UNIX 
@@ -95,10 +85,7 @@ When you launch the use case, pass the full pathname of the file into which you 
   
 ---  
 
-
-
 [Top]
-
 #### Where to Find the CAADrwTitleBlock Code
 
 The CAADrwTitleBlock use case is made of a single source file named CAADrwTitleBlock.cpp located in the CAADrwTitleBlock.m module of the CAADraftingInterfaces.edu framework:
@@ -110,7 +97,6 @@ Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwTitleBlock.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are six steps in CAADRWTitleBlock:
@@ -122,10 +108,7 @@ There are six steps in CAADRWTitleBlock:
   5. Getting the Annotation Factory and Creating the Title Block Texts
   6. Saving the Document and Exiting
 
-
-
 [Top]
-
 #### Creating and Initializing the Document
     
     
@@ -150,7 +133,6 @@ There are six steps in CAADRWTitleBlock:
 This section represents the usual sequence for creating a CATIA document [2].
 
 [Top]
-
 #### Accessing the Drawing in the Document
     
     
@@ -182,7 +164,6 @@ This section represents the usual sequence for creating a CATIA document [2].
 The root feature of a drawing document is the Drawing, that is, the feature that implements the _CATIDrawing_ interface. We can get a pointer to _CATIDrawing_ using the _CATIDftDocumentServices_ interface, which is implemented by the document. The `GetDrawing` method first argument is the _CATIDrawing_ interface IID.
 
 [Top]
-
 #### Navigating through the Drawing and Sheet to Get the Background View
     
     
@@ -201,7 +182,6 @@ The root feature of a drawing document is the Drawing, that is, the feature that
 A drawing may contain several sheets, but only one is current at a time. The current sheet is the sheet containing the active view, that is the view currently edited. The methods of the _CATISheet_ and _CATIView_ interfaces do return handlers, so we don’t need to care about releasing them. The drawing variable is a pointer to _CATIDrawing_ , so we have to release when it's no longer used.
 
 [Top]
-
 #### Getting the Geometry Factory and Creating the Frame 2D Lines
     
     
@@ -349,7 +329,6 @@ A drawing may contain several sheets, but only one is current at a time. The cur
 Before using the factory, you have to make the view current. The view implements the _CATI2DWFFactory_ 2D geometry factory interface. It is the sketcher factory and, as a consequence, you can use the same methods to create a profile in a part or 2D geometric objects in a drawing view.
 
 [Top]
-
 #### Getting the Annotation Factory and Creating Dress Up (Texts, Axis Line and Center Line)
     
     
@@ -444,7 +423,6 @@ Before using the factory, you have to make the view current. The view implements
 The _CATIDrwAnnotationFactory_ annotation factory is implemented by the view and so the coordinates passed in `CreateDrwText` are view coordinates. The _CATIDrwTextProperties_ interface allows for text property modification, such as setting the text with a bold typeface using the `SetBold` method.
 
 [Top]
-
 #### Saving the Document and Exiting
     
     
@@ -468,7 +446,6 @@ This section represents the usual sequence for saving a newly created CATIA docu
 [Top]
 
 * * *
-
 ### In Short
 
 This use case shows the objects and interfaces used when creating a CATDrawing document, and when creating a frame and a title block in the current sheet background view. The _CATIDrawing_ interface is implemented by the drawing root object. A pointer to this interface is the key to enter and navigate the drawing structure, and can be retrieved using the `GetDrawing` method of the _CATIDftDocumentServices_ interface implemented by the document. Retrieving the background view is performed first by retrieving the current sheet thanks to the `GetCurrentSheet` method of the _CATIDrawing_ interface, and then asking the current sheet for this background view using the `GetBackgroundView` of _CATISheet_. This background view is made current using the `SetCurrentView` method of _CATISheet_ , and a handler to the _CATI2DWFFactory_ interface implemented by the view is retrieved to create the frame lines thanks to the `CreateLine` method. The view also implements the _CATIDrwAnnotationFactory_ interface and the title block is created using its `CreateDrwText` method, and set with a bold typeface using the `SetBold` method.
@@ -476,16 +453,14 @@ This use case shows the objects and interfaces used when creating a CATDrawing d
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] | [Creating a New Document](../CAAOmbUseCases/CAAOmbNewDoc.htm)  
+[2] | [Creating a New Document](../CAAOmbUseCases/CAAOmbNewDoc.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Jan 2000] | Document created  

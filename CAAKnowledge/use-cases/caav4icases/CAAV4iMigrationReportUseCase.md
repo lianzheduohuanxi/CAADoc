@@ -3,18 +3,15 @@ title: "Reading Migration Report of a Model"
 category: "use case"
 module: "CAAV4iUseCases"
 tags: ["CATIAV4Interfaces", "CAACATIAV4Interfaces", "CAAV4iMigrationReportExtraction"]
-source_file: "Doc\online\CAAV4iUseCases\CAAV4iMigrationReportUseCase.htm"
+source_file: "Doc/online/CAAV4iUseCases/CAAV4iMigrationReportUseCase.md"
 converted: "2026-05-11T17:33:45.775884"
 ---
-
 # 3D PLM PPR Hub Open Gateway
 
 | 
-
 ## V4 Access
 
 | 
-
 ### Reading Migration Report of a Model
 
 _Working with the elements of model_  
@@ -22,7 +19,6 @@ _Working with the elements of model_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to read Migration Report 
@@ -40,19 +36,16 @@ This article shows how to read Migration Report
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show you how to read Migration Report of a model. 
 
 [Top] 
-
 ### The CAAV4iMigrationReportExtraction Use Case
 
 CAAV4iMigrationReportExtraction is a use case of the CAACATIAV4Interfaces.edu framework that illustrates CATIAV4Interfaces framework capabilities. 
 
 [Top] 
-
 #### What Does CAAV4iMigrationReportExtraction Do
 
 The CAAV4iMigrationReportExtraction reads the Migration report file in ReadReportFile().  
@@ -95,7 +88,6 @@ The output looks like :
     
 
 Close the report,release the buffer,remove the pDoc and finally delete the session. if the reading failed, code returns an error with rc = 1. 
-
 #### How to Launch CAAV4iMigrationReportExtraction
 
 To launch CAAV4iMigrationReportExtraction, you will need to set up the build time environment, then compile CAAV4iMigrationReportExtraction along with its prerequisites, set up the run time environment, and then execute the use case [1].  
@@ -113,10 +105,7 @@ You can use the model attribut.CATPart located in CAACATIAV4Interfaces.edu/Input
   * Windows : `InstallRootDirectory\CAA``CATIAV4Interfaces``.edu\InputData`
   * Unix : `InstallRootDirectory/CAA``CATIAV4Interfaces``.edu/InputData`
 
-
-
 [Top] 
-
 #### Where to Find the CAAV4iMigrationReportExtraction Code
 
 The CAAV4iMigrationReportExtraction use case is made of a single file located in the CAAV4iMigrationReportExtraction.m module of the CAACATIAV4Interfaces.edu framework:  
@@ -127,7 +116,6 @@ Unix | `InstallRootDirectory/CAACATIAV4Interfaces.edu/`CAAV4iMigrationReportExtr
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed. 
 
 [Top] 
-
 ### Step-by-Step
 
 There are 4 logical steps in CAAV4iMigrationReportExtraction : 
@@ -138,10 +126,7 @@ There are 4 logical steps in CAAV4iMigrationReportExtraction :
   4. Migrated object decoding
   5. Retrieving the object and its attribute
 
-
-
 [Top] 
-
 #### Opening the report file
     
     
@@ -154,7 +139,6 @@ There are 4 logical steps in CAAV4iMigrationReportExtraction :
 ---  
   
 [Top] 
-
 #### Opening the model
     
     
@@ -171,7 +155,6 @@ There are 4 logical steps in CAAV4iMigrationReportExtraction :
 ---  
   
 [Top] 
-
 #### Get the entities of the part
     
     
@@ -183,7 +166,6 @@ There are 4 logical steps in CAAV4iMigrationReportExtraction :
 ---  
   
 [Top] 
-
 #### Migrated object decoding
     
     
@@ -222,7 +204,6 @@ There are 4 logical steps in CAAV4iMigrationReportExtraction :
 ---  
   
 [Top] 
-
 #### Retrieving the object and its attribute
 
 If above calculated Type from DecodeLine () equals to 1, it retrieve v4 elementâ€™s corresponding V5 object.Â 
@@ -262,7 +243,6 @@ If above calculated Type from DecodeLine () equals to 1, it retrieve v4 elementâ
       
   
 ---  
-  
 ### Close the report file and delete buffer 
     
     
@@ -274,7 +254,6 @@ If above calculated Type from DecodeLine () equals to 1, it retrieve v4 elementâ
       
   
 ---  
-  
 ### Release the loaded document
     
     
@@ -283,7 +262,6 @@ If above calculated Type from DecodeLine () equals to 1, it retrieve v4 elementâ
     ...  
   
 ---  
-  
 ### Delete the session 
     
     
@@ -299,7 +277,6 @@ If above calculated Type from DecodeLine () equals to 1, it retrieve v4 elementâ
 [Top] 
 
 * * *
-
 ### In Short
 
 These sample show a way to read Migration Report of a model.
@@ -307,15 +284,13 @@ These sample show a way to read Migration Report of a model.
 _[_Top] 
 
 * * *
-
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Jan 2014] | Document created  

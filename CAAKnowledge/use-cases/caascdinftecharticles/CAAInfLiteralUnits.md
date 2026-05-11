@@ -1,19 +1,16 @@
 ---
 title: "About Numbers, Literals, and Units"
-category: "general"
+category: "use-case"
 module: "CAAScdInfTechArticles"
 tags: []
-source_file: "Doc\online\CAAScdInfTechArticles\CAAInfLiteralUnits.htm"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfLiteralUnits.md"
 converted: "2026-05-11T17:31:52.422043"
 ---
-
 ## Infrastructure
  
  | 
- 
  ## About Numbers, Literals, and Units  
    
- ---|---  
    
  * * *
  

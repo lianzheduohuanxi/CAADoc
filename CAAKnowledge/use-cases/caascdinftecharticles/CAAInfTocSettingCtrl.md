@@ -1,18 +1,17 @@
 ---
 title: "Infrastructure Automation Objects"
-category: "general"
+category: "use-case"
 module: "CAAScdInfTechArticles"
 tags: []
-source_file: "Doc\online\CAAScdInfTechArticles\CAAInfTocSettingCtrl.htm"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfTocSettingCtrl.md"
 converted: "2026-05-11T17:31:52.495651"
 ---
-
 # Setting Controller Automation Objects
  
- ![](../CAAScrAutomationImages/images/setctrls.gif)[![Application Object Diagram](../CAAScrAutomationImages/images/uparrow.gif)](CAAInfTocApplication.htm)  
+ ![](../CAAScrAutomationImages/images/setctrls.gif)[![Application Object Diagram](../CAAScrAutomationImages/images/uparrow.gif)](CAAInfTocApplication.md)  
 ![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/setctrllong.gif)  
  ---  
- ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parderim.gif)![](../CAAScrAutomationImages/images/setrep.gif) |  ![Inheritance Symbol](../CAAScrAutomationImages/images/parderil.gif)   
+
  ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/scangenstat.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/scanANR.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/scanpp.gif)  
@@ -57,7 +56,7 @@ converted: "2026-05-11T17:31:52.495651"
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/schtstask.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/sciges.gif)  
 ![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/scigpolp.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/scimpd5.gif) |  ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/scinterop.gif)  
+
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/scknwshe.gif)  
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/sclngshe.gif)  
 ![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/sc2dlayout.gif)  

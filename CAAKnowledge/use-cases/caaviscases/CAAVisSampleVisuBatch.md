@@ -3,18 +3,15 @@ title: "Constructing Graphic Representations in Batch Mode"
 category: "use case"
 module: "CAAVisUseCases"
 tags: ["CATI3DGeoVisu", "CATIPrtContainer", "CAAGviVisuBatchuse", "CAAGviVisuBatch", "CAAVisuBatch", "CAAGeometryVisualization"]
-source_file: "Doc\online\CAAVisUseCases\CAAVisSampleVisuBatch.htm"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleVisuBatch.md"
 converted: "2026-05-11T17:31:52.235473"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## 3D Visualization
 
 | 
-
 ### Constructing Graphic Representations in Batch Mode
 
 _How to use the CATVisManager in batch mode_  
@@ -22,7 +19,6 @@ _How to use the CATVisManager in batch mode_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to construct graphic representations in batch mode. 
@@ -36,25 +32,19 @@ This article shows how to construct graphic representations in batch mode. 
   * **In Short**
   * **References**
 
-
-
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show you how to use the _CATVisManager_ to construct the graphic representations (rep) of a model.  [Top]
-
 ### The CAAGviVisuBatch Use Case
 
 CAAGviVisuBatch is a use case of the CAAGeometryVisualization.edu framework that illustrates Visualization and VisualizationBase framework capabilities. [Top]
-
 #### What Does CAAGviVisuBatch Do
 
-CAAGviVisuBatch constructs the graphic representations associated with the MechanicalPart (`Part1`) of the following Model: _Fig.1 The CAAVisuBatch Part Document_ | ![](images/CAAVisSampleVisuBatch.jpg)  
+CAAGviVisuBatch constructs the graphic representations associated with the MechanicalPart (`Part1`) of the following Model: _Fig.1 The CAAVisuBatch Part Document_ 
 ---  
   
 [Top]
-
 #### How to Launch CAAGviVisuBatch
 
 To launch CAAGviVisuBatch , you will need to set up the build time environment, then compile CAAGviVisuBatch along with its prerequisites, set up the run time environment, and then execute the use case [1].
@@ -66,10 +56,7 @@ where `InputPart` is the complete path of a Part document. You can use the follo
   * Unix : `InstallRootDirectory/CAAGeometryVisualization.edu/InputData/CAAVisuBatch.CATPart`
   * Windows : `InstallRootDirectory\CAAGeometryVisualization.edu\InputData\CAAVisuBatch.CATPart`
 
-
-
 [Top]
-
 #### Where to Find the CAAGviVisuBatch Code
 
 The CAAGviVisuBatch use case is made of a single file, _CAAGviVisuBatch.cpp_ , located in the CAAGviVisuBatch.m module of the CAAGeometryVisualization.edu framework:
@@ -81,7 +68,6 @@ Unix | `InstallRootDirectory/CAAGeometryVisualization.edu/CAAGviVisuBatch.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are seven logical steps in CAAGviVisuBatch:
@@ -94,16 +80,12 @@ There are seven logical steps in CAAGviVisuBatch:
   6. Detaches the Root Model from the CATVisManager
   7. Epilog
 
-
-
 [Top]
-
 #### Prolog
 
 CAAGviVisuBatch begins by creating a session, and opening a Part document. Next it retrieves the root container of this Part as a pointer to _CATIPrtContainer_ , `pISpecContainer.` This is the usual sequence for loading a Part document. 
 
 Thanks to  the `GetPart` method on the root container we retrieve the Mechanical Part. This part is handled by the smart pointer `spSpecObjectOnMechanicalPart`.
-
 #### Creates a Path with the MechanicalPart feature of the Part Document
     
     
@@ -114,7 +96,6 @@ Thanks to  the `GetPart` method on the root container we retrieve the Mechanica
 ---  
   
 In this use case, the _CATPathElement_ is built with the root feature of the Part Document. This feature is the MechanicalPart feature, those called Part1 in the specification tree. Refer to the Mechanical Modeler articles. But anyhow, you can create this path with any feature of the model. 
-
 #### Retrieves the unique CATVisManager Instance 
     
     
@@ -125,7 +106,6 @@ In this use case, the _CATPathElement_ is built with the root feature of the Par
 ---  
   
 There is only one instance of the _CATVisManager_ class in a session. The `GetVisManager` static method enables you to retrieve it.
-
 #### Attaches the Root Model to  the CATVisManager
     
     
@@ -147,10 +127,7 @@ On the _CATVisManager_ you attach to the _CATVisManager_ :
   * For a default viewpoint, `pVP,`
   * For a given list of the visualization interfaces, `ListIVisu3d`. Here, it is a list with only the _CATI3DGeoVisu_ interface, once the Mechanical features implement it.
 
-
-
 ![](../CAAIcons/images/warning.gif)The `AttachTo` method constructs the graphic representations. 
-
 #### Retrieves the Graphic Representation of the MechanicalPart feature
     
     
@@ -172,7 +149,6 @@ On the _CATVisManager_ you attach to the _CATVisManager_ :
 ---  
   
 After the `AttachTo` method, it is possible to retrieve the graphic representations (rep) of an element thanks to the `GiveRep` method of the _CATI3DGeoVisu_ interface. In this use case, the rep of the MechanicalPart feature (the root) is asked. 
-
 #### Detaches the Root Model from the CATVisManager
     
     
@@ -189,7 +165,6 @@ After the `AttachTo` method, it is possible to retrieve the graphic representati
 When the graphic representations are useless, you should detach the root model from the _CATVisManager_. With the `DetachFrom` method with only the viewpoint, all the root models and the list of interfaces attached with this viewpoint will be detached too. (The same root model can be attached with different viewpoints and with different interfaces)
 
 [Top]
-
 #### Epilog
 
 The last part of the CAAGviVisuBatchuse case shows how to removes the Part document from the session and delete the session. This is also described in the "Loading a Document" use case (see Data Access entry in the CAA Encyclopedia home page)
@@ -197,7 +172,6 @@ The last part of the CAAGviVisuBatchuse case shows how to removes the Part docum
 [Top]
 
 * * *
-
 ### In Short
 
 This use case explains how to use the CATVisManager to create the graphic representations of model in a batch.
@@ -205,15 +179,13 @@ This use case explains how to use the CATVisManager to create the graphic repres
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Fev 2003] | Document created  

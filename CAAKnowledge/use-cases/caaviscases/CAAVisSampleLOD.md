@@ -3,18 +3,15 @@ title: "Creating Levels of Details"
 category: "use case"
 module: "CAAVisUseCases"
 tags: ["CAAVisBaseView", "CAAVisBaseDocument", "CAAVisBasics", "CAAVisBaseDefaultDocument", "CAAVisBaseApplication", "CATIA", "CAAVisBase", "CAAVisualization"]
-source_file: "Doc\online\CAAVisUseCases\CAAVisSampleLOD.htm"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleLOD.md"
 converted: "2026-05-11T17:31:52.141771"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## 3D Visualization
 
 | 
-
 ### Creating Levels of Details
 
 _Enabling for multiple tessellations of the same object_  
@@ -22,7 +19,6 @@ _Enabling for multiple tessellations of the same object_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to create levels of details. 
@@ -40,19 +36,16 @@ This article shows how to create levels of details.
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show how to create levels of details, that is several representations of the same object that are each displayed in turn with respect to the modifications brought to the viewpoint and display characteristics.
 
 [Top]
-
 ### The CAAVisBasics Use Case
 
 CAAVisBasics is a set of use cases of the CAAVisualization.edu framework that illustrates CATIA Vizualization framework capabilities.
 
 [Top]
-
 #### What Does CAAVisBasics Do
 
 CAAVisBasics includes a MDI interactive application that displays viewers in its document windows. One of these viewers is displayed when the application is launched and contains the representation of a torus. This article focuses on how to create levels of details for this torus, that is several tessellations, each corresponding to a given sag value, in order to the render to select the most appropriate one depending on the viewpoint characteristics and on the object size.
@@ -68,7 +61,6 @@ The torus is displayed in a 3D navigation viewer as soon as the application is l
 ![](images/CAAVisSampleTorusLOD4.jpg)
 
 [Top]
-
 #### How to Launch CAAVisBasics
 
 To launch CAAVisBasics, you will need to set up the build time environment, then compile CAAVisBasics along with its prerequisites, set up the run time environment, and then execute the use case [1].
@@ -76,7 +68,6 @@ To launch CAAVisBasics, you will need to set up the build time environment, then
 The torus is displayed in a 3D navigation viewer as soon as the application is launched. Zoom in and out to show the different levels of details and their associated colors.
 
 [Top]
-
 #### Where to Find the CAAVisBasics Code?
 
 The CAAVisBasics use case is made of several classes located in the CAAVisBasics.m module of the CAAVisualization.edu framework:
@@ -96,11 +87,9 @@ _CAAVisBaseDefaultDocument_ | Class for the document that creates a representati
 _CAAVisBaseView_ | Class for the document window containing a viewer to display the document  
   
 [Top]
-
 ### Step-by-Step
 
 To create levels of details, there are three main steps:
-
 # | Step | Where  
 ---|---|---  
 1 | Create a _CAT3DLodRep_ | `CreateModel` method of _CAAVisBaseDefaultDocument_  
@@ -110,7 +99,6 @@ To create levels of details, there are three main steps:
 The torus is displayed when the CAAVisBase application is launched. The torus levels of details creation and display is performed in the _CAAVisBaseDefaultDocument_ constructor that creates a _CAT3DLodRep_ instance and that loops on calling the `CreateRep` method that creates a _CAT3DFaceGP_ instance with the passed sag, and that adds it to the _CAT3DLodRep_ instance. The representation is displayed thanks to calling the `AddRepToViewer` method. Only the constructor and the part of `CreateRep` that deals with the _CAT3DLodRep_ management are described below. The remaining parts, namely the torus tessellation and the creation of _CAT3DLodRep_ instance are already dealt with in [2].
 
 [Top]
-
 #### Creating a CAT3DLodRep
 
 The _CAAVisBaseDefaultDocument_ constructor creates the representation bag to attach to the viewer, creates a _CAT3DLodRep_ instance for the torus, calls `CreateRep` as many time as there are sag values to the corresponding torus representations, adds the resulting 3D Lod representation to the representation bag, and calls `AddRepToViewer` for display.
@@ -133,7 +121,6 @@ The _CAAVisBaseDefaultDocument_ constructor creates the representation bag to at
 This 3D representation to accommodate the different tessellations of the torus is a _CAT3DLodRep_ instance. This representation is dedicated to contain several representations of the same object, each being associated with the sag value used to create it.
 
 [Top]
-
 #### Looping for Each Sag Value onto the CAT3DFaceGP Creation
     
     
@@ -159,7 +146,6 @@ This 3D representation to accommodate the different tessellations of the torus i
 The sag values are computed and passed to the `AddLOD` method as well as the associated color.
 
 [Top]
-
 #### Adding the CAT3DCustomRep to the CAT3DLodRep
 
 The `AddLOD` method is the same as the one explained in [2], except that it has the sag as argument, and computes the theta and phi angles from the sag value. It also update the 3D Lod representation with the created 3D custom representation.
@@ -191,7 +177,6 @@ The angles theta and phi are computed using the sag value and the rotating circl
 [Top]
 
 * * *
-
 ### In Short
 
 This use case shows the objects involved when creating several representations for a given object and to bind them in a 3D Lod representation. This enables the object to provide representations that match the different accuracies required when the viewpoint and display characteristics change.
@@ -199,16 +184,14 @@ This use case shows the objects involved when creating several representations f
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] | [Tessallating a Torus](CAAVisSampleCAT3DFaceGP.htm)  
+[2] | [Tessallating a Torus](CAAVisSampleCAT3DFaceGP.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Feb 2000] | Document created  

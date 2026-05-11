@@ -3,18 +3,15 @@ title: "Creating Annotations on View Components"
 category: "use case"
 module: "CAADriUseCases"
 tags: ["CATIDrwAnnotationFactory_var", "CATISheet_var", "CATIDftTextProperties", "CATIDftText", "CATIDrwAnnotationFactory", "CATIDftDocumentServices", "CAADrwCoordinates", "CATIA", "CATI2DPoint_var", "CATIDrawing", "CATI2DPoint", "CATIView_var", "CAADRWCoordinates", "CATIDescendants_var", "CATIView", "CATIDrwSubString", "CATIDescendants", "CAADraftingInterfaces", "CATIDrwTextProperties", "CATISheet"]
-source_file: "Doc\online\CAADriUseCases\CAADriCoordinates.htm"
+source_file: "Doc/online/CAADriUseCases/CAADriCoordinates.md"
 converted: "2026-05-11T17:31:50.944012"
 ---
-
 # Mechanical Design
 
 | 
-
 ## Drafting
 
 | 
-
 ### Creating Annotations on View Components
 
 _How to retrieve view components_  
@@ -22,7 +19,6 @@ _How to retrieve view components_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article discusses the CAADrwCoordinates use case. This use case explains how to retrieve the view components.
@@ -38,7 +34,6 @@ This article discusses the CAADrwCoordinates use case. This use case explains ho
 
   
 ---  
-  
 ### What You Will Learn With This Use Case
 
 This use case is intended to retrieve the view components. These components can be :
@@ -47,16 +42,12 @@ This use case is intended to retrieve the view components. These components can 
   * Annotations
   * Generative results.
 
-
-
 [Top]
-
 ### The CAADrwCoordinates Use Case
 
 CAADrwCoordinates is a use case of the CAADraftingInterfaces.edu framework that illustrates DraftingInterfaces framework capabilities.
 
 [Top]
-
 #### What Does CAADrwCoordinates Do
 
 Fig. 1 The Document Before Running CAADrwCoordinates ![](images/CAADrwCoordinates1.jpg)  
@@ -75,7 +66,6 @@ _X = _the x point coordinate
 _Y = _the y point coordinate_
 
 [Top]
-
 #### How to Launch CAADrwCoordinates
 
 To launch CAADrwCoordinates, you will need to set up the build time environment, then compile CAADrwCoordinates along with its prerequisites, set up the run time environment, and then execute the use case [1].
@@ -95,10 +85,7 @@ When you launch the use case, pass the full pathname of the file into which you 
   
 ---  
 
-
-
 [Top]
-
 #### Where to Find the CAADrwCoordinates Code
 
 The CAADrwCoordinates use case is made of a single source file named CAADrwCoordinates.cpp located in the CAADrwCoordinates.m module of the CAADraftingInterfaces.edu framework:
@@ -110,7 +97,6 @@ Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCoordinates.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are six steps in CAADRWCoordinates:
@@ -122,10 +108,7 @@ There are six steps in CAADRWCoordinates:
   5. Scanning Points and Creating Texts
   6. Saving the Document and Exiting
 
-
-
 [Top]
-
 #### Reading the Document
     
     
@@ -160,7 +143,6 @@ There are six steps in CAADRWCoordinates:
 This section represents the usual sequence for reading a CATIA document [2].
 
 [Top]
-
 #### Accessing the Drawing in the Document
     
     
@@ -183,7 +165,6 @@ This section represents the usual sequence for reading a CATIA document [2].
 The root feature of a drawing document is the Drawing, that is, the feature that implements the _CATIDrawing_ interface. We can get a pointer to _CATIDrawing_ using the _CATIDftDocumentServices_ interface, which is implemented by the document. The `GetDrawing` method first argument is the _CATIDrawing_ interface IID.
 
 [Top]
-
 #### Navigating through the Drawing and Sheet to Get the Active View
     
     
@@ -202,7 +183,6 @@ The root feature of a drawing document is the Drawing, that is, the feature that
 A drawing may contain several sheets, but only one is the current one. The current sheet is the sheet containing the active view, that is the view currently edited. The methods of the _CATISheet_ and _CATIView_ interfaces do return handlers, so we do not need to care about releasing them. The drawing variable is a pointer to _CATIDrawing_ , so we have to release it when it is no longer used.
 
 [Top]
-
 #### Getting the View Points
     
     
@@ -218,7 +198,6 @@ A drawing may contain several sheets, but only one is the current one. The curre
 The view geometry can be retrieved using the _CATIDescendants_ interface. The first argument of the _GetDirectChildren_ method is a scan filter. In this example, we only get points.
 
 [Top]
-
 #### Scanning Points and Creating Texts
     
     
@@ -285,7 +264,6 @@ We loop on the points and get the coordinates using _CATI2DPoint::GetPointData_.
 The _CATIDrwAnnotationFactory_ annotation factory is implemented by the view and so the coordinates passed in `CreateDrwText` are view coordinates. The _CATIDrwTextProperties_ interface allows text property modifications, such as setting the text with a bold typeface using the `SetBold` method.
 
 [Top]
-
 #### Saving the Document and Exiting
     
     
@@ -310,7 +288,6 @@ This section represents the usual sequence for saving a CATIA document [2].
 [Top]
 
 * * *
-
 ### In Short
 
 This use case shows how to get the view components. The view implements the _CATIDescendants_ interface and the components can be retrieved by using the _GetDirectChildren_ method.
@@ -321,16 +298,14 @@ The view also implements the _CATIDrwAnnotationFactory_ interface and the texts 
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] | [Creating a New Document](../CAAOmbUseCases/CAAOmbNewDoc.htm)  
+[2] | [Creating a New Document](../CAAOmbUseCases/CAAOmbNewDoc.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Jan 2000] | Document created  

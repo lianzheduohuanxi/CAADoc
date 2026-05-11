@@ -1,9 +1,10 @@
 ---
 title: "ElecRoutingItf Modifications"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR11"
+version: "V5R11"
 tags: ["CATIEwrUipWires"]
-source_file: "Doc\online\CAACenAPIChangesR11\ElecRoutingItf.htm"
+source_file: "Doc/online/CAACenAPIChangesR11/ElecRoutingItf.md"
 converted: "2026-05-11T17:33:50.375169"
 ---
 

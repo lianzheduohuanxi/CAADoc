@@ -1,9 +1,10 @@
 ---
 title: "VPMInterfaces Modifications"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR8"
+version: "V5R8"
 tags: ["CATIConfigurable", "CATIAVPMBusinessObject", "CATICfgManager", "CATIABase", "CATIAVPMBOProductInstance", "CATIConfigHandler", "CATIVpmAFLAffectedObject", "CATICfgModification", "CATICfgNormalValue", "CATIVpmFactoryObject", "CATICfgEffectivity", "CATICfgFilter", "CATIVpmUEActionFlow", "CATIAVPMBOProductComponent", "CATICfgSpecCategory", "CATIVpmAFLAttachement", "CATIVpmAFLProductView", "CATIVpmAFLAction", "CATIVpmAFLManager", "CATICfgSimpleSpecification"]
-source_file: "Doc\online\CAACenAPIChangesR8\VPMInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR8/VPMInterfaces.md"
 converted: "2026-05-11T17:33:52.761505"
 ---
 

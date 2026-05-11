@@ -3,15 +3,13 @@ title: "Using NURBS"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CATICGMContainer", "CAADoc", "CAAGMModelNurbs", "CATICGMObject", "CAAGMModelGemBrowser", "CAAGMModelInterfaces", "CATIA"]
-source_file: "Doc\online\CAACgmModel\CAACgmUcGobNurbs.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGobNurbs.md"
 converted: "2026-05-11T17:33:48.422980"
 ---
-
 # Using NURBS  
   
 ---  
 Use Case  
-  
 ## Abstract
 
 The use case illustrates how to use the CGM classes and interfaces to create the NURBS curves. The NURBS theory is described in a dedicated technical article [1].
@@ -25,11 +23,9 @@ The use case illustrates how to use the CGM classes and interfaces to create the
     * In Short
     * References  
 ---  
-  
 ## What You Will Learn With This Use Case
 
 The use case explains how to use the CATKnotVector class and the CATNurbsCurve interface to create NURBS curves. The way to use NURBS surface is similar.
-
 ## The Principle
 
 The NURBS (Non Uniform Rational B-Spline) model defines a curve as a piecewise rational polynomial function of a **parameter** _u_.
@@ -45,25 +41,21 @@ In CGM, the CATKnotVector class is used to define the polynomial basis (uniform,
 As any CGM curve [3], a CATNurbsCurve is created by the CATGeoFactory, using a knot vector, control points and weights. To remove it, use the `CATICGMContainer::Remove` method, that removes the instance from the memory, except if it is pointed to by another CGM object (such as a CATPCurve or a CATFace). See [2] to have more detail on the management of the geometric objects.
 
 In case of NURBS surface, two knot vectors must be defined, one in each surface direction.
-
 ## The CAAGMModelNurbs Use Case
 
 CAAGMModelNurbs is a use case of the CAAGMModelInterfaces.edu framework that illustrates GeometricObjects framework capabilities.
-
 ### What Does CAAGMModelNurbs Do
 
 With this use case, you create a Bzier arc, a Non Uniform Polynomial B-Spline and a Non Uniform Rational B-Spline. Geometric points corresponding to the arc limits are also created.
-
 ### How to Launch CAAGMModelNurbs
 
 To launch CAAGMModelNurbs, you will need to set up the build time environment, then compile CAAGMModelNurbs.m along with its prerequisites, set up the run time environment, and then execute the use case [4].
 
 If you simply type CAAGMModelNurbs with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example:
 
-`CAAGMModelNurbs e:\NurbsCreation.NCGM`
+`CAAGMModelNurbs e/NurbsCreation.NCGM`
 
 This NCGM file can be displayed using the CAAGMModelGemBrowser use case.
-
 ### Where to Find the CAAGMModelNurbs Code
 
 The CAAGMModelNurbs use case is made of a main named CAAGMModelNurbs.cpp located in the CAAGMModelNurbs.m module of the CAAGMModelInterfaces.edu framework:
@@ -71,7 +63,6 @@ The CAAGMModelNurbs use case is made of a main named CAAGMModelNurbs.cpp located
 `InstallRootFolder\CAADoc\CAAGMModelInterfaces.edu\CAAGMModelNurbs.m\`
 
 where `InstallRootFolder` [4] is the folder where the API CD-ROM is installed.
-
 ## Step-by-Step
 
 The main program is divided into the following steps: 
@@ -83,14 +74,12 @@ The main program is divided into the following steps:
     5. Creating the Geometric Points Corresponding to the Arc Limits
     6. Creating a General NURBS Curve
     7. Writing the Model And Closing the Container
-
 ### Creating the Geometry Factory
 
 The geometry factory (`CATGeoFactory`) creates and manages all the CATICGMObject (and the curves and surfaces in particular) [3]. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
     
     CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**() ;
     if (NULL==piGeomFactory) return (1);
-
 ### Creating a Bzier Curve
 
 The Bzier curve is a special type of NURBS curve: the multiplicities of the knots is equal to the degree.
@@ -145,7 +134,6 @@ The control points of the curves are given as mathematical points to the `Create
 To visualize the control points, the use case creates them as geometric points, but this is not required in the general use.
 
 If an error occurs, the program closes the factory and returns an error code.
-
 ### Creating Another Curve, Only Differing by a Control Point
 
 To see the influence of the control points, another Bzier curve using the same knot vector is created: only one control point is different.
@@ -176,7 +164,6 @@ To change the control point, directly change the definition in the `CATMathSetOf
        ::CATCloseCGMContainer(piGeomFactory);
        return (1);
      }	
-
 ### Creating a Non Uniform Polynomial B-Spline
 
 We define here the green curve of Fig. 2. It is non periodic, non uniform, and C2 continuous, with three arcs of degree 3 (the knot vector has four distincts knots). In this case, there are six control points, according to the following relation [1] between the number of knots (_m+1_), the degree (_k_) of _Nik_ and the number of control points (_n+1_):
@@ -215,7 +202,6 @@ _m = (n+1) + k_
      }
 
 The knot vector is now non uniform, because its knot values do not increment of 1. The curve is still polynomial, because the pointer to the weight values is NULL. In fact, the weight of each control point is `1.`.
-
 ### Creating the Geometric Points Corresponding to the Arc Limits
 
 The arc limits are defined by the knots. By default, the `CreateNurbsCurve` method adapts the parameterization of the knots according, more or less, to the length of the curve.
@@ -258,7 +244,6 @@ To create the 3D geometric point, you have to recover its definition from the pa
     * The `GetPoint` method returns the result as a mathematical point.
 
 It just remains to create the corresponding point to be able to visualize the arc limits.
-
 ### Creating a General NURBS Curve
 
 The non uniform vector of the step 5 is kept. The non rational is created by defining weights affected to the control points.
@@ -289,7 +274,6 @@ Fig. 2 shows the influence of the weights.
 
 Fig. 2: Illustration of Non Uniform Polynomial and Rational B-Splines ![Nurbs](images/CAACgmGobNurbs1.gif) | The green curve is the non uniform polynomial B-Spline curve created at the step 4. The weight of each control point is 1. If you assign the (1,1,10,20,5,1) weights to the control points, it gives the red curve. This curve is attracted by the control points CP3 and CP4, that are more weighted than the others. These curves have three arcs: CP1-K1, K1-K2, K2-CP2.  
 ---|---  
-  
 ### Writing the Model and Closing the Container
 
 To save the model in a file, the `::CATSaveCGMContainer` global function is used. Notice that in the use case, the save is conditioned by an input parameter representing the file inside which the model must be saved.
@@ -312,19 +296,16 @@ The use case ends with the closure of the geometry factory, done by the ` ::CATC
      // Closes the container
      //
      **::CATCloseCGMContainer**(piGeomFactory);
-
 ## In Short
 
 This use case describes how to use the NURBS curves in CGM, using the CATNurbsCurve interface and the CATKnotVector class. Bzier curve, non uniform polynomial curve and non uniform rational curve are then created.
-
 ## References
 
-[1] | [About NURBS](CAACgmTaGobAboutNurbs.htm)  
+[1] | [About NURBS](CAACgmTaGobAboutNurbs.md)  
 ---|---  
-[2] | [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.htm)  
-[3] | [The Curves of CATIA Geometric Modeler](CAACgmTaGobCurves.htm)  
-[4] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-  
+[2] | [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.md)  
+[3] | [The Curves of CATIA Geometric Modeler](CAACgmTaGobCurves.md)  
+[4] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ## History
 
 Version: **1** [Apr 2000] | Document created  

@@ -2,39 +2,24 @@
 title: "CAAXMLSAXResolverHandlers"
 type: "interface"
 module: "CAAXMLParser"
+category: "framework"
 base: "CATSAXHandlerBase"
+inheritance_chain: "CAAXMLSAXResolverHandlers → CATSAXHandlerBase"
 method_count: 3
 visibility: "local"
+has_tie_binding: false
 verified: true
 ---
-
 # CAAXMLSAXResolverHandlers
 
 **基类**: CATSAXHandlerBase  
+**继承链**: CAAXMLSAXResolverHandlers → CATSAXHandlerBase  
 **模块**: CAAXMLParser  
+**分类**: framework  
 **可见性**: local  
 **方法数**: 3
 
 > interfaces from which it is convenient to
-
-## 方法列表
-
-### ResolveEntity
-```cpp
-HRESULT ResolveEntity(const CATUnicodeString & iPublicId, 
-			const CATUnicodeString & iSystemId, 
-			CATISAXInputSource_var& oInputSource);
-```
-
-### Error
-```cpp
-HRESULT Error(CATSAXParseException* iException);
-```
-
-### FatalError
-```cpp
-HRESULT FatalError(CATSAXParseException* iException);
-```
 
 ## 依赖
 

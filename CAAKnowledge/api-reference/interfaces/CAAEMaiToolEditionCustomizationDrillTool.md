@@ -2,52 +2,24 @@
 title: "CAAEMaiToolEditionCustomizationDrillTool"
 type: "interface"
 module: "CAAManufacturingItf"
+category: "framework"
 base: "CATBaseUnknown"
+inheritance_chain: "CAAEMaiToolEditionCustomizationDrillTool → CATBaseUnknown"
 method_count: 5
 visibility: "local"
+has_tie_binding: false
 verified: true
 ---
-
 # CAAEMaiToolEditionCustomizationDrillTool
 
 **基类**: CATBaseUnknown  
+**继承链**: CAAEMaiToolEditionCustomizationDrillTool → CATBaseUnknown  
 **模块**: CAAManufacturingItf  
+**分类**: framework  
 **可见性**: local  
 **方法数**: 5
 
 > Dialog Framework
-
-## 方法列表
-
-### GetPanelEditor
-```cpp
-CATDlgFrame* GetPanelEditor(CATDialog    *iParent, CATDlgStyle  iStyle=CATDlgFraNoFrame,
-											 const CATBoolean iEditMode=TRUE);
-```
-
-### GetMorePanelEditor
-```cpp
-CATDlgFrame* GetMorePanelEditor(CATDialog    *iParent, CATDlgStyle iStyle=CATDlgFraNoFrame,
-											 const CATBoolean iEditMode=TRUE);
-```
-
-### GetActivityEditor
-```cpp
-CATDlgFrame* GetActivityEditor(CATDialog    *iParent, CATDlgStyle  iStyle=CATDlgFraNoFrame,
-											 const CATBoolean iEditMode=FALSE, const CATISpecObject_var &ihSpecAct=NULL_var);
-```
-
-### GetGraphicEditor
-```cpp
-CATDlgFrame* GetGraphicEditor(CATDialog    *iParent, CATDlgStyle   iStyle=CATDlgFraNoFrame,
-											 const CATBoolean iEditMode=FALSE);
-```
-
-### GenerateJPEGImageFromGraphicEditor
-```cpp
-void GenerateJPEGImageFromGraphicEditor(CATDialog             *iParent,
-													 const CATUnicodeString &iImagePathName="");
-```
 
 ## 依赖
 

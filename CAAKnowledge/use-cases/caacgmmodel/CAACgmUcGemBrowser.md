@@ -3,15 +3,13 @@ title: "Browsing the Geometric Container"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGemBrowserRepWindowId", "CATICGMContainer", "CATICGMCellTessellator", "CAADoc", "CAAGMOperatorsTesBody", "CAAGemBrowserDocument_h", "CAAGMModelNurbs", "CATInteractiveApplication", "CAAGMModelGemBrowser", "CAAGMModelCreation", "CAAVisBase", "CAAGMModelIntersect", "CAATopJournal", "CAAGMOperatorsOverview", "CAAGemBrowserApplication", "CAAGemBrowserDocument", "CATIA", "CAAGemRep", "CATICGMSurfaceTessellator", "CATICGMObject"]
-source_file: "Doc\online\CAACgmModel\CAACgmUcGemBrowser.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGemBrowser.md"
 converted: "2026-05-11T17:33:48.225077"
 ---
-
 # Browsing the Geometric Container  
   
 ---  
 Use Case  
-  
 ## Abstract
 
 In all the CATIA Geometric Modeler use cases, a CATGeoFactory container, creating and containing the geometric objects, is created and can be stored in a .NCGM file. The purpose of the CAAGMModelGemBrowser use case is to create an application and a document allowing you to visualize the created objects of a CATGeoFactory container.
@@ -24,7 +22,6 @@ In all the CATIA Geometric Modeler use cases, a CATGeoFactory container, creatin
     * In Short
     * References  
 ---  
-  
 ## What You Will Learn With This Use Case
 
 This use case explains a means to visualize geometric objects:
@@ -38,11 +35,9 @@ First an application and a document are defined, following the same way as in th
     * How to read data on the geometric objects.
     * How to use the tessellation operators: `CATCellOperator` to tessellate a cell, `CATCurveTessellator` to tessellate a curve and `CATSurfaceTessellator` to tessellate a surface.
     * How to create representations.
-
 ## The CAAGMModelGemBrowser Use Case
 
 CAAGMModelGemBrowser is a use case of the CAAGMModelInterfaces.edu framework. This use case illustrates the geometric modeler tessellation capabilities.
-
 ### What Does CAAGMModelGemBrowser Do
 
 This use case:
@@ -59,13 +54,11 @@ In the picture above, the CAAGMModelGemBrowser use case displays the result of t
 `InstallRootFolder\intel_a\CNext\resources\graphic\CAATopJournal.NCGM`
 
 to allow you to visualize an example without processing any other use case. To visualize the model, simply select the menu File and the item Open. Then select the file.
-
 ### How to Launch CAAGMModelGemBrowser
 
 To launch CAAGMModelGemBrowser, you will need to set up the build time environment, then compile CAAGMModelGemBrowser.m along with its prerequisites, set up the run time environment, and then execute the use case [1].
 
 This use case is an interactive application. To visualize a .NCGM document (for example, the model saved at the last step of the CAAGMOperatorsJournal, CAAGMOperatorsOverview, CAAGMModelCreation, CAAGMModelNurbs, CAAGMOperatorsTesBody, or CAAGMModelIntersect use cases ), click the File+Open menu and select the file you want to display.
-
 ### Where to Find the CAAGMModelGemBrowser Code
 
 The CAAGMModelGemBrowser use case is made of three classes 
@@ -81,7 +74,6 @@ The corresponding headers (CAAGemBrowserApplication.h, CAAGemBrowserDocument.h, 
 `InstallRootFolder\CAADoc\CAAGMModelInterfaces.edu\CAAGMModelGemBrowser.m\`
 
 where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed.
-
 ## Step-by-Step
 
 CAAGMModelGemBrowser is divided into the following steps:
@@ -101,11 +93,9 @@ CAAGMModelGemBrowser is divided into the following steps:
       * Representation of a Surface
       * Representation of a Body
       * Representation of a Edge
-
 ### Creating an Interactive Application to Display the Document
 
 Thanks to an interactive application, the CAAGemBrowserDocument can be displayed and run as a standalone application. This interactive application is made of the class CAAGemBrowserApplication that derives from CATInteractiveApplication. Its header file is as follows.
-    
     #include "CATInteractiveApplication.h"  // To derive from
     
     class CAAGemBrowserApplication : public CATInteractiveApplication
@@ -160,14 +150,11 @@ The application is simply instantiated as follows.
     CAAGemBrowserApplication ApplicationInstance("CAAGemBrowserApplicationInstance");
 
 The main program is created from this instance.
-
 ### Creating Dialog Objects and Setting their Behaviors and Styles
 
 The file CAAGemBrowserDocument.h contains the following:
-    
     #ifndef CAAGemBrowserDocument_h
     #define CAAGemBrowserDocument_h
-    
     #include "CATDlgDocument.h"      // To derive from
     
     class CATInteractiveApplication; // Application kept in data member
@@ -248,7 +235,6 @@ The remaining part of this file deals with the callback method declaration.
         void Close  (CATCommand           * iSendingCommand, 
                      CATNotification      * iSentNotification, 
                      CATCommandClientData   iUsefulData);
-
 #### Constructor and Build Methods
 
 Let's have a look at the beginning of CAAGemBrowserDocument.cpp:
@@ -274,7 +260,6 @@ Let's have a look at the beginning of CAAGemBrowserDocument.cpp:
     }
 
 The constructor is empty, but calls the base class `CATDlgDocument` constructor, and sets the parent command of the window as the interactive application itself. The `Build` method calls for the creation of the menu bar and for the creation of the viewer that allows the user to do 3D manipulations.
-
 #### Creating the Menu Bar
     
     void CAAGemBrowserDocument::**CreateMenuBar**()
@@ -319,7 +304,6 @@ Moreover, this method sets the callbacks to trigger the appropriate method when 
     * If the File/Open menu is selected, a file selector window is activated.
     * If the File/Close menu is selected, the model visualization disappears.
     * If the File/Exit menu is selected, this ends the application.
-
 #### Creating the Viewer
 
 The 3D navigation viewer is an instance of the CATNavigation3DViewer class. It is created in the `CreateViewer` method of the CAAGemBrowserDocument class that is called when the application is launched.
@@ -337,7 +321,6 @@ The 3D navigation viewer is an instance of the CATNavigation3DViewer class. It i
     }
 
 The `_pViewer` pointer to the 3D navigation viewer is kept as a data member of the CAAGemBrowserDocument class. The `Attach4Sides` method attaches the four sides of the viewer to those of the window. This makes the viewer occupy the whole window space.
-
 #### Managing the Open Callback
 
 Once the user clicks on the File/Open item, the following callback is triggered:
@@ -368,7 +351,6 @@ Once the user clicks on the File/Open item, the following callback is triggered:
     }
 
 This method creates a File Box to select the file to display. The authorized type of file extension is `*NCGM`. Once again, callbacks are set to trigger methods when a specific control is activated. In particular, the `OpenOK` method opens the file and visualizes the created objects of the CATGeoFactory container.
-
 #### Loading the Geometry Factory
 
 The `OpenOK` callback:
@@ -456,7 +438,6 @@ The visualization is done by the `VisualizeModel` method.
     * The bag representation is attached to the viewer.
     * The visualization is reframed on the bounding box of the model.
     * The viewer is drawn.
-
 ### Creating the Representations
 
 CAAGemRep is the class dedicated to the creation of the representations.
@@ -465,7 +446,6 @@ CAAGemRep is the class dedicated to the creation of the representations.
     
     ... // Tessellation forward declarations
     class CAT3DRep;
-    
     #include "CATBoolean.h"
      
     class CAAGemRep 
@@ -600,7 +580,6 @@ The structure of the **CreateRep** method is as follows:
 The creation of the representations is managed according to the type of the geometric object, retrieved with the `CATICGMContainer::IsATypeOf` method. In case of surfaces, curves, or points, the choice of the use case is to visualize only objects that are not pointed to by any other object. Hence the `CATICGMObject::GetUseCount` returns if an object is pointed to or not.
 
 We now examine in detail all the type of geometry: point, line, curve, plane, surface and body.
-
 #### Representation of a Point
 
 The coordinates of the point are directly passed to the constructor of the representation.
@@ -621,7 +600,6 @@ The coordinates of the point are directly passed to the constructor of the repre
        // Returns the rep
        iopRep = rep;
     }
-
 #### Representation of a Line
 
 The lines have a specific treatment: they do not need to be discretized. Two cases are considered: finite (or trimmed) and infinite lines. To know if a line is infinite, the model size of the `CATGeoFactory` container is retrieved (`GetModelSize`). The model size defines the maximum bounding box of the model [3] and one tests whether this maximum bounding box includes the extremities of the curve.
@@ -683,7 +661,6 @@ The lines have a specific treatment: they do not need to be discretized. Two cas
 In case of a finite line, a CAT3DLineRep instance is modified to be trimmed by the start and end limits of the line, thus defining the representation of the line.
 
 In case of an infinite line, an arrow is visualized: a CAT3DFixedArrowGP is created at the origin of the line, along its direction. The total arrow length is 40 millimeters, and the head height is 2 millimeters.
-
 #### Representation of a Curve
 
 We are here in the `CreateRep` method of CAAGemRep. We describe now the code under the _other curves_ comment.
@@ -782,7 +759,6 @@ The tessellation results are used by the method `CreateCurveRep` of `CAAGemRep` 
     }
 
 The representation of a curve is a collection of graphic polylines `CAT3DPolylineGP`, each one representing a level of detail (LOD). Here, one LOD is added to the curve representation (`AddWireframeLOD`), with a level a detail having `_sag` as the corresponding sag value. Finally, the bounding box is computed from the tessellation results and set to the curve representation.
-
 #### Representation of a Plane
 
 The origin and the axes of the plane are directly passed to the constructor of the representation. As the plane is infinite, a given size is fixed. The associated bounding sphere is also set to the representation.
@@ -820,7 +796,6 @@ The origin and the axes of the plane are directly passed to the constructor of t
       // Returns the rep
       iopRep = pRep;
     }
-
 #### Representation of a Surface
 
 We are here in the `CreateRep` method of CAAGemRep. We describe now the code under the _other surfaces_ comment.
@@ -1026,7 +1001,6 @@ Now, the representation can be created.
       pSurfacicRep->**SetBoundingElement**(BoundingSphere); 
 
 The graphic primitive is first created: it is a CAT3DPlanarFaceGP for a planar surface or a CAT3DFaceGP for a non-planar surface. This primitive is added to a new CAT3DCustomRep. The computed bounding box is set with the `SetBoundingElement` method, thus ending the construction of the surface representation.
-
 #### Representation of a Body
 
 All the previous methods are used to create the representation of a body. `CATICGMCellTessellator` is used to create data needed by the `CreateSurfaceRep` and `CreateCurveRep` methods. The faces, edges of wire domains, and vertices in volume are tessellated. In particular, neither the edges of the face, nor the vertices of the edges are represented.
@@ -1216,7 +1190,6 @@ We first loop on all the domains of the body. `GetDomain` returns the pointer to
     * If the domain is a vertex in volume: 
       * The unique cell of this domain is retrieved.
       * The representation of the corresponding point is created.
-
 #### Representation of an Edge
 
 The representation is created in a very similar way as in the curve case. They only differ by the process of the degenerated elements
@@ -1259,17 +1232,14 @@ The representation is created in a very similar way as in the curve case. They o
 If the edge has a length greater than the factory resolution, the representation of a curve is created.
 
 Otherwise, one point of the edge is recovered, and a representation of this point is created. Notice that to get the points extremities of an edge, the `CATEdge::GetVerticesPointsOnEdgeCurve` method can be used.
-
 ## In Short
 
 This use case offers the programmer a way to visualize the geometry and topology created by the CATGeoFactory. Meanwhile, it illustrates how to tessellate geometric objects.
-
 ## References
 
-[1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] | [Using a Tessellation Operator](CAACgmUcTesBody.htm)  
-  
+[2] | [Using a Tessellation Operator](CAACgmUcTesBody.md)  
 ## History
 
 Version: **1.1** [Nov 2000] | Use of CAT3DCustomRep for the graphic representation of a surface representation.  

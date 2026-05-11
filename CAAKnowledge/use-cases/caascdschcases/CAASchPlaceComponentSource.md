@@ -1,16 +1,15 @@
 ---
 title: "CAASchPlaceComponent.CATScript"
-category: "general"
+category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CATIASchCompatibility", "CAASCH_Sample", "CAASCH_RouteForPlacement2", "CAAScdSchUseCases", "CATIASchGRRComp", "CATIA", "CAASchPlaceComponent", "CATIASchCompatible", "CATIASchComponent", "CATIASchCompGraphic", "CATIASchComponent2"]
-source_file: "Doc\online\CAAScdSchUseCases\CAASchPlaceComponentSource.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchPlaceComponentSource.md"
 converted: "2026-05-11T17:31:51.438458"
 ---
 
-
     Option Explicit
+```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2004
-    
     ' *****************************************************************************
     '   Purpose:      Schematic component placement in free space and connected to
     '                 existing component.
@@ -18,30 +17,40 @@ converted: "2026-05-11T17:31:51.438458"
     '   Locales:      English 
     '   CATIA Level:  V5R15 
     ' *****************************************************************************
+```
+
     
+```vbscript
     Sub CATMain()
-    
+```vbscript
         ' ------------------------------------------------------------------------- 
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String 
         sDocPath=CATIA.SystemService.Environ("CATDocView")
     
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+```
+
+```vbscript
           Err.Raise 9999,sDocPath,"No Doc Path Defined"
         End If
-    
+```vbscript
         ' ------------------------------------------------------------------------- 
         ' Open the schematic document 
         Dim sCtlgFilePath
         sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+```
+
                 "online\CAAScdSchUseCases\samples\CAASCH_Sample.catalog")
     
         Dim objSchCtlgDoc As Document
         Set objSchCtlgDoc = CATIA.Documents.Open(sCtlgFilePath)
-    
+```vbscript
         ' Open main schematic P&ID; design document (for new component instances created here)
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+```
+
                 "online\CAAScdSchUseCases\samples\CAASCH_RouteForPlacement2.CATProduct")
     
         Dim objSchDoc As Document
@@ -49,13 +58,15 @@ converted: "2026-05-11T17:31:51.438458"
     
         Dim strMessage As String
     
+```
+
         strMessage = _
           "--------------------------------------------------------------------" & vbCr
         strMessage = strMessage & _
           "Output traces from CAASchPlaceComponent.CATScript" & vbCrLf
-    
         '
         ' Find the top node of the schematic object tree - schematic root.
+```vbscript
         Dim objPrdRoot As Product
         Dim objSchRoot As SchematicRoot
         If ( Not ( objSchDoc Is Nothing ) ) Then
@@ -73,7 +84,7 @@ converted: "2026-05-11T17:31:51.438458"
         Dim objSchCompGraphInstA As SchCompGraphic
         Dim objSchCompatInstA As SchCompatible
         Dim objSchCompInstB As SchComponent
-    
+```vbscript
         '--------------------------------------------------------------------------
         ' Component instance (to be created below) orientation matrix.
         ' x-axis = (1.0,0.0)
@@ -81,6 +92,8 @@ converted: "2026-05-11T17:31:51.438458"
         ' origin = (100.0,300.0)
         '--------------------------------------------------------------------------
         Dim db6Array(6) As CATSafeArrayVariant
+```
+
         db6Array(0)=1.0
         db6Array(1)=0.0
         db6Array(2)=0.0
@@ -88,15 +101,17 @@ converted: "2026-05-11T17:31:51.438458"
         db6Array(4)=145.0
         db6Array(5)=130.0
     
+```
+
+```vbscript
         If ( Not ( objSchRoot Is Nothing ) ) Then
-    
+```vbscript
            '-----------------------------------------------------------------------
            ' Get the first symbol from component catalog.
            '-----------------------------------------------------------------------
            Set objSchGRRCtlg = objSchRoot.GetCompSymbolFromCatalog ("Blocking Valve",objSchCtlgDoc)
            If ( Not ( objSchGRRCtlg Is Nothing ) ) Then
              strMessage = strMessage &  "Got the first catalog symbol" & vbCr
-    
              '---------------------------------------------------------------------
              ' Get the owner of the first symbol. That is a reference component
              ' in the catalog.
@@ -104,7 +119,6 @@ converted: "2026-05-11T17:31:51.438458"
              Set objSchCntblRef = objSchGRRCtlg.GetSchObjOwner
              If ( Not ( objSchCntblRef Is Nothing ) ) Then
                strMessage = strMessage &  "Got catalog connectable of the first symbol" & vbCr
-    
                '-------------------------------------------------------------------
                ' Place an instance of the catalog reference in an empty space in 
                ' the design document
@@ -113,6 +127,8 @@ converted: "2026-05-11T17:31:51.438458"
                Set objSchComp2Ref = objSchRoot.GetInterface ("CATIASchComponent2",objSchCntblRef)
                If ( Not ( objSchComp2Ref Is Nothing ) ) Then
                   strMessage = strMessage &  "Got catalog component reference of the symbol" & vbCr
+```
+
                   objSchComp2Ref.PlaceInSpace objSchGRRCtlg,db6Array,objSchDoc,objSchCompInstA
                   If ( Not ( objSchCompInstA Is Nothing ) ) Then
                      strMessage = strMessage &  "Place component instance in space is successful" & vbCr
@@ -120,7 +136,7 @@ converted: "2026-05-11T17:31:51.438458"
                End If 
              End If
            End If
-    
+```vbscript
            '-----------------------------------------------------------------------
            ' Get another symbol from component catalog.
            '-----------------------------------------------------------------------
@@ -131,7 +147,6 @@ converted: "2026-05-11T17:31:51.438458"
            Set objSchGRRCVCtlg = objSchRoot.GetCompSymbolFromCatalog ("Control Valve",objSchCtlgDoc)
            If ( Not ( objSchGRRCVCtlg Is Nothing ) ) Then
              strMessage = strMessage &  "Got the second catalog symbol" & vbCr
-    
              '---------------------------------------------------------------------
              ' Get the owner of the second symbol. That is a reference component
              ' in the catalog.
@@ -139,7 +154,6 @@ converted: "2026-05-11T17:31:51.438458"
              Set objSchCntblCVRef = objSchGRRCVCtlg.GetSchObjOwner
              If ( Not ( objSchCntblCVRef Is Nothing ) ) Then
                strMessage = strMessage &  "Got catalog connectable of the second symbol" & vbCr
-    
                '-------------------------------------------------------------------
                ' Place an instance of the second reference connecting it to the
                ' first one. That is to "place" a new instance B connecting to 
@@ -155,7 +169,6 @@ converted: "2026-05-11T17:31:51.438458"
                If ( Not ( objSchCompCVRef Is Nothing ) ) Then
                   strMessage = strMessage &  "Got catalog component reference of the second symbol" & vbCr
                End If 
-    
                '-------------------------------------------------------------------
                '  Preparing to place B on A. 
                '  1- need to retreive a CATIASchCompatibility interface handle
@@ -166,7 +179,12 @@ converted: "2026-05-11T17:31:51.438458"
                '     checking. 
                '     For this we need another interface handle: CATIASchCompGraphic
                '-------------------------------------------------------------------
+```
+
     
+```
+
+```vbscript
                If ( Not ( objSchCompInstA Is Nothing ) ) Then
                   Set objSchCompatInstA = objSchRoot.GetInterface ("CATIASchCompatible", _
                     objSchCompInstA)
@@ -175,10 +193,13 @@ converted: "2026-05-11T17:31:51.438458"
                   Set objSchGRRCompInstA = GetComponentImage (objSchCompGraphInstA)
                End If
     
+```
+
+```vbscript
                If ( Not ( objSchCompatInstA Is Nothing ) And _ 
                     Not ( objSchGRRCompInstA Is Nothing ) And _
                     Not ( objSchCompCVRef Is Nothing ) ) Then
-    
+```vbscript
                   '----------------------------------------------------------------
                   '  1- QueryConnectAbility.
                   '     Ask the reference of the new instance B for information
@@ -203,59 +224,79 @@ converted: "2026-05-11T17:31:51.438458"
                   '     Place a new instance with the black box info. 
                   ' 
                   '----------------------------------------------------------------
-    
                   ' -- step 1 
                   Set objCompRefPlaceInfo = objSchCompCVRef.QueryConnectAbility _
                     (objSchGRRCVCtlg) 
-    
                   ' -- step 2 
+```
+
                   objSchCompatInstA.IsTargetOKForPlace objSchGRRCompInstA, _
                     objCompRefPlaceInfo, objCompatInfo, bYesCompat
     
                   Dim db2Pt(2) As CATSafeArrayVariant
-    
                   '-- 6.50 is the relative x coordinate of the right connector
                   '-- from the symbol origin
                   db2Pt(0) = 145.0 + 5.00
                   db2Pt(1) = 130.0
     
+```
+
+```vbscript
                   If ( bYesCompat ) Then
                      strMessage = strMessage &  "Target is compatible" & vbCr
                      bFindAllSolutions = false
-    
                      ' -- step 3 
                      objSchCompatInstA.GetBestFitPlaceInfo db2Pt, objCompatInfo, _
                        objFinalPlaceInfo, bFindAllSolutions
     
+```
+
+```vbscript
                      If ( Not ( objFinalPlaceInfo is Nothing ) ) Then
-    
                         ' -- step 4 
                         Set objSchCompInstB = objSchCompCVRef.PlaceOnComponentWithInfo _
                           (objFinalPlaceInfo)
     
+```
+
+```vbscript
                         If ( Not ( objSchCompInstB is Nothing ) ) Then
                            strMessage = strMessage &  _
                              "Place a new component instance on another existing object is successful" & vbCr
                         End If
     
+```
+
+```vbscript
                      End If 
     
+```
+
                   Else 
                      strMessage = strMessage &  "Target is NOT compatible" & vbCr
                   End If
     
+```
+
+```vbscript
                End If '----If ( Not ( objSchCompatInstA Is Nothing )...
     
+```
+
+```vbscript
              End If '---- If ( Not ( objSchCntblCVRef Is Nothing )...
            End If '---- If ( Not ( objSchGRRCVCtlg Is Nothing )...
         End If  '----If ( Not ( objSchRoot Is Nothing )...
     
+```
+
         strMessage = strMessage & _
           "--------------------------------------------------------------------" & vbCr
         MsgBox strMessage
     
+```vbscript
     End Sub
-    
+```vbscript
     ' -----------------------------------------------------------------------------
     ' | Find the first symbol used for the input schematic component.
     ' | Input: objSchCompGraphArg:  the schematic component 
@@ -271,9 +312,15 @@ converted: "2026-05-11T17:31:51.438458"
           End If
        End If
     End Function
+```
+
+    
+```
+
     
     
     
     
     
-    
+
+```

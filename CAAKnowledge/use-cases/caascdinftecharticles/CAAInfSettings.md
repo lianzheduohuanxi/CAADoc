@@ -1,22 +1,18 @@
 ---
 title: "Administrating Settings with Automation"
-category: "general"
+category: "use-case"
 module: "CAAScdInfTechArticles"
 tags: ["CATIA"]
-source_file: "Doc\online\CAAScdInfTechArticles\CAAInfSettings.htm"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfSettings.md"
 converted: "2026-05-11T17:31:52.445748"
 ---
-
 ## Infrastructure
  
  | 
- 
  ## Administrating Settings with Automation  
    
- ---|---  
    
  * * *
- 
  ### Abstract
  
  In addition to using the **Tools- >Options...** command, many settings can be managed and administrated using Automation thanks to Automation objects. This enables you to record the current settings, modify the settings values or lock the settings you feel appropriate, and apply this setting customization just running macros without entering all the property pages the modified settings belong to.
@@ -31,17 +27,18 @@ converted: "2026-05-11T17:31:52.445748"
      * **Administrating Settings Using Macros**
      * **In Short**  
  ---  
-   
  ### How Automation Can Help You Manage and Administrate Settings
  
  The **Tools- >Options...** dialog box displays a tree in its left part. The first level nodes represent solutions, such as General, Infrastructure, Mechanical Design, Shape, and so on. The second level nodes represent workbenches, such as Display, Compatibility, Parameters and Measure, and so on. A property sheet is displayed in the right part. It is always associated with a workbench, and possibly with a solution. A property sheet contains property pages represented as tab pages.
  
+```vbscript
  For example, the picture below shows the property sheet associated with the General solution. This property sheet contains the General, Help, Shareable Products, Licensing, and so on, property pages. The property page General is the active one.
  
+```
+
  A property page displays single setting attributes, such as User Interface Style, or setting parameters, such as Data Save, that are made up of two or more setting attributes. Data Save includes a setting attribute to store which box is checked, and another one to store the frequency as a number of minutes. If the second box is not checked, the second setting attribute is not used, and the box is not available. In the same way, Memory Warning at the bottom of the property page is made up of a setting parameter including two setting attributes for Trigger Memory warning and the percentage of memory use, and a setting attribute for Trigger Memory Stopper.
  
  The setting attributes are stored in setting repositories, usually one for a given tab page. Sometimes, two setting repositories can be used in a tab page. For example, still on the picture below, User Interface Style deals with the user interface part of the application, and Data Save deals with the model part. Since they are accessed by different parts of the application, they are stored in two different setting repositories. But they are displayed in the same tab page because it makes sense for the end user to find them together.
- 
  ### Creating Macros for Property Pages
  
  The **Tools- >Options...** dialog box contains a dump button ![](images/CAAScdInfSettingDumpButton.gif)  at the bottom left for dumping settings to a .catvbs script macro file:
@@ -65,10 +62,9 @@ converted: "2026-05-11T17:31:52.445748"
  The example described below corresponds to the Dump of Parameters dialog box as it is shown above for the General property page of the General solution. Click Yes to create the macro. 
  
  [Top]
- 
  ### Understanding the Created Macros
  
- The macro files are by default stored in C:\Documents and Settings\_user_ \Local Settings\Temp with Windows, where user is your user name. They are named according to the solution, workbench, and property page names separated by a dash character. If a space character appears in a name, it is replaced with an underscore "_". For example, the macro created from the General property page located in the General solution is named General-General.catvbs, and the macro created from the Tree Appearance property page located in the Display workbench of the General solution is named General-Display-Tree_Appearance.catvbs.
+ The macro files are by default stored in C/Documents and Settings\_user_ \Local Settings\Temp with Windows, where user is your user name. They are named according to the solution, workbench, and property page names separated by a dash character. If a space character appears in a name, it is replaced with an underscore "_". For example, the macro created from the General property page located in the General solution is named General-General.catvbs, and the macro created from the Tree Appearance property page located in the Display workbench of the General solution is named General-Display-Tree_Appearance.catvbs.
  
  Such a macro contains code to manage the setting attributes the setting repositories of which can be accessed using Automation. So, in such a macro, you may find code for all the setting attributes making up the property page, or a part of them. You may also find a single object to manage all the setting attributes if they all belong to the same setting repository, or several objects otherwise. Each of these objects can be either a setting controller object dedicated to the setting repository, or the generic SettingRepository object:
  
@@ -76,21 +72,27 @@ converted: "2026-05-11T17:31:52.445748"
      * The generic SettingRepository object contains a couple of GetAttr/PutAttr methods to read and write any attribute values, a couple of GetAttrArray/PutAttrArray method to read and write any array type attribute values, a SetAttrLock method to manage any setting attribute locks and a GetAttrInfo method to get any attribute information.
  
  [Top]
- 
  #### Setting Repository Managed by a Dedicated Object
  
+```vbscript
  For example, consider the macro file created for the General property page of the General solution as shown in the image above. This macro is named General-General.catvbs and begins with the following statements:
      
+```
+
      Language="VBSCRIPT"
      
+```vbscript
      Sub CATMain()
      
+```vbscript
      Set settingControllers1 = CATIA.SettingControllers
      
      Set generalSessionSettingAtt1 = settingControllers1.Item("CATCafGeneralSessionSettingCtrl")
  
  The first object retrieved is the  SettingControllers collection object in the `settingControllers1` variable. Since the setting controller collection is aggregated to the Application object, simply calling `CATIA.SettingControllers` returns this collection.
  
+```
+
  The setting controller collection contains all the setting controller objects available in the current session. Each setting controller manages a setting repository stored in a CATSettings file. A setting controller gives you read and write access to the setting values contained in the setting repository, enables you to retrieve information about these settings, namely their default values and whether they are locked, and to lock or unlock them. 
  
  The next line retrieves a setting controller in the `generalSessionSettingAtt1` variable thanks to the `Item` method of the setting controller collection to which the setting controller identifier `CATCafGeneralSessionSettingCtrl` is passed as argument. The variable name is built by the Dump command according to the setting controller object name, with the first character set to lowercase, and with a digit added to the end. So you can easily get the object name GeneralSessionSettingAtt from the identifier `generalSessionSettingAtt1`. A table gives the correspondence between the property pages, the setting controller object names and their identifiers you should pass as an argument to retrieve them from the setting controller collection [1].
@@ -99,12 +101,18 @@ converted: "2026-05-11T17:31:52.445748"
  
  The next lines of this macro are:
      
+```vbscript
      Dim long1
      long1 = generalSessionSettingAtt1.UIStyle
+```vbscript
      '--------------------------------------------------
      ' Returned value : (CATGenUIStyle) UIStyleP2
      '--------------------------------------------------
+```
+
      
+```
+
  
  They deal with the User Interface Style setting that is displayed on top of the General property page.
  
@@ -114,18 +122,24 @@ converted: "2026-05-11T17:31:52.445748"
  
  The next lines give additional information about this setting attribute.
      
+```vbscript
      Dim bSTR1
      bSTR1 = ""
      Dim bSTR2
      bSTR2 = ""
      Dim boolean1
      boolean1 = generalSessionSettingAtt1.GetUIStyleInfo(bSTR1, bSTR2)
+```vbscript
      '--------------------------------------------------
      ' Parameter 1 : (String) "Default value"
      ' Parameter 2 : (String) "Unlocked"
      ' Returned value : (Boolean) False
      '--------------------------------------------------
+```
+
      
+```
+
  
  These lines use the GetUIStyleInfo method that retrieves the following information displayed as comments:
  
@@ -137,8 +151,10 @@ converted: "2026-05-11T17:31:52.445748"
  
  Going further in the macro, the following lines met are:
      
+```vbscript
      Dim boolean2
      boolean2 = generalSessionSettingAtt1.DragDrop
+```vbscript
      '--------------------------------------------------
      ' Returned value : (Boolean) False
      '--------------------------------------------------
@@ -154,7 +170,11 @@ converted: "2026-05-11T17:31:52.445748"
      ' Parameter 2 : (String) "Unlocked"
      ' Returned value : (Boolean) True
      '--------------------------------------------------
+```
+
  
+```
+
  They deal with the Drag & Drop setting, that is displayed almost at the bottom of the dialog box, but is managed by the same setting controller object, since the macro uses the same variable `generalSessionSettingAtt1`. This means that this setting attribute is stored in the same setting repository. Note that the different variable names still use the variable types with increasing indexes.
  
  ![](images/CAAScdInfSettingDragAndDrop.gif)
@@ -163,10 +183,12 @@ converted: "2026-05-11T17:31:52.445748"
  
  Then the macro contains the following lines. 
      
+```vbscript
      Set disconnectionSettingAtt1 = settingControllers1.Item("CATSysDisconnectionSettingCtrl")
      
      Dim boolean4
      boolean4 = disconnectionSettingAtt1.ActivationState
+```vbscript
      '--------------------------------------------------
      ' Returned value : (Boolean) False
      '--------------------------------------------------
@@ -182,7 +204,11 @@ converted: "2026-05-11T17:31:52.445748"
      ' Parameter 2 : (String) "Unlocked"
      ' Returned value : (Boolean) False
      '--------------------------------------------------
+```
+
  
+```
+
  Here a new setting controller is returned from the setting controller collection object. This is the  DisconnectionSettingAtt object [2]. This is because the setting Disconnection is managed by this object, and not by the previous  GeneralSessionSettingAtt object, even if both settings are located in the same dialog box. The reason is that they are stored in two different setting repositories, each having its own setting controller.
  
  ![](images/CAAScdInfSettingDisc.gif)
@@ -191,8 +217,10 @@ converted: "2026-05-11T17:31:52.445748"
  
  The next lines are: 
      
+```vbscript
      Dim long2
      long2 = disconnectionSettingAtt1.InactivityDuration
+```vbscript
      '--------------------------------------------------
      ' Returned value : (Long) 1800
      '--------------------------------------------------
@@ -208,7 +236,11 @@ converted: "2026-05-11T17:31:52.445748"
      ' Parameter 2 : (String) "Unlocked"
      ' Returned value : (Boolean) False
      '--------------------------------------------------
+```
+
  
+```
+
  This setting contains the inactivity duration after which the application should disconnect. It makes sense if the previous setting is checked. Note that the value displayed in the dialog box (30) is expressed in minutes, but the value returned and stored in the setting repository (1800) is expressed in seconds. You may find differences like this one between what is shown in the dialog box to the end user and what is actually managed by the application. Note that these two setting attributes are related to each other and make up a setting parameter.
  
  The macro continues, but you should now know enough to understand the remaining part. You will notice that this remaining part only deals with the Memory Warning settings. This means that the other settings displayed in this dialog box are not managed by any setting controller object. These settings are:
@@ -221,20 +253,26 @@ converted: "2026-05-11T17:31:52.445748"
  
  Note that the macro ends with the statement:
      
+```vbscript
      End Sub
  
+```
+
  [Top]
- 
  #### Setting Controller Managed by the SettingRepository Object
  
+```vbscript
  For example, consider the macro file created for the PCS property page of the General solution as shown in the image below.
  
+```
+
  ![](images/CAAScdInfSettingGeneralPCS.png)
  
  This macro is named General-PCS.catvbs and begins with the following statements:
      
      Language="VBSCRIPT"
      
+```vbscript
      Sub CATMain()
      
      Set settingControllers1 = CATIA.SettingControllers
@@ -243,6 +281,8 @@ converted: "2026-05-11T17:31:52.445748"
  
  The first object retrieved is the  SettingControllers collection object in the `settingControllers1` variable. Since the setting controller collection is aggregated to the Application object, simply calling `CATIA.SettingControllers` returns this collection.
  
+```
+
  The setting controller collection contains all the setting controller objects available in the current session. Each setting controller manages a setting repository stored in a CATSettings file. A setting controller gives you read and write access to the setting values contained in the setting repository, enables you to retrieve information about these settings, namely their default values and whether they are locked, and to lock or unlock them. 
  
  The next line retrieves the generic SettingRepository object in the ` settingRepository1` variable thanks to the `Item` method of the setting controller collection to which the setting repository identifier `GeneralPCS` is passed as argument. This object is thus dedicated to the GeneralPCS setting repository. A table gives the correspondence between the property pages and their setting repository identifiers you should pass as an argument to retrieve a generic SettingRepository object dedicated to them from the setting controller collection [1].
@@ -252,16 +292,21 @@ converted: "2026-05-11T17:31:52.445748"
  The next lines of this macro are:
      
      uLong1 = settingRepository1.GetAttr("StackFullWarning")
+```vbscript
      '--------------------------------------------------
      ' Parameter 1 : (String) "StackFullWarning"
      ' Returned value : (Variant) (Unsigned Long) 0
      '--------------------------------------------------
+```
+
  
  They deal with the Stack Full setting attribute.
  
  This setting attribute is stored as a unsigned long integer and its current value is returned in the uLong1 variable the name of which is built with the setting attribute type. This setting attribute is retrieved using the GetAttr method of the SettingRepository object, to which the setting attribute name StackFullWarning is passed as an argument. To know the type and the possible values of this setting attribute, look for the General solution in the Setting Controller Reference page [1], then for None in the Workbench column, since the property page is attached directly to the solution, and then for the PCS property page. This shows you a link to the SettingRepository object and a link to the GeneralPCS setting repository [3], where the setting attributes that can be customized with Automation in this setting repository are described. Here is the documentation of the StackFullWarning setting attribute:
  
      * **StackFullWarning**   
+```
+
 **Role** : Activation flag for stack full warning   
 **Detailed role** : Sets the behavior when the Undo/Redo stack becomes full.  
 0 means that no warning is displayed, 1 displays an easy warning, 2 displays a notify box requesting a user commitment.  
@@ -276,19 +321,25 @@ converted: "2026-05-11T17:31:52.445748"
  
  The next lines give additional information about this setting attribute.
      
+```vbscript
      Dim bSTR1
      bSTR1 = ""
      Dim bSTR2
      bSTR2 = ""
      Dim boolean1
      settingRepository1.GetAttrInfo "StackFullWarning", bSTR1, bSTR2, boolean1
+```vbscript
      '--------------------------------------------------
      ' Parameter 1 : (String) "StackFullWarning"
      ' Parameter 2 : (String) "Default value"
      ' Parameter 3 : (String) "Unlocked"
      ' Parameter 4 : (Boolean) False
      '--------------------------------------------------
+```
+
  
+```
+
  These lines use the GetAttrInfo method of the SettingRepository object that retrieves the following information about the StackFullWarning setting attribute, displayed as comments:
  
      * The first parameter is the setting attribute name: StackFullWarning
@@ -299,7 +350,6 @@ converted: "2026-05-11T17:31:52.445748"
  The macro continues, but you should now know enough to understand the remaining part. 
  
  [Top]
- 
  ### Using a Created Macro to Manage Settings
  
  If you attempt to run the macro as it is created, you will get no more than what is written as comments.
@@ -311,11 +361,9 @@ converted: "2026-05-11T17:31:52.445748"
      * Lock a setting attribute.
  
  The way to do this depends on whether the setting repository can be accessed using a dedicated setting controller object or the generic SettingRepository object.
- 
  #### With a Dedicated Setting Controller Object
  
  The setting controller object depends on the setting repository, and includes properties and methods dedicated to each setting attributes. See the Setting Controller Reference [1] to know which setting controller objects apply to a given tab page. 
- 
  ##### Retrieving Information About a Setting
  
  Suppose you want to retrieve information about the User Interface Style setting. You can reuse the part of the created macro as it is, and display the retrieved information in a pop-up, or write it to a file. As seen when detailing the created macro, this information is:
@@ -331,19 +379,26 @@ converted: "2026-05-11T17:31:52.445748"
             Option Explicit
             Sub CATMain()
  
+```
+
  The explicit option enables the script compiler/interpreter to issue an error if a non declared or misspelled variable is found. Note that the `Language="VBSCRIPT"` is omitted. It is of no use but still output in recorded or dumped macros.
  
      2. Then retrieve the setting controller collection object from the application, and the setting controller object dealing with the User Interface Style setting. Just copy the third and fourth statements of the macro described above, and add the Dim statements. You can get this information in the Setting Controller Reference [1].
             
+```vbscript
             Dim settingControllers1 As SettingControllers
             Set settingControllers1 = CATIA.SettingControllers
             Dim generalSessionSettingAtt1  As GeneralSessionSettingAtt
             Set generalSessionSettingAtt1 = settingControllers1.Item("CATCafGeneralSessionSettingCtrl")
  
+```
+
      3. Now you will retrieve the setting value and information. The User Interface Style value is returned.
             
+```vbscript
             Dim long1
             long1 = generalSessionSettingAtt1.UIStyle
+```vbscript
             '--------------------------------------------------
             '' Returned value : (CATGenUIStyle) UIStyleP2
             '--------------------------------------------------
@@ -358,7 +413,11 @@ converted: "2026-05-11T17:31:52.445748"
             ' Parameter 2 : (String) "Unlocked"
             ' Returned value : (Boolean) False
             '--------------------------------------------------
+```
+
             
+```
+
  
      4. To display the retrieved data in a pop-up, add the following lines: 
             
@@ -372,14 +431,16 @@ converted: "2026-05-11T17:31:52.445748"
  
      5. Do not forget to end the macro. 
             
+```vbscript
             End Sub
  
+```
+
  The pop-up displayed is as follows.
  
  ![](images/CAAScdInfSettingPopup.gif)
  
  Note that the setting value is returned to the integer 1 corresponding to the second value (UIStyleP2) of the enumeration CATGenUIStyle.
- 
  ##### Setting a New Value
  
  Now assume you want to set the User Interface Style to P1. To ease your job, you can reuse a part of the created macro.
@@ -389,25 +450,34 @@ converted: "2026-05-11T17:31:52.445748"
             Option Explicit
             Sub CATMain()
  
+```
+
      2. Then retrieve the setting controller collection object from the application, and the setting controller object dealing with the User Interface Style setting. Just copy the third and fourth statements of the macro described above, and add the Dim statements. You can get this information in the Setting Controller Reference [1].
             
+```vbscript
             Dim settingControllers1 As SettingControllers
             Set settingControllers1 = CATIA.SettingControllers
             Dim generalSessionSettingAtt1  As GeneralSessionSettingAtt
             Set generalSessionSettingAtt1 = settingControllers1.Item("CATCafGeneralSessionSettingCtrl")
  
+```
+
      3. Now you will set the new value. The User Interface Style value is returned or set thanks to the  UIStyle property of the  GeneralSessionSettingAtt setting controller object. This property takes the enumeration  CATGenUIStyle as argument. The value corresponding to the P1 style is UIStyleP1. So first create a new variable, say `myNewStyle`, and set it the value UIStyleP1 of the enumeration CATGenUIStyle by writing `CATGenUIStyle.UIStyleP1` as value. Then assign that new value to the UIStyle property. 
             
+```vbscript
             Dim myNewStyle = CATGenUIStyle.UIStyleP1
             generalSessionSettingAtt1.UIStyle = myNewStyle
  
+```
+
      4. Do not forget to save your changes by calling the SaveRepository method and to end the macro. 
             
             generalSessionSettingAtt1.SaveRepository
             End Sub
  
+```
+
  You can now run this short macro to change the User Interface Style to P1.
- 
  ##### Locking a Setting
  
      1. First Create a Sub. 
@@ -415,13 +485,18 @@ converted: "2026-05-11T17:31:52.445748"
             Option Explicit
             Sub CATMain()
  
+```
+
      2. Then retrieve the setting controller collection object from the application, and the setting controller object dealing with the User Interface Style setting. Just copy the third and fourth statements of the macro described above, and add the Dim statements. You can get this information in the Setting Controller Reference [1].
             
+```vbscript
             Dim settingControllers1 As SettingControllers
             Set settingControllers1 = CATIA.SettingControllers
             Dim generalSessionSettingAtt1  As GeneralSessionSettingAtt
             Set generalSessionSettingAtt1 = settingControllers1.Item("CATCafGeneralSessionSettingCtrl")
  
+```
+
      3. Now you will lock the setting. The method to use does not appear in the create macro. This method name is built using the setting parameter name UIStyle to which the prefix Set and the suffix Lock are added. This is valid for all the setting parameters managed using dedicated Automation objects. You can refer to the  GeneralSessionSettingAtt object to learn more about this method. To lock the setting, pass the Boolean value True to this method, as follows. 
             
             generalSessionSettingAtt1.SetUIStyleLock True
@@ -431,14 +506,17 @@ converted: "2026-05-11T17:31:52.445748"
             generalSessionSettingAtt1.SaveRepository
             End Sub
  
+```
+
+```vbscript
  Do not forget to save your changes by calling the SaveRepository method. You can now run this short macro to lock the User Interface Style setting. Note that since you lock a setting, you need to start in the admin mode, otherwise the macro will fail.
  
+```
+
  [Top]
- 
  #### With the Generic SettingRepository Object
  
  The SettingRepository object uses a single set of methods for all the setting attributes. See the Setting Controller Reference [1] to know which setting repository objects apply to a given tab page and to get the description of their setting attributes [3]. 
- 
  ##### Retrieving Information About a Setting Attribute
  
  Suppose you want to retrieve information about the Stack Full setting attribute. You can reuse the part of the created macro as it is, and display the retrieved information in a pop-up, or write it to a file. As seen when detailing the created macro, this information is:
@@ -454,21 +532,28 @@ converted: "2026-05-11T17:31:52.445748"
             Option Explicit
             Sub CATMain()
  
+```
+
  The explicit option enables the script compiler/interpreter to issue an error if a non declared or misspelled variable is found. Note that the `Language="VBSCRIPT"` is omitted. It is of no use but still output in recorded or dumped macros.
  
      2. Then retrieve the setting controller collection object from the application, and the setting repository object dealing with the PCS setting repository. Just copy the third and fourth statements of the macro described above, and add the Dim statements. 
             
+```vbscript
             Dim settingControllers1 As SettingControllers
             Set settingControllers1 = CATIA.SettingControllers
             Dim settingRepository1 As SettingRepository
             Set settingRepository1 = settingControllers1.Item("GeneralPCS")
  
+```
+
  You can get the GeneralPCS character string to pass to the Item method in the Setting Controller Reference [1].
  
      3. Now you will retrieve the setting value and information. Complete the Dim statements. The Stack Full value is returned, as well as its information. 
             
+```vbscript
             Dim uLong1 
             uLong1 = settingRepository1.GetAttr("StackFullWarning")
+```vbscript
             '--------------------------------------------------
             ' Parameter 1 : (String) "StackFullWarning"
             ' Returned value : (Variant) (Unsigned Long) 0
@@ -478,14 +563,21 @@ converted: "2026-05-11T17:31:52.445748"
             Dim bSTR2 As String
             bSTR2 = ""
             Dim boolean1 As Boolean
+```
+
             settingRepository1.GetAttrInfo "StackFullWarning", bSTR1, bSTR2, boolean1
+```vbscript
             '--------------------------------------------------
             ' Parameter 1 : (String) "StackFullWarning"
             ' Parameter 2 : (String) "Default value"
             ' Parameter 3 : (String) "Unlocked"
             ' Parameter 4 : (Boolean) False
             '--------------------------------------------------
+```
+
             
+```
+
  
      4. To display the retrieved data in a pop-up, add the following lines: 
             
@@ -499,14 +591,16 @@ converted: "2026-05-11T17:31:52.445748"
  
      5. Do not forget to end the macro. 
             
+```vbscript
             End Sub
  
+```
+
  The pop-up displayed is as follows.
  
  ![](images/CAAScdInfSettingPopup2.png)
  
  From the Setting Repository Reference [3], you can access to the GeneralPCS setting repository documentation, where the Stack Full setting is represented using the StackFullWarning setting attribute. The value 0 means that no warning is displayed.
- 
  ##### Setting a New Value
  
  Now assume you want to set the Stack Full to Easy warning. To ease your job, you can reuse a part of the created macro.
@@ -516,13 +610,18 @@ converted: "2026-05-11T17:31:52.445748"
             Option Explicit
             Sub CATMain()
  
+```
+
      2. Then retrieve the setting controller collection object from the application, and the setting repository object dealing with the PCS setting repository. Just copy the third and fourth statements of the macro described above, and add the Dim statements.
             
+```vbscript
             Dim settingControllers1 As SettingControllers
             Set settingControllers1 = CATIA.SettingControllers
             Dim settingRepository1 As SettingRepository
             SSet settingRepository1 = settingControllers1.Item("GeneralPCS")
  
+```
+
      3. Now you will set the new value. From the Setting Repository Reference [3], you can access to the GeneralPCS setting repository documentation, where the Stack Full setting is represented using the StackFullWarning setting attribute. The Easy warning is associated with the value 1. Use the PutAttr method to which you pass the setting attribute name as a String, and the value you want to set.
             
             settingRepository1.PutAttr "StackFullWarning", 1
@@ -532,8 +631,9 @@ converted: "2026-05-11T17:31:52.445748"
             settingRepository1.SaveRepository
             End Sub
  
+```
+
  You can now run this short macro to change the Stack Full to Easy warning.
- 
  ##### Locking a Setting
  
      1. First create a Sub. 
@@ -541,13 +641,18 @@ converted: "2026-05-11T17:31:52.445748"
             Option Explicit
             Sub CATMain()
  
+```
+
      2. Then retrieve the setting controller collection object from the application, and the setting repository object dealing with the PCS setting repository. Just copy the third and fourth statements of the macro described above, and add the Dim statements.
             
+```vbscript
             Dim settingControllers1 As SettingControllers
             Set settingControllers1 = CATIA.SettingControllers
             Dim settingRepository1 As SettingRepository
             Set settingRepository1 = settingControllers1.Item("GeneralPCS")
  
+```
+
      3. Now you will lock the setting. The method is SetAttrLock. To lock the setting, pass the setting attribute name and the Boolean value True to this method, as follows. 
             
             settingRepository1.SetAttrLock "StackFullWarning", True
@@ -557,10 +662,14 @@ converted: "2026-05-11T17:31:52.445748"
             settingRepository1.SaveRepository
             End Sub
  
+```
+
+```vbscript
  Do not forget to save your changes by calling the SaveRepository method. You can now run this short macro to lock the Stack Warning setting. Note that since you lock a setting, you need to start in the admin mode, otherwise the macro will fail.
  
+```
+
  [Top]
- 
  ### Administrating Setting Using Macros
  
  You can use macros to administrate settings.
@@ -580,18 +689,17 @@ converted: "2026-05-11T17:31:52.445748"
  You can then decide to update your customization macros and/or create new ones if the changes are in your customization scope, or use the previous ones as they are otherwise.
  
  [Top]
- 
  ### In Short
  
  Administrating settings can be much simplified using Automation. You can record the default settings in macros, use some of these macros to change values, set or reset locks, and apply you customization by simply running the changed macros. These macros keep track of the default values and of your customization, and you can easily compare settings and their default values from one release to another one. This helps decide what to do to administrate settings when a new release is installed.
  
  * * *
- 
  ### References
  
- [1] | [Setting Controller Reference](CAAInfTabPageList.htm)  
- ---|---  
- [2] | [Setting Controller Automation Objects](CAAInfTocSettingCtrl.htm)  
- [3] | [Setting Repository Reference](../CAAScrSettings/CAAScrTocSettings.htm)  
+ [1] | [Setting Controller Reference](CAAInfTabPageList.md)  
+```
+
+ [2] | [Setting Controller Automation Objects](CAAInfTocSettingCtrl.md)  
+ [3] | [Setting Repository Reference](../CAAScrSettings/CAAScrTocSettings.md)  
    
  _Copyright © 1999-2011, Dassault Systèmes. All rights reserved._

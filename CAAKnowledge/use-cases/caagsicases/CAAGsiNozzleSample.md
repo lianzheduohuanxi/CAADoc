@@ -3,18 +3,15 @@ title: "Creating a Nozzle Shape Thanks to Shape Design Features"
 category: "use case"
 module: "CAAGsiUseCases"
 tags: ["CAAGSMInterfaces", "CAAGsiNozzle", "CATIGSMFactory", "CATISpecObject", "CAAGsiUserTools", "CAA2SampleSession", "CATIGSMTool_var", "CAAGsiObjTool", "CATISpecObject_var"]
-source_file: "Doc\online\CAAGsiUseCases\CAAGsiNozzleSample.htm"
+source_file: "Doc/online/CAAGsiUseCases/CAAGsiNozzleSample.md"
 converted: "2026-05-11T17:31:50.638182"
 ---
-
 # Shape Design & Styling
 
 | 
-
 ## Generative Shape Design
 
 | 
-
 ### Creating a Nozzle Shape Thanks to Shape Design Features
 
 _Using the Shape Design factory to create point, line, plane, circle, split, sweep, and loft features_  
@@ -22,7 +19,6 @@ _Using the Shape Design factory to create point, line, plane, circle, split, swe
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article discusses the CAAGsiNozzle use case. This use case explains how to create a nozzle shape thanks to shape design features. 
@@ -41,13 +37,11 @@ This article discusses the CAAGsiNozzle use case. This use case explains how to 
 ---  
   
 * * *
-
 ### What You Will You Learn With This Use Case
 
 This use case is intended to help you make your first steps in programming with Shape Design. Its main intent is to allow you to create a nozzle shape using shape design features[2]. 
 
 [Top]
-
 ### Some Important Concepts Relevant to CATGsiUserTools
 
 The CAAGsiNozzle use case uses many services of the CAAGsiUserTools class. This class embeds several calls to the _CATIGSMFactory_ interface. This decreases the number of lines to write. We use a list that contains the input for the specification (feature) we want to instantiate. The way it is coded, enables the user to call many times the same method by changing a few parameters in the input list.
@@ -57,13 +51,11 @@ This class _CAAGsiUserTools_ separates the sample CAAGsiNozzle from the interfac
 Moreover, if a common task has to be done for every feature created by the user, this can be done in the `CreateXXX` method instead of doing it in every file that creates that feature. (As an example, change the name or put it into NoShow.)
 
 [Top]
-
 ### The CAAGsiNozzle Use Case
 
 CAAGsiNozzle is a use case of the CAAGSMInterfaces.edu framework that illustrates GSMInterfaces framework capabilities.
 
 [Top]
-
 #### What Does CAAGsiNozzle Do
 
 The goal of CAAGsiUserTools use case is to show how to create a nozzle shape using shape design features. We enrich the sample code CAAGsiNozzle.cpp and explains in more detail the way shape design features are created.
@@ -73,7 +65,6 @@ We have decided to split the creation of the Nozzle Shape in different steps: fi
 ![](images/CAAGsiNozzle.jpg)
 
 [Top]
-
 #### How to Launch CAAGsiNozzle
 
 To launch CAAGsiNozzle, you will need to set up the build time environment, then compile CAAGsiNozzle along with its prerequisites, and set up the run time environment, and then execute the use case [1].
@@ -93,8 +84,6 @@ Launch the use case as follows:
   
 ---  
 
-
-
 where:
 
 `outputDirectory` | The directory into which `CAAGsiNozzle.CATPart is saved`  
@@ -102,7 +91,6 @@ where:
 `CAAGsiNozzle.CATPart` | The file that contains the part created to contain the nozzle shape result  
   
 [Top]
-
 #### Where to Find the CAAGsiNozzle Code
 
 The CAAGsiNozzle use case is made of main program located in the CAAGsiNozzle.m module of the CAAGSMInterfaces.edu framework:
@@ -114,7 +102,6 @@ Unix | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiNozzle.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are six logical step in CAAGsiNozzle: 
@@ -126,12 +113,9 @@ There are six logical step in CAAGsiNozzle:
   5. Create Split and Spline Features
   6. Create Sweep and Loft Features
 
-
-
 We will now comment each of those sections by looking at the code of the main method of file CAAGsiNozzle.
 
 [Top]
-
 #### Prolog
 
 In CAAGsiNozzle, we use an instance (named CAAGsiObjTool) of the class _CAAGsiUserTools_ to create shape design features. We call the `Init` method to create a session and a Part document.
@@ -146,7 +130,7 @@ In CAAGsiNozzle, we use an instance (named CAAGsiObjTool) of the class _CAAGsiUs
       if (FAILED(rc)) return 1;
     
       int setAsCurrent = 1;
-      CATIGSMTool_var spTool = CAAGsiObjTool.[CreateGSMTool](../CAAGsiTechArticles/CAAGsiCreateGSMTool.htm)("Nozzle",setAsCurrent);
+      CATIGSMTool_var spTool = CAAGsiObjTool.[CreateGSMTool](../CAAGsiTechArticles/CAAGsiCreateGSMTool.md)("Nozzle",setAsCurrent);
       ...  
   
 ---  
@@ -154,7 +138,6 @@ In CAAGsiNozzle, we use an instance (named CAAGsiObjTool) of the class _CAAGsiUs
 Then, we create an open body to insert generative shape design features inside it. We call the `CreateGSMTool` method that returns the GSMTool that has been created.
 
 [Top]
-
 #### Create Point Features
 
 How to create a point coordinate feature:
@@ -200,7 +183,6 @@ We create a point on curve feature using Split.12 feature at curvilinear length 
 [Top]
 
 * * *
-
 #### Create Plane and Line Features
 
 Now that we have created points, we can use them to create planes and lines.
@@ -241,7 +223,6 @@ We create a simple line defined by two points. We get `spPoint3` (respectively `
 [Top]
 
 * * *
-
 #### Create Circle Features
 
 How to create circles:
@@ -266,7 +247,6 @@ The circle will pass through Point.5 and Point.6 and will have for reference pla
 [Top]
 
 * * *
-
 #### Create Split and Spline Features
 
 We can now create split features that will relimit a feature by intersection with another one.
@@ -304,7 +284,6 @@ We have created two directions above that will not be seen in the Procedural Vie
 [Top]
 
 * * *
-
 #### Create Sweep and Loft Features
 
 Now that we have created the wireframe we need, we can create skins, let see how to create sweep and loft.
@@ -346,7 +325,6 @@ We create a loft feature with sections Circle.2, Circle.3 and with guide Line.3.
 [Top]
 
 * * *
-
 ### In Short
 
 This use case has demonstrated the way to create a nozzle shape thanks to shape design primitives. We illustrates the use of the _CAAGsiUserTools_ class that encapsulates the _CATIGSMFactory_ method for a set of capabilities. We illustrates also the creation of wireframe and almost simple skin features. We also show that there is different ways to design points, lines, planes, circles depending on what are the driving parameters the user want to manipulate and also the way he wants the shape to behave in a modification scenario.
@@ -354,18 +332,16 @@ This use case has demonstrated the way to create a nozzle shape thanks to shape 
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] | [About Generative Shape Design Features](../CAAGsiTechArticles/CAAGsiShapeDesignFeature.htm)  
-[3] | [Inserting a Shape Design Feature in the procedural view ](../CAAGsiTechArticles/CAAGsiInsertInProceduralView.htm)  
-[4] |  [Updating a shape Design feature ](../CAAGsiTechArticles/CAAGsiUpdateShapeDesign.htm)  
+[2] | [About Generative Shape Design Features](../CAAGsiTechArticles/CAAGsiShapeDesignFeature.md)  
+[3] | [Inserting a Shape Design Feature in the procedural view ](../CAAGsiTechArticles/CAAGsiInsertInProceduralView.md)  
+[4] |  [Updating a shape Design feature ](../CAAGsiTechArticles/CAAGsiUpdateShapeDesign.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Apr 2000] | Document created  

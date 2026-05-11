@@ -1,9 +1,10 @@
 ---
 title: "DraftingInterfaces Framework Modifications in V5R14"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR14"
+version: "V5R14"
 tags: ["CATISketch_var", "CATIDrwGenDrawShape", "CATIDftPattern", "CATIGenerSpec", "CATIProduct_var", "CATILinkableObject_var", "CATISpecObject_var"]
-source_file: "Doc\online\CAACenAPIChangesR14\DraftingInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR14/DraftingInterfaces.md"
 converted: "2026-05-11T17:33:50.891917"
 ---
 

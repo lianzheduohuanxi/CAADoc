@@ -1,9 +1,10 @@
 ---
 title: "VisualizationBase Framework Modifications in V5R14"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR14"
+version: "V5R14"
 tags: []
-source_file: "Doc\online\CAACenAPIChangesR14\VisualizationBase.htm"
+source_file: "Doc/online/CAACenAPIChangesR14/VisualizationBase.md"
 converted: "2026-05-11T17:33:50.986264"
 ---
 

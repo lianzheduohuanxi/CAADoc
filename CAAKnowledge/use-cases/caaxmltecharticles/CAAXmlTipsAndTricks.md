@@ -1,20 +1,17 @@
 ---
 title: "XML tips and tricks"
-category: "general"
+category: "use-case"
 module: "CAAXmlTechArticles"
 tags: ["CATISAXParser_var", "CATIXMLSAXFactory", "CATIndentationCharacter", "CATIXMLDOMDocumentBuilder", "CATIXMLDOMDocumentBuilder_var", "CATIndentation", "CATISAXEntityResolver", "CATIDOMText", "CATIXMLSAXFactory_var"]
-source_file: "Doc\online\CAAXmlTechArticles\CAAXmlTipsAndTricks.htm"
+source_file: "Doc/online/CAAXmlTechArticles/CAAXmlTipsAndTricks.md"
 converted: "2026-05-11T17:33:45.696790"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## Middleware Abstraction
 
 | 
-
 ### XML Tips and Tricks
 
 _Tips for making the best use of the XMLParser framework_  
@@ -22,7 +19,6 @@ _Tips for making the best use of the XMLParser framework_
 Technical Article  
   
 * * *
-
 ### Abstract
 
 This article presents several tips to help you make the best use of the XMLParser framework.
@@ -44,20 +40,18 @@ This article presents several tips to help you make the best use of the XMLParse
 ---  
   
 * * *
-
 ### Frequently used Patterns
 
 The XMLParser framework uses several patterns to help you get used to the API more quickly.
 
 [Top]
-
 #### Manage Errors Using the V5 HRESULT / CATError Pattern
 
 The XMLParser framework uses the HRESULT / CATError mechanism to manage errors.
     
     
     if (FAILED(hr)) {
-        CATUnicodeString message = "XMLParser call has failed:\n";
+        CATUnicodeString message = "XMLParser call has failed/n";
         CATError* error = **CATError::CATGetLastError**(hr);
         if (error != NULL) {
             message.Append(error->GetNLSMessage());
@@ -76,7 +70,6 @@ XML parsers have rich error reporting capabilities and will often give you a pre
   * a line and column number to locate the error precisely.
   * an error message to help you to fix the not well-formed or invalid XML input.
 
-
     
     
     XMLParser call has failed:
@@ -90,7 +83,6 @@ XML parsers have rich error reporting capabilities and will often give you a pre
 In the same way, when you are building a DOM tree, the parser will also tell you precisely which well-formedness rule has been broken if you try to make an incorrect operation. Make sure to use the `CATError::CATGetLastError` function to obtain the associated CATError to help you debug your XML developments. More information about V5 error management is available here [1].
 
 [Top]
-
 #### Use CLSIDs to Create the Right Parser Component
 
 The XMLParser framework provides several V5 DOM components, which all implement the _CATIXMLDOMDocumentBuilder_ interface, but offer different features (DTD validation, XSD schema validation). If you do not specify which component to use, the default DOM component (XML4C3) will be used.
@@ -132,7 +124,6 @@ To use a specific V5 SAX component (say XML4C5 since you want SAX with schema va
 ![warning.gif \(206 bytes\)](../CAAIcons/images/warning.gif) Note that some DOM methods take as a parameter objects coming from the SAX object model. DOM and SAX V5 component can work together only if they are backed by the same parser (XML4C3 DOM can work with XML4C3 SAX, but not with XML4C5 SAX). For more details on V5 DOM and SAX components, see [2].
 
 [Top]
-
 #### Pass Options Using CATListOfCATUnicodeStrings
 
 Several methods of the XMLParser framework (for instance: `CATIXMLDOMDocumentBuilder::Parse`, `CATIXMLDOMDocumentBuilder::Write`, `CATIXMLSAXFactory::CreateParser`) accept options. Options are passed to these methods using two _CATListOfCATUnicodeStrings_. The first one contains the option names, the second one contains the option values. For instance, the following code instructs a DOM component to generate a file, which uses the UTF-16 encoding and indents the output with one TAB character per indentation level:
@@ -154,13 +145,11 @@ Several methods of the XMLParser framework (for instance: `CATIXMLDOMDocumentBui
 ---  
   
 [Top]
-
 ### Validation Tips
 
 When parsing XML files, you will have to decide if you want to use the grammar validation capabilities of the parser, or not. This section explains how to turn validation on and off.
 
 [Top]
-
 #### Default Parsers Are Validating
 
 DOM and SAX parsers can run in two modes: non-validating and validating. Non validating parsers just verify that the XML document is well-formed, whereas validating parsers verify that that the XML document is both well-formed and valid. To activate/deactivate validation, use the `CATDoValidation` option. The following code shows how to turn off validation for a SAX1 parser:
@@ -190,7 +179,6 @@ DOM and SAX parsers can run in two modes: non-validating and validating. Non val
 ---  
   
 [Top]
-
 #### How to Reference a DTD
 
 To use a validating parser, you need to pass to the parser a document which references a grammar. If your grammar is a DTD, this reference takes the form of a document type declaration. This declaration appears on the second line of the XML document, after the XML declaration and can take one of three forms:
@@ -220,7 +208,6 @@ To use a validating parser, you need to pass to the parser a document which refe
 If the DTD is specified in an external resource, as in the two first forms, the parser will use the system ID to try to locate the resource. The system ID can be either a URI relative to the position of the XML document, or an absolute URI. You can also use a _CATISAXEntityResolver_ to help the parser locate the external resource. For more information on this possibility, see [4].
 
 [Top]
-
 #### How to Reference an XSD Schema
 
 To use a validating parser, you need to pass to the parser a document which references a grammar. If your grammar is an XSD schema, this reference takes the form of special attributes of the `http://www.w3.org/2001/XMLSchema-instance` namespace. These attributes appear in the start tag of the first element defined in the grammar. There are two attributes, depending on whether several XSDs need to be imported.
@@ -248,13 +235,11 @@ The schema is always specified in an external resource. The parser will use the 
 ![warning.gif \(206 bytes\)](../CAAIcons/images/warning.gif) Note that schema validation depends on namespaces. Make sure to activate the `CATEnableNameSpaces` option in the `CATIXMLDOMDocumentBuilder::Parse` and `CATIXMLSAXFactory::CreateParser` when using schemas.
 
 [Top]
-
 ### XML Generation Tips
 
 This section explains how to customize XML documents generated by the `CATIXMLDOMDocumentBuilder::Write` and `CATIXMLDOMDocumentBuilder::WriteToFile` methods.
 
 [Top]
-
 #### Encoding Defaults to UTF-8
 
 The `CATIXMLDOMDocumentBuilder::WriteToFile` method accepts the "CATEncoding" option to explicitely specify the encoding used by the resulting document. If you do not specify this option, you will have an XML file with no `encoding` attribute specified in the XML declaration. The file itself uses the UTF-8 encoding. This corresponds to the default behavior of XML parsers as per the section F1 of the XML specification. See [3] for more information.
@@ -272,7 +257,6 @@ If you use the "CATEncoding" option, you will have an XML file with an `encoding
 ---  
   
 [Top]
-
 #### Use the CATIndentation and CATIndentationCharacter Options to Control Formatting
 
 Humans and XML parsers tend not to treat white space (indentations, line feeds) in the same way. Whereas humans view it as a hint of the structure of the underlying XML document, they are just wasted space for an XML parser. If you open XML files, which contain no white space in a text editor, they will look like this:
@@ -305,7 +289,6 @@ If your XML files need to be manually edited by humans or for debugging purposes
 ![warning.gif \(206 bytes\)](../CAAIcons/images/warning.gif) Note however that these two XML files are not equivalent. If you use the `CATIndentation` and `CATIndentationCharacter` options, white space is inserted in the XML document. Depending on the grammar file, this might or might not be allowed. Furthermore, the resuting DOM structure will be altered, since _CATIDOMText_ nodes will be inserted at various places in the DOM tree to represent this white space. An alternative approach to these options is not to display XML in the console or a text editor, but to use an XML-enabled tool to view the XML, such as a web browser, or a dedicated XML editor.
 
 [Top]
-
 #### Use CATSortAttributes for Stable Output
 
 The XML specification does not mandate that XML attributes appear in a specific order within a tag. Therefore, XML attributes are often stored internally in hashtables by parser implementations. The consequence of this implementation choice is that the ordering of XML attributes is not preserved when reading an XML file and writing it back to disk. This can be a problem if you want to make comparisons between two XML files. To avoid this problem, the `CATIXMLDOMDocumentBuilder::WriteToFile` supports the `"CATSortAttributes"` option. If you use this option, attributes will be sorted in ascending order by qualified name.
@@ -313,7 +296,6 @@ The XML specification does not mandate that XML attributes appear in a specific 
 [Top]
 
 * * *
-
 ### In Short
 
 This article presents several tips to help you make the best use of the XMLParser framework.
@@ -321,17 +303,15 @@ This article presents several tips to help you make the best use of the XMLParse
 [Top]
 
 * * *
-
 ### References
 
-[1] | [ Managing Errors Using HRESULT](../CAASysTechArticles/CAASysErrors.htm)  
+[1] | [ Managing Errors Using HRESULT](../CAASysTechArticles/CAASysErrors.md)  
 ---|---  
-[2] | [Using XML in V5](../CAAXmlTechArticles/CAAXmlV5Overview.htm)  
+[2] | [Using XML in V5](../CAAXmlTechArticles/CAAXmlV5Overview.md)  
 [3] | Extensible Markup Language (XML) 1.0 (Third Edition) - W3C Recommendation 04 February 2004  
-[4] | [Fetching an External Entity with SAX](../CAAXmlUseCases/CAAXMLSAXResolver.htm)  
+[4] | [Fetching an External Entity with SAX](../CAAXmlUseCases/CAAXMLSAXResolver.md)  
   
 * * *
-
 ### History
 
 Version: **1** [Apr 2005] | Document created  

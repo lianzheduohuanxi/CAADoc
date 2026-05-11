@@ -1,27 +1,23 @@
 ---
 title: "Adding a Macro as a Command in a Toolbar"
-category: "general"
+category: "use-case"
 module: "CAAScdInfUseCases"
 tags: []
-source_file: "Doc\online\CAAScdInfUseCases\CAAInfAddingMacroInToolbar.htm"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfAddingMacroInToolbar.md"
 converted: "2026-05-11T17:31:52.346579"
 ---
-
 ## Infrastructure
 
 | 
-
 ## Adding a Macro as a Command in a Toolbar  
   
----|---  
   
 * * *
 
 You can easily customize your toolbars by adding icons to trigger your favorite macros. This reduces the macro access time for the macros you often run.
 
-![](images/atarget.gif) |  This task explains how to add a macro as a command in a toolbar.  
+  This task explains how to add a macro as a command in a toolbar.  
 ---|---  
-![](images/ascenari.gif) | 
 
   1. Select the **Tools- >Macro->Macros... **command to display the **Macros** dialog box, and make sure that the directory path is added in '**Current Macro library or documents** ' section. All macros under this directory are listed in '**Available macros** ' section. Then click '**Close** '  
 ![](images/CAAInfAdd1.jpg)
@@ -36,7 +32,6 @@ You can easily customize your toolbars by adding icons to trigger your favorite 
 
   1. In Customize window select '**Show Properties** ' The default icon ![](images/CAAInfDefaultIcon.jpg) is used to show Icon.  
 ![](images/CAAInfAdd3.jpg)  
-
 
   
   | 

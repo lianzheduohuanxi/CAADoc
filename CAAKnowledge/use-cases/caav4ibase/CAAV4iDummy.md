@@ -1,10 +1,9 @@
 ---
 title: "Dummy File for Search"
-category: "general"
+category: "use-case"
 module: "CAAV4iBase"
 tags: []
-source_file: "Doc\online\CAAV4iBase\CAAV4iDummy.htm"
+source_file: "Doc/online/CAAV4iBase/CAAV4iDummy.md"
 converted: "2026-05-11T17:33:45.812437"
 ---
-
 

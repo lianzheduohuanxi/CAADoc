@@ -3,10 +3,9 @@ title: "Breaking a C1 Surface into C2 Pieces"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMModelInterfaces", "CATICGMMathNurbsSurfaceTools", "CAAGMModelConvertSurfaceToC2", "CATICGMNurbsSurfaceTools"]
-source_file: "Doc\online\CAACgmModel\CAACgmUcTopGMModelSurfaceC1ToC2.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTopGMModelSurfaceC1ToC2.md"
 converted: "2026-05-11T17:33:48.605582"
 ---
-
 
     
     
@@ -70,7 +69,7 @@ converted: "2026-05-11T17:33:48.605582"
     C1NurbsSurface.ncgm file which is delivered in the FunctionTests/InputData 
     folder. If you are not already 
     familiar with geometric modeler use cases, go to
-    [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm).
+    [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md).
     With the input data below:
     
       Fig.1 Break a C1 Surface into C2 Pieces: Input 
@@ -136,27 +135,26 @@ converted: "2026-05-11T17:33:48.605582"
     		[1]
     		| 
     		[
-    		Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)
+    		Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
     	  
-    ---|---  
     
     	
     		[2]
     		| 
-    		[About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)
+    		[About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)
     	  
     
     	
     		[3]
     		| 
-    		[How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)
+    		[How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)
     	  
     
     
     
     		[4]
     		| 
-    		[How to Use Geometric Operators](CAACgmUcGMModelOpeOverw.htm)
+    		[How to Use Geometric Operators](CAACgmUcGMModelOpeOverw.md)
     	  
     
     	
@@ -167,7 +165,6 @@ converted: "2026-05-11T17:33:48.605582"
     		Version: **1** [Dec 2011]
     		| Document created
     	  
-    ---|---  
     
     
     

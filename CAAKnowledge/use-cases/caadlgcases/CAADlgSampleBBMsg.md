@@ -3,18 +3,15 @@ title: "Sending a Data Message to an Interactive Application"
 category: "use case"
 module: "CAADlgUseCases"
 tags: ["CAADlgBBSender", "CAAIDlgDataRequest", "CATICommunicator", "CAADlgBBMessage", "CATIMessageReceiver", "CAADlgBBMessageNotification", "CATICommMsg", "CAADlgBBMessageManager", "CAADlgBBEditorMessageHandler", "CAADlgBBEditorMessage", "CAADlgBBReceiver", "CAADlgBBReceiverWindow", "CAADlgBBSenderWindow", "CAASystem", "CATInstantiateComponent", "CATInteractiveApplication", "CAADlgBBMessageInt", "CAADialog"]
-source_file: "Doc\online\CAADlgUseCases\CAADlgSampleBBMsg.htm"
+source_file: "Doc/online/CAADlgUseCases/CAADlgSampleBBMsg.md"
 converted: "2026-05-11T17:17:55.971235"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## User Interface - Dialogs
 
 | 
-
 ### Sending a Data Message to an Interactive Application
 
 _Using the backbone to send a message with data_  
@@ -22,7 +19,6 @@ _Using the backbone to send a message with data_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to make two interactive applications communicate, and how one of them can send a data message that conveys a text, and how the other can receive the message. 
@@ -40,25 +36,20 @@ This article shows how to make two interactive applications communicate, and how
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show you how an interactive application can declare that it will send or receive messages, how to filter the messages to receive, and how to send and receive messages using the backbone objects of the System framework. The message taken as an example conveys a text.
 
 [Top]
-
 ### The CAADlgBBSender and CAADlgBBReceiver Use Cases
 
 CAADlgBBSender and CAADlgBBReceiver are use cases of the CAADialog.edu framework that illustrates the Dialog and System frameworks capabilities.
 
 [Top]
-
 #### What Do CAADlgBBSender and CAADlgBBReceiver Do
 
 This use case illustrates two interactive applications. One behaves as a message sender, and the other as a message receiver. The message is a data message that conveys a text. The message sender displays an entry field in which the end user types the message text and clicks the Send button to send the message. The message receiver displays a field in which the text of the received message is printed.
 
-![](images/CAADlgBBSender.jpg) | ![](images/CAADlgBBReceiver.jpg)  
----|---  
   
 Both the message sender and the message receiver are interactive applications launched by instantiating a class that derives from _CATInteractiveApplication_. To send the message, the message sender connects to the backbone bus, declares itself, instantiates the message component using the text entered in the text field of its window, and sends it.
 
@@ -67,7 +58,6 @@ The message receiver needs to instantiate a message handler to receive the messa
 Compared to batch applications that intend to receive messages [1] [2], there is no need to create and enter a waiting loop, since the interactive application includes one already. The message conveys data [5] made of a text. It is not described.
 
 [Top]
-
 #### How to Launch CAADlgBBSender and CAADlgBBReceiver
 
 To launch CAADlgBBSender and CAADlgBBReceiver, you will need to set up the build time environment, then compile CAADlgBBSender and CAADlgBBReceiver along with its prerequisites, set up the run time environment [3] in two different windows, and then execute the use case.
@@ -84,13 +74,9 @@ To execute the use case:
         CAADlgBBSender &
         CAADlgBBReceiver &
 
-
-
-
 Type a text in the Backbone Sender window text field, and click Send. The text is printed in the Backbone Receiver window text field.
 
 [Top]
-
 #### Where to Find the CAADlgBBSender and CAADlgBBReceiver Code
 
 The CAADlgBBSender and CAADlgBBReceiver use case are made of several classes located in the CAADlgBBSender.m and CAADlgBBReceiver.m module of the CAADialog.edu framework:
@@ -106,7 +92,6 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 The message component is made of several classes located in the CAADlgBBMessage.m module of the CAADialog.edu framework, and in addition implements the CAAIDlgDataRequest interface located in the PrivateInterfaces directory and in the CAADlgBBMessageInt.m module of the CAADialog.edu framework. They are not described in this article. Refer to the messages described in the CAASystem.edu framework [4] [5].
 
 [Top]
-
 ### Step-by-Step
 
 To create interactive applications that send and receive a data message, there are seven main steps:
@@ -119,10 +104,7 @@ To create interactive applications that send and receive a data message, there a
   6. Receiving the Message
   7. Removing the Message Handler
 
-
-
 [Top]
-
 #### Creating the Message Sender
 
 The message sender is an interactive application whose class is _CAADlgBBSender_. Its main method is `BeginApplication` where the application window is instantiated. The window class is _CAADlgBBSenderWindow_ whose `Build` method connects to the backbone bus by calling its `BackboneInit` method before creating the controls and setting a callback to react when the Send button is clicked. Below is the `BackboneInit `method
@@ -149,7 +131,6 @@ The message sender is an interactive application whose class is _CAADlgBBSender_
 First, a connection to the backbone bus must be established. This is possible thanks to the global function `CATGetBackboneConnection` that returns a pointer to the _CATICommunicator_ interface stored in the `_pICommunicator` data member. Then, the message sender creates its application class identifier and declares it to the backbone bus using the method `Declare`.
 
 [Top]
-
 #### Sending the Message
 
 The message is sent by the callback set to the push button activation.
@@ -191,9 +172,7 @@ The message is sent by the callback set to the push button activation.
 When you click Send, this method is called, and the message sender can send the message. It first retrieves the text entered in the text field, a _CATDlgEditor_ instance, thanks to the `GetLine` method. Then it instantiates the message component _CAADlgBBEditorMessage_ using the `CATInstantiateComponent` global function, which returns a pointer to _CAAIDlgDataRequest_ interface. This interface is created for this message to enable it to set and get its data, that is, the message text. The message text is passed to the message component thanks to the `SetData` method of _CAAIDlgDataRequest_ , and then the message is sent using the `SendRequest` method of _CATICommunicator_ , specifying the target message receiver identifier and the message to send as a pointer to _CATICommMsg_. This message receiver identifier must be the same than the one declared by the message receiver itself in its own `BackboneInit` method.
 
 [Top]
-
 #### Creating the Message Handler
-    
     
     #include "CATBaseUnknown.h"   //Needed to derive from CATBaseUnknown
     
@@ -217,12 +196,10 @@ When you click Send, this method is called, and the message sender can send the 
   
 The _CAADlgBBEditorMessageHandler_ class belongs to a component, thanks to the `CATDeclareClass` macro, C++ derives from _CATBaseUnknown_ , and implements _CATIMessageReceiver_ , whose single method is `HandleMessage`. Note that the copy constructor is set as private, and is not implemented in the source file. This prevents the compiler from creating the copy constructor as public without you know.
     
-    
     #include "CAADlgBBEditorMessageHandler.h"
     #include <CATErrorDef.h> // for the SUCCEEDED macro 
     #include "CAAIDlgDataRequest.h"
     #include "CAADlgBBMessageManager.h"
-    
     #include "TIE_CATIMessageReceiver.h"
     **TIE_CATIMessageReceiver(CAADlgBBEditorMessageHandler);**
     
@@ -273,11 +250,9 @@ The framework interface dictionary is updated to declare that _CAADlgBBEditorMes
 ---  
   
 [Top]
-
 #### Creating the Message Manager
 
 The message manager is a component that dispatches a notification that carries the message text.
-    
     
     #include <CAADlgBBMessageManager.h>
     #include <CAADlgBBMessageNotification.h>
@@ -323,7 +298,6 @@ The message manager is a component that dispatches a notification that carries t
 The message manager is created as a component and is unique. It is instantiated by the `GetManager` static method. The `EventToDispatch` method retrieves the default callback manager associated with any component, instantiates a _CAADlgBBMessageNotification_ class that takes the message text as a data member, and request the default callback manager to dispatch this notification, to which the message receiver application will subscribe.
 
 [Top]
-
 #### Creating the Message Receiver
 
 The message receiver is an interactive application. It has a window, instance of the class _CAADlgBBReceiverWindow_ , that carries out the main tasks of connecting to the backbone bus and receiving the message. Below is the `Build` method of  _CAADlgBBReceiverWindow._
@@ -413,7 +387,6 @@ The `BackboneInit` method is as follows.
 First, a connection to the backbone bus must be established. This is possible thanks to the global function `CATGetBackboneConnection` that returns a pointer to the _CATICommunicator_ interface. Once the connection is established, the message receiver sets its application identifier and declares it to the backbone bus using the method `Declare`. Note that this identifier is used by the message sender when sending the message using the `SendRequest` method. Then the message receiver instantiates the message handler, asks the message handler for a pointer to _CATIMessageReceiver_ , and declares to the backbone bus that it will receive the declared messages using the designated handler, thanks to the `AssociateHandler` method.
 
 [Top]
-
 #### Receiving the Message
 
 The message is received thanks to the message handler that retrieves the message manager, and requests it to dispatch a notification that carries the message text. The message receiver has subscribed to this notification, and the callback method designated is then called. This method is the `ModifyEditor` method below.
@@ -441,7 +414,6 @@ The message is received thanks to the message handler that retrieves the message
 `ModifyEditor` retrieves the message text from the notification, and assigns it to the editor thanks to the `SetLine` method.
 
 [Top]
-
 #### Removing the Message Handler
 
 The message handler should be removed when no messages are to be received any longer. This is done here in the message receiver application window destructor.
@@ -487,7 +459,6 @@ The data members are released and nullified. The message handler is removed than
 [Top]
 
 * * *
-
 ### In Short
 
 This use case shows how to create interactive applications that send and receive backbone messages. The receiving application identifier must be known by the message sender.
@@ -495,20 +466,18 @@ This use case shows how to create interactive applications that send and receive
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Sending a Backbone Simple Message to an Application](../CAASysUseCases/CAASysSampleBBSendRecSimpleMsg.htm)  
+[1] | [Sending a Backbone Simple Message to an Application](../CAASysUseCases/CAASysSampleBBSendRecSimpleMsg.md)  
 ---|---  
-[2] | [Sending a Backbone Data Message to an Application](../CAASysUseCases/CAASysSampleBBSendRecDataMsg.htm)  
-[3] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-[4] | [Creating a Backbone Simple Message](../CAASysUseCases/CAASysSampleBBSimpleMsg.htm)  
-[5] | [Creating a Backbone Data Message](../CAASysUseCases/CAASysSampleBBDataMsg.htm)  
-[6] | [Object Modeler Component and Implementation Inheritances](../CAASysTechArticles/CAASysOMInheritance.htm)  
+[2] | [Sending a Backbone Data Message to an Application](../CAASysUseCases/CAASysSampleBBSendRecDataMsg.md)  
+[3] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[4] | [Creating a Backbone Simple Message](../CAASysUseCases/CAASysSampleBBSimpleMsg.md)  
+[5] | [Creating a Backbone Data Message](../CAASysUseCases/CAASysSampleBBDataMsg.md)  
+[6] | [Object Modeler Component and Implementation Inheritances](../CAASysTechArticles/CAASysOMInheritance.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Jul 2000] | Document created  

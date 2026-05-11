@@ -3,18 +3,15 @@ title: "Creating a Single Patch NURBS Surface"
 category: "use case"
 module: "CAATopUseCases"
 tags: ["CAAGemBrowser", "CATICGMObject", "CAATopCreateHelix", "CAATopOverview", "CAATopologicalOperators"]
-source_file: "Doc\online\CAATopUseCases\CAATopCreateHelix.htm"
+source_file: "Doc/online/CAATopUseCases/CAATopCreateHelix.md"
 converted: "2026-05-11T17:31:50.697467"
 ---
-
 # Geometric Modeler
 
 | 
-
 ## Topology
 
 | 
-
 ### Creating an Helix
 
 _How to create a geometric helix and convert it into a body_  
@@ -22,7 +19,6 @@ _How to create a geometric helix and convert it into a body_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article explains how to create a geometric helix by using the CATGeoFactory::CreateHelix API. 
@@ -39,19 +35,16 @@ This article explains how to create a geometric helix by using the CATGeoFactory
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to help you create a geometric helix, then transform it into a wire.
 
 [Top]
-
 ### The CAATopCreateHelix Use Case
 
 CAATopCreateHelix is a use case of the CAATopologicalOperators.edu framework that illustrates how to create a geometric helix and convert it into a wire.
 
 [Top]
-
 #### What Does CAATopCreateHelix Do?
 
 The CAATopCreateHelix use case:
@@ -61,24 +54,20 @@ The CAATopCreateHelix use case:
   * creates an helix with a variable pitch  and a constant radius and creates the body associated with the helix
   * writes the model and closes the container.
 
-
-
 [Top]
-
 #### How to Launch CAATopCreateHelix
 
 To launch CAATopCreateHelix, you will need to set up the build time environment, then compile CAATopCreateHelix.m along with its prerequisites, set up the run time environment, and then execute the use case [1].
 
 If you simply type CAATopCreateHelix with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example:
 
-With Windows CAATopCreateHelix `e:\helix.NCGM`
+With Windows CAATopCreateHelix `e/helix.NCGM`
 
 With UNIX CAATopCreateHelix `/u/helix.NCGM`
 
 This NCGM file can be displayed using the CAAGemBrowser use case.
 
 [Top]
-
 #### Where to Find the CAATopCreateHelix Code
 
 The CAATopCreateHelix use case is made of a main named CAATopCreateHelix .cpp located in the CAATopCreateHelix .m module of the CAATopologicalOperators.edu framework:
@@ -90,9 +79,7 @@ Unix | `InstallRootDirectory/CAATopologicalOperators.edu/`CAATopCreateHelix `.m/
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
-
 #### Creating the Geometry Factory, CATSoftwareConfiguration and CATTopData
 
  The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
@@ -108,7 +95,6 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 ---  
   
 [Top]
-
 #### Creating an Helix with a Constant Pitch and Constant Radius
 
 An helix with a constant pitch is created by using the CATGeoFactory::CreateHelix API. With this method, you can specify either a constant radius (last argument set to 0) or a linear variation coefficient for the radius (number of mm per helix turn). 
@@ -129,19 +115,16 @@ With the code below:
   
 you get the helix below:
 
-![](images/helix1.gif) | Note that the origin point (B) does not belong to the helix as the start angle is set to 90 deg. To have the origin confused with the starting point, you should specify a start angle of 0. ![](images/helix0.gif)  
+ Note that the origin point (B) does not belong to the helix as the start angle is set to 90 deg. To have the origin confused with the starting point, you should specify a start angle of 0. ![](images/helix0.gif)  
 ---|---  
   
 [Top]
-
 #### Creating an Helix with a Variable Pitch and a Variable Radius
 
 To create an helix with a variable pitch and a variable radius (with a linear or not linear variation), you must use the CATHelix::Set API which takes CATLaws as arguments. Prior to calling this method, you must:
 
   1. Initialize the data for the helix to be created. To do this, use the CATGeoFactory::CreateHelix method
   2. Compute the length of the initial helix by using the CATDynMassProperties1D operator. A suitable length is required for the CATLaw creation. If you pass an inconsistent length to the CATLaw and CATHelix::Set method, you will get a throw.
-
-
 
 ##### Creating the Radius Law
 
@@ -152,7 +135,6 @@ A linear radius law is used as it can be used both for a constant and a linear l
     CATLaw * radiusLaw = ((CATLaw*)(piGeomFactory -> CreateLinearLaw(0.0, 100.0, theLength1, 100)));  
   
 ---  
-  
 ##### Creating the ZLaw as a CATCompositeLaw
 
 The ZLaw defines how the Z coordinate varies versus the CATCrvParam. A composite law with one CATMathFunctionX of degree 2 is defined (z = 0.02*CATCrvParam 2).
@@ -168,7 +150,6 @@ The ZLaw defines how the Z coordinate varies versus the CATCrvParam. A composite
     CATLaw * ZLaw = (CATLaw*)piGeomFactory->CreateCompositeLaw (1,LimitParameters1,Functions1);  
   
 ---  
-  
 ##### Creating the theta law as a linear law
     
     
@@ -178,7 +159,6 @@ The ZLaw defines how the Z coordinate varies versus the CATCrvParam. A composite
     CATLaw * thetaLaw = ((CATLaw*)(piGeomFactory -> CreateLinearLaw(0.0, 0.0, theLength1, 9*CAT2PI)));  
   
 ---  
-  
 #####  Setting the New Helix Parameters
 
 The arguments 4 to 6 allow you to modify the helix shape by applying a coefficient to the coordinates. The effect of these parameters is illustrated below.
@@ -199,10 +179,12 @@ The arguments 4 to 6 allow you to modify the helix shape by applying a coefficie
   
 ---  
   
-For how to create a skin, see the [CAATopOverview](CAATopOverview.htm) use case.
+```vbscript
+For how to create a skin, see the [CAATopOverview](CAATopOverview.md) use case.
+
+```
 
 [Top]
-
 #### The Created Helix
 
 constant radius = 100.0   
@@ -237,7 +219,6 @@ CATCrvParam Max = 125.664 -> Z max = 315.827
 ![](images/helix4.gif)  
   
 [Top]
-
 #### Writing the Model and Closing the Factory
 
 To save the model in a file, the `::CATSaveCGMContainer` global function is used. Notice that in the use case, the save is conditioned by an input parameter representing the file inside which the model must be saved.
@@ -267,17 +248,15 @@ The use case ends with the closure of the geometry factory, done by the `::CATCl
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] | [Overview of the Topological Operators](CAATopOverview.htm)  
+[2] | [Overview of the Topological Operators](CAATopOverview.md)  
 [Top]  
 ---  
   
 * * *
-
 ### History
 
 Version: **1** [July 2005] | Document created  

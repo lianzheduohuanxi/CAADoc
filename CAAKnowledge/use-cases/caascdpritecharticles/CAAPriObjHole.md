@@ -1,12 +1,11 @@
 ---
 title: "Hole Object"
-category: "general"
+category: "use-case"
 module: "CAAScdPriTechArticles"
 tags: []
-source_file: "Doc\online\CAAScdPriTechArticles\CAAPriObjHole.htm"
+source_file: "Doc/online/CAAScdPriTechArticles/CAAPriObjHole.md"
 converted: "2026-05-11T17:31:51.235946"
 ---
-
 # Hole Object
 
   | See Also | UseCases | Properties | Methods  

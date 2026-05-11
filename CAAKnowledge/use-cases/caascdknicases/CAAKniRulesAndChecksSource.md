@@ -1,17 +1,18 @@
 ---
 title: "CAAKniRulesAndChecks.CATScript"
-category: "general"
+category: "use-case"
 module: "CAAScdKniUseCases"
 tags: ["CATIA", "CAAKniRulesAndChecks", "CAAScdKniUseCases"]
-source_file: "Doc\online\CAAScdKniUseCases\CAAKniRulesAndChecksSource.htm"
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniRulesAndChecksSource.md"
 converted: "2026-05-11T17:31:51.995311"
 ---
 
-
     Option Explicit
     ' COPYRIGHT DASSAULT SYSTEMES 2001
+```vbscript
     Dim Language as String
     Language="VBScript"
+```vbscript
     ' ***********************************************************************
     '   Purpose:      This macro:
     '                 1 - Checks whether the active document is a CATPart
@@ -36,9 +37,14 @@ converted: "2026-05-11T17:31:51.995311"
     '   CATIA Level:  V5R6  
     '   revision V5R13
     ' ***********************************************************************
+```
+
     
+```
+
+```vbscript
     Sub CATMain()
-    
+```vbscript
         ' ----------------------------------------------------------- 
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String 
@@ -47,14 +53,15 @@ converted: "2026-05-11T17:31:51.995311"
           Err.Raise 9999,,"No Doc Path Defined"
         End If
         ' ----------------------------------------------------------- 
-    
         ' Open the Part document 
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+```
+
     		"online\CAAScdKniUseCases\samples\KwrMacro0.CATPart")
         Dim oDoc As Document
         set oDoc = CATIA.Documents.Open(sFilePath)
-    
+```vbscript
      ' Set the CATIA popup file alerts to False
      ' It prevents to stop the macro at each alert during its execution
      CATIA.DisplayFileAlerts = False
@@ -63,40 +70,46 @@ converted: "2026-05-11T17:31:51.995311"
     ' on your application object
     Dim oActiveDoc As Document 
     Set oActiveDoc = CATIA.ActiveDocument 
-     
     ' Check whether the document is a CATPart
     If (InStr(oActiveDoc.Name,".CATPart")) <> 0  Then 
-    
         ' Retrieve the collection object which contains
         ' all the document relations.
         ' The statements below are only valid when the active
         ' document is a CATPart
         Dim oRelations As Relations
         Set oRelations = oActiveDoc.Part.Relations
-    
         ' Create the rule below:
         '           if PartBody\Hole.1\Diameter > 10mm
         '           Message The hole diameter is , PartBody\Hole.1\Diameter)
         Dim Rule0 As Rule
         Set Rule0 = oRelations.CreateProgram("Rule.1",_
+```
+
                                              "", "" +_
                                              chr(10)_
                                              + "if PartBody\Hole.1\Diameter > 10mm" +_
                                              chr(10) +_
                          "Message (""The hole diameter is # "", PartBody\Hole.1\Diameter)" ) 
-    
+```vbscript
         ' Create the check below:
         '       PartBody\Pad.1\FirstLimit\Length  > 100mm
         Dim Check1 As Check
         Set Check1 = oRelations.CreateCheck  ( "Check.1", "Increase the pad thickness",_
+```
+
                                                "/* Check created by CRE 03/16/00 */" +_
                                     chr(10) + "PartBody\Pad.1\FirstLimit\Length  > 100mm" ) 
-    
     ' Update the document
     CATIA.ActiveDocument.Part.Update 
     else 
        MsgBox "The active document must be a CATPart"
     End If
     
+```
+
+```vbscript
     End Sub
     
+```
+
+```

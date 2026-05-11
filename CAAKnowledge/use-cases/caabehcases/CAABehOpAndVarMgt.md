@@ -3,7 +3,7 @@ title: "Managing Variables and Operation States for Behavior Command"
 category: "use case"
 module: "CAABehUseCases"
 tags: ["CAAOBMInterfaces", "CAAOBMInterfacesCommand", "CATIType_var", "CAAOBMInterfacesProduct", "CATIDocRoots", "CATICkeParm", "CATIValue", "CATIConnector_var", "CATIVariableManagement", "CATIBehOperationManagement_var", "CATICkeParm_var", "CATIBehOperationManagement", "CATICkeParmFactory_var", "CATIPrdObjectPublisher_var", "CATILinkableObject_var", "CAAOBMInterfacesDlg", "CATIVariableManagement_var", "CAAOBMInterfacesCmd", "CAAOBMInterfacesPart", "CATIProduct_var"]
-source_file: "Doc\online\CAABehUseCases\CAABehOpAndVarMgt.htm"
+source_file: "Doc/online/CAABehUseCases/CAABehOpAndVarMgt.md"
 converted: "2026-05-11T17:33:49.917165"
 ---
 
@@ -35,7 +35,7 @@ _CAAOBMInterfacesDlg_ | Dialog description class
 _CAAOBMInterfaces.CATfct_ | Catalog describing a BKT type with its attributes and behaviors  
 _CAAOBMInterfacesProduct.CATProduct_ | Product to be typed  
 _CAAOBMInterfacesPart.CATPart_ | Part contained in the Product  
-[Top] How to Launch CAAOBMInterfacesCmd Open the catalog CAAOBMInterfaces.CAFct and create the associated workbench with the dedicated command in the BKT toolbar.         ![](Images/CAABehHammer.jpg)                     ![](Images/CAABehWkb.jpg) Open the CAAOBMInterfacesProduct.CATProduct. Select the product and click on this icon ![](Images/CAABehFinger.jpg) to initialize the BKT context. Select the product and click on this icon ![](Images/CAABehType.jpg) to type the product with the BKT type. As a result you can see : ![](Images/CAABehTypedProduct.jpg) The product is now typed by the technological object.   To launch the execution of the use case itself , executes the sequence of behaviors of the extended product. To do so, from its submenu, select the command Type->SequentialCombination ![](Images/CAABehExeSequence.jpg)   It opens the following dialog dedicated to manipulate variables:   ![](Images/CAABehDialog.jpg) [Top] Step-by-Step 1 | Create a CAA Command dedicated to be launched by a behavior command |    
+ Create a CAA Command dedicated to be launched by a behavior command 
 ---|---|---  
 2 | Manage the states of the behavior command from the CAA command |    
 3 | Manage the variables of BKT Objects |    

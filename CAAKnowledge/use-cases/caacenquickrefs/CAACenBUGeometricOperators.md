@@ -1,15 +1,15 @@
 ---
 title: "GeometricOperators Changed Classes or Interfaces"
-category: "general"
+category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATICGMDynMassProperties1D", "CATICGMProjectionCrvSur", "CATICGMConvertCurveToCanonic", "CATICGMConfusionPtOnSurPtOnSur", "CATICGMProjectionPtSur", "CATICGMDistanceMinPtSur", "CATICGMGeoOperator", "CATICGMIntersectionSurSur", "CATICGMDistanceMinPtCrv", "CATICGMProjectionPtCrv", "CATICGMCurveUserParameterization", "CATICGMIntersectionCrvCrv", "CATICGMInclusionPtCrv", "CATIntersectionCrvCrv", "CATICGMCurveCurvilinearParameterization", "CATICGMDistanceTool", "CATICGMNurbsCurveTools", "CATICGMDistanceMinCrvCrv", "CATICGMLocalAnalysis1D", "CATICGMNurbsSurfaceTools"]
-source_file: "Doc\online\CAACenQuickRefs\CAACenBUGeometricOperators.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenBUGeometricOperators.md"
 converted: "2026-05-11T17:33:46.392224"
 ---
 
 GeometricOperators Changed Classes or Interfaces  
 ---  
-This table summarizes the CAA V5 GeometricOperators classes, interfaces, methods, and global functions that you may have used in your applications built on top of CAA V5 and that have been replaced in the [New V5R20 CGM Interfaces Layer](CAACenGobInterfacesMigration.htm). For each of these:
+This table summarizes the CAA V5 GeometricOperators classes, interfaces, methods, and global functions that you may have used in your applications built on top of CAA V5 and that have been replaced in the [New V5R20 CGM Interfaces Layer](CAACenGobInterfacesMigration.md). For each of these:
 
   * If a one-to-one mapping exists to replacing classes, interfaces, methods, or global functions, links to these substitutes are listed and pointed to
   * Otherwise, an article is pointed to to explain how to replace or get rid of them.
@@ -179,10 +179,10 @@ CATReflectCurve | Not supported any longer.
 GMModelInterfaces | CATICGMReflectCurve  
 Class or Interface | Comment  
 CATSurTo2DGlobalMapping | Not supported any longer.  
-Refer to the following article: [New Geometric Modeler Interfaces Layer](CAACenGobInterfacesMigration.htm)  
+Refer to the following article: [New Geometric Modeler Interfaces Layer](CAACenGobInterfacesMigration.md)  
 Class or Interface | Comment  
 CATSurTo2DGlobalPlanarMapping | Not supported any longer.  
-Refer to the following article: [New Geometric Modeler Interfaces Layer](CAACenGobInterfacesMigration.htm)  
+Refer to the following article: [New Geometric Modeler Interfaces Layer](CAACenGobInterfacesMigration.md)  
 Global Functions | Signature | Comment  
 CATCreateConvertCurveToCanonic | CATConvertCurveToCanonic* CATCreateConvertCurveToCanonic(CATGeoFactory* iFactory,  
 CATLONG32 iNbCrv,  

@@ -1,15 +1,14 @@
 ---
 title: "CAAAniMeshAdvSurf.catvbs"
-category: "general"
+category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshAdvSurf", "CAAScdAniUseCases"]
-source_file: "Doc\online\CAAScdAniUseCases\CAAAniMeshAdvSurfSource.htm"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshAdvSurfSource.md"
 converted: "2026-05-11T17:31:51.610526"
 ---
 
-
+```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2000
-    
     ' ***********************************************************************
     '   Purpose:      Open an analysis document
     '                 Create an advanced surface mesh  
@@ -23,54 +22,75 @@ converted: "2026-05-11T17:31:51.610526"
     '   Locales:      English 
     '   CATIA Level:  V5R16
     ' ***********************************************************************
+```
+
     
+```vbscript
     Sub CATMain()
+```vbscript
     ' ----------------------------------------------------------- 
     ' Optional: allows to find the sample wherever it's installed
       sDocPath=CATIA.SystemService.Environ("CATDocView")
     
       If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+```
+
+```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
         End If
     ' ----------------------------------------------------------- 
     
-    
+```
+
     ' Open the Analysis document 
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Surface.CATAnalysis")
+```vbscript
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
     
-    
+```
+
     ' Retrieve the Analysis Manager and Analysis Model
+```vbscript
     Set oAnalysisManager = oAnalysisDocument.Analysis
-    
+```vbscript
     ' Retreive the part document from Analysis manager
     Set oAnalysisLinkedDocuments = oAnalysisManager.LinkedDocuments
     Set partDocument = oAnalysisLinkedDocuments.Item(1)
     Set product = partDocument.Product
+```
+
     
-    
+```
+
     ' Retrieve the analysis model from the list of models
+```vbscript
     Set oAnalysisModels = oAnalysisManager.AnalysisModels
     Set oAnalysisModel = oAnalysisModels.Item(1)
-    
+```vbscript
     ' Retrieve mesh manager and mesh part 
     Set meshManager = oAnalysisModel.MeshManager
     Set meshParts = meshManager.AnalysisMeshParts
+```
+
     
-    
+```
+
     ' Retrieve publications from product and retrieve the published face.
+```vbscript
     Set publications1 = product.Publications
     Set pubEdge = publications1.Item("Edge")
     Set pubSurf = publications1.Item("Round Hole.1")
     
-    
+```
+
     ' Add the new Advanced surface mesh part to the list of mesh parts
+```vbscript
     Set surfPart = meshParts.Add ("MSHPartSmartSurf") 
-    
     ' Add reference previously created
     surfPart.AddSupportFromPublication product, pubSurf
     
-    
+```
+
     ' Set the global Specifications
     surfPart.SetGlobalSpecification "GlobalMethod", "Frontal triangle"
     surfPart.SetGlobalSpecification "GlobalSize", "20.0 mm"
@@ -96,18 +116,24 @@ converted: "2026-05-11T17:31:51.610526"
     surfPart.SetGlobalSpecification "MeshAbsSag", 2
     surfPart.SetGlobalSpecification "MeshAbsSagValue", "1.0 mm"
     
-    
     ' Add the domain specifications as local specifications and assign values to its attributes
+```vbscript
     Set meshSpecs = surfPart.AnalysisMeshLocalSpecifications
     Set spec = meshSpecs.Add("MSHDistributionElement")
     spec.SetAttribute "NbElements", 50
     spec.SetAttribute "Type", "Isometric"
     spec.AddSupportFromPublication "Supports", product, pubEdge
-    
     'Update the mesh part
     surfPart.Update
     
+```
+
+```vbscript
     End Sub
     
+```
+
     
     
+
+```

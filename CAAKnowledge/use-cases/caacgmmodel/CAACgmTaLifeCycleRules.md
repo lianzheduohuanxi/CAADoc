@@ -1,17 +1,15 @@
 ---
 title: "Object Life Cycle: Rules"
-category: "general"
+category: "use-case"
 module: "CAACgmModel"
 tags: ["CATICGMContainer", "CATICGMTopWire"]
-source_file: "Doc\online\CAACgmModel\CAACgmTaLifeCycleRules.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmTaLifeCycleRules.md"
 converted: "2026-05-11T17:33:47.987993"
 ---
-
 # Object Life Cycle: Rules  
   
 ---  
 Technical Article  
-  
 ## Abstract
 
 Object life cycle of CGM objects is managed through the implicit/explicit status assigned to objects. Here are the rules to comply with for a correct management of object life cycle. 
@@ -21,7 +19,6 @@ Object life cycle of CGM objects is managed through the implicit/explicit status
     * Recommendations to Avoid Memory Leaks 
    
 ---  
-  
 ## Creating and Removing Objects
 
 CGM objects can be created:
@@ -41,7 +38,6 @@ Objects which are no longer of any use must be removed with ` CATICGMContainer::
 These options applies to the objects pointed to by the object to be removed. Refer to Implicit and Explicit Objects.
 
 **Note** : The default mode of the `Remove` method is `CATICGMContainer::KeepDependancies`, due to legacy reasons. However, it is strongly recommended to use this method with `CATICGMContainer::RemoveDependancies` to enhance the memory management.
-
 ## How to Create the Geometry Factory 
 
 There are two factories: 
@@ -50,7 +46,6 @@ There are two factories:
 `CATGeoFactory* theFactory = ::CATCreateCGMContainer() ;`
     2. and the implicit one which is dedicated to geometry.   
 `CATGeoFactory * piImplicitFactory = theFactory- >GetImplicitGeoFactory( );`
-
 ## Implicit and Explicit Objects
 
 The implicit/explicit status of an object is related to its life cycle. Any object created as implicit is removed when:
@@ -60,19 +55,18 @@ The implicit/explicit status of an object is related to its life cycle. Any obje
 
 The RemoveDependancies and KeepDependancies option are ineffective on explicit objects. In other words, no matter the Remove option, removing an object pointing to an explicit object does not remove the pointed to object. This explicit object has to be removed directly by the Remove method. 
 
-Fig.1 The Remove Options ![](images/CGM_life_cycle_0.png) |  ![](images/CGM_life_cycle_1.png) | 
+Fig.1 The Remove Options ![](images/CGM_life_cycle_0.png) 
 
 > Body 1 and CATSurface removed  
   
----|---|---  
  _Body1 (explicit or explicit) pointing to CATSurface(implicit)_ | _Body1 removed  
  with KeepDependancies (CATSurface not removed)_ | _Body1 removed  
  with RemoveDependancies_  
-![](images/CGM_life_cycle_2.png) |  ![](images/CGM_life_cycle_3.png) |  ![](images/CGM_life_cycle_3.png)  
+
  _Body1 and Body 2 (explicit or explicit) pointing to CATSurface(implicit)_ | _Body1 removed  
  with KeepDependancies (CATSurface not removed)_ | _Body1 removed  
  with RemoveDependancies (CATSurface not removed as it is pointed to by Body2)_  
-![](images/CGM_life_cycle_4.png) |  ![](images/CGM_life_cycle_5.png) |  ![](images/CGM_life_cycle_5.png)  
+
  _Body1 (explicit or explicit) pointing to CATSurface(explicit)_ | _Body1 removed  
  with KeepDependancies (CATSurface not removed)_ | _Body1 removed  
  with RemoveDependancies (CATSurface not removed_)  
@@ -81,7 +75,6 @@ Notes:
 
     * Only the objects pointed to by generic naming are streamed on disk whether they are implicit or explicit. 
     * Only explicit objects have their visualization computed. 
-
 ## Recommendations to Avoid Memory Leaks 
 
     1. Create all objects as implicit (not only the geometry)  
@@ -95,7 +88,6 @@ Notes:
 
 **WARNING:**  
 Objects not referred to by generic naming and not managed properly can potentially inflate the virtual memory size.  
-
 
 ## History
 

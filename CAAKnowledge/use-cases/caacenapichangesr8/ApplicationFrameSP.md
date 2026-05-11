@@ -1,9 +1,10 @@
 ---
 title: "ApplicationFrame Modifications"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR8"
+version: "V5R8"
 tags: ["CATISO"]
-source_file: "Doc\online\CAACenAPIChangesR8\ApplicationFrameSP.htm"
+source_file: "Doc/online/CAACenAPIChangesR8/ApplicationFrameSP.md"
 converted: "2026-05-11T17:33:52.367891"
 ---
 

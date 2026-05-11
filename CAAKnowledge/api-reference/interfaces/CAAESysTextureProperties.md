@@ -2,42 +2,22 @@
 title: "CAAESysTextureProperties"
 type: "interface"
 module: "CAASystem"
+category: "framework"
 base: "CATBaseUnknown"
+inheritance_chain: "CAAESysTextureProperties → CATBaseUnknown"
 method_count: 4
 visibility: "local"
+has_tie_binding: false
 verified: true
 ---
-
 # CAAESysTextureProperties
 
 **基类**: CATBaseUnknown  
+**继承链**: CAAESysTextureProperties → CATBaseUnknown  
 **模块**: CAASystem  
+**分类**: framework  
 **可见性**: local  
 **方法数**: 4
-
-> ===========================================================================
-
-## 方法列表
-
-### GetMetal
-```cpp
-HRESULT GetMetal(int & oIsMetal);
-```
-
-### SetMetal
-```cpp
-HRESULT SetMetal(const int iIsMetal);
-```
-
-### GetRough
-```cpp
-HRESULT GetRough(int & oIsRough);
-```
-
-### SetRough
-```cpp
-HRESULT SetRough(const int iIsRough);
-```
 
 ## 依赖
 

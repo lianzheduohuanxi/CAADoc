@@ -3,18 +3,15 @@ title: "Creating an Add-in"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CAAAfrFilletHdr", "CAAAfrGeoCreationWkbAddin", "CAAGeometry", "CAAAfrOperationToolsMnu", "CAAAfrUnionHdr", "CAAAfrTFilletStr", "CAAAfrGeoOperationAdnHeader", "CAAAfrSubstractHdr", "CAAAfrGeoOperationAdn", "CAAAfrMFilletStr", "CAAAfrOperationMbr", "CAAAfrMSubstractStr", "CAAApplicationFrame", "CAAAfrTSubstractStr", "CAAAfrOperationTlb", "CAAAfrGeoOperationAddin", "CAAAfrOperationToolsSep", "CAAAfrTUnionStr", "CAAIAfrGeoCreationWkbAddin"]
-source_file: "Doc\online\CAAAfrUseCases\CAAAfrSampleAddin.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleAddin.md"
 converted: "2026-05-11T17:17:55.625620"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## User Interface - Frame
 
 | 
-
 ### Creating an Add-in
 
 _Customizing a workshop or a workbench_  
@@ -22,7 +19,6 @@ _Customizing a workshop or a workbench_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to create an add-in. 
@@ -41,49 +37,43 @@ This article shows how to create an add-in.
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show how to create an add-in to a given workbench. An add-in is an object that gathers commands to work on the document and arrange them in one or several toolbars and menu items. Command headers are used to make the link between the add-in and the commands.
 
 [Top]
-
 ### The CAAAfrGeoOperationAdn Use Case
 
 CAAAfrGeoOperationAdn is a use case of the CAAApplicationFrame.edu framework that illustrates the ApplicationFrame framework capabilities.
 
 [Top]
-
 #### What Does CAAAfrGeoOperationAdn Do
 
 The CAAAfrGeoOperationAdn use case creates an add-in to the **CAA Geometrical Creation** workbench for the CAAGeometry document. Is is made up of:
 
   *  a single toolbar.
-![CAAAfrGeomAddinToolbar.jpg \(2966 bytes\)](images/CAAAfrGeomAddinToolbar.jpg) | The **Operation** toolbar. It includes three commands: Union, Subtract, and Fillet.  
+ The **Operation** toolbar. It includes three commands: Union, Subtract, and Fillet.  
 ---|---  
   * menu items 
-![CAAAfrGeomAddinToolbar.jpg \(2966 bytes\)](images/CAAAfrGeomAddinMenu.jpg) |  It includes three commands: Union, Subtract, and Fillet and a separator just after Conferencing.  
+  It includes three commands: Union, Subtract, and Fillet and a separator just after Conferencing.  
 ---|---  
 
-
-
 [Top]
-
 #### How to Launch CAAAfrGeoOperationAdn
 
-See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.htm)" use case for a detailed description of how this use case should be launched.
+See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched.
 
+```vbscript
 Do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following: 
+
+```
 
   * Select File->New
   * In the New box, select CAAGeometry and click OK
   * If the Operation toolbar is not displayed, right click on a toolbar and select it in the contextual menu to make it appear.
   * If you can't find it in the menu, select Start->Infrastructure->CAA V5 :Geometrical Creation  to reset the workbench.
 
-
-
 [Top]
-
 #### Where to Find the CAAAfrGeoOperationAdn Code
 
 The CAAAfrGeoOperationAdn use case is made of a single class named _CAAAfrGeoOperationAdn_ located in the CAAAfrGeoCreationWkbAddin.m module of the CAAApplicationFrame.edu framework:
@@ -95,7 +85,6 @@ Unix | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeoCreationWkbAddin.m
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 To create the add-in, you should create the module directory to store the add-in code along with its two subdirectories LocalInterfaces and src. For this example, this directory is named CAAAfrGeoOperationAdn.m and can be found in the CAAApplicationFrame.edu framework. Then you will need to create the following files.
@@ -113,7 +102,6 @@ CAAAfrGeoOperationAdnHeader.CATNls and
 CAAAfrGeoOperationAdnHeader.CATRsc | The command header resource files  
   
 To create the CAA Geometrical Creation workbench, there are four steps:
-
 # | Step | Where  
 ---|---|---  
 1 | Create the add-in description class | LocalInterfaces and src  
@@ -122,11 +110,9 @@ To create the CAA Geometrical Creation workbench, there are four steps:
 4 | Provide the resources | Resource files  
   
 [Top]
-
 #### Creating the Add-in Description Class
 
   1. Create the CAAAfrGeoOperationAdn.h file 
-         
          #include "CATBaseUnknown.h"  // Needed to derive from CATBaseUnknown
          
          class CATCmdContainer;       // Needed by CreateToolbars
@@ -157,7 +143,6 @@ To create the CAA Geometrical Creation workbench, there are four steps:
          
          CATImplementClass(CAAAfrGeoOperationAdn, DataExtension,
                            CATBaseUnknown, CAAAfrGeoOperationAddin);
-         
          #include <TIE_CAAIAfrGeoCreationWkbAddin.h>
          TIE_CAAIAfrGeoCreationWkbAddin(CAAAfrGeoOperationAdn);
          
@@ -192,11 +177,7 @@ Update the interface dictionary, that is a file named, for example, CAAApplicati
   
 Note that the component main class name is used to refer to the component in the interface dictionary, and never the extension class names. Note also that the shared library or DLL to associate with the component/interface pair is the one that contains the code created by the call to the TIE macro (This is generally the same library than the one that contains the interface implementation code, since the TIE macro is usually included in the extension class source file.) This is because when a client asks a component for an interface pointer, the TIE class is instantiated first, and it either retrieves the existing instance of the appropriate extension class, or otherwise instantiates it.
 
-
-
-
 [Top]
-
 #### Creating the Command Headers
 
 This is done by the `CreateCommands` method. Each command available in your add-in must have a command header. A command header is an instance of a command header class, and different commands can share the same command header class to create their command header. Refer to The Command Headers for more details.
@@ -204,7 +185,6 @@ This is done by the `CreateCommands` method. Each command available in your add-
 A command header class is created for the commands, named CAAAfrGeoOperationAdnHeader using the `MacDeclareHeader` macro. 
 
   1. Create the CAAAfrGeoOperationAdnHeader command header class. To do this, add the following in CAAAfrGeoOperationAddin.cpp: 
-         
          #include "CATCommandHeader.h"
          MacDeclareHeader(CAAAfrGeoOperationAdnHeader);  
   
@@ -232,10 +212,7 @@ The command header constructor has the following arguments:
      * `UnionCmd` is the name of the Union command class
      * the last argument is the possible pointer to the object to pass to the command when executing it. It is often a character string that indicates the action to carry out when the same command can perform several actions depending on the active document and data, such as "update" or "update all", or "cut" or "copy".
 
-
-
 [Top]
-
 #### Creating the Toolbar and Arranging the Commands
 
 Finally, we'll create the toolbar and arrange the commands. This is the job of the `CreateToolbars` method.
@@ -331,11 +308,7 @@ Proceed in the same way for the other commands, except that they are set as next
   
 The first chained toolbar, `pCAAAfrOperationTlb`,  is returned by this method.
 
-
-
-
 [Top]
-
 #### Providing the Resources
 
 You should provide the resources for the toolbar, the menu and for all its commands. They are classified into the following: 
@@ -343,33 +316,27 @@ You should provide the resources for the toolbar, the menu and for all its comma
   * The toolbar's title. The Creating Resources for Workshops and Workbenches article details all the resources [2].
   * The command header resources in the command header resource files: titles, messages, icons, and the accelerators associated with the commands. This is described in Creating Resources for Command Headers [3]
 
-
-
 More about Internationalization and resources can be found in Internationalizing Your Client Application.
 
 [Top]
 
 * * *
-
 ### Troubleshooting
-
 ####  My addin is not available or a system failure occured
 
-![symptom.gif \(111 bytes\)](../CAAIcons/images/symptom.gif) | I create a workbench addin but it's not available, or a system failure occurs.  
+ I create a workbench addin but it's not available, or a system failure occurs.  
 ---|---  
-![solution.gif \(218 bytes\)](../CAAIcons/images/solution.gif) | Check your latetype name in the CATImplementClass macro. The latetype name mustn't be an existing C++ class name or an existing latetype name.  
-  
+ Check your latetype name in the CATImplementClass macro. The latetype name mustn't be an existing C++ class name or an existing latetype name.  
 #### A Command Doesn't Display in the Menu Bar or Toolbar
 
-![symptom.gif \(111 bytes\)](../CAAIcons/images/symptom.gif) | I create a command starter for a command, and I arrange it in the menu bar or in a toolbar, but the command doesn't display in the menu bar or toolbar where I place it.  
+ I create a command starter for a command, and I arrange it in the menu bar or in a toolbar, but the command doesn't display in the menu bar or toolbar where I place it.  
 ---|---  
-![diagnos.gif \(130 bytes\)](../CAAIcons/images/diagnos.gif) | The command starter is not associated with a command header, and is thus not displayed, since the command cannot be launched without command header.  
-![solution.gif \(218 bytes\)](../CAAIcons/images/solution.gif) | Check your `CreateToolbars` method. The command starter must be associated with a command header for the command you want to display thanks to the `SetAccessCommand` macro.  
+ The command starter is not associated with a command header, and is thus not displayed, since the command cannot be launched without command header.  
+ Check your `CreateToolbars` method. The command starter must be associated with a command header for the command you want to display thanks to the `SetAccessCommand` macro.  
   
 [Top]
 
 * * *
-
 ### In Short
 
 An add-in gathers commands to customize a workshop or a workbench without you need to modify the workshop or workbench's code. You simply need to implement the interface that the workshop or workbench exposes for add-ins.
@@ -377,17 +344,15 @@ An add-in gathers commands to customize a workshop or a workbench without you ne
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Checklist for CAA V5 C++ Naming Rules](../CAADocQuickRefs/CAADocCppNamingRulesChecklist.htm)  
+[1] | [Checklist for CAA V5 C++ Naming Rules](../CAADocQuickRefs/CAADocCppNamingRulesChecklist.md)  
 ---|---  
-[2] | [ Creating Resources for Workshops and Workbenches ](../CAAAfrTechArticles/CAAAfrI18NWorkshop.htm)  
-[3] | [ Creating Resources for Command Headers ](../CAAAfrTechArticles/CAAAfrI18NHeader.htm)  
+[2] | [ Creating Resources for Workshops and Workbenches ](../CAAAfrTechArticles/CAAAfrI18NWorkshop.md)  
+[3] | [ Creating Resources for Command Headers ](../CAAAfrTechArticles/CAAAfrI18NHeader.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Jan 2000] | Document created  

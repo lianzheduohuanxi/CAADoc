@@ -3,10 +3,9 @@ title: "Corner"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsCornerCreation", "CATICGMTopCorner", "CAAGMOperatorsInterfaces"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcTopCorner.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopCorner.md"
 converted: "2026-05-11T17:33:49.126240"
 ---
-
 
     
     
@@ -61,7 +60,7 @@ converted: "2026-05-11T17:33:49.126240"
     the CornerInputs.NCGM input file which is delivered in 
     CAAGMOperatorsInterfaces.edu/FunctionTests/InputData. If you are not already 
     familiar with geometric modeler use cases, go to
-    [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm).
+    [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md).
     With the input data below:
     
       Fig.1 Corner Operation: Input Data
@@ -94,20 +93,20 @@ converted: "2026-05-11T17:33:49.126240"
       
   
 ---  
-you get this result: Fig.2 Result of Corner Operation  ![Corner-SetOffsetOrientation\(-1,-1\)](images/CGM_corner_minus1_minus1.png) | ![Corner-SetOffsetOrientation\(1,-1\)](images/CGM_corner_plus1_minus1.png) | ![Corner-SetCircleMode\(Complementary\)](images/CGM_corner_plus1_minus1_comp.png)  
+you get this result: Fig.2 Result of Corner Operation  ![Corner-SetOffsetOrientation\(-1,-1\)](images/CGM_corner_minus1_minus1.png) 
 ---|---|---  
 SetOffsetOrientation(-1,-1) | SetOffsetOrientation(1,-1)  | SetOffsetOrientation(1,-1)   
 SetCircleMode(Direct) | SetCircleMode(Direct) | SetCircleMode(Complementary)  
 **Merging the created corner with input wires** The created corner can be assembled or not with one input body or both input bodies. The input bodies are trimmed for this operation.  Fig.3 Merging the corner with the input wires  
-SetOffsetOrientation(1,-1)  and SetCircleMode(Direct) ![Corner-SetOffsetOrientation\(-1,-1\)](images/CGM_corner_minus1_minus1.png) | ![Corner-SetOffsetOrientation\(1,-1\)](images/CGM_corner_trim_0.png) | ![Corner-SetCircleMode\(Complementary\)](images/CGM_corner_plus1_minus1_comp.png)  
+SetOffsetOrientation(1,-1)  and SetCircleMode(Direct) ![Corner-SetOffsetOrientation\(-1,-1\)](images/CGM_corner_minus1_minus1.png) 
 ---|---|---  
 SetOffsetOrientation(-1,-1) |  SetSupportTrimmingSideAndMode(0,1)  
 Result = Created corner + input wires  | SetOffsetOrientation(1,-1)   
-References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)  
-[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)  
-[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.htm)  
-[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.htm)  
+[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)  
+[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)  
+[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.md)  
+[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.md)  
 History Version: **1** [Sept 2011] | Document created  
 ---|---

@@ -1,20 +1,17 @@
 ---
 title: "Mathematics Framework Modifications in V5R21"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR21"
+version: "V5R21"
 tags: []
-source_file: "Doc\online\CAACenAPIChangesR21\Mathematics.htm"
+source_file: "Doc/online/CAACenAPIChangesR21/Mathematics.md"
 converted: "2026-05-11T17:33:51.685249"
 ---
-
 # CAA C++ API Modifications  
   
 | 
-
 ##  Mathematics Framework Modifications in V5R21 
 
-|   
----|---|---  
   
 * * *
 

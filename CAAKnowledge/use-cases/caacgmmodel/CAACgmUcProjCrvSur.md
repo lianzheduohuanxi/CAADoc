@@ -3,7 +3,7 @@ title: "Projecting a Curve onto a Surface"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CATICGMProjectionCrvSur", "CAAGMModelInterfaces", "CAAGMModelProjectionOpe"]
-source_file: "Doc\online\CAACgmModel\CAACgmUcProjCrvSur.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcProjCrvSur.md"
 converted: "2026-05-11T17:33:48.489649"
 ---
 
@@ -15,7 +15,7 @@ Abstract A curve can be projected onto a surface by using the CATICGMProjectionC
     * Use Case Description
     * References  
 ---  
-Operator to be Used Use CATICGMProjectionCrvSur. This operator is created by using the `CATCGMCreateProjection` global function. Use Case Description The CAAGMModelProjectionOpe.m module in CAAGMModelInterfaces.edu illustrates how to project a curve onto a surface. This use case constructs its input data. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm). With the input data below: Fig.1 Project a Curve onto a Surface:  Input data ![Porject a Curve onto a Surface](images/CGM_proj_crvSur_0.png)   
+Operator to be Used Use CATICGMProjectionCrvSur. This operator is created by using the `CATCGMCreateProjection` global function. Use Case Description The CAAGMModelProjectionOpe.m module in CAAGMModelInterfaces.edu illustrates how to project a curve onto a surface. This use case constructs its input data. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md). With the input data below: Fig.1 Project a Curve onto a Surface:  Input data ![Porject a Curve onto a Surface](images/CGM_proj_crvSur_0.png)   
 ---  
 and the code below:
     
@@ -59,27 +59,26 @@ and the code below:
     		[1]
     		| 
     		[
-    		Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)
+    		Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
     	  
-    ---|---  
     
     	
     		[2]
     		| 
-    		[About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)
+    		[About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)
     	  
     
     	
     		[3]
     		| 
-    		[How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)
+    		[How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)
     	  
     
     
     
     		[4]
     		| 
-    		[How to Use Geometric Operators](CAACgmUcGMModelOpeOverw.htm)
+    		[How to Use Geometric Operators](CAACgmUcGMModelOpeOverw.md)
     	  
     
     	
@@ -90,7 +89,6 @@ and the code below:
     		Version: **1** [Feb 2014]
     		| Document created
     	  
-    ---|---  
     
     
     

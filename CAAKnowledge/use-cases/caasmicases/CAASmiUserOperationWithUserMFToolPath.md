@@ -3,18 +3,15 @@ title: "Computing a Tool Path with User Machining Features"
 category: "use case"
 module: "CAASmiUseCases"
 tags: ["CATIMfgCompoundTraject", "CAASmiUserOperationToolPathReplay", "CAAToolAngle", "CATISmgNcGeometryManager", "CATIMfgToolPathFactory", "CATIMfgComputeToolPathCustom", "CAAGuide", "CATISmgNcGeometryParameter", "CAASmgOperation", "CAAApproachDistance", "CAAISmiUserMachFeature", "CAASmiUserOperationpToolPathReplay", "CATIMfgToolPathComponents", "CATIMfgTPSaveData", "CAASmgMachiningFeature", "CATIMfgActivityParameters", "CAAESmiUserOperationTPComputation", "CAASmgGuide", "CAAESmiUserMachFeature", "CAASmiUserMachFeature"]
-source_file: "Doc\online\CAASmiUseCases\CAASmiUserOperationWithUserMFToolPath.htm"
+source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithUserMFToolPath.md"
 converted: "2026-05-11T17:31:51.288324"
 ---
-
 # Machining 
 
 | 
-
 ## 3 Axis Surface Machining
 
 | 
-
 ### Computing a Tool Path with User Machining Features
 
 _Implement CATIMfgComputeToolPathCustom on a surface machining operation using machining features_  
@@ -22,10 +19,9 @@ _Implement CATIMfgComputeToolPathCustom on a surface machining operation using m
 Use Case  
   
 * * *
-
 ### Abstract
 
-This article discusses the CAASmiUserOperationWithUserMFToolPath use case. It explains how to customize tool path computation of a surface machining operation with a user machining feature. This paper accompanies the first scenario of _Surface Machining Operation Sample_ [1] and follows the [CAASmiUserOperationWithUserMF](CAASmiUserOperationWithUserMF.htm) use case.
+This article discusses the CAASmiUserOperationWithUserMFToolPath use case. It explains how to customize tool path computation of a surface machining operation with a user machining feature. This paper accompanies the first scenario of _Surface Machining Operation Sample_ [1] and follows the [CAASmiUserOperationWithUserMF](CAASmiUserOperationWithUserMF.md) use case.
 
   * **What You Will Learn With This Use Case**
   * **The CAASmiUserOperationWithUserMFToolPath Use Case**
@@ -40,7 +36,6 @@ This article discusses the CAASmiUserOperationWithUserMFToolPath use case. It ex
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to help you to implement tool path computation of a surface machining operation.
@@ -52,27 +47,22 @@ More specifically, the CAASmiUserOperationWithUserMFToolPath Use Case shows how 
   * Retrieve geometry of an user machining feature's attribute.
   * Create a tool path.
 
-
-
 Another use case describes in detail how to customize tool path computation [3].
 
 [Top]
-
 ### The CAASmiUserOperationWithUserMFToolPath Use Case
 
 CAASmiUserOperationWithUserMFToolPath is a use case of the CAASurfaceMachiningItf.edu framework that illustrates Surface Machining capabilities. It is a part of the sample described in the technical article [1].
 
 [Top]
-
 #### What Does CAASmiUserOperationWithUserMFToolPath Do
 
 This use case computes a kind of "plunge roughing" tool path for **CAASmgOperation**.
 
-The tool path is created from the first guide of CAASmgGuide and the CAAStep, CAAToolAngle and CAAApproachDistance parameters ![](images/CAASmiOperationWithuserMFTP1.gif) | ![](images/CAASmiOperationWithuserMFTP2.jpg)  
+The tool path is created from the first guide of CAASmgGuide and the CAAStep, CAAToolAngle and CAAApproachDistance parameters ![](images/CAASmiOperationWithuserMFTP1.gif) 
 ---|---  
   
 [Top]
-
 #### How to Launch CAASmiUserOperationWithUserMFToolPath
 
 This use case is a part of _Surface Machining Operation Sample_ [1]. You should build all the modules of this sample at a time to be able to launch it [2].
@@ -86,7 +76,6 @@ Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed, and uncomment the appropriate lines by removing the '#' character.
 
 [Top]
-
 #### Where to Find the CAASmiUserOperationWithUserMFToolPath Code
 
 This use case is made of source files located in the CAASmiUserOperationToolPathReplay.m module of the CAASurfaceMachiningItf.edu framework:
@@ -98,7 +87,6 @@ Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CAASmiUserOperationpTool
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 CAASmiUserOperationWithUserMFToolPath is divided into the following steps
@@ -108,12 +96,9 @@ CAASmiUserOperationWithUserMFToolPath is divided into the following steps
   3. Reading Geometry
   4. Creating a Tool Path
 
-
-
 We now comment each of those sections by looking at the code.
 
 [Top]
-
 #### Declaring CATIMfgComputeToolPathCustom Implementation
 
 To customize the _ComputeToolPath_ ****method**,** we should create an extension class that will implement _CATIMfgComputeToolPathCustom_ :
@@ -128,7 +113,6 @@ To customize the _ComputeToolPath_ ****method**,** we should create an extension
 ---  
   
 [Top]
-
 #### Reading parameters
 
 To compute the tool path, we need the strategy and macros parameters of our operation. To retrieve them, we use the _CATIMfgActivityParameters_ interface.
@@ -160,7 +144,6 @@ To compute the tool path, we need the strategy and macros parameters of our oper
 ---  
   
 [Top]
-
 #### Reading Geometry
 
 To get geometry, we first retrieve the machining feature of our operation. Then, we use the _GetGuides_ method of the specific _CAAISmiUserMachFeature_ interface _,_ described later, to find geometrical elements.
@@ -210,7 +193,6 @@ In _GetGuides,_ we retrieve the CAASmgGuide attribute from GetNcGeometryParamete
 ---  
   
 [Top]
-
 #### Creating a Tool Path
 
 The tool path is created and returned as a _CATIMfgCompoundTraject_ smart pointer using the CreateMfgCompoundTraject of the _CATIMfgToolPathFactory_ interface implemented by the Process document manufacturing container passed as input parameter. Then, a pointer to _CATIMfgToolPathComponents_ is retrieved from the tool path and the tool path is initialized from the activity using the Init method of _CATIMfgCompoundTraject_.
@@ -224,7 +206,6 @@ With interface _CATIMfgTPSaveData_ on tool path, the tool path is saved in the m
 [Top]
 
 * * *
-
 ### In Short
 
 This article provides an example on how to implement tool path computation of a new surface machining operation with a user machining feature.
@@ -236,20 +217,17 @@ Now, let's have a look at the second scenario [4] of the _Surface Machining Oper
 [Top]
 
 * * *
-
 ### 
-
 ### References
 
-[1] | [Surface Machining Operation Sample Overview](../CAASmiTechArticles/CAASmiOperationSampleOverview.htm)  
+[1] | [Surface Machining Operation Sample Overview](../CAASmiTechArticles/CAASmiOperationSampleOverview.md)  
 ---|---  
-[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-[3] | [Customizing Tool Path Computation on Axial Operation](../CAAMaiUseCases/CAAMaiToolPathWithCycleCustomization.htm)  
-[4] | [Managing Geometry with Machining Areas](CAASmiUserOperationWithMA.htm)  
+[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[3] | [Customizing Tool Path Computation on Axial Operation](../CAAMaiUseCases/CAAMaiToolPathWithCycleCustomization.md)  
+[4] | [Managing Geometry with Machining Areas](CAASmiUserOperationWithMA.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Mar 2002] | Document created  

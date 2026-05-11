@@ -1,22 +1,19 @@
 ---
 title: "TopologicalOperators Framework Modifications in V5R18"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR18"
+version: "V5R18"
 tags: []
-source_file: "Doc\online\CAACenAPIChangesR18\TopologicalOperators.htm"
+source_file: "Doc/online/CAACenAPIChangesR18/TopologicalOperators.md"
 converted: "2026-05-11T17:33:51.499246"
 ---
 
 | 
-
 # CAA C++ API Modifications
 
 | 
-
 ##  TopologicalOperators Framework Modifications in V5R18 
 
-|   
----|---|---  
   
 * * *
 

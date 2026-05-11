@@ -1,9 +1,9 @@
 ---
 title: "Creating a State Dialog Command"
-category: "general"
+category: "use-case"
 module: "CAADegTechArticles"
 tags: ["CAACommandCmd", "CATIndicationAgent"]
-source_file: "Doc\online\CAADegTechArticles\CAADegCreatingCommand.htm"
+source_file: "Doc/online/CAADegTechArticles/CAADegCreatingCommand.md"
 converted: "2026-05-11T17:33:49.764355"
 ---
 
@@ -63,7 +63,6 @@ Creating the State Dialog Command Class Header This shows how to create the clas
   
 ---  
 Once you have completed this step, the header file of your state dialog command class should look like this:
-    
     #include "CATStateCommand.h"
     
     class CAACommandCmd : public CATStateCommand

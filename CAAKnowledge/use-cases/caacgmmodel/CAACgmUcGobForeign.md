@@ -3,15 +3,13 @@ title: "Creating Foreign Surfaces"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAAmtForeign", "CAAGMModelForeignSurfaceData", "CAADoc", "CAAGobFS", "CAAGobApplicationName", "CAAGMModelCreation", "CAAAdvancedMathematics", "CAAGMModelForeign", "CAAGMModelInterfaces", "CAAAmtForeignFunctionXY", "CAAAmtForeignFct", "CAAAmtForeignFctXY", "CAAAForeignSurfaceSample", "CATICGMDomainBinder", "CATIA", "CATIForeignSurface"]
-source_file: "Doc\online\CAACgmModel\CAACgmUcGobForeign.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGobForeign.md"
 converted: "2026-05-11T17:33:48.383671"
 ---
-
 # Creating Foreign Surfaces  
   
 ---  
 Use Case  
-  
 ## Abstract
 
 The GeometricObjects framework exposes the interfaces for the geometry: points, curves, surfaces, and some related classes (such as knot vector or surface and curve parameters for example). Moreover, it offers the programmer the capability to introduce its own definition of curve and surface. Such "foreign" definition is then taken into account as any CATIA curve and surface. The use cases illustrates the introduction of a new kind of surface. The way to use the geometry (and the foreign geometry in particular) is detailed in the CAAGMModelCreation use case. The same methodology can be used to introduce foreign curves, only differing by the parent class to derive.
@@ -24,15 +22,12 @@ The GeometricObjects framework exposes the interfaces for the geometry: points, 
     * In Short
     * References  
 ---  
-  
 ## What You Will Learn With This Use Case
 
 This use case explains the introduction of a new kind of geometric surface by describing all the steps of its introduction on a concrete case. The mathematical definition of the new surface is given by the CAAAmtForeignFunctionXY class, already presented in the CAAAmtForeign use case [6] of the CAAAdvancedMathematics.edu framework.
-
 ## The CAAGMModelForeign Use Case
 
 CAAGMModelForeign is a use case of the CAAGMModelInterfaces.edu framework that illustrates the GMModelInterfaces framework capabilities.
-
 ### What Does CAAGMModelForeign Do
 
 The use case creates a new type of surface, which mathematical definition uses the CAAAmtForeignFctXY mathematical function class. 
@@ -42,13 +37,11 @@ The principle of the introduction of a new kind of surface is fully described in
     * Defines the class attribute deriving from CATForeignSurfaceData class: CAAGMModelForeignSurfaceData.
     * Defines the correspondence between the physical module name (CAAGMModelForeign) and a logical one (CAAGobFS).
     * Defines the dictionary.
-
 ### How to Launch CAAGMModelForeign
 
 As CAAGMModelForeign only provides the definition of the new surface, it cannot be run alone: you must launch CAAGMModelCreation to execute the CAAGMModelForeign code.
 
 To launch CAAGMModelCreation, you will need to set up the build time environment, then compile CAAGMModelForeign.m and CAAGMModelCreation.m along with their prerequisites (such as CAAAmtForeignFct.m), set up the run time environment, and then execute the use case [7]. Do not forget to run the `mkCreateRuntimeView` command to update the runtime dictionary.
-
 ### Where to Find the CAAGMModelForeign Code
 
 The CAAGMModelForeign use case contains the definition of the new class located:
@@ -64,7 +57,6 @@ Moreover, in order to register this new class:
 
     * The correspondence between the physical module name (CAAGMModelForeign) and a logical one (CAAGobFS) is defined by CAAGobApplicationName.cpp of the CAAGMModelForeign.m module of the CAAGMModelInterfaces.edu framework.
     * The dictionary must be defined in the CNext directory of the CAAGMModelInterfaces.edu framework.
-
 ## Step-by-Step
 
 The use case is divided into the following steps:
@@ -74,7 +66,6 @@ The use case is divided into the following steps:
     * The CAAGobApplicationName.cpp Code and Dictionary
 
 Following the described scheme, first define the header of the surface attribute.
-
 ### The CAAGMModelForeignSurfaceData.h Header
 
 The new attribute class CAAGMModelForeignSurfaceData derived from the CATForeignSurfaceData class, which is a special streamable attribute dedicated to the foreign surface introduction.
@@ -149,7 +140,6 @@ Methods are overridden to declare the specific behavior of the new class (only s
     * The `ExportedByCAAGMModelForeign` variable is defined in the `CAAGMModelForeign.h` header.
     * The `CATCGMDeclareAttribute` macro is also mandatory to declare the derivation.
     * Private data contains the definition of the surface parameters.
-
 ### The CAAGMModelForeignSurfaceData.cpp Source Code
 
 This section emphasizes on some methods of the .cpp:
@@ -296,7 +286,6 @@ To perform the `GetEquation` step, the `CATIForeignSurface` needs to recover the
                                    _Height*(_dU[0]*_dV[1]-_dU[1]*_dV[0]),
                                    _Origin[2]) ;
     }
-
 ### The CAAGobApplicationName.cpp Code and Dictionary
 
 This file defines the logical name (here `CAAGobFS`) of the load module containing the `CAAGMModelForeignSurfaceData` definition, by the mean of the `AppDef` macro.
@@ -310,22 +299,19 @@ This file defines the logical name (here `CAAGobFS`) of the load module containi
 The dictionary keeps track of the correspondence between the logical application name and the physical load module `libCAAGMModelFo`reign.
     
     **CAAGobFS** 		CATICGMDomainBinder 		**libCAAGMModelForeign**
-
 ## In Short
 
 This use case demonstrates a concrete case of introduction of a new type of foreign surfaces.
-
 ## References
 
-[1] | [The Management of Foreign Data](CAACgmTaGobAttribute.htm)  
+[1] | [The Management of Foreign Data](CAACgmTaGobAttribute.md)  
 ---|---  
-[2] | [The Clone and Transformation Managers](CAACgmTaGobClone.htm)  
-[3] | [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.htm)  
-[4] | [The Curves of CATIA Geometric Modeler](CAACgmTaGobCurves.htm)  
-[5] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-[6] | [Foreign Mathematical Functions](CAACgmUcAmtForeign.htm)  
-[7] | [Creating and Transforming Geometry](CAACgmUcGobCreation.htm)  
-  
+[2] | [The Clone and Transformation Managers](CAACgmTaGobClone.md)  
+[3] | [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.md)  
+[4] | [The Curves of CATIA Geometric Modeler](CAACgmTaGobCurves.md)  
+[5] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[6] | [Foreign Mathematical Functions](CAACgmUcAmtForeign.md)  
+[7] | [Creating and Transforming Geometry](CAACgmUcGobCreation.md)  
 ## History
 
 Version: **1** [Apr 2000] | Document created  

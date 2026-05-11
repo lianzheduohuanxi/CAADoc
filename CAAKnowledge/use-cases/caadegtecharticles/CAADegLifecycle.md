@@ -1,9 +1,9 @@
 ---
 title: "Managing the State Dialog Command Lifecycle"
-category: "general"
+category: "use-case"
 module: "CAADegTechArticles"
 tags: ["CAACmdWithArg", "CAACommandCmd"]
-source_file: "Doc\online\CAADegTechArticles\CAADegLifecycle.htm"
+source_file: "Doc/online/CAADegTechArticles/CAADegLifecycle.md"
 converted: "2026-05-11T17:33:49.851891"
 ---
 

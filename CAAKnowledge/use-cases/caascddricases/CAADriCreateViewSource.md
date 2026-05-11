@@ -1,16 +1,15 @@
 ---
 title: "CAADriCreateView.CATScript"
-category: "general"
+category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CATIA", "CAADriCreateView", "CAAScdDriUseCases"]
-source_file: "Doc\online\CAAScdDriUseCases\CAADriCreateViewSource.htm"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriCreateViewSource.md"
 converted: "2026-05-11T17:31:51.043880"
 ---
 
-
     Option Explicit
+```vbscript
     ' COPYRIGTH DASSAULT SYSTEMES 2000
-    
     ' ***********************************************************************
     '   Purpose:      Create A Drawing document with a front view and a projection view
     '   Assumtions:   Looks for MyPart.CATPart in the DocView   
@@ -20,53 +19,66 @@ converted: "2026-05-11T17:31:51.043880"
     '   CATIA Level:  V5R6 
     ' ***********************************************************************
     
+```
+
     
+```vbscript
     Sub CATMain()
     
-    
+```
+
+```vbscript
         ' ----------------------------------------------------------- 
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String 
         sDocPath=CATIA.SystemService.Environ("CATDocView")
+```
+
+```vbscript
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
         End If
+```vbscript
         ' ----------------------------------------------------------- 
-    
         ' Open the Part document 
         Dim oPartToDraw As PartDocument
         Set oPartToDraw = CATIA.Documents.Open(sDocPath & _
+```
+
                  "\online\CAAScdDriUseCases\samples\Cube.CATPart")
-    
+```vbscript
         ' Create a drawing document: it becomes the active document.
         Dim oDrawing As DrawingDocument
         Set oDrawing = CATIA.Documents.Add("Drawing")
-    
         ' Retrieve the active sheet
         Dim oSheet As DrawingSheet
         Set oSheet = oDrawing.Sheets.ActiveSheet
-    
         ' Create a view called "Front View" in this sheet
         Dim oFrontView As DrawingView
         Set oFrontView = oSheet.Views.Add("Front View")
-    
         ' Retrieve it generative behavior
         Dim oFrontViewGB As DrawingViewGenerativeBehavior
         Set oFrontViewGB = oFrontView.GenerativeBehavior
-    
         ' Declare the part to draw in this front view
+```
+
         oFrontViewGB.Document = oPartToDraw
-    
         ' Define this view as a front view, with the XY plane (in oPartToDraw) as projection plane 
         oFrontViewGB.DefineFrontView 1, 0, 0, 0, 1, 0
-    
         ' Position the View in the Sheet
         oFrontView.x = 300
         oFrontView.y = 150
-    
         ' Update the view
         oFrontViewGB.Update 
     
+```
+
+```vbscript
     End Sub
     
+```
+
     
+
+```

@@ -3,18 +3,15 @@ title: "Customizing the Surface Machining Operation Editor"
 category: "use case"
 module: "CAASmiUseCases"
 tags: ["CATIMfgMacroEditorActivity", "CAASmiUserOperationUI", "CAAToolAngle", "CAAESmiUserOperationToolEditor", "CATICkeParamFrame_var", "CAASmgOperation", "CAAApproachDistance", "CAAESmiUserOperationStrategyEditor", "CATIMacroEditorActivity", "CAAESmiUserOperationMacroEditor", "CATIMfgResourceFactory", "CATIMfgStrategyActivity", "CATIMfgActivity", "CAAMaiToolEditionCustomization", "CATIMfgActivityParameters", "CATIMfgTool", "CAAStep", "CAASurfaceMachiningItf", "CATIMfgToolActivity"]
-source_file: "Doc\online\CAASmiUseCases\CAASmiUserOperationUI.htm"
+source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationUI.md"
 converted: "2026-05-11T17:31:51.261386"
 ---
-
 # Machining
 
 | 
-
 ## 3 Axis Surface Machining
 
 | 
-
 ### Customizing the Surface Machining Operation Editor
 
 _Customize default operation tab pages_  
@@ -22,11 +19,9 @@ _Customize default operation tab pages_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article discusses the CAASmiUserOperationUI use case. It explains how to customize strategy, tool and macros tab pages of the surface machining operation editor. This paper accompanies the _Surface Machining Operation Sample_ [1], but it can be used for any Manufacturing Activities.  
-
 
   * **What You Will Learn With This Use Case**
   * **The CAASmiUserOperationUI Use Case**
@@ -41,7 +36,6 @@ This article discusses the CAASmiUserOperationUI use case. It explains how to cu
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 When a surface machining operation is edited by double clicking or through its contextual menu, a default dialog box is displayed.
@@ -52,16 +46,12 @@ This use case is intended to help you to customize some of the tab pages of this
   * Implementing _CATIMfgMacroEditorActivity_ to overload Macros tab page. ![](images/CAASmiOperationUIMacrosIcon.jpg)
   * Implementing _CATIMfgToolActivity_ to define Tool tab page. ![](images/CAASmiOperationUIToolIcon.jpg)
 
-
-
 [Top]
-
 ### The CAASmiUserOperationUI Use Case
 
 CAASmiUserOperationUI is a use case of the CAASurfaceMachiningItf.edu framework that illustrates Surface Machining capabilities. It is a part of the sample described in the technical article [1].
 
 [Top]
-
 #### What Does CAASmiUserOperationUI Do
 
 This use case customizes three tab pages of the **CAASmgOperation** editing panel:
@@ -78,11 +68,7 @@ This use case customizes three tab pages of the **CAASmgOperation** editing pane
 
 ![](images/CAASmiOperationUITool.jpg)
 
-
-
-
 [Top]
-
 #### How to Launch CAASmiUserOperationUI
 
 This use case is a part of _Surface Machining Operation Sample_ [1]. You should build all the modules of this sample at a time to be able to launch it [2].
@@ -96,7 +82,6 @@ Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed, and uncomment the appropriate lines by removing the '#' character.
 
 [Top]
-
 #### Where to Find the CAASmiUserOperationUI Code
 
 This use case is made of source files located in the CAASmiUserOperationUI.m module of the CAASurfaceMachiningItf.edu framework:
@@ -108,7 +93,6 @@ Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CAASmiUserOperationUI.m`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are three logical steps in CAASmiUserOperationUI:
@@ -117,12 +101,9 @@ There are three logical steps in CAASmiUserOperationUI:
   2. Implementing CATIMfgMacroEditorActivity
   3. Implementing CATIMfgToolActivity
 
-
-
 We now comment each of those sections by looking at the code.
 
 [Top]
-
 #### Implementing CATIMfgStrategyActivity
 
 To overload the strategy tab page, we should create an extension class that will implement _CATIMfgStrategyActivity_
@@ -165,7 +146,6 @@ In _GetMainPanelEditor,_ we create a frame that contains the frame-editor of our
 ---  
   
 [Top]
-
 #### Implementing CATIMacroEditorActivity
 
 To overload the macros tab page, we should create an extension class that will implement _CATIMacroEditorActivity_
@@ -217,10 +197,7 @@ In _GetMainPanelEditor,_ we create a frame that contains frame-editors of our ma
 ---  
   
 
-
-
 [Top]
-
 #### Implementing CATIMfgToolActivity
 
 To customize tool tab page, we should create an extension class that will implement _CATIMfgToolActivity_. This interface offers services to manage allowed and default tools. If you like to overload the whole tab page, see the _CAAMaiToolEditionCustomization_ use case [3].
@@ -299,7 +276,6 @@ In _CreateDefaultTool,_ we set the default tool of our operation
 [Top]
 
 * * *
-
 ### In Short
 
 This article provides an example on how to customize strategy, tool and macros tab pages of the editing dialog panel of a surface machining operation. How to customize geometry tab page is described in the next use cases [4] & [5].
@@ -307,19 +283,17 @@ This article provides an example on how to customize strategy, tool and macros t
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Surface Machining Operation Sample Overview](../CAASmiTechArticles/CAASmiOperationSampleOverview.htm)  
+[1] | [Surface Machining Operation Sample Overview](../CAASmiTechArticles/CAASmiOperationSampleOverview.md)  
 ---|---  
-[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-[3] | [Customizing Tool Editor for Drilling Tool](../CAAMaiUseCases/CAAMaiToolEditionCustomization.htm)  
-[4] | [Managing Geometry with User Machining Features](CAASmiUserOperationWithUserMF.htm)  
-[5] | [Managing Geometry with Machining Areas](CAASmiUserOperationWithMA.htm)  
+[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[3] | [Customizing Tool Editor for Drilling Tool](../CAAMaiUseCases/CAAMaiToolEditionCustomization.md)  
+[4] | [Managing Geometry with User Machining Features](CAASmiUserOperationWithUserMF.md)  
+[5] | [Managing Geometry with Machining Areas](CAASmiUserOperationWithMA.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Mar 2002] | Document created  

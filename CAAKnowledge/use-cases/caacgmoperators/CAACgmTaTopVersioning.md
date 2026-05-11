@@ -1,9 +1,9 @@
 ---
 title: "Understanding the Versioning of the Topological Operators"
-category: "general"
+category: "use-case"
 module: "CAACgmOperators"
 tags: []
-source_file: "Doc\online\CAACgmOperators\CAACgmTaTopVersioning.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmTaTopVersioning.md"
 converted: "2026-05-11T17:33:48.710152"
 ---
 
@@ -891,8 +891,8 @@ Case of the Journal If you directly create a CATCGMJournalList, you must now giv
 In Short
     * The versioning allows an operator to be replayed with a special software configuration. The software configuration is given to the operator by the mean of a CATTopData instance.
     * This enhancement leads to interface modifications, and the correspondence of the deprecated and new methods is given.
-References [1] | [Understanding the CGM Journal](CAACgmTaTopJournal.htm)  
+References [1] | [Understanding the CGM Journal](CAACgmTaTopJournal.md)  
 ---|---  
-[2] | [Overview of the Topological Operators](CAACgmUcTopOverview.htm)  
+[2] | [Overview of the Topological Operators](CAACgmUcTopOverview.md)  
 History Version: **1** [Oct 2000] | Document created  
 ---|---

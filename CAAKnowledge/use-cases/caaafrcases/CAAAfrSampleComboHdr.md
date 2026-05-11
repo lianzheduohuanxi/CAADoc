@@ -3,18 +3,15 @@ title: "Creating a Combo Command Header"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CAAAfrMRUHeader", "CAAGeometry", "CAAAfrComboColorNotification", "CAAAfrComboColorHeader", "CAAAfrComboColorRep", "CAAAfrComboColorHdr", "CAAIAfrTemporaryObjectColor", "CAAAfrComboRep", "CAAAfrComboRepId", "CATIAfrCommandHeaderRep", "CAAIAfrGeometryWksAddin", "CAAAfrGeoChartWindowAdn", "CAASysGeomRootObj", "CAASysGeoRootObj", "CATImplementHeaderResources", "CAAAfrEduCombo", "CAAApplicationFrame", "CAAAfrCustomizedCommandHeader", "CAAAfrGeoWksAddin2"]
-source_file: "Doc\online\CAAAfrUseCases\CAAAfrSampleComboHdr.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleComboHdr.md"
 converted: "2026-05-11T17:17:55.651120"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## User Interface - Frame
 
 | 
-
 ### Creating a Combo Command Header
 
 How to create a command header class whose the representation is a combo in a toolbar?  
@@ -22,7 +19,6 @@ How to create a command header class whose the representation is a combo in a to
 Use Case  
   
 * * *
-
 ### Abstract
 
 This use case explains how to create a specialized command header. This command header has a customized graphic representation. In place of a check button into a toolbar, the graphic representation is a combo. 
@@ -36,41 +32,30 @@ This use case explains how to create a specialized command header. This command 
   * **In Short**
   * **References**
 
-
-
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case illustrates the creation of a customized command header. In a toolbar, its graphic representation is a combo in place of a check button, the default representation. You will learn how to:
 
   * Create the component representing the command header 
 
-
-
 > It is a component which must derive from the _CATAfrDialogCommandHeader_ class. 
 
   * Create the component instantiating the graphic representation
-
-
 
 > It is a component which must derive from the _CATAfrCommandHeaderRep_ class and which instantiates a _CATDlgCombo_ instance. 
 
   * Create the component controlling the data used by the graphic representation
 
-
-
 > The data used by the the graphic representation is the value of the current color in the combo. This data is dependent of the instance of a V5 document. 
 
 You can also read the CAAAfrMRUHeader use case [1] which presents another customized command header. In this case, the graphic representation is a dynamic list of push items in a menu of the menu bar. Contrarily to the current use case, the data (a list of string) is independent of the document.  To take full advantage of this article, you can first read "The Command Headers" technical article [2], and precisely the "Creating Customized Command Headers" section.   [Top]
-
 ### The CAAAfrComboColorHeader Use Case
 
 CAAAfrComboColorHeader is a use case of the CAAApplicationFrame.edu framework that illustrates ApplicationFrame framework capabilities. [Top]
-
 #### What Does CAAAfrComboColorHeader Do
 
-CAAAfrComboColorHeader creates a command header whose the graphic representation is a combo color in a toolbar. The following picture shows the header in the Customized Command Header toolbar: Fig.1 The combo header | ![](../CAAAfrTechArticles/images/CAAAfrCommandHeaderComboHdr.jpg)  
+CAAAfrComboColorHeader creates a command header whose the graphic representation is a combo color in a toolbar. The following picture shows the header in the Customized Command Header toolbar: Fig.1 The combo header 
 ---  
   
 If you drop down the combo, you have the choice between ten colors:
@@ -81,7 +66,6 @@ Fig.2 Ten values of the combo ![](images/CAAAfrComboHdrDeplie.jpg) |  The combo 
   * The current selected color. This information is kept by a component linked to the CAAGeometry document. This component is the CAASysGeomRootObj component. Refer to the referenced article for complete details on the CAAGeometry document and the CAASysGeomRootObj component [3].
 
   
----|---  
   
 The **CAASysGeomRootObj component** is the component controlling the data used by the graphic representation. It manages the current value of the color through the _CAAIAfrTemporaryObjectColor_ interface. This interface enables us to get and set the current color. However the color is not persistent (not streamed) because the CAAGeometry document is not "streamable".
 
@@ -109,12 +93,14 @@ The _CAAAfrComboRep_ class creates a _CATDlgCombo_ [4] class instance and sets a
 The combo header is instantiated in an Add-in of the workshop of the CAAGeometry document. The last step of the Step by Step section explains this instantiation.
 
 [Top]
-
 #### How to Launch CAAAfrComboColorHeader
 
-See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.htm)" use case for a detailed description of how this use case should be launched.
+See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched.
 
+```vbscript
 Do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following: 
+
+```
 
   * On the **File** menu, click **New**
   * **New** Dialog box click **CAAGeometry** and click **OK**
@@ -145,10 +131,7 @@ Do not type the module name on the command line, but type CNEXT instead. When th
     * click **OK**
   * Select the **red** color in one combo color instance (the other instance is red too)
 
-
-
 [Top]
-
 #### Where to Find the CAAAfrComboColorHeader Code
 
 The CAAAfrComboColorHeader use case is made of several classes located in three modules of the CAAApplicationFrame.edu framework:
@@ -173,25 +156,17 @@ It is the implementation of the _CAAIAfrTemporaryObjectColor_ interface on the C
 
 It is the notification sent by the _CAAEAfrTemporaryObjectColor_ class when the current color is modified.
 
-
-
-
 The `CAAAfrCustomizedCommandHeader``.m` module contains classes to define the combo color header:
 
   * CAAAfrComboRep.h (LocalInterfaces) and CAAAfrComboRep.cpp (src)
   * CAAEAfrCommandHeaderRepForComboColor.h (LocalInterfaces) and CAAEAfrCommandHeaderRepForComboColor.cpp (src)
   * CAAAfrComboColorHeader.cpp (src),  CAAAfrComboColorHeader.h (PrivateInterfaces)
 
-
-
 The `CAAAfrGeoWksAddin2.``m` module contains an Add-in of the CAAGeometry workshop 
 
   * CAAAfrGeoChartWindowAdn.h (LocalInterfaces) and CAAAfrGeoChartWindowAdn.cpp (src)
 
-
-
 [Top]
-
 ### Step-by-Step
 
 There are four logical steps in CAAAfrComboColorHeader:
@@ -201,10 +176,7 @@ There are four logical steps in CAAAfrComboColorHeader:
   3. Creating the Class Instantiating the Graphic Representation
   4. Instantiating the Combo Header Class
 
-
-
 [Top]
-
 #### Creating the Data Model Representing the Current Color in the Combo
 
 The current color is kept by the CAASysGeomRootObj component which implements the _CAAIAfrTemporaryObjectColor_ interface to set and retrieve the current color (Fig.3). When the color is modified on the component (Set method) a _CAAAfrComboColorNotification_ notification is sent by the callback mechanism [5]. 
@@ -310,15 +282,12 @@ The `SetCurrentColor` method publishes the notification that states the current 
 Refer to the callback use case [7] which explains in details the callback mechanism, and how the _CAAAfrComboColorNotification_ must be created. You will learn why the _CAAAfrComboColorNotification_ class instance is deleted just after the `DispatchCallbacks` call. See the constructor of the CAAAfrComboColorRep class. 
 
 [Top]
-
 #### Creating the Component Representing the Command Header 
 
 The combo header is a component which must Object Modeler and C++ derive from _CATAfrDialogCommandHeader_ and must implement the _CATIAfrCommandHeaderRep_ interface (Fig.4). This paragraph is divided in two parts:
 
   * Component Creation
   * CATIAfrCommandHeaderRep implementation
-
-
 
 ##### **Component Creation**
 
@@ -355,17 +324,12 @@ About the mandatory public methods:
   * A `destructor`, 
   * The `Clone` method inherited from _CATCommandHeader_ and used to duplicate the command header instance. Refer to the "Customized Command Header Class Structure" section of the technical article about the command headers [2]. You will have all the details about the `Clone` method. 
 
-
-
 About the mandatory private methods:
 
   * A `constructor` taking a pointer to a _CATCommandHeader_ is dedicated to the `Clone` method. 
   * Two other `constructor` are declared in the private part, and are not implemented in the source file. This prevents the compiler from creating them as public without you know.
 
-
-
 Here the CAAAfrComboColorHeader header file:
-    
     
     #include "CAAAfrComboColorHeader.h"
     
@@ -397,8 +361,6 @@ Here the CAAAfrComboColorHeader header file:
   * A customized command header is a CAA component. The `CATImplementClass` macro makes the class _CAAAfrComboColorHeader_ a component main class (`Implementation`) that OM-derives [9] from _CATAfrDialogCommandHeader_. 
   * The `CATImplementHeaderResources` macro is used in conjunction with the `CATDeclareHeaderResources` macro in the header file. It states that the _CAAAfrComboColorHeader_ class derives from _CATAfrDialogCommandHeader_ , and that its associated resource file names use the class name: CAAAfrComboColorHeader.CATNls and CAAAfrComboColorHeader.CATRsc respectively. The base class name set as second argument helps to use resource concatenation. The third argument could be set to the name of another class that is associated with resource files that use its class name, or to the name, without suffix, of an already existing resource file pair.
   * The `Clone` method returns a copy construction instance of this.
-
-
 
 **_CATIAfrCommandHeaderRep_ implementation**
 
@@ -503,7 +465,6 @@ You do not have to take care of the _CAAAfrComboRep_ class instance, the returne
 The combo header has no representation in the menu bar or in a contextual menu, so `CreateMenuRep` and `CreateCtxMenuRep` return E_FAIL.
 
 [Top]
-
 #### Creating the Class Instantiating the Graphic Representation
 
 This class is the _CAAAfrComboRep_ class. Its main roles are:
@@ -511,8 +472,6 @@ This class is the _CAAAfrComboRep_ class. Its main roles are:
   * Set a callback to be informed when the current color on the CAASysGeomRootObj component changes, see Creating the Data Model Representing the Current Color in the Combo step 
   * Create a _CATDlgCombo_ instance
   * Change the current value of the _CATDlgCombo_ instance when a notification is sent by the CAASysGeomRootObj component
-
-
 
 Here the CAAAfrComboRep header file:
     
@@ -559,8 +518,6 @@ Here the CAAAfrComboRep header file:
     * `_pCombo` the _CATDlgCombo_ class instance created in the `Build` method 
     * `_pUIActiveObject` the UI active object of the CAAGeometry document. It is those which sends _CAAAfrComboColorNotification_ notification and keeps the current color. In your modelization, it can another component than the UI active object.  
     * `_ColorTable` is the array defining the ten colors - See Fig.2.  
-
-
 
 Here the CAAAfrComboRep source file:
 
@@ -776,10 +733,7 @@ This method consists in to read the current color on the CAASysGeoRootObj compon
   
 ---  
 
-
-
 [Top]
-
 #### Instantiating the Combo Header Class
 
 The combo header is used in the CAAGeometry document. An instance of this header has been created in an Add-in of the workshop of the document. Here is an extract of the _CAAAfrGeoChartWindowAdn_ class which is an implementation of the _CAAIAfrGeometryWksAddin_ interface. 
@@ -798,7 +752,6 @@ The combo header is used in the CAAGeometry document. An instance of this header
 The combo command header is created using its constructor class. 
 
 * * *
-
 ### In Short
 
 This use case has explained how to create a command header whose the graphic representation is customized:
@@ -806,30 +759,26 @@ This use case has explained how to create a command header whose the graphic rep
   * The command header is a component which OM and C++ derives from CATAfrDialogCommandHeader and implements CATIAfrCommandHeaderRep
   * The customized graphic representation is created by a class which must derive from CATAfrCommandHeaderRep
 
-
-
 The component controlling the data used by the graphic representation is dependent of the document. 
 
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Creating a Most Recent Used Command Header](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Creating a Most Recent Used Command Header](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] | [The Command Headers](../CAAAfrTechArticles/CAAAfrCommandHeaders.htm)  
-[3] | [The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.htm)  
-[4] | [CATDlgCombo](../CAADlgQuickRefs/CAADlgCATDlgCombo.htm)  
-[5] | [The Callback Mechanism](../CAASysTechArticles/CAASysCallbacks.htm)  
-[6] | [Creating an Interface](../CAASysUseCases/CAASysSampleOMCreatingInt.htm)  
-[7] | [The Callback Mechanism](../CAASysUseCases/CAASysSampleCallbacks.htm)  
-[8] | [The CAA Command Model](../CAADegTechArticles/CAADegCommandModel.htm)  
-[9] | [Object Modeler Inheritances](../CAASysTechArticles/CAASysOMInheritance.htm)  
+[2] | [The Command Headers](../CAAAfrTechArticles/CAAAfrCommandHeaders.md)  
+[3] | [The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)  
+[4] | [CATDlgCombo](../CAADlgQuickRefs/CAADlgCATDlgCombo.md)  
+[5] | [The Callback Mechanism](../CAASysTechArticles/CAASysCallbacks.md)  
+[6] | [Creating an Interface](../CAASysUseCases/CAASysSampleOMCreatingInt.md)  
+[7] | [The Callback Mechanism](../CAASysUseCases/CAASysSampleCallbacks.md)  
+[8] | [The CAA Command Model](../CAADegTechArticles/CAADegCommandModel.md)  
+[9] | [Object Modeler Inheritances](../CAASysTechArticles/CAASysOMInheritance.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Fev 2004] | Document created  

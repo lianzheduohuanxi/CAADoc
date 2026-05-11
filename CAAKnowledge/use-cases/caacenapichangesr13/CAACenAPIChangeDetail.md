@@ -1,9 +1,10 @@
 ---
 title: "Detail Of C++ API Changes"
-category: "general"
+category: "api-changes"
 module: "CAACenAPIChangesR13"
+version: "V5R13"
 tags: ["CAA2Usage", "CATIAV4Interfaces", "CAA2Level"]
-source_file: "Doc\online\CAACenAPIChangesR13\CAACenAPIChangeDetail.htm"
+source_file: "Doc/online/CAACenAPIChangesR13/CAACenAPIChangeDetail.md"
 converted: "2026-05-11T17:33:50.640808"
 ---
 
@@ -29,30 +30,30 @@ INDM | Method is no more documented. It does not break your code in any way but 
   
 * * *
 
-CATAnalysisBase.htm | [R13GA vs R12GA](CATAnalysisBase.htm) |   
+CATAnalysisBase.md | [R13GA vs R12GA](CATAnalysisBase.md) |   
 ---|---|---  
-CATAnalysisInterfaces.htm | [R13GA vs R12GA](CATAnalysisInterfaces.htm) |   
-CATIAV4Interfaces.htm | [R13GA vs R12GA](CATIAV4Interfaces.htm) |   
-DNBInspectInterfaces.htm | [R13GA vs R12GA](DNBInspectInterfaces.htm) |   
-DMAPSInterfaces.htm | [R13GA vs R12GA](DMAPSInterfaces.htm) |   
-ENOVaultClientCPP.htm | [R13GA vs R12GA](ENOVaultClientCPP.htm) |   
-GeometryVisualization.htm | [R13GA vs R12GA](GeometryVisualization.htm) |   
-GSOInterfaces.htm | [R13GA vs R12GA](GSOInterfaces.htm) |   
-ManufacturingInterfaces.htm | [R13GA vs R12GA](ManufacturingInterfaces.htm) |   
-MechanicalModeler.htm | [R13GA vs R12GA](MechanicalModeler.htm) |   
-MecModInterfaces.htm | [R13GA vs R12GA](MecModInterfaces.htm) |   
-ObjectModelerBase.htm | [R13GA vs R12GA](ObjectModelerBase.htm) |   
-Visualization.htm | [R13GA vs R12GA](Visualization.htm) |   
-VPMDesktopObjects.htm | [R13GA vs R12GA](VPMDesktopObjects.htm) |   
-VPMInterfaces.htm | [R13GA vs R12GA](VPMInterfaces.htm) |   
-V5ToV4Geo.htm | [R13GA vs R12GA](V5ToV4Geo.htm) |   
+CATAnalysisInterfaces.md | [R13GA vs R12GA](CATAnalysisInterfaces.md) |   
+CATIAV4Interfaces.md | [R13GA vs R12GA](CATIAV4Interfaces.md) |   
+DNBInspectInterfaces.md | [R13GA vs R12GA](DNBInspectInterfaces.md) |   
+DMAPSInterfaces.md | [R13GA vs R12GA](DMAPSInterfaces.md) |   
+ENOVaultClientCPP.md | [R13GA vs R12GA](ENOVaultClientCPP.md) |   
+GeometryVisualization.md | [R13GA vs R12GA](GeometryVisualization.md) |   
+GSOInterfaces.md | [R13GA vs R12GA](GSOInterfaces.md) |   
+ManufacturingInterfaces.md | [R13GA vs R12GA](ManufacturingInterfaces.md) |   
+MechanicalModeler.md | [R13GA vs R12GA](MechanicalModeler.md) |   
+MecModInterfaces.md | [R13GA vs R12GA](MecModInterfaces.md) |   
+ObjectModelerBase.md | [R13GA vs R12GA](ObjectModelerBase.md) |   
+Visualization.md | [R13GA vs R12GA](Visualization.md) |   
+VPMDesktopObjects.md | [R13GA vs R12GA](VPMDesktopObjects.md) |   
+VPMInterfaces.md | [R13GA vs R12GA](VPMInterfaces.md) |   
+V5ToV4Geo.md | [R13GA vs R12GA](V5ToV4Geo.md) |   
   
 * * *
 
 References [1] | [Migration to CATBoolean](../CAACenQuickRefs/CAACenWhatsNew.htm#CATBoolean)  
 ---|---  
-[2] | [Details Of V511 API Changes](../CAACenAPIChangesR11/CAACenAPIChangeDetail.htm)  
-[3] | [Details Of V5R12 API Changes](../CAACenAPIChangesR12/CAACenAPIChangeDetail.htm)  
+[2] | [Details Of V511 API Changes](../CAACenAPIChangesR11/CAACenAPIChangeDetail.md)  
+[3] | [Details Of V5R12 API Changes](../CAACenAPIChangesR12/CAACenAPIChangeDetail.md)  
 [4] | [Split of the Visualization framework](../CAACenQuickRefs/CAACenWhatsNew.htm#VisuSplit)  
 [5] | [Move of CAA API resources from MechanicalComands into InteractiveInterfaces](../CAACenQuickRefs/CAACenWhatsNew.htm#MecComMov)  
 [Top]  

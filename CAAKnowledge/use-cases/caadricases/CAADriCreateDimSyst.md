@@ -3,18 +3,15 @@ title: "Creating Center Lines in a CATDrawing Document"
 category: "use case"
 module: "CAADriUseCases"
 tags: ["CATIDrwDimDimension", "CATIUnknownListImpl", "CAADrwAddin", "CATIDrwStackedDimSystem", "CAAUseCaseCommands", "CATIDrwDimSystem", "CAADraftingInterfaces", "CATIA", "CAADrwCreateDimSystCmd", "CATISpecObject_var", "CAADrwCreateDimSyst", "CATIDrwAnnotationFactory", "CATIUnknownList"]
-source_file: "Doc\online\CAADriUseCases\CAADriCreateDimSyst.htm"
+source_file: "Doc/online/CAADriUseCases/CAADriCreateDimSyst.md"
 converted: "2026-05-11T17:31:50.955484"
 ---
-
 # Mechanical Design
 
 | 
-
 ## Drafting
 
 | 
-
 ### Creating Dimension System in a CATDrawing Document
 
 _How to create dimension system on interactive_  
@@ -22,7 +19,6 @@ _How to create dimension system on interactive_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article discusses the CAADrwCreateDimSyst use case. This use case explains how to create dimension system on interactive in a CATDrawing document.
@@ -42,19 +38,16 @@ This article discusses the CAADrwCreateDimSyst use case. This use case explains 
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 In this use case you will learn how to create dimension system on interactive geometry. The dimension system is a set of dimensions. The positioning of these dimensions depend of the type of the dimension system: Cumulated, Stacked or Chained. This sample is an interactive command which create a Stacked dimension system, from extremity points of line put in the CSO.
 
 [Top]
-
 ### The CAADrwCreateDimSyst Use Case
 
 CAADrwCreateDimSyst is a use case of the CAADraftingInterfaces.edu framework that illustrates DraftingInterfaces framework capabilities.
 
 [Top]
-
 #### What Does CAADrwCreateDimSyst Do
 
 This use case is made of a state command that creates a dimension system from points already put in the CSO.
@@ -74,7 +67,6 @@ Fig. 3: The Drawing with geometry on which the dimensions will be created ![](im
 This picture shows the dimension system created  by the CAA command CreateDimSystem.
 
 [Top]
-
 #### How to Launch CAADrwCreateDimSyst
 
 To launch CAADrwCreateDimSyst, you will need to set up the build time environment, then compile CAADrwCreateDimSyst and CAADrwAddin along with its prerequisites, set up the run time environment.[1].
@@ -84,10 +76,7 @@ To launch CAADrwCreateDimSyst, you will need to set up the build time environmen
   3. Select geometry on which dimension system will be created
   4. Launch the CreateDimSystem use case command to create the dimension system.
 
-
-
 Top]
-
 #### Where to Find the CAADrwCreateDimSyst Code
 
 The CAADrwCreateDimSyst use case is made of two source files named CAADrwCreateDimSystCmd.h and CAADrwCreateDimSystCmd.cpp located in the CAADrwCreateDimSyst.m module of the CAADraftingInterfaces.edu framework:
@@ -99,7 +88,6 @@ Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCreateDimSyst.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are two steps in CAADrwCreateDimSyst:
@@ -107,10 +95,7 @@ There are two steps in CAADrwCreateDimSyst:
   1. Building the State Chart and Creating the Appropriate Selection Agent.
   2. Retrieving the Selection and Creating the Center Line
 
-
-
 [Top]
-
 ### Building the State Chart and Creating the Appropriate Selection Agent
     
     
@@ -140,7 +125,6 @@ There are two steps in CAADrwCreateDimSyst:
 In this section we create a CATPathElementAgent and set the corresponding element type to IDMPoint.
 
 [Top]
-
 ### Retrieving the Selection and Creating the dimension system
     
     
@@ -238,7 +222,6 @@ In this section we create a CATPathElementAgent and set the corresponding elemen
 The acquisition agent did put the selected points into the CSO. So we get the SO and loop on it. A dimension is created from the 2 first points in the SO, then the dimension system is created from this dimension by using ` CreateDimSystem` method defined in CATIDrwAnnotationFactory interface, Others dimensions are created in the dimension system by using ` AddDimension `method defined in CATIDrwDimSystem interface. CATDimSystemDefinition class allows to initialize a set of parameters for the dimension system definition as the type of the dimension system (Chained, Cumulated, Stacked).
 
 [Top]
-
 ### Modifying a dimension system
     
     
@@ -281,7 +264,6 @@ The modification of dimension system dimensions line is insured by the moving of
  
 
 * * *
-
 ### In Short
 
 This use case shows how to create a state command creating and modifying a dimension system.
@@ -289,16 +271,14 @@ This use case shows how to create a state command creating and modifying a dimen
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Building and Lauching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Lauching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] | [Implementing the Statechart Diagram](../CAADegUseCases/CAADegSampleGraph.htm)  
+[2] | [Implementing the Statechart Diagram](../CAADegUseCases/CAADegSampleGraph.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [March 2008] | Document created  

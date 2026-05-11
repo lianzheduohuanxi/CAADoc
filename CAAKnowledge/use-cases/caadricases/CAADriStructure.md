@@ -3,18 +3,15 @@ title: "Creating Sheets and Views in a CATDrawing Document"
 category: "use case"
 module: "CAADriUseCases"
 tags: ["CATIDftStandardManager", "CATIDftDrawing", "CATIDftDrawingFormat", "CATIDftDocumentServices", "CATIContainer_var", "CATIA", "CATIDftViewMakeUp", "CAADrwStructure", "CATIDrawing", "CATIStringList", "CATIDftView", "CATIDftSheetFormat", "CATIDrwFactory", "CATIUnknownList", "CATISpecObject_var", "CATIView", "CATISpecObject", "CATI2DWFFactory_var", "CATIDftFormat_var", "CAADraftingInterfaces"]
-source_file: "Doc\online\CAADriUseCases\CAADriStructure.htm"
+source_file: "Doc/online/CAADriUseCases/CAADriStructure.md"
 converted: "2026-05-11T17:31:51.020431"
 ---
-
 # Mechanical Design
 
 | 
-
 ## Drafting
 
 | 
-
 ### Creating Sheets and Views in a CATDrawing Document
 
 _How to structure a CATDrawing document_  
@@ -22,7 +19,6 @@ _How to structure a CATDrawing document_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article discusses the CAADrwStructure use case. This use case explains how to create sheets and interactive views in a drawing document.
@@ -40,19 +36,16 @@ This article discusses the CAADrwStructure use case. This use case explains how 
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 In this use case you will learn how to deal with the structure of a drawing document. Thus you will be able to create sheets and interactive views.
 
 [Top]
-
 ### The CAADrwStructure Use Case
 
 CAADrwStructure is a use case of the CAADraftingInterfaces.edu framework that illustrates DraftingInterfaces framework capabilities.
 
 [Top]
-
 #### What Does CAADrwStructure Do
 
   Fig. 1: The Document Created by the Use Case   
@@ -66,12 +59,9 @@ This picture represents a CATDrawing document created by the use case program. T
   * A main view which contains the elements directly created in the sheet
   * A background view, which is dedicated to the frames and title blocks.
 
-
-
 These two views are created by the sheet factory. They are part of the sheet and so they cannot be deleted and they are not showed in the graph.
 
 [Top]
-
 #### How to Launch CAADrwStructure
 
 To launch CAADrwStructure, you will need to set up the build time environment, then compile CAADrwStructure along with its prerequisites, set up the run time environment, and then execute the use case [1].
@@ -89,10 +79,7 @@ When you launch the use case, pass the full pathname of the file into which you 
   
 ---  
 
-
-
 [Top]
-
 #### Where to Find the CAADrwStructure Code
 
 The CAADrwStructure use case is made of a single source file named CAADrwStructure.cpp located in the CAADrwStructure.m module of the CAADraftingInterfaces.edu framework:
@@ -104,7 +91,6 @@ Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwStructure.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are five steps in CAADrwStructure:
@@ -118,10 +104,7 @@ There are five steps in CAADrwStructure:
   7. Creating a geometric element in this view
   8. Saving the document and exiting
 
-
-
 [Top]
-
 #### Creating and Initializing the Document
     
     
@@ -150,7 +133,6 @@ There are five steps in CAADrwStructure:
 This section represents the usual sequence for creating a CATIA document.
 
 [Top]
-
 #### Accessing the drawing feature and drawing container in the document
     
     
@@ -190,9 +172,7 @@ This section represents the usual sequence for creating a CATIA document.
 The root feature of a drawing document is the Drawing that is the feature that implements the CATIDrawing interface. We can get a pointer to CATIDrawing using the CATIDftDocumentServices interface, which is implemented by the document. The GetDrawing method first argument is the interface you want to get on the drawing.
 
 [Top]
-
 ####  
-
 #### Creating drawing standard in the drawing document
     
     
@@ -248,7 +228,6 @@ The root feature of a drawing document is the Drawing that is the feature that i
     
     
      
-    
     #### Appending format to the current sheet in the drawing 
      drawing document
     
@@ -339,7 +318,6 @@ CATIDftDrawingFormat interface is implemented on drawing root. GetAvailableForma
 [Top]
 
  
-
 #### Creating an Additional Sheet and Adding it to the Drawing Feature
     
     
@@ -354,7 +332,6 @@ CATIDftDrawingFormat interface is implemented on drawing root. GetAvailableForma
 AddSheet method on CATIDftDrawing interface creates the sheet and add it to the drawing root. If this method is called in interactive context, sheet tab page will be updated.
 
 [Top]
-
 #### Creating a View and Adding it to the Just Created Sheet
     
     
@@ -387,7 +364,6 @@ AddSheet method on CATIDftDrawing interface creates the sheet and add it to the 
 The CATIDrwFactory is implemented by the drawing container. A MakeUp object is associated to the view. So we create the two objects by using CreateViewWithMakeUp method.The view has to be typed and added to the sheet.
 
 [Top]
-
 #### Creating a Geometric Element in this View
     
     
@@ -422,7 +398,6 @@ To create geometric elements in a view, the view has to be current. Wire frame f
  
 
 [Top]
-
 #### Saving the Document and Exiting
     
     
@@ -445,7 +420,6 @@ This section represents the usual sequence for saving a newly created CATIA docu
 [Top]
 
 * * *
-
 ### In Short
 
 This use case shows the objects and interfaces used when creating sheets and views in a CATDrawing document. Sheets are created by using AddSheet method defined in CATIDftDrawing interface, thus sheet tab page may be updated in interactive context. View features are created by using CreateViewWithMakeUp defined in CATIDrwFactory interface implemented by the drawing container.
@@ -453,16 +427,14 @@ This use case shows the objects and interfaces used when creating sheets and vie
 [Top]
 
 * * *
-
 ### References
 
-[1] |  [ Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.htm)  
+[1] |  [ Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [ Creating a New Document](../CAAOmbUseCases/CAAOmbNewDoc.htm)  
+[2] |  [ Creating a New Document](../CAAOmbUseCases/CAAOmbNewDoc.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Jan 2000] | Document created  

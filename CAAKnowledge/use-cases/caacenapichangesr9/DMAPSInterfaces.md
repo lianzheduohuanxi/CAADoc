@@ -1,9 +1,10 @@
 ---
 title: "DMAPSInterfaces Modifications"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR9"
+version: "V5R9"
 tags: ["CATISPPResourceManagement", "CATISPPItemMgt"]
-source_file: "Doc\online\CAACenAPIChangesR9\DMAPSInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR9/DMAPSInterfaces.md"
 converted: "2026-05-11T17:33:52.858160"
 ---
 

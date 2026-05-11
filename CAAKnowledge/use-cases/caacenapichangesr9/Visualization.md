@@ -1,9 +1,10 @@
 ---
 title: "Visualization Modifications"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR9"
+version: "V5R9"
 tags: ["CATIndicateEvent", "CATIndicator", "CATIndicationSegment"]
-source_file: "Doc\online\CAACenAPIChangesR9\Visualization.htm"
+source_file: "Doc/online/CAACenAPIChangesR9/Visualization.md"
 converted: "2026-05-11T17:33:52.991419"
 ---
 

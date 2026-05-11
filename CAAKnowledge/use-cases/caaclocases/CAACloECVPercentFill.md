@@ -3,7 +3,7 @@ title: "Distributive Systemes"
 category: "use case"
 module: "CAACloUseCases"
 tags: ["CAACommonLayoutItf", "CAACloECVPercentFill", "CATIEcvPercentFill", "CAAEPFforNetworkArc", "CAACommonLayoutInterfaces", "CAAEPFforNetworkNode"]
-source_file: "Doc\online\CAACloUseCases\CAACloECVPercentFill.htm"
+source_file: "Doc/online/CAACloUseCases/CAACloECVPercentFill.md"
 converted: "2026-05-11T17:33:49.355969"
 ---
 
@@ -49,11 +49,17 @@ where InstallRootDirectory is the root directory of your CAA V5 installation.  C
 If no user implementation exists, then default implementation will get invoked.   
   
 NOTE:   
+```vbscript
         For R19sp5+ level, environment variable ECV_CAAPercentFill needs to be set  
         For R20GA level and above, no environment variable is needed.  
   
+```
+
+```vbscript
 For *.h sample, refer image below:
     
+```
+
     class CAAEPFforNetworkNode: public CATBaseUnknown
     
     {
@@ -86,7 +92,6 @@ For *.h sample, refer image below:
     
     private: 
     };
-    
     #endif
       
   
@@ -160,7 +165,7 @@ In Short This use case has demonstrated how the user implementation to calculate
 
 * * *
 
-References [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---  
  [Top]  
   

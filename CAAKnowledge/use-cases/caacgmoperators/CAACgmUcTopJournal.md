@@ -3,10 +3,9 @@ title: "Using the Topological Journal"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAAErrorTopStifx", "CATICGMProjectionPtSur", "CAAErrorTopStif5", "CATICGMContainer", "CATICGMIntersectionCrvCrv", "CAADoc", "CAAGMModelGemBrowser", "CAAErrorTopStif7", "CAAGMOperatorsOverview", "CATICGMDynFillet", "CAAErrorTopStif3", "CATICGMTopPrism", "CATICGMTopSkin", "CAATopStiffener", "CATICGMTopOperator", "CAATopStifferner", "CAATopStiffner", "CAAErrorTopStif2", "CATICGMObject"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcTopJournal.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopJournal.md"
 converted: "2026-05-11T17:33:49.202401"
 ---
-
 
     
     
@@ -184,7 +183,6 @@ converted: "2026-05-11T17:33:49.202401"
     		
     		
     	  
-    ---|---  
     
     
     
@@ -197,7 +195,7 @@ converted: "2026-05-11T17:33:49.202401"
     If you simply type CAAGMOperatorsJournal with no argument, the use case executes, 
     but doesn't save the result in an NCGM file. If you want to save this result, provide 
     the full pathname of the NCGM file to create. For example:
-    CAAGMOperatorsJournal e:\ExJournal.NCGM
+    CAAGMOperatorsJournal e/ExJournal.NCGM
     This NCGM file can be displayed using the CAAGMModelGemBrowser use case.
     
     
@@ -605,7 +603,7 @@ These methods can scan along a type of item, or several types (see the `ThroughC
         CAAErrorTopStif3(...)
       }
 
-Fig. 2: The Journal and Boolean Journal of CATICGMTopPrism ![CATICGMTopPrism Journal and Boolean Journal](images/CAACgmTopJournal2.gif) | 
+Fig. 2: The Journal and Boolean Journal of CATICGMTopPrism ![CATICGMTopPrism Journal and Boolean Journal](images/CAACgmTopJournal2.gif) 
        * In the journal relative to the prism creation, `FindLasts` finds the cell `FromHeight1` resulting from `Height1`. The `ThroughCreateAndModify` option indicates that the search is done among the creation and modification items. At this stage, the cells are already delimited on the limiting body, but not glued.
        * In the journal relative to the Boolean union, `FindLasts` finds the cell `BooleanFromHeight1` from `FromHeight1`. This cell is the cell on which `CAATopStifferner` creates a circle. The `ThroughModify` option indicates that the search is done among the modification items only. After the Boolean operation, the prism and the limiting bodies are glued.  
 ---|---  
@@ -677,7 +675,7 @@ The surface is retrieved with the `CATFace::GetSurface` method. The center of th
              pPrismOp = NULL;
            
 
-Fig. 3: Use of the Boolean Journal to Recover the Upper Wing ![Boolean Journal](images/CAACgmTopJournal3.gif) | 
+Fig. 3: Use of the Boolean Journal to Recover the Upper Wing ![Boolean Journal](images/CAACgmTopJournal3.gif) 
        * All the faces of `FirstLimitBody` are first got. For each face `listCells[i]`, `FindLasts` searches for a cell resulting from a modification of `listCells[i]`. The resulting cells are put in the list `pFaces`, that is first cleaned (`RemoveAll`). `FindLasts` does never return a void `pFaces` list. If it does not find any solution, it returns the initial face `listCells[i]`. It is the reason why the returned solutions must be compared to the initial face.  
 ---|---  
     7. Filleting A filleting operation is defined by affecting a (possibly variable) radius to edges:
@@ -1063,13 +1061,13 @@ The new operator is used as a GM operator with the steps that creates, runs, get
             //
             **::CATCloseCGMContainer**(piGeomFactory);
 
-In Short The journal follows the topological modification from the input bodies (that are never modified) to the output body. This journal is read to recover topological entities, that can be later used in other topological operations. New operator classes can be developed, by chaining several topological operations. In this case, the corresponding journal is the concatenation of the journal of each operator. If an intermediate body is removed, this must be declared in the journal. References [1] |  [ Topology Concepts](../CAACgmModel/CAACgmTaTobTopoConcepts.htm)  
+In Short The journal follows the topological modification from the input bodies (that are never modified) to the output body. This journal is read to recover topological entities, that can be later used in other topological operations. New operator classes can be developed, by chaining several topological operations. In this case, the corresponding journal is the concatenation of the journal of each operator. If an intermediate body is removed, this must be declared in the journal. References [1] |  [ Topology Concepts](../CAACgmModel/CAACgmTaTobTopoConcepts.md)  
 ---|---  
-[2] |  [ The CGM Topological Model](../CAACgmModel/CAACgmTaTobTopoModel.htm)  
-[3] | [Overview of the Topological Operators](CAACgmUcTopOverview.htm)  
-[4] | [Understanding the CGM Journal](CAACgmTaTopJournal.htm)  
-[5] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-[6] | [Understanding the Versioning of the Topological Operators](CAACgmTaTopVersioning.htm)  
+[2] |  [ The CGM Topological Model](../CAACgmModel/CAACgmTaTobTopoModel.md)  
+[3] | [Overview of the Topological Operators](CAACgmUcTopOverview.md)  
+[4] | [Understanding the CGM Journal](CAACgmTaTopJournal.md)  
+[5] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[6] | [Understanding the Versioning of the Topological Operators](CAACgmTaTopVersioning.md)  
 History Version: **1.1** [Oct 2000] | Operator configuration  
 ---|---  
 Version: **1** [May 2000] | Document created

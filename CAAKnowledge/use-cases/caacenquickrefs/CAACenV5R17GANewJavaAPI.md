@@ -1,9 +1,9 @@
 ---
 title: "New Java Authorized APIs in CAA V5R17 GA"
-category: "general"
+category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIA"]
-source_file: "Doc\online\CAACenQuickRefs\CAACenV5R17GANewJavaAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R17GANewJavaAPI.md"
 converted: "2026-05-11T17:33:47.302648"
 ---
 
@@ -34,4 +34,4 @@ History Version: **1** [Apr 2006] | Document created
 * * *
 
 _Copyright © 1999-2006, Dassault Systèmes. All rights reserved._  
-Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.htm) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.htm) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.htm)
+Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)

@@ -2,42 +2,24 @@
 title: "CAAPeoUserAlgorithm"
 type: "interface"
 module: "CAAOptimizationInterfaces"
+category: "framework"
 base: "CATOptAlgorithmAdapter"
+inheritance_chain: "CAAPeoUserAlgorithm → CATOptAlgorithmAdapter"
 method_count: 4
 visibility: "local"
+has_tie_binding: false
 verified: true
 ---
-
 # CAAPeoUserAlgorithm
 
 **基类**: CATOptAlgorithmAdapter  
+**继承链**: CAAPeoUserAlgorithm → CATOptAlgorithmAdapter  
 **模块**: CAAOptimizationInterfaces  
+**分类**: framework  
 **可见性**: local  
 **方法数**: 4
 
 > LiteralFeatures
-
-## 方法列表
-
-### Run
-```cpp
-HRESULT Run(CATIOptOptimization_var & spiOptim);
-```
-
-### CheckCompatibility
-```cpp
-HRESULT CheckCompatibility(CATIOptOptimization_var &iOptim);
-```
-
-### SetSetting
-```cpp
-HRESULT SetSetting(const char* attrName, double content);
-```
-
-### GetSetting
-```cpp
-HRESULT GetSetting(const char* attrName, double &content);
-```
 
 ## 依赖
 

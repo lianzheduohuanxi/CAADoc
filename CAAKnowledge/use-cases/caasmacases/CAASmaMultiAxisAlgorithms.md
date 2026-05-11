@@ -3,18 +3,15 @@ title: "Multi-axis Machining Algorithms"
 category: "use case"
 module: "CAASmaUseCases"
 tags: ["CATInstantiateComponent", "CATIGeometricalElement", "CATIGSMPoint_var", "CATIVisProperties_var", "CATIVisProperties", "CATIMfgTPMultipleMotion_var", "CATIMfgTPMultipleMotion", "CAAMultiAxisAlgorithms", "CATIContainer_var", "CATIPartRequest", "CATIGeometricalElement_var", "CATIMfgMachiningContainer", "CATIMfgManufacturingFactories", "CATIGSMFactory", "CAASmaMultiAxisAlgorithms", "CAASurfaceMachiningAlgoItf", "CATIDescendants_var", "CATIMfgMultiAxisAlgorithm", "CATISpecObject_var", "CATIPartRequest_var"]
-source_file: "Doc\online\CAASmaUseCases\CAASmaMultiAxisAlgorithms.htm"
+source_file: "Doc/online/CAASmaUseCases/CAASmaMultiAxisAlgorithms.md"
 converted: "2026-05-11T17:31:50.835710"
 ---
-
 # Machining
 
 | 
-
 ## Machining Algorithms
 
 | 
-
 ### Multi-axis Machining Algorithms
 
 _Creating points with multi-axis machining algorithms_  
@@ -22,7 +19,6 @@ _Creating points with multi-axis machining algorithms_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article discusses the CAASmaMultiAxisAlgorithms use case and explains how to use multi-axis machining algorithms.
@@ -40,7 +36,6 @@ This article discusses the CAASmaMultiAxisAlgorithms use case and explains how t
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to help you run multi-axis machining algorithms. Its main intent is to explain how to set parameters, compute and read results of machining algorithms, which are:
@@ -48,27 +43,22 @@ This use case is intended to help you run multi-axis machining algorithms. Its m
   * multi-axis sweeping: tool path is executed in vertical parallel planes and is normal to the part surface
   * multi-axis contour driven: tool path sweeps between two guide contours or out an area by following contours parallel to a reference contour and is normal to the part surface
 
-
-
 [Top]
-
 ### The CAASmaMultiAxisAlgorithms Use Case
 
 CAASmaMultiAxisAlgorithms is a use case of the CAASurfaceMachiningAlgoItf.edu framework that illustrates the SurfaceMachiningAlgoInterfaces framework capabilities.
 
 [Top]
-
 #### What Does CAASmaMultiAxisAlgorithms Do
 
 CAASmaMultiAxisAlgorithms creates geometrical points, that follow tool paths computed by multi-axis sweeping and multi-axis contour driven algorithms.
 
-![The geometry of the Part](images/CAASmaGeometry.jpg) | It opens a Part document, finds the first geometrical set and retrieves geometry of PARTS1, PARTS2, GUIDE1 and GUIDE2.  
+ It opens a Part document, finds the first geometrical set and retrieves geometry of PARTS1, PARTS2, GUIDE1 and GUIDE2.  
 ---|---  
-![Points created by multi-axis sweeping](images/CAASmaResultSweeping.jpg) | It runs a multi-axis sweeping algorithm on PARTS1 and creates a first set of points (points lying on the surface are green).  
-![Points created by multi-axis contour driven](images/CAASmaResultContourDriven.jpg) | It runs a multi-axis contour driven algorithm on PARTS2 between GUIDE1 and GUIDE2 and creates a second set of points.  
+ It runs a multi-axis sweeping algorithm on PARTS1 and creates a first set of points (points lying on the surface are green).  
+ It runs a multi-axis contour driven algorithm on PARTS2 between GUIDE1 and GUIDE2 and creates a second set of points.  
   
 [Top]
-
 #### How to Launch CAASmaMultiAxisAlgorithms
 
 To launch CAASmaMultiAxisAlgorithms, you will need to set up the build time environment, then compile CAASmaMultiAxisAlgorithms along with its prerequisites, set up the run time environment, and then execute the use case [1].
@@ -84,7 +74,6 @@ Unix | `InstallRootDirectory/CAASurfaceMachiningAlgoItf.edu/InputData`
 Windows | `InstallRootDirectory\CAASurfaceMachiningAlgoItf.edu\InputData`  
   
 [Top]
-
 #### Where to Find the CAASmaMultiAxisAlgorithms Code
 
 The use case code is located in the CAASmaMultiAxisAlgorithms.m module of the CAASurfaceMachiningAlgoItf.edu framework:
@@ -96,7 +85,6 @@ Unix | `InstallRootDirectory/CAASurfaceMachiningAlgoItf.edu/CAASmaMultiAxisAlgor
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are five logical steps in CAASmaMultiAxisAlgorithms:
@@ -107,12 +95,9 @@ There are five logical steps in CAASmaMultiAxisAlgorithms:
   4. Running the multi-axis contour driven algorithm
   5. Creating sets of points from tool paths
 
-
-
 We will now comment each of those sections by looking at the code.
 
 [Top]
-
 #### Opening a Part document and retrieving geometries
 
 First, we need to get geometries used by machining algorithms.
@@ -188,9 +173,7 @@ From features called PARTS1 and PARTS2, we get the faces and fill the according 
 From features called GUIDE1 and GUIDE2, we get the curves and fill the according lists `ListOfGuide1` and `ListOfGuide2`.
 
 [Top] 
-
 #### Creating a Process document and initializing manufacturing environment   
-
 
 To store algorithms results, we need to get a machining tool path container.
     
@@ -220,7 +203,6 @@ To store algorithms results, we need to get a machining tool path container.
 The `CATDocumentServices::OpenDocument` static method creates a process document. From the root container of the process, we initialize the machining containers with `InitContainer` and we get the tool path container thanks to the _CATIMfgManufacturingFactories_ interface.
 
 [Top]
-
 #### Running the multi-axis sweeping algorithm
     
     
@@ -272,15 +254,10 @@ First we create an instance of the multi-axis sweeping algorithm with the `CATIn
   * `MfgAlgMachiningMode`: Tool path style, the cutting mode is one way or zigzag
   * `MfgAlgStepoverSide`: Stepover side, it determines the side of the machining direction  
 
-
-
-
 `SetDirection` method sets a direction:
 
   * `MfgAlgViewDirection`: View direction
   * `MfgAlgStartDirection`: Start direction
-
-
 
 `SetSurfacicGeometry` method sets the geometry of the parts. The call of this method is mandatory.
 
@@ -294,14 +271,11 @@ Macros motions are defined by one or several elementary motions with the followi
   * `AddMacroAlongALineMotion`: along a vector 
   * `AddMacroSyntax`: insert a user syntax 
 
-
-
 `SetTool` method sets a manufacturing tool. If we don't call it, then a default ball end tool will be used during computation.
 
 At last, `ComputeToolPath` creates and returns a tool path. It is created in the container pointed by `spTPContainer`.
 
 [Top]
-
 #### Running the multi-axis contour driven algorithm
     
     
@@ -348,8 +322,6 @@ First we create an instance of the multi-axis contour driven algorithm with the 
   * `MfgAlgContouringMode`: Guiding strategy, it is between contours or parallel contour
   * `MfgAlgFromToContour`: Direction in parallel contour mode, it starts from the guide or it is done up to the guide
 
-
-
 `SetSurfacicGeometry` method sets the geometry of the parts. The call of this method is mandatory.
 
 `SetWireFrameGeometry` method sets one of the following geometry:
@@ -360,14 +332,11 @@ First we create an instance of the multi-axis contour driven algorithm with the 
   * `MfgAlgStop2`: Second stop, it delimits the ends of paths
   * `MfgAlgLimitLine`: Limiting contour, it defines a limit to the part surface and is also available for multi-axis sweeping algorithm
 
-
-
 Direction, tool and macro motions are defined like in the multi-axis sweeping algorithm.
 
 At last, `ComputeToolPath` creates and returns a tool path. It is created in the container pointed by `spTPContainer`.
 
 [Top]
-
 #### Creating sets of points from tool paths
 
 Finally we scan information of tool paths and create points in the part document.
@@ -428,27 +397,22 @@ With the help of "`START`" and "`END`" user syntax defined in macros motions, we
 [Top]
 
 * * *
-
 ### In Short
 
   * Inputs of machining algorithms are several geometries and a tool path container
   * Numerical values, directions, geometry, tool and macros can be defined with _CATIMfgMultiAxisAlgorithm_ interface
   * Output is a tool path, containing information that can be used outside machining context
 
-
-
 [Top]
 
 * * *
-
 ### References
 
-[1] |  [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] |  [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Mar 2006] | Document created  

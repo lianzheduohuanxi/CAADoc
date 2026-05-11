@@ -1,9 +1,10 @@
 ---
 title: "CATAnalysisResources Modifications"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR7"
+version: "V5R7"
 tags: []
-source_file: "Doc\online\CAACenAPIChangesR7\CATAnalysisResourcesSP.htm"
+source_file: "Doc/online/CAACenAPIChangesR7/CATAnalysisResourcesSP.md"
 converted: "2026-05-11T17:33:51.958392"
 ---
 

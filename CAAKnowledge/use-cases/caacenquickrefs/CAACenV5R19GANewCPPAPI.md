@@ -1,9 +1,9 @@
 ---
 title: "New C++ Authorized APIs in CAA V5R19 GA"
-category: "general"
+category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIEhiMechanicalImport", "CATIMfgCatalogServices", "CATIDlgTableViewLineModel", "CATIDrwCumulatedDimSystem", "CATITPSCylinder", "CATIDftElementInSystem", "CATIDrwDimSystem", "CATITPSThread", "CATIIniSearchJapaneseGraphNameCriterion", "CATICfgCatLnk", "CATIPspPlacePartOnRun", "CATICkeParm_var", "CATITPSPlane", "CATIPrdHandleImpactsOnInstance", "CAACloudQsrItf", "CATIDlgTableViewColumnModel", "CATIAApplicationFrame", "CATImplementHandler", "CATIQsrCAAPowerFit", "CATIGSMMask"]
-source_file: "Doc\online\CAACenQuickRefs\CAACenV5R19GANewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R19GANewCPPAPI.md"
 converted: "2026-05-11T17:33:47.426935"
 ---
 
@@ -204,4 +204,4 @@ History Version: **1** [Mar 2008] | Document created
 * * *
 
 _Copyright © 1999-2008, Dassault Systèmes. All rights reserved._  
-Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.htm) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.htm) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.htm)
+Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)

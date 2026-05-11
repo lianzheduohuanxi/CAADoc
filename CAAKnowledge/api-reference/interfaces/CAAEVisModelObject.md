@@ -2,32 +2,24 @@
 title: "CAAEVisModelObject"
 type: "interface"
 module: "CAAVisualization"
+category: "framework"
 base: "CATBaseUnknown"
+inheritance_chain: "CAAEVisModelObject → CATBaseUnknown"
 method_count: 2
 visibility: "local"
+has_tie_binding: false
 verified: true
 ---
-
 # CAAEVisModelObject
 
 **基类**: CATBaseUnknown  
+**继承链**: CAAEVisModelObject → CATBaseUnknown  
 **模块**: CAAVisualization  
+**分类**: framework  
 **可见性**: local  
 **方法数**: 2
 
 > System Framework
-
-## 方法列表
-
-### GetType
-```cpp
-HRESULT GetType(char ** oType);
-```
-
-### SetType
-```cpp
-HRESULT SetType(const char * iType);
-```
 
 ## 依赖
 

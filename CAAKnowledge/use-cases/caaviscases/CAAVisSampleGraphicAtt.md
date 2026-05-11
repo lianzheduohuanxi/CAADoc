@@ -3,18 +3,15 @@ title: "Using Graphic Attributes"
 category: "use case"
 module: "CAAVisUseCases"
 tags: ["CAAVisBaseView", "CAAVisRepWindow", "CAAVisualization", "CAAVisRep", "CAAVisRepApplication"]
-source_file: "Doc\online\CAAVisUseCases\CAAVisSampleGraphicAtt.htm"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleGraphicAtt.md"
 converted: "2026-05-11T17:31:52.107319"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## 3D Visualization
 
 | 
-
 ### Using Graphic Attributes
 
 _Setting colors, linetypes, and thicknesses to representations, and understanding graphic attribute inheritance_  
@@ -22,7 +19,6 @@ _Setting colors, linetypes, and thicknesses to representations, and understandin
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article discusses the CAAVisRep use case. This use case explains how to use graphic attributes. 
@@ -40,19 +36,16 @@ This article discusses the CAAVisRep use case. This use case explains how to use
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show how to set graphic attributes to graphic representations, how to manage graphic attribute inheritance, and describes some of these attributes.
 
 [Top]
-
 ### The CAAVisRep Use Case
 
 CAAVisRep is a use case of the CAAVisualization.edu framework that illustrates Vizualization framework capabilities.
 
 [Top]
-
 #### What Does CAAVisRep Do
 
 CAAVisRep creates two line representations, and two cuboid representations, and sets graphic attributes to these representations to display them as shown in Fig. 1.
@@ -61,13 +54,11 @@ _Fig. 1: The CAAVisRep Representations_ ![](images/CAAVisSampleGraphicAtt1.jpg)
 ---  
   
 [Top]
-
 #### How to Launch the CAAVisRep
 
 To launch CAAVisRep, you will need to set up the build time environment, then compile CAAVisRep along with its prerequisites, set up the run time environment, and then execute the use case [1].
 
 [Top]
-
 #### Where to Find the CAAVisRep Code
 
 The CAAVisRep use case is made of two classes named _CAAVisRepApplication_ and _CAAVisRepWindow_ located in the CAAVisRep code is located in the CAAVisRep.m use case module of the CAAVisualization.edu framework:
@@ -79,7 +70,6 @@ Unix | `InstallRootDirectory/CAAVisualization.edu/CAAVisRep.m`
 where `InstallRootDirectory` is the root directory of your CAA V5 installation. 
 
 [Top]
-
 ### Step-by-Step
 
 To manage graphic attributes, there are four main steps:
@@ -92,10 +82,7 @@ To manage graphic attributes, there are four main steps:
   6. Creating a White Cube with Faces Lighted on Their Two Sides
   7. Displaying the Representation in the Viewer
 
-
-
 [Top]
-
 #### Creating a 3D Navigation Viewer Instance
 
 The 3D navigation viewer is an instance of the _CATNavigation3DViewer_ class. It is created in the `CreateViewer` method of the _CAAVisBaseView_ class that is called when the application is launched.
@@ -124,7 +111,6 @@ The `_pViewer` pointer to the 3D navigation viewer is kept as a data member of t
 The `SetBackgroundColor` method changes the viewer background color. The `Attach4Sides` method attaches the four sides of the viewer to those of the window. This makes the viewer occupy the whole window space.
 
 [Top]
-
 #### Creating a 3D Representation Bag
     
     
@@ -138,7 +124,6 @@ The `SetBackgroundColor` method changes the viewer background color. The `Attach
 This is done at the beginning of the `CreateModelRepresentation` method of _CAAVisRepWindow_.
 
 [Top]
-
 #### Creating a Green Dotted Line with Two Yellow Points at Its Ends
     
     
@@ -212,12 +197,9 @@ The line and points are created as graphic primitives (GPs) added to a _CAT3DCus
   * `SetLineType` sets the line type to 2. The line type ranges from 1 to 63. 2 means dotted
   * `SetType` sets its graphic type to 0. This means that the line is always seen, even if other representations are displayed in front of it.
 
-
-
 The two points are created using a single instance of the _CAT3DMarkerGP_ class, and their color is set as yellow. Then, the bounding element associated with the custom representation is computed as a _CAT3DBoundingSphere_ instance, and set to the custom representation using the `SetBoundingElement` method.
 
 [Top]
-
 #### Creating a Magenta Solid Line with Two Magenta Points at Its Ends
 
 The second line and its endpoints are also created using the `CreateLineEndedByTwoPoints` method, but uses the graphic attribute inheritance to get the attributes set to the GPs, and reset other graphic attributes.
@@ -247,7 +229,6 @@ The second line and its endpoints are also created using the `CreateLineEndedByT
 The second line is carried by the Y axis. Once the custom representation is created, its graphic attributes are those of the GPs, that is, the line color is green, its thikness is set to 2, its line type is dotted, its type set to 1 makes it hidden by representations in front of it, and the endpoints are yellow, but keep the default type set to 0. The graphic attribute set associated with the custom representation is now used to reset some of the GP graphic attributes. The `SetInheritanceMode` method enables the GPs that make up the custom representation to inherit graphic attribute values set to the representation itself, namely the line thickness (`LINEWIDTH_INHERITANCE` ) and the color (`COLOR_INHERITANCE`). The line thickness is reset to 1, that is to solid, and the color is reset to magenta. These graphic attribute values are reset for all the GPs: the line GP and the marker GP are both magenta. (The line thickness makes no sense for markers.) If the custom representation is successfully created, it is added to the representation bag.
 
 [Top]
-
 #### Creating a Red Cube without Top Face and with Faces Lighted on One Side
     
     
@@ -305,7 +286,6 @@ The first cube has its corner located at `RedCubePoint`. The `CreateOpenCube` me
 As with the lines and points, the cube is created as a _CAT3DCustomRep_ instance. It is made up of eight instances of _CAT3DPlanarFaceGP_ created using the `CreateFaceGP` method of _CAAVisRepWindow_ that are associated with a graphic attribute set when added to the custom representation. The top face is set as invisible using the `SetShowMode` method to which 1 is passed. (0 is the default and means shown.) The other faces share the same graphic attribute set and are considered as part of a volume, since 3 is passed to `SetType`. Each of these faces is displayed only if it is seen from the outside of the cube.
 
 [Top]
-
 #### Creating a White Cube with Faces Lighted on Their Two Sides
     
     
@@ -327,7 +307,6 @@ As with the lines and points, the cube is created as a _CAT3DCustomRep_ instance
 The second cube is created with the default color, that is, white, and with its type set to 2, that is the faces are lighted on both sides.
 
 [Top]
-
 #### Displaying the Representation in the Viewer
 
 The `AddRepToViewer` method displays the created representation.
@@ -349,7 +328,6 @@ The 3D representation bag created to contain all the created representations is 
 [Top]
 
 * * *
-
 ### In Short
 
 This use case shows how to create and manage graphic attribute on graphic representation. It also has shown how to make graphic representations inherit from the graphic attributes set to the custom representation that holds them.
@@ -357,15 +335,13 @@ This use case shows how to create and manage graphic attribute on graphic repres
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Building and Launching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Launching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Feb 2000] | Document created  

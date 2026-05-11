@@ -3,10 +3,9 @@ title: "Testing the Position of a Point inside a Face or a Volume "
 category: "use case"
 module: "CAACgmModel"
 tags: ["CATICGMPositionPtFaceOperator", "CAAGMModelPositionOpe", "CAAGMModelInterfaces", "CATICGMPositionPtVolOperator"]
-source_file: "Doc\online\CAACgmModel\CAACgmUcPtPosition.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcPtPosition.md"
 converted: "2026-05-11T17:33:48.514152"
 ---
-
 
     
     
@@ -62,7 +61,7 @@ converted: "2026-05-11T17:33:48.514152"
     illustrates how to test the inclusion of a point inside a volume or a face. This use case 
     constructs its input data. If you are not already 
     familiar with geometric modeler use cases, go to
-    [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm).
+    [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md).
     With the input data below:
     
       Fig.1 Point Inclusion:  Input 
@@ -144,10 +143,10 @@ returns
     is INSIDE (not on the boundary of) the face  53
     
 
-References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)  
-[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)  
-[4] |  [How to Use Geometric Operators](CAACgmUcGMModelOpeOverw.htm)  
+[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)  
+[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)  
+[4] |  [How to Use Geometric Operators](CAACgmUcGMModelOpeOverw.md)  
 History Version: **1** [Feb 2014] | Document created  
 ---|---

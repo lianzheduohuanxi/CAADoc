@@ -3,7 +3,7 @@ title: "Computing the Area of a CATFace and the Length of a CATEdge"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CATICGMDynMassProperties3D", "CAAGMProperties", "CATICGMObject", "CATICGMDynCreateMassProperties3D", "CAAGMModelGemBrowser", "CAAGMOperatorsProperties", "CATICGMSolidSphere", "CAATopProperties"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcTopProperties.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopProperties.md"
 converted: "2026-05-11T17:33:49.289425"
 ---
 
@@ -26,7 +26,7 @@ What You Will Learn With This Use Case In this use case, you learn how to comput
     3. Computes the area of each face.
     4. Computes the length of each edge.
     5. Writes the model and closes the container.
-How to Launch CAAGMOperatorsProperties To launch CAAGMOperatorsProperties, you will need to set up the build time environment, then compile CAAGMOperatorsProperties.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. If you simply type CAAGMOperatorsProperties with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsProperties e:\Properties.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsProperties Code The CAAGMOperatorsProperties use case is made of a main named CAATopProperties.cpp located in the CAAGMOperatorsProperties.m module of the GMOperatorsInterfaces framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMProperties.m\` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step The program: 
+How to Launch CAAGMOperatorsProperties To launch CAAGMOperatorsProperties, you will need to set up the build time environment, then compile CAAGMOperatorsProperties.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. If you simply type CAAGMOperatorsProperties with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsProperties e/Properties.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case. Where to Find the CAAGMOperatorsProperties Code The CAAGMOperatorsProperties use case is made of a main named CAATopProperties.cpp located in the CAAGMOperatorsProperties.m module of the GMOperatorsInterfaces framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMProperties.m\` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step The program: 
     1. Creates the Geometry Factory
     2. Creates the Sphere (CATICGMSolidSphere)
     3. Computes the Area of Each Face
@@ -91,14 +91,14 @@ Computing the Length of a CATEdge To retrieve a face area, you must:
      }
 
 This is the length with is displayed on the standard output: ![Edge 21](images/CAACgmTopedge21.gif)  
-Edge 3 length: 157.08 |  ![Edge 22](images/CAACgmTopedge22.gif)  
+Edge 3 length: 157.08 
 Edge 2 length: 157.08  
 ---|---  
 ![Edge 23](images/CAACgmTopedge23.gif)  
-Edge 5 length: 157.08 |  ![Edge 24](images/CAACgmTopedge24.gif)  
+Edge 5 length: 157.08 
 Edge 6 length: 157.08  
 ![Edge 25](images/CAACgmTopedge25.gif)  
-Edge 1 length: 314.159 |  ![Edge 26](images/CAACgmTopedge26.gif)  
+Edge 1 length: 314.159 
 Edge 4 length: 314.159  
 Writing the Model and Closing the Container Before ending, we must first release the software configuration.
     
@@ -125,7 +125,7 @@ To save the model in a file, the `::CATSaveCGMContainer` global function is used
     	
      **::CATCloseCGMContainer**(piGeomFactory);
 
-In Short This use case explains how to compute the area of a face and the length of an edge by using the CATICGMDynMassProperties3D class. References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+In Short This use case explains how to compute the area of a face and the length of an edge by using the CATICGMDynMassProperties3D class. References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
 History Version: **1** [Feb 2002] | Document created  
 ---|---

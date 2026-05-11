@@ -3,7 +3,7 @@ title: "Using a Tessellation Operator"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMOperatorsInterfaces", "CATICGMCellTessellator", "CAATesBody", "CAAGMOperatorsTesBody", "CATICGMBodyTessellator", "CATICGMObject", "CAAGMModelGemBrowser", "CATICGMTopSkin", "CATIA"]
-source_file: "Doc\online\CAACgmModel\CAACgmUcTesBody.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTesBody.md"
 converted: "2026-05-11T17:33:48.537640"
 ---
 
@@ -59,7 +59,7 @@ These iterators are all built on the same scheme. To use them:
     * Initialize the iterator.
     * Increment the iterator.
     * Retrieve one object.
-The CAAGMOperatorsTesBody Use Case CAAGMOperatorsTesBody is a use case of the CAAGMOperatorsInterfaces.edu framework that illustrates the tessellation capabilities. What Does CAAGMOperatorsTesBody Do This use case creates a body representing a quarter of hemisphere. Then it defines a tessellation operator, runs it, and uses the results to create lines representing the generated bars. Finally, it clears the environment. How to Launch CAAGMOperatorsTesBody To launch CAAGMOperatorsTesBody, you will need to set up the build time environment, then compile CAAGMOperatorsTesBody.m along with its prerequisites, set up the run time environment, and then execute the use case [5]. If you simply type CAAGMOperatorsTesBody with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsTesBody e:\Tessellation.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case [6]. Where to Find the CAAGMOperatorsTesBody Code The CAAGMOperatorsTesBody use case is made of a main named CAATesBody.cpp located in the CAAGMOperatorsTesBody.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootDirectory\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsTesBody.m\` where `InstallRootFolder` [5] is the folder where the API CD-ROM is installed. Step-by-Step There are five logical sections in CAAGMOperatorsTesBody:
+The CAAGMOperatorsTesBody Use Case CAAGMOperatorsTesBody is a use case of the CAAGMOperatorsInterfaces.edu framework that illustrates the tessellation capabilities. What Does CAAGMOperatorsTesBody Do This use case creates a body representing a quarter of hemisphere. Then it defines a tessellation operator, runs it, and uses the results to create lines representing the generated bars. Finally, it clears the environment. How to Launch CAAGMOperatorsTesBody To launch CAAGMOperatorsTesBody, you will need to set up the build time environment, then compile CAAGMOperatorsTesBody.m along with its prerequisites, set up the run time environment, and then execute the use case [5]. If you simply type CAAGMOperatorsTesBody with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: `CAAGMOperatorsTesBody e/Tessellation.NCGM` This NCGM file can be displayed using the CAAGMModelGemBrowser use case [6]. Where to Find the CAAGMOperatorsTesBody Code The CAAGMOperatorsTesBody use case is made of a main named CAATesBody.cpp located in the CAAGMOperatorsTesBody.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootDirectory\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsTesBody.m\` where `InstallRootFolder` [5] is the folder where the API CD-ROM is installed. Step-by-Step There are five logical sections in CAAGMOperatorsTesBody:
     1. Creating the Geometry Factory
     2. Creating the Topological Body representing a topological sphere
     3. Tessellating the Body
@@ -250,12 +250,12 @@ Writing the Model and Closing the Factory To save the model in a file, the `::CA
 In Short
     * The tessellation operators compute a discretized geometry from geometric (curve, surface) or topological (body, face, vertex) objects according to a sag, a step and an angle parameter.
     * They follow the general scheme of a CGM operator. Results are presented by means of iterators.
-References [1] | [Topology Concepts](CAACgmTaTobTopoConcepts.htm)  
+References [1] | [Topology Concepts](CAACgmTaTobTopoConcepts.md)  
 ---|---  
-[2] | [The CGM Topological Model](CAACgmTaTobTopoModel.htm)  
-[3] | [The Curves of CATIA Geometric Modeler](CAACgmTaGobCurves.htm)  
-[4] | [The Surfaces of CATIA Geometric Modeler](CAACgmTaGobSurfaces.htm)  
-[5] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-[6] | [Browsing the Geometric Container](CAACgmUcGemBrowser.htm)  
+[2] | [The CGM Topological Model](CAACgmTaTobTopoModel.md)  
+[3] | [The Curves of CATIA Geometric Modeler](CAACgmTaGobCurves.md)  
+[4] | [The Surfaces of CATIA Geometric Modeler](CAACgmTaGobSurfaces.md)  
+[5] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[6] | [Browsing the Geometric Container](CAACgmUcGemBrowser.md)  
 History Version: **1** [dec 2006] | Document created  
 ---|---

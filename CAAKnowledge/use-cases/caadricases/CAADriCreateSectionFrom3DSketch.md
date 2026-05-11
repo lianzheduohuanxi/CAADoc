@@ -3,18 +3,15 @@ title: "Creating a Section View from a 3D Sketch"
 category: "use case"
 module: "CAADriUseCases"
 tags: ["CATIDftStandardManager", "CATIPrtContainer", "CATIDftDrawing", "CATIDftDocumentServices", "CATIContainer_var", "CATIA", "CATI2DLine_var", "CATI2DWFGeometry_var", "CATIStringList", "CATIDftView", "CATIPrtPart_var", "CATIAlias", "CATInit_var", "CATI2DWFGeometry", "CATISpecObject_var", "CATISpecObject", "CATIDescendants", "CAADrwCreateSectionFrom3DSketch", "CAADrwCreatViewFrom3D", "CATIProduct"]
-source_file: "Doc\online\CAADriUseCases\CAADriCreateSectionFrom3DSketch.htm"
+source_file: "Doc/online/CAADriUseCases/CAADriCreateSectionFrom3DSketch.md"
 converted: "2026-05-11T17:31:50.970014"
 ---
-
 # Mechanical Design
 
 | 
-
 ## Drafting
 
 | 
-
 ### Creating a Section View from a 3D Sketch
 
 _How to create a section view with the cutting profile associative to a 3D Sketch_  
@@ -22,7 +19,6 @@ _How to create a section view with the cutting profile associative to a 3D Sketc
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article discusses the CAADrwCreateSectionFrom3DSketch use case. This use case explains how to create a generative section view defined by a cutting profile associative to a 3D Sketch. Thus, if the 3D Sketch is modified, the section view will modified after update.
@@ -40,7 +36,6 @@ This article discusses the CAADrwCreateSectionFrom3DSketch use case. This use ca
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show you how to create a Drawing generative section view from a 3D Sketch. 
@@ -52,13 +47,11 @@ _Fig 1: The part document containing the sketch "SketchForSection"_
 The SketchForSection sketch allows you to manage the cutting profile of the Drawing Section View from the 3D document.
 
 [Top]
-
 ### The CAADrwCreateSectionFrom3DSketch Use Case
 
 CAADrwCreateSectionFrom3DSketch is a use case of the CAADraftingInterfaces.edu framework that illustrates DraftingInterfaces framework capabilities.
 
 [Top]
-
 #### What Does CAADrwCreateSectionFrom3DSketch Do?
 
   _Fig. 2: Drawing Document with the new Section view_  
@@ -66,7 +59,6 @@ CAADrwCreateSectionFrom3DSketch is a use case of the CAADraftingInterfaces.edu f
 ![](images/CAADriCreateSectionFrom3DSketch2.jpg)  
   
 [Top]
-
 #### How to Launch CAADrwCreateSectionFrom3DSketch
 
 To launch CAADrwCreateSectionFrom3DSketch, you will need to set up the build time environment, then compile CAADrwCreateSectionFrom3DSketch along with its prerequisites, set up the run time environment, and then execute the use case [1].
@@ -76,7 +68,7 @@ When you launch the use case, pass the full pathname of the Drawing file as argu
   * With Windows 
         
         e:> mkrun -c cmd
-        CAADrwCreateSectionFrom3DSketch c:\...\PartWithPlaneAndSketchForSectionView.CATPart c:\DrawingTestOutput.CATDrawing  
+        CAADrwCreateSectionFrom3DSketch c/.../PartWithPlaneAndSketchForSectionView.CATPart c/DrawingTestOutput.CATDrawing  
   
 ---  
   * With UNIX 
@@ -86,10 +78,7 @@ When you launch the use case, pass the full pathname of the Drawing file as argu
   
 ---  
 
-
-
 [Top]
-
 #### Where to Find the CAADrwCreateSectionFrom3DSketch Code
 
 The CAADrwCreateSectionFrom3DSketch use case is made of a single source file named CAADrwCreateSectionFrom3DSketch.cpp located in the CAADrwCreateSectionFrom3DSketch.m module of the CAADraftingInterfaces.edu framework:
@@ -101,7 +90,6 @@ Unix | ` InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCreateSectionFrom3
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are six steps in CAADrwCreatViewFrom3D:
@@ -112,10 +100,7 @@ There are six steps in CAADrwCreatViewFrom3D:
   4. Creating the Section View from the "SketchForSection" Sketch
   5. Saving the Document and Exiting
 
-
-
 [Top]
-
 #### Creating and Initializing the Document
     
     
@@ -144,7 +129,6 @@ There are six steps in CAADrwCreatViewFrom3D:
 This section represents the usual sequence for loading a CATIA document [2].
 
 [Top]
-
 #### Creating the Drawing in the Document
     
     
@@ -160,7 +144,6 @@ This section represents the usual sequence for loading a CATIA document [2].
 The other steps to fully initialize the Drawing document are included in the specific sub program, `CreateViewFrom3DInDrawingDoc`.
 
 [Top]
-
 #### Retrieving the Part Document and the "SketchForSection" Sketch
     
     
@@ -213,7 +196,6 @@ The other steps to fully initialize the Drawing document are included in the spe
 All the sketches in the Part document are retrieved by using the ` GetAllChildren` method of the _CATIDescendants_ interface. The appropriate sketch is extracted from the list thanks to the `GetAlias` method of the _CATIAlias_ interface.
 
 [Top]
-
 #### Creating the Section View from the "SketchForSection" Sketch
     
     
@@ -381,12 +363,9 @@ Main arguments to initialize are:
 The `Vecpro` orientation informs the system which part will be drawn in the section view.
   * `ipi3DSketch`: 3D Sketch.
 
-
-
 The other arguments are of no use in this sample.
 
 [Top]
-
 #### Saving the Document and Exiting
     
     
@@ -414,7 +393,6 @@ This section represents the usual sequence for saving a newly created CATIA docu
 [Top]
 
 * * *
-
 ### In Short
 
 This use case shows the way to:
@@ -425,21 +403,17 @@ This use case shows the way to:
   4. Create a section view from a 3D Sketch by using ` CreateStandAloneSectionView` method defined in the _CATIDftGenViewFactory_ interface
   5. Save the Drawing document
 
-
-
 [Top]
 
 * * *
-
 ### References
 
-[1] |  [ Building and Launching a CAA Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] |  [ Building and Launching a CAA Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [ Loading a Document](../CAAOmbUseCases/CAAOmbLoadDoc.htm)  
+[2] |  [ Loading a Document](../CAAOmbUseCases/CAAOmbLoadDoc.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Jan 2005] | Document created  

@@ -3,7 +3,7 @@ title: "Using the Smoothing Options when Creating a Sweep"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CAAAdtSweepSmoothingCode", "CATICGMObject", "CAAGemBrowser", "CATICGMFrFTopologicalSweep", "CAAGMOperatorsSweepSmoothing", "CATIA"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcAdtSweepSmoothing.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtSweepSmoothing.md"
 converted: "2026-05-11T17:33:48.857282"
 ---
 
@@ -20,7 +20,7 @@ Abstract The CATICGMFrFTopologicalSweep operator enables you to create sweeps. T
     * In Short
     * References  
 ---  
-What You Will Learn With This Use Case In this use case, you learn how to use the "Smooth Sweeping" option of the CATICGMFrFTopologicalSweep operator. You create a segment sweep with a guide curve and a reference surface, specify the input data as indicated below and improve the sweep surface quality by acting on the "Smooth sweeping" parameters. CATICGMFrFTopologicalSweep is to be used according to the general scheme of topological operators. If need be, you can take a look at "Overview of the Topological Operators" [1] for more information. |  ![Swept Surface Definition Dialog Box](images/CAACgmAdtSweep0.jpg)  
+What You Will Learn With This Use Case In this use case, you learn how to use the "Smooth Sweeping" option of the CATICGMFrFTopologicalSweep operator. You create a segment sweep with a guide curve and a reference surface, specify the input data as indicated below and improve the sweep surface quality by acting on the "Smooth sweeping" parameters. CATICGMFrFTopologicalSweep is to be used according to the general scheme of topological operators. If need be, you can take a look at "Overview of the Topological Operators" [1] for more information. 
 ---|---  
 The CAAGMOperatorsSweepSmoothing Use Case Reminder In a CATIA session, the "Smooth Sweeping" option can be used in two cases:
     1. Whenever a sweep cannot be generated because the specified input data are invalid (guide not continuous in tangency or not planar).
@@ -30,7 +30,7 @@ There are two parameters to be adjusted in order to perform a sweep that does no
     * Creates a CATICGMFrFTopologicalSweep  operator instance.
     * Specifies the sweep parameters (angle and length laws, smoothing options).
     * Runs the CATICGMFrFTopologicalSweep  and retrieve the resulting body.
-How to Launch CAAGMOperatorsSweepSmoothing To launch CAAGMOperatorsSweepSmoothing, you will need to set up the build time environment, then compile CAAGMOperatorsSweepSmoothing.m, set up the run time environment, and then execute the use case [2].  To launch this use case you must type the command below, this commands saves the result in the outfile.NCGM file: `CAAGMOperatorsSweepSmoothing ...\tolerantSweepInit.ncgm `outfile.NCGM This NCGM file can be displayed using the CAAGemBrowser use case. Where to Find the CAAGMOperatorsSweepSmoothing Code The CAAGMOperatorsSweepSmoothing code use case is made of a main named CAAAdtSweepSmoothingCode.cpp located in the CAAGMOperatorsSweepSmoothing.m code module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsSweepSmoothing.m\` where `InstallRootFolder` [2] is the folder where the API CD-ROM is installed. Step-by-Step The use case is divided into the following main steps:
+How to Launch CAAGMOperatorsSweepSmoothing To launch CAAGMOperatorsSweepSmoothing, you will need to set up the build time environment, then compile CAAGMOperatorsSweepSmoothing.m, set up the run time environment, and then execute the use case [2].  To launch this use case you must type the command below, this commands saves the result in the outfile.NCGM file: `CAAGMOperatorsSweepSmoothing .../tolerantSweepInit.ncgm `outfile.NCGM This NCGM file can be displayed using the CAAGemBrowser use case. Where to Find the CAAGMOperatorsSweepSmoothing Code The CAAGMOperatorsSweepSmoothing code use case is made of a main named CAAAdtSweepSmoothingCode.cpp located in the CAAGMOperatorsSweepSmoothing.m code module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsSweepSmoothing.m\` where `InstallRootFolder` [2] is the folder where the API CD-ROM is installed. Step-by-Step The use case is divided into the following main steps:
     * Retrieving the Input Data
     * Creating a CATICGMFrFTopologicalSweep Operator Instance
     * Setting the Smooth Options
@@ -68,7 +68,7 @@ Angular correction: not activated
 
 **Comments** The tangency conditions along the two edges are not satisfactory (maximum angle between edges: 5.921deg) Face 1: 2 knots along U - 2 along V  
 Face 2: 3 knots along U - 2 along V  
-Face 3: 2 knots along U - 2 along V |  ![Specification 1](images/CAACgmAdtSegmentation0.jpg)  
+Face 3: 2 knots along U - 2 along V 
 Specification 2 Deviation from Guide: 0.03 mm  
 Angular correction: 0.5deg  
 **Code**
@@ -83,7 +83,7 @@ Angular correction: 0.5deg
 
 **Comments** The tangency conditions along the two edges are satisfactory (Max is 0deg). Face 1: 3 knots along U - 2 along V  
 Face 2: 4 knots along U - 2 along V  
-Face 3: 3 knots along U - 2 along V |  ![Specification 2](images/CAACgmAdtSegmentation1.jpg)  
+Face 3: 3 knots along U - 2 along V 
 Specification 3 Deviation from Guide: 1mm  
 Angular correction: 2deg  
 **Code**
@@ -98,13 +98,13 @@ Angular correction: 2deg
 
 **Comments** The tangency conditions along the two edges are satisfactory (Max is 0deg) Face 1: 2 knots along U - 2 along V  
 Face 2: 3 knots along U - 2 along V  
-Face 3: 2 knots along U - 2 along V |  ![Specification 3](images/CAACgmAdtsegmentation2.jpg)  
+Face 3: 2 knots along U - 2 along V 
 Specification 4 No smooth option specified - a throw is issued - the sweep cannot be generated.  
 In Short This use case is an example of how to the smooth options to achieve a better quality of the segment sweep.  References [*] | Delivered in CAAGMOperatorsInterfaces.edu/FunctionTests/InputData  
 ---|---  
-[1] | [Overview of the Topological Operators](CAACgmUcTopOverview.htm)  
-[2] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-[3] | [Using the Basic Topological Operators](CAACgmUcTopSpline.htm)  
+[1] | [Overview of the Topological Operators](CAACgmUcTopOverview.md)  
+[2] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[3] | [Using the Basic Topological Operators](CAACgmUcTopSpline.md)  
 History Version: **1** [Aug 2002] | Document created  
 ---|---  
 Version: **2** [Jan 2008] | Document Modified

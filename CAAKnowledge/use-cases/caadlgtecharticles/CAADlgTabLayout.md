@@ -1,20 +1,17 @@
 ---
 title: "Arranging Dialog Objects Using Tabulations"
-category: "general"
+category: "use-case"
 module: "CAADlgTechArticles"
 tags: []
-source_file: "Doc\online\CAADlgTechArticles\CAADlgTabLayout.htm"
+source_file: "Doc/online/CAADlgTechArticles/CAADlgTabLayout.md"
 converted: "2026-05-11T17:17:56.095914"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## User Interface - Dialogs
 
 | 
-
 ### Arranging Dialog Objects Using Tabulations
 
 _How to manage the dialog object with the tabulation layout_  
@@ -22,7 +19,6 @@ _How to manage the dialog object with the tabulation layout_
 Technical Article  
   
 * * *
-
 ### Abstract
 
 Arranging dialog objects in a dialog window, a dialog box, a frame or a tab page, that is a container, consists in positionning each object at a given place with respect to the others [1]. The container layout will then not changed when the dialog window is resized. The dialog objects can be precisely arranged in their respective containers using tabulations attached to the container.
@@ -45,23 +41,20 @@ Arranging dialog objects in a dialog window, a dialog box, a frame or a tab page
 ---  
   
 * * *
-
 ### Object Default Layout
 
 By default, each object you create has its own size which depends on its contents. Let's take the example of a dialog window that derives from the CATDlgDialog class, and that contains a combo, a push button, a spinner, and a check button.
 
-![CATDlgHorizontalLayout.jpg \(11122 bytes\)](images/CATDlgHorizontalLayout.jpg) | These controls are arranged horizontally side by side in their instantiation order and attached by their top side to an implicit horizontal tabulation line if nothing particular is specified since the `SetDefaultOrientation(Horizontal)` method is the default for any container.  
+ These controls are arranged horizontally side by side in their instantiation order and attached by their top side to an implicit horizontal tabulation line if nothing particular is specified since the `SetDefaultOrientation(Horizontal)` method is the default for any container.  
 ---|---  
-![CATDlgVerticalLayout.jpg \(10034 bytes\)](images/CATDlgVerticalLayout.jpg) | If you insert the method `SetDefaultOrientation(Vertical)`for the container, your objects are then arranged vertically and attached by their left side to an implicit vertical tabulation line.  
+ If you insert the method `SetDefaultOrientation(Vertical)`for the container, your objects are then arranged vertically and attached by their left side to an implicit vertical tabulation line.  
   
 [Top]
-
 ### Tabulation Layout
 
 It is based on tabulation lines along which you can attach the sides of the containers and objects. 
 
 [Top]
-
 #### Tabulation Lines
 
 To arrange complex windows, and also to help for resizing such windows, we will use tabulation lines. These are horizontal or vertical lines located in a container. ![](images/dialoaa6.gif)
@@ -71,12 +64,9 @@ They are used to attach objects using their sides. Attachments are ordered as fo
   * Horizontal tabulation lines are ordered from top to bottom 
   * Vertical tabulation lines are ordered from left to right 
 
-
-
 Tabulation lines are identified using an integer number which grows, not necessarily continuously, from left to right for vertical tabulation lines and from top to bottom for horizontal tabulation lines. 
 
 [Top]
-
 #### Attaching Containers and Controls along Tabulation Lines
 
 You can attach containers and controls along tabulation lines as shown in this diagram: ![](images/dialoaa7.gif)
@@ -86,18 +76,18 @@ The way the object is attached, referred to below as the attachment mode, along 
   * for a horizontal tabulation line: Top, Center or Bottom 
   * for a vertical tabulation line: Left, Center or Right. 
 
-
-
 When you create tabulations lines, you assign them an integer number. Vertical tabulation lines are positioned from left to right in the increasing order of their numbers. Horizontal tabulation lines are positioned from top to bottom, also in the increasing order of their numbers. 
 
 A given tabulation line can accommodate any number of containers and controls, but all with the same attachment mode. In the same way you can not attach the same container or control with the same attachment mode to two different vertical tabulation lines (or to two different horizontal tabulation lines). 
 
+```vbscript
 For each tabulation line, objects are laid out from top to bottom for vertical tabulation lines, and from left to right for horizontal tabulation lines, in the order they are listed in the method creating the tabulation line, with the methods SetVerticalAttachment and SetHorizontalAttachment. 
+
+```
 
 The space between two tabulation lines is determined by the largest object located between them. 
 
 [Top]
-
 #### Allowing for Container Resize
 
 You can request that, when the user resizes a window, the different objects remain at their location, and that containers, if any, remain at the same size, or you can request that some or all the object locations and container sizes change according to the window resize. 
@@ -113,13 +103,11 @@ The space between the horizontal tabulations 1 and 2 remains constant, since the
 In the same way, if the user drags in such a way that the window size decreases, the fixed tabulations stay at the same distance from their preceding tabulation while the movable tabulations bring closer to their preceding one. 
 
 [Top]
-
 #### Creating Tabulation Lines and Attaching Objects Along Them
 
 To create tabulation lines and attachment modes, you can use the methods `Attach4Sides`, `SetVerticalAttachment`, and `SetHorizontalAttachment`. 
 
 [Top]
-
 ##### Using Implicit Tabulation Lines
 
 The `Attach4Sides` method is used to insert one object in a container. If you intend to use this method for a given container, you must use it for all the objects of this container. Objects are laid out horizontally and attached left and top to fixed tabulation lines and right and bottom to movable tabulation lines. You do not explicitly declare these tabulation lines.This makes the container and the objects it contains resizable. Use this method as follows: 
@@ -132,7 +120,10 @@ The `Attach4Sides` method is used to insert one object in a container. If you in
   
 where `Container` is a pointer to a container instance, which contains two controls: `PushButton` and `Spinner` which are pointers to a push button instance and a spinner instance respectively. 
 
+```vbscript
 For example, the following container, instance of the class CATDlgWindow ![](images/dialaa10.gif)
+
+```
 
 contains a spinner, a vertical slider, an editor, and a tabcontainer. It is coded as follows: 
     
@@ -154,7 +145,6 @@ contains a spinner, a vertical slider, an editor, and a tabcontainer. It is code
 This container is fully resizable and each container or object contained herein is resized in width and height proportionally to its initial size with respect to the container resize. For example, below is a snapshot of the same container after a resize which increases its width and reduces its height. ![](images/dialaa11.gif)
 
 [Top]
-
 ##### Using Explicit Tabulation Lines
 
 The methods `SetVerticalAttachment` and `SetHorizontalAttachment` are the two methods available to create vertical and horizontal tabulation lines respectively. Use them to define: 
@@ -162,8 +152,6 @@ The methods `SetVerticalAttachment` and `SetHorizontalAttachment` are the two me
   * the tabulation line using the integer which identifies it 
   * the attachment mode 
   * the objects attached and their order. 
-
-
 
 They are to be applied to containers. For example: 
     
@@ -176,7 +164,6 @@ They are to be applied to containers. For example:
 creates a vertical tabulation line in `Container`, a pointer to a container instance, with `5` as vertical tabulation line number, `CATDlgTopOrLeft` as attachment mode, and lays out from top to bottom along this vertical tabulation line `Frame`, `PushButton` and `Editor`, which are pointers to a frame instance, a push button instance and an editor instance respectively. Note that three keywords only accommodate the five possible attachment modes: `CATDlgTopOrLeft` for top and left, `CATDlgCenter` for center and `CATDlgRightOrBottom` for right and bottom. Movable tabulation lines are declared using the same keywords suffixed by `Relative`. 
 
 [Top]
-
 ##### A Window Layout Example
 
 The following example fully illustrates how to layout many objects in a window or a container. The main container is a CATDlgWindow instance which contains containers and controls. 
@@ -228,8 +215,11 @@ Another way for more simple containers in which all the objects are laid out alo
 
 Movable tabulation lines are set by means of the suffix `Relative` to the tabulation line keywords. Use `CATDlgTopOrLeftRelative`, `CATDlgCenterRelative`, and `CATDlgRightOrBottomRelative` in place of the previous `CATDlgTopOrLeft`, `CATDlgCenter`, and `CATDlgRightOrBottom`. This allows for moving the tabulation lines proportionally with the window resize. 
 
+```vbscript
 For example, to make Spinner and Frame2 resize vertically with the window, you simply need to attach them to an additional horizontal tabulation line with the keyword `CATDlgRightOrBottomRelative` as follows: 
     
+```
+
     
     n += 1;                                             // added 
     SetHorizontalAttachment(n, CATDlgRightOrBottomRelative,  // statements
@@ -281,7 +271,6 @@ The resized windows is as follows:
 ![](images/dialaa19.gif)
 
 [Top]
-
 #### Changing Attached Objects and Attachments
 
 You can insert and remove objects into/from a tabulation line. Use the methods `InsertAlongHorizontalTab` or `InsertAlongVerticalTab` to insert an object, and `RemoveAlongHorizontalTab` or `RemoveAlongVerticalTab` to remove one. For example: 
@@ -319,16 +308,13 @@ You can also replace an object by another one by means of the method `ReplaceKee
 replaces the control `Spinner` by the control `Slider` while keeping the `Spinner` attachments for `Slider`. 
 
 [Top]
-
 ### The Object Container Tabulation Layout Specific Programming Tasks
 
 To manage the layout of a container using tabulations, you can use the following methods. They apply to 
 
-  * [Frames](../CAADlgQuickRefs/CAADlgCATDlgFrame.htm), instances of the CATDlgFrame instances
-  * [Tab pages ](../CAADlgQuickRefs/CAADlgCATDlgTabPage.htm) or property pages, instances of the CATDlgTabPage instances
-  * Your classes that derive from [CATDlgDocument](../CAADlgQuickRefs/CAADlgCATDlgDocument.htm) or [CATDlgDialog](../CAADlgQuickRefs/CAADlgCATDlgDialog.htm)
-
-
+  * [Frames](../CAADlgQuickRefs/CAADlgCATDlgFrame.md), instances of the CATDlgFrame instances
+  * [Tab pages ](../CAADlgQuickRefs/CAADlgCATDlgTabPage.md) or property pages, instances of the CATDlgTabPage instances
+  * Your classes that derive from [CATDlgDocument](../CAADlgQuickRefs/CAADlgCATDlgDocument.md) or [CATDlgDialog](../CAADlgQuickRefs/CAADlgCATDlgDialog.md)
 
 Layout using tabulations is available by default, that is, if the _CATDlgGridLayout_ style is NOT used in the object constructor. With tabulations, you can: 
 
@@ -336,10 +322,7 @@ Layout using tabulations is available by default, that is, if the _CATDlgGridLay
   * Manage tabulation lines and attaching objects along them
   * Attach a object using its four sides
 
-
-
 The examples use a _CATDlgFrame_ instance:
-
 ##### Managing the Frame Content Default Orientation
 
 The default orientation is taken into account when no other layout information is provided. This orientation is horizontal. The controls or containers contained in the frame are placed horizontally one after the other in their instantiation order. This corresponds to the following call to the SetDefaultOrientation method:
@@ -355,7 +338,6 @@ You can ask for this orientation to be vertical.
     pFrame->**SetDefaultOrientation**(**Vertical**);  
   
 ---  
-  
 ##### Managing Tabulation Lines and Attaching Objects along Them
 
 To manage the tabulation lines, you can: 
@@ -446,12 +428,9 @@ ResetAttachment has the same effect than the two calls to RemoveAlongHorizontalT
   
 ---  
 
-
-
 [Top]
 
 * * *
-
 ### In Short
 
 The dialog object sizes are determined using their contents, and arranging the layout of your objects in a container means either leaving the framework do it for you for containers with few objects which are placed horizontally one after the other in the order they are instantiated, or add code to attach objects to vertical tabulation lines using their left or right side and/or horizontal tabulation lines using their top or bottom side. The center of an object can be used in both cases. 
@@ -465,20 +444,16 @@ The keys to object layout are:
   * a single attachment mode can be used along a tabulation line, chosen among `CATDlgTopOrLeft`, `CATDlgCenter` or `CATDlgRightOrBottom`
   * the suffix `Relative` to an attachment mode means that the corresponding tabulation line is movable with respect to the tabulation line located left or above and that objects attached to it are resized when the container is resized 
 
-
-
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Arranging Dialog Objects](CAADlgObjectLayout.htm)  
+[1] | [Arranging Dialog Objects](CAADlgObjectLayout.md)  
 ---|---  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Jan 2000] | Document created  

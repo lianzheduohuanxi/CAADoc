@@ -3,10 +3,9 @@ title: "Projecting a Point onto  a Surface"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMModelInterfaces", "CATICGMProjectionPtSur", "CAAGMModelProjectionOpe"]
-source_file: "Doc\online\CAACgmModel\CAACgmUcProjPtSur.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcProjPtSur.md"
 converted: "2026-05-11T17:33:48.506138"
 ---
-
 
     
     
@@ -59,7 +58,7 @@ converted: "2026-05-11T17:33:48.506138"
     illustrates how to project a Cartesian point onto a surface. This use case 
     constructs its input data. If you are not already 
     familiar with geometric modeler use cases, go to
-    [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm).
+    [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md).
     With the input data below:
     
       Fig.1 Project a Point onto a Surface:  Input 
@@ -120,27 +119,26 @@ converted: "2026-05-11T17:33:48.506138"
     		[1]
     		| 
     		[
-    		Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)
+    		Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
     	  
-    ---|---  
     
     	
     		[2]
     		| 
-    		[About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)
+    		[About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)
     	  
     
     	
     		[3]
     		| 
-    		[How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)
+    		[How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)
     	  
     
     
     
     		[4]
     		| 
-    		[How to Use Geometric Operators](CAACgmUcGMModelOpeOverw.htm)
+    		[How to Use Geometric Operators](CAACgmUcGMModelOpeOverw.md)
     	  
     
     	
@@ -151,7 +149,6 @@ converted: "2026-05-11T17:33:48.506138"
     		Version: **1** [Feb 2014]
     		| Document created
     	  
-    ---|---  
     
     
     

@@ -1,28 +1,32 @@
 ---
 title: "CAASchQueryConnectivity.CATScript"
-category: "general"
+category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAASCH_CompRoute01", "CATIAProduct", "CATIASchRouteGraphic", "CAAScdSchUseCases", "CATIA", "CATIASchCntrLocation", "CATIASchGRR", "CAASchQueryConnectivity", "CATIASchCompGraphic", "CATIASchAppConnectable"]
-source_file: "Doc\online\CAAScdSchUseCases\CAASchQueryConnectivitySource.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryConnectivitySource.md"
 converted: "2026-05-11T17:31:51.471879"
 ---
 
-
     Option Explicit
+```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2004
-    
     ' *****************************************************************************
     '   Purpose:      Query the connectivity of components and routes in a network.
     '   Languages:    VBScript
     '   Locales:      English 
     '   CATIA Level:  V5R15 
     ' *****************************************************************************
-    
     '--- strMessage_g is a global variable visible to all private Sub/Function
+```
+
+```vbscript
     Dim strMessage_g As String
     
+```
+
+```vbscript
     Sub CATMain()
-    
+```vbscript
         ' ------------------------------------------------------------------------- 
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String 
@@ -35,17 +39,21 @@ converted: "2026-05-11T17:31:51.471879"
         ' Open the schematic document 
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+```
+
                 "online\CAAScdSchUseCases\samples\CAASCH_CompRoute01.CATProduct")
     
         Dim objSchDoc As Document
         Set objSchDoc = CATIA.Documents.Open(sFilePath)
     
+```
+
         strMessage_g = _
           "--------------------------------------------------------------------" & vbCr
         strMessage_g = strMessage_g & _
           "Output traces from CAASchQueryConnectivity.CATScript" & vbCrLf
-    
         ' Find the top node of the schematic object tree - schematic root.
+```vbscript
         Dim objPrdRoot As Product
         Dim objSchRoot As SchematicRoot
         If ( Not ( objSchDoc Is Nothing ) ) Then
@@ -58,11 +66,16 @@ converted: "2026-05-11T17:31:51.471879"
         Dim objSchLComps As SchListOfObjects
         Dim objSchLRoutes As SchListOfObjects
     
-    
+```
+
+```vbscript
         ' ------------------------------------------------------------------------- 
         ' |  Get a list of all component instances and
         ' |  a list of all route instances in the model.
         ' ------------------------------------------------------------------------- 
+```
+
+```vbscript
         If ( Not ( objSchRoot Is Nothing ) ) Then
            Set objSchLComps = objSchRoot.GetComponents
            Set objSchLRoutes = objSchRoot.GetRoutes
@@ -79,19 +92,27 @@ converted: "2026-05-11T17:31:51.471879"
         Dim objLCntrOther As SchListOfObjects
         Dim objSchTempListFact As SchTempListFactory
         Dim objLFilter As SchListOfBSTRs
-    
+```vbscript
         ' ------------------------------------------------------------------------- 
         ' |  For each component instance in the list, find connected objects
         ' ------------------------------------------------------------------------- 
         If ( Not ( objSchLComps Is Nothing ) And _
+```
+
              Not ( objSchRoot Is Nothing ) ) Then
     
+```
+
            intNb = objSchLComps.Count
            strMessage_g = strMessage_g &  "Number of schematic component instances = " & intNb & vbCrLf
+```vbscript
            If (intNb > 0) Then
               strMessage_g = strMessage_g &  "-----------Component Connectivity report ------------------- " _
                 & vbCrLf
     
+```
+
+```vbscript
               For intIndex = 1 To intNb
                 Set objPrd = Nothing
                 strName = ""
@@ -104,9 +125,14 @@ converted: "2026-05-11T17:31:51.471879"
                 
                 Set objAppCntbl = objSchRoot.GetInterface ("CATIASchAppConnectable",objPrd)
     
+```
+
+```vbscript
                 If ( Not ( objAppCntbl Is Nothing ) ) Then
     
-     
+```
+
+```vbscript
                    '---------------------------------------------------------------
                    '  AppListConnectables output 3 lists of objects.
                    '
@@ -119,39 +145,68 @@ converted: "2026-05-11T17:31:51.471879"
                    '           B               connector on A   connector on B
                    '           C               connector on A   connector on C
                    '---------------------------------------------------------------
+```
+
     
+```vbscript
                    Set objLFilter = Nothing
     
+```
+
                    objAppCntbl.AppListConnectables objLFilter, objLCntblOther, _
                      objLCntrThis, objLCntrOther
     
                    GenerateALine objSchRoot, objLCntblOther, objLCntrOther
     
+```vbscript
                    Set objLCntblOther = Nothing
                    Set objLCntrThis = Nothing
                    Set objLCntrOther = Nothing
     
+```
+
+```vbscript
                 End If
                           
+```
+
+```vbscript
              Next '--- For intIndex = 1 To intNb
     
+```
+
+```vbscript
            End If ' --- If (intNb > 0) Then
     
+```
+
+```vbscript
         End If '--- If ( Not ( objSchLComps Is Nothing ) And ...
     
-    
+```
+
+```vbscript
         ' ------------------------------------------------------------------------- 
         ' |  For each route instance in the list, find connected objects
         ' ------------------------------------------------------------------------- 
+```
+
+```vbscript
         If ( Not ( objSchLRoutes Is Nothing ) And _
              Not ( objSchRoot Is Nothing ) ) Then
     
+```
+
            intNb = objSchLRoutes.Count
            strMessage_g = strMessage_g &  "Number of schematic route instances = " & intNb & vbCrLf
+```vbscript
            If (intNb > 0) Then
               strMessage_g = strMessage_g &  "---------------- Route Connectivity report ------------------- " _
                 & vbCrLf
     
+```
+
+```vbscript
               For intIndex = 1 To intNb
                 Set objPrd = Nothing
                 strName = ""
@@ -164,27 +219,47 @@ converted: "2026-05-11T17:31:51.471879"
                 
                 Set objAppCntbl = objSchRoot.GetInterface ("CATIASchAppConnectable",objPrd)
     
+```
+
+```vbscript
                 If ( Not ( objAppCntbl Is Nothing ) ) Then
     
                    Set objLFilter = Nothing
     
+```
+
                    objAppCntbl.AppListConnectables objLFilter, objLCntblOther, _
                      objLCntrThis, objLCntrOther
     
                    GenerateALine objSchRoot, objLCntblOther, objLCntrOther
     
+```vbscript
                    Set objLCntblOther = Nothing
                    Set objLCntrThis = Nothing
                    Set objLCntrOther = Nothing
     
+```
+
+```vbscript
                 End If
                           
+```
+
+```vbscript
              Next '--- For intIndex = 1 To intNb
     
+```
+
+```vbscript
            End If ' --- If (intNb > 0) Then
     
+```
+
+```vbscript
         End If '--- If ( Not ( objSchLComps Is Nothing ) And ...
     
+```
+
     
     
     
@@ -192,11 +267,15 @@ converted: "2026-05-11T17:31:51.471879"
           "--------------------------------------------------------------------" & vbCr
         MsgBox strMessage_g
     
+```vbscript
     End Sub
     
+```
+
     Private Sub GenerateALine (objSchRootArg As SchematicRoot, _
       objLCntblArg As SchListOfObjects, objLCntrArg As SchListOfObjects)
     
+```vbscript
       Dim intNbCntbl As Integer
       Dim intNbCntr As Integer
       Dim intIndex As Integer
@@ -210,14 +289,23 @@ converted: "2026-05-11T17:31:51.471879"
       Dim objLDb As SchListOfDoubles
       Dim strName As String
     
+```
+
+```vbscript
       If ( Not ( objLCntblArg Is Nothing ) And _
            Not ( objLCntrArg Is Nothing ) ) Then
     
+```
+
          intNbCntbl = objLCntblArg.Count
          intNbCntr = objLCntrArg.Count
     
+```vbscript
          If ( intNbCntbl = intNbCntr ) Then
     
+```
+
+```vbscript
             For intIndex = 1 To intNbCntbl
               Set objPrd = Nothing
               strName = ""
@@ -225,32 +313,45 @@ converted: "2026-05-11T17:31:51.471879"
               Set objPrd = objLCntblArg.Item (intIndex,"CATIAProduct")
         
               Set objCntbl = objSchRootArg.GetInterface ("CATIASchAppConnectable",objPrd)
-    
+```vbscript
               '--------------------------------------------------------------------
               '  Report the name of the object connected 
               '--------------------------------------------------------------------
               If ( Not ( objPrd Is Nothing ) ) Then
                  strName = objPrd.Name
                  strMessage_g = strMessage_g &  "    connected to  " & intIndex  _
+```
+
                     & strName 
               End If  
-    
+```vbscript
               '--------------------------------------------------------------------
               '  Report the location of the connection through the connector 
               '  position
               '--------------------------------------------------------------------
               Set objGRR = Nothing
               Set objGRR = GetImage (objSchRootArg, objCntbl)
+```
+
     
+```
+
+```vbscript
               If ( Not ( objGRR Is Nothing ) ) Then
                  
                  Set objCntr = objLCntrArg.Item (intIndex,"CATIASchCntrLocation")
     
+```
+
+```vbscript
                  If ( Not ( objCntr Is Nothing ) ) Then
     
                     Set objLDb = Nothing
                     objCntr.GetPosition objGRR, objLDb
     
+```
+
+```vbscript
                     If ( Not ( objLDb Is Nothing ) ) Then
                        intNbCoord = objLDb.Count
                        If ( intNbCoord > 1 ) Then
@@ -260,19 +361,37 @@ converted: "2026-05-11T17:31:51.471879"
                        End If
                     End If 
     
+```
+
+```vbscript
                  End If
     
+```
+
+```vbscript
               End If '--- If ( Not ( objGRR Is Nothing ) ) Then ...
     
+```
+
      
+```vbscript
             Next '--- For intIndex = 1 To intNb
     
+```
+
+```vbscript
          End If '--- If ( intNbCntbl = intNbCntr ) Then ...
     
+```
+
+```vbscript
       End If '--- If ( Not ( objLCntblArg Is Nothing ) And ...
     
+```
+
+```vbscript
     End Sub
-    
+```vbscript
     ' -----------------------------------------------------------------------------
     ' | Find the first symbol used for the input schematic component.
     ' | Input: objSchCompGraph:  the schematic component 
@@ -280,6 +399,8 @@ converted: "2026-05-11T17:31:51.471879"
     ' | Returns: the component image (the symbol instance)
     ' -----------------------------------------------------------------------------
     Private Function GetImage (objSchRootArg As SchematicRoot, _
+```
+
       objSchCntblArg As SchAppConnectable) As SchGRR
     
       Dim objSchLImages As SchListOfObjects
@@ -290,10 +411,15 @@ converted: "2026-05-11T17:31:51.471879"
       Set objSchCompGraph = Nothing
       Set objSchRouteGraph = Nothing
     
+```
+
+```vbscript
       If ( Not ( objSchRootArg Is Nothing ) And _
            Not ( objSchCntblArg Is Nothing ) ) Then
     
-    
+```
+
+```vbscript
          '-------------------------------------------------------------------------
          ' Input objSchCntblArg could be a route or a component.  If 
          ' objSchCntblArg is a component, we expect 
@@ -302,8 +428,11 @@ converted: "2026-05-11T17:31:51.471879"
          ' Error handling is to call GetInterface again with "CATIASchCompGraphic"
          ' as input argument.
          '-------------------------------------------------------------------------
+```
+
          On Error Resume Next
     
+```vbscript
          Set objSchRouteGraph = objSchRootArg.GetInterface ( _
            "CATIASchRouteGraphic",objSchCntblArg)
     
@@ -315,12 +444,21 @@ converted: "2026-05-11T17:31:51.471879"
                Set objSchCompGraph = objSchRootArg.GetInterface ( _
                  "CATIASchCompGraphic",objSchCntblArg)
     
+```
+
+```vbscript
             End If
          End If
          On Error Goto 0
     
+```
+
+```vbscript
       End If
     
+```
+
+```vbscript
       If ( Not ( objSchCompGraph Is Nothing ) ) Then
           Set objSchLImages = objSchCompGraph.ListGraphicalImages
       Else 
@@ -329,11 +467,21 @@ converted: "2026-05-11T17:31:51.471879"
          End If 
       End If
     
+```
+
+```vbscript
       If ( Not ( objSchLImages Is Nothing ) ) Then
          Set GetImage = objSchLImages.Item (1,"CATIASchGRR")
       End If
     
+```
+
+```vbscript
     End Function
     
+```
+
     
     
+
+```

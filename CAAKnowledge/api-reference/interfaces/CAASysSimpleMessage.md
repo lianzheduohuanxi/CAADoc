@@ -2,42 +2,24 @@
 title: "CAASysSimpleMessage"
 type: "interface"
 module: "CAASystem"
+category: "framework"
 base: "CATBBMessage"
+inheritance_chain: "CAASysSimpleMessage → CATBBMessage"
 method_count: 4
 visibility: "local"
+has_tie_binding: false
 verified: true
 ---
-
 # CAASysSimpleMessage
 
 **基类**: CATBBMessage  
+**继承链**: CAASysSimpleMessage → CATBBMessage  
 **模块**: CAASystem  
+**分类**: framework  
 **可见性**: local  
 **方法数**: 4
 
 > - Implement CATIStreamMsg   (here in the implementation class )
-
-## 方法列表
-
-### UnstreamData
-```cpp
-HRESULT UnstreamData(void  *iBuffer, uint32  iLen);
-```
-
-### StreamData
-```cpp
-HRESULT StreamData(void **oBuffer, uint32 *oLen);
-```
-
-### FreeStreamData
-```cpp
-HRESULT FreeStreamData(void  *iBuffer, uint32  iLen);
-```
-
-### SetMessageSpecifications
-```cpp
-HRESULT SetMessageSpecifications();
-```
 
 ## 依赖
 

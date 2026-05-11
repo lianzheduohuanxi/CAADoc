@@ -1,9 +1,10 @@
 ---
 title: "VPMXBom Modifications"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR13"
+version: "V5R13"
 tags: []
-source_file: "Doc\online\CAACenAPIChangesR13\VPMXBom.htm"
+source_file: "Doc/online/CAACenAPIChangesR13/VPMXBom.md"
 converted: "2026-05-11T17:33:50.811338"
 ---
 

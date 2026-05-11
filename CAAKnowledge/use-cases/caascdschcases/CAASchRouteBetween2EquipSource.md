@@ -1,16 +1,15 @@
 ---
 title: "CAASchRouteBetween2Equip.CATScript"
-category: "general"
+category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CATIASchAppConnectable", "CATIAProduct", "CAASchRouteBetween2Equip", "CATIASchRouteGraphic", "CAAScdSchUseCases", "CATIASchAppConnector", "CATIASchGRRComp", "CATIA", "CATIASchListOfBSTRs", "CAASCHEDU_SamplePID", "CAASCHEDUConnector", "CATIASchGRR", "CAASCHEDUFuncString", "CATIASchCompatible", "CAASCH_RouteBetween2Equip", "CATIASchCompGraphic", "CATIASchCntrLocation"]
-source_file: "Doc\online\CAAScdSchUseCases\CAASchRouteBetween2EquipSource.htm"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchRouteBetween2EquipSource.md"
 converted: "2026-05-11T17:31:51.497816"
 ---
 
-
     Option Explicit
+```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2004
-    
     ' *****************************************************************************
     '   Purpose:      Route a piping line function between two equipments.
     '   Languages:    VBScript
@@ -20,12 +19,18 @@ converted: "2026-05-11T17:31:51.497816"
     '------------------------------------------------------------------------------
     ' These variables are visible to private Sub and CATMain
     '------------------------------------------------------------------------------
+```
+
+```vbscript
     Dim objLGRRComp_g As SchListOfObjects
     Dim objLCompat_g As SchListOfObjects
     Dim strMessage_g As String
     
+```
+
+```vbscript
     Sub CATMain()
-    
+```vbscript
         ' ------------------------------------------------------------------------- 
         ' Optional: allows to find the sample wherever it's installed
         dim sDocPath As String 
@@ -34,22 +39,25 @@ converted: "2026-05-11T17:31:51.497816"
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
           Err.Raise 9999,sDocPath,"No Doc Path Defined"
         End If
-    
         ' ------------------------------------------------------------------------- 
         ' Open the schematic document 
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+```
+
                 "online\CAAScdSchUseCases\samples\CAASCH_RouteBetween2Equip.CATProduct")
     
         Dim objSchDoc As Document
         Set objSchDoc = CATIA.Documents.Open(sFilePath)
     
+```
+
         strMessage_g = _
           "--------------------------------------------------------------------" & vbCr
         strMessage_g = strMessage_g & _
           "Output traces from CAASchRouteBetween2Equip.CATScript" & vbCrLf
-    
         ' Find the top node of the schematic object tree - schematic root.
+```vbscript
         Dim objPrdRoot As Product
         Dim objSchRoot As SchematicRoot
         If ( Not ( objSchDoc Is Nothing ) ) Then
@@ -59,6 +67,9 @@ converted: "2026-05-11T17:31:51.497816"
           End If
         End If
     
+```
+
+```vbscript
         If ( Not ( objSchRoot Is Nothing ) ) Then
     
            Dim objSchTempListFact As SchTempListFactory
@@ -71,36 +82,57 @@ converted: "2026-05-11T17:31:51.497816"
     
            Set objSchTempListFact = objSchRoot.GetTemporaryListFactory
     
+```
+
+```vbscript
            If ( Not ( objSchTempListFact Is Nothing )) Then
               Set objLCompat_g = objSchTempListFact.CreateListOfObjects
               Set objLGRRComp_g = objSchTempListFact.CreateListOfObjects
            End If
     
+```
+
     
+```vbscript
            If ( Not ( objLCompat_g Is Nothing )  And _
                 Not ( objLGRRComp_g Is Nothing ) ) Then
-    
+```vbscript
               '--------------------------------------------------------------------
               ' Find 2 component instances in the model
               '--------------------------------------------------------------------
+```
+
               Find2ComponentInst objSchRoot
-    
+```vbscript
               '--------------------------------------------------------------------
               ' Route a line connecting its ends to each component
               '--------------------------------------------------------------------
+```
+
               RouteLineBetween2Component objSchRoot
     
+```
+
+```vbscript
            End If
     
+```
+
+```vbscript
         End If '--- If ( Not ( objSchRoot Is Nothing )...
     
+```
+
         strMessage_g = strMessage_g & _
           "--------------------------------------------------------------------" & vbCr
         MsgBox strMessage_g
     
+```vbscript
     End Sub
     
-    
+```
+
+```vbscript
     ' -----------------------------------------------------------------------------
     ' | Find the first symbol used for the input schematic component.
     ' | Input: objSchCompGraph:  the schematic component 
@@ -108,6 +140,9 @@ converted: "2026-05-11T17:31:51.497816"
     ' | Returns: the component image (the symbol instance)
     ' -----------------------------------------------------------------------------
     Private Function GetComponentImage (objSchCompGraphArg As SchCompGraphic) As SchGRRComp
+```
+
+```vbscript
        Dim objSchLSymbols As SchListOfObjects
        If ( Not ( objSchCompGraphArg Is Nothing ) ) Then
           Set objSchLSymbols = objSchCompGraphArg.ListGraphicalImages
@@ -116,7 +151,7 @@ converted: "2026-05-11T17:31:51.497816"
           End If
        End If
     End Function
-    
+```vbscript
     ' -----------------------------------------------------------------------------
     ' | Find the first graphical primitives of an input route.
     ' | Input: objSchRouteGraph:  the schematic route
@@ -124,6 +159,8 @@ converted: "2026-05-11T17:31:51.497816"
     ' | Returns: the route graphic primitives
     ' -----------------------------------------------------------------------------
     Private Function GetRoutePrimitives (objSchRouteGraphArg As SchRouteGraphic) _
+```
+
       As SchGRR
     
        Dim objSchLGRR As SchListOfObjects
@@ -135,7 +172,9 @@ converted: "2026-05-11T17:31:51.497816"
        End If
     End Function
     
-    
+```
+
+```vbscript
     ' -----------------------------------------------------------------------------
     ' | Find a connector that matches the input x-y coordinates.
     ' | Input: dbXArg,dbYArg:  the x-y coordinates of the matching point
@@ -144,14 +183,20 @@ converted: "2026-05-11T17:31:51.497816"
     ' | Returns: the connector handle
     ' -----------------------------------------------------------------------------
     Private Function FindConnectorAtPosition ( dbXArg As Double, dbYArg As Double, _
+```
+
       objSchCntblArg As SchAppConnectable, _
       objSchRootArg As SchematicRoot ) As SchAppConnector
     
+```vbscript
        Dim objLCntr As SchListOfObjects
        Dim objLFilter As CATIASchListOfBSTRs
        Dim objSchRouteGraphic As SchRouteGraphic
        Dim objGRR As SchGRR
     
+```
+
+```vbscript
        If ( Not ( objSchCntblArg Is Nothing ) And _
             Not ( objSchRootArg Is Nothing ) ) Then
           Set objLFilter = Nothing
@@ -165,6 +210,9 @@ converted: "2026-05-11T17:31:51.497816"
           End If
        End If '--- If ( Not ( objSchRoute Is Nothing ) ...
     
+```
+
+```vbscript
        If ( Not ( objLCntr Is Nothing )  And _
              Not ( objGRR Is Nothing ) ) Then
     
@@ -176,7 +224,10 @@ converted: "2026-05-11T17:31:51.497816"
           Dim dbXOut As Double
           Dim dbYOut As Double
     
+```
+
           intNbCntr = objLCntr.Count
+```vbscript
           If (intNbCntr > 0) Then
              For iCntr = 1 To intNbCntr
                Set objCntrLoc = Nothing
@@ -184,10 +235,16 @@ converted: "2026-05-11T17:31:51.497816"
     
                Set objCntrLoc = objLCntr.Item (iCntr,"CATIASchCntrLocation")
     
+```
+
+```vbscript
                If (Not ( objCntrLoc Is Nothing ) ) Then
     
+```
+
                   objCntrLoc.GetPosition objGRR,objLDbOut
     
+```vbscript
                   If ( Not ( objLDbOut Is Nothing ) ) Then
                      IntNbCoord = objLDbOut.Count
                      If (IntNbCoord > 1) Then
@@ -199,8 +256,11 @@ converted: "2026-05-11T17:31:51.497816"
                           Set FindConnectorAtPosition =  objSchRootArg.GetInterface ( _
                              "CATIASchAppConnector", objCntrLoc )
     
+```
+
                           Exit For
     
+```vbscript
                        End If 
                      End If 
                   End If
@@ -209,8 +269,11 @@ converted: "2026-05-11T17:31:51.497816"
           End If '--- If (intNbCntr > 0) ...
        End If '--- If ( Not ( objLCntr Is Nothing ) ...
     
+```
+
+```vbscript
     End Function
-    
+```vbscript
     ' -----------------------------------------------------------------------------
     ' | Find 2 components and their images. The user need to designate specific
     ' | specific component instances by naming them specially.
@@ -222,13 +285,21 @@ converted: "2026-05-11T17:31:51.497816"
     ' |          objLGRRComp_g: a list of component instance image objects
     ' -----------------------------------------------------------------------------
     Private Sub Find2ComponentInst (objSchRootArg As SchematicRoot)
+```
+
     
+```
+
+```vbscript
        If ( objLCompat_g Is Nothing ) Then Exit Sub
        If ( objLGRRComp_g Is Nothing ) Then Exit Sub
     
        Dim objLCompInst As SchListOfObjects
        Dim intNbComp As Integer
     
+```
+
+```vbscript
        If ( Not ( objSchRootArg Is Nothing ) ) Then
           Set objLCompInst = objSchRootArg.GetComponents
           If ( Not ( objLCompInst Is Nothing ) ) Then
@@ -258,7 +329,7 @@ converted: "2026-05-11T17:31:51.497816"
        Set objCompCompatTo = Nothing
        Set objGRRCompTo  = Nothing
        If (Not ( objLCompInst Is Nothing ) ) Then
-    
+```vbscript
           '------------------------------------------------------------------------
           '  Loop through the members in the list and find 2 components that
           '  have "network" as part of the product instance names
@@ -267,19 +338,33 @@ converted: "2026-05-11T17:31:51.497816"
           intStoreIndex = 0
           strTgtFrom = "_Routefrom"
           strTgtTo = "_Routeto"
+```
+
     
+```
+
+```vbscript
           For intIndex = 1 To intNbComp
     
+```
+
             strInstName = ""
             intFound = 0
     
+```vbscript
             Set objCompCompat = objLCompInst.Item (intIndex,"CATIASchCompatible")
     
+```
+
+```vbscript
             If ( Not ( objCompCompat Is Nothing ) ) Then
     
                Set objPrd = objSchRootArg.GetInterface ( _
                  "CATIAProduct", objCompCompat)
     
+```
+
+```vbscript
                If ( Not ( objPrd Is Nothing ) ) Then
                   strInstName = objPrd.Name
                   intFound  = Instr (1, strInstName, strTgtFrom, 1) 
@@ -291,6 +376,9 @@ converted: "2026-05-11T17:31:51.497816"
                   End If   
                End If 
     
+```
+
+```vbscript
                If ( intFound > 0 ) Then
     
                  Dim ObjSchCompGraph As SchCompGraphic
@@ -298,6 +386,9 @@ converted: "2026-05-11T17:31:51.497816"
                    "CATIASchCompGraphic",objCompCompat)
                  Set objGRRComp = GetComponentImage (objSchCompGraph)
     
+```
+
+```vbscript
                  If ( ( Not objGRRComp Is Nothing ) ) Then
                     If ( intStoreIndex = 1 ) Then
                       Set objCompCompatFrom = objCompCompat
@@ -310,32 +401,56 @@ converted: "2026-05-11T17:31:51.497816"
                  End If 
                End If
     
+```
+
+```vbscript
                If ( intNbFound > 1 ) Then  Exit For           
     
+```
+
+```vbscript
             End If '--- If ( Not ( objCompCompat Is Nothing ) ...
     
+```
+
           Next
     
+```vbscript
           If ( Not ( objCompCompatFrom Is Nothing ) And _
                Not ( objGRRCompFrom Is Nothing ) ) Then
     
+```
+
              objLCompat_g.Append objCompCompatFrom
              objLGRRComp_g.Append objGRRCompFrom
     
+```vbscript
           End If 
     
+```
+
+```vbscript
           If ( Not ( objCompCompatTo Is Nothing ) And _
                Not ( objGRRCompTo Is Nothing ) ) Then
     
+```
+
              objLCompat_g.Append objCompCompatTo
              objLGRRComp_g.Append objGRRCompTo
     
+```vbscript
           End If 
     
+```
+
+```vbscript
        End If '--- If (Not ( objLCompInst Is Nothing ) ...
     
+```
+
+```vbscript
     End Sub
-    
+```vbscript
     ' -----------------------------------------------------------------------------
     ' | Route a line from member 1 in objLCompat_g to member 2 in objLCompat_g. 
     ' | These members are specific interface handle on 2 component instances.
@@ -351,10 +466,15 @@ converted: "2026-05-11T17:31:51.497816"
        Dim intNbComp As Integer
        Dim intNbGRR As Integer
        Dim intIndex As Integer
+```
+
     
+```
+
        intNbComp = objLCompat_g.Count
        intNbGRR = objLGRRComp_g.Count
     
+```vbscript
        If ( intNbComp <> 2 ) Then Exit Sub
        If ( intNbComp <> intNbGRR ) Then Exit Sub
        If ( objSchRootArg Is Nothing ) Then Exit Sub
@@ -384,6 +504,9 @@ converted: "2026-05-11T17:31:51.497816"
        Dim objPrd As Product
        Dim strName As String
     
+```
+
+```vbscript
        For intIndex = 1 To 2
           Set objCompCompat = Nothing
           Set objGRRComp = Nothing
@@ -406,22 +529,33 @@ converted: "2026-05-11T17:31:51.497816"
              End If 
           End If
     
+```
+
+```vbscript
           If ( Not ( objGRRComp Is Nothing ) And _
                Not ( objCompCompat Is Nothing ) ) Then
-    
+```vbscript
              '---------------------------------------------------------------------
              '  IsTargetOKRoute returns a list of compatible connectors
              '  on the target component is the component is compatible to
              '  to connected to the start point of the route.
              '---------------------------------------------------------------------
+```
+
              objCompCompat.IsTargetOKForRoute "CAASCHEDUConnector", _
                objGRRComp, objLCntrs, bCompatible
     
              Set objSchGRR = objSchRootArg.GetInterface ("CATIASchGRR",objGRRComp) 
     
+```
+
+```vbscript
              If ( Not ( objLCntrs Is Nothing ) And  _
                   Not ( objSchGRR Is Nothing ) And bCompatible ) Then
     
+```
+
+```vbscript
                 If ( intIndex = 1 ) Then
                    db2SelectPt(0) = 83.75
                    db2SelectPt(1) = 81.25
@@ -429,7 +563,7 @@ converted: "2026-05-11T17:31:51.497816"
                    db2SelectPt(0) = 130.0
                    db2SelectPt(1) = 100.0
                 End If 
-    
+```vbscript
                 '------------------------------------------------------------------
                 '  GetBestCntrForRoute returns a connector from
                 '  the output list that is closest 
@@ -437,14 +571,22 @@ converted: "2026-05-11T17:31:51.497816"
                 '------------------------------------------------------------------
                 Set objLDbOut = Nothing
                 Set objAppCntrBest = Nothing
+```
+
                 objCompCompat.GetBestCntrForRoute db2SelectPt, _
                   objSchGRR, objLCntrs, objLDbOut, objAppCntrBest
        
+```
+
                 IntNbCoord = objLDbOut.Count
+```vbscript
                 If (IntNbCoord > 1) Then
                   db2CntrPt(0) = objLDbOut.Item(1)
                   db2CntrPt(1) = objLDbOut.Item(2)
     
+```
+
+```vbscript
                   If ( intIndex = 1 ) Then
                      db2CntrPt1(0) =  db2CntrPt(0)
                      db2CntrPt1(1) =  db2CntrPt(1)
@@ -464,6 +606,9 @@ converted: "2026-05-11T17:31:51.497816"
                   End If 
                 End If '--- If (IntNbCoord > 1) Then
     
+```
+
+```vbscript
              End If '--- If ( Not ( objLCntrs Is Nothing ) And  _
           End If '--- If ( Not ( objGRRComp Is Nothing ) ...
        Next '--- For intIndex
@@ -473,13 +618,18 @@ converted: "2026-05-11T17:31:51.497816"
        Dim strLogLineID As String
        Dim dbPtArray(8) As CATSafeArrayVariant
     
+```
+
     
+```vbscript
        Dim objAppCntrRouteBest1 As SchAppConnector
        Dim objAppCntrRouteBest2 As SchAppConnector
     
        Dim objAppConnection As SchAppConnection
        Dim objRouteCntbl As SchAppConnectable
     
+```
+
        dbPtArray(0) = db2CntrPt1(0)
        dbPtArray(1) = db2CntrPt1(1)
     
@@ -491,80 +641,121 @@ converted: "2026-05-11T17:31:51.497816"
     
        dbPtArray(6) = db2CntrPt2(0)
        dbPtArray(7) = db2CntrPt2(1)
-    
+```vbscript
        '---------------------------------------------------------------------------
        ' Ask application to create a route reference
        '---------------------------------------------------------------------------
        'Logical line concept not supported in sample application
        'So just send in a null string.
        'strLogLineID = ""
+```
+
        objAppObjFact.AppCreateRoute "CAASCHEDUFuncString", _
          objAppRouteRef, strLogLineID      
     
+```vbscript
        If ( Not ( objAppRouteRef Is Nothing ) ) Then
          strMessage_g = strMessage_g &  _
            "application reference route created" & vbCr
     
+```
+
          objSchBaseFact.CreateSchRouteByPoints objAppRouteRef, _
            dbPtArray, objSchRoute  
     
+```vbscript
          If ( Not ( objSchRoute Is Nothing ) ) Then
            strMessage_g = strMessage_g &  "schematic route created" & vbCr
     
            Set objRouteCntbl = objSchRootArg.GetInterface ( _
              "CATIASchAppConnectable",objSchRoute)
-    
+```vbscript
            '-----------------------------------------------------------------------
            ' Find the connector of the route matching the 
            ' component connector position at each end
            '-----------------------------------------------------------------------
     
            Set objAppCntrRouteBest1 = FindConnectorAtPosition ( _
+```
+
              db2CntrPt1(0), db2CntrPt1(1), objRouteCntbl, objSchRootArg)
     
            Set objAppCntrRouteBest2 = FindConnectorAtPosition ( _
              db2CntrPt2(0), db2CntrPt2(1), objRouteCntbl, objSchRootArg)
-    
+```vbscript
            '-----------------------------------------------------------------------
            ' Connect the route to the 2 components
            '-----------------------------------------------------------------------
            If ( Not (objAppCntrRouteBest1 Is Nothing ) And _
+```
+
                 Not (objAppCntrCompBest1 Is Nothing ) ) Then
-    
+```vbscript
               '--------------------------------------------------------------------
               ' Connect start point of route to "*_from" component
               '--------------------------------------------------------------------
               Set objAppConnection = objAppCntrCompBest1.AppConnect _
                 (objAppCntrRouteBest1)
+```
+
     
+```
+
+```vbscript
               If ( Not ( objAppConnection Is Nothing ) ) Then
                  strMessage_g = strMessage_g & "route has been connected"
                  strMessage_g = strMessage_g & _
                    " to _from component successfully" & vbCr
               End If 
     
+```
+
+```vbscript
            End If '--- If ( Not (objAppCntrRouteBest Is Nothing ) ...
     
+```
+
+```vbscript
            If ( Not (objAppCntrRouteBest2 Is Nothing ) And _
                 Not (objAppCntrCompBest2 Is Nothing ) ) Then
-    
+```vbscript
               '--------------------------------------------------------------------
               ' Connect end point of route to "*_to" component
               '--------------------------------------------------------------------
               Set objAppConnection = objAppCntrCompBest2.AppConnect _
                 (objAppCntrRouteBest2)
+```
+
     
+```
+
+```vbscript
               If ( Not ( objAppConnection Is Nothing ) ) Then
                  strMessage_g = strMessage_g & "route has been connected"
                  strMessage_g = strMessage_g & _
                    " to _to component successfully" & vbCr
               End If 
     
+```
+
+```vbscript
            End If '--- If ( Not (objAppCntrRouteBest Is Nothing ) ...
     
+```
+
+```vbscript
          End If '--- If ( Not ( objSchRoute Is Nothing )...
     
+```
+
+```vbscript
        End If '--- If ( Not ( objAppCompRef Is Nothing ) ...
     
+```
+
+```vbscript
     End Sub
     
+```
+
+```

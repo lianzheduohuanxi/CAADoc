@@ -1,18 +1,18 @@
 ---
 title: "CAAPriCreateEdgeFillet.CATScript"
-category: "general"
+category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CAAScdPriUseCases", "CATIA", "CAAPriCreateEdgeFillet"]
-source_file: "Doc\online\CAAScdPriUseCases\CAAPriCreateEdgeFilletSource.htm"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriCreateEdgeFilletSource.md"
 converted: "2026-05-11T17:31:51.219986"
 ---
 
-
     Option Explicit
     ' COPYRIGHT DASSAULT SYSTEMES 2000
+```vbscript
     Dim Language As String
     Language="VBSCRIPT"
-    
+```vbscript
     ' ****************************************************************************
     '   Purpose     :  Create two EdgeFillet on the vertical edges of a pad
     '                  and on the top and bottom faces
@@ -22,7 +22,12 @@ converted: "2026-05-11T17:31:51.219986"
     '   Locales     :  English
     '   CATIA Level :  V5R6
     '*****************************************************************************
+```
+
     
+```
+
+```vbscript
     Sub CATMain()
     
         Dim oPartDocument As PartDocument
@@ -30,15 +35,13 @@ converted: "2026-05-11T17:31:51.219986"
     
         Dim oPart As Part
         Set oPart =  CATIA.ActiveDocument.Part
-    
+```vbscript
         ' Retrieve the part body of the document containing the pad to be used
         Dim oBody As Body
         Set oBody = oPart.Bodies.Item  ( "MechanicalTool.1" ) 
-    
         ' Retrieve the pad of the body
         Dim oPad As Pad
         Set oPad = oBody.Shapes.Item  ( "Pad.1" )
-    
         ' Retrieve the vertical edges of the pad to be filleted
         Dim oEdge1 As Reference
         Set oEdge1 = oPart.CreateReferenceFromBRepName  ( "REdge:(Edge:(Face:(Brp:(Pad.1;0:(Brp:(Sketch.1;1)));None:());Face:(Brp:(Pad.1;0:(Brp:(Sketch.1;2)));None:());None:(Limits1:();Limits2:()));WithTemporaryBody;WithoutBuildError;WithSelectingFeatureSupport)", oPad ) 
@@ -51,45 +54,45 @@ converted: "2026-05-11T17:31:51.219986"
     
         Dim oEdge4 As Reference
         Set oEdge4 = oPart.CreateReferenceFromBRepName  ( "REdge:(Edge:(Face:(Brp:(Pad.1;0:(Brp:(Sketch.1;4)));None:());Face:(Brp:(Pad.1;0:(Brp:(Sketch.1;1)));None:());None:(Limits1:();Limits2:()));WithTemporaryBody;WithoutBuildError;WithSelectingFeatureSupport)", oPad ) 
-    
         ' Define the fillet to be created with the first edge
         Dim oEdgeFillet1 As ConstRadEdgeFillet
         Set oEdgeFillet1 = oPart.ShapeFactory.AddNewEdgeFilletWithConstantRadius  ( oEdge1, 1, 5.000000 ) 
-    
         ' Add the others edges to be filleted 
+```
+
         oEdgeFillet1.AddObjectToFillet oEdge2
         oEdgeFillet1.AddObjectToFillet oEdge3
         oEdgeFillet1.AddObjectToFillet oEdge4
-    
         ' Define the fillet radius to 5 mm
         oEdgeFillet1.Radius.Value = 5.000000
-    
         ' Define the fillet to be propagated to all the tangent contiguous edges
         oEdgeFillet1.EdgePropagation = 1
-    
         ' Update the document
         oPart.Update
-    
+```vbscript
         ' Retrieve the top face of the pad to be filleted
         Dim oTopFace As Reference
         Set oTopFace = oPart.CreateReferenceFromBRepName  ( "RSur:(Face:(Brp:(Pad.1;2);None:());WithTemporaryBody;WithoutBuildError;WithSelectingFeatureSupport)", oEdgeFillet1 ) 
-    
         ' Retrieve the bottom face of the pad to be filleted 
         Dim oBottomFace As Reference
         Set oBottomFace = oPart.CreateReferenceFromBRepName  ( "RSur:(Face:(Brp:(Pad.1;1);None:());WithTemporaryBody;WithoutBuildError;WithSelectingFeatureSupport)", oEdgeFillet1 ) 
-    
         ' Define the fillet to be created with the first face
         Dim oEdgeFillet2 As ConstRadEdgeFillet
         Set oEdgeFillet2 = oPart.ShapeFactory.AddNewEdgeFilletWithConstantRadius  ( oTopFace, 1, 15.000000 )
-    
         ' Define the fillet radius to 5 mm
+```
+
         oEdgeFillet2.Radius.Value = 5.000000
-    
         ' Add the other face
         oEdgeFillet2.AddObjectToFillet oBottomFace
-    
         ' Update the document
         oPart.Update
     
+```
+
+```vbscript
     End Sub
     
+```
+
+```

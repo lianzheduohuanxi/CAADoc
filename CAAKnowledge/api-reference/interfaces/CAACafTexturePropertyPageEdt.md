@@ -2,42 +2,24 @@
 title: "CAACafTexturePropertyPageEdt"
 type: "interface"
 module: "CAACATIAApplicationFrm"
+category: "framework"
 base: "CATEditor"
+inheritance_chain: "CAACafTexturePropertyPageEdt → CATEditor"
 method_count: 4
 visibility: "local"
+has_tie_binding: false
 verified: true
 ---
-
 # CAACafTexturePropertyPageEdt
 
 **基类**: CATEditor  
+**继承链**: CAACafTexturePropertyPageEdt → CATEditor  
 **模块**: CAACATIAApplicationFrm  
+**分类**: framework  
 **可见性**: local  
 **方法数**: 4
 
 > System framework
-
-## 方法列表
-
-### GetEditorTitle
-```cpp
-CATUnicodeString GetEditorTitle();
-```
-
-### SetEditorSize
-```cpp
-void SetEditorSize(int & oSize);
-```
-
-### BuildEditor
-```cpp
-void BuildEditor(CATEditorPage * iEditor);
-```
-
-### CloseWindowFromEditor
-```cpp
-void CloseWindowFromEditor();
-```
 
 ## 依赖
 

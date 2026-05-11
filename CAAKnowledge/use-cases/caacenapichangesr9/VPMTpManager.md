@@ -1,9 +1,10 @@
 ---
 title: "VPMTpManager Modifications"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR9"
+version: "V5R9"
 tags: []
-source_file: "Doc\online\CAACenAPIChangesR9\VPMTpManager.htm"
+source_file: "Doc/online/CAACenAPIChangesR9/VPMTpManager.md"
 converted: "2026-05-11T17:33:53.028350"
 ---
 

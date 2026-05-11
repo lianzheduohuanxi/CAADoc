@@ -3,18 +3,15 @@ title: "Saving and Restoring the Dialog Box State"
 category: "use case"
 module: "CAADlgUseCases"
 tags: ["CAADlgDemoWindow", "CAADlgDialogDemonstrator", "CATISpecObject", "CAADlgFrameReplace", "CATInteractiveApplication", "CAADlgDemoApplication", "CAADialog", "CAADlgFrameReplaceDlg"]
-source_file: "Doc\online\CAADlgUseCases\CAADlgSampleSettings.htm"
+source_file: "Doc/online/CAADlgUseCases/CAADlgSampleSettings.md"
 converted: "2026-05-11T17:17:55.997189"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## User Interface - Dialogs
 
 | 
-
 ### Saving and Restoring the Dialog Box State
 
 How to keep and retrieve the dialog object values   
@@ -22,7 +19,6 @@ How to keep and retrieve the dialog object values 
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to save parameters so that one can find the Dialog box in the same state that it was before its closing. 
@@ -36,18 +32,13 @@ This article shows how to save parameters so that one can find the Dialog box in
   * **In Short**
   * **References**
 
-
-
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show you how to use a setting file and repository [1] to store and retrieve the values of Dialog Objects. The setting repository being the memory copy of a setting file. [Top]
-
 ### The CAADlgFrameReplace Use Case
 
 CAADlgFrameReplace is a use case of the CAADialog.edu framework that illustrates Dialog and System framework capabilities. [Top]
-
 #### What Does CAADlgFrameReplace Do
 
 CAADlgFrameReplace simulates the  "Point Definition" V5 Dialog box. It creates the "Frame Replacement Demonstrator" Dialog box that you can see just below. The end user can select the mode of creation for the point: by coordinate values, by the center of a circle or between two points [2].   |  | _Fig. 1a_ _:Coordinates_  
@@ -65,19 +56,14 @@ When the end user clicks **OK** , the following values are kept:
   * The "`Point Type`" ( an integer )
   * The point coordinates (`X, Y, Z`)  (three double)
 
-
-
 The others values are not kept, for the following reasons:
 
   * `Circle`, `P1` and `P2` : The values, in a V5 context, will be a string, the _GetDisplayName_ of a _CATISpecObject._ You can save a string, but it is not possible to save a _CATISpecObject_ instance, so there is no need to keep the value of these fields.
   * `Ratio` : The Dialog object is a _CATDlgEditor_ class. It is the only one Dialog object which natively keeps the last values. You retrieve them with the up and down arrows. 
 
-
-
 When the end user clicks **Cancel** or **closes** the window, the current values of the Dialog objects are not kept. 
 
 [Top]
-
 #### How to Launch CAADlgFrameReplace
 
 To launch the use case, you will need to set up the build time environment, then compile CAADlgDialogDemonstrator along with its prerequisites, set up the run time environment, and then execute the use case [3].
@@ -106,10 +92,7 @@ When the `CAADlgDialogDemonstrator` application is launched:
   * On the **Tabulation**   menu click **Frame Replacement  **
   * On the**File** menu click**Exit**
 
-
-
 [Top]
-
 #### Where to Find the CAADlgFrameReplace Code
 
 The CAADlgFrameReplace use case is made of several classes located in the CAADlgDialogDemonstrator.m module of the CAADialog.edu framework:
@@ -126,10 +109,7 @@ In the LocalInterfaces and src directory, you will find the following files:
   * CAADlgDemoWindow.h/CAADlgDemoWindow.cpp : The _CATDlgDocument_ definition.
   * CAADlgFrameReplaceDlg.h/CAADlgFrameReplaceDlg.cpp : The "Frame Replacement Demonstrator" dialog box definition
 
-
-
 [Top]
-
 ### Step-by-Step
 
 There are four logical steps in the use case:
@@ -139,14 +119,10 @@ There are four logical steps in the use case:
   3. Retrieving the Last Values
   4. Saving the Values
 
-
-
 [Top]
-
 #### Creating the Class Header
 
 The main contents of the CAADlgFrameReplaceDlg.h file is the following:
-    
     
     #include "CATDlgDialog.h"   // To derive from
     ...
@@ -187,8 +163,6 @@ where
   * The `CloseWindow` method is a callback method which is called when the end user pushes the Cancel Button or closes the window.
   * `_pSettingFrameReplace` is a _CATSettingRepository_ class pointer. It will be initialized in the constructor class. You should not release this pointer. 
 
-
-
 #### Retrieving the Setting Repository
 
 In the _CAADlgFrameReplaceDlg_ class constructor you retrieve a setting repository pointer thanks to the static `GetRepository` method. The first and unique argument of this method is the name of the setting file. 
@@ -218,7 +192,6 @@ In the _CAADlgFrameReplaceDlg_ class destructor you have just to set NULL the `
 ---  
   
 [Top]
-
 #### Retrieving the Last Values
 
 The `Build` method can be divided in three parts:
@@ -234,11 +207,8 @@ The `Build` method can be divided in three parts:
     }  
   
 ---  
-  
 ##### a/ Creating the Dialog objects and Arranging them
-
 ##### This part is described in the use case about the tabulation layout [2].
-
 ##### b/ Retrieving the Initial Values
 
 To retrieve a value in a setting repository use the `ReadSetting` method. The arguments of this method are
@@ -246,13 +216,13 @@ To retrieve a value in a setting repository use the `ReadSetting` method. The ar
   * The name of the attribute
   * The value of the attribute
 
-
-
+```vbscript
 For the use case:
+
+```
 
   * `XCoord`, `YCoord` and `ZCoord` are the names of the attributes to initialize the X, Y and Z spinner respectively. The value of each attribute is a double
   * `ComboPointType `is the name of the attribute to initialize the first selected element in the combo list. The value of the attribute is an integer.
-
 
     
     
@@ -279,9 +249,7 @@ For the use case:
     }  
   
 ---  
-  
 ##### Where `_pSpinnerX, _pSpinnerY` and` _pSpinnerZ `are _CATDlgSpinner_ class instances created in the first part of the `Build` method, but not explained in this article. `_pComboPointType` is a _CATDlgCombo_ class instance created in the first part of the `Build `method, but also not explained in this article. 
-
 ##### c/ Defining the Callbacks
     
     
@@ -304,15 +272,12 @@ For the use case:
 ---  
   
 [Top]
-
 #### Saving the Values
 
 When the end user clicks OK, the dialog box must be closed. The current values of the Dialog objects should be saved. To save the values in the setting repository use the `WriteSetting` method. The arguments of this method are
 
   * The name of the attribute
   * The value of the attribute
-
-
 
  
     
@@ -365,7 +330,6 @@ When the end user clicks Cancel or closes the window, there is nothing to save. 
 [Top]
 
 * * *
-
 ### In Short
 
 This use case explains how to use the setting file and repository to save and restore the Dialog object values. 
@@ -373,17 +337,15 @@ This use case explains how to use the setting file and repository to save and re
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Setting Repositories and Attributes](../CAASysTechArticles/CAASysSettingRepositories.htm)  
+[1] | [Setting Repositories and Attributes](../CAASysTechArticles/CAASysSettingRepositories.md)  
 ---|---  
-[2] | [Creating Dialog Boxes Automatically Resizable](CAADlgSampleTabulation.htm)  
-[3] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[2] | [Creating Dialog Boxes Automatically Resizable](CAADlgSampleTabulation.md)  
+[3] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Fev 2003] | Document created  

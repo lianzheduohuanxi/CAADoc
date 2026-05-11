@@ -1,20 +1,17 @@
 ---
 title: "The Mesh Parts and their Attributes"
-category: "general"
+category: "use-case"
 module: "CAAScdAniTechArticles"
 tags: []
-source_file: "Doc\online\CAAScdAniTechArticles\CAAAniMeshPartsAndAttributes.htm"
+source_file: "Doc/online/CAAScdAniTechArticles/CAAAniMeshPartsAndAttributes.md"
 converted: "2026-05-11T17:31:51.914774"
 ---
-
 # Analysis Solution
 
 | 
-
 ## Analysis Modeler
 
 | 
-
 ### The Mesh Parts and their Attributes
 
 _All the mesh parts you can use_  
@@ -22,7 +19,6 @@ _All the mesh parts you can use_
 Technical Article  
   
 * * *
-
 ### Abstract
 
 This article describes the Mesh Parts and their Attributes available in Advanced Meshing Tools Workbench.  Names of the Mesh parts and their attributes are listed. These names are required to create the mesh part and also to assign values to its attributes. The type of attributes their legal values and their meaning is also explained. Following is the list of Mesh Parts
@@ -55,8 +51,7 @@ This article describes the Mesh Parts and their Attributes available in Advanced
 * * *
 
 Top]
-
-####  ![](images/I_MshTetP2.gif)Octree Tetrahedron Mesh                                    [_use case_   ](../CAAScdAniUseCases/CAAAniMeshOctTetra.htm) 
+####  ![](images/I_MshTetP2.gif)Octree Tetrahedron Mesh                                    [_use case_   ](../CAAScdAniUseCases/CAAAniMeshOctTetra.md) 
 
 Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning  
 ---|---|---|---|---  
@@ -89,8 +84,7 @@ MSHNumberOdEdges | Double |   | Defines the number of mesh edges
 ConnectorList |   |   | Defines the support of the local specification  
   
 [Top]
-
-####  ![](images/I_MshGHS3DP2.gif)Tetrahedron Filler Mesh                                    _[_use case_](../CAAScdAniUseCases/CAAAniMeshTetraFiller.htm)_
+####  ![](images/I_MshGHS3DP2.gif)Tetrahedron Filler Mesh                                    _[_use case_](../CAAScdAniUseCases/CAAAniMeshTetraFiller.md)_
 
 Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning  
 ---|---|---|---|---  
@@ -98,8 +92,7 @@ MHSPartGHS3D | ElementOrder  | Integer | 1,2 | Specifies the type of element lin
   | Propagation | Double | >1 | Factor which lets you dilute mesh elements inside solid   
   
  
-
-####  ![](images/I_MshSweep3DP2.gif)**Sweep 3D Mesh                                     [_use case_](../CAAScdAniUseCases/CAAAniMeshSweep3D.htm)**
+####  ![](images/I_MshSweep3DP2.gif)**Sweep 3D Mesh                                     [_use case_](../CAAScdAniUseCases/CAAAniMeshSweep3D.md)**
 
 Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning  
 ---|---|---|---|---  
@@ -116,8 +109,7 @@ MSHPartSweep3D |  ElementOrder   | Integer | 1,2 | Specifies the type of elem
   | Bottom |   |   | This geometrical support specifies the bottom face  
   
 [Top]
-
-####  ![](images/I_MshAdvancedSurfMesherP2.gif)**Advanced Surface Mesh                         [_use case_](../CAAScdAniUseCases/CAAAniMeshAdvSurf.htm)**
+####  ![](images/I_MshAdvancedSurfMesherP2.gif)**Advanced Surface Mesh                         [_use case_](../CAAScdAniUseCases/CAAAniMeshAdvSurf.md)**
 
 Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning  
 ---|---|---|---|---  
@@ -193,8 +185,7 @@ Size | Double |   | Defines the required mesh size
 Supports |   |   | Must represent the connex set of faces  
   
 [Top]
-
-####  ![](images/I_MshBasicSurfMesherP2.gif)**Surface Mesh                                            [_use case_](../CAAScdAniUseCases/CAAAniMeshBasicSurf.htm)**
+####  ![](images/I_MshBasicSurfMesherP2.gif)**Surface Mesh                                            [_use case_](../CAAScdAniUseCases/CAAAniMeshBasicSurf.md)**
 
 Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning  
 ---|---|---|---|---  
@@ -227,8 +218,7 @@ Tolerance | Double |   | The approximate distance of the point from the specifi
 Project | Boolean | 0,1 | Specifies whether the point is to be projected on the geometry(1) or not (0)  
   
 [Top]
-
-#### ![](images/I_MshTr3P2.gif)**Octree Triangle Mesh                                     [_use case_](../CAAScdAniUseCases/CAAAniMeshOctTriangle.htm)**
+#### ![](images/I_MshTr3P2.gif)**Octree Triangle Mesh                                     [_use case_](../CAAScdAniUseCases/CAAAniMeshOctTriangle.md)**
 
 Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning  
 ---|---|---|---|---  
@@ -262,8 +252,7 @@ MSHNumberOdEdges | Double |   | Defines the number of mesh edges
 ConnectorList |   |   | Defines the support of the local specification  
   
 [Top]
-
-#### ![](images/I_MshBarP2.gif)**Beam Mesh                                                 [_use case_](../CAAScdAniUseCases/CAAAniMesh1D.htm)**
+#### ![](images/I_MshBarP2.gif)**Beam Mesh                                                 [_use case_](../CAAScdAniUseCases/CAAAniMesh1D.md)**
 
 Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning  
 ---|---|---|---|---  
@@ -283,8 +272,7 @@ Project | Boolean | 0,1 | Specifies whether the point is to be projected on the 
  
 
 [Top]
-
-#### ![](images/I_MshTranslateP2.gif)**Translation Mesh                                         [_use case_](../CAAScdAniUseCases/CAAAniMeshTranslation.htm)**
+#### ![](images/I_MshTranslateP2.gif)**Translation Mesh                                         [_use case_](../CAAScdAniUseCases/CAAAniMeshTranslation.md)**
 
 Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning  
 ---|---|---|---|---  
@@ -298,7 +286,7 @@ MSHPartTranslation | Direction | ConnectorList |   | Specifies the direction of
   
 [Top]
 
-![](images/I_MshRotateP2.gif)**Rotation Mesh                                             [_use case_](../CAAScdAniUseCases/CAAAniMeshRotation.htm)**
+![](images/I_MshRotateP2.gif)**Rotation Mesh                                             [_use case_](../CAAScdAniUseCases/CAAAniMeshRotation.md)**
 
 Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning  
 ---|---|---|---|---  
@@ -314,7 +302,7 @@ MSHPartRotation | Direction | ConnectorList |   | Specifies the direction of tr
 
  
 
-![](images/I_MshSymmetryP2.gif)**Symmetry Mesh                                         [_use case_](../CAAScdAniUseCases/CAAAniMeshSymmetry.htm)**
+![](images/I_MshSymmetryP2.gif)**Symmetry Mesh                                         [_use case_](../CAAScdAniUseCases/CAAAniMeshSymmetry.md)**
 
 Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning  
 ---|---|---|---|---  
@@ -328,7 +316,7 @@ MSHPartSymmetry | Direction | ConnectorList |   | Lets you select the plane of 
 
  
 
-![](images/I_MshExtrTranslationP2.gif)**Extrude with Translation                                 [_use case_](../CAAScdAniUseCases/CAAAniMeshExtrudeTrans.htm)**
+![](images/I_MshExtrTranslationP2.gif)**Extrude with Translation                                 [_use case_](../CAAScdAniUseCases/CAAAniMeshExtrudeTrans.md)**
 
 Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning  
 ---|---|---|---|---  
@@ -348,7 +336,7 @@ RelativeSag | Double |   | Relative sag value
   
 [Top]
 
-![](images/I_MshExtrRotationP2.gif)**Extrude with Rotation                                       [_use case_](../CAAScdAniUseCases/CAAAniMeshExtrudeRot.htm)**
+![](images/I_MshExtrRotationP2.gif)**Extrude with Rotation                                       [_use case_](../CAAScdAniUseCases/CAAAniMeshExtrudeRot.md)**
 
 Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning  
 ---|---|---|---|---  
@@ -372,7 +360,7 @@ RelativeSag | Double |   | Relative sag value
 
  
 
-![](images/I_MshExtrSymmetryP2.gif)**Extrude with Symmetry                                 [_use case_](../CAAScdAniUseCases/CAAAniMeshExtrudeSymm.htm)**
+![](images/I_MshExtrSymmetryP2.gif)**Extrude with Symmetry                                 [_use case_](../CAAScdAniUseCases/CAAAniMeshExtrudeSymm.md)**
 
 Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning  
 ---|---|---|---|---  
@@ -392,7 +380,7 @@ RelativeSag | Double |   | Relative sag value
 
  
 
-![](images/I_MshExtrSpineP2.gif)**Extrude along a Spine                                 [_use case_](../CAAScdAniUseCases/CAAAniMeshExtrudeSpine.htm)**
+![](images/I_MshExtrSpineP2.gif)**Extrude along a Spine                                 [_use case_](../CAAScdAniUseCases/CAAAniMeshExtrudeSpine.md)**
 
 Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning  
 ---|---|---|---|---  
@@ -416,7 +404,7 @@ RelativeSag | Double |   | Relative sag value
 
  
 
-![](images/I_MshCoatingP2.gif)**Coating 1D Mesh                                                             [_use case_](../CAAScdAniUseCases/CAAAniMeshCoating1D.htm)**
+![](images/I_MshCoatingP2.gif)**Coating 1D Mesh                                                             [_use case_](../CAAScdAniUseCases/CAAAniMeshCoating1D.md)**
 
 Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning  
 ---|---|---|---|---  
@@ -429,7 +417,7 @@ MSHCoatingLocalSpecification | ConnectorList |   |   | Specifies the edges you
 
  
 
-![](images/I_MshCoating2DP2.gif)**Coating 2D Mesh                                                             [_use case_](../CAAScdAniUseCases/CAAAniMeshCoating2D.htm)**
+![](images/I_MshCoating2DP2.gif)**Coating 2D Mesh                                                             [_use case_](../CAAScdAniUseCases/CAAAniMeshCoating2D.md)**
 
 Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning  
 ---|---|---|---|---  
@@ -442,7 +430,7 @@ MSHCoatingLocalSpecification | ConnectorList |   |   | Specifies the faces you
 
  
 
-![](images/I_MshWeldSpotP2.gif)**Spot Welding Connection Mesh                             [_use case_](../CAAScdAniUseCases/CAAAniMeshSpotWelding.htm)**
+![](images/I_MshWeldSpotP2.gif)**Spot Welding Connection Mesh                             [_use case_](../CAAScdAniUseCases/CAAAniMeshSpotWelding.md)**
 
 Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning  
 ---|---|---|---|---  
@@ -456,7 +444,7 @@ MSHPartConnWeldSpot | MiddleCombination | Integer |   | Decides how the connect
 
  
 
-![](images/I_MshWeldSeamP2.gif)**Seam Welding Connection Mesh                                 [_use case_](../CAAScdAniUseCases/CAAAniMeshSeamWelding.htm)**
+![](images/I_MshWeldSeamP2.gif)**Seam Welding Connection Mesh                                 [_use case_](../CAAScdAniUseCases/CAAAniMeshSeamWelding.md)**
 
 Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning  
 ---|---|---|---|---  
@@ -469,7 +457,7 @@ MSHPartConnWeldSeam | MiddleCombination | Integer  |   | Decides how the conne
   
 [Top]
 
-![](images/I_MshWeldSurfP2.gif)**Surface Welding Connection Mesh                             [_use case_](../CAAScdAniUseCases/CAAAniMeshSurfaceWelding.htm)**
+![](images/I_MshWeldSurfP2.gif)**Surface Welding Connection Mesh                             [_use case_](../CAAScdAniUseCases/CAAAniMeshSurfaceWelding.md)**
 
 Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning  
 ---|---|---|---|---  
@@ -482,7 +470,7 @@ MSHPartConnWeldSurf | MaximalGap | Double |   | Specifies the radius value of a
 
  
 
-![](images/I_MshPointPointP2.gif)**Nodes to Nodes Connection Mesh                             _[ _use case_](../CAAScdAniUseCases/CAAAniMeshNodesToNodesConnection.htm)_**
+![](images/I_MshPointPointP2.gif)**Nodes to Nodes Connection Mesh                             _[ _use case_](../CAAScdAniUseCases/CAAAniMeshNodesToNodesConnection.md)_**
 
 Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning  
 ---|---|---|---|---  
@@ -494,7 +482,7 @@ MSHPartConnPointPoint | MiddleCombination | Integer | 13, 12 | How the connectio
 
  
 
-![](images/I_MshHalfPointP2.gif)**Node Interface Mesh                                                 [_use case_](../CAAScdAniUseCases/CAAAniMeshNodesInterface.htm)**
+![](images/I_MshHalfPointP2.gif)**Node Interface Mesh                                                 [_use case_](../CAAScdAniUseCases/CAAAniMeshNodesInterface.md)**
 
 Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning  
 ---|---|---|---|---  
@@ -513,7 +501,6 @@ Mesh Part Name | Attributes Name | Value Type | Legal Values | Meaning
 [Top]
 
 * * *
-
 ### History
 
 Version: **1** [Mar 2001] | Document created  

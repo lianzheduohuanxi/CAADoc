@@ -1,9 +1,10 @@
 ---
 title: "CATSchPlatformModeler Framework Modifications in V5R14"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR14"
+version: "V5R14"
 tags: []
-source_file: "Doc\online\CAACenAPIChangesR14\CATSchPlatformModeler.htm"
+source_file: "Doc/online/CAACenAPIChangesR14/CATSchPlatformModeler.md"
 converted: "2026-05-11T17:33:50.865800"
 ---
 

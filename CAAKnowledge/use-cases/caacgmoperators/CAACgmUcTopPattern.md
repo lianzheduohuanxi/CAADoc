@@ -3,7 +3,7 @@ title: "Creating a Pattern"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsPattern", "CAAGMOperatorsInterfaces", "CATICGMTopPattern", "CATICGMSolidCylinder"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcTopPattern.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopPattern.md"
 converted: "2026-05-11T17:33:49.266941"
 ---
 
@@ -15,7 +15,7 @@ Abstract A pattern is a set of operations repeated by applying a transformation 
     * Use Case Description
     * References  
 ---  
-Operator to be Used To create a pattern, use the CATICGMTopPattern operator in GMOperatorsInterfaces. This operator has to be created by the CATCGMCreateTopPattern global function. Use Case Description The CAAGMOperatorsPattern.m module in CAAGMOperatorsInterfaces.edu illustrates how to create a pattern. This use case is to be run with the PatternTest.NCGM input file which is delivered in CAAGMOperatorsInterfaces.edu/FunctionTests/InputData. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm). Case 1: Pattern Creation from a List of Faces With the input data below: Fig.1 Pattern Operation: Input Data ![Pattern Support](images/CGM_pattern_0.png) | ![Faces to be patterned](images/CGM_pattern_1.png)  
+Operator to be Used To create a pattern, use the CATICGMTopPattern operator in GMOperatorsInterfaces. This operator has to be created by the CATCGMCreateTopPattern global function. Use Case Description The CAAGMOperatorsPattern.m module in CAAGMOperatorsInterfaces.edu illustrates how to create a pattern. This use case is to be run with the PatternTest.NCGM input file which is delivered in CAAGMOperatorsInterfaces.edu/FunctionTests/InputData. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md). Case 1: Pattern Creation from a List of Faces With the input data below: Fig.1 Pattern Operation: Input Data ![Pattern Support](images/CGM_pattern_0.png) 
 ---|---  
 and the code below:
     
@@ -54,7 +54,7 @@ and the code below:
     	  
   
 ---  
-you get this result: Fig.2 Result of Pattern Operation from a Set of Faces  ![Pattern Result - Set of faces](images/CGM_pattern_2.png) | ![Pattern Result - Set of faces - Global View ](images/CGM_pattern_3.png)  
+you get this result: Fig.2 Result of Pattern Operation from a Set of Faces  ![Pattern Result - Set of faces](images/CGM_pattern_2.png) 
 ---|---  
 Case 2: Pattern Creation from a Body to be Replicated  The body to be patterned is a solid cylinder. With the same input body as above and the code below:
     
@@ -100,13 +100,13 @@ Case 2: Pattern Creation from a Body to be Replicated  The body to be patterned 
     	  
   
 ---  
-you get this result: Fig.3 Result of Pattern Operation from a Body to be Replicated ![Pattern Result - Tool](images/CGM_pattern_4.png) | ![Pattern Result - Tool - Global View ](images/CGM_pattern_5.png)  
+you get this result: Fig.3 Result of Pattern Operation from a Body to be Replicated ![Pattern Result - Tool](images/CGM_pattern_4.png) 
 ---|---  
-References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)  
-[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)  
-[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.htm)  
-[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.htm)  
+[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)  
+[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)  
+[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.md)  
+[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.md)  
 History Version: **1** [Sept 2011] | Document created  
 ---|---

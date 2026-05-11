@@ -3,18 +3,15 @@ title: "Creating a Surface Machining Operation StartUp"
 category: "use case"
 module: "CAASmiUseCases"
 tags: ["CATIM3xFeature", "CAAUserOperationCatalog", "CAASmgOperation", "CAASmgMachiningFeature", "CAAApproachDistance", "CAASmgOperationWithMASU", "CATIMfgMachiningFeature", "CAAStep", "CAASurfaceMachiningItf", "CAASmiUserOperationCatalog", "CAASmgOperationSU", "CAAISmiUserMachFeature", "CAAOffset", "CAAToolAngle", "CAASmgOperationWithMA"]
-source_file: "Doc\online\CAASmiUseCases\CAASmiUserOperationCatalog.htm"
+source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationCatalog.md"
 converted: "2026-05-11T17:31:51.254402"
 ---
-
 #  Machining
 
 | 
-
 ##  3 Axis Surface Machining
 
 | 
-
 ###  Creating a Surface Machining Operation StartUp
 
 _Define your own surface machining operation StartUp and store it in a library_  
@@ -22,7 +19,6 @@ _Define your own surface machining operation StartUp and store it in a library_
 Use Case   
   
 * * *
-
 ###  Abstract
 
 This article discusses the CAASmiUserOperationCatalog use case and explains how to generate a library file including the CAA SMG Operation Initial Definition: its StartUp. This step is the preliminary one for all NC Operation creation.
@@ -40,7 +36,6 @@ This article discusses the CAASmiUserOperationCatalog use case and explains how 
 ---  
   
 * * *
-
 ###  What You Will Learn With This Use Case
 
 This use case is intended to help you to generate a new library containing **Surface Machining Operation StartUps**.
@@ -51,10 +46,7 @@ This involves the following:
   * Add StartUps in this library.
   * Add strategy parameters on StartUps.
 
-
-
 [Top]
-
 ###  The CAASmiUserOperationCatalog Use Case
 
 CAASmiUserOperationCatalog is a use case of the CAASurfaceMachiningItf.edu framework that illustrates Surface Machining capabilities.
@@ -62,7 +54,6 @@ CAASmiUserOperationCatalog is a use case of the CAASurfaceMachiningItf.edu frame
 It is the first step of the sample described in the technical article [1].
 
 [Top]
-
 ####  What Does CAASmiUserOperationCatalog Do
 
 CAASmiUserOperationCatalog enables the customer to generate a new catalog containing two new StartUps :
@@ -70,10 +61,7 @@ CAASmiUserOperationCatalog enables the customer to generate a new catalog contai
   * The startup of CAA Plunge Operation is **CAASmgOperation**. It uses its own machining feature: **CAASmgMachiningFeature** and has three parameters: CAAStep, CAAToolAngle and CAAApproachDistance.
   * The startup of CAA Box Operation is **CAASmgOperationWithMA**. It uses machining areas and has one parameter CAAOffset.
 
-
-
 [Top]
-
 ####  How to Launch CAASmiUserOperationCatalog
 
 To launch CAASmiUserOperationCatalog, you will need to set up the runtime environment and then execute the CATfctEditorAssistant tool as indicated.
@@ -102,7 +90,6 @@ To launch CAASmiUserOperationCatalog, you will need to set up the runtime enviro
 To have more explanation on the usage of the CATFctEditorAssistant tool, please refer to the Creating Startups in Catalogs use case.
 
 [Top]
-
 ####  Where to Find the CAASmiUserOperationCatalog Code
 
 The CAASmiUserOperationCatalog.osm file is located in the InputData directory of the CAASurfaceMachiningItf.edu framework:
@@ -112,7 +99,6 @@ The CAASmiUserOperationCatalog.osm file is located in the InputData directory of
 where `InstallRootDirectory` is the root directory of your CAA installation.
 
 [Top]
-
 ###  Step-by-Step
 
 There are five logical steps in CAAUserOperationCatalog for the creation of a new activities catalog:
@@ -121,8 +107,6 @@ There are five logical steps in CAAUserOperationCatalog for the creation of a ne
   2. Creating a startup in this catalog
   3. Adding strategy parameters to the startup
   4. Upgrading the activities catalog
-
-
 
 ###  Creating a new activities catalog
 
@@ -137,8 +121,6 @@ Once the above command has been executed, you will find two new files:
 
   1. CAAUserOperationCatalog.CATfct 
   2. CAAUserOperationCatalog.osm 
-
-
 
 Both files represent the same version of an empty catalog with a root container. The only difference is that the `.osm` file is readable while the `.CATfct` catalog is not:
     
@@ -162,7 +144,6 @@ Both files represent the same version of an empty catalog with a root container.
 ---  
   
 [Top]
-
 ###  Creating a startup in this Catalog
 
 To define the startup of a new User Defined Operation, the new startup must derive from the startup "MfgUserDefinedMO" which is defined in the ManufacturingActivities.feat catalog. In the new catalog, we create a new startup of type "CAASmgOperation". 
@@ -197,7 +178,6 @@ Note that the "AuthorizedItems" attribute holds a list of string so that it is p
 The call to the `synchronize` method is necessary to be sure that any modification on the mother startup MfgUserDefinedMO is propagated on the new startup.
 
 [Top]
-
 ###  Adding Strategy Parameters to the startup
 
 Then we add four new strategy parameters "CAAStep", "CAAToolAngle", "CAAApproachDistance" and "Box Offset" to the startup.
@@ -240,10 +220,7 @@ The AddStrategyParameteris a method to be called on the StrategyParameters featu
 It can be regular types (`String, Integer, Real, Boolean`) or magnitudes (`LENGTH, ANGLE, ...`). For the complete list of available magnitudes, look at the Magnitudes Reference article.
   * a **value** : this is the default value that the parameter will hold once it is created
 
-
-
 [Top]
-
 ###  Upgrading the activities catalog
 
 Now that the OSM file has been updated with the required startup and attributes, you can use CATfctEditorAssistant to create the corresponding catalog. This is done by upgrading the empty catalog created previously. This catalog must be in the runtime view.
@@ -260,14 +237,16 @@ Note that the catalog can be upgraded as many times as necessary using the same 
 [Top]
 
 * * *
-
 ###  In Short
 
 This article provides an example on how to generate and upgrade a catalog of User Defined Machining Operations thanks to the osm language.
 
 In this example we generate a catalog named "CAAUserOperationCatalog.CATfct" that contains one startup of a User Defined Operation with the CATFctEditorAssistant on line tool. It derives from the late type "MfgUserDefinedMO" as every user defined operation should do. The "MfgUserDefinedMO" is a standard user defined operation. The corresponding startup of this operation is defined in the ManufacturingActivities.feat catalog.
 
+```vbscript
 For this user defined activity we authorized a "CATIMfgMachiningFeature" machining feature, which is a standard machining feature defined in the Manufacturing.feat catalog.
+
+```
 
 We also add several strategy parameters on this startup in several steps to illustrate the upgrade mechanism.
 
@@ -278,17 +257,15 @@ This StartUp will later be used in the next use case [3].
 [Top]
 
 * * *
-
 ###  References
 
-[1]  |  [Surface Machining Operation Sample Overview](../CAASmiTechArticles/CAASmiOperationSampleOverview.htm)  
+[1]  |  [Surface Machining Operation Sample Overview](../CAASmiTechArticles/CAASmiOperationSampleOverview.md)  
 ---|---  
-[2]  |  [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-[3]  |  [Customizing the Surface Machining Operation Editor](CAASmiUserOperationUI.htm)  
+[2]  |  [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[3]  |  [Customizing the Surface Machining Operation Editor](CAASmiUserOperationUI.md)  
 [Top]   
   
 * * *
-
 ###  History
 
 Version: **1** [Mar 2002]  |  Document created   

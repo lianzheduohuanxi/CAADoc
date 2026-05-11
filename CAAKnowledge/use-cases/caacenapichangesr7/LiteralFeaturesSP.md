@@ -1,9 +1,10 @@
 ---
 title: "LiteralFeatures Modifications"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR7"
+version: "V5R7"
 tags: ["CATICkeSignature", "CATICkeRelation", "CATICkeFunctionFactory"]
-source_file: "Doc\online\CAACenAPIChangesR7\LiteralFeaturesSP.htm"
+source_file: "Doc/online/CAACenAPIChangesR7/LiteralFeaturesSP.md"
 converted: "2026-05-11T17:33:52.123702"
 ---
 

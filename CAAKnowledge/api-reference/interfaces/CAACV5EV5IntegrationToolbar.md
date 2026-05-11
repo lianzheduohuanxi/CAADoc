@@ -2,16 +2,20 @@
 title: "CAACV5EV5IntegrationToolbar"
 type: "interface"
 module: "CAAProductStructureE5i"
+category: "framework"
 base: "CATBaseUnknown"
+inheritance_chain: "CAACV5EV5IntegrationToolbar → CATBaseUnknown"
 method_count: 0
 visibility: "local"
+has_tie_binding: false
 verified: true
 ---
-
 # CAACV5EV5IntegrationToolbar
 
 **基类**: CATBaseUnknown  
+**继承链**: CAACV5EV5IntegrationToolbar → CATBaseUnknown  
 **模块**: CAAProductStructureE5i  
+**分类**: framework  
 **可见性**: local  
 **方法数**: 0
 
@@ -19,7 +23,7 @@ verified: true
 
 ## 说明
 
-该接口没有声明自定义方法，作为标记接口或配置接口使用。
+该接口作为标记接口或配置接口使用，无自定义方法。
 
 ## 依赖
 

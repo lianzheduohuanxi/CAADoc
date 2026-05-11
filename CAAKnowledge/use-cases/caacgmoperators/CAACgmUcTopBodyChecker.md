@@ -3,7 +3,7 @@ title: "Using the Body Checker"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CATICGMContainer", "CAADoc", "CAAGMOperatorsBodyChecker", "CATICGMObject", "CAATopBodyChecker", "CATICGMBodyChecker"]
-source_file: "Doc\online\CAACgmOperators\CAACgmUcTopBodyChecker.htm"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopBodyChecker.md"
 converted: "2026-05-11T17:33:49.090808"
 ---
 
@@ -24,7 +24,7 @@ What You Will Learn With This Use Case This use case is intended to help you det
     * Creates and uses the body checker.
     * Displays the diagnosis.
     * Closes the container.
-How to Launch CAAGMOperatorsBodyChecker To launch CAAGMOperatorsBodyChecker , you will need to set up the build time environment, then compile CAAGMOperatorsBodyChecker.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. `CAAGMOperatorsBodyChecker e:\bodyChecker1.NCGM` where `bodyChecker1.NCGM` is the input file delivered in the CAAGMOperatorsInterfaces.edu\FunctionTests\InputData file [1].  Where to Find the CAAGMOperatorsBodyChecker Code The CAAGMOperatorsBodyChecker use case is made of a main named CAATopBodyChecker.cpp located in the CAAGMOperatorsBodyChecker.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsBodyChecker.m\` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step There are thee main steps in CAATopBodyChecker.cpp: 
+How to Launch CAAGMOperatorsBodyChecker To launch CAAGMOperatorsBodyChecker , you will need to set up the build time environment, then compile CAAGMOperatorsBodyChecker.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. `CAAGMOperatorsBodyChecker e/bodyChecker1.NCGM` where `bodyChecker1.NCGM` is the input file delivered in the CAAGMOperatorsInterfaces.edu\FunctionTests\InputData file [1].  Where to Find the CAAGMOperatorsBodyChecker Code The CAAGMOperatorsBodyChecker use case is made of a main named CAATopBodyChecker.cpp located in the CAAGMOperatorsBodyChecker.m module of the CAAGMOperatorsInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsBodyChecker.m\` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step There are thee main steps in CAATopBodyChecker.cpp: 
     1. Loading the Container and Retrieving the Body to Be Checked
     2. Creating and Running the CATICGMBodyChecker Object
     3. Displaying the Diagnosis
@@ -74,8 +74,8 @@ Closing the Container The use case ends with the closure of the geometry factory
      //
      **::CATCloseCGMContainer**(piGeomFactory);
 
-References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] | [Overview of the Topological Operators](CAACgmUcTopOverview.htm)  
+[2] | [Overview of the Topological Operators](CAACgmUcTopOverview.md)  
 History Version: **1** [Aug 2004] | Document created  
 ---|---

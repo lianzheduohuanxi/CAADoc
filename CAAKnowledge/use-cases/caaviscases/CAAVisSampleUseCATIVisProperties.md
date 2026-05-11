@@ -3,18 +3,15 @@ title: "Modifying Object Graphical Properties"
 category: "use case"
 module: "CAAVisUseCases"
 tags: ["CATIDescendants", "CAAPropertyWithNewProperties", "CATIPrtContainer", "CATIPartRequest", "CATIVisProperties", "CATIA", "CATIProperty", "CAAGeometryVisualization", "CAAProperty", "CATISpecObject_var", "CAAGviApplyProperties"]
-source_file: "Doc\online\CAAVisUseCases\CAAVisSampleUseCATIVisProperties.htm"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleUseCATIVisProperties.md"
 converted: "2026-05-11T17:31:52.198094"
 ---
-
 # Portal
 
 | 
-
 ## Visualization
 
 | 
-
 ### Modifying Object Graphical Properties
 
 _Using the CATIVisProperties interface_  
@@ -22,7 +19,6 @@ _Using the CATIVisProperties interface_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to use the _CATIVisProperties_ interface to modify the graphical aspect of an object.
@@ -40,7 +36,6 @@ This article shows how to use the _CATIVisProperties_ interface to modify the gr
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This article shows how to use the _CATIVisProperties_ interface to retrieve or set the graphical properties for CATIA V5 features. This interface contains five main methods:
@@ -62,24 +57,18 @@ These two methods, as the two above, also work with the same two keys. The reset
 
   5. `IsGeomTypeDefined`, tells if a given type of geometry is recognized by the feature.
 
-
-
 In this article you will learn to:
 
   * Use these five methods
   * Handle the different geometry types and the different property types to arrive at a specific visual effect
   * Handle the _CATVisPropertiesValues_ instance.
 
-
-
 [Top]
-
 ### The CAAGviApplyProperties Use Case
 
 CAAGviApplyProperties is a use case of the CAAGeometryVisualization.edu framework that illustrates Visualization and GeometryVisualization framework capabilities.
 
 [Top]
-
 #### What Does CAAGviApplyProperties Do
 
 The goal of this use case is to change the graphic properties of some GSM features.It is based on a delivered Part document called "CAAProperty" [Fig.1], located in the `CAAGeometryVisualization.edu/InputData `directory. This document contains the following elements:
@@ -107,10 +96,12 @@ The modified document is saved in the "CAAPropertyWithNewProperties.CATPart`" `d
 _Fig.2: The CAAPropertyWithNewProperties Document_ ![](images/CAAVisSampleCAAPropertyMWithComment.jpg)  
 ---  
   
+```vbscript
 For the Line.1feature, try going over on the line, it is not highlighted. For the Sweep.2 feature, turn the model, you can see through the surface because it is transparent.
 
-[Top]
+```
 
+[Top]
 #### How to Launch CAAGviApplyProperties
 
 To launch CAAGviApplyProperties , you will need to set up the build time environment, then compile CAAGviApplyProperties along with its prerequisites, set up the run time environment [1]. Then execute the following command:
@@ -124,10 +115,7 @@ where:
      * Windows : `InstallRootDirectory\CAAGeometryVisualization.edu\InputData`
   2. **OutputPath** : The path where the output file `CAAPropertyWithNewProperties.CATPart `will be stored. If this path is empty, the output file is created in the current directory.
 
-
-
 [Top]
-
 #### Where to Find the CAAGviApplyProperties Code
 
 The CAAGviApplyProperties use case is made of a main program located in the CAAGviApplyProperties.m module of the CAAGeometryVisualization.edu framework:
@@ -139,7 +127,6 @@ Unix | `InstallRootDirectory/CAAGeometryVisualization.edu/CAAGviApplyProperties.
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 The main steps of CAAGviApplyProperties are:
@@ -153,10 +140,7 @@ The main steps of CAAGviApplyProperties are:
   7. Showing the Surface
   8. Epilog
 
-
-
 [Top]
-
 #### Prolog
 
 CAAGviApplyProperties begins by creating a session, and opening the "CAAProperty" Part document. Next, it retrieves the root container of this Part as a pointer to _CATIPrtContainer_ , `pIPrtCont.` This is the usual sequence for loading a Part document. 
@@ -164,7 +148,6 @@ CAAGviApplyProperties begins by creating a session, and opening the "CAAProperty
 Thanks to the `GetPart` method on the root container we retrieve the Mechanical Part feature handled by the smart pointer `spPart.`
 
 [Top]
-
 #### Retrieving Features to Modify
 
 The five features are inside the same Open Body:
@@ -229,7 +212,6 @@ The features inside the Open Body, pointed to by `surfBodies[1]`, are retrieved 
 The position of each element has been determined in an interactive session.
 
 [Top]
-
 #### Modifying the Point
 
 The point, Point.1, is represented by the `ThePoint` smart pointer in the code.In the above picture [Fig.1], you can see that this point is green and its symbol is a full square. But before changing its graphical properties, we verify its current properties:
@@ -263,8 +245,6 @@ We retrieve the _CATIVisProperties_ interface pointer, `pIPropertiesOnPoint, `on
   * `PropTypeOnPoint `is a `CATVPColor` to indicate that only the color property is asked.
   * `GeomTypeOnPoint` is a `CATVPPoint` to indicate that the type of the geometry is the point.
 
-
-
 The color is retrieved using the `GetColor` method on the `MyPropertyOnPoint` instance.
 
 Is it a full square point ?
@@ -293,8 +273,6 @@ This follows the same principle as the color property, changing only the propert
   * The `GetPropertiesAtt`**** method**** returns the point symbol information in the `MyPropertyOnPoint `instance.
   * `PropTypeOnPoint `is` a CATVPSymbol `to indicate that only the point symbol property is asked
   * `GeomTypeOnPoint` is still `CATVPPoint`
-
-
 
 The point symbol is retrieved using the `GetSymbol `method on the `MyPropertyOnPoint` instance. `FULLSQUARE` is one of the values of the _CATSymbolType_ enum.
 
@@ -337,7 +315,6 @@ The new symbol is set on the _CATVisPropertiesValues_ instance, `MyPropertyOnPoi
 The symbol of the feature is modified by calling the `SetPropertiesAtt` method using the `CATVPSymbol` as the property type and as always, `CATVPPoint as` geometry type.
 
 [Top]
-
 #### Modifying the Line
 
 The line, Line.1, is represented by the `TheLine` smart pointer in the code.In the above picture [Fig.1], you can see that this line is a solid white line ended by two cross points.
@@ -409,7 +386,6 @@ The `SetPickAttr` method modifies the pickable state of the _CATVisPropertiesVal
 The property `CATVPPick `is not dedicated to a specific type of geometry: the feature is globally pickable or not. To be more precise, on a surface , for example, you cannot have its faces pickable and its edges no-pickable. So the type of the geometry is `CATVPGlobalType.`
 
 [Top]
-
 #### Modifying the Sweep
 
 The sweep, Sweep.2, is represented by the `TheSweep2Surface` smart pointer in the code.Notice this white surface in the above picture [Fig.1].
@@ -420,7 +396,6 @@ At first, all the geometry types supported by a GSM surface are tested:
   * lineic (CATVPEdge) : to modify the CATEdge of the surface
   * surfacic (CATVPMesh) : to modify the CATFace of the surface
   * CATVPGlobalType: to modify the show/no show, the pick/no pick and the layer number.
-
 
     
     
@@ -502,7 +477,6 @@ The surfacic properties are represented by the `CATVPMesh` geometry type. As for
 The _CATVisPropertiesValues_ instance,`MyPropertyOnSurface2`, is initialized by the `GetPropertiesAtt `method. Next, the color (blue) and the degree of opacity are modified. The opacity is defined by an integer whose range is between 0 ( total transparency) and 255 (total opacity).
 
 [Top]
-
 #### Resetting Graphical Properties
 
 The surface, Extrude.1, is represented by the `TheExtrude1Surface` smart pointer in the code.In the above picture [Fig.1], you can recognize this yellow surface with its white edges.
@@ -532,14 +506,11 @@ To reset a graphical property, two keys are necessary:
   * The type of property: In this case all the properties will be reset. The first argument, `PropTypeOnSurface1`, is `CATVPAllpropertyType`
   * The concerned geometry: here `CATVPMesh`, so the second argument, `GeomTypeOnSurface1`, is `CATVPMesh` .
 
-
-
 The reset will be done on all the properties of the _CATFace_ elements forming the surface: The color and the opacity.
 
 Resetting a graphical property means that the property, stored by the _CATIProperty_ interface, is not used; a default value, defined by the implementation of the `GetStandardProperties` method, is used as "standard".
 
 [Top]
-
 #### Showing the surface
 
 The surface, Extrude.2, is represented by the `TheExtrude2Surface` smart pointer in the code.In the above picture [Fig.1], you can not see it, it is hidden. In an interactive session, you can see it by going to the hidden space.
@@ -570,7 +541,6 @@ The surface, Extrude.2, is represented by the `TheExtrude2Surface` smart pointer
 The show/no show state is modifiable using the `CATVPGlobalType` geometry type and, of course, using the `CATVPShow `property type.
 
 [Top]
-
 #### Epilog
 
 The last part of the CAAGviApplyProperties use case shows how to: save the CAAProperty.CATPart as CAAPropertyWithNewProperties.CATPart, removes it from the session and delete the session. This is also described in the "Loading a Document" use case (see Data Access entry in the Encyclopedia home page)
@@ -578,7 +548,6 @@ The last part of the CAAGviApplyProperties use case shows how to: save the CAAPr
 [Top]
 
 * * *
-
 ### In Short
 
 This article illustrates how to use the _CATIVisProperties_ interface to modify or retrieve the graphical properties of a feature. It explains how to change:
@@ -588,23 +557,19 @@ This article illustrates how to use the _CATIVisProperties_ interface to modify 
   * The visibility state,(show/no-show)
   * The width and the type of a line
 
-
-
 and how to reset graphic attributes.
 
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
   
 [Top]
 
 * * *
-
 ### History
 
 Version: **1** [Apr 2002] | Document created  

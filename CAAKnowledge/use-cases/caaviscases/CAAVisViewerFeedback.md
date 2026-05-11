@@ -3,18 +3,15 @@ title: "Viewer Feedback"
 category: "use case"
 module: "CAAVisUseCases"
 tags: ["CAAAfrGeneralWksAddin", "CAAApplicationFrame", "CAACafViewerFeedback", "CATIWorkbenchAddin", "CAACafViewerFeedbackCmd", "CAACATIAApplicationFrm", "CATIAlias", "CAACafViewerFeedbackManager", "CATIAfrGeneralWksAddin"]
-source_file: "Doc\online\CAAVisUseCases\CAAVisViewerFeedback.htm"
+source_file: "Doc/online/CAAVisUseCases/CAAVisViewerFeedback.md"
 converted: "2026-05-11T17:31:52.253960"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## 3D Visualization
 
 | 
-
 ### Viewer Feedback
 
 _How to retrieve information on interactions coming from viewers_  
@@ -22,7 +19,6 @@ _How to retrieve information on interactions coming from viewers_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to retrieve and analyze information on interactions coming from viewers. These interactions can be mouse motion or press/release button. 
@@ -36,10 +32,7 @@ This article shows how to retrieve and analyze information on interactions comin
   * **In Short**
   * **References**
 
-
-
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show you how to retrieve and analyze information on interactions coming from viewers. You will learn how to:
@@ -51,14 +44,12 @@ The notification is a _CATVisViewerFeedbackEvent_ notification class.
   * Display on the screen information contained in the notification  
 Information will be displayed in the main 2D viewpoint of the viewer. 
 [Top]
-
 ### The CAACafViewerFeedback Use Case
 
 CAACafViewerFeedback is a use case of CAACATIAApplicationFrm.edu and CAAApplicationFrame.edu frameworks that illustrates Visualization framework capabilities. [Top]
-
 #### What Does CAACafViewerFeedback Do
 
-CAACafViewerFeedback use case enables you to activate or deactivate the feedback mode on the current viewer. This switch is possible thanks to a command set in an add-in of the General workshop [1]. The Viewer Feedback demonstrator command, see pictures below, is represented by a check button. When the button is "ON" (right picture), the feedback mode is active. When the button is "OFF" (left picture), the feedback mode is not active. | ![](images/CAAAfrCheckHeaderAddinOff.jpg) | ![](images/CAAAfrCheckHeaderAddinOn.jpg)  
+CAACafViewerFeedback use case enables you to activate or deactivate the feedback mode on the current viewer. This switch is possible thanks to a command set in an add-in of the General workshop [1]. The Viewer Feedback demonstrator command, see pictures below, is represented by a check button. When the button is "ON" (right picture), the feedback mode is active. When the button is "OFF" (left picture), the feedback mode is not active. 
 ---|---  
   
 When the feedback mode is active in the current viewer you can see:
@@ -70,11 +61,7 @@ When the feedback mode is active in the current viewer you can see:
   
 On this picture you can see that there is only one selected element.
 
-
-
-
 [Top]
-
 #### How to Launch CAACafViewerFeedback
 
 To launch CAACafViewerFeedback, you will need to set up the build time environment, then compile CAACafViewerFeedback along with its prerequisites, set up the run time environment, and then execute the use case [2].
@@ -109,10 +96,7 @@ Then, in the window where you run the mkrun command, do not type the module name
   * On the **View** menu, click **Viewer Feedback Demonstrator**
   * **Move** the mouse on the viewer and **pass over** the newly elements
 
-
-
 [Top]
-
 #### Where to Find the CAACafViewerFeedback Code
 
 The CAACafViewerFeedback use case is made of several classes located:
@@ -134,13 +118,9 @@ Unix | `InstallRootDirectory/CAACATIAApplicationFrm.edu/CAACafViewerFeedback.m/`
   
 Only one instance of the _CAACafViewerFeedbackManager_ class is created during the session. This class manages the current viewer and the feedback mode on the current viewer. It means how to receive notifications sent by the viewer, and once received, how to decode it to display some information in the 2D Viewpoint of the viewer. The _CAACafViewerFeedbackCmd_ command, explained in the "Creating a Command with Options in the "Tools Palette" Toolbar" article [3], informs the __unique _CAACafViewerFeedbackManager_ class instance to activate or deactivate the feedback mode.
 
-
-
-
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 [Top]
-
 ### Step-by-Step
 
 There are four logical steps in the CAACafViewerFeedback use case:
@@ -150,10 +130,7 @@ There are four logical steps in the CAACafViewerFeedback use case:
   3. Deactivating the Feedback Mode
   4. Decoding the CATVisViewerFeedbackEvent Notification
 
-
-
 [Top]
-
 #### Creating the CAACafViewerFeedbackManager Class Header
     
     
@@ -232,8 +209,6 @@ This class contains the following methods:
   * `PathElementString`: It is a service to translate in a string a _CATPathElement_. For each element of the path, the _CATIAlias_ interface is called.
   * `ChangeBagPosition`: this method is also a service to move the text near the mouse position. Click here to see the code.
 
-
-
 and contains the following data:
 
   * _`pCurrentViewer`: it is one viewer of the current window.
@@ -241,10 +216,7 @@ and contains the following data:
   * `_ViewerFeedbackCB`: it is the identifier of the viewer callback.
   * `_WindowxxxCB`: there are the identifiers of the window callbacks
 
-
-
 [Top]
-
 #### Activating the Feedback Mode
 
 The `SetViewerFeedbackOn `method consists in first to retrieve a viewer:
@@ -294,12 +266,9 @@ The `SetFeedbackMode` method with `TRUE` actives the feedback mode. It means tha
   * `ViewerFeedbackCB`: the callback method - See the Decoding the CATVisViewerFeedbackEvent Notification section
   * `NULL`: no argument
 
-
-
 `_ViewerFeedbackCB` is an identifier of the callback, it is important to keep it for the callback deletion. See the  `SetViewerFeedbackOn ` method
 
 [Top]
-
 #### Deactivating the Feedback Mode
 
 The `SetViewerFeedbackOn `method consists in to cancel the feedback mode on the current viewer.
@@ -339,10 +308,7 @@ There are four steps:
   4. Removes the callback coming from the viewer: `_ViewerFeedbackCB` is the identifier returns by the `AddCallback` method. See the  `SetViewerFeedbackOn ` method.
   5. `_pCurrentViewer`, returned by the `GetViewer` method of _CATFrmWindow,_ is not "AddReffed" by this method, so you have just to reset the pointer.
 
-
-
 [Top]
-
 #### Decoding the CATVisViewerFeedbackEvent Notification
 
 The `ViewerFeedbackCB` method consists in to decode the notification contained in the callback event, and to display in the main 2D viewpoint of the viewer, the information of the notification.
@@ -395,15 +361,13 @@ The third argument of the `ViewerFeedbackCB` method is the notification containi
   2. The intersection point with the selected geometry
   3. The elements under the mouse
 
-
-
 These three steps are described below.
 
   1. The mouse position in screen coordinates
 
 Before to detail the code, a picture to explain the screen coordinates:
 
-![](images/CAAVisViewerFeedbackScreenCoord.jpg) | If (Xpos,Ypos) are the screen coordinates of the mouse, 
+ If (Xpos,Ypos) are the screen coordinates of the mouse, 
      * Xpos ranges from 0 to width-1
      * Ypos ranges from 0 to height-1
 where width and height are the support (_CATSupport_) dimensions.  
@@ -426,7 +390,7 @@ where width and height are the support (_CATSupport_) dimensions.
 
 The position of a child is a position in the bag axis system as shown in the picture below:
 
-![](images/CAAVisViewerFeedbackBagPos.jpg) | (u,v) is the bag axis system (Xpos,Ypos) is the mouse position in screen coordinates The `ChangeBagPosition` method transforms (Xpos,Ypos) is model coordinates.  
+ (u,v) is the bag axis system (Xpos,Ypos) is the mouse position in screen coordinates The `ChangeBagPosition` method transforms (Xpos,Ypos) is model coordinates.  
 ---|---  
   
 Here is the code of the `ChangeBagPosition` method:
@@ -488,7 +452,7 @@ Come back to the `ViewerFeedbackCB` method:
 
 Before to detail the code, a picture to explain the intersection point.
 
-![](images/CAAVisViewerFeedbackInters.jpg) | The point symbolized by a bold circle is the intersection point of the line and the nearest selected geometry. This point is in model coordinates.  
+ The point symbolized by a bold circle is the intersection point of the line and the nearest selected geometry. This point is in model coordinates.  
 ---|---  
   
 `GetIntersection`**** returns a _CATGraphicElementIntersection_ class instance pointer. This class contains as public data a _CATMathPoint_ . `point` is the intersection point. If there is nothing under the mouse, `GetIntersection`**** returns NULL.
@@ -569,13 +533,9 @@ Before to detail the code, a picture to explain the intersection point.
   
 This piece of code is a loop from the first element to the last. For each path, `PathElementString` converts a path in a string. This string is the input of a new `CAT2DAnnotationTextRep` class instance.
 
-
-
-
 [Top]
 
 * * *
-
 ### In Short
 
 This use case explains how to receive information from a viewer when interactions occur. These information are inside a _CATVisViewerFeebackEvent_ notification class.
@@ -583,19 +543,17 @@ This use case explains how to receive information from a viewer when interaction
 [Top]
 
 * * *
-
 ### References
 
-[1] | [Making Your Document Independent Command Available in All Workbenches](../CAAAfrUseCases/CAAAfrSampleGeneralWksAddin.htm)  
+[1] | [Making Your Document Independent Command Available in All Workbenches](../CAAAfrUseCases/CAAAfrSampleGeneralWksAddin.md)  
 ---|---  
-[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
-[3] | [Creating a Command with Options in the "Tools Palette" Toolbar](../CAAAfrUseCases/CAAAfrCmdPalette.htm)  
-[4] | [Understanding the Application Frame Layout](../CAAAfrTechArticles/CAAAfrLayoutV5.htm)  
-[5] | [The Callback Mechanism](../CAASysTechArticles/CAASysCallbacks.htm)  
+[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[3] | [Creating a Command with Options in the "Tools Palette" Toolbar](../CAAAfrUseCases/CAAAfrCmdPalette.md)  
+[4] | [Understanding the Application Frame Layout](../CAAAfrTechArticles/CAAAfrLayoutV5.md)  
+[5] | [The Callback Mechanism](../CAASysTechArticles/CAASysCallbacks.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Aug 2003] | Document created  

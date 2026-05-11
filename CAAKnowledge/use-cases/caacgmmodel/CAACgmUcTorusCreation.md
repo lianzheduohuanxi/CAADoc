@@ -3,10 +3,9 @@ title: "Torus"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMModelInterfaces", "CAAGMModelTorusCreation"]
-source_file: "Doc\online\CAACgmModel\CAACgmUcTorusCreation.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTorusCreation.md"
 converted: "2026-05-11T17:33:48.614089"
 ---
-
 
     
     
@@ -69,7 +68,7 @@ converted: "2026-05-11T17:33:48.614089"
     illustrates how to create a torus. This use case creates the input data required 
     for the torus creation. If you are not already 
     familiar with geometric modeler use cases, go to
-    [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm). 
+    [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md). 
     Case 1: The surface does not self-intersect
     With the code below:
     
@@ -101,7 +100,7 @@ converted: "2026-05-11T17:33:48.614089"
     if (!pTorus) return 1;  
   
 ---  
-you get this result: Fig.1 Torus ![Major start and end angles of a torus](images/CGM_torus_0.png) |  ![Minor start and end angles of a torus](images/CGM_torus_2.png)  
+you get this result: Fig.1 Torus ![Major start and end angles of a torus](images/CGM_torus_0.png) 
 ---|---  
 Major start angle: -72 deg   
 Major end angle: + 36 deg   
@@ -139,14 +138,14 @@ Case 2: The surface self-intersects With the code below:
       
   
 ---  
-you get this result: Fig.2 Self-intersecting tori  ![Apple Torus](images/CGM_torus_apple.png) |   ![Apple Torus](images/CGM_torus_lemon.png)  
+you get this result: Fig.2 Self-intersecting tori  ![Apple Torus](images/CGM_torus_apple.png) 
 ---|---  
 Internal part removed   
 (CATBoolean argument =1) |  External part removed   
 (CATBoolean argument =0)  
-References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)  
-[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)  
+[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)  
+[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)  
 History Version: **1** [Sept 2012] | Document created  
 ---|---

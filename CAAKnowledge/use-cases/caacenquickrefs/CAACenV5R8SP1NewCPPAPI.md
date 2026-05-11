@@ -1,9 +1,9 @@
 ---
 title: "New C++ Authorized APIs in CAA V5R8 SP1"
-category: "general"
+category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATITPSViewList", "CATITPSView", "CATITPSAxisStraightness", "CATIMfgDesignHoleLimits", "CATIBuildProvider", "CATIAApplicationFrame", "CATICfgSpecification", "CATICafTreeSettingAtt", "CATIGSMGridSet", "CATISelectShow"]
-source_file: "Doc\online\CAACenQuickRefs\CAACenV5R8SP1NewCPPAPI.htm"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R8SP1NewCPPAPI.md"
 converted: "2026-05-11T17:33:47.633955"
 ---
 

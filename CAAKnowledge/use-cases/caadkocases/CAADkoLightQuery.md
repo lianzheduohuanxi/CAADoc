@@ -3,7 +3,7 @@ title: "Running Light Query"
 category: "use case"
 module: "CAADkoUseCases"
 tags: ["CATIVpmLightQueryManager", "CAAVPMDesktopObjects", "CATIVpmPredicate_var", "CATIVpmQuery_var", "CAADkoLightQuery", "CATIVpmPathExpression_var", "CATIVpmLightQueryManager_var", "CATIVpmFactoryManager_var"]
-source_file: "Doc\online\CAADkoUseCases\CAADkoLightQuery.htm"
+source_file: "Doc/online/CAADkoUseCases/CAADkoLightQuery.md"
 converted: "2026-05-11T17:33:45.996993"
 ---
 
@@ -208,7 +208,7 @@ In Short Running Light Query on the server consists in getting the Light Query M
 
 * * *
 
-References [1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
 [Top]  
   

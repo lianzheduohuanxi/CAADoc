@@ -3,7 +3,7 @@ title: "Geometric Modeler"
 category: "use case"
 module: "CAATobUseCases"
 tags: ["CAATobReverseEdgeOrientation", "CATICGMObject", "CAATopologicalObjects", "CATICGMContainer"]
-source_file: "Doc\online\CAATobUseCases\CAATopReverseEdgeOrientation.htm"
+source_file: "Doc/online/CAATobUseCases/CAATopReverseEdgeOrientation.md"
 converted: "2026-05-11T17:33:45.870486"
 ---
 
@@ -34,7 +34,7 @@ What You Will Learn With This Use Case This use case is intended to make you und
   * reverses the edge orientation
   * writes the model and closes the factory. Note that, in this use case the output model is the same as the input model.
 
-[Top] How to Launch CAATobReverseEdgeOrientation To launch CAATobReverseEdgeOrientation , you will need to set up the build time environment, then compile CAATobReverseEdgeOrientation.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. With Windows CAATobReverseEdgeOrientation `e:/tobereversed.NCGM" e:\outputFile.NCGM` With UNIX CAATobReverseEdgeOrientation `/u/`tobereversed`.NCGM e:\outputFile.NCGM` where tobereversed.NCGM is an input file delivered in the CAATopologicalObjects.edu/FunctionTests/InputData file and outputFile.NCGM the file where you want to store the created data. [Top] WWhere to Find the CAATobReverseEdgeOrientation Code The CAATobReverseEdgeOrientation use case is made of a main named ReverseEdgeOrientationOpe.cpp located in the CAATobReverseEdgeOrientation .m module of the CAATopologicalObjects.edu framework: Windows | `InstallRootDirectory\CAATopologicalObjects.edu\CAATobReverseEdgeOrientation .m\`  
+[Top] How to Launch CAATobReverseEdgeOrientation To launch CAATobReverseEdgeOrientation , you will need to set up the build time environment, then compile CAATobReverseEdgeOrientation.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. With Windows CAATobReverseEdgeOrientation `e:/tobereversed.NCGM" e/outputFile.NCGM` With UNIX CAATobReverseEdgeOrientation `/u/`tobereversed`.NCGM e/outputFile.NCGM` where tobereversed.NCGM is an input file delivered in the CAATopologicalObjects.edu/FunctionTests/InputData file and outputFile.NCGM the file where you want to store the created data. [Top] WWhere to Find the CAATobReverseEdgeOrientation Code The CAATobReverseEdgeOrientation use case is made of a main named ReverseEdgeOrientationOpe.cpp located in the CAATobReverseEdgeOrientation .m module of the CAATopologicalObjects.edu framework: Windows | `InstallRootDirectory\CAATopologicalObjects.edu\CAATobReverseEdgeOrientation .m\`  
 ---|---  
 Unix | `InstallRootDirectory/CAATopologicalObjects.edu/CAATobReverseEdgeOrientation .m/`  
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed. [Top] Step-by-Step There are three main steps in ReverseEdgeOrientation.cpp: 
@@ -54,7 +54,7 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 ---  
 Here is the input model. The edge to be reversed is highlighted. ![](images/reverseEdge.gif) [Top] Reversing the edge orientation If the edge is modified, the loop which contents this edge as well as the face on which this edge relies on have to be modified. The consistency of the whole topology must be achieved. This is what you have to do:
 
-  1. Touch the edge to be reversed, "smart duplicate" the initial body and retrieve the duplicated edge, face and loop. You can turn to [Using the Smart Duplicator](CAATobSmartDuplicator.htm) for more information on how to use the CATSmartBodyDuplicator operator. 
+  1. Touch the edge to be reversed, "smart duplicate" the initial body and retrieve the duplicated edge, face and loop. You can turn to [Using the Smart Duplicator](CAATobSmartDuplicator.md) for more information on how to use the CATSmartBodyDuplicator operator. 
          
          CATBody * copBody = piGeomFactory->CreateBody();
          CATSmartBodyDuplicator * smartDuplicator = 
@@ -72,7 +72,7 @@ Here is the input model. The edge to be reversed is highlighted. ![](images/reve
                 
   
 ---  
-  2. Create a new edge with an opposite direction (for more information on how to create edges and associate geometry with topology, refer to [Using the TopologicalObjects](CAATobTetra.htm)). 
+  2. Create a new edge with an opposite direction (for more information on how to create edges and associate geometry with topology, refer to [Using the TopologicalObjects](CAATobTetra.md)). 
          
          // Create a new edge
          CATEdge * ReplEdg = copBody -> CreateEdge();
@@ -121,7 +121,6 @@ Here is the input model. The edge to be reversed is highlighted. ![](images/reve
          		CurPCurve); 
          		}
 
-
 [Top]  Writing the Model and Closing the Factory To save the model in a file, the `::CATSaveCGMContainer` global function is used. Notice that in the use case, the save is conditioned by an input parameter representing the file inside which the model must be saved. The use case ends with the closure of the geometry factory, done by the ` ::CATCloseCGMContainer` global function.
     
     
@@ -147,7 +146,7 @@ Here is the input model. The edge to be reversed is highlighted. ![](images/reve
 
 * * *
 
-References [1] |  [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] |  [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
 [Top]  
   

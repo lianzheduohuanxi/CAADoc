@@ -3,18 +3,15 @@ title: "Creating a Workbench"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CATIxxxConfiguration", "CAAAfrMSurfRevolStr", "CAACube", "CAAAfrGeoCreationMbr", "CAAAfrTSolidEltTorusStr", "CAAAfrCuboidHdr", "CAAAfrMSurfOffsetStr", "CAAGeometry", "CAAAfrTSolidEltCuboidStr", "CATIA", "CAAAfrCylinder2Hdr", "CAAAfrTSolidEltCylinder1Str", "CAAAfrMSolidSphereStr", "CAAAfrMSolidCuboidStr", "CAAAfrGeoCreationWkbFactory", "CAADegCreateCuboidCmd", "CAAAfrTorusHdr", "CAADegGeoCommands", "CAAAfrOffsetSurfHdr", "CAAAfrGeoCreationWkb"]
-source_file: "Doc\online\CAAAfrUseCases\CAAAfrSampleWorkbench.htm"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleWorkbench.md"
 converted: "2026-05-11T17:17:55.841364"
 ---
-
 # 3D PLM Enterprise Architecture
 
 | 
-
 ## User Interface - Frame
 
 | 
-
 ### Creating a Workbench
 
 _Exposing and organizing commands dedicated to a given task_  
@@ -22,7 +19,6 @@ _Exposing and organizing commands dedicated to a given task_
 Use Case  
   
 * * *
-
 ### Abstract
 
 This article shows how to create a workbench. 
@@ -41,48 +37,42 @@ This article shows how to create a workbench.
 ---  
   
 * * *
-
 ### What You Will Learn With This Use Case
 
 This use case is intended to show how to create a workbench to be added to a given workshop. Like the workshop, the workbench is an object that gathers the commands to work on the document and arrange them in toolbars and menus. Command headers are used to make the link between the workbench and the commands.
 
 [Top]
-
 ### The CAAAfrGeoCreationWbench Use Case
 
 CAAAfrGeoCreationWbench is a use case of the CAAApplicationFrame.edu framework that illustrates the ApplicationFrame framework capabilities.
 
 [Top]
-
 #### What Does CAAAfrGeoCreationWbench Do
 
 The CAAAfrGeoCreationWbench use case creates a workbench named **CAA Geometrical Creation** for the CAAGeometry document. Its specifications cover most of the cases you will meet. Two toolbars are provided:
 
-![](images/CAAAfrGeomWbenchSolidElt.jpg) | The **Solids** toolbar. It includes five new commands: Cuboid, Sphere, Torus, and Cylinder 1 and 2.  
+ The **Solids** toolbar. It includes five new commands: Cuboid, Sphere, Torus, and Cylinder 1 and 2.  
 ---|---  
-![](images/CAAAfrGeomWbenchSurfaceElt.jpg) | The **Surfaces** toolbar. It includes three new commands: Revolution Surface, Nurbs Surface, and Offset Surface.  
+ The **Surfaces** toolbar. It includes three new commands: Revolution Surface, Nurbs Surface, and Offset Surface.  
   
 The only change in the menu bar is the addition of these commands in the Insert menu using two submenus below the existing ones.
 
-![](images/CAAAfrGeomWbenchSolidsSM.jpg) |  ![](images/CAAAfrGeomWbenchSurfacesSM.jpg)  
----|---  
   
 [Top]
-
 #### How to Launch CAAAfrGeoCreationWbench
 
-See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.htm)" use case for a detailed description of how this use case should be launched. For the specific scenario :
+See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched. For the specific scenario :
 
+```vbscript
 Do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following: 
 
+```
+
   * Select Start->Infrastructure->CAA V5: Geometrical Creation
-
-
 
 This creates a new CAAGeometry document with the CAA V5: Geometrical Creation workbench active. 
 
 [Top]
-
 #### Where to Find the CAAAfrGeoCreationWbench Code
 
 The CAAAfrGeoCreationWbench use case is made of classes and interfaces located in the CAAAfrGeoCreationWbench.m module and in the ProtectedInterfaces directory of the CAAApplicationFrame.edu framework:
@@ -104,14 +94,11 @@ _CAAIAfrGeoCreationWkbAddin_ | Add-in interface exposed by the workbench and tha
 _TIE_CAAIAfrGeoCreationWkbAddin_ | TIE class for the add-in interface  
   
 [Top]
-
 ### Step-by-Step
 
 But before creating the workbench, you should: 
 
   * Make sure that the workshop to which it is dedicated exposes the _CATIxxxConfiguration_ interface, where xxx is the workshop identifier, in a PublicInterfaces or ProtectedInterfaces directory. This interface is mandatory and you have to strictly respect its naming nomenclature, otherwise the workbench won't be available.
-
-
 
  
 
@@ -137,10 +124,7 @@ In the CNext\resources\msgcatalog directory, referenced at run time using the CA
   | CAAAfrGeoCreationWkbHeader.CATNls and  
 CAAAfrGeoCreationWkbHeader.CATRsc | The command header resource files  
 
-
-
 To create the CAA Geometrical Creation workbench, there are seven steps:
-
 # | Step | Where  
 ---|---|---  
 1 | Create the workbench factory interface | LocalInterfaces and src  
@@ -152,7 +136,6 @@ To create the CAA Geometrical Creation workbench, there are seven steps:
 7 | Create the workbench exposed interface | ProtectedInterfaces and src  
   
 [Top]
-
 #### Creating the Workbench Factory Interface
 
 This factory interface is named _CAAIAfrGeoCreationWkbFactory_. To create this interface, create: 
@@ -161,13 +144,10 @@ This factory interface is named _CAAIAfrGeoCreationWkbFactory_. To create this i
   2. The source file
   3. The TIE tsrc file.
 
-
-
 This is shown below. 
 
   1. Its header file CAAIAfrGeoCreationWkbFactory.h is as follows  
 
-         
          #include <CATIGenericFactory.h> 
          
          extern IID **IID_CAAIAfrGeoCreationWkbFactory** ;
@@ -182,7 +162,6 @@ This is shown below.
   
 A factory interface is a CAA interface, that is, an abstract class that derives from _CATIGenericFactory_. As any interface, it has an IID declared as IID_ followed by the interface name, and includes the ` CATDeclareInterface` macro that declares that this abstract class is an interface. No additional method than those of _CATIGenericFactory_ is necessary. Don't forget the public keyword required by the TIE compiler.
   2. Its source file CAAIAfrGeoCreationWkbFactory.cpp is as follows. 
-         
          #include <CAAIAfrGeoCreationWkbFactory.h>
          
          IID IID_CAAIAfrGeoCreationWkbFactory = **{
@@ -198,17 +177,13 @@ A factory interface is a CAA interface, that is, an abstract class that derives 
   
 This file includes a GUID [1], shown in bold typeface. The `CATImplementInterface` macro is used in conjunction with `CATDeclareInterface` in the header file to make an interface from this abstract class and to declare that it OM-derives from _CATIGenericfactory_.
   3. Create a file named TIE_CAAIAfrGeoCreationWkbFactory.tsrc in the src directory, and containing: 
-         
          #include "CAAIAfrGeoCreationWkbFactory.h"  
   
 ---  
   
 The Multi-Workspace Application Builder (mkmk) will generate the TIE for this interface for you, that is, the TIE_CAAIAfrGeoCreationWkbFactory.h file in the ProtectedGenerated directory.
 
-
-
 [Top]
-
 #### Creating the Workbench Factory
 
  ![warning.gif \(206 bytes\)](../CAAIcons/images/warning.gif)The factory class that creates workbench instances must concatenate the name of the class to instantiate, that is, the workbench description class **CAAAfrGeoCreationWkb** , with the string **Factory**. This gives **CAAAfrGeoCreationWkbFactory.**
@@ -219,9 +194,7 @@ To create this class, create:
   2. The source file, using the `CATImplementConfigurationFactory` macro
   3. Update the interface dictionary and the factory dictionary.
 
-
   1. Create the CAAAfrGeoCreationWkbFactory.h header file. 
-         
          #include "CATWorkshopConfigurationFactory.h" 
          
          CATDeclareConfigurationFactory(CAAAfrGeoCreationWkb);  
@@ -230,10 +203,8 @@ To create this class, create:
   
 The `CATDeclareConfigurationFactory` macro argument is the name of the workbench description class. 
   2. Create the CAAAfrGeoCreationWkbFactory.cpp file. 
-         
          #include <CAAAfrGeoCreationWkb.h>
          #include <CAAAfrGeoCreationWkbFactory.h>
-         
          #include <TIE_CAAIAfrGeoCreationWkbFactory.h>
          
          CATImplementConfigurationFactory(CAAAfrGeoCreationWkb,
@@ -257,10 +228,7 @@ The `CATImplementConfigurationFactory` arguments are the name of the workbench d
   
 At run time, the pathname of the directory that contains these dictionaries files is concatenated to other dictionary pathnames in the CATDictionaryPath environment variable.
 
-
-
 [Top]
-
 #### Creating the Workbench Description Class
 
 The _CAAAfrGeoCreationWkb_ class implements the _CATICAAAfrGeometryWksConfiguration_ interface exposed by the CAAGeometry workshop . It includes the following methods: 
@@ -270,16 +238,12 @@ The _CAAAfrGeoCreationWkb_ class implements the _CATICAAAfrGeometryWksConfigurat
   * `GetCustomInterface`s which returns the names of the interfaces exposed by the workbench to enable its customization
   * `GetAddinInterface` which returns the name of the interface exposed by the workbench to create add-ins.
 
-
-
 You should: 
 
   * Create the header and source files for the _CAAAfrGeoCreationWkb_ class
   * Update the dictionary.
 
-
   1. Create the CAAAfrGeoCreationWkb.h file 
-         
          #include "CATBaseUnknown.h"
          #include "CATListPV.h"
          
@@ -305,12 +269,9 @@ You should:
   
 The _CAAAfrGeoCreationWkb_ class C++-derives from _CATBaseUnknown_. The `CATDeclareClass` macro declares that the class _CAAAfrGeoCreationWkb_ belongs to a component. The class has a constructor, a destructor, the four methods of the _CATIWorkbench_ interface, and a copy constructor. Note that the copy constructor is set as private. This prevents the compiler from creating the copy constructor as public without you know. This copy constructor is not implemented in the source file.
   2. Create the CAAAfrGeoCreationWkb.cpp file. The file skeleton is shown below. The implementation of each method is described in separate sections. 
-         
          #include <CAAAfrGeoCreationWkb.h>
-         
          #include <CATCommandHeader.h> // See Creating the Command Headers
          MacDeclareHeader(CAAAfrGeoCreationWkbHeader);
-         
          #include <CATCreateWorkshop.h>
          
          CATImplementClass(CAAAfrGeoCreationWkb, Implementation, CATBaseUnknown, CATNull);
@@ -353,10 +314,7 @@ Update the interface dictionary, that is a file named, for example, CAAApplicati
   
 ---  
 
-
-
 [Top]
-
 #### Creating the Command Headers
 
 This is done by the `CreateCommands` method. Each command available in your workbench must have a command header. A command header is an instance of a command header class, and different commands can share the same command header class to create their command header. Refer to The Command Headers for more details.
@@ -364,7 +322,6 @@ This is done by the `CreateCommands` method. Each command available in your work
 A single command header class is created for the commands, named CAAAfrGeoCreationWkbHeader using the `MacDeclareHeader` macro. You can also create the class more classically if the command may be sometimes unavailable. This is described in The Command Headers. 
 
   1. Create the CAAAfrGeoCreationWkbHeader command header class. To do this, add the following in CAAAfrGeoCreationWkb.cpp: 
-         
          #include <CATCommandHeader.h>
          MacDeclareHeader(CAAAfrGeoCreationWkbHeader);  
   
@@ -393,10 +350,7 @@ The command header constructor has the following arguments:
      * `CAADegCreateCuboidCmd` is the name of the Cuboid command class
      * the last argument is the possible pointer to the object to pass to the command when executing it. It is often a character string that indicates the action to carry out when the same command can perform several actions depending on the active document and data, such as "update" or "update all", or "cut" or "copy".
 
-
-
 [Top]
-
 #### Creating the Workbench and Arranging the Commands
 
 This is the job of the `CreateWorkbench` method. To understand how to do, let's remind of what the workbench is made of.
@@ -410,7 +364,6 @@ You should create:
   * The content of the Solids toolbar
   * The content of the Surfaces toolbar
   * The content of the menu bar.
-
 
   1. Creating the Workbench 
 
@@ -608,10 +561,7 @@ The Surfaces submenu command container is created and set next to the Solids sub
 
 The menu and submenu resources, and how to provide them, are described in Creating Resources for Workbenches. See also Providing the Resources and Inserting the Workbench into the Start Menu for an overview of all the resources to create.
 
-
-
 [Top]
-
 #### Providing the Resources and Inserting the Workbench into the Start Menu
 
 You should provide the resources for the workbench and for all its contents. These resources are classified as follows:
@@ -712,9 +662,12 @@ It is in this file that you declare if the workbench is warm start compliant [3]
   
 ---  
   
+```vbscript
 For each command, the title, short help, help, and long help are declared.
     * The CAAAfrGeoCreationWkbHeader.CATRsc file includes the following for the Cuboid command 
           
+```
+
           CAAAfrGeoCreationWkbHeader.CAAAfrCuboidHdr.Icon.Normal    = "I_CAACube";
           ...  
   
@@ -723,14 +676,11 @@ For each command, the title, short help, help, and long help are declared.
 This icon name is provided to display in the Solids toolbar where the Cuboid command is included. The icon is also displayed in front of the menu item in the menu.
   * The command starter resources are the mnemonics associated with the commands. They are automatically set at run time.
 
-
-
 More about Internationalization and resources can be found in Internationalizing Your Client Application.
 
  
 
 [Top]
-
 #### Creating the Workbench Exposed Interface
 
 To enable client applications of your workbench to customize it with add-ins, you should provide the _CAAIAfrGeoCreationWkbAddin_ interface the client application will implement. This enables the client application to add its own commands in one or several new toolbars.
@@ -738,7 +688,6 @@ To enable client applications of your workbench to customize it with add-ins, yo
 The header file of this interface should be inserted in the ProtectedInterfaces or PublicInterfaces directory of your framework to make it available to client applications. To create the _CAAIAfrGeoCreationWkbAddin_ interface: 
 
   * Create the CAAIAfrGeoCreationWkbAddin.h file as follows. 
-        
         #include <CATIWorkbenchAddin.h>        // Needed to derive from CATIWorkbenchAddin
         #include "CAAAfrGeoCreationWbench.h"   // Needed to export the IID
         
@@ -754,7 +703,6 @@ The header file of this interface should be inserted in the ProtectedInterfaces 
   
 The CAAIAfrGeoCreationWkbAddin.h file contains the ` ExportedByCAAAfrGeoCreationWbench` definition that manages the DLL interface for Windows, and is set to blank for UNIX. Don't forget the public keyword required by the TIE compiler.
   * Create the CAAIAfrGeoCreationWkbAddin.cpp file with a GUID [1], shown in bold typeface: 
-        
         #include <CAAIAfrGeoCreationWkbAddin.h>
         
         IID IID_CAAIAfrGeoCreationWkbAddin = **{
@@ -768,27 +716,22 @@ The CAAIAfrGeoCreationWkbAddin.h file contains the ` ExportedByCAAAfrGeoCreation
   
 ---  
 
-
-
 The `CATDeclareInterface` and `CATImplementInterface` macros make an interface from this C++ class.
 
 [Top]
 
 * * *
-
 ### Troubleshooting
-
 #### A Command Doesn't Display in the Menu Bar or Toolbar
 
-![symptom.gif \(111 bytes\)](../CAAIcons/images/symptom.gif) | I create a command starter for a command, and I arrange it in the menu bar or in a toolbar, but the command doesn't display in the menu bar or toolbar where I place it.  
+ I create a command starter for a command, and I arrange it in the menu bar or in a toolbar, but the command doesn't display in the menu bar or toolbar where I place it.  
 ---|---  
-![diagnos.gif \(130 bytes\)](../CAAIcons/images/diagnos.gif) | The command starter is not associated with a command header, and is thus not displayed, since the command cannot be launched without command header.  
-![solution.gif \(218 bytes\)](../CAAIcons/images/solution.gif) | Check your `CreateWorkbench` method. The command starter must be associated with a command header for the command you want to display thanks to the `SetAccessCommand` macro.  
+ The command starter is not associated with a command header, and is thus not displayed, since the command cannot be launched without command header.  
+ Check your `CreateWorkbench` method. The command starter must be associated with a command header for the command you want to display thanks to the `SetAccessCommand` macro.  
   
 [Top]
 
 * * *
-
 ### In Short
 
 A workbench gathers tools, that is commands you develop or pick-up among those existing to work on documents of a given type. A workbench is part of the workshop for that document type and can be selected from the Start menu.
@@ -802,17 +745,15 @@ You should also provide the IxxxAddin interface with your workbench, where xxx i
 [Top]
 
 * * *
-
 ### References
 
-[1] |  [ About Globally Unique IDentifiers](../CAASysQuickRefs/CAASysGUID.htm)  
+[1] |  [ About Globally Unique IDentifiers](../CAASysQuickRefs/CAASysGUID.md)  
 ---|---  
-[2] |  [ Object Modeler Component and Implementation Inheritances](../CAASysTechArticles/CAASysOMInheritance.htm)  
-[3] | [Warm Start Incremental Backup](../CAAAfrTechArticles/CAAAfrWarmstart.htm)  
+[2] |  [ Object Modeler Component and Implementation Inheritances](../CAASysTechArticles/CAASysOMInheritance.md)  
+[3] | [Warm Start Incremental Backup](../CAAAfrTechArticles/CAAAfrWarmstart.md)  
 [Top]  
   
 * * *
-
 ### History
 
 Version: **1** [Jan 2000] | Document created  

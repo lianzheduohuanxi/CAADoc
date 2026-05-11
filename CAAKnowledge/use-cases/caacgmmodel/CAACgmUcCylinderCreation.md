@@ -3,15 +3,13 @@ title: "Cylinder"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMModelCylinderCreation", "CAAGMModelInterfaces"]
-source_file: "Doc\online\CAACgmModel\CAACgmUcCylinderCreation.htm"
+source_file: "Doc/online/CAACgmModel/CAACgmUcCylinderCreation.md"
 converted: "2026-05-11T17:33:48.190455"
 ---
-
 # Creating a Cylinder  
   
 ---  
 Use Case  
-  
 ## Abstract
 
 A portion of a geometric cylinder can be created by specifying an axis, the start and end lengthes and the start and end angles.
@@ -19,7 +17,6 @@ A portion of a geometric cylinder can be created by specifying an axis, the star
     * Use Case Description
     * References  
 ---  
-  
 ## APIs to be Used
 
 To create a cylinder or a piece of a cylinder, use the CATGeoFactory::CreateCylinder method in the GeometricObjects framework.  As surface periodicity is not supported, it is recommended to specify angles so that:
@@ -28,10 +25,9 @@ To create a cylinder or a piece of a cylinder, use the CATGeoFactory::CreateCyli
     2. end angle - start angle <= 2*Pi 
 
 but if angle values are too large, the cylinder is created around 2*Pi.
-
 ## Use Case Description
 
-The CAAGMModelCylinderCreation.m module in CAAGMModelInterfaces.edu illustrates how to create a cylinder. This use case creates the input data required for the cylinder creation. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm). 
+The CAAGMModelCylinderCreation.m module in CAAGMModelInterfaces.edu illustrates how to create a cylinder. This use case creates the input data required for the cylinder creation. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md). 
 
 With the code below:
     
@@ -68,16 +64,13 @@ Start angle: -72 deg
 End angle: + 108 deg   
 Right-hand rule defines positive angles   
 First direction of the cylinder axis is the angle reference   
-  
 ## 
-
 ## References
 
-[1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+[1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
-[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)  
-[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)  
-  
+[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)  
+[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)  
 ## History
 
 Version: **1** [Sept 2012] | Document created  

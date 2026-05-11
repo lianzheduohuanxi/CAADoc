@@ -2,45 +2,24 @@
 title: "CATUExitPVRCommand"
 type: "interface"
 module: "CAACATPDMReconcile"
+category: "framework"
 base: "CATBaseUnknown"
+inheritance_chain: "CATUExitPVRCommand → CATBaseUnknown"
 method_count: 3
 visibility: "local"
+has_tie_binding: false
 verified: true
 ---
-
 # CATUExitPVRCommand
 
 **基类**: CATBaseUnknown  
+**继承链**: CATUExitPVRCommand → CATBaseUnknown  
 **模块**: CAACATPDMReconcile  
+**分类**: framework  
 **可见性**: local  
 **方法数**: 3
 
 > -----------------------------------------------------------------------
-
-## 方法列表
-
-### AfterPRCOpenFromPVR
-```cpp
-HRESULT AfterPRCOpenFromPVR(CATDocument * ixPVRDoc , CATDocument * ixPRCDoc);
-```
-
-### UpdateAttributeOnPvrSynchro
-```cpp
-HRESULT UpdateAttributeOnPvrSynchro(CATDocument      * ixPVRDoc
-                                                , int                inIsyncNeeded
-                                                , CATUnicodeString & ocAttrId 
-                                                , CATUnicodeString & ocAttrVal);
-```
-
-### GetDefaultNamesForPVRCreation
-```cpp
-HRESULT GetDefaultNamesForPVRCreation(int                                ilNewFrom
-                                                  , int                                ilFilteredPVR
-                                                  , const CATListValCATUnicodeString & iAttributeIdLst
-                                                  , const CATListValCATUnicodeString & iAttributeValueLst
-                                                  , CATUnicodeString                 & iocPVRName
-                                                  , CATUnicodeString                 & iocPVSName);
-```
 
 ## 依赖
 

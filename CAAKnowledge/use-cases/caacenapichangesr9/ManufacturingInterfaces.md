@@ -1,9 +1,10 @@
 ---
 title: "ManufacturingInterfaces Modifications"
-category: "general"
+category: "use-case"
 module: "CAACenAPIChangesR9"
+version: "V5R9"
 tags: ["CATIMfgTool", "CATIMfgToolPathToolAssembly", "CATIMfgCustomizeRep"]
-source_file: "Doc\online\CAACenAPIChangesR9\ManufacturingInterfaces.htm"
+source_file: "Doc/online/CAACenAPIChangesR9/ManufacturingInterfaces.md"
 converted: "2026-05-11T17:33:52.917769"
 ---
 

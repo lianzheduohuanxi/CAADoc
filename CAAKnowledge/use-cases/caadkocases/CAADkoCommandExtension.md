@@ -3,7 +3,7 @@ title: "Adding Business Rules to a Command"
 category: "use case"
 module: "CAADkoUseCases"
 tags: ["CATIAVPMVDAAddChild", "CAADkoCommandExtenstion", "CAAVPMDesktopObjects", "CATIAVPMAddChild", "CATIAVPMVDACommandExtension", "CATIAVPMVDACommand", "CATIAVPMVDAAddChild_var", "CAADkoCommandExtension", "CATIAVPMVDACommandFactory_var", "CATIAVPMVDACopy", "CATIAVPMVDAExists"]
-source_file: "Doc\online\CAADkoUseCases\CAADkoCommandExtension.htm"
+source_file: "Doc/online/CAADkoUseCases/CAADkoCommandExtension.md"
 converted: "2026-05-11T17:33:45.967445"
 ---
 
@@ -23,8 +23,6 @@ Abstract This article shows how to extend a server command to perform some check
   * **Step-by-Step**
   * **In Short**
   * **References**
-
-
 
 * * *
 
@@ -108,7 +106,6 @@ In the header file of the class, make it derive from CATBaseUnknown, and use the
      */
     
     CATImplementClass( CAADkoCommandExtension, DataExtension, CATBaseUnknown, CATVpmVDAAddChild );
-    
     
     #include "TIE_CATIAVPMVDACommandExtension.h"
     TIE_CATIAVPMVDACommandExtension( CAADkoCommandExtension );
@@ -294,7 +291,7 @@ In Short Extending a server command consists in implementing an interface, CATIA
 
 * * *
 
-References [1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+References [1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
 ---|---  
 [Top]  
   
