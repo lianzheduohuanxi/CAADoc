@@ -9,10 +9,10 @@ converted: "2026-05-11T17:33:48.152406"
 ```
 
 ---
-# Foreign Mathematical Functions  
+# Foreign Mathematical Functions
 
----  
-Use Case  
+---
+Use Case
 ## Abstract
 
 The AdvancedMathematics framework mainly exposes the mathematical functions and sets of mathematical points. The mathematical functions are used as evaluators by the geometric objects. If you want to introduce your own geometric object with associated mathematical equations that are not provided by the AdvancedMathematics framework, you can derive your own mathematical function. This article discusses how to introduce your own function class. The new class is used to demonstrate how to evaluate the mathematical functions.
@@ -24,8 +24,8 @@ The AdvancedMathematics framework mainly exposes the mathematical functions and 
       * Where to Find the CAAAmtForeign Code
     * Step-by-Step
     * In Short
-    * References  
----  
+    * References
+---
 ## What You Will Learn With This Use Case
 
 This use case explains the introduction of a new class of mathematical function by describing all the steps of its introduction on a concrete case: the new function to introduce is a function of two parameters (called _u_ and _v_) to _R_ , and defined by:
@@ -35,12 +35,12 @@ _(u,v) - > F(u,v) = a*u + b*v + c * cos(u)*cos(v) + d_
 
 where _a_ , _b_ , _c_ , _d_ are definition parameters. This function can be later used to defined the evaluators of a surface called "eggs box".
 
-Fig 1: The "Eggs Box" Using the New Type of Function ![Eggs Box](images/CAACgmAmtForeign.gif) | The surface is defined by three functions, one for each Cartesian coordinate: 
+Fig 1: The "Eggs Box" Using the New Type of Function ![Eggs Box](images/CAACgmAmtForeign.gif) | The surface is defined by three functions, one for each Cartesian coordinate:
 
     * _FX(u,v) = a x*u + bx*v + dx_
     * _FY(u,v) = a y*u + by*v + dy_
-    * _FZ(u,v) = c z * cos(u)*cos(v) + dz_  
----|---  
+    * _FZ(u,v) = c z * cos(u)*cos(v) + dz_
+---|---
 ## The Principle
 
 To introduce a new class of mathematical functions, you must derive the base class of the mathematical functions:
@@ -141,12 +141,12 @@ _//-----------------------------------------------------------------
 const double iOrigin);
 _//-----------------------------------------------------------------
     _//Returns "CAAAmtForeignFctXY"_
-      CATMathClassId IsA() const; 
+      CATMathClassId IsA() const;
 
       // _the type of available evaluations_
 _//Returns "CAAAmtForeignFctXY"_
 CATMathClassId IsA() const;
-      CATBoolean IsOption(const CATMathOption iOption) const;  
+      CATBoolean IsOption(const CATMathOption iOption) const;
 
       _//-----------------------------------------------------------------
 
@@ -156,20 +156,20 @@ CATBoolean IsOption(const CATMathOption iOption) const;
 _//-----------------------------------------------------------------
        double Eval(const double & iX, const double & iY) const;
 
-      _// first derivatives_ 
+      _// first derivatives_
       double EvalFirstDerivX(const double & iX, const double & iY) const;
       double EvalFirstDerivY(const double & iX, const double & iY) const;
       _// ... other overridden methods_
 
       _// multiple evaluations_
-      void Eval(const double u, 
-                const double v, 
+      void Eval(const double u,
+                const double v,
     	    const CATMathOption iOptions,
     	    double * ioF,
-    	    double * ioFx =NULL, 
+    	    double * ioFx =NULL,
                 double * ioFy =NULL,
-    	    double * ioFx2=NULL, 
-                double * ioFxy=NULL, 
+    	    double * ioFx2=NULL,
+                double * ioFxy=NULL,
                 double * ioFy2=NULL) const;
       _// ... other overriden methods_
     private:
@@ -192,17 +192,23 @@ This section emphasizes on some methods of the .cpp. The `IsOption` method descr
     {
 This section emphasizes on some methods of the .cpp. The `IsOption` method describes the type of evaluators that are overridden by the foreign surface.
 CATBoolean CAAAmtForeignFctXY::IsOption(const CATMathOption iOption) const
-      CATMathOption myOptions = 
+      CATMathOption myOptions =
         OptionEval + OptionEvalFirstDeriv + OptionEvalSecondDeriv ;
 
-       if ((myOptions & iOption) == iOption) return (1);   
-       return (0); 
+       if ((myOptions & iOption) == iOption) return (1);
+```vbscript
+       return (0);
 
-    }			
+```
+
+    }
 
 ```vbscript
 if ((myOptions & iOption) == iOption) return (1);
+```vbscript
 return (0);
+```
+
 It is important that the declaration of the `IsOption` method and the actual redefined methods are consistent. If not, some problems could appear during the use of the new function. Now follows the code of the function evaluator and the first derivative evaluator.
 
     _//-----------------------------------------------------------------
@@ -212,7 +218,7 @@ It is important that the declaration of the `IsOption` method and the actual red
     //-----------------------------------------------------------------_
 It is important that the declaration of the `IsOption` method and the actual redefined methods are consistent. If not, some problems could appear during the use of the new function. Now follows the code of the function evaluator and the first derivative evaluator.
 _//-----------------------------------------------------------------
-    double CAAAmtForeignFctXY::Eval(const double & u, 
+    double CAAAmtForeignFctXY::Eval(const double & u,
                                     const double & v) const
 
     {
@@ -224,7 +230,7 @@ const double & v) const
 
 const double & v) const
 return (_a*u+_b*v+_c*cos(u)*cos(v)+_Origin);
-    double CAAAmtForeignFctXY::EvalFirstDerivX(const double & u, 
+    double CAAAmtForeignFctXY::EvalFirstDerivX(const double & u,
                                                const double & v) const
 
     {
@@ -236,7 +242,7 @@ const double & v) const
 
 const double & v) const
 return (_a-_c*sin(u)*cos(v));
-    double CAAAmtForeignFctXY::EvalFirstDerivY(const double & u, 
+    double CAAAmtForeignFctXY::EvalFirstDerivY(const double & u,
                                                const double & v) const
 
     {
@@ -254,20 +260,20 @@ The following code is only an illustration of the fact that, in the case of this
 
 Overridden the derivatives evaluators is not necessary, because there always is a default implementation of the derivative evaluators and multi-evaluators.
 
-    _// Multi-evaluation of function and derivatives on a regular 
+    _// Multi-evaluation of function and derivatives on a regular
 
     // grid of Nu x Nv points delimited by  [uStart,uEnd] x [vStart,vEnd]
     // The value f[Nv*i+j] contains Eval(x_i,y_j) ..._
 Overridden the derivatives evaluators is not necessary, because there always is a default implementation of the derivative evaluators and multi-evaluators.
 _// Multi-evaluation of function and derivatives on a regular
-    void CAAAmtForeignFctXY::Eval(const CATMathIntervalND & iDomain, 
+    void CAAAmtForeignFctXY::Eval(const CATMathIntervalND & iDomain,
                                   const long * NbPoints,
                                   const CATMathOption iOptions,
                                   double * f,
-                                  double * fx , 
+                                  double * fx ,
     		              double * fy,
-                                  double * fx2, 
-                                  double * fxy, 
+                                  double * fx2,
+                                  double * fxy,
     		              double * fy2) const
 
     {
@@ -284,18 +290,30 @@ _// To speed up this multi-evaluation, use a precomputation which computes
       long nu = NbPoints[0], nv = NbPoints[1];
       const double * coords = iDomain.GetCoords();
       double uStart = coords[0], uDelta=0.;
-      if (nu>1) 
+      if (nu>1)
+```vbscript
         uDelta = (coords[1]-coords[0])/double(nu-1);
+```
+
       double vStart = coords[2], vDelta=0.;
       if (nv>1)
+```vbscript
+```vbscript
         vDelta = (coords[3]-coords[2])/double(nv-1);
 
-      _// Compute cos(vStart+j*vDelta) and sin(vStart+j*vDelta) and bufferizes them 
+```
+
+```
+
+      _// Compute cos(vStart+j*vDelta) and sin(vStart+j*vDelta) and bufferizes them
 
       // in sintab and costab arrays to save CPU time in the computation_
 ```vbscript
 if (nv>1)
+```vbscript
 vDelta = (coords[3]-coords[2])/double(nv-1);
+```
+
 _// Compute cos(vStart+j*vDelta) and sin(vStart+j*vDelta) and bufferizes them
       double * costab = new double[2*nv];
       double * sintab = costab + nv;
@@ -304,7 +322,7 @@ _// Compute cos(vStart+j*vDelta) and sin(vStart+j*vDelta) and bufferizes them
       costab[0] = cos(vStart);
       sintab[0] = sin(vStart);
 
-      for (long j=1; j<nv; j++) 
+      for (long j=1; j<nv; j++)
 ```
 
     	{
@@ -322,36 +340,60 @@ sintab[j] = costab[j-1]*dsin+sintab[j-1]*dcos;
       double cosu = cos(uStart);
       double sinu = sin(uStart);
       dcos = cos(uDelta);
+```vbscript
       dsin = sin(uDelta);
+```
+
       double u = uStart;
       for (long i=0; i<nu; i++) {
+```vbscript
         if (i>0) {
+```
+
           double tmp = cosu;
           cosu = cosu*dcos-sinu*dsin;   _// c = cos(uStart+i*uDelta)_
+```vbscript
+```vbscript
           sinu = tmp*dsin+sinu*dcos; _// s = sin(uStart+i*uDelta)_
+
+```
+
+```
 
         }
 ```vbscript
 if (i>0) {
 double tmp = cosu;
 cosu = cosu*dcos-sinu*dsin;   _// c = cos(uStart+i*uDelta)_
+```vbscript
 sinu = tmp*dsin+sinu*dcos; _// s = sin(uStart+i*uDelta)_
+```
+
         double v = vStart;
         for (long j=0; j<nv; j++) {
+```vbscript
           if (iOptions & OptionEval)
+```
+
 ```
 
             *(f++) = _a*u+_b*v+_c*cosu*costab[j]+_Origin;
 double v = vStart;
 for (long j=0; j<nv; j++) {
+```vbscript
+```vbscript
 if (iOptions & OptionEval)
-          if (iOptions & OptionEvalFirstDeriv) 
+          if (iOptions & OptionEvalFirstDeriv)
+
+```
+
+```
 
     			{
             *(fx++) = _a-_c*sinu*costab[j];
             *(fy++) = _b-_c*cosu*sintab[j];
           }
-          if (iOptions & OptionEvalSecondDeriv) 
+          if (iOptions & OptionEvalSecondDeriv)
     			{
             *(fx2++) = *(fy2++) = -_c*cosu*costab[j];
             *(fxy++) = _c*sinu*sintab[j];
@@ -370,7 +412,7 @@ v += vDelta;
 u += uDelta;
       delete [] costab;
 
-    }				
+    }
 ### The CAAAmtFctMain.cpp main
 
 delete [] costab;
@@ -378,7 +420,7 @@ The main first creates a CAAAmtForeignFctXY with the given input parameters. It 
 
     _//
 
-    // 1-Creation of the function 
+    // 1-Creation of the function
     //_
 The main first creates a CAAAmtForeignFctXY with the given input parameters. It then checks the type of the generated objects. It gets some evaluations and checks that they are correct.
 _//
@@ -395,7 +437,13 @@ double d = 10.;
 _//(u,v) - > F(u,v) = a*u + b*v + c * cos(u)*cos(v) + d_
     _// check the type_
     if (FALSE== f.**IsAKindOf**("CAAAmtForeignFctXY") ) return (1);
+```vbscript
+```vbscript
     if (FALSE== f.IsAKindOf("CATMathFunctionXY") )    return (2);
+
+```
+
+```
 
     _//
 
@@ -406,19 +454,31 @@ if (FALSE== f.IsAKindOf("CATMathFunctionXY") )    return (2);
 _//
     double u=0., v=0.;
     double val = f.**Eval** (u,v);
+```vbscript
     if (val != (c+d))                                 return (3);
 
+```
+
     _// first derivative in u_
-    u = 0.; 
+    u = 0.;
     v = CATPIBY4;
     val = f.**EvalFirstDerivX**(u,v);
+```vbscript
+```vbscript
     if (val != (a-c*sin(u)*cos(v)) )                  return (4);
+
+```
+
+```
 
     _// simultaneous evaluation at a point_
     double fu, fv, fu2 , fuv , fv2;
     f.**Eval**( u,  v, OptionEvalSecondDeriv, &val, &fu, &fv, &fu2, &fuv, &fv2 );
 
-    if (fv2 != (-c*cos(u)*cos(v)) )                   return (5);		
+```vbscript
+    if (fv2 != (-c*cos(u)*cos(v)) )                   return (5);
+
+```
 
 The case of the multi evaluation is also addressed as follows: A `CATMathIntervalND` (`N=2`) is created, defining the domain of the evaluation. The` Eval` method is then called, only asking the evaluation of the function and its first derivative. The `NULL` pointer corresponds to the fact that the second derivatives are not asked.
 
@@ -434,7 +494,7 @@ _// simultaneous evaluates the tangents at grid points.
     double umax       = CATPIBY4;
     double vmin       = 0.;
     double vmax       = CATPIBY2;
-    double aMinMax[4] = {umin, umax, vmin, vmax}; 
+    double aMinMax[4] = {umin, umax, vmin, vmax};
 
     **CATMathIntervalND** domain(2,aMinMax);
 
@@ -448,7 +508,7 @@ double aMinMax[4] = {umin, umax, vmin, vmax};
     double * aFv  = new double [tot];
     f.**Eval**(domain, nb, OptionEval+OptionEvalFirstDeriv , aVal, aFu, aFv, NULL, NULL ,NULL);
 
-    _// checks the evaluation of uij, vij, 0 <= i <= nb[0],  
+    _// checks the evaluation of uij, vij, 0 <= i <= nb[0],
 
     // 0 <= j <= nb[1]--> aVal[nb[1]*i+j]
 double * aFv  = new double [tot];
@@ -459,7 +519,10 @@ _// checks the evaluation of uij, vij, 0 <= i <= nb[0],
     double uij = umin + (umax-umin)*(i)/(nb[0]-1);
     double vij = vmin + (vmax-vmin)*(j)/(nb[1]-1);
     cout << aVal[nb[1]*i+j] << ", "<< a*uij + b*vij + c*cos(uij)*cos(vij) +d << endl;
+```vbscript
     if (aVal[nb[1]*i+j] != (a*uij + b*vij + c*cos(uij)*cos(vij) +d) ) return (6);
+
+```
 
     delete [] aVal;
     aVal = NULL;
@@ -479,9 +542,9 @@ Moreover, it illustrates the use of any mathematical functions.
 
 ## References
 
-[1] | [Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
----|---  
+[1] | [Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
+---|---
 ## History
 
-Version: **1** [Mar 2000] | Document created  
+Version: **1** [Mar 2000] | Document created
 ---|---

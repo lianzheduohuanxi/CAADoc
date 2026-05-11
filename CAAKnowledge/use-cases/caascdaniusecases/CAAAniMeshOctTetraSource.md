@@ -2,118 +2,69 @@
 title: "CAAAniMeshOctTetra.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CAAScdAniUseCases", "CAAScrBase", "CAAAniMeshOctTetra", "CATIA"]
+tags: ["CAAScrBase", "CAAAniMeshOctTetra", "CATIA", "CAAScdAniUseCases"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshOctTetraSource.htm"
-converted: "2026-05-11T11:06:32.276134"
+converted: "2026-05-11T11:27:02.486832"
 ---
 
-```
 ' COPYRIGHT DASSAULT SYSTEMES 2000
 
 ' ***********************************************************************
-
-' Purpose: Create an octree tetrahedron mesh
-
-' assign the part body as support
-
-' specify the global specifications
-
-' create a local specifications and add local mesh size
-
-' set attributes of domain specifications
-
-' Assumptions: 
-
-' Author: bmw
-
-' Languages: VBScript
-
-' Locales: English 
-
-' CATIA Level: V5R16
-
+'   Purpose: Create an octree tetrahedron mesh
+'            assign the part body as support
+'            specify the global specifications
+'            create a local specifications and add local mesh size
+'            set attributes of domain specifications
+'   Assumptions:   
+'   Author:       bmw
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R16
 ' ***********************************************************************
 
-Sub 
-CATMain()
+Sub CATMain()
 
 ' ----------------------------------------------------------- 
-
 ' Optional: allows to find the sample wherever it's installed
+  sDocPath=CATIA.SystemService.Environ("CATDocView")
 
- sDocPath=CATIA.SystemService.Environ("CATDocView")
-
- If 
-(Not CATIA.FileSystem.FolderExists(sDocPath))
- Then
-
- Err.Raise 9999,,"No Doc Path Defined"
-
- End If
-
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,,"No Doc Path Defined"
+    End If
 ' ----------------------------------------------------------- 
 
 ' Open the CATAnalysis Document
-
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis")
-
-Set
- oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 'Retrieve analysis manager
-
-Set 
-oAnalysisManager = oAnalysisDocument.Analysis
+Set oAnalysisManager = oAnalysisDocument.Analysis
 
 ' Retrieve the part document and product
-
-Set 
-oAnalysisLinkedDocuments = oAnalysisManager.LinkedDocuments
-
-Set 
-partDocument = oAnalysisLinkedDocuments.Item(1)
-
-Set 
-product = partDocument.Product
+Set oAnalysisLinkedDocuments = oAnalysisManager.LinkedDocuments
+Set partDocument = oAnalysisLinkedDocuments.Item(1)
+Set product = partDocument.Product
 
 ' Retrieve the analysis model
-
-Set 
-oAnalysisModels = oAnalysisManager.AnalysisModels
-
-Set 
-oAnalysisModel = oAnalysisModels.Item(1)
+Set oAnalysisModels = oAnalysisManager.AnalysisModels
+Set oAnalysisModel = oAnalysisModels.Item(1)
 
 ' Retrieve mesh manager and mesh part 
-
-Set 
-oAnalysisMeshManager = oAnalysisModel.MeshManager
-
-Set 
-oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+Set oAnalysisMeshManager = oAnalysisModel.MeshManager
+Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
 
 ' Retrieve publications from product and retrieve the published face.
-
-Set 
-publications = product.Publications
-
-Set 
-pubedge = publications.Item("Edge")
-
-Set 
-pubPartBody = publications.Item("PartBody")
+Set publications = product.Publications
+Set pubedge = publications.Item("Edge")
+Set pubPartBody = publications.Item("PartBody")
 
 ' Add the new Octree tetrahedron mesh part to the list of mesh parts
-
-Set 
-octreePart = oAnalysisMeshParts.Add ("MSHPartOctree3D") 
+Set octreePart = oAnalysisMeshParts.Add ("MSHPartOctree3D") 
 
 ' Add reference previously created
-
 octreePart.AddSupportFromPublication product, pubPartBody
 
 ' Set the global Specifications
-
 octreePart.SetGlobalSpecification "SizeValue", "10.0 mm"
 octreePart.SetGlobalSpecification "AbsoluteSagValue", "3.0 mm"
 octreePart.SetGlobalSpecification "ElementOrder", "Parabolic"
@@ -132,17 +83,106 @@ octreePart.SetGlobalSpecification "ProportionalSag", 1
 octreePart.SetGlobalSpecification "ProportionalSagValue", "0.5 mm"
 
 ' Add the Mesh local size as local specifications and assign it attributes
-
-Set 
-meshspecs1 = octreePart.AnalysisMeshLocalSpecifications
-
-Set 
-spec1 = meshspecs1.Add("MSHLocalMeshSize")
+Set meshspecs1 = octreePart.AnalysisMeshLocalSpecifications
+Set spec1 = meshspecs1.Add("MSHLocalMeshSize")
 spec1.SetAttribute "MSHMeshSizeMag", "1.5 mm"
 spec1.AddSupportFromPublication "ConnectorList", product, pubedge
 
 'Update the mesh part
+octreePart.Update
 
+End Sub
+
+
+
+```vbscript
+' COPYRIGHT DASSAULT SYSTEMES 2000
+
+' ***********************************************************************
+'   Purpose: Create an octree tetrahedron mesh
+'            assign the part body as support
+'            specify the global specifications
+'            create a local specifications and add local mesh size
+'            set attributes of domain specifications
+'   Assumptions:   
+'   Author:       bmw
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R16
+' ***********************************************************************
+
+Sub CATMain()
+
+' ----------------------------------------------------------- 
+' Optional: allows to find the sample wherever it's installed
+  sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,,"No Doc Path Defined"
+    End If
+' ----------------------------------------------------------- 
+
+
+' Open the CATAnalysis Document
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis&quot;)
+Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+
+'Retrieve analysis manager
+Set oAnalysisManager = oAnalysisDocument.Analysis
+
+' Retrieve the part document and product
+Set oAnalysisLinkedDocuments = oAnalysisManager.LinkedDocuments
+Set partDocument = oAnalysisLinkedDocuments.Item(1)
+Set product = partDocument.Product
+
+
+' Retrieve the analysis model
+Set oAnalysisModels = oAnalysisManager.AnalysisModels
+Set oAnalysisModel = oAnalysisModels.Item(1)
+
+' Retrieve mesh manager and mesh part 
+Set oAnalysisMeshManager = oAnalysisModel.MeshManager
+Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+
+' Retrieve publications from product and retrieve the published face.
+Set publications = product.Publications
+Set pubedge = publications.Item("Edge")
+Set pubPartBody = publications.Item("PartBody")
+
+
+' Add the new Octree tetrahedron mesh part to the list of mesh parts
+Set octreePart = oAnalysisMeshParts.Add ("MSHPartOctree3D") 
+
+' Add reference previously created
+octreePart.AddSupportFromPublication product, pubPartBody
+
+
+' Set the global Specifications
+octreePart.SetGlobalSpecification "SizeValue", "10.0 mm"
+octreePart.SetGlobalSpecification "AbsoluteSagValue", "3.0 mm"
+octreePart.SetGlobalSpecification "ElementOrder", "Parabolic"
+octreePart.SetGlobalSpecification "MaxInteriorSize", "1.2 mm"
+octreePart.SetGlobalSpecification "MinSizeForSags", "0.5 mm"
+octreePart.SetGlobalSpecification "MinGeometrySize", "0.5 mm"
+octreePart.SetGlobalSpecification "AbsoluteSag", 1
+octreePart.SetGlobalSpecification "MaxWarpAngle", "1.0 rad"
+octreePart.SetGlobalSpecification "Criteria", "Skewness"
+octreePart.SetGlobalSpecification "MeshGeometryViolation", 1
+octreePart.SetGlobalSpecification "InteriorSize", 1
+octreePart.SetGlobalSpecification "MinJacobian", 0.3
+octreePart.SetGlobalSpecification "MaxAttempts", 2
+octreePart.SetGlobalSpecification "MeshViolationValue", "0.5 mm"
+octreePart.SetGlobalSpecification "ProportionalSag", 1
+octreePart.SetGlobalSpecification "ProportionalSagValue", "0.5 mm"
+
+' Add the Mesh local size as local specifications and assign it attributes
+Set meshspecs1 = octreePart.AnalysisMeshLocalSpecifications
+Set spec1 = meshspecs1.Add("MSHLocalMeshSize")
+spec1.SetAttribute "MSHMeshSizeMag", "1.5 mm"
+spec1.AddSupportFromPublication "ConnectorList", product, pubedge
+
+'Update the mesh part
 octreePart.Update
 
 End Sub

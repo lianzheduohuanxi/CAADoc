@@ -2,134 +2,131 @@
 title: "Untitled"
 category: "use-case"
 module: "CAAScdDriUseCases"
-tags: ["CAAScdDriUseCases", "CAAScrBase", "CATIA", "CAADriCreateView"]
+tags: ["CAAScrBase", "CAADriCreateView", "CATIA", "CAAScdDriUseCases"]
 source_file: "Doc/online/CAAScdDriUseCases/CAADriCreateViewSource.htm"
-converted: "2026-05-11T11:06:32.905146"
+converted: "2026-05-11T11:27:02.751653"
 ---
 
-```
 Option Explicit
-
 ' COPYRIGTH DASSAULT SYSTEMES 2000
 
 ' ***********************************************************************
-
-' Purpose: Create A Drawing document with a front view and a projection view
-
-' Assumtions: Looks for MyPart.CATPart in the DocView 
-
-' Author: 
-
-' Languages: VBScript
-
-' Locales: English 
-
-' CATIA Level: V5R6 
-
+'   Purpose:      Create A Drawing document with a front view and a projection view
+'   Assumtions:   Looks for MyPart.CATPart in the DocView   
+'   Author: 
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R6 
 ' ***********************************************************************
 
-Sub 
-CATMain()
+Sub CATMain()
 
- 
-' ----------------------------------------------------------- 
+    ' ----------------------------------------------------------- 
+    ' Optional: allows to find the sample wherever it's installed
+    dim sDocPath As String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,,"No Doc Path Defined"
+    End If
+    ' ----------------------------------------------------------- 
 
- 
-' Optional: allows to find the sample wherever it's installed
+    ' Open the Part document 
+    Dim oPartToDraw As PartDocument
+    Set oPartToDraw = CATIA.Documents.Open(sDocPath & _
+             "\online\CAAScdDriUseCases\samples\Cube.CATPart")
 
- dim 
-sDocPath
- As 
-String 
- sDocPath=CATIA.SystemService.Environ("CATDocView")
+    ' Create a drawing document: it becomes the active document.
+    Dim oDrawing As DrawingDocument
+    Set oDrawing = CATIA.Documents.Add("Drawing")
 
- If 
-(Not CATIA.FileSystem.FolderExists(sDocPath))
- Then
+    ' Retrieve the active sheet
+    Dim oSheet As DrawingSheet
+    Set oSheet = oDrawing.Sheets.ActiveSheet
 
- Err.Raise 9999,,"No Doc Path Defined"
+    ' Create a view called "Front View" in this sheet
+    Dim oFrontView As DrawingView
+    Set oFrontView = oSheet.Views.Add("Front View")
 
- End If
+    ' Retrieve it generative behavior
+    Dim oFrontViewGB As DrawingViewGenerativeBehavior
+    Set oFrontViewGB = oFrontView.GenerativeBehavior
 
- 
-' ----------------------------------------------------------- 
+    ' Declare the part to draw in this front view
+    oFrontViewGB.Document = oPartToDraw
 
- 
-' Open the Part document 
+    ' Define this view as a front view, with the XY plane (in oPartToDraw) as projection plane 
+    oFrontViewGB.DefineFrontView 1, 0, 0, 0, 1, 0
 
- Dim 
-oPartToDraw
- As 
-PartDocument
+    ' Position the View in the Sheet
+    oFrontView.x = 300
+    oFrontView.y = 150
 
- Set 
-oPartToDraw = CATIA.Documents.Open(sDocPath & _
- "\online\CAAScdDriUseCases\samples\Cube.CATPart")
+    ' Update the view
+    oFrontViewGB.Update 
 
- 
-' Create a drawing document: it becomes the active document.
+End Sub
 
- Dim 
-oDrawing
- As 
-DrawingDocument
 
- Set 
-oDrawing = CATIA.Documents.Add("Drawing")
 
- 
-' Retrieve the active sheet
+```vbscript
+Option Explicit
+' COPYRIGTH DASSAULT SYSTEMES 2000
 
- Dim 
-oSheet
- As 
-DrawingSheet
+' ***********************************************************************
+'   Purpose:      Create A Drawing document with a front view and a projection view
+'   Assumtions:   Looks for MyPart.CATPart in the DocView   
+'   Author: 
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R6 
+' ***********************************************************************
 
- Set 
-oSheet = oDrawing.Sheets.ActiveSheet
 
- 
-' Create a view called "Front View" in this sheet
+Sub CATMain()
 
- Dim 
-oFrontView
- As 
-DrawingView
 
- Set 
-oFrontView = oSheet.Views.Add("Front View")
+    ' ----------------------------------------------------------- 
+    ' Optional: allows to find the sample wherever it's installed
+    dim sDocPath As String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,,"No Doc Path Defined"
+    End If
+    ' ----------------------------------------------------------- 
 
- 
-' Retrieve it generative behavior
+    ' Open the Part document 
+    Dim oPartToDraw As PartDocument
+    Set oPartToDraw = CATIA.Documents.Open(sDocPath & _
+             "\online\CAAScdDriUseCases\samples\Cube.CATPart")
 
- Dim 
-oFrontViewGB
- As 
-DrawingViewGenerativeBehavior
+    ' Create a drawing document: it becomes the active document.
+    Dim oDrawing As DrawingDocument
+    Set oDrawing = CATIA.Documents.Add("Drawing")
 
- Set 
-oFrontViewGB = oFrontView.GenerativeBehavior
+    ' Retrieve the active sheet
+    Dim oSheet As DrawingSheet
+    Set oSheet = oDrawing.Sheets.ActiveSheet
 
- 
-' Declare the part to draw in this front view
+    ' Create a view called "Front View" in this sheet
+    Dim oFrontView As DrawingView
+    Set oFrontView = oSheet.Views.Add("Front View")
 
- oFrontViewGB.Document = oPartToDraw
+    ' Retrieve it generative behavior
+    Dim oFrontViewGB As DrawingViewGenerativeBehavior
+    Set oFrontViewGB = oFrontView.GenerativeBehavior
 
- 
-' Define this view as a front view, with the XY plane (in oPartToDraw) as projection plane 
+    ' Declare the part to draw in this front view
+    oFrontViewGB.Document = oPartToDraw
 
- oFrontViewGB.DefineFrontView 1, 0, 0, 0, 1, 0
+    ' Define this view as a front view, with the XY plane (in oPartToDraw) as projection plane 
+    oFrontViewGB.DefineFrontView 1, 0, 0, 0, 1, 0
 
- 
-' Position the View in the Sheet
+    ' Position the View in the Sheet
+    oFrontView.x = 300
+    oFrontView.y = 150
 
- oFrontView.x = 300
- oFrontView.y = 150
-
- 
-' Update the view
-
- oFrontViewGB.Update 
+    ' Update the view
+    oFrontViewGB.Update 
 
 End Sub
 ```

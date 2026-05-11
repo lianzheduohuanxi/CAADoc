@@ -11,20 +11,20 @@ converted: "2026-05-11T17:17:55.631615"
 ---
 # 3D PLM Enterprise Architecture
 
-| 
+|
 ## User Interface - Frame
 
-| 
+|
 ### Using Cameras
 
-_Creating a single command seen as several end user commands_  
----|---|---  
-Use Case  
+_Creating a single command seen as several end user commands_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
 
-This article shows how to create a command that can be passed a parameter. It uses a camera to modify the current window viewpoint, the parameter being the selected viewpoint. 
+This article shows how to create a command that can be passed a parameter. It uses a camera to modify the current window viewpoint, the parameter being the selected viewpoint.
 
   * **What You Will Learn With This Use Case**
   * **The CAAAfrGeoCommands Use Case**
@@ -35,7 +35,7 @@ This article shows how to create a command that can be passed a parameter. It us
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
@@ -53,12 +53,12 @@ CAAAfrGeoCommands is a use case of the CAAApplicationFrame.edu framework that il
 CAAAfrGeoCommands is a use case of the CAAApplicationFrame.edu framework that illustrates the ApplicationFrame framework capabilities.
 The CAAAfrGeoCommands use case includes several commands. The CAAAfrChangeViewNormalCmd command that changes the current window viewpoint is the only command described here. This command that belongs to the CAAAfrGeometryWshop changes the current window viewpoint to one of the following.
 
- See the yz plane from left. Select View->Normal View->NormalX  
+ See the yz plane from left. Select View->Normal View->NormalX
 
 The CAAAfrGeoCommands use case includes several commands. The CAAAfrChangeViewNormalCmd command that changes the current window viewpoint is the only command described here. This command that belongs to the CAAAfrGeometryWshop changes the current window viewpoint to one of the following.
 See the yz plane from left. Select View->Normal View->NormalX
- See the zx plane from right. Select View->Normal View->NormalY  
- See the xy plane from top. Select View->Normal View->NormalZ  
+ See the zx plane from right. Select View->Normal View->NormalY
+ See the xy plane from top. Select View->Normal View->NormalZ
 
 This command is instantiated from the workshop using as many command headers as there are end user commands, that is, as there are push items in menus or push buttons in toolbars that trigger this command,
 
@@ -68,7 +68,10 @@ See the xy plane from top. Select View->Normal View->NormalZ
 This command is instantiated from the workshop using as many command headers as there are end user commands, that is, as there are push items in menus or push buttons in toolbars that trigger this command,
 See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched. For the specific scenario :
 
-Do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following: 
+```vbscript
+Do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following:
+
+```
 
   * Select File->New
   * In the New box, select CAAGeometry and click OK
@@ -80,26 +83,26 @@ Do not type the module name on the command line, but type CNEXT instead. When th
 The CAAAfrGeoCommand use case is made of a single class named _CAAAfrChangeViewNormalCmd_ located in the CAAAfrGeoCommands.m module of the CAAApplicationFrame.edu framework:
 
 The CAAAfrGeoCommand use case is made of a single class named _CAAAfrChangeViewNormalCmd_ located in the CAAAfrGeoCommands.m module of the CAAApplicationFrame.edu framework:
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeoCommands.m\`  
+Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeoCommands.m\`
 
 The CAAAfrGeoCommand use case is made of a single class named _CAAAfrChangeViewNormalCmd_ located in the CAAAfrGeoCommands.m module of the CAAApplicationFrame.edu framework:
 Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeoCommands.m\`
-Unix | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeoCommands.m/`  
+Unix | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeoCommands.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
-In addition, the command header that stands for this command in the CAAAfrGeometryWshop and that passes the parameter to the command is described with the workshop. 
+In addition, the command header that stands for this command in the CAAAfrGeometryWshop and that passes the parameter to the command is described with the workshop.
 
 [Top]
 ### Step-by-Step
 
 To create the command that changes the current window viewpoint, there are three steps:
-# | Step | Where  
----|---|---  
+# | Step | Where
+---|---|---
 To create the command that changes the current window viewpoint, there are three steps:
-1 | Create the command and storing the argument | constructor  
-2 | Set the camera axes | `Activate` method  
-3 | Create the camera and assign it to the current window | `Activate` method  
+1 | Create the command and storing the argument | constructor
+2 | Set the camera axes | `Activate` method
+3 | Create the camera and assign it to the current window | `Activate` method
 
 [Top]
 #### Creating the Command and Storing the Argument
@@ -110,9 +113,9 @@ The command constructor is as follows.
                              : CATCommand("ViewNormalId",**CATCommandModeExclusive**)
     {
        _ArgumentCmd = **CATPtrToINT32**(iArgument) ;
-    }  
+    }
 
----  
+---
 
 The command headers call the constructor with an argument that indicates the plane that should be normal to the sight direction. This argument is:
 
@@ -156,9 +159,9 @@ switch (_ArgumentCmd)
                  break ;
 
       }
-      ...  
+      ...
 
----  
+---
 
 The argument takes the value of 1 for a plane normal to the x axis, 2 for a plane normal to the y axis, and 3 for a plane normal to the z axis. The camera axes are made up of a sight direction axis that joins the eye and the target, and a zenith axis perpendicular to the sight direction. ![CAAAfr3DCamera.gif \(3610 bytes\)](images/CAAAfr3DCamera.gif)
 
@@ -174,13 +177,19 @@ These direction as set as _CATMathDirection_ instances is the switch.
       ...
       CATFrmLayout *pCurrentLayout = **CATFrmLayout::GetCurrentLayout**();
 CATFrmLayout *pCurrentLayout = **CATFrmLayout::GetCurrentLayout**();
+```vbscript
       if ( pCurrentLayout )
+
+```
 
       {
 CATFrmLayout *pCurrentLayout = **CATFrmLayout::GetCurrentLayout**();
 if ( pCurrentLayout )
         CATFrmWindow *pCurrentWindow = pCurrentLayout->**GetCurrentWindow**();
+```vbscript
         if ( pCurrentWindow )
+
+```
 
         {
 ```vbscript
@@ -193,13 +202,16 @@ if ( pCurrentWindow )
                                                             zenith);
 ```
 
-          **CATI3DCamera** *pCamera = NULL;                
+          **CATI3DCamera** *pCamera = NULL;
 CATFrm3DCamera * pCameraImpl = new **CATFrm3DCamera**("cam3d",
 origin,
 direction,
 zenith);
           HRESULT rc = pCameraImpl->QueryInterface(IID_CATI3DCamera, (void**)&pCamera);
+```vbscript
           if (SUCCEEDED(rc))
+
+```
 
           {
 zenith);
@@ -217,14 +229,14 @@ pCamera->Release();
 ```
 
         }
-      }  
+      }
 pCamera->Release();
 pCameraImpl->Release();
       return CATStatusChangeRCCompleted;
 
-    }  
+    }
 
----  
+---
 
 To set the camera axes as those of the viewpoint of the current window, the layout is first retrieved thanks to the static `CATFrmLayout::GetCurrentLayout` method, and then the current window is retrieved from this layout using `GetCurrentWindow`. Then a 3D camera is instantiated with the eye location, sight and zenith directions determined with respect to the argument passed, that is, with respect to the View->Normal View item selected by the end user, and a pointer to the _CATI3DCamera_ interfaces is retrieved from this camera. This pointer is assigned to the current window whose viewpoint changes to match the camera thanks to the `SetCamera` method.
 
@@ -242,18 +254,18 @@ A camera is an object that can be assigned to a window to set or reset the viewp
 * * *
 ### References
 
-[1] | [Creating Standard Command Headers](CAAAfrSampleStdCommandHeader.md)  
----|---  
-[Top]  
----  
+[1] | [Creating Standard Command Headers](CAAAfrSampleStdCommandHeader.md)
+---|---
+[Top]
+---
 
 * * *
 ### History
 
-Version: **1** [Jan 2000] | Document created  
----|---  
-Version: **2** [Mar 2004] | 64 bits   
-[Top]  
+Version: **1** [Jan 2000] | Document created
+---|---
+Version: **2** [Mar 2004] | 64 bits
+[Top]
 
 * * *
 

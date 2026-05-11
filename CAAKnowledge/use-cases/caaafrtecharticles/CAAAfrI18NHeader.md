@@ -11,20 +11,20 @@ converted: "2026-05-11T17:17:55.887253"
 ---
 # 3D PLM Enterprise Architecture
 
-| 
+|
 ## User Interface - Frame
 
-| 
+|
 ### Creating Resources for Command Headers
 
-_How to provide the title, help messages, and icons for command headers_  
----|---|---  
-Technical Article  
+_How to provide the title, help messages, and icons for command headers_
+---|---|---
+Technical Article
 
 * * *
 ### Abstract
 
-This article shows how to create the resource files, and fill them in with the resources, for command headers. It is in connection with the article describing the workshop creation [1], since it uses as examples command headers created with this workshop. 
+This article shows how to create the resource files, and fill them in with the resources, for command headers. It is in connection with the article describing the workshop creation [1], since it uses as examples command headers created with this workshop.
 
   * **Declaring the Command Header Resource Files**
   * **Filling in the Command Header CATNls File**
@@ -33,14 +33,17 @@ This article shows how to create the resource files, and fill them in with the r
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### Declaring the Command Header Resource Files
 
+```vbscript
 If you use the macros `MacDefineHeader` and `MacImplementHeader`, or `MacDeclareHeader`, the resource files searched for at run time should have the same name than you command header class. This is the case of the CAAGeometryWksHeader [1].
 
 If you create the command header class by yourself, you need to declare the resource file to use. Assume the command header class is named MyHeaderClass. You should insert the `CATDeclareHeaderResources` macro in MyHeaderClass.h:
+
+```
 
     ...
 ```vbscript
@@ -52,11 +55,14 @@ If you create the command header class by yourself, you need to declare the reso
 class MyHeaderClass : public CATCommandHeader
       CATDeclareClass;
       CATDeclareHeaderResources;
+```vbscript
       public :
 
-      ...  
+```
 
----  
+      ...
+
+---
 
 In MyHeaderClass.cpp, you should insert the `CATImplementHeaderResources` macro:
 
@@ -66,17 +72,17 @@ In MyHeaderClass.cpp, you should insert the `CATImplementHeaderResources` macro:
                                 BaseCommandHeaderClass,
                                 ResourceFile);
 
-    ...  
+    ...
 
----  
+---
 
-where: 
+where:
 
   * `CommandHeaderClass` is the command header class name
   * `BaseCommandHeaderClass` is the command header class from which `CommandHeaderClass` derives
   * `ResourceFile` is the name used to build the names of the resource files associated with `CommandHeaderClass`. Using the `CommandHeaderClass` name for this file in this macro is recommended.
 
-There are two command header resource files: 
+There are two command header resource files:
 
 There are two command header resource files:
   1. The resource file containing the title and help messages in the English language, and that can be translated into other languages. It is suffixed using CATNls
@@ -92,9 +98,9 @@ This file contains the resources for each of the command header instances: title
 
 Each resource is provided using a key and a text separated by the equal sign. The key is built as a concatenation of the command header resource file name, a dot, the command header identifier you defined as the first parameter of the `New` operator, a dot, and a keyword designating the appropriate resource. The message is enclosed using double quotes and ended using a semicolon. For example, the Query command of the Explore menu defined for the Geometry workshop in [2] has its title defined as follows:
 
-    CAAAfrGeometryWksHeader.CAAAfrQueryExploreHdr.Title     = "Query" ;  
+    CAAAfrGeometryWksHeader.CAAAfrQueryExploreHdr.Title     = "Query" ;
 
----  
+---
 
 where:
 
@@ -114,8 +120,8 @@ The following is an extract of CAAGeometryWksHeader.CATNls, showing the resource
     CAAAfrGeometryWksHeader.CAAAfrPointHdr.ShortHelp = "Point" ;
     CAAAfrGeometryWksHeader.CAAAfrPointHdr.Help      = "Creates points: indicate a point or enter coordinates";
     CAAAfrGeometryWksHeader.CAAAfrPointHdr.LongHelp  = "Point (Insert menu)
-    Create points in two ways: 
-     1- Indicate a point with the mouse left button 
+    Create points in two ways:
+     1- Indicate a point with the mouse left button
      2- Enter the point coordinates in the dialog box
     This Command is in repeat mode, so you can create
     several points along the command life.
@@ -131,48 +137,51 @@ CAAAfrGeometryWksHeader.CAAAfrPointHdr.Category  = "Element" ;
     CAAAfrGeometryWksHeader.CAAAfrCircleHdr.Help      = "Creates circles" ;
     CAAAfrGeometryWksHeader.CAAAfrCircleHdr.LongHelp  = "Circle (Insert menu)
     Create circles:
-     1- Select a projection plane: 
-     2- Indicate a point for the circle center 
+     1- Select a projection plane:
+     2- Indicate a point for the circle center
      3- Move the mouse and indicate a point to define the radius.";
     CAAAfrGeometryWksHeader.CAAAfrCircleHdr.Category  = "Element" ;
 
-    ...  
+    ...
 
----  
-
-Below is a reminder of the keywords used in the resource keys that can be found in the CATNls resource file:
+---
 
 Below is a reminder of the keywords used in the resource keys that can be found in the CATNls resource file:
-Title | Text displayed in the menu or submenu, and in the toolbar if no icon is provided  
 
 Below is a reminder of the keywords used in the resource keys that can be found in the CATNls resource file:
 Title | Text displayed in the menu or submenu, and in the toolbar if no icon is provided
-Help | Text displayed in the status bar as the command help message when the mouse is over the command in the toolbar or in the menu or submenu  
-ShortHelp | Text displayed in a balloon as the command short help message when the mouse is over the command. This is not applicable to commands only located in menus or submenus  
-LongHelp | Text displayed in a balloon when the end user clicks ![](../CAAIcons/images/I_WhatsThisP2.gif), which turns the mouse cursor as a question mark, and then clicks on the icon representing the command. This is not applicable to commands located only in menu or submenus  
-Mnemonic | An "Alt+key" keystroke combination that activates menus, submenus, and menu items. The key character is underlined in the menu, submenu, or menu item title, and therefore must belong to this title. No duplicates should exist in the set of mnemonic keys for a given menu or submenu. The case is ignored when using the mnemonic. The mnemonic is declared in the workshop resource file for menus and submenus only. It is declared in the command header resource file for menu items.  
-Category | An attribute associated with the command and used to sort the commands in the Command tab page of the Customize window.  
+
+Below is a reminder of the keywords used in the resource keys that can be found in the CATNls resource file:
+Title | Text displayed in the menu or submenu, and in the toolbar if no icon is provided
+Help | Text displayed in the status bar as the command help message when the mouse is over the command in the toolbar or in the menu or submenu
+ShortHelp | Text displayed in a balloon as the command short help message when the mouse is over the command. This is not applicable to commands only located in menus or submenus
+LongHelp | Text displayed in a balloon when the end user clicks ![](../CAAIcons/images/I_WhatsThisP2.gif), which turns the mouse cursor as a question mark, and then clicks on the icon representing the command. This is not applicable to commands located only in menu or submenus
+Mnemonic | An "Alt+key" keystroke combination that activates menus, submenus, and menu items. The key character is underlined in the menu, submenu, or menu item title, and therefore must belong to this title. No duplicates should exist in the set of mnemonic keys for a given menu or submenu. The case is ignored when using the mnemonic. The mnemonic is declared in the workshop resource file for menus and submenus only. It is declared in the command header resource file for menu items.
+Category | An attribute associated with the command and used to sort the commands in the Command tab page of the Customize window.
 
 [Top]
 ### Filling in the Command Header CATRsc File
 
 Category | An attribute associated with the command and used to sort the commands in the Command tab page of the Customize window.
-This file contains the icon names to be associated with the command header and displayed in the toolbars and in the menus. It can also include the LongHelpId, an pointer to the the URL where the file documenting the command is located. 
+This file contains the icon names to be associated with the command header and displayed in the toolbars and in the menus. It can also include the LongHelpId, an pointer to the the URL where the file documenting the command is located.
 
 Each icon resource is provided using a key and a file name without suffix separated by the equal sign. The key is built as a concatenation of the command header resource file name, a dot, the command header identifier you defined as the first parameter of the `New` operator, a dot, and a keyword designating the appropriate resource. The message is enclosed using double quotes and ended using a semicolon. For example, the Point command header icon name to display in the Basic Elements toolbar is defined as follows
 
-    CAAAfrGeometryWksHeader.CAAAfrPointHdr.Icon.Normal     = "I_CAAPoint" ;  
+    CAAAfrGeometryWksHeader.CAAAfrPointHdr.Icon.Normal     = "I_CAAPoint" ;
 
----  
+---
 
 ```vbscript
-For the URL, 
+```vbscript
+For the URL,
 
 ```
 
-    CCAAAfrGeometryWksHeader.CAAAfrPointHdr.LongHelpId      = "CAAAfrGeometryWksHeader.CAAAfrPointHdr" ;  
+```
 
----  
+    CCAAAfrGeometryWksHeader.CAAAfrPointHdr.LongHelpId      = "CAAAfrGeometryWksHeader.CAAAfrPointHdr" ;
+
+---
 
 CCAAAfrGeometryWksHeader.CAAAfrPointHdr.LongHelpId      = "CAAAfrGeometryWksHeader.CAAAfrPointHdr" ;
 It is recommended to build the URL  as a concatenation of the command header resource file name, a dot, the command header identifier you defined as the first parameter of the `New` operator.
@@ -190,21 +199,21 @@ The following is an extract of CAAGeometryWksHeader.CATRsc, showing the resource
     ...
 CCAAAfrGeometryWksHeader.CAAAfrPointHdr.Icon.Normal     = "I_CAAPoint" ;
 CAAAfrGeometryWksHeader.CAAAfrPointHdr.LongHelpId      = "CAAAfrGeometryWksHeader.CAAAfrPointHdr" ;
-    CAAAfrGeometryWksHeader.CAAAfrCircleHdr.Icon.Normal    = "I_CAACircle" ;  
+    CAAAfrGeometryWksHeader.CAAAfrCircleHdr.Icon.Normal    = "I_CAACircle" ;
 
----  
+---
 
 CAAAfrGeometryWksHeader.CAAAfrCircleHdr.Icon.Normal    = "I_CAACircle" ;
 Below is a reminder of the keywords used in the resource keys that can be found in the CATRsc resource file:
 
-Icon.Normal | Icon associated with the command and used in toolbars when the command is available. The greyed icon associated with the command when it is unavailable is computed from this one. The displayed icon is a shadowed icon computed from the Normal one too.  
+Icon.Normal | Icon associated with the command and used in toolbars when the command is available. The greyed icon associated with the command when it is unavailable is computed from this one. The displayed icon is a shadowed icon computed from the Normal one too.
 
 Below is a reminder of the keywords used in the resource keys that can be found in the CATRsc resource file:
 Icon.Normal | Icon associated with the command and used in toolbars when the command is available. The greyed icon associated with the command when it is unavailable is computed from this one. The displayed icon is a shadowed icon computed from the Normal one too.
-Icon.Pressed | Icon associated with the command when it is pressed. This keyword is kept for compatibility. If not explicitly specified through this keyword, the Pressed icon is computed from the Normal one  
-Icon.Focused | Icon associated with the command when the mouse moves or is located above. This keyword is kept for compatibility. If not explicitly specified through this keyword, the Focused icon is computed from the Normal one  
-Accelerator | A keystroke combination, such as "Ctrl+key", used to activate the command directly. The keystroke combination is written beside the command title in the menu or submenu  
-LongHelpId | Identifier to associate a URL to the command. The URL is stored in a  mapping file.   
+Icon.Pressed | Icon associated with the command when it is pressed. This keyword is kept for compatibility. If not explicitly specified through this keyword, the Pressed icon is computed from the Normal one
+Icon.Focused | Icon associated with the command when the mouse moves or is located above. This keyword is kept for compatibility. If not explicitly specified through this keyword, the Focused icon is computed from the Normal one
+Accelerator | A keystroke combination, such as "Ctrl+key", used to activate the command directly. The keystroke combination is written beside the command title in the menu or submenu
+LongHelpId | Identifier to associate a URL to the command. The URL is stored in a  mapping file.
 
 [Top]
 ### Providing the Icon Files
@@ -223,17 +232,17 @@ The command header resources are provided in two files whose names are the comma
 * * *
 ### References
 
-[1] | [Application Frame Overview](CAAAfrOverview.md)  
----|---  
-[2] | [Creating a Workbench](../CAAAfrUseCases/CAAAfrSampleWorkbench.md)  
-[Top]  
+[1] | [Application Frame Overview](CAAAfrOverview.md)
+---|---
+[2] | [Creating a Workbench](../CAAAfrUseCases/CAAAfrSampleWorkbench.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Jan 2001] | Document created  
----|---  
-[Top]  
+Version: **1** [Jan 2001] | Document created
+---|---
+[Top]
 
 * * *
 

@@ -12,31 +12,31 @@ converted: "2026-05-11T17:33:47.535004"
 tags: ["CATICGMHybTrim", "CATITPSThreadGeometrySpecification", "CATICGMHybIntersect", "CATIMmiUseDatumFactory", "CATIMmiUseSolidInsertion", "CATIMmiMechanicalFeature_var", "CATITPSAssociatedTextVisu", "CATIMmiUseCharacteristicExtremity", "CATITPSTextVisu", "CATIVpmLightVersion", "CATIMmiUseStructureAnalyse", "CATIMmiUseMfBRep", "CATIMmiUseREdge", "CATICGMDynAdvancedFillet", "CATIMmiBRepScanServices", "CATIStrPPGExecLogSettingAtt", "CATICGMDynAdvancedDraft", "CATICGMTopExtrude", "CATICGMTopExtractFace", "CATIMmiUsePrtPart"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R23GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.535004"
-CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5-6R2013 GA  
+CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5-6R2013 GA
 
 * * *
 
 The following are the new CAA V5-6R2013 GA C++ Authorized APIs, compared with CAA V5-6R2012 at GA level.
 
-  * CATFmtToolsInterfaces framework 
+  * CATFmtToolsInterfaces framework
     * Class CATFmtFEMRepFactory
-  * CATGSMUseItf framework 
+  * CATGSMUseItf framework
     * Interface CATIGSMUseMultipleSolutionsManager
-  * CATIAV4Interfaces framework 
+  * CATIAV4Interfaces framework
     * Global Function CATV4iIsExternalWsp
-  * CATMecModExtendItf framework 
+  * CATMecModExtendItf framework
     * Class CATMf3DBehaviorAdapter
     * Class CATMmrUseSolidInsertionAdapt
     * Interface CATIMmiAlgoConfigServices
     * Interface CATIMmiErrUpdate
     * Interface CATIMmiFeatureAttributes
     * Interface CATIMmiUpdateError
-  * CATMecModLiveUseItf framework 
+  * CATMecModLiveUseItf framework
     * Class CATLISTV(CATIMmiMechanicalFeature_var)
     * Interface CATIMmiMechanicalFeature
     * Interface CATIMmiUseBodyContent
     * Interface CATIMmiUsePrtPart
-  * CATMecModUseItf framework 
+  * CATMecModUseItf framework
     * Class CATLISTP(CATIMmiUseBRepAccess)
     * Class CATLISTP(CATIMmiUseRSur)
     * Class CATLISTV(CATIMmiUseBRepAccess_var)
@@ -76,9 +76,9 @@ The following are the new CAA V5-6R2013 GA C++ Authorized APIs, compared with CA
     * Interface CATIMmiUseWireFVertex
     * Interface CATIMmiUseWireREdge
     * Typedef CATCkeListOfParm
-  * CATPDMReconcile framework 
+  * CATPDMReconcile framework
     * Macro or #define CATScmPDMObject_HasACATUuid
-  * CATTPSInterfaces framework 
+  * CATTPSInterfaces framework
     * Enumeration CATTPSConstrainingDOF
     * Enumeration CATTPSIndividualElementControl
     * Enumeration CATTPSToleranceThreadGeometry
@@ -89,11 +89,11 @@ The following are the new CAA V5-6R2013 GA C++ Authorized APIs, compared with CA
     * Interface CATITPSStatisticalTolerancing
     * Interface CATITPSTextVisu
     * Interface CATITPSThreadGeometrySpecification
-  * CCWInterfaces framework 
+  * CCWInterfaces framework
     * Interface CCWICVNonGraphicProperty
-  * ENOVaultClientCPP framework 
+  * ENOVaultClientCPP framework
     * Macro or #define VAULT_E_MAX_FILE_SIZE_EXCEEDED
-  * FeatureModelerExt framework 
+  * FeatureModelerExt framework
     * Class CATFmAttributeName
     * Class CATFmAttributeValuationInfo
     * Class CATFmAttributeValue
@@ -135,11 +135,11 @@ The following are the new CAA V5-6R2013 GA C++ Authorized APIs, compared with CA
     * Global Function CATFmGetLastError
     * Interface CATIFmFeatureBehaviorCustomization
     * Typedef CATFmEventSubscriberMethod
-  * GMModelInterfaces framework 
+  * GMModelInterfaces framework
     * Enumeration CATLengthType
     * Global Function CATCGMCreateBodyFromLengthOnWire
     * Interface CATICGMBodyFromLengthOnWire
-  * GMOperatorsInterfaces framework 
+  * GMOperatorsInterfaces framework
     * Macro or #define CATPatternKOAndFar
     * Macro or #define CATPatternKO
     * Macro or #define CATPatternOKWithBoolean
@@ -173,7 +173,7 @@ The following are the new CAA V5-6R2013 GA C++ Authorized APIs, compared with CA
     * Interface CATICGMTopFaceReplaceSurface
     * Interface CATICGMTopPattern
     * Interface CATICGMTopSilhouette
-  * GeometricObjects framework 
+  * GeometricObjects framework
     * Class CATLISTP(CATCGMJournalInfo)
     * Macro or #define CATBodyMode
     * Macro or #define CATGeoCreateBodyDelayed
@@ -181,42 +181,42 @@ The following are the new CAA V5-6R2013 GA C++ Authorized APIs, compared with CA
     * Macro or #define CATGeoCreateBodyName
     * Macro or #define CatBodyMode_Delayed
     * Macro or #define CatBodyMode_Working
-  * ManufacturingInterfaces framework 
+  * ManufacturingInterfaces framework
     * Interface CATIMfgGeomContours
     * Interface CATIMfgGeometryDefinition
     * Interface CATIMfgGeometryParameters
-  * Mathematics framework 
+  * Mathematics framework
     * Class CATLISTV(CATMathPlane)
     * Class CATLISTV(CATMathVector)
     * Enumeration CATCGMScaleCategory
     * Enumeration CATCGMScaleRange
-  * ObjectSpecsModeler framework 
+  * ObjectSpecsModeler framework
     * Class CATOsmCatalogAccessServices
-  * PartInterfaces framework 
+  * PartInterfaces framework
     * Global Function CATCreateCATIPrtThreadStandardServices
-  * StructureInterfaces framework 
+  * StructureInterfaces framework
     * Interface CATIStrPPGExecLogSettingAtt
-  * TopologicalOperators framework 
+  * TopologicalOperators framework
     * Global Function CATCreateDirNewBodyExtremum
-  * TopologicalOperatorsLight framework 
+  * TopologicalOperatorsLight framework
     * Global Function CATCreateTopEuclidianDistanceTool
     * Global Function CATCreateTopGeodesicDistanceTool
-  * VPMDesktopProduct framework 
+  * VPMDesktopProduct framework
     * Interface ENOVIChangeStatusOfWP
-  * VPMInterfaces framework 
+  * VPMInterfaces framework
     * Interface CATICfgModificationUE
-  * VPMPsImplSDM framework 
+  * VPMPsImplSDM framework
     * Interface CATIVpmLightVersion
 
 [Top]
 
 * * *
 
-History Version: **1** [Sep 2012] | Document created  
----|---  
-[Top]  
+History Version: **1** [Sep 2012] | Document created
+---|---
+[Top]
 
 * * *
 
-_Copyright © 1999-2012, Dassault Systèmes. All rights reserved._  
+_Copyright © 1999-2012, Dassault Systèmes. All rights reserved._
 Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)

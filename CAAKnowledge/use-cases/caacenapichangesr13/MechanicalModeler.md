@@ -10,10 +10,10 @@ converted: "2026-05-11T17:33:50.744977"
 ```
 
 ---
-| CAA C++ API Modifications|  MechanicalModeler  |   
----|---|---  
+| CAA C++ API Modifications|  MechanicalModeler  |
+---|---|---
 
 * * *
 
-**Entity|  SP| Modification| To Do** | MechanicalModeler/Public/CATIGSMTool.h| GA| FHBD| Has been moved into MecModInterfaces for performance purpose. Please update client code IdentityCard and Imakefile.mk accordingly.  
+**Entity|  SP| Modification| To Do** | MechanicalModeler/Public/CATIGSMTool.h| GA| FHBD| Has been moved into MecModInterfaces for performance purpose. Please update client code IdentityCard and Imakefile.mk accordingly.
 ---|---|---|---

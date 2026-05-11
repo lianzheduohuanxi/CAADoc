@@ -2,104 +2,132 @@
 title: "CAAAniMesh1D.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CAAAniMesh1D", "CATIA", "CAAScdAniUseCases", "CAAScrBase"]
+tags: ["CAAAniMesh1D", "CAAScrBase", "CATIA", "CAAScdAniUseCases"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniMesh1DSource.htm"
-converted: "2026-05-11T11:06:32.335626"
+converted: "2026-05-11T11:27:02.511341"
 ---
 
-```
 'COPYRIGHT DASSAULT SYSTEMES 2000
 
 '***********************************************************************
-
-' Purpose: Create a 1D beam mesh part
-
-' assign the support 
-
-' specify the global specifications 
-
-' Assumptions: Looks for the published element Line.3 in the analysis doc
-
-' Author: bmw
-
-' Languages: VBScript
-
-' Locales: English 
-
-' CATIA Level: V5R16
-
+'  Purpose:  Create a 1D beam mesh part
+'                  assign the support 
+'                  specify the global specifications           
+'  Assumptions:  Looks for the published element Line.3 in the analysis doc
+'  Author:       bmw
+'  Languages:    VBScript
+'  Locales:      English 
+'  CATIA Level:  V5R16
 '***********************************************************************
 
-Sub 
-CATMain()
+Sub CATMain()
 
 '----------------------------------------------------------- 
-
 'Optional: allows to find the sample wherever it's installed
-
 sDocPath=CATIA.SystemService.Environ("CATDocView")
-
-If 
-(Not CATIA.FileSystem.FolderExists(sDocPath))
- Then
-
+If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 Err.Raise 9999,,"No Doc Path Defined"
-
 End If
-
 '----------------------------------------------------------- 
 
 'Open the CATAnalysis Document
-
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Beam.CATAnalysis")
-
-Set
- oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 'Retrieve the Analysis Managar and Analysis Model
-
-Set 
-oAnalysisManager = oAnalysisDocument.Analysis
+Set oAnalysisManager = oAnalysisDocument.Analysis
 
 'Retrieve the part document and product
-
-Set 
-oAnalysisLinkedDocuments = oAnalysisManager.LinkedDocuments
-
-Set 
-partDocument = oAnalysisLinkedDocuments.Item(1)
-
-Set 
-product = partDocument.Product
+Set oAnalysisLinkedDocuments = oAnalysisManager.LinkedDocuments
+Set partDocument = oAnalysisLinkedDocuments.Item(1)
+Set product = partDocument.Product
 
 'Retrieve the analysis model from list of models
-
-Set 
-oAnalysisModels = oAnalysisManager.AnalysisModels
-
-Set 
-oAnalysisModel = oAnalysisModels.Item(1)
+Set oAnalysisModels = oAnalysisManager.AnalysisModels
+Set oAnalysisModel = oAnalysisModels.Item(1)
 
 'Retrieve mesh manager and mesh part 
-
-Set 
-oAnalysisMeshManager = oAnalysisModel.MeshManager
-
-Set 
-oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+Set oAnalysisMeshManager = oAnalysisModel.MeshManager
+Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
 
 'Retrieve publications from product and retrieve the published face.
-
-Set 
-publications = product.Publications
-
-Set 
-pubLine = publications.Item("Line.3")
+Set publications = product.Publications
+Set pubLine = publications.Item("Line.3")
 
 'Add the new beam mesh part to the list of mesh parts
+Set beamPart = oAnalysisMeshParts.Add("MSHPart1D")
 
-Set 
-beamPart = oAnalysisMeshParts.Add("MSHPart1D")
+beamPart.AddSupportFromPublication product, pubLine
+beamPart.SetGlobalSpecification "SizeValue", "10.0 mm"
+beamPart.SetGlobalSpecification "AbsoluteSag", 1
+beamPart.SetGlobalSpecification "AbsoluteSagValue", "1.1 mm"
+beamPart.SetGlobalSpecification "MinimumSizeValue", "1.1 mm"
+beamPart.SetGlobalSpecification "ElementOrder", "Parabolic"
+beamPart.SetGlobalSpecification "MeshCapture", 1
+beamPart.SetGlobalSpecification "MeshCaptureTol", "1.1 mm"
+beamPart.SetGlobalSpecification "CurveAngle", "40 deg"
+
+'Update the mesh part
+beamPart.Update 
+
+End Sub
+
+
+
+```vbscript
+'COPYRIGHT DASSAULT SYSTEMES 2000
+
+'***********************************************************************
+'  Purpose:  Create a 1D beam mesh part
+'                  assign the support 
+'                  specify the global specifications           
+'  Assumptions:  Looks for the published element Line.3 in the analysis doc
+'  Author:       bmw
+'  Languages:    VBScript
+'  Locales:      English 
+'  CATIA Level:  V5R16
+'***********************************************************************
+
+
+Sub CATMain()
+
+'----------------------------------------------------------- 
+'Optional: allows to find the sample wherever it&#39;s installed
+sDocPath=CATIA.SystemService.Environ("CATDocView")
+If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+Err.Raise 9999,,"No Doc Path Defined"
+End If
+'----------------------------------------------------------- 
+
+
+'Open the CATAnalysis Document
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Beam.CATAnalysis&quot;)
+Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+
+&#39;Retrieve the Analysis Managar and Analysis Model
+Set oAnalysisManager = oAnalysisDocument.Analysis
+
+&#39;Retrieve the part document and product
+Set oAnalysisLinkedDocuments = oAnalysisManager.LinkedDocuments
+Set partDocument = oAnalysisLinkedDocuments.Item(1)
+Set product = partDocument.Product
+
+&#39;Retrieve the analysis model from list of models
+Set oAnalysisModels = oAnalysisManager.AnalysisModels
+Set oAnalysisModel = oAnalysisModels.Item(1)
+
+'Retrieve mesh manager and mesh part 
+Set oAnalysisMeshManager = oAnalysisModel.MeshManager
+Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+
+
+'Retrieve publications from product and retrieve the published face.
+Set publications = product.Publications
+Set pubLine = publications.Item("Line.3")
+
+'Add the new beam mesh part to the list of mesh parts
+Set beamPart = oAnalysisMeshParts.Add("MSHPart1D")
 
 beamPart.AddSupportFromPublication product, pubLine
 beamPart.SetGlobalSpecification "SizeValue", "10.0 mm"
@@ -112,9 +140,8 @@ beamPart.SetGlobalSpecification "MeshCaptureTol", "1.1 mm"
 beamPart.SetGlobalSpecification "CurveAngle", "40 deg"
 ```
 
-```
-'Update the mesh part
-
+```vbscript
+&#39;Update the mesh part
 beamPart.Update 
 
 End Sub

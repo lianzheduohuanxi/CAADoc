@@ -2,162 +2,163 @@
 title: "Untitled"
 category: "use-case"
 module: "CAAScdStrUseCases"
-tags: ["CAAScrBase", "CAAStrModificationOfStructureObjects", "CATIA"]
+tags: ["CAAScrBase", "CATIA", "CAAStrModificationOfStructureObjects"]
 source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfStructureObjectsSource.htm"
-converted: "2026-05-11T11:06:32.500342"
+converted: "2026-05-11T11:27:02.583775"
 ---
 
-```
 '// COPYRIGHT DASSAULT SYSTEMES 2000
-
 '//============================================================================
-
 '//
-
 '// Language="VBSCRIPT"
-
 '// Sample of macro of using structural vb objects
-
 '//
-
 '//============================================================================
-
 '//
-
 '// Alain DEBUISSON			le 07/11/2000		creation 
-
 '//
-
 '//============================================================================
 
-Sub 
-CATMain()
+Sub CATMain()
 
- Dim 
-doc
- As 
-Document
+    Dim doc As Document
 
- Dim 
-StrWorkbench
- As 
-StrWorkbench
+    Dim StrWorkbench As StrWorkbench
+    Dim strFactory As StrObjectFactory
 
- Dim 
-strFactory
- As 
-StrObjectFactory
+    Set doc = CATIA.ActiveDocument
+    Dim rootProduct As Product
+    Set rootProduct = doc.Product
+	dim strMembers as StrMembers
 
- Set 
-doc = CATIA.ActiveDocument
+    Set strWorkbench = doc.GetWorkbench("StrWorkbench")
+    Set strMembers = rootProduct.GetTechnologicalObject("StructureMembers")
 
- Dim 
-rootProduct
- As 
-Product
+	'============================================================
+	' looking for a member
+	'============================================================
 
- Set 
-rootProduct = doc.Product
-	dim strMembers
- as 
-StrMembers
-
- Set 
-strWorkbench = doc.GetWorkbench("StrWorkbench")
-
- Set 
-strMembers = rootProduct.GetTechnologicalObject("StructureMembers")
-
-	
-'============================================================
-
-	
-' looking for a member
-
-	
-'============================================================
-
-	dim member
- as 
-StrMember
+	dim member as StrMember
 	set member = strMembers.Item("Column_3")
 
-	
-'============================================================
-
-	
-' rotate a member
-
-	
-'============================================================
+	'============================================================
+	' rotate a member
+	'============================================================
 
 	member.Rotate(45.0)
 
-	
-'============================================================
-
-	
-' anchor point modification
-
-	
-'============================================================
+	'============================================================
+	' anchor point modification
+	'============================================================
 
 	member.CurrentAnchorPointName = "catStrTopCenter"
 
-	
-'============================================================
+	'============================================================
+	' looking for a plate
+	'============================================================
 
-	
-' looking for a plate
+	dim strPlates as StrPlates
+    Set strPlates = rootProduct.GetTechnologicalObject("StructurePlates")
 
-	
-'============================================================
-
-	dim strPlates
- as 
-StrPlates
-
- Set 
-strPlates = rootProduct.GetTechnologicalObject("StructurePlates")
-
-	dim plate
- as 
-StrPlates
+	dim plate as StrPlates
 	set plate = strPlates.Item("PlateType_11")
 	
-	
-'============================================================
-
-	
-' inverse material orientation
-
-	
-'============================================================
+	'============================================================
+	' inverse material orientation
+	'============================================================
 
 	plate.ReverseDirection
 	
-	
-'============================================================
-
-	
-' thickness modification
-
-	
-'============================================================
+	'============================================================
+	' thickness modification
+	'============================================================
 
 	plate.StandardThickness = 0.020
 
-	
-'============================================================
-
-	
-' update
-
-	
-'============================================================
+	'============================================================
+	' update
+	'============================================================
 
 	rootProduct.Update
 	
+End Sub
 
+
+
+```vbscript
+'// COPYRIGHT DASSAULT SYSTEMES 2000
+'//============================================================================
+'//
+'// Language="VBSCRIPT"
+'// Sample of macro of using structural vb objects
+'//
+'//============================================================================
+'//
+'// Alain DEBUISSON			le 07/11/2000		creation 
+'//
+'//============================================================================
+
+Sub CATMain()
+
+    Dim doc As Document
+
+    Dim StrWorkbench As StrWorkbench
+    Dim strFactory As StrObjectFactory
+
+    Set doc = CATIA.ActiveDocument
+    Dim rootProduct As Product
+    Set rootProduct = doc.Product
+	dim strMembers as StrMembers
+
+    Set strWorkbench = doc.GetWorkbench("StrWorkbench")
+    Set strMembers = rootProduct.GetTechnologicalObject("StructureMembers")
+
+	'============================================================
+	' looking for a member
+	'============================================================
+
+	dim member as StrMember
+	set member = strMembers.Item("Column_3")
+
+	'============================================================
+	' rotate a member
+	'============================================================
+
+	member.Rotate(45.0)
+
+	'============================================================
+	' anchor point modification
+	'============================================================
+
+	member.CurrentAnchorPointName = "catStrTopCenter"
+
+	'============================================================
+	' looking for a plate
+	'============================================================
+
+	dim strPlates as StrPlates
+    Set strPlates = rootProduct.GetTechnologicalObject("StructurePlates")
+
+	dim plate as StrPlates
+	set plate = strPlates.Item("PlateType_11")
+	
+	'============================================================
+	' inverse material orientation
+	'============================================================
+
+	plate.ReverseDirection
+	
+	'============================================================
+	' thickness modification
+	'============================================================
+
+	plate.StandardThickness = 0.020
+
+	'============================================================
+	' update
+	'============================================================
+
+	rootProduct.Update
+	
 End Sub
 ```

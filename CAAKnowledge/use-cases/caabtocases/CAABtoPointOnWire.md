@@ -12,15 +12,15 @@ converted: "2026-05-11T17:33:46.169729"
 tags: ["CAATopComputePointOnWire", "CATICGMObject", "CAABasicTopoOpe", "CAAGemBrowser"]
 source_file: "Doc/online/CAABtoUseCases/CAABtoPointOnWire.htm"
 converted: "2026-05-11T17:33:46.169729"
-Geometric Modeler |  Topology |  Creating a Point on a Wire _A topological operator to create a point on a wire_  
+Geometric Modeler |  Topology |  Creating a Point on a Wire _A topological operator to create a point on a wire_
 
 converted: "2026-05-11T17:33:46.169729"
 Geometric Modeler |  Topology |  Creating a Point on a Wire _A topological operator to create a point on a wire_
-Use Case  
+Use Case
 
 * * *
 
-Abstract You can create a point on a wire by using the CATComputePointOnWire operator. How to use this operator is illustrated in the CAATopComputePointOnWire use case. 
+Abstract You can create a point on a wire by using the CATComputePointOnWire operator. How to use this operator is illustrated in the CAATopComputePointOnWire use case.
 
   * **What You Will Learn With This Use Case**
   * **The CATTopComputePointOnWire Operator**
@@ -32,7 +32,7 @@ Abstract You can create a point on a wire by using the CATComputePointOnWire ope
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 
@@ -43,13 +43,13 @@ What You Will Learn With This Use Case This use case is intended to help you use
   2. run of the operator
   3. retrieve of the CATMathPoint which has been created.
 
-Note: Unlike in most topological operators, there is no GetResult method whereby you access a CATBody. There is no BASIC or ADVANCED mode to be defined either. [Top] The CAATopComputePointOnWire Use Case CAATopComputePointOnWire is a use case of the CAABasicTopoOpe.edu framework that illustrates the Basic Topological Operators framework capabilities. [Top] What Does CAATopComputePointOnWire Do Fig. 1: The Geometry of the CAATopComputePointOnWire Use Case ![](images/CAAComputePointOnWire.gif) | This use case creates a CATMathPoint at a ratio of 0.5 from the start extremity of the CATWire. To visualize this point a cartesian point is created at the CATMathPoint location.  
-
-[Top] How to Launch CAATopComputePointOnWire To launch CAATopComputePointOnWire, you will need to set up the build time environment, then compile CAATopComputePointOnWire.m along with its prerequisites, set up the run time environment, and then execute the use case [3]. If you simply type CAATopComputePointOnWire with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: With Windows CAATopComputePointOnWire `e/PointOnWire.NCGM` With UNIX CAATopComputePointOnWire `/u/PointOnWire.NCGM` This NCGM file can be displayed using the CAAGemBrowser use case. [Top] Where to Find the CAATopComputePointOnWire Code The CAATopComputePointOnWire use case is made of a main named CAATopComputePointOnWire.cpp located in the CAATopComputePointOnWire.m module of the CAABasicTopoOpe.edu framework: Windows | `InstallRootDirectory\CAABasicTopoOpe.edu\CAATopComputePointOnWire.m\`  
----|---  
 Note: Unlike in most topological operators, there is no GetResult method whereby you access a CATBody. There is no BASIC or ADVANCED mode to be defined either. [Top] The CAATopComputePointOnWire Use Case CAATopComputePointOnWire is a use case of the CAABasicTopoOpe.edu framework that illustrates the Basic Topological Operators framework capabilities. [Top] What Does CAATopComputePointOnWire Do Fig. 1: The Geometry of the CAATopComputePointOnWire Use Case ![](images/CAAComputePointOnWire.gif) | This use case creates a CATMathPoint at a ratio of 0.5 from the start extremity of the CATWire. To visualize this point a cartesian point is created at the CATMathPoint location.
-Unix | `InstallRootDirectory/CAABasicTopoOpe.edu/CAATopComputePointOnWire.m/`  
-where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed. [Top] Step-by-Step CAATopComputePointOnWire.cpp is divided into four logical steps: 
+
+[Top] How to Launch CAATopComputePointOnWire To launch CAATopComputePointOnWire, you will need to set up the build time environment, then compile CAATopComputePointOnWire.m along with its prerequisites, set up the run time environment, and then execute the use case [3]. If you simply type CAATopComputePointOnWire with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example: With Windows CAATopComputePointOnWire `e/PointOnWire.NCGM` With UNIX CAATopComputePointOnWire `/u/PointOnWire.NCGM` This NCGM file can be displayed using the CAAGemBrowser use case. [Top] Where to Find the CAATopComputePointOnWire Code The CAATopComputePointOnWire use case is made of a main named CAATopComputePointOnWire.cpp located in the CAATopComputePointOnWire.m module of the CAABasicTopoOpe.edu framework: Windows | `InstallRootDirectory\CAABasicTopoOpe.edu\CAATopComputePointOnWire.m\`
+---|---
+Note: Unlike in most topological operators, there is no GetResult method whereby you access a CATBody. There is no BASIC or ADVANCED mode to be defined either. [Top] The CAATopComputePointOnWire Use Case CAATopComputePointOnWire is a use case of the CAABasicTopoOpe.edu framework that illustrates the Basic Topological Operators framework capabilities. [Top] What Does CAATopComputePointOnWire Do Fig. 1: The Geometry of the CAATopComputePointOnWire Use Case ![](images/CAAComputePointOnWire.gif) | This use case creates a CATMathPoint at a ratio of 0.5 from the start extremity of the CATWire. To visualize this point a cartesian point is created at the CATMathPoint location.
+Unix | `InstallRootDirectory/CAABasicTopoOpe.edu/CAATopComputePointOnWire.m/`
+where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed. [Top] Step-by-Step CAATopComputePointOnWire.cpp is divided into four logical steps:
 
   1. Creating the Geometry Factory
   2. Creating the CATWire
@@ -60,9 +60,12 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 4. Writing the Model and Closing the Factory
     CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**() ;
-    if (NULL==piGeomFactory) return (1);  
+```vbscript
+    if (NULL==piGeomFactory) return (1);
 
----  
+```
+
+---
 [Top] Creating the CATWire A wire is made up of a list of curves. To simplify the example, a CATCircle is created in the YZ plane. This CATCircle is created by the geometry factory by using the CreateCircle method. Then the wire is created:
 
     _// Define an open configuration for the operator_
@@ -77,39 +80,39 @@ CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();
     CATCrvLimits CurLim[1];
     CATOrientation Orient[1]={1};
     ListOfCurves[0]->GetLimits(CurLim[0]);
-    CATTopWire * pWire1 = ::CATCreateTopWire(piGeomFactory, 
+    CATTopWire * pWire1 = ::CATCreateTopWire(piGeomFactory,
 
-    	                                     &topdata,		
+    	                                     &topdata,
 CATCrvLimits CurLim[1];
 CATOrientation Orient[1]={1};
 ListOfCurves[0]->GetLimits(CurLim[0]);
 CATTopWire * pWire1 = ::CATCreateTopWire(piGeomFactory,
                                                          1,
-    				      ListOfCurves, 
+    				      ListOfCurves,
                                                     CurLim,
-                                                   Orient);  
+                                                   Orient);
 
----  
+---
 ListOfCurves,
 CurLim,
 Orient);
-The operator configuration is the level of software you want to use to run this operator. By default, define an open configuration as in this use case to run with the current level. Moreover here, the pointer to the journal is set to `NULL` in the operator data. So that the journal is not filled. The CATCreateTopWire global function is used to create a CATTopWire, then the Run and GetResult methods are applied like for most operators. [Top] Creating and Manipulating the CATComputePointOnWire Operator The CATCreateComputePointOnWire global method is used to create an instance of operator. The body retrieved from the GetResult method **applied to the CATTopWire object** is passed as the third function argument value. The ratio in the fourth argument is calculated from the wire start extremity. The created point is retrieved by using the GetMathPoint method. 
+The operator configuration is the level of software you want to use to run this operator. By default, define an open configuration as in this use case to run with the current level. Moreover here, the pointer to the journal is set to `NULL` in the operator data. So that the journal is not filled. The CATCreateTopWire global function is used to create a CATTopWire, then the Run and GetResult methods are applied like for most operators. [Top] Creating and Manipulating the CATComputePointOnWire Operator The CATCreateComputePointOnWire global method is used to create an instance of operator. The body retrieved from the GetResult method **applied to the CATTopWire object** is passed as the third function argument value. The ratio in the fourth argument is calculated from the wire start extremity. The created point is retrieved by using the GetMathPoint method.
 
     CATComputePointOnWire* pPointOnWire = ::CATCreateComputePointOnWire(piGeomFactory,
 
-                                                        &topdata, 
+                                                        &topdata,
 The operator configuration is the level of software you want to use to run this operator. By default, define an open configuration as in this use case to run with the current level. Moreover here, the pointer to the journal is set to `NULL` in the operator data. So that the journal is not filled. The CATCreateTopWire global function is used to create a CATTopWire, then the Run and GetResult methods are applied like for most operators. [Top] Creating and Manipulating the CATComputePointOnWire Operator The CATCreateComputePointOnWire global method is used to create an instance of operator. The body retrieved from the GetResult method **applied to the CATTopWire object** is passed as the third function argument value. The ratio in the fourth argument is calculated from the wire start extremity. The created point is retrieved by using the GetMathPoint method.
 CATComputePointOnWire* pPointOnWire = ::CATCreateComputePointOnWire(piGeomFactory,
                                                         pWireBody,  0.5);
 
-    ...                                  
+    ...
 CATComputePointOnWire* pPointOnWire = ::CATCreateComputePointOnWire(piGeomFactory,
 pWireBody,  0.5);
     CATMathPoint oPointOnWire;
     oPointOnWire->Run();
-    pPointOnWire->GetMathPoint(oPointOnWire);  
+    pPointOnWire->GetMathPoint(oPointOnWire);
 
----  
+---
 CATMathPoint oPointOnWire;
 oPointOnWire->Run();
 pPointOnWire->GetMathPoint(oPointOnWire);
@@ -135,14 +138,14 @@ ofstream filetowrite(pfileName, ios::binary ) ;
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
        filetowrite.close();
-     }	
+     }
 
      _//
      // Closes the container
-     //_	
-     **::CATCloseCGMContainer**(piGeomFactory);  
+     //_
+     **::CATCloseCGMContainer**(piGeomFactory);
 
----  
+---
 [Top]
 
 * * *
@@ -151,17 +154,17 @@ In Short The CATComputePointOnWire topological operators allows you to create a 
 
 * * *
 
-References [1] | [The CGM Objects](../CAAGobTechArticles/GeoObjects.md)  
----|---  
-[2] | [The CGM Curves](../CAAGobTechArticles/Curves.md)  
-[3] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
-[Top]  
+References [1] | [The CGM Objects](../CAAGobTechArticles/GeoObjects.md)
+---|---
+[2] | [The CGM Curves](../CAAGobTechArticles/Curves.md)
+[3] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)
+[Top]
 
 * * *
 
-History Version: **1** [Feb 2000] | Document created  
----|---  
-[Top]  
+History Version: **1** [Feb 2000] | Document created
+---|---
+[Top]
 
 * * *
 

@@ -11,20 +11,20 @@ converted: "2026-05-11T17:31:50.638182"
 ---
 # Shape Design & Styling
 
-| 
+|
 ## Generative Shape Design
 
-| 
+|
 ### Creating a Nozzle Shape Thanks to Shape Design Features
 
-_Using the Shape Design factory to create point, line, plane, circle, split, sweep, and loft features_  
----|---|---  
-Use Case  
+_Using the Shape Design factory to create point, line, plane, circle, split, sweep, and loft features_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
 
-This article discusses the CAAGsiNozzle use case. This use case explains how to create a nozzle shape thanks to shape design features. 
+This article discusses the CAAGsiNozzle use case. This use case explains how to create a nozzle shape thanks to shape design features.
 
   * **What You Will Learn With This Use Case**
   * **Some Important Concepts Relevant to CATGsiToolkit**
@@ -36,12 +36,12 @@ This article discusses the CAAGsiNozzle use case. This use case explains how to 
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will You Learn With This Use Case
 
-This use case is intended to help you make your first steps in programming with Shape Design. Its main intent is to allow you to create a nozzle shape using shape design features[2]. 
+This use case is intended to help you make your first steps in programming with Shape Design. Its main intent is to allow you to create a nozzle shape using shape design features[2].
 
 [Top]
 ### Some Important Concepts Relevant to CATGsiUserTools
@@ -74,26 +74,26 @@ We have decided to split the creation of the Nozzle Shape in different steps: fi
 To launch CAAGsiNozzle, you will need to set up the build time environment, then compile CAAGsiNozzle along with its prerequisites, and set up the run time environment, and then execute the use case [1].
 
 To launch CAAGsiNozzle, you will need to set up the build time environment, then compile CAAGsiNozzle along with its prerequisites, and set up the run time environment, and then execute the use case [1].
-CAAGsiUserTools API is used in CAAGsiNozzle use Case 
+CAAGsiUserTools API is used in CAAGsiNozzle use Case
 
-Launch the use case as follows: 
+Launch the use case as follows:
 
-  * With Windows 
+  * With Windows
 
-        e:>CAAGsiNozzle outputDirectory\CAAGsiNozzle.CATPart  
+        e:>CAAGsiNozzle outputDirectory\CAAGsiNozzle.CATPart
 
----  
-  * With UNIX 
+---
+  * With UNIX
 
-        $ CAAGsiNozzle outputDirectory/CAAGsiNozzle.CATPart  
+        $ CAAGsiNozzle outputDirectory/CAAGsiNozzle.CATPart
 
----  
+---
 
 where:
 
-`outputDirectory` | The directory into which `CAAGsiNozzle.CATPart is saved`  
----|---  
-`CAAGsiNozzle.CATPart` | The file that contains the part created to contain the nozzle shape result  
+`outputDirectory` | The directory into which `CAAGsiNozzle.CATPart is saved`
+---|---
+`CAAGsiNozzle.CATPart` | The file that contains the part created to contain the nozzle shape result
 
 [Top]
 #### Where to Find the CAAGsiNozzle Code
@@ -101,11 +101,11 @@ where:
 The CAAGsiNozzle use case is made of main program located in the CAAGsiNozzle.m module of the CAAGSMInterfaces.edu framework:
 
 The CAAGsiNozzle use case is made of main program located in the CAAGsiNozzle.m module of the CAAGSMInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiNozzle.m\`  
+Windows | `InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiNozzle.m\`
 
 The CAAGsiNozzle use case is made of main program located in the CAAGsiNozzle.m module of the CAAGSMInterfaces.edu framework:
 Windows | `InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiNozzle.m\`
-Unix | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiNozzle.m/`  
+Unix | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiNozzle.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
@@ -113,7 +113,7 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 ### Step-by-Step
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
-There are six logical step in CAAGsiNozzle: 
+There are six logical step in CAAGsiNozzle:
 
   1. Prolog
   2. Create Point Features
@@ -139,14 +139,20 @@ int **main**(int argc, char **argv, char **envp)
 
       char* pSessionName = "CAA2SampleSession";
       rc = CAAGsiObjTool.**Init**( pSessionName);
+```vbscript
+```vbscript
       if (FAILED(rc)) return 1;
+
+```
+
+```
 
       int setAsCurrent = 1;
       CATIGSMTool_var spTool = CAAGsiObjTool.[CreateGSMTool](../CAAGsiTechArticles/CAAGsiCreateGSMTool.md)("Nozzle",setAsCurrent);
 
-      ...  
+      ...
 
----  
+---
 
 Then, we create an open body to insert generative shape design features inside it. We call the `CreateGSMTool` method that returns the GSMTool that has been created.
 
@@ -175,9 +181,9 @@ CATLISTV(CATISpecObject_var) aObjectParameters;
       aObjectParameters.RemoveAll();
 ```
 
-      ...  
+      ...
 
----  
+---
 
 aObjectParameters.RemoveAll();
 Here we create a point coordinate at location (17,0,0). For this purpose, we first create three length parameters with values 17, 0, and 0 millimeters respectively, and put each into `spCurrent`, and then append `spCurrent` in the input list `aObjectParameters` that is bound to store the ordered parameters needed to create a feature. Finally, we create a point coordinate using `aObjectParameters` as input by calling the `CreatePointCoord`**** method.
@@ -190,13 +196,13 @@ How to create a point on curve feature:
       aObjectParameters.Append(spSplit2);
       aObjectParameters.Append(spCurrent);
       CAAGsiObjTool.**CreateReal**("Parm", 0.0, spCurrent);
-      aObjectParameters.Append(spCurrent);  
+      aObjectParameters.Append(spCurrent);
       CATISpecObject_var spPoint14 = CAAGsiObjTool.**CreatePointOnCurve**(aObjectParameters,TRUE);
       aObjectParameters.RemoveAll();
 
-      ...  
+      ...
 
----  
+---
 
 We create a point on curve feature using Split.12 feature at curvilinear length 0 First, we get the spSplit12 CATISpecObject smart pointer and add it in `aObjectParameters`**.** Second, we set `spCurrent` to null and store it in the input list, that means that the reference for the curvilinear length will be computed taking into account the start extremity of Split.12 feature. We create a real parameter that represents the caviling length on the curve by calling `CreateReal` method. Finally we create a point on curve feature using `CreatePlaneEquation` method.
 
@@ -221,14 +227,14 @@ Now that we have created points, we can use them to create planes and lines.
       CATISpecObject_var spPlaneY10 = CAAGsiObjTool.**CreatePlaneEquation**(aObjectParameters);
       aObjectParameters.RemoveAll();
 
-      ...  
+      ...
 
----  
+---
 
 aObjectParameters.RemoveAll();
 Here we create the plane Y = 10. To do this, we create a plane equation with the `aObjectParameters` input list Here the parameters created are length for the plane coefficients, and after having created the four length parameters, we call the `CreatePlaneEquation`**** method.
 
-We can also create lines like this: 
+We can also create lines like this:
 
       ...
 We can also create lines like this:
@@ -237,9 +243,9 @@ We can also create lines like this:
       CATISpecObject_var spLine3 = CAAGsiObjTool.**CreateLinePtPt**(aObjectParameters);
       aObjectParameters.RemoveAll();
 
-      ...  
+      ...
 
----  
+---
 
 We create a simple line defined by two points. We get `spPoint3` (respectively `spPoint5`), a _CATISpecObject_ smart pointer on Point.3 (respectively Point.5) feature and store it in the `aObjectParameters` input list used by `CreateLinePtPt`**** method to create the line point-point feature.
 
@@ -260,9 +266,9 @@ How to create circles:
       CATISpecObject_var spCircle3 = CAAGsiObjTool.**CreateCircle2PointsRad**(aObjectParameters,FALSE,TRUE);
       aObjectParameters.RemoveAll();
 
-      ...  
+      ...
 
----  
+---
 
 aObjectParameters.RemoveAll();
 We want to create a circle profile in plane Y=15. On this purpose, we first retrieve the `spPoint5`, `spPoint6` and `spPlaneY15` _CATISpecObject_ smart pointers and append them into the `aObjectParameters` input list used by the `CreateCircle2PointsRad`**** method to create a circle defined by two points and a radius.
@@ -283,9 +289,9 @@ We can now create split features that will relimit a feature by intersection wit
       CATISpecObject_var spSplit1 = CAAGsiObjTool.**CreateSplit**(aObjectParameters,TRUE);
       aObjectParameters.RemoveAll();
 
-      ...  
+      ...
 
----  
+---
 
 aObjectParameters.RemoveAll();
 We create a split feature that will be the relimitation of Circle.6 by Plane.6. To do this, we set `spCircle6` and `spPlaneAngle35` in the `aObjectParameters` input list and call `CreateSplit`**** to create Split.1 feature. The orientation (`TRUE` argument) enable us to choose between the two parts of the circle that is splitted.
@@ -301,9 +307,9 @@ How to create a spline feature:
       CATISpecObject_var spSpline = CAAGsiObjTool.**CreateSpline**(aObjectParameters,spDir1,FALSE,spDir2,TRUE);
       aObjectParameters.RemoveAll();
 
-      ...  
+      ...
 
----  
+---
 
 aObjectParameters.RemoveAll();
 The spline will go through Point.15 and Point.16. Then we create two directions that are defined relatively to a line feature. We create a spline feature that goes through Point.15 and Point.16, and that have two tangents defined at the extremity.We will take the inverse direction for `spDir1` and the same direction for `spDir2`.
@@ -324,9 +330,9 @@ Now that we have created the wireframe we need, we can create skins, let see how
       CATISpecObject_var spSweep1 = CAAGsiObjTool.**CreateSweepOneGuide**(aObjectParameters);
       aObjectParameters.RemoveAll();
 
-      ...  
+      ...
 
----  
+---
 
 aObjectParameters.RemoveAll();
 We create a sweep unspec feature with a guide Line.2 and a profile Circle.1. Line.2 will be used also as the spine of the explicit sweep.
@@ -348,9 +354,9 @@ The same for the loft feature:
       aObjectParameters.RemoveAll();
       aObjectParametersSections.RemoveAll();
 
-      ...  
+      ...
 
----  
+---
 
 We create a loft feature with sections Circle.2, Circle.3 and with guide Line.3. The input list `aObjectParameters` contains the guide curve and the sections are stored in the `aObjectParametersSections` dedicated list. We call the `CreateLoft`**** method with `spUnused` set to `NULL_var` which represents the spine of the loft. Here we use the automatic spine capability of the loft feature.
 
@@ -366,20 +372,20 @@ This use case has demonstrated the way to create a nozzle shape thanks to shape 
 * * *
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-[2] | [About Generative Shape Design Features](../CAAGsiTechArticles/CAAGsiShapeDesignFeature.md)  
-[3] | [Inserting a Shape Design Feature in the procedural view ](../CAAGsiTechArticles/CAAGsiInsertInProceduralView.md)  
-[4] |  [Updating a shape Design feature ](../CAAGsiTechArticles/CAAGsiUpdateShapeDesign.md)  
-[Top]  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)
+---|---
+[2] | [About Generative Shape Design Features](../CAAGsiTechArticles/CAAGsiShapeDesignFeature.md)
+[3] | [Inserting a Shape Design Feature in the procedural view ](../CAAGsiTechArticles/CAAGsiInsertInProceduralView.md)
+[4] |  [Updating a shape Design feature ](../CAAGsiTechArticles/CAAGsiUpdateShapeDesign.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Apr 2000] | Document created  
----|---  
-Version: **2** [Apr 2003] | Update  
-[Top]  
+Version: **1** [Apr 2000] | Document created
+---|---
+Version: **2** [Apr 2003] | Update
+[Top]
 
 * * *
 

@@ -9,18 +9,18 @@ converted: "2026-05-11T17:33:48.060274"
 ```
 
 ---
-# How to Use Topological Operators  
+# How to Use Topological Operators
 
----  
-Technical Article  
+---
+Technical Article
 ### Abstract
 
 Build on a common scheme, the topological operators are transient objects used to create bodies.
     * Introduction
     * How to Create and Use a Topological Operator
-    * How to Delete a Topological Operator 
-    * In Short  
----  
+    * How to Delete a Topological Operator
+    * In Short
+---
 ### Introduction
 
 Using topological operators is an easy way to create new consistent topological objects. There are two types of operators:
@@ -35,7 +35,7 @@ The operators can log, under request, the follow-up of the faces and free edges 
 
 The topological operators are transient objects used to define topological operations, and cannot be streamed.
 
-The GMOperatorsInterfaces framework provides main topological operators. 
+The GMOperatorsInterfaces framework provides main topological operators.
 
 ### How to Create and Use a Topological Operator
 
@@ -43,13 +43,13 @@ The topological operators are transient objects used to define topological opera
 The GMOperatorsInterfaces framework provides main topological operators.
 To use a topological operator, you must:
 
-    1. Create it: 
+    1. Create it:
 
        * By calling a global method.
        * During this step, the operation is not run.
 To use a topological operator, you must:
 1. Create it:
-    2. If needed, specify or modify additional information: 
+    2. If needed, specify or modify additional information:
 
        * During this step, the operation is not run.
 1. Create it:
@@ -75,7 +75,7 @@ To use a topological operator, you must:
 5. Delete the operator instance (see How to Delete a Topological Operator).
 CATICGMTopSkin * pSkinOp = ::CATCGMCreateTopSkin (piGeomFactory,
     piPlane,
-    nbPCurves, 
+    nbPCurves,
     aPCurves,
     aLimits,
     aOrientations);
@@ -106,7 +106,7 @@ CATICGMTopSkin * pSkinOp = ::CATCGMCreateTopSkin (piGeomFactory,
     // delete the operator
 CATICGMTopSkin * pSkinOp = ::CATCGMCreateTopSkin (piGeomFactory,
 piPlane, ...)
-    pSkinOp **- >Release();  
+    pSkinOp **- >Release();
 
     **pSkinOp **= NULL;**
 ### In Short
@@ -115,5 +115,5 @@ piPlane, ...)
     * All the topological operators are based on the same scheme: creation, specification od additional data if need be, run, read of the results, deletion. They work inside one container.
 ### History
 
-Version: **1** [Jan 2007] | Document created  
+Version: **1** [Jan 2007] | Document created
 ---|---

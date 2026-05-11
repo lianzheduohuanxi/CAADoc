@@ -2,121 +2,108 @@
 title: "Untitled"
 category: "use-case"
 module: "CAAScdArrUseCases"
-tags: ["CAAScrBase", "CAAArrCreateNoContourArea", "CATIA"]
+tags: ["CAAScrBase", "CATIA", "CAAArrCreateNoContourArea"]
 source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateNoContourAreaSource.htm"
-converted: "2026-05-11T11:06:32.729984"
+converted: "2026-05-11T11:27:02.672859"
 ---
 
-```
 Option Explicit
-
-'// COPYRIGHT DASSAULT SYSTEMES 2000
-
+'// COPYRIGHT DASSAULT SYSTEMES  2000
+'******************************************************************************
+' Purpose:       This CATScript demonstrates how to create an Area without
+'                a contour.
+' Assumptions:   This assumes that a macro is being executed interactively.
+' Author     :                               
+' Languages  :   VBScript
+' CATIA Level:   V5R6
+' Locale     :   English
 '******************************************************************************
 
-' Purpose: This CATScript demonstrates how to create an Area without
+Sub CATMain()
+   
+   ' On Error Resume Next
 
-' a contour.
+   '----------------------------------------------
+   'Create a new product document
+   Dim objProdDoc        As ProductDocument
+   Dim objRootProd       As Product
+   Set objProdDoc      = CATIA.Documents.Add("Product")
+   Set objRootProd     = objProdDoc.Product
 
-' Assumptions: This assumes that a macro is being executed interactively.
+   '----------------------------------------------
+   'Retrieving Root Product's Relative Axis and Position Information
+   Dim objMove           As Move
+   Dim objPosition       As Position
+   Set objMove      = objRootProd.Move
+   Set objPosition  = objRootProd.Position
 
-' Author : 
+   '----------------------------------------------
+   ' Get ArrangementProduct
+   Dim objArrProd        As ArrangementProduct
+   Set objArrProd   = objRootProd.GetTechnologicalObject("ArrangementProduct")
 
-' Languages : VBScript
+   '----------------------------------------------
+   ' Create Area without a contour under the Root Product
+   Dim objArea              As ArrangementArea
+   Dim dblAreaPosition(11)  As Double
 
-' CATIA Level: V5R6
+   objPosition.GetComponents dblAreaPosition
+   dblAreaPosition(9)    = 300.0
+   dblAreaPosition(10)   = 400.0
+   dblAreaPosition(11)   = 300.0
+   Set objArea     = objArrProd.ArrangementAreas.AddArea(objMove, dblAreaPosition, 50.0)
 
-' Locale : English
+End Sub 
 
+
+
+```vbscript
+Option Explicit
+'// COPYRIGHT DASSAULT SYSTEMES  2000
+'******************************************************************************
+' Purpose:       This CATScript demonstrates how to create an Area without
+'                a contour.
+' Assumptions:   This assumes that a macro is being executed interactively.
+' Author     :                               
+' Languages  :   VBScript
+' CATIA Level:   V5R6
+' Locale     :   English
 '******************************************************************************
 
-Sub 
-CATMain()
- 
- 
-' On Error Resume Next
 
- 
-'----------------------------------------------
+Sub CATMain()
+   
+   ' On Error Resume Next
 
- 
-'Create a new product document
+   '----------------------------------------------
+   'Create a new product document
+   Dim objProdDoc        As ProductDocument
+   Dim objRootProd       As Product
+   Set objProdDoc      = CATIA.Documents.Add("Product")
+   Set objRootProd     = objProdDoc.Product
 
- Dim 
-objProdDoc 
- As 
-ProductDocument
+   '----------------------------------------------
+   'Retrieving Root Product's Relative Axis and Position Information
+   Dim objMove           As Move
+   Dim objPosition       As Position
+   Set objMove      = objRootProd.Move
+   Set objPosition  = objRootProd.Position
 
- Dim 
-objRootProd 
- As 
-Product
+   '----------------------------------------------
+   ' Get ArrangementProduct
+   Dim objArrProd        As ArrangementProduct
+   Set objArrProd   = objRootProd.GetTechnologicalObject("ArrangementProduct")
 
- Set 
-objProdDoc = CATIA.Documents.Add("Product")
+   '----------------------------------------------
+   ' Create Area without a contour under the Root Product
+   Dim objArea              As ArrangementArea
+   Dim dblAreaPosition(11)  As Double
 
- Set 
-objRootProd = objProdDoc.Product
-
- 
-'----------------------------------------------
-
- 
-'Retrieving Root Product's Relative Axis and Position Information
-
- Dim 
-objMove 
- As 
-Move
-
- Dim 
-objPosition 
- As 
-Position
-
- Set 
-objMove = objRootProd.Move
-
- Set 
-objPosition = objRootProd.Position
-
- 
-'----------------------------------------------
-
- 
-' Get ArrangementProduct
-
- Dim 
-objArrProd 
- As 
-ArrangementProduct
-
- Set 
-objArrProd = objRootProd.GetTechnologicalObject("ArrangementProduct")
-
- 
-'----------------------------------------------
-
- 
-' Create Area without a contour under the Root Product
-
- Dim 
-objArea 
- As 
-ArrangementArea
-
- Dim 
-dblAreaPosition(11) 
- As 
-Double
-
- objPosition.GetComponents dblAreaPosition
- dblAreaPosition(9) = 300.0
- dblAreaPosition(10) = 400.0
- dblAreaPosition(11) = 300.0
-
- Set 
-objArea = objArrProd.ArrangementAreas.AddArea(objMove, dblAreaPosition, 50.0)
+   objPosition.GetComponents dblAreaPosition
+   dblAreaPosition(9)    = 300.0
+   dblAreaPosition(10)   = 400.0
+   dblAreaPosition(11)   = 300.0
+   Set objArea     = objArrProd.ArrangementAreas.AddArea(objMove, dblAreaPosition, 50.0)
 
 End Sub
 ```

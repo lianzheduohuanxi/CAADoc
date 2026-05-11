@@ -2,122 +2,13 @@
 title: "Selecting a mesh entity (node, element)"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CAAScrBase", "CAAInfLauchMacro", "CAAAniMeshSelectFEEntitySource", "CAAAniMeshSelectFEEntity", "CAAScdInfUseCases", "CAAScdAniUseCases", "CATIA", "CAAScrJavaScript"]
+tags: ["CAAScrBase", "CATIA", "CAAAniMeshSelectFEEntitySource", "CAAScrJavaScript", "CAAScdAniUseCases", "CAAScdInfUseCases", "CAAAniMeshSelectFEEntity", "CAAInfLauchMacro"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSelectFEEntity.htm"
-converted: "2026-05-11T11:06:32.417708"
+converted: "2026-05-11T11:27:02.547047"
 ---
-
-## Analysis Modeler
-		
-		
-## []Selecting a mesh entity (node, element)
-		
-	
 
 ---
 
-	
-		![](../CAAScrBase/images/atarget.gif)
-		
-
-[]This use case shows you how to select a mesh entity (node, element) using the **Selection** object.
-		This scenario requires "GPS" product.
-		
-
-The macro open an Analysis document. User is prompted to select a mesh element then to select a mesh node.
-		After each selection a panel displays the mesh entity tag.
-		
-
-		![](images/AllElementsModel.jpg)
-		
-
- 
-		
-	
-	
-		![](../CAAScrBase/images/ainfo.gif)
-		
-
-[]CAAAniMeshSelectFEEntity is launched in CATIA [[1]]. 
-		No open document is needed.
-		
-
-[CAAAniMeshSelectFEEntity.catvbs] 
-		is located in the CAAScdAniUseCases module.
-		[Execute macro] (Windows only).
-		
-	
-	
-		![](../CAAScrBase/images/ascenari.gif)
-		
-
-[]CAAAniMeshSelectFEEntity includes the following steps:
-		
-
-			
-- [Prolog]
-			
-- [Selecting a mesh element]
-			
-- [Selecting a mesh node]
-			
-- [Epilog]
-		
-		
-#### []Prolog
-		
-			
-				
-```
-...
-```
-
-				
-```
-'----------------------------------------------------------- 
-
-'Optional: allows to find the sample wherever it's installed
-
- sDocPath=CATIA.SystemService.Environ("CATDocView")
-
- If 
-(Not CATIA.FileSystem.FolderExists(sDocPath))
- Then
-
- Err.Raise 9999,,"No Doc Path Defined"
-
- End If
-
-'-----------------------------------------------------------
-```
-
-				
-```
-'Open the Analysis document
- 
-sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\AllElementsAndNode.CATAnalysis")
-
-Set 
-oAnalysisDocument = CATIA.Documents.Open(sFilePath)
-```
-
-				
-```
-'Get the Selection object
- 
-
-Set 
-oSelection = oAnalysisDocument.Selection
-```
-
-				
-```
-...
-```
-
-				
-			
-		
 		
 
 Open the Analysis document. The Analysis document is retrieved in the 
@@ -127,85 +18,24 @@ Open the Analysis document. The Analysis document is retrieved in the
 		the Analysis document and the Part document.
 		The **Selection** object is retrieved from the Analysis document.
 		
-#### []Selecting a mesh element
-		
-			
-				
-```
-...
-```
 
-				
-```
-'Set the selection type
-
-InputObjectType(0) = "AnalysisMeshElement"
-
-'Get the status
-
-oStatus = oSelection.SelectElement2 ( InputObjectType, "Select a mesh element", True )
-
-'Get the object in the selection
-
-Set 
-oMeshElement = oSelection.Item(1).Value
-
-...
-```
-
-				
-			
+#### Selecting a mesh element
 		
 		
 
 User is prompted to select a mesh element. The filter **AnalysisMeshElement** allows to select
 		either a mesh element, a mesh edge or a mesh node.
 		
-#### []Selecting a mesh node.
-		
-			
-				
-```
-...
-```
 
-				
-```
-'Set the selection type
-
-InputObjectType(0) = "AnalysisMeshNode"
-
-'Get the status
-
-oStatus = oSelection.SelectElement2 ( InputObjectType, "Select a mesh node", True )
-
-'Get the object in the selection
-
-Set 
-oMeshNode = oSelection.Item(1).Value
-
-...
-```
-
-				
-			
+#### Selecting a mesh node.
 		
 		
+
 #### User is prompted to select a mesh node.
 		The filter **AnalysisMeshNode** allows to select a mesh node that does not belong to a mesh element.
 		
-#### []Epilog
-		
-			
-				
-```
-...
- End Sub
-...
-```
 
-				
-			
+#### Epilog
 		
 		
 
@@ -216,31 +46,94 @@ To run the macro interactively CATDocView environment
 
 ![](../CAAScrBase/images/aendtask.gif)
 
-[[Top]]
+[Top]
 
 ---
 
-#### []In Short
+#### In Short
 
 This use case has shown how to use the **Selection** object in order to select mesh entites.
 
- 
+ 
 
-[[Top]]
-
----
-
-#### []References
-
-	
-		|[1]
-		[Replaying 
-		a Macro]
-	
-	
-		|[[Top]]
-	
+[Top]
 
 ---
 
-*Copyright 2001, Dassault Systmes. All rights reserved.*
+#### References
+
+---
+
+*Copyright  2001, Dassault Systmes. All rights reserved.*
+
+
+
+```vbscript
+...
+```
+
+```vbscript
+&#39;----------------------------------------------------------- 
+&#39;Optional: allows to find the sample wherever it&#39;s installed
+  sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,,&quot;No Doc Path Defined&quot;
+    End If
+&#39;-----------------------------------------------------------
+```
+
+```vbscript
+&#39;Open the Analysis document 
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\AllElementsAndNode.CATAnalysis&quot;)
+Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+```
+
+```vbscript
+&#39;Get the Selection object 
+Set oSelection = oAnalysisDocument.Selection
+```
+
+```vbscript
+...
+```
+
+```vbscript
+...
+```
+
+```vbscript
+&#39;Set the selection type
+InputObjectType(0) = &quot;AnalysisMeshElement&quot;
+
+&#39;Get the status
+oStatus = oSelection.SelectElement2 ( InputObjectType, &quot;Select a mesh element&quot;, True )
+
+&#39;Get the object in the selection
+Set oMeshElement = oSelection.Item(1).Value
+
+...
+```
+
+```vbscript
+...
+```
+
+```vbscript
+&#39;Set the selection type
+InputObjectType(0) = &quot;AnalysisMeshNode&quot;
+
+&#39;Get the status
+oStatus = oSelection.SelectElement2 ( InputObjectType, &quot;Select a mesh node&quot;, True )
+
+&#39;Get the object in the selection
+Set oMeshNode = oSelection.Item(1).Value
+
+...
+```
+
+```vbscript
+...
+ End Sub
+...
+```

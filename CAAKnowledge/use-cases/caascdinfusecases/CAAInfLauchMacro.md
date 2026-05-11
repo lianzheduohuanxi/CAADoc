@@ -2,41 +2,33 @@
 title: "Untitled"
 category: "use-case"
 module: "CAAScdInfUseCases"
-tags: ["CAAScrBase", "CAALaunch1", "CAADoc", "CAALaunch7b", "CAALaunch7a", "CAALaunch6", "CAAInstallation"]
+tags: ["CAAScrBase", "CAALaunch7b", "CAALaunch6", "CAALaunch7a", "CAALaunch1", "CAAInstallation", "CAADoc"]
 source_file: "Doc/online/CAAScdInfUseCases/CAAInfLauchMacro.htm"
-converted: "2026-05-11T11:06:32.800058"
+converted: "2026-05-11T11:27:02.701952"
 ---
-
-## Infrastructure
- 
- 
-## []Launching a CAA V5 Automation Use Case
- 
- 
 
 ---
 
 CAA V5 Automation Uses Cases are macros that may access existing files. To 
-make replaying such macros as straightforward as possible, they  most of 
+make replaying such macros as straightforward as possible, they  most of 
 the time follows coding conventions that may require specific SetUp of the V5 
 session. This article explains:
-
-> 
+**
 	
 
-[where to find CAA V5 Automation Uses Cases macros,]
+where to find CAA V5 Automation Uses Cases macros,
 	
 
-[how to launch a macro,]
+how to launch a macro,
 	
 
-[which specific setup may be required. ]
+which specific setup may be required. 
 
 Note: topics explained in this article, launching macros and 
 retrieving existing files from the documentation installation, do not doesn't 
 apply to documentation in HtmlHelp format or accessed through a http server.
 
-### []Where to find CAA V5 Automation Uses Cases macros
+### Where to find CAA V5 Automation Uses Cases macros
 
 Samples come with a documentation that most of the time contains the name of 
 the macro and the module it belongs to.
@@ -52,56 +44,25 @@ and can be used, on Windows plaforms, to launch the replay of the macro.
 
 ![](images/CAALaunch7b.jpg)
 
- 
+ 
 
 A few samples documentations only contain a html view of the content of the 
 macro, in this case, the macro must be retrieved from the documentation file, 
 for example
 
-`    xxx/myModule/myMacroSource.htm`
+`    xxx/myModule/myMacroSource.htm`
 
 is the documentation view of the 
 
-    `xxx/myModule/macros/myMacro.catvbs` or `
+    `xxx/myModule/macros/myMacro.catvbs` or `
 xxx/myModule/macros/myMacro.CATScript`
 
 macro.
 
-### []How to launch a macro
+### How to launch a macro
 
 Macros can also be launched from the V5 session.
 
- 
-
- 
- |![](images/atarget.gif)
- 
-
-This task explains how to launch a CAA V5 Automation Use case macro
- 
- 
- 
- |![](images/ascenari.gif)
- 
-
- 
-- Select the **Tools->Macro->Macros... **command to display
- the Macro dialog box, 
- 
-		
-
-		![](images/CAALaunch1.jpg)
-		
-
- 
-- Select the macro to be launched.
-		
-- Click the Run button.
- 
- 	
-
- 
- 
  
 
 Please note that the Macro Library must be set to the folder containing the 
@@ -111,7 +72,7 @@ For more details, on how to run a macro, and set macro libraries, consult in
 the V5 documentation, *Infrastructure Solutions*, *Infrastructure Users 
 Guide*, the *Recording, Running And Editing Macros* topic.
 
-### []Specific Setups
+### Specific Setups
 
 Unless explicitely specified, CAA Automation Use Cases macros that use 
 documents search those documents in a location relative to where the 
@@ -129,26 +90,22 @@ If it is set to a place where documents cannot be retrieved, an error message
 	documentation installation linked to a V5 product installation, this 
 	variable is already set to
 
-> 
-	
-> 
+**
+	**
 		
 
 `<DocInstallation>`
 	
-
 	
 
 To be able to replay macros directly from the documentation, use the *Environment Editor* to create a *
 	new User Environment* and 
 	set the value to:
-	
-> 
+	**
 		
 
 `<DocInstallation>/<Language>`
 	
-
 	
 
 Where <Language> is the language for which the documentation has been 
@@ -162,13 +119,11 @@ Remark: you have to use the *Environment Editor* for this
 - If you access the CAA V5 Automation documentation in a CAA installation, 
 	use the *Environment Editor* to create a *new User Environment* and 
 	set the value to:
-	
-> 
+	**
 		
 
 `<CAAInstallation>/CAADoc/Doc`
 	
-
 	
 
 For more details, on how to create and modifiy *Environments*, 
@@ -178,8 +133,8 @@ For more details, on how to create and modifiy *Environments*,
 
 ![](images/aendtask.gif)
 
-[[Top]]
+[Top]
 
 ---
 
-*Copyright 1994-2004, Dassault Systmes. All rights reserved.*
+*Copyright  1994-2004, Dassault Systmes. All rights reserved.*

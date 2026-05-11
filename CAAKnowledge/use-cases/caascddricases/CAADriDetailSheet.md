@@ -9,21 +9,21 @@ converted: "2026-05-11T17:31:51.047373"
 ```
 
 ---
-| 
+|
 ## Drafting
 
-| 
-## Creating a Detail Sheet  
+|
+## Creating a Detail Sheet
 
 * * *
 
-  This macro shows you how to create a sheet in a drawing. This macro opens the CAADriSheet.CATDrawing document that contains a sheet only.   
+  This macro shows you how to create a sheet in a drawing. This macro opens the CAADriSheet.CATDrawing document that contains a sheet only.
 This macro shows you how to create a sheet in a drawing. This macro opens the CAADriSheet.CATDrawing document that contains a sheet only.
-It creates _DrawingSheet_ object from the _DrawingSheets_ __ collection with the AddDetail method and a activate it.  
+It creates _DrawingSheet_ object from the _DrawingSheets_ __ collection with the AddDetail method and a activate it.
 
 This macro shows you how to create a sheet in a drawing. This macro opens the CAADriSheet.CATDrawing document that contains a sheet only.
 It creates _DrawingSheet_ object from the _DrawingSheets_ __ collection with the AddDetail method and a activate it.
-  CAADriSheet is launched in CATIA [1]. No open document is needed. [CAADriDetailSheet.CATScript](CAADriDetailSheetSource.md) is located in the CAAScdPriUseCases module. [Execute macro](macros/CAADriDetailSheet.CATScript) (Windows only).    
+  CAADriSheet is launched in CATIA [1]. No open document is needed. [CAADriDetailSheet.CATScript](CAADriDetailSheetSource.md) is located in the CAAScdPriUseCases module. [Execute macro](macros/CAADriDetailSheet.CATScript) (Windows only).
   CAAPriPad includes the following steps:
 
   1. Prolog
@@ -34,51 +34,75 @@ It creates _DrawingSheet_ object from the _DrawingSheets_ __ collection with the
 
 2. Creating the Detail Sheet
 3. Activating the Detail Sheet
-The macro first loads CAADriDetailSheet.CATDrawing that contains a sheet: Sheet.1  ![](images/img004.jpg) 
+The macro first loads CAADriDetailSheet.CATDrawing that contains a sheet: Sheet.1  ![](images/img004.jpg)
 
     ...
+```vbscript
+```vbscript
 ```vbscript
     ' ------------
     ' Get the sheets collection of the drawing
     ' ------------
 ```
 
+```
+
+```
+
 ```vbscript
     Dim oDrawingSheets As DrawingSheets
+```vbscript
     Set oDrawingSheets = oDoc.Sheets
 ```
 
-    ...  
+```
 
----  
+    ...
+
+---
 
 Once the drawing document has been loaded, the `odrawingSheets` is declared to receive the instance of the sheets.
 #### Creating the Detail Sheet
 
     ...
 ```vbscript
+```vbscript
+```vbscript
     ' ------------
     ' Add the detail sheet with a default name to the sheets collection of the drawing
     ' ------------
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' ------------
 ' Add the detail sheet with a default name to the sheets collection of the drawing
 ' ------------
+```
+
+```
+
     MsgBox "Click OK to create the new sheet."
 ```
 
 ```vbscript
     Dim oDrawingSheet As DrawingSheet
-    Set oDrawingSheet = oDrawingSheets.AddDetail("New Detail Sheet") 
+```vbscript
+    Set oDrawingSheet = oDrawingSheets.AddDetail("New Detail Sheet")
 ```
 
-    ...  
+```
 
----  
+    ...
 
-The _oDrawingSheet_ object is added to the _oDrawingSheets_ collection with the `AddDetail` method and a default name: New Detail Sheet. 
+---
+
+The _oDrawingSheet_ object is added to the _oDrawingSheets_ collection with the `AddDetail` method and a default name: New Detail Sheet.
 
 The _oDrawingSheet_ is then displayed with the following result but not activated.
 
@@ -87,26 +111,38 @@ The _oDrawingSheet_ is then displayed with the following result but not activate
 
     ...
 ```vbscript
+```vbscript
+```vbscript
     ' ------------
     ' Activate the detail sheet
     ' ------------
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' ------------
 ' Activate the detail sheet
 ' ------------
-    MsgBox "Click OK to activate the new detail sheet."
-    oDrawingSheet.Activate 
 ```
 
-    ...  
+```
 
----  
+    MsgBox "Click OK to activate the new detail sheet."
+    oDrawingSheet.Activate
+```
+
+    ...
+
+---
 
 The `Activate` property of the _DrawingSheet_ object is used to activate it.
 
-![](images/img006.jpg)  
+![](images/img006.jpg)
 
 ![](../CAAScrBase/images/aendtask.gif)
 
@@ -122,8 +158,8 @@ This use case has shown how to create and activate a sheet using macros.
 * * *
 #### References
 
-[1] | [Replaying a Macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)  
----|---  
+[1] | [Replaying a Macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)
+---|---
 [Top]
 
 * * *

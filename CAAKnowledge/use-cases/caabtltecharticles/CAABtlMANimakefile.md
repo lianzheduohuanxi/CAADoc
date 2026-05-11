@@ -12,11 +12,11 @@ converted: "2026-05-11T17:33:46.091758"
 tags: []
 source_file: "Doc/online/CAABtlTechArticles/CAABtlMANimakefile.htm"
 converted: "2026-05-11T17:33:46.091758"
-RADE |  Multi-Workspace Application Builder |  The Imakefile.mk Special File _How to control the compilation of programs_  
+RADE |  Multi-Workspace Application Builder |  The Imakefile.mk Special File _How to control the compilation of programs_
 
 converted: "2026-05-11T17:33:46.091758"
 RADE |  Multi-Workspace Application Builder |  The Imakefile.mk Special File _How to control the compilation of programs_
-Technical Article  
+Technical Article
 
 * * *
 
@@ -35,7 +35,7 @@ Abstract The **Imakefile.mk** file is a text file which must be defined for each
     * Variables interpreted by mkmk
   * **In Short**
 
----  
+---
 Why this kind of file? Every module should be associated with a **Imakefile.mk** file before attempt to build with the CAA Workbench Code Builder mkmk. The Imakefile.mk contains make-like macros which are used at compilation time and build time. So the Imakefile.mk syntax must comply to the global syntax of makefiles. Like explained in [mkmk](CAABtlMkmk.htm#Hide operating system specificities) paper, our environment proposes the same compiler for all operating systems where CNext can be run. This is a convenient way for developers to build their programs since they do not have to learn how to use different compilers and how to write (and keep up to date) makefiles. However all cannot be done by mkmk and users must explain at least what they want to generate. Few samples Here are the most basic samples of Imakefile.mk files you could have to write regarding the type of data to generate. Location ![](images/FileTree17.gif) How to build a shared library The type of result is specified by a variable named `_BUILT_OBJECT_TYPE_`. The most basic Imakefile.mk contains just one line:
 
 > `_BUILT_OBJECT_TYPE=SHARED LIBRARY_`
@@ -46,12 +46,15 @@ Another type of library is the **archive**. It is less used than shared librarie
 
 Another thing that could be interesting to control is the name of the program: this is achieved using another variable, for instance:
 
-> `_PROGRAM_NAME=my_beautiful_program  
+> `_PROGRAM_NAME=my_beautiful_program
 >  BUILT_OBJECT_TYPE=LOAD MODULE_`
 
+```vbscript
 If no name is defined, default names will be chosen regarding the type of data to build. How to Build a Java Module To build a Java module, include:
 
-> `_PACKAGE_MODULE=my.package  
+```
+
+> `_PACKAGE_MODULE=my.package
 >  BUILT_OBJECT_TYPE=JAVA_`
 
 where `my.package` is the root of the packages that are to be included in the Java module. Distinguish operating systems in Imakefile.mk Even if the same Imakefile.mk file can be used on any (supported) operating systems, you may want to mark some differences regarding the current operating system. To do this, consult the [declarative file preprocessor](CAABtlMANprepro.md) document. How to use personal preprocessing variables Preprocessing variables are often used in programs for different purposes:
@@ -61,21 +64,27 @@ where `my.package` is the root of the packages that are to be included in the Ja
 
 The Imakefile.mk syntax proposes a set of keyword (one per language) to add such variables, here is an example where we set a "`_DEBUG_`" variable for the compilation of C and C++ files and a "`_API3_`" variable for the compilation of C++ files (note the use of "`_$(...)_ "` to reference the value of a variable):
 
-> `_LOCAL_CFLAGS=-DDEBUG  
->  LOCAL_CCFLAGS=$(LOCAL_CFLAGS) -DAPI3  
+> `_LOCAL_CFLAGS=-DDEBUG
+>  LOCAL_CCFLAGS=$(LOCAL_CFLAGS) -DAPI3
 >  ..._`
 
 Syntax and variables Syntax rules
 
 Syntax and variables Syntax rules
-  1. A variable can be defined from a previously defined variable. 
+  1. A variable can be defined from a previously defined variable.
 
+```vbscript
          _VAR2=$(VAR1)_
 
-  2. The makefile syntax does not allow to define a variable from itself. Definition such as the following ones are not allowed: 
+```
+
+  2. The makefile syntax does not allow to define a variable from itself. Definition such as the following ones are not allowed:
 
          _VAR1=val1 val2_
+```vbscript
          _VAR1=$(VAR1) val3_
+
+```
 
   3. Lines beginning by the '#' character are comments or pragma.
   4. Lines ending with a backslash '\' character continue on the next line.
@@ -91,7 +100,7 @@ Variables interpreted by mkmk Note: Variables following the flag "**internal usa
 >   * `_ARCHIVE_` to build an archive,
 >   * `_EL LIBRARY_` for Explicitly Loaded, this kind of modules are explicitly loaded at run time. A shared library or DDL is built but it cannot be referenced by the other modules through the `_LINK_WITH_` macro
 >   * `_JAVA_` to build a Java module.
-> 
+>
 
 mandatory for Java
 
@@ -103,11 +112,11 @@ internal usage
 
 optional
 
-> `_PROGRAM_NAME_`= name of the built module. Default value is the module directory name with a prefix or a suffix depending of the module type (see `_BUILT_OBJECT_TYPE_` variable). For example, if the module to build is in _mymodule.m_ directory, the generated output name is: BUILT_OBJECT_TYPE | Generated module name  
-> ---|---  
-> `_LOAD MODULE_` | mymodule (UNIX) mymodule.exe (Windows)  
-> `_SHARED LIBRARY_` | libmymodule.a (AIX) libmymodule.sl (HP-UX) libmymodule.so (SunOS) mymodule.dll (Windows) mymodule.lib (Windows)  
-> `_ARCHIVE_` | libmymodule.a (UNIX) mymodule.lib (Windows)  
+> `_PROGRAM_NAME_`= name of the built module. Default value is the module directory name with a prefix or a suffix depending of the module type (see `_BUILT_OBJECT_TYPE_` variable). For example, if the module to build is in _mymodule.m_ directory, the generated output name is: BUILT_OBJECT_TYPE | Generated module name
+> ---|---
+> `_LOAD MODULE_` | mymodule (UNIX) mymodule.exe (Windows)
+> `_SHARED LIBRARY_` | libmymodule.a (AIX) libmymodule.sl (HP-UX) libmymodule.so (SunOS) mymodule.dll (Windows) mymodule.lib (Windows)
+> `_ARCHIVE_` | libmymodule.a (UNIX) mymodule.lib (Windows)
 > The naming of modules concerns only load modules `_(BUILT_OBJECT_TYPE= LOAD MODULE_`) and is advised for transparency reasons.
 
 mandatory
@@ -124,14 +133,14 @@ optional
 
 optional
 
-> `_IMPACT_ON_IMPORT= YES_` to force the build of the modules which import this module. This solves the incoherences at runtime due to the no rebuild of libraries. The problem does not exist with C++ programs because the dependencies between modules are indicated in header files. The impact is automatically computed and the rebuild is done. But with Fortran language this problem exists as shown in the following sample. ![](images/makefile2.gif) 
-> 
+> `_IMPACT_ON_IMPORT= YES_` to force the build of the modules which import this module. This solves the incoherences at runtime due to the no rebuild of libraries. The problem does not exist with C++ programs because the dependencies between modules are indicated in header files. The impact is automatically computed and the rebuild is done. But with Fortran language this problem exists as shown in the following sample. ![](images/makefile2.gif)
+>
 >   1. The m3 module in library3 has the m1 module from library1 as prerequisite.
 >   2. The s1 symbol moves from m1 (library1) to m2 (library2).
 >   3. So library3 must be rebuilt to be correct at the execution time.
-> 
+>
 
-> ---|---  
+> ---|---
 > This macro must be included always in Fortran modules and never in other modules for performance reasons. With C++ programs it is not necessary to force the rebuild.
 
 optional
@@ -144,20 +153,20 @@ optional
 
 optional
 
-> `_BUILD=NO_` module won't be rebuilt by mkmk until this macro is removed.  
+> `_BUILD=NO_` module won't be rebuilt by mkmk until this macro is removed.
 >  Useful in `_OS_`-specific section.
 
 optional
 
-> `_LOCAL_xxFLAGS=_` additive compile-time options. The following table lists the name of the macro corresponding to the language to compile. Languages | Macro name  
-> ---|---  
-> C++ | `_LOCAL_CCFLAGS_`  
-> C | `_LOCAL_CFLAGS_`  
-> fortran | `_LOCAL_FFLAGS_`  
-> assembler | `_LOCAL_ASFLAGS_`  
-> express grammar | `_LOCAL_CKMFLAGS_`  
-> yacc grammar (on UNIX only) | `_LOCAL_YFLAGS_`  
-> lex grammar (on UNIX only) | `_LOCAL_LFLAGS_`  
+> `_LOCAL_xxFLAGS=_` additive compile-time options. The following table lists the name of the macro corresponding to the language to compile. Languages | Macro name
+> ---|---
+> C++ | `_LOCAL_CCFLAGS_`
+> C | `_LOCAL_CFLAGS_`
+> fortran | `_LOCAL_FFLAGS_`
+> assembler | `_LOCAL_ASFLAGS_`
+> express grammar | `_LOCAL_CKMFLAGS_`
+> yacc grammar (on UNIX only) | `_LOCAL_YFLAGS_`
+> lex grammar (on UNIX only) | `_LOCAL_LFLAGS_`
 
 optional
 
@@ -174,21 +183,21 @@ optional
 optional
 
 > `_MKMFC_DEPENDENCY_`=`_yes_` additive link-edit time option. Required to build shared libraries directly using MFC classes or load modules producing _Windows WPF Applications_ (per opposition to _Windows Console Applications_). In this last case, the `_$(SUB_WIN)_` keywork is also mandatory:
->     
->     
+>
+>
 >     BUILT_OBJECT_TYPE=LOAD MODULE
->     
+>
 >     LINK_WITH = ...
->     
->     OS = Windows_NT 
+>
+>     OS = Windows_NT
 >     MKMFC_DEPENDENCY = yes
 >     LOCAL_LDFLAGS = $(SUB_WIN)
->     
->     
->       
->     ---  
->     
->       
+>
+>
+>
+>     ---
+>
+>
 
       [Top]
 

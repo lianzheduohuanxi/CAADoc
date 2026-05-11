@@ -10,55 +10,90 @@ converted: "2026-05-11T17:31:51.738069"
 
 ---
 ```vbscript
+```vbscript
+```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2000
     ' ***********************************************************************
     '   Purpose:      To demonstrate activation and deactivation of image
     '   Assumptions:   displacement symbol image exists in the document
     '   Author:       bmw
     '   Languages:    VBScript
-    '   Locales:      English 
+    '   Locales:      English
     '   CATIA Level:  V5R16
     ' ***********************************************************************
 ```
 
-    Sub CATMain()
+```
+
+```
 
 ```vbscript
-    ' ----------------------------------------------------------- 
+    Sub CATMain()
+
+```
+
+```vbscript
+```vbscript
+```vbscript
+    ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 
+```
+
+```
+
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
+```vbscript
+```vbscript
         End If
-    ' ----------------------------------------------------------- 
+    ' -----------------------------------------------------------
+
+```
+
+```
 
 ```
 
 ```vbscript
 End If
+```vbscript
+```vbscript
 ' -----------------------------------------------------------
     ' Open the CATAnalysis Document
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis")
 ```
 
+```
+
+```
+
+```vbscript
 ```vbscript
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```
 
+```
+
 ```vbscript
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+```vbscript
     ' Retrieve the Analysis Manager
+```
+
 ```
 
 ```vbscript
     Set oAnalysisManager = oAnalysisDocument.Analysis
 ```
 
+```vbscript
+```vbscript
 ```vbscript
     ' Retrieve the analysis model from the list of models
     Set oAnalysisModels = oAnalysisManager.AnalysisModels
@@ -77,29 +112,60 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
     'we Activate the image
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 'we search image Disp_Symbol
 Set oAnalysisImage = analysisImages1.Item("Disp_Symbol")
 'we Activate the image
+```
+
+```
+
     oAnalysisImage.SetActivationStatus true
+```vbscript
     'we update the  image
+```
+
     oAnalysisImage.Update
 ```
 
+```vbscript
+```vbscript
 ```vbscript
     'deactivation of an  image
     '===============
     'we deactivate the image
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 'deactivation of an  image
 '===============
 'we deactivate the image
+```
+
+```
+
     oAnalysisImage.SetActivationStatus false
+```vbscript
     'we update the  image
+```
+
     oAnalysisImage.Update
 
 ```
 
+```vbscript
     End Sub
+
+```

@@ -2,196 +2,45 @@
 title: "Untitled"
 category: "use-case"
 module: "CAAScdSchUseCases"
-tags: ["CAAScrBase", "CAAInfLauchMacro", "CAASchCreateSchDocument2Source", "CAAScdInfUseCases", "CAASchCreateSchDocument2", "CAAScdSchUseCases", "CATIA", "CAAScrJavaScript"]
+tags: ["CAAScrBase", "CATIA", "CAASchCreateSchDocument2", "CAAScrJavaScript", "CAASchCreateSchDocument2Source", "CAAScdSchUseCases", "CAAScdInfUseCases", "CAAInfLauchMacro"]
 source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocument2.htm"
-converted: "2026-05-11T11:06:32.568522"
+converted: "2026-05-11T11:27:02.611363"
 ---
-
-## Schematics Platform Modeler
- 
- 
-## []Creating a Schematic Document
- 
- 
- 
- 
 
 ---
 
  
  
- 
- ![](../CAAScrBase/images/atarget.gif)
- |[]This macro shows you how to create a 
- new schematic document.
- 
+     
 
-Schematic documents for DS provided Schematic applications are all of 
- the same kind. They are all special CATProduct document. Instead of having 
- typical 3D viewers, these Schematic documents have 2D viewers embedded in 
- them. Therefore, when using the standard way of creating a new document, an 
- additional step is required to initialize this new document the "Schematic 
- way". This macro illustrates this important step.
- 
- 
- ![](../CAAScrBase/images/ainfo.gif)
- |[]CAASchCreateSchDocument2 is launched in 
- CATIA [[1]]. No open document is needed.
+#### Initialize the new 
+     Schematic document the "schematic way"
+     
+     
 
- [
- CAASchCreateSchDocument2.CATScript ]is located in the CAAScdSchUseCases 
- module. [Execute macro] 
- (Windows only).
- 
- 
- ![](../CAAScrBase/images/ascenari.gif)
- |[]CAASchCreateSchDocument2 includes the 
- following steps:
-
- 
-- [Prolog]
- 
-- [Initialize the new Schematic 
- document the "schematic way"]
- 
-- Get the current CNEXT session
- 
-- Create a new schematic document
- 
-- Set the drawing standard
- 
- 
-#### []Prolog
- 
-
-The macro first creates a new document..
- 
- 
- |    ...
-
-   
- '--------------------------------------------------------------------------
-
-   
- ' Create a CATProduct document
-
-   
- '--------------------------------------------------------------------------
-
-    Dim objSchDoc As Document
-
-    Set objSchDoc = CATIA.Documents.Add ("CATProduct")
-
-   
- ...
- 
- 
- 
-#### []Initialize the new 
- Schematic document the "schematic way"
- 
- 
- |    ...
-
-        
- '---------------------------------------------------------------------
-
-        
- ' Regular CATProduct is a 3D document and is associated with a 3D
-
-        
- ' editor and a 3D viewer. On the other hand a schematic document
-
-        
- ' is a special CATProduct document that is associated with a special
-
-        
- ' 2D viewer and 2D editor. Therefore, we need to trigger the
-
-        
- ' documentation initialization (which has already been done in 
- 
-
-        
- ' CATDocuments.Add) again after associating schematic 
- 
-
-        
- ' behavior to the document, 
-
-        
- ' by saving the document and re-opening it again.
-
-        
- '---------------------------------------------------------------------
-
-         objSchDoc.SaveAs strDocName
-
- 
-
-         objSchDoc.Close
-
- 
-
-         Set objSchDoc = CATIA.Documents.Open (strDocName)
-
-   
- ...
- 
- 
- 
-#### []Set the drawing standard of the 
- drafting viewer in the schematic document
- 
+#### Set the drawing standard of the 
+     drafting viewer in the schematic document
+     
 
 A schematic document has a drafting viewer embedded in it. The drawing 
- standard of that drafting viewer can be set by calling the 
- SetDrawingStandard method. This macro also illustrates how to use the 
- GetDrawingStandard method to retrieve the drawing standard of a schematic 
- document.
- 
- 
- |    ...
-
-        
- '---------------------------------------------------------------------
-
-        
- ' Set the drawing standard if needed 
-
-        
- '---------------------------------------------------------------------
-
-         If ( Not ( objSchRoot Is Nothing ) ) Then
-
-            objSchRoot.SetDrawingStandard catISO
-
-            strMessage = strMessage & "drawing standard set to catISO" & vbCr
-
-            Dim std As CatDrawingStandard
-
-            std = objSchRoot.GetDrawingStandard
-
-            strMessage = strMessage & "drawing standard = " & std & vbCr
-
-         End If
-
-   
- ...
- 
- 
- 
- 
+     standard of that drafting viewer can be set by calling the 
+     SetDrawingStandard method. This macro also illustrates how to use the 
+     GetDrawingStandard method to retrieve the drawing standard of a schematic 
+     document.
+     
+     
+   
  
  
 
-[[Top]]
+[Top]
 
 ---
 
  
  
-#### []In Short
+
+#### In Short
  
 
 This use case shows how to create a schematic document. A message logging 
@@ -201,24 +50,14 @@ This use case shows how to create a schematic document. A message logging
  ![](images/CAASchCreateSchDocument2.jpg)
  
 
-[[Top]]
+[Top]
 
 ---
 
  
  
-#### []References
- 
- 
- |[1]
- |[
- Replaying a Macro]
- 
- 
- 
- 
- |[[Top]]
- 
+
+#### References
  
  
 
@@ -227,4 +66,4 @@ This use case shows how to create a schematic document. A message logging
  
  
 
-*Copyright 2001, Dassault Systmes. All rights reserved.*
+*Copyright  2001, Dassault Systmes. All rights reserved.*

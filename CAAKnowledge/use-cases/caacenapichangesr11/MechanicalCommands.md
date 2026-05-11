@@ -10,10 +10,10 @@ converted: "2026-05-11T17:33:50.434681"
 ```
 
 ---
-| CAA C++ API Modifications|  MechanicalCommands  |   
----|---|---  
+| CAA C++ API Modifications|  MechanicalCommands  |
+---|---|---
 
 * * *
 
-**Entity|  SP| Modification| To Do** | MechanicalCommands/Protected/CATICCPable.h| GA| FHBD| Modules using the moved resources should have the CATInteractiveInterfaces module added to their LINK_WITH statement of their Imakefile.mk file and add the InteractiveInterfaces framework as a prerequisite in the IdentityCard of their frameworks.  
+**Entity|  SP| Modification| To Do** | MechanicalCommands/Protected/CATICCPable.h| GA| FHBD| Modules using the moved resources should have the CATInteractiveInterfaces module added to their LINK_WITH statement of their Imakefile.mk file and add the InteractiveInterfaces framework as a prerequisite in the IdentityCard of their frameworks.
 ---|---|---|---

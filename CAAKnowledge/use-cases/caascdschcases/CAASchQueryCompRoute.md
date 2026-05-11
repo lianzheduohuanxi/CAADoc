@@ -11,8 +11,8 @@ converted: "2026-05-11T17:31:51.448432"
 ---
 ## Schematics Platform Modeler
 
-| 
-## Querying Schematic Document Content  
+|
+## Querying Schematic Document Content
 
 * * *
 
@@ -25,7 +25,7 @@ This macro shows you how to query for information from a Schematic design docume
   4. The defining route points of the route path of a specific Schematic route instance.
   5. The position of a connector.
 
-This macro open the CAASCH_CompRoute01.CATProduct document for querying information. ![](images/CAASchQueryCompRoute_01.jpg)  
+This macro open the CAASCH_CompRoute01.CATProduct document for querying information. ![](images/CAASchQueryCompRoute_01.jpg)
 
 4. The defining route points of the route path of a specific Schematic route instance.
 5. The position of a connector.
@@ -36,17 +36,17 @@ This macro open the CAASCH_CompRoute01.CATProduct document for querying informat
 
 >   1. RADE must be installed.
 >   2. CAASchPlatformModeler.edu must exist in CAADoc folder.
-> 
+>
 
   * Setup:
 
->   1. Build CAASchAppBase.m and CAASchAppUtilities.m, located in CAASchPlatformModeler.edu (RADE is required). 
+>   1. Build CAASchAppBase.m and CAASchAppUtilities.m, located in CAASchPlatformModeler.edu (RADE is required).
 >   2. Copy generated DLLs, CAASchAppBase.dll and CAASchAppUtilities.m, respectively, to the run-time environment folder "intel_a\code\bin."
 >   3. Copy CAASCHEDUApp.CATfct, located CAASchPlatformModeler.edu\CNext\resources\graphic, to the run-time environment folder "intel_a\resources\graphic."
 >   4. Copy CAASchPlatformModeler.edu\CNext\code\dictionary\CAASchPlatformModeler.edu.dico to the run-time environment folder "intel_a\code\dictionary."
-> 
+>
 
-[CAASchQueryCompRoute.CATScript ](CAASchQueryCompRouteSource.md) is located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchQueryCompRoute.CATScript) (windows only).  
+[CAASchQueryCompRoute.CATScript ](CAASchQueryCompRouteSource.md) is located in the CAAScdSchUseCases module. [Execute macro](macros/CAASchQueryCompRoute.CATScript) (windows only).
  CAASchQueryCompRoute includes the following steps:
 
 CAASchQueryCompRoute includes the following steps:
@@ -63,210 +63,294 @@ CAASchQueryCompRoute includes the following steps:
 
 7. Query for a list of all the Schematic route instances in the document.
 8. Query for a list of route path definition points.
-The macro first loads the document: CAASCH_CompRoute01.CATProduct. |     ...  
-    ' Open the schematic document   
-
+The macro first loads the document: CAASCH_CompRoute01.CATProduct. |     ...
 ```vbscript
-    Dim sFilePath  
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _  
+```vbscript
+    ' Open the schematic document
+
 ```
 
-            "online\CAAScdSchUseCases\samples\CAASCH_CompRoute01.CATProduct")  
+```
+
+```vbscript
+    Dim sFilePath
+```vbscript
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+```
+
+```
+
+            "online\CAAScdSchUseCases\samples\CAASCH_CompRoute01.CATProduct")
 
 ```vbscript
 Dim sFilePath
+```vbscript
+```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
-    Dim objSchDoc As Document  
-    Set objSchDoc = CATIA.Documents.Open(sFilePath)  
+    Dim objSchDoc As Document
+    Set objSchDoc = CATIA.Documents.Open(sFilePath)
 ```
 
-    ...  
+```
 
----  
+```
 
-Next, the macro acquires the schematic root object from the document. The schematic root is the top node of the object instance tree in a schematic document. 
+    ...
 
-    ...  
+---
+
 Next, the macro acquires the schematic root object from the document. The schematic root is the top node of the object instance tree in a schematic document.
-    ' Find the top node of the schematic object tree - schematic root.  
+
+    ...
+Next, the macro acquires the schematic root object from the document. The schematic root is the top node of the object instance tree in a schematic document.
+```vbscript
+```vbscript
+    ' Find the top node of the schematic object tree - schematic root.
+
+```
+
+```
 
 ```vbscript
-    Dim objPrdRoot As Product  
-    Dim objSchRoot As SchematicRoot  
-    If ( Not ( objSchDoc Is Nothing ) ) Then  
-      Set objPrdRoot = objSchDoc.Product   
-      If ( Not ( objPrdRoot Is Nothing ) ) Then  
-        Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")  
-      End If  
-    End If  
+    Dim objPrdRoot As Product
+```vbscript
+```vbscript
+    Dim objSchRoot As SchematicRoot
+    If ( Not ( objSchDoc Is Nothing ) ) Then
+      Set objPrdRoot = objSchDoc.Product
+      If ( Not ( objPrdRoot Is Nothing ) ) Then
+        Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
+      End If
+    End If
 ```
 
-    ...  
+```
 
----  
+```
+
+    ...
+
+---
 #### Query for the name of the current document in the session
 
 The SchSession interface provides the GetCurrentDocument method to return the name of the current document.
 
-    ...  
+    ...
 ```vbscript
-       Set objSchSession = objSchRoot.GetSchematicSession  
+       Set objSchSession = objSchRoot.GetSchematicSession
 ```
 
 ```vbscript
-       '-----------------------------------------------------------------------  
-       '| Query the name of the current document    
-       '-----------------------------------------------------------------------  
-       If ( Not ( objSchSession Is Nothing ) ) Then  
-          Set objCurDoc = objSchSession.GetCurrentDocument  
+```vbscript
+```vbscript
+       '-----------------------------------------------------------------------
+       '| Query the name of the current document
+       '-----------------------------------------------------------------------
+       If ( Not ( objSchSession Is Nothing ) ) Then
+          Set objCurDoc = objSchSession.GetCurrentDocument
 ```
 
-    ...  
+```
 
----  
+```
+
+    ...
+
+---
 #### Query for a list of Schematic reference components in the document
 
 The SchematicRoot interface provides the GetRefComponents method to return a list of Schematic component references in the document.
 
-    ...  
+    ...
 ```vbscript
-    ' -------------------------------------------------------------------------    
-    ' |  List schematic component references in the model  
-    ' -------------------------------------------------------------------------    
+```vbscript
+```vbscript
+    ' -------------------------------------------------------------------------
+    ' |  List schematic component references in the model
+    ' -------------------------------------------------------------------------
+```
+
+```
+
 ```
 
 ```vbscript
-    Set objSchLCompRefs = objSchRoot.GetRefComponents  
+    Set objSchLCompRefs = objSchRoot.GetRefComponents
 ```
 
-    ...  
+    ...
 
----  
+---
 #### Query for a list of Schematic component instances in the document
 
 The SchematicRoot interface provides the GetComponents method to return a list of Schematic component instances in the document.
 
-    ...  
+    ...
 ```vbscript
-    ' -------------------------------------------------------------------------    
-    ' |  List schematic component instances in the model  
-    ' -------------------------------------------------------------------------    
+```vbscript
+```vbscript
+    ' -------------------------------------------------------------------------
+    ' |  List schematic component instances in the model
+    ' -------------------------------------------------------------------------
+```
+
+```
+
 ```
 
 ```vbscript
-    Set objSchLComps = objSchRoot.GetComponents  
+    Set objSchLComps = objSchRoot.GetComponents
 ```
 
-    ...  
+    ...
 
----  
+---
 #### Find the positioning matrix of specific graphical image of a Schematic component instance
 
 This macro provides the GetComponentImage internal Function to return a specific SchGRRComp interface handle on a specific graphical image of a component instance. This interface provides the GetTransformation2D method to return the positioning matrix of the image.
 
-    ...  
+    ...
 ```vbscript
-            If ( Not ( objCompGraphInst Is Nothing ) ) Then  
+            If ( Not ( objCompGraphInst Is Nothing ) ) Then
 ```
 
 ```vbscript
-               Set objGRRCompInst = GetComponentImage (objCompGraphInst)  
+               Set objGRRCompInst = GetComponentImage (objCompGraphInst)
 ```
 
-    ...  
+    ...
 ```vbscript
 If ( Not ( objCompGraphInst Is Nothing ) ) Then
+```vbscript
 Set objGRRCompInst = GetComponentImage (objCompGraphInst)
-                  objGRRCompInst.GetTransformation2D objSchLDbComp  
 ```
 
-    ...  
+                  objGRRCompInst.GetTransformation2D objSchLDbComp
+```
 
----  
+    ...
+
+---
 #### Query for a list of all the connectors of a Schematic component instance
 
 The macro calls AppListConnectors to list all the connectors. Notice that the input objFilter is an empty list which specifies no filtering is requested.
 
-    ...  
+    ...
 ```vbscript
-            '------------------------------------------------------------------  
-            ' Get the connector locations of all component instances  
-            '------------------------------------------------------------------  
+```vbscript
+```vbscript
+            '------------------------------------------------------------------
+            ' Get the connector locations of all component instances
+            '------------------------------------------------------------------
+```
+
+```
+
 ```
 
 ```vbscript
-            If ( Not ( objCntbl Is Nothing ) And  Not ( objGRR Is Nothing ) ) Then  
+            If ( Not ( objCntbl Is Nothing ) And  Not ( objGRR Is Nothing ) ) Then
 ```
 
 ```vbscript
-               Set objLCntrs = objCntbl.AppListConnectors (objLFilter)  
+               Set objLCntrs = objCntbl.AppListConnectors (objLFilter)
 ```
 
-    ...  
+    ...
 
----  
+---
 
+```vbscript
 ```vbscript
 For each connector in the returned list, the macro calls the method calls GetPosition method to obtain the x-y coordinates of the connector position.
 
 ```
 
-    ...  
+```
+
+    ...
 ```vbscript
-                     For iCntr = 1 To intNbCntr  
+                     For iCntr = 1 To intNbCntr
 ```
 
 ```vbscript
-                        Set objCntr = Nothing  
-                        Set objCntr = objLCntrs.Item (iCntr,"CATIASchCntrLocation")  
-                        If ( Not ( objCntr Is Nothing )) Then  
-                           objCntr.GetPosition objGRR, objLDbCntr  
+                        Set objCntr = Nothing
+```vbscript
+```vbscript
+                        Set objCntr = objLCntrs.Item (iCntr,"CATIASchCntrLocation")
+                        If ( Not ( objCntr Is Nothing )) Then
 ```
 
-    ...  
+```
 
----  
+                           objCntr.GetPosition objGRR, objLDbCntr
+```
+
+    ...
+
+---
 #### Query for a list of all the Schematic route instances in the document
 
 The SchematicRoot interface provides the GetRoutes method to return a list of Schematic route instances in the document.
 
-    ...  
+    ...
 ```vbscript
-    ' -------------------------------------------------------------------------    
-    ' |  List schematic route instances  
-    ' -------------------------------------------------------------------------    
+```vbscript
+```vbscript
+    ' -------------------------------------------------------------------------
+    ' |  List schematic route instances
+    ' -------------------------------------------------------------------------
+```
+
+```
+
 ```
 
 ```vbscript
-    Set objSchLRoutes = objSchRoot.GetRoutes  
+    Set objSchLRoutes = objSchRoot.GetRoutes
 ```
 
-    ...  
+    ...
 
----  
+---
 #### Query for a list of route path definition points
 
-The macro calls the GetRoutePrimitives to get the graphical representation of a specific Schematic route instance. Then it calls GetPath to get a list of x-y coordinates for each defining points of the route path. 
+The macro calls the GetRoutePrimitives to get the graphical representation of a specific Schematic route instance. Then it calls GetPath to get a list of x-y coordinates for each defining points of the route path.
 
         ...
 ```vbscript
+```vbscript
+```vbscript
                 '------------------------------------------------------------------
-                ' Get the route points x-y coordinates of the route. 
+                ' Get the route points x-y coordinates of the route.
                 '------------------------------------------------------------------
 ```
 
+```
+
+```
+
+```vbscript
 ```vbscript
                 If ( Not ( objSchRouteGraph Is Nothing ) ) Then
 
 ```
 
+```
+
+```vbscript
 ```vbscript
                    Set objGRRRoute = GetRoutePrimitives (objSchRouteGraph,objSchRoot)
 
 ```
 
+```
+
+```vbscript
 ```vbscript
                    If ( Not ( objGRRRoute Is Nothing ) ) Then
+
+```
 
 ```
 
@@ -280,23 +364,32 @@ The macro calls the GetRoutePrimitives to get the graphical representation of a 
 
 ```vbscript
 If ( Not ( objSchLDbRoute Is Nothing ) And _
+```
+
 intNbOut > 3 ) Then
                          intNb = objSchLDbRoute.Count
 
-```
-
 ```vbscript
                          Dim iIndex As Integer
+```vbscript
+```vbscript
                          Dim jIndex As integer
                          Dim dbX As Double
                          Dim dbY As Double
                          Dim intNbPoint As Integer
+```
+
+```
+
                          intNbPoint = intNbOut/2
 
 ```
 
 ```vbscript
+```vbscript
                          If ( (intNbOut = intNb ) And  (intNbPoint > 1) ) Then
+
+```
 
 ```
 
@@ -304,22 +397,40 @@ intNbOut > 3 ) Then
 
 ```vbscript
                             For iIndex = 1 To intNbPoint
+```vbscript
+```vbscript
                                jIndex = ((iIndex-1) * 2) + 1
                                dbX = objSchLDbRoute.Item(jIndex)
                                dbY = objSchLDbRoute.Item(jIndex+1)
 ```
 
-         ...
-```vbscript
-For iIndex = 1 To intNbPoint
-jIndex = ((iIndex-1) * 2) + 1
-dbX = objSchLDbRoute.Item(jIndex)
-dbY = objSchLDbRoute.Item(jIndex+1)
-                            Next   
+```
 
 ```
 
----  
+         ...
+```vbscript
+For iIndex = 1 To intNbPoint
+```
+
+jIndex = ((iIndex-1) * 2) + 1
+```vbscript
+```vbscript
+dbX = objSchLDbRoute.Item(jIndex)
+dbY = objSchLDbRoute.Item(jIndex+1)
+```
+
+```
+
+```vbscript
+```vbscript
+                            Next
+
+```
+
+```
+
+---
 
 [Top]
 
@@ -335,9 +446,9 @@ This use case shows how to query the data of a Schematic document and of its obj
 * * *
 #### References
 
-[1] | [ Replaying a Macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)  
----|---  
-[Top]  
+[1] | [ Replaying a Macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)
+---|---
+[Top]
 
 * * *
 

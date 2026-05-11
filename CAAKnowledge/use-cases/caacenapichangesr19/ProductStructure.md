@@ -10,11 +10,11 @@ converted: "2026-05-11T17:33:51.597196"
 ```
 
 ---
-| 
+|
 # CAA C++ API Modifications
 
-| 
-##  ProductStructure Framework Modifications in V5R19 
+|
+##  ProductStructure Framework Modifications in V5R19
 
 * * *
 

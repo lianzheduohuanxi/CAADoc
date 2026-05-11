@@ -12,11 +12,11 @@ converted: "2026-05-11T17:33:46.134211"
 tags: []
 source_file: "Doc/online/CAABtlTechArticles/CAABtlMANtlb.htm"
 converted: "2026-05-11T17:33:46.134211"
-RADE |  Multi-Workspace Application Builder |  Type Libraries in C++ for Windows _Support of type libraries import in C++ sources for Windows_  
+RADE |  Multi-Workspace Application Builder |  Type Libraries in C++ for Windows _Support of type libraries import in C++ sources for Windows_
 
 converted: "2026-05-11T17:33:46.134211"
 RADE |  Multi-Workspace Application Builder |  Type Libraries in C++ for Windows _Support of type libraries import in C++ sources for Windows_
-Technical Article  
+Technical Article
 
 * * *
 
@@ -31,9 +31,9 @@ All the imported files, "**.dll** ", "**.olb** " and "**.tlb** ", must be delive
 
 * * *
 
-History Version: **1** [Jun 2003] | Document created  
----|---  
-[Top]  
+History Version: **1** [Jun 2003] | Document created
+---|---
+[Top]
 
 * * *
 

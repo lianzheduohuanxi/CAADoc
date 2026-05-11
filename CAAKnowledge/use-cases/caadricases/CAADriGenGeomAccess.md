@@ -11,15 +11,15 @@ converted: "2026-05-11T17:31:50.999826"
 ---
 # Mechanical Design
 
-| 
+|
 ## Drafting
 
-| 
+|
 ### Editing Generated Geometry in a Generative View
 
-_How to access generated geometry_  
----|---|---  
-Use Case  
+_How to access generated geometry_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
@@ -35,7 +35,7 @@ This article discusses the CAADrwGeomAccess use case. This use case explains how
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
@@ -50,13 +50,13 @@ CAADrwGeomAccess is a use case of the CAADraftingInterfaces.edu framework that i
 [Top]
 #### What Does CAADrwGeomAccess Do?
 
-Fig. 1: Initial Document ![](images/CAADrwGeomAccess1.jpg)  
----  
+Fig. 1: Initial Document ![](images/CAADrwGeomAccess1.jpg)
+---
 
 Fig. 1 represents the Drawing document on which a front view has been created from a Part document. The document is not provided with the use case.
 
-Fig. 2 The Document modified by the Use Case ![](images/CAADrwGeomAccess2.jpg)  
----  
+Fig. 2 The Document modified by the Use Case ![](images/CAADrwGeomAccess2.jpg)
+---
 
 Fig. 2 represents the Drawing document modified by the use case program:
 
@@ -68,21 +68,21 @@ Fig. 2 represents the Drawing document modified by the use case program:
 
 To launch CAADrwGeomAccess, you will need to set up the build time environment, then compile CAADrwGeomAccess along with its prerequisites, set up the run time environment, and then execute the use case [1].
 
-When you launch the use case, pass the full pathname of the Drawing file as argument. A Drawing file is deliverry in the following path: CAADraftingInterfaces.edu\CNext\resources\graphic\DrawingForGenGeomAccessUseCase.CATDrawing. 
+When you launch the use case, pass the full pathname of the Drawing file as argument. A Drawing file is deliverry in the following path: CAADraftingInterfaces.edu\CNext\resources\graphic\DrawingForGenGeomAccessUseCase.CATDrawing.
 
-  * With Windows 
+  * With Windows
 
 When you launch the use case, pass the full pathname of the Drawing file as argument. A Drawing file is deliverry in the following path: CAADraftingInterfaces.edu\CNext\resources\graphic\DrawingForGenGeomAccessUseCase.CATDrawing.
         e:> mkrun -c cmd
-        CAADrwGeomAccess c/.../DrawingForGenGeomAccessUseCase.CATDrawing c/DrawingTestOutput.CATDrawing  
+        CAADrwGeomAccess c/.../DrawingForGenGeomAccessUseCase.CATDrawing c/DrawingTestOutput.CATDrawing
 
----  
-  * With UNIX 
+---
+  * With UNIX
 
         $ mkrun -c cmd
-        CAADrwGeomAccess /u/users/.../DrawingForGenGeomAccessUseCase.CATDrawing  /u/users/DrawingTestOutput.CATDrawing  
+        CAADrwGeomAccess /u/users/.../DrawingForGenGeomAccessUseCase.CATDrawing  /u/users/DrawingTestOutput.CATDrawing
 
----  
+---
 
 [Top]
 #### Where to Find the CAADrwGeomAccess Code
@@ -90,11 +90,11 @@ When you launch the use case, pass the full pathname of the Drawing file as argu
 The CAADrwGeomAccess use case is made of a single source file named CAADrwGeomAccess.cpp located in the CAADrwGeomAccess.m module of the CAADraftingInterfaces.edu framework:
 
 The CAADrwGeomAccess use case is made of a single source file named CAADrwGeomAccess.cpp located in the CAADrwGeomAccess.m module of the CAADraftingInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwGeomAccess.m\`  
+Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwGeomAccess.m\`
 
 The CAADrwGeomAccess use case is made of a single source file named CAADrwGeomAccess.cpp located in the CAADrwGeomAccess.m module of the CAADraftingInterfaces.edu framework:
 Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwGeomAccess.m\`
-Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwGeomAccess.m/`  
+Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwGeomAccess.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
@@ -114,7 +114,7 @@ There are six steps in CAADRWGeomAccess:
 [Top]
 #### Creating and Initializing the Document
 
-    int main(int    iArgc,   // Number of arguments (1) 
+    int main(int    iArgc,   // Number of arguments (1)
              char** iArgv)   // Path to the new *.CATDrawing document
     {
       // Check arguments
@@ -130,11 +130,14 @@ char** iArgv)   // Path to the new *.CATDrawing document
 const char *fileNameOut = iArgv[2];
       CATSession *pSampleSession = NULL;
       HRESULT hr = ::Create_Session("SampleSession",pSampleSession);
+```vbscript
       if (FAILED(hr)) return 1;
 
-    ...  
+```
 
----  
+    ...
+
+---
 
 This section represents the usual sequence for loading a CATIA document [2].
 
@@ -159,7 +162,10 @@ return 2;
 
       **CATIDftDocumentServices** *piDftDocServices = NULL;
 CATIDrawing *piDrawing = NULL;
+```vbscript
       if (SUCCEEDED(pDoc->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftDocServices)))
+
+```
 
       {
 CATIDrawing *piDrawing = NULL;
@@ -174,9 +180,9 @@ piDftDocServices->**Release**();
       if (NULL == piDrawing)
         return 1;
 
-    ...  
+    ...
 
----  
+---
 
 The root feature of a drawing document is the Drawing, that is, the feature that implements the _CATIDrawing_ interface. We can get a pointer to _CATIDrawing_ using the _CATIDftDocumentServices_ interface, which is implemented by the document. The `GetDrawing` method first argument is the _CATIDrawing_ interface IID.
 
@@ -192,7 +198,10 @@ The root feature of a drawing document is the Drawing, that is, the feature that
        CATIDftSheet *piSheet = NULL;
        CATIDftView *piCurrentView = NULL;
 
+```vbscript
        if (SUCCEEDED(spSheet->QueryInterface(IID_CATIDftSheet,(void**) & piSheet) ) )
+
+```
 
        {
 CATIDftSheet *piSheet = NULL;
@@ -203,9 +212,9 @@ if (SUCCEEDED(spSheet->QueryInterface(IID_CATIDftSheet,(void**) & piSheet) ) )
           piSheet=NULL;
 
        }
-    ...  
+    ...
 
----  
+---
 
 A drawing may contain several sheets, but only one is current at a time. The current sheet is the sheet containing the active view, that is the view currently edited. The methods of the _CATISheet_ and _CATIView_ interfaces do return handlers, so we don’t need to care about releasing them. The drawing variable is a pointer to _CATIDrawing_ , so we have to release when it's no longer used.
 
@@ -215,8 +224,10 @@ A drawing may contain several sheets, but only one is current at a time. The cur
     ...
        CATIView_var spCurrentView = spSheet->GetCurrentView();
        CATILinkableObject_var spLink;
-       CATDocument* pDocPart = NULL; 
+       CATDocument* pDocPart = NULL;
        if (NULL_var != spCurrentView)
+```vbscript
+```vbscript
           spLink = spCurrentView->GetDoc();
 
        if (NULL_var != spLink)
@@ -224,11 +235,21 @@ A drawing may contain several sheets, but only one is current at a time. The cur
 
        if (pDocPart)
 
+```
+
+```
+
        {
 ```vbscript
 if (NULL_var != spLink)
+```vbscript
+```vbscript
 pDocPart = spLink->GetDocument();
 if (pDocPart)
+```
+
+```
+
           CATInit_var spInitOnDoc(pDocPart);
           if(NULL_var == spInitOnDoc) return 5;
 
@@ -237,8 +258,11 @@ if (pDocPart)
           // Retrieves the root container
 CATInit_var spInitOnDoc(pDocPart);
 if(NULL_var == spInitOnDoc) return 5;
-          CATIPrtContainer * piPrtCont =  (CATIPrtContainer*) spInitOnDoc->GetRootContainer("CATIPrtContainer");	
+          CATIPrtContainer * piPrtCont =  (CATIPrtContainer*) spInitOnDoc->GetRootContainer("CATIPrtContainer");
+```vbscript
           if (!piPrtCont)
+
+```
 
           {
              // Ends session
@@ -255,36 +279,54 @@ return 6;
           piPrtCont=NULL;
 
        }
-    ...  
+    ...
 
----  
+---
 
-A link is created between a generative view  and the CATPart document associated  to keep the 2D/3D associativity. So, we have to load the CATPart document from this link.  
+A link is created between a generative view  and the CATPart document associated  to keep the 2D/3D associativity. So, we have to load the CATPart document from this link.
 
 [Top]
-#### Reading and Coloring the Generated Geometry in the Current View  
+#### Reading and Coloring the Generated Geometry in the Current View
 
     ...
       CATIDftGenGeomAccess *piGenGeomAccess = NULL;
        IUnknown *piGenView = NULL;
-       if (NULL != piCurrentView) 
+```vbscript
+       if (NULL != piCurrentView)
+
+```
 
        {
 CATIDftGenGeomAccess *piGenGeomAccess = NULL;
 IUnknown *piGenView = NULL;
 if (NULL != piCurrentView)
+```vbscript
+```vbscript
           if (SUCCEEDED( piCurrentView->GetApplicativeExtension(IID_CATIDftGenView,&piGenView)))
+
+```
+
+```
 
           {
 IUnknown *piGenView = NULL;
 if (NULL != piCurrentView)
+```vbscript
+```vbscript
 if (SUCCEEDED( piCurrentView->GetApplicativeExtension(IID_CATIDftGenView,&piGenView)))
              if (SUCCEEDED( piGenView->QueryInterface(IID_CATIDftGenGeomAccess, (void**) & piGenGeomAccess) ) )
+
+```
+
+```
 
              {
 ```vbscript
 if (SUCCEEDED( piCurrentView->GetApplicativeExtension(IID_CATIDftGenView,&piGenView)))
+```vbscript
 if (SUCCEEDED( piGenView->QueryInterface(IID_CATIDftGenGeomAccess, (void**) & piGenGeomAccess) ) )
+```
+
                 CATIUnknownList * piList = NULL;
 
 ```
@@ -318,42 +360,60 @@ CATVisPropertyType       iPropertyType = CATVPColor;
                    {
 CATVisPropertyType       iPropertyType = CATVPColor;
 for(unsigned int i=0 ; i<piListSize ; i++)
+```vbscript
                       if( SUCCEEDED( piList->Item(i, &item) ) )
+
+```
 
                       {
 ```vbscript
 for(unsigned int i=0 ; i<piListSize ; i++)
+```vbscript
 if( SUCCEEDED( piList->Item(i, &item) ) )
                          if(SUCCEEDED( item->QueryInterface(IID_CATIDftGenGeom, (void**) & piGenGeom) ) )
+```
+
 ```
 
                          {
 ```vbscript
 if( SUCCEEDED( piList->Item(i, &item) ) )
+```vbscript
 if(SUCCEEDED( item->QueryInterface(IID_CATIDftGenGeom, (void**) & piGenGeom) ) )
+```
+
                             CATCurve * Curve = NULL;
-                            if (SUCCEEDED(piGenGeom->GetUnderlyingGeometry(&Curve))) 
+                            if (SUCCEEDED(piGenGeom->GetUnderlyingGeometry(&Curve)))
 ```
 
                             {
                                // Color modification
 CATCurve * Curve = NULL;
 if (SUCCEEDED(piGenGeom->GetUnderlyingGeometry(&Curve)))
+```vbscript
                                if(SUCCEEDED( piGenGeom->QueryInterface(IID_CATIVisProperties, (void**) & piVisProp) ) )
+
+```
 
                                {
 ```vbscript
 if (SUCCEEDED(piGenGeom->GetUnderlyingGeometry(&Curve)))
+```vbscript
 if(SUCCEEDED( piGenGeom->QueryInterface(IID_CATIVisProperties, (void**) & piVisProp) ) )
+```
+
     			     CATBoolean cutInfo = FALSE;
     			     if (SUCCEEDED(piGenGeom->IsCut(&cutInfo)))
 ```
 
     			     {
-    			       // Red color is applied for generated geometry coming from section 
+    			       // Red color is applied for generated geometry coming from section
 CATBoolean cutInfo = FALSE;
 if (SUCCEEDED(piGenGeom->IsCut(&cutInfo)))
+```vbscript
     			       if (cutInfo)
+```
+
     			         ioValues.SetColor( 255,0,0);
 
     			       // Greeen color is applied for generated geometry coming from projection
@@ -371,7 +431,7 @@ else
 ioValues.SetColor( 0,255,0);
 piVisProp->SetPropertiesAtt( ioValues, iPropertyType, CATVPLine);
                                  piVisProp->Release();
-                                 piVisProp=NULL; 
+                                 piVisProp=NULL;
 
                                }
 piVisProp->SetPropertiesAtt( ioValues, iPropertyType, CATVPLine);
@@ -381,7 +441,7 @@ piVisProp=NULL;
 
                             }
 
-                            // Memory clean                     
+                            // Memory clean
 Curve->Release(); Curve = NULL;
                             piGenGeom->Release(); piGenGeom = NULL;
                             item->Release(); item = NULL;
@@ -389,24 +449,24 @@ Curve->Release(); Curve = NULL;
                          }
                       }
                    }
-                   // Memory clean                     
-                   piList->Release(); piList = NULL;	
+                   // Memory clean
+                   piList->Release(); piList = NULL;
                 }
-                // Memory clean                     
+                // Memory clean
                 piGenGeomAccess->Release(), piGenGeomAccess = NULL;
              }
-             // Memory clean                     
+             // Memory clean
              piGenView->Release() , piGenView=NULL;
           }
-          // Memory clean                     
+          // Memory clean
           piCurrentView->Release() , piCurrentView=NULL;
        }
 
-    ...  
+    ...
 
----  
+---
 
-Note: 
+Note:
 
 Note:
   1. Color modification is done by using CATIVisProperties interface capabilities [4].
@@ -421,17 +481,23 @@ Note:
       ... // Check rc
       rc = CATDocumentServices::**Remove** (*pDoc);
       ... // Check rc
-      // Ends session and drops document	
+      // Ends session and drops document
 rc = CATDocumentServices::**SaveAs**(*pDoc, (char *)fileName);
+```vbscript
+```vbscript
 rc = CATDocumentServices::**Remove** (*pDoc);
       rc = ::**Delete_Session**("SampleSession");
+
+```
+
+```
 
       ... // Check rc
 
       return 0;
-    }  
+    }
 
----  
+---
 
 This section represents the usual sequence for saving a newly created CATIA document [3].
 
@@ -454,18 +520,18 @@ This use case shows the way to :
 * * *
 ### References
 
-[1] | [Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-[2] | [Load an existing Document](../CAAOmbUseCases/CAAOmbLoadDoc.md)  
-[3] | [Modifying Object Graphical Properties](../CAAVisUseCases/CAAVisSampleUseCATIVisProperties.md)  
-[Top]  
+[1] | [Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)
+---|---
+[2] | [Load an existing Document](../CAAOmbUseCases/CAAOmbLoadDoc.md)
+[3] | [Modifying Object Graphical Properties](../CAAVisUseCases/CAAVisSampleUseCATIVisProperties.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Dec 2002] | Document created  
----|---  
-[Top]  
+Version: **1** [Dec 2002] | Document created
+---|---
+[Top]
 
 * * *
 

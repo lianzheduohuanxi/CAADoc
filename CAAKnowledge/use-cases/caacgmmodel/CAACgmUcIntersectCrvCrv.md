@@ -9,20 +9,20 @@ converted: "2026-05-11T17:33:48.444003"
 ```
 
 ---
-# Intersecting  Curves  
+# Intersecting  Curves
 
----  
-Use Case  
+---
+Use Case
 ## Abstract
 
 Curves can be intersected by using the CATICGMIntersectionCrvCrv operator. The result is a set of geometrical objects (points, curves or a combination of these objects) that you have to scan.
     * Operator to be Used
     * Use Case Description
-    * References  
----  
+    * References
+---
 ## Operator to be Used
 
-Use CATICGMIntersectionCrvCrv. This operator is created by using the CATCGMCreateIntersection global function. 
+Use CATICGMIntersectionCrvCrv. This operator is created by using the CATCGMCreateIntersection global function.
 ## Use Case Description
 
 Use CATICGMIntersectionCrvCrv. This operator is created by using the CATCGMCreateIntersection global function.
@@ -30,9 +30,9 @@ The CAAGMModelIntersectionOpe.m module in CAAGMModelInterfaces.edu illustrates h
 
 With the input data below:
 
-Fig.1 Intersection of Curves:  Input data  ![Curve Intersection](images/CGM_intersect_crvCrv_0.png)  
+Fig.1 Intersection of Curves:  Input data  ![Curve Intersection](images/CGM_intersect_crvCrv_0.png)
 
----  
+---
 
 With the input data below:
 Fig.1 Intersection of Curves:  Input data  ![Curve Intersection](images/CGM_intersect_crvCrv_0.png)
@@ -41,8 +41,8 @@ the code below:
     CATICGMIntersectionCrvCrv * pPtCrvCrv =:: CATCGMCreateIntersection(
     		piGeomFactory,
     		pConfig,
-    		piNurbsCurve, 
-    		piNurbsCurve1); 
+    		piNurbsCurve,
+    		piNurbsCurve1);
 
     ...
 
@@ -59,31 +59,43 @@ CATLONG32 nbOfPoints1 = pPtCrvCrv->GetNumberOfPoints();
 cout   << "NumberOfPoints "   << nbOfPoints1   << endl;
 CATCartesianPoint * pCartP = NULL;
 if(nbOfPoints1)
+```vbscript
     		while(pPtCrvCrv->NextPoint())
 
+```
+
     		{
-    			// Retrieves the resulting points 
+    			// Retrieves the resulting points
     			// 3 points are expected
 ```vbscript
 while(pPtCrvCrv->NextPoint())
+```vbscript
+```vbscript
     			pCartP = pPtCrvCrv->GetCartesianPoint();
     			if (pCartP)
 ```
 
+```
+
+```
+
     			{
 pCartP = pPtCrvCrv->GetCartesianPoint();
+```vbscript
 if (pCartP)
+```
+
     				cout   << "X="   << pCartP->GetX()   << endl;
     				cout   << "Y="   << pCartP->GetY()   << endl;
     				cout   << "Z="   << pCartP->GetZ()   << endl;
 
     			}
     		}
-    	} 				
+    	}
 
-    ---  
+    ---
 
-    returns 
+    returns
 
 returns
     NumberOfPoints 3
@@ -97,17 +109,17 @@ returns
     Y=20
     Z=0
 
-on the standard output.  Fig.2 Curve Intersection:  Output data are three points ![Intersecting Curves](images/CGM_intersect_crvCrv_1.png)  
+on the standard output.  Fig.2 Curve Intersection:  Output data are three points ![Intersecting Curves](images/CGM_intersect_crvCrv_1.png)
 
----  
+---
 ## References
 
-[1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)  
-[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)  
-[4] |  [How to Use Geometric Operators](CAACgmUcGMModelOpeOverw.md)  
+[1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
+---|---
+[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)
+[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)
+[4] |  [How to Use Geometric Operators](CAACgmUcGMModelOpeOverw.md)
 ## History
 
-Version: **1** [Feb 2014] | Document created  
+Version: **1** [Feb 2014] | Document created
 ---|---

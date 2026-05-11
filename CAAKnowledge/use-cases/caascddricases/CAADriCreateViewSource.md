@@ -15,25 +15,40 @@ converted: "2026-05-11T17:31:51.043880"
     Option Explicit
 
 ```vbscript
+```vbscript
+```vbscript
     ' COPYRIGTH DASSAULT SYSTEMES 2000
     ' ***********************************************************************
     '   Purpose:      Create A Drawing document with a front view and a projection view
-    '   Assumtions:   Looks for MyPart.CATPart in the DocView   
-    '   Author: 
+    '   Assumtions:   Looks for MyPart.CATPart in the DocView
+    '   Author:
     '   Languages:    VBScript
-    '   Locales:      English 
-    '   CATIA Level:  V5R6 
+    '   Locales:      English
+    '   CATIA Level:  V5R6
     ' ***********************************************************************
 
 ```
 
-    Sub CATMain()
+```
+
+```
 
 ```vbscript
-        ' ----------------------------------------------------------- 
+    Sub CATMain()
+
+```
+
+```vbscript
+```vbscript
+```vbscript
+        ' -----------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
-        dim sDocPath As String 
+        dim sDocPath As String
         sDocPath=CATIA.SystemService.Environ("CATDocView")
+```
+
+```
+
 ```
 
 ```vbscript
@@ -42,17 +57,28 @@ converted: "2026-05-11T17:31:51.043880"
 
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
+```vbscript
         End If
 ```
 
+```
+
 ```vbscript
-        ' ----------------------------------------------------------- 
-        ' Open the Part document 
+```vbscript
+```vbscript
+        ' -----------------------------------------------------------
+        ' Open the Part document
         Dim oPartToDraw As PartDocument
         Set oPartToDraw = CATIA.Documents.Open(sDocPath & _
 ```
 
+```
+
+```
+
                  "\online\CAAScdDriUseCases\samples\Cube.CATPart")
+```vbscript
+```vbscript
 ```vbscript
         ' Create a drawing document: it becomes the active document.
         Dim oDrawing As DrawingDocument
@@ -69,19 +95,38 @@ converted: "2026-05-11T17:31:51.043880"
         ' Declare the part to draw in this front view
 ```
 
+```
+
+```
+
 ```vbscript
 Dim oFrontViewGB As DrawingViewGenerativeBehavior
+```vbscript
+```vbscript
 Set oFrontViewGB = oFrontView.GenerativeBehavior
 ' Declare the part to draw in this front view
         oFrontViewGB.Document = oPartToDraw
-        ' Define this view as a front view, with the XY plane (in oPartToDraw) as projection plane 
+        ' Define this view as a front view, with the XY plane (in oPartToDraw) as projection plane
+```
+
+```
+
         oFrontViewGB.DefineFrontView 1, 0, 0, 0, 1, 0
+```vbscript
+```vbscript
         ' Position the View in the Sheet
         oFrontView.x = 300
         oFrontView.y = 150
         ' Update the view
-        oFrontViewGB.Update 
+```
 
 ```
 
+        oFrontViewGB.Update
+
+```
+
+```vbscript
     End Sub
+
+```

@@ -9,12 +9,12 @@ converted: "2026-05-11T17:33:46.116441"
 ```
 
 ---
-          RADE
+RADE
 
-        | 
+        |
           Multi-Workspace Application Builder
 
-        | 
+        |
 Multi-Workspace Application Builder
           The Declarative File Preprocessor
           _How to distinguish specific operating system sections_
@@ -34,7 +34,7 @@ Multi-Workspace Application Builder
 
         * **In Short**
 
-    ---  
+    ---
 
     Syntax
 Syntax
@@ -43,7 +43,7 @@ Syntax
     `**#** ' character in first column and is followed by an interpreted keyword,
 Syntax
 The preprocessor is an internal step which parse any lines that begin with a
-    any others are translated to declarative file parser.  
+    any others are translated to declarative file parser.
 
     Such lines cannot be continued on next line with the `**\** ' continuing
     character.
@@ -58,7 +58,7 @@ The preprocessor is an internal step which parse any lines that begin with a
         | are used for special purpose and may not be used outside Dassault
           Systmes
 
-        |  
+        |
 
         | **#if** _Expression_
 
@@ -72,11 +72,11 @@ The preprocessor is an internal step which parse any lines that begin with a
 
     Expression consist of test flag clauses that can be mixed with booleans
 Expression consist of test flag clauses that can be mixed with booleans
-    operators and grouped with parenthesis `**(**...**)** '.  
+    operators and grouped with parenthesis `**(**...**)** '.
 
     Only following operators are supported (comparison's are not) :
 
-        |  
+        |
         | **& &**
         | (AND)
 
@@ -87,13 +87,13 @@ Expression consist of test flag clauses that can be mixed with booleans
         | (NOT)
 
     A clause consist of a flag existence test (not a value test), by using the
-    following keywords :  
+    following keywords :
 
         | **defined** _FlagName_
 
         | used for special purpose and may not be used outside Dassault Systmes
 
-        |  
+        |
 
         | **os** _OSName_
 
@@ -110,25 +110,25 @@ Expression consist of test flag clauses that can be mixed with booleans
         | Value of OSName flag
 
         AIX (IBM)
-        | _**AIX**_  
+        | _**AIX**_
 
           _**aix_a**_
 
         HP-UX (Hewlett Packard)
-        | _**HP-UX**_  
+        | _**HP-UX**_
 
           _**hpux_a**_
 
         SunOS (Sun MicroSystems)
-        | _**SunOS**_  
+        | _**SunOS**_
 
           _**solaris_a**_
 
         Windows (Microsoft)
-        | _**Windows_NT**_  
+        | _**Windows_NT**_
 
 Windows (Microsoft)
-          _**intel_a**_ (Windows 2000)  
+          _**intel_a**_ (Windows 2000)
 
           _**win_a**_ (Windows 98)
 
@@ -181,9 +181,9 @@ In Short
 
 * * *
 
-History Version: **1** [Mar 2000] | Document created  
----|---  
-[Top]  
+History Version: **1** [Mar 2000] | Document created
+---|---
+[Top]
 
 * * *
 

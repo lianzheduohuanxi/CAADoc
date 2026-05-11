@@ -11,15 +11,15 @@ converted: "2026-05-11T17:31:50.992103"
 ---
 # Mechanical Design
 
-| 
+|
 ## Drafting
 
-| 
+|
 ### Editing Dimension Dress-Up
 
-_How to use dimension interfaces_  
----|---|---  
-Use Case  
+_How to use dimension interfaces_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
@@ -36,7 +36,7 @@ This article discusses the CAADrwDimDressupCmd.cpp use case. This use case expla
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
@@ -46,8 +46,8 @@ In this use case you will learn how to modify the dimension dress-up parameters.
 [Top]
 ### The Main Dimension Interfaces
 
-Fig. 1: The Dimension Interfaces UML Diagram ![](images/CAADrwDimDressup2.jpg)  
----  
+Fig. 1: The Dimension Interfaces UML Diagram ![](images/CAADrwDimDressup2.jpg)
+---
 
 [Top]
 ### The CAADrwDimDressupCmd Use Case
@@ -60,10 +60,10 @@ CAADrwDimDressupCmd is a use case of the CAADraftingInterfaces.edu framework tha
 CAADrwDimDressupCmd is a use case of the CAADraftingInterfaces.edu framework that illustrates DraftingInterfaces framework capabilities.
 This sample waits for a dimension selection and modifies the dress-up as follows:
 
-Fig. 2: The Dimension After and Before Dress-Up ![](images/CAADrwDimDressup1.jpg) 
+Fig. 2: The Dimension After and Before Dress-Up ![](images/CAADrwDimDressup1.jpg)
 
-**Texts**     Prefix = L=, main text upper = Up main text lower = Down **Dual value**     On, in inch, side by side **Tolerance**     main and dual, alpha-numerical **Dimension Line**     Thickness = 0.2, color = blue **Extension Line**     Funnel, thickness = 0.2, color = yellow, over-run = 4, blanking = 4 **Symbol**     Circled cross, thickness = 0.2 color = green **Font**     5mm, color = red **Frame :**     Rectangle   
----|---  
+**Texts**     Prefix = L=, main text upper = Up main text lower = Down **Dual value**     On, in inch, side by side **Tolerance**     main and dual, alpha-numerical **Dimension Line**     Thickness = 0.2, color = blue **Extension Line**     Funnel, thickness = 0.2, color = yellow, over-run = 4, blanking = 4 **Symbol**     Circled cross, thickness = 0.2 color = green **Font**     5mm, color = red **Frame :**     Rectangle
+---|---
 
 [Top]
 #### How to Launch CAADrwDimDressupCmd
@@ -81,11 +81,11 @@ To launch CAADrwDimDressupCmd, you will need to set up the build time environmen
 3. Launch the DimDressup use case command, and select the annotation.
 The CAADrwDimDressupCmduse case is made of two source files named CAADrwDimDressupCmd.h and CAADrwDimDressupCmd.cpp located in the CAADrwDimDressup.m module of the CAADraftingInterfaces.edu framework:
 
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwDimDressup.m\`  
+Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwDimDressup.m\`
 
 The CAADrwDimDressupCmduse case is made of two source files named CAADrwDimDressupCmd.h and CAADrwDimDressupCmd.cpp located in the CAADrwDimDressup.m module of the CAADraftingInterfaces.edu framework:
 Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwDimDressup.m\`
-Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwDimDressup.m/`  
+Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwDimDressup.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
@@ -111,13 +111,13 @@ There are 11 steps in CAADrwDimDressupCmd:
 #### Building the State Chart and Creating the Appropriate Selection Agent
 
     void CAADrwDimDressupCmd::BuildGraph()
-    {  
+    {
        // Creation of the acquisition agent
 void CAADrwDimDressupCmd::BuildGraph()
        _pObjectAgent = new CATPathElementAgent("_ObjectAgent A");
-       _pObjectAgent ->SetBehavior( CATDlgEngWithPrevaluation | 
-                                    CATDlgEngMultiAcquisition | 
-                                    CATDlgEngWithCSO); 
+       _pObjectAgent ->SetBehavior( CATDlgEngWithPrevaluation |
+                                    CATDlgEngMultiAcquisition |
+                                    CATDlgEngWithCSO);
 
        // We want to select dimensions
 _pObjectAgent ->SetBehavior( CATDlgEngWithPrevaluation |
@@ -136,11 +136,14 @@ AddCSOClient(_pObjectAgent);
 CATDialogState* state1 = GetInitialState("Sel dimension");
 state1->AddDialogAgent(_pObjectAgent);
        AddTransition(state1, NULL, IsOutputSetCondition(_pObjectAgent),
+```vbscript
                      Action((ActionMethod)&CAADrwDimDressupCmd::DressUp, NULL, NULL));
 
-    }  
+```
 
----  
+    }
+
+---
 
 In this section we create a _CATPathElementAgent_ and set the corresponding element type to _CATIDrwDimDimension_. So only dimensions could be selected.
 
@@ -148,13 +151,16 @@ In this section we create a _CATPathElementAgent_ and set the corresponding elem
 #### Retrieving the Selection
 
     boolean CAADrwDimDressupCmd::DressUp(void *)
-    { 
+    {
        // We get the Selected set of objects
 boolean CAADrwDimDressupCmd::DressUp(void *)
-       CATSO* pObjSO = _pObjectAgent->GetListOfValues(); 
+       CATSO* pObjSO = _pObjectAgent->GetListOfValues();
        CATPathElement *pElemPath = NULL;
 
-       if (pObjSO)  
+```vbscript
+       if (pObjSO)
+
+```
 
        {
 
@@ -172,9 +178,9 @@ if (pObjSO)
              if (NULL != piDim)
              {
 
-    ...  
+    ...
 
----  
+---
 
 The acquisition agent did put the selected dimension into the CSO. So we get the set of object and loop on it.
 
@@ -188,21 +194,21 @@ The acquisition agent did put the selected dimension into the CSO. So we get the
                 spTextProperties->**SetColor**(255, 0, 0, 255);
                 spTextProperties->**SetFrameType**(CATDrwRectangle);
 
-    ...  
+    ...
 
----  
+---
 
 The dimension implements the _CATIDrwTextProperties_ interface. Using this interface, we modify the font size, color and the text frame format.
 
 [Top]
 #### Setting the Dual Value
 
-    ...            
+    ...
                 // Dual value
                 piDim->**ShowDualValue**();
-    ...  
+    ...
 
----  
+---
 
 The dual value is set using the _CATIDrwDimDimension_ interface.
 
@@ -212,9 +218,9 @@ The dual value is set using the _CATIDrwDimDimension_ interface.
     ...
                 // Tolerance
                 piDim->**AddTolerance**("h7","g6",1,1);
-    ...  
+    ...
 
----  
+---
 
 The tolerance is set using the _CATIDrwDimDimension_ interface.
 
@@ -233,9 +239,9 @@ spDimValue->**SetDualValueDisplay**(CATDrwDimDualSideBySide);
                 spMainText->**SetPSText**("L=", "");
                 spMainText->**SetBAULText**("", "", "Up", "Down");
 
-    ...  
+    ...
 
----  
+---
 
 The _CATGraphicAttributeSet_ will be used to convert RGBA data from a 4-integer representation to a 1-integer representation. First we get the dimension value. This feature manages the main and dual value representations. Then we get the main value from the dimension value. Using `SetPSText` we set:
 
@@ -257,9 +263,9 @@ Using `SetBAULText` we set:
                 CATIDrwDimValueComponent_var spDualValue = spDimValue->**GetDualComponent**();
                 **CATIDrwDimFormat** _var spDualFormat = spDualValue->**GetFormat**();
                 spDualFormat->**SetUnit**(CATDrwDimUnitINCH);
-    ...  
+    ...
 
----  
+---
 
 We get the dual value from the dimension value and modify the format putting the unit to "INCH".
 
@@ -268,7 +274,7 @@ We get the dual value from the dimension value and modify the format putting the
 
     ...
                 // Useful to convert RGBA(4-int)<->RGBA(1-int)
-                **CATGraphicAttributeSet** attrSet;            
+                **CATGraphicAttributeSet** attrSet;
 
                 // DimensionLine
                 **CATIDrwDimDimensionLine** _var spDimLine = piDim->**GetDimensionLine**();
@@ -276,12 +282,12 @@ We get the dual value from the dimension value and modify the format putting the
                 spDimLine->**SetGraphicParameters**(attrSet.GetColorRGBA(), 0.2);
                 spDimLine->**SetSymbol**(CATDrwDimSymbCircledCross,CATDrwDimSymbCircledCross);
                 attrSet.**SetColorRGBA**(0,255,0,255);
-                spDimLine->**SetSymbolsGraphicParameters**(attrSet.GetColorRGBA(), 0.1, 
+                spDimLine->**SetSymbolsGraphicParameters**(attrSet.GetColorRGBA(), 0.1,
                                                        attrSet.GetColorRGBA(), 0.1);
 
-    ...  
+    ...
 
----  
+---
 
 We get the dimension line interface from the dimension. Using the _CATIDrwDimDimensionLine_ interface we modify :
 
@@ -300,12 +306,12 @@ We get the dimension line interface from the dimension. Using the _CATIDrwDimDim
                 spExtLine->**SetGap**(4);
                 spExtLine->**SetOverRun**(4);
 
-    ...  
+    ...
 
----  
+---
 
 spExtLine->**SetOverRun**(4);
-We get the extension line interface from the dimension.  
+We get the extension line interface from the dimension.
 Using the _CATIDrwDimExtensionLine_ interface we modify :
 
   * The color and thickness (using the _CATGraphicAttributeSet_)
@@ -318,9 +324,9 @@ Using the _CATIDrwDimExtensionLine_ interface we modify :
                 // Funnel
                 **CATIDrwDimExtensionLineLinear** _var spLinearExtLine = spExtLine;
                 spLinearExtLine->**SetFunnel**(1);
-    ...  
+    ...
 
----  
+---
 
 This is a distance dimension. So the extension line implements _CATIDrwDimExtensionLine_. `CATIDrwDimExtensionLineLinear::SetFunnel(1)` sets the funnel at true.
 
@@ -345,9 +351,9 @@ _pObjectAgent -> InitializeAcquisition();
 return TRUE;
        return FALSE;
 
-    }  
+    }
 
----  
+---
 
 We have to update the dimension to take into account the dress-up modifications.
 
@@ -363,17 +369,17 @@ This use case shows how to edit a dimension dress-up. The main dimension interfa
 * * *
 ### References
 
-[1] | [Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-[2] | [Implementing the Statechart Diagram](../CAADegUseCases/CAADegSampleGraph.md)  
-[Top]  
+[1] | [Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)
+---|---
+[2] | [Implementing the Statechart Diagram](../CAADegUseCases/CAADegSampleGraph.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Jan 2000] | Document created  
----|---  
-[Top]  
+Version: **1** [Jan 2000] | Document created
+---|---
+[Top]
 
 * * *
 

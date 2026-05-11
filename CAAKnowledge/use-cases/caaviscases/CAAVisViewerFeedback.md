@@ -11,20 +11,20 @@ converted: "2026-05-11T17:31:52.253960"
 ---
 # 3D PLM Enterprise Architecture
 
-| 
+|
 ## 3D Visualization
 
-| 
+|
 ### Viewer Feedback
 
-_How to retrieve information on interactions coming from viewers_  
----|---|---  
-Use Case  
+_How to retrieve information on interactions coming from viewers_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
 
-This article shows how to retrieve and analyze information on interactions coming from viewers. These interactions can be mouse motion or press/release button. 
+This article shows how to retrieve and analyze information on interactions coming from viewers. These interactions can be mouse motion or press/release button.
 
   * **What You Will Learn With This Use Case**
   * **The CAACafViewerFeedback Use Case**
@@ -40,19 +40,19 @@ This article shows how to retrieve and analyze information on interactions comin
 
 This use case is intended to show you how to retrieve and analyze information on interactions coming from viewers. You will learn how to:
 
-  * Activate or deactivate the sending of event when interactions occur in a viewer  
+  * Activate or deactivate the sending of event when interactions occur in a viewer
 This use case is intended to show you how to retrieve and analyze information on interactions coming from viewers. You will learn how to:
 The activation/deactivation mode is called the **feedback** mode.
 
-  * Analyze the notification associated with the event  
+  * Analyze the notification associated with the event
 This use case is intended to show you how to retrieve and analyze information on interactions coming from viewers. You will learn how to:
 The activation/deactivation mode is called the **feedback** mode.
 The notification is a _CATVisViewerFeedbackEvent_ notification class.
 
-  * Display on the screen information contained in the notification  
+  * Display on the screen information contained in the notification
 The activation/deactivation mode is called the **feedback** mode.
 The notification is a _CATVisViewerFeedbackEvent_ notification class.
-Information will be displayed in the main 2D viewpoint of the viewer. 
+Information will be displayed in the main 2D viewpoint of the viewer.
 
 [Top]
 ### The CAACafViewerFeedback Use Case
@@ -60,15 +60,15 @@ Information will be displayed in the main 2D viewpoint of the viewer.
 CAACafViewerFeedback is a use case of CAACATIAApplicationFrm.edu and CAAApplicationFrame.edu frameworks that illustrates Visualization framework capabilities. [Top]
 #### What Does CAACafViewerFeedback Do
 
-CAACafViewerFeedback use case enables you to activate or deactivate the feedback mode on the current viewer. This switch is possible thanks to a command set in an add-in of the General workshop [1]. The Viewer Feedback demonstrator command, see pictures below, is represented by a check button. When the button is "ON" (right picture), the feedback mode is active. When the button is "OFF" (left picture), the feedback mode is not active. 
----|---  
+CAACafViewerFeedback use case enables you to activate or deactivate the feedback mode on the current viewer. This switch is possible thanks to a command set in an add-in of the General workshop [1]. The Viewer Feedback demonstrator command, see pictures below, is represented by a check button. When the button is "ON" (right picture), the feedback mode is active. When the button is "OFF" (left picture), the feedback mode is not active.
+---|---
 
 When the feedback mode is active in the current viewer you can see:
 
-  * Only the mouse position, if there is no element under the mouse  ![](images/CAAAfrCheckHeaderMouseCoord.jpg)  
----  
-  * The mouse position, the intersection point coordinates, and the path of all elements under the mouse.  ![](images/CAAVisViewerFeedbackAll.jpg)  
----  
+  * Only the mouse position, if there is no element under the mouse  ![](images/CAAAfrCheckHeaderMouseCoord.jpg)
+---
+  * The mouse position, the intersection point coordinates, and the path of all elements under the mouse.  ![](images/CAAVisViewerFeedbackAll.jpg)
+---
 
 On this picture you can see that there is only one selected element.
 
@@ -88,11 +88,11 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed 
 In this file, remove the "**#** " character before the two following lines:
 
     ...
-    #CAAAfrGeneralWksAddin       CATIWorkbenchAddin          libCAAAfrGeneralWksAddin  
+    #CAAAfrGeneralWksAddin       CATIWorkbenchAddin          libCAAAfrGeneralWksAddin
     #CAAAfrGeneralWksAddin       CATIAfrGeneralWksAddin      libCAAAfrGeneralWksAddin
-    ...  
+    ...
 
----  
+---
 
 The two line deal with the General workshop add-in described in the CAAAfrGeneralWksAddin use case [1] located in the CAAAfrGeneralWksAddin.m module (CAAApplicationFrame.edu framework)
 
@@ -117,11 +117,11 @@ The CAACafViewerFeedback use case is made of several classes located:
 The CAACafViewerFeedback use case is made of several classes located:
 This module contains an add-in of the general workshop which defines a toolbar with the "Viewer Feedback Demonstrator" command. This part of the use case is not explained in this article. You can you refer to the add-in article [1] for more details.
 
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeneralWksAddin.m\`  
+Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeneralWksAddin.m\`
 
 This module contains an add-in of the general workshop which defines a toolbar with the "Viewer Feedback Demonstrator" command. This part of the use case is not explained in this article. You can you refer to the add-in article [1] for more details.
 Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeneralWksAddin.m\`
-Unix | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeneralWksAddin.m/`  
+Unix | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeneralWksAddin.m/`
 
   * In the CAACafViewerFeedback.m module of the CAACATIAApplicationFrm.edu framework:
 
@@ -129,11 +129,11 @@ Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeneralWksAddin.m\
 Unix | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeneralWksAddin.m/`
 This module contains _CAACafViewerFeedbackManager_ and _CAACafViewerFeedbackCmd_ classes.
 
-Windows | `InstallRootDirectory\CAACATIAApplicationFrm.edu\CAACafViewerFeedback.m\`  
+Windows | `InstallRootDirectory\CAACATIAApplicationFrm.edu\CAACafViewerFeedback.m\`
 
 This module contains _CAACafViewerFeedbackManager_ and _CAACafViewerFeedbackCmd_ classes.
 Windows | `InstallRootDirectory\CAACATIAApplicationFrm.edu\CAACafViewerFeedback.m\`
-Unix | `InstallRootDirectory/CAACATIAApplicationFrm.edu/CAACafViewerFeedback.m/`  
+Unix | `InstallRootDirectory/CAACATIAApplicationFrm.edu/CAACafViewerFeedback.m/`
 
 Only one instance of the _CAACafViewerFeedbackManager_ class is created during the session. This class manages the current viewer and the feedback mode on the current viewer. It means how to receive notifications sent by the viewer, and once received, how to decode it to display some information in the 2D Viewpoint of the viewer. The _CAACafViewerFeedbackCmd_ command, explained in the "Creating a Command with Options in the "Tools Palette" Toolbar" article [3], informs the __unique _CAACafViewerFeedbackManager_ class instance to activate or deactivate the feedback mode.
 
@@ -154,14 +154,14 @@ There are four logical steps in the CAACafViewerFeedback use case:
 #### Creating the CAACafViewerFeedbackManager Class Header
 
     // System Framework
-    #include "CATBaseUnknown.h"      // Needed to derive from 
+    #include "CATBaseUnknown.h"      // Needed to derive from
     #include "CATEventSubscriber.h"  // To set callback
 
     class CAT2DBagRep ;              // The graphic representation of the feedback
     class CATViewer ;                // The viewer with the visual feedback
     class CATNotification ;          // for callback methods
-    class CATUnicodeString ;         // 
-    class CATPathElement ;           // 
+    class CATUnicodeString ;         //
+    class CATPathElement ;           //
 
     class CAACafViewerFeedbackManager : public CATBaseUnknown
 
@@ -169,11 +169,14 @@ There are four logical steps in the CAACafViewerFeedback use case:
 class CATUnicodeString ;         //
 class CATPathElement ;           //
 class CAACafViewerFeedbackManager : public CATBaseUnknown
+```vbscript
       public :
+
+```
 
        CAACafViewerFeedbackManager ();
 
-       virtual ~CAACafViewerFeedbackManager();  
+       virtual ~CAACafViewerFeedbackManager();
 
        static void **GetManager**(CAACafViewerFeedbackManager ** opManager);
 
@@ -181,7 +184,10 @@ class CAACafViewerFeedbackManager : public CATBaseUnknown
 
        void **SetViewerFeedbackOff**();
 
-      private : 
+```vbscript
+      private :
+
+```
 
        void **ViewerFeedbackCB**          (CATCallbackEvent  iEventAlarm,
                                void             *iAlarm,
@@ -201,7 +207,7 @@ class CAACafViewerFeedbackManager : public CATBaseUnknown
                                CATSubscriberData iBurglarData,
                                CATCallback       iCallBack );
 
-       void **PathElementString**(CATPathElement   * ipPath, 
+       void **PathElementString**(CATPathElement   * ipPath,
                                CATUnicodeString & oPathName) ;
 
        void **ChangeBagPosition**(float Xpos, float Ypos) ;
@@ -221,9 +227,9 @@ CAT2DBagRep   * **_pInformationsToDisplay** ;
        CATCallback     _WindowDeactivatedCB ;
        CATCallback     _WindowDeletedCB ;
 
-    };  
+    };
 
----  
+---
 
 This class contains the following methods:
 
@@ -253,27 +259,39 @@ The `SetViewerFeedbackOn `method consists in first to retrieve a viewer:
     {
 The `SetViewerFeedbackOn `method consists in first to retrieve a viewer:
 void CAACafViewerFeedbackManager::SetViewerFeedbackOn()
+```vbscript
         if ( NULL == _pCurrentViewer )
+
+```
 
         {
            **CATFrmLayout** * pCurrentLayout= CATFrmLayout::**GetCurrentLayout**();
 void CAACafViewerFeedbackManager::SetViewerFeedbackOn()
 if ( NULL == _pCurrentViewer )
+```vbscript
+```vbscript
            if ( NULL != pCurrentLayout )
+
+```
+
+```
 
            {
               **CATFrmWindow** * pCurrentWindow = pCurrentLayout->**GetCurrentWindow**();
 
 ```vbscript
 if ( NULL != pCurrentLayout )
+```vbscript
               if ( NULL != pCurrentWindow )
+```
+
 ```
 
               {
                   _pCurrentViewer = pCurrentWindow->**GetViewer**();
-    ...  
+    ...
 
----  
+---
 
 _pCurrentViewer = pCurrentWindow->**GetViewer**();
 This viewer is one of the current window (it is the choice of this command). The _CATFrmLayout_ [4] is the class which manages all the windows all the session.
@@ -282,9 +300,12 @@ Then, once you have a viewer, you can activate the feedback mode:
 
      ...
 Then, once you have a viewer, you can activate the feedback mode:
+```vbscript
            if ( NULL != _pCurrentViewer )
 
-           {         
+```
+
+           {
 ```vbscript
 if ( NULL != _pCurrentViewer )
               _pCurrentViewer->**SetFeedbackMode**(TRUE);
@@ -296,22 +317,28 @@ if ( NULL != _pCurrentViewer )
 if ( NULL != _pCurrentViewer )
 _pCurrentViewer->**SetFeedbackMode**(TRUE);
 if (0 == _ViewerFeedbackCB)
+```vbscript
                  _ViewerFeedbackCB = ::**AddCallback**(this,
-                                _pCurrentViewer, 
 ```
 
-                                **CATViewer** ::**VIEWER_FEEDBACK_UPDATE**(), 
+                                _pCurrentViewer,
+```
+
+                                **CATViewer** ::**VIEWER_FEEDBACK_UPDATE**(),
 ```vbscript
 if (0 == _ViewerFeedbackCB)
+```vbscript
 _ViewerFeedbackCB = ::**AddCallback**(this,
+```
+
 _pCurrentViewer,
                                 (CATSubscriberMethod) & CAACafViewerFeedbackManager::**ViewerFeedbackCB** , NULL);
 ```
 
               }
-           }  
+           }
 
----  
+---
 
 The `SetFeedbackMode` method with `TRUE` actives the feedback mode. It means that now the viewer sends notifications when an interaction occurs. To receive these notifications, the command sets a callback.
 
@@ -334,14 +361,20 @@ The `SetViewerFeedbackOn `method consists in to cancel the feedback mode on the 
     {
 The `SetViewerFeedbackOn `method consists in to cancel the feedback mode on the current viewer.
 void CAACafViewerFeedbackManager::SetViewerFeedbackOff()
+```vbscript
         if ( NULL != _pCurrentViewer)
+
+```
 
         {
 void CAACafViewerFeedbackManager::SetViewerFeedbackOff()
 if ( NULL != _pCurrentViewer)
            _pCurrentViewer->**SetFeedbackMode**(FALSE);
 
+```vbscript
            if (NULL != **_pInformationsToDisplay**)
+
+```
 
            {
 _pCurrentViewer->**SetFeedbackMode**(FALSE);
@@ -357,7 +390,10 @@ _pInformationsToDisplay->**Destroy**();
 _pInformationsToDisplay = NULL;
            _pCurrentViewer->**Draw**();
 
+```vbscript
            if (0 != _ViewerFeedbackCB)
+
+```
 
            {
               ::**RemoveCallback**(this,_pCurrentViewer,**_ViewerFeedbackCB**) ;
@@ -369,13 +405,13 @@ if (0 != _ViewerFeedbackCB)
 ```vbscript
 if (0 != _ViewerFeedbackCB)
 _ViewerFeedbackCB = 0 ;
-           _pCurrentViewer = NULL ; 
+           _pCurrentViewer = NULL ;
 ```
 
         }
-    }  
+    }
 
----  
+---
 
 There are four steps:
 
@@ -403,18 +439,30 @@ void             * client,
 CATNotification  * iNotification,
 CATSubscriberData  data,
 CATCallback        callback)
+```vbscript
       if ( NULL != _pCurrentViewer )
+
+```
 
       {
 CATSubscriberData  data,
 CATCallback        callback)
 if ( NULL != _pCurrentViewer )
+```vbscript
+```vbscript
          if (NULL != _pInformationsToDisplay)
+
+```
+
+```
 
          {
 ```vbscript
 if ( NULL != _pCurrentViewer )
+```vbscript
 if (NULL != _pInformationsToDisplay)
+```
+
             _pCurrentViewer->**RemoveRep**(_pInformationsToDisplay);
 
             _pInformationsToDisplay->**Destroy**();
@@ -422,47 +470,71 @@ if (NULL != _pInformationsToDisplay)
 ```
 
          }
-    ...  
+    ...
 
----  
+---
 
 The `ViewerFeedbackCB` method is called each time the viewer sends an event. So the graphic representation, `_pInformationsToDisplay`, previously created, should be first removed from the viewer and deleted.
 
 The `ViewerFeedbackCB` method is called each time the viewer sends an event. So the graphic representation, `_pInformationsToDisplay`, previously created, should be first removed from the viewer and deleted.
          CATVisViewerFeedbackEvent * pFeedbackEvent = NULL ;
+```vbscript
          if ( NULL != iNotification )
+
+```
 
          {
 CATVisViewerFeedbackEvent * pFeedbackEvent = NULL ;
 if ( NULL != iNotification )
+```vbscript
+```vbscript
             pFeedbackEvent = (**CATVisViewerFeedbackEvent** *) iNotification;
+
+```
+
+```
 
          }
 
 ```vbscript
 if ( NULL != iNotification )
+```vbscript
+```vbscript
 pFeedbackEvent = (**CATVisViewerFeedbackEvent** *) iNotification;
          if (NULL != pFeedbackEvent)
 ```
 
+```
+
+```
+
          {
 pFeedbackEvent = (**CATVisViewerFeedbackEvent** *) iNotification;
+```vbscript
 if (NULL != pFeedbackEvent)
+```
+
              CATViewer * pViewerPublisher = pFeedbackEvent->**GetViewer**();
+```vbscript
              if ( (NULL != pViewerPublisher) && ( pViewerPublisher **==** _pCurrentViewer) )
+
+```
 
              {
 ```vbscript
 if (NULL != pFeedbackEvent)
 CATViewer * pViewerPublisher = pFeedbackEvent->**GetViewer**();
 if ( (NULL != pViewerPublisher) && ( pViewerPublisher **==** _pCurrentViewer) )
+```vbscript
                 _pInformationsToDisplay = new **CAT2DBagRep**();
+```
+
                 _pCurrentViewer->**AddRep**(_pInformationsToDisplay);
 ```
 
-                ...  
+                ...
 
----  
+---
 
 The third argument of the `ViewerFeedbackCB` method is the notification containing the information. This notification, `iNotification`, is a _CATVisViewerFeedbackEvent_**** class. This class instance contains the viewer which has published the event. `GetViewer` retrieves it, it is `pViewerPublisher`. This viewer should be released at this end of the method. This value enables you to check that the current viewer, `_pCurrentViewer,` kept by the manager, is the same as the notification's sender. Once the check is validated, a new graphic representation can be built.
 
@@ -479,13 +551,22 @@ These three steps are described below.
 
 Before to detail the code, a picture to explain the screen coordinates:
 
- If (Xpos,Ypos) are the screen coordinates of the mouse, 
+```vbscript
+```vbscript
+ If (Xpos,Ypos) are the screen coordinates of the mouse,
+
+```
+
+```
 
      * Xpos ranges from 0 to width-1
      * Ypos ranges from 0 to height-1
 Before to detail the code, a picture to explain the screen coordinates:
+```vbscript
 If (Xpos,Ypos) are the screen coordinates of the mouse,
-where width and height are the support (_CATSupport_) dimensions.  
+```
+
+where width and height are the support (_CATSupport_) dimensions.
 
 where width and height are the support (_CATSupport_) dimensions.
     int XPos, YPos;
@@ -499,16 +580,16 @@ pFeedbackEvent->**GetMousePosition**(&XPos, &YPos);
                points[0] = 8.0f;
                points[1] = 8.0f;
 
-    ...  
+    ...
 
----  
+---
 
 `GetMousePosition` returns the mouse position in screen coordinates. This position serves to locate the 2D bag. The `ChangeBagPosition` method locates `_pInformationsToDisplay` near the mouse. `points` is an array of two floats which is used to locate the child representations in the 2D bag.
 
 The position of a child is a position in the bag axis system as shown in the picture below:
 
- (u,v) is the bag axis system (Xpos,Ypos) is the mouse position in screen coordinates The `ChangeBagPosition` method transforms (Xpos,Ypos) is model coordinates.  
----|---  
+ (u,v) is the bag axis system (Xpos,Ypos) is the mouse position in screen coordinates The `ChangeBagPosition` method transforms (Xpos,Ypos) is model coordinates.
+---|---
 
 The position of a child is a position in the bag axis system as shown in the picture below:
 (u,v) is the bag axis system (Xpos,Ypos) is the mouse position in screen coordinates The `ChangeBagPosition` method transforms (Xpos,Ypos) is model coordinates.
@@ -528,15 +609,21 @@ void CAACafViewerFeedbackManager::ChangeBagPosition(float Xpos, float Ypos)
             Support.**GetWidthAndHeight**(width,height);
 
             MMInSupportUnit = Support.**GetMMInSupportUnit**();
+```vbscript
+```vbscript
             RatioWH = Support.**GetRatioWH**();
+
+```
+
+```
 
             CAT2DViewpoint & VP2D = _pCurrentViewer->**GetMain2DViewpoint**() ;
 
             CATMathPoint2Df ModelPos;
-            VP2D.**ComputeModelFromPixel**( Xpos,Ypos, 
-                                        ModelPos.x, ModelPos.y, 
-                                        width, height, 
-                                        MMInSupportUnit, 
+            VP2D.**ComputeModelFromPixel**( Xpos,Ypos,
+                                        ModelPos.x, ModelPos.y,
+                                        width, height,
+                                        MMInSupportUnit,
                                         RatioWH);
 
             CATMathVector2Df U,V ;
@@ -549,9 +636,9 @@ CATMathVector2Df U,V ;
 
         }
     }
-    ...  
+    ...
 
----  
+---
 
 `(ModelPos.x, ModelPos.y)` is the mouse position in model coordinates. The `ComputeModelFromPixel` method transforms a 2D point from screen coordinates to model coordinates.
 
@@ -563,11 +650,14 @@ Come back to the `ViewerFeedbackCB` method:
                sprintf(MousePositionBuffer, "Mouse Coordinates : X=%d Y=%d", **XPos** , **YPos**);
 
                CAT2DAnnotationTextRep * pMousePositionTextRep = NULL ;
-               pMousePositionTextRep = new **CAT2DAnnotationTextRep**( points, 
-                                                                 MousePositionBuffer, 
+               pMousePositionTextRep = new **CAT2DAnnotationTextRep**( points,
+                                                                 MousePositionBuffer,
                                                                  BASE_LEFT);
 
+```vbscript
                if (NULL != pMousePositionTextRep)
+
+```
 
                {
 MousePositionBuffer,
@@ -576,9 +666,9 @@ if (NULL != pMousePositionTextRep)
                   _pInformationsToDisplay->**AddChild**(*pMousePositionTextRep);
 
                }
-    ...  
+    ...
 
----  
+---
 
 `pMousePositionTextRep` is a _CAT2DAnnotationTextRep_ class instance to display the mouse position screen coordinates.
 
@@ -587,7 +677,7 @@ if (NULL != pMousePositionTextRep)
 2. The intersection point with the selected geometry
 Before to detail the code, a picture to explain the intersection point.
 
- The point symbolized by a bold circle is the intersection point of the line and the nearest selected geometry. This point is in model coordinates.  
+ The point symbolized by a bold circle is the intersection point of the line and the nearest selected geometry. This point is in model coordinates.
 
 `GetIntersection`**** returns a _CATGraphicElementIntersection_ class instance pointer. This class contains as public data a _CATMathPoint_ . `point` is the intersection point. If there is nothing under the mouse, `GetIntersection`**** returns NULL.
 
@@ -602,19 +692,22 @@ Before to detail the code, a picture to explain the intersection point.
 if (NULL != pIntersection)
                   char IntersectionBuffer[200];
 
-                  sprintf(IntersectionBuffer, 
+                  sprintf(IntersectionBuffer,
 ```
 
-                     "Intersection Coordinates : X=%.2f Y=%.2f Z=%.2f", 
-                      **pIntersection- >point.GetX**(), 
-                      **pIntersection- >point.GetY**(), 
+                     "Intersection Coordinates : X=%.2f Y=%.2f Z=%.2f",
+                      **pIntersection- >point.GetX**(),
+                      **pIntersection- >point.GetY**(),
                       **pIntersection- >point.GetZ**());
 
                   CAT2DAnnotationTextRep * pIntersectionTextRep = NULL ;
-                  pIntersectionTextRep = new **CAT2DAnnotationTextRep**( points, 
+                  pIntersectionTextRep = new **CAT2DAnnotationTextRep**( points,
                                                       IntersectionBuffer, BASE_LEFT);
 
+```vbscript
                   if (NULL != pIntersectionTextRep)
+
+```
 
                   {
 pIntersectionTextRep = new **CAT2DAnnotationTextRep**( points,
@@ -632,9 +725,9 @@ _pInformationsToDisplay->**AddChild**(*pIntersectionTextRep);
 ```
 
                }
-    ...  
+    ...
 
----  
+---
 
 `pMousePositionTextRep` is a _CAT2DAnnotationTextRep_ class instance which contains the intersection point coordinates.
 
@@ -646,13 +739,19 @@ _pInformationsToDisplay->**AddChild**(*pIntersectionTextRep);
 3. The elements under the mouse
                CATSO* SO = pFeedbackEvent->**GetElementsUnder**();
 
+```vbscript
                if (NULL != SO)
+
+```
 
                {
 CATSO* SO = pFeedbackEvent->**GetElementsUnder**();
 if (NULL != SO)
                   int SOSize = SO->**GetSize**() ;
+```vbscript
                   for ( int i= 0 ; i < SOSize ; i++)
+
+```
 
                   {
 ```vbscript
@@ -677,11 +776,14 @@ CATUnicodeString PathElementName = "";
                      points[1] += 8.0f;
 
                      CAT2DAnnotationTextRep* pElementTextRep = NULL ;
-                     pElementTextRep = new **CAT2DAnnotationTextRep**( points, 
-                                                              PathElementName.CastToCharPtr(), 
+                     pElementTextRep = new **CAT2DAnnotationTextRep**( points,
+                                                              PathElementName.CastToCharPtr(),
                                                               BASE_LEFT);
 
+```vbscript
                      if (NULL != pElementTextRep)
+
+```
 
                      {
 PathElementName.CastToCharPtr(),
@@ -698,9 +800,9 @@ _pInformationsToDisplay->**AddChild**(*pElementTextRep);
                   SO = NULL;
 ```
 
-    ...  
+    ...
 
----  
+---
 
 This piece of code is a loop from the first element to the last. For each path, `PathElementString` converts a path in a string. This string is the input of a new `CAT2DAnnotationTextRep` class instance.
 
@@ -716,20 +818,20 @@ This use case explains how to receive information from a viewer when interaction
 * * *
 ### References
 
-[1] | [Making Your Document Independent Command Available in All Workbenches](../CAAAfrUseCases/CAAAfrSampleGeneralWksAddin.md)  
----|---  
-[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
-[3] | [Creating a Command with Options in the "Tools Palette" Toolbar](../CAAAfrUseCases/CAAAfrCmdPalette.md)  
-[4] | [Understanding the Application Frame Layout](../CAAAfrTechArticles/CAAAfrLayoutV5.md)  
-[5] | [The Callback Mechanism](../CAASysTechArticles/CAASysCallbacks.md)  
-[Top]  
+[1] | [Making Your Document Independent Command Available in All Workbenches](../CAAAfrUseCases/CAAAfrSampleGeneralWksAddin.md)
+---|---
+[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)
+[3] | [Creating a Command with Options in the "Tools Palette" Toolbar](../CAAAfrUseCases/CAAAfrCmdPalette.md)
+[4] | [Understanding the Application Frame Layout](../CAAAfrTechArticles/CAAAfrLayoutV5.md)
+[5] | [The Callback Mechanism](../CAASysTechArticles/CAASysCallbacks.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Aug 2003] | Document created  
----|---  
-[Top]  
+Version: **1** [Aug 2003] | Document created
+---|---
+[Top]
 
 * * *
 

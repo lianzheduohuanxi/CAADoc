@@ -12,17 +12,17 @@ converted: "2026-05-11T17:33:45.903936"
 tags: ["CATIntCurve"]
 source_file: "Doc/online/CAATobTechArticles/TopoCreate.htm"
 converted: "2026-05-11T17:33:45.903936"
-Geometric Modeler |  Topology |  How to Associate Topology With Geometry _Rules Between Topological and Geometric Objects_  
+Geometric Modeler |  Topology |  How to Associate Topology With Geometry _Rules Between Topological and Geometric Objects_
 
 converted: "2026-05-11T17:33:45.903936"
 Geometric Modeler |  Topology |  How to Associate Topology With Geometry _Rules Between Topological and Geometric Objects_
-Technical Article  
+Technical Article
 
 * * *
 
 * * *
 
-Abstract The topology describes the limitation of a geometry. Hence, topological objects are related to geometric objects within specified rules, which are detailed here 
+Abstract The topology describes the limitation of a geometry. Hence, topological objects are related to geometric objects within specified rules, which are detailed here
 
   * **Introduction**
   * **Representing Geometry**
@@ -38,31 +38,31 @@ Abstract The topology describes the limitation of a geometry. Hence, topological
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 
-Introduction The topology is a building set for limiting the space. Vertex bound edges, which bound faces, which bound volumes. How to map these topological entities to geometric entities in order to limit the geometric space? 
+Introduction The topology is a building set for limiting the space. Vertex bound edges, which bound faces, which bound volumes. How to map these topological entities to geometric entities in order to limit the geometric space?
 
   * a CATMacroPoint corresponds to the geometric support of a vertex,
   * a CATEdgeCurve corresponds to the geometric support of an edge,
   * a CATSurface corresponds to the geometric support of a face.
 
-[Top] Representing Geometry A CATEdgeCurve Represents CATCurves Consider the intersection curve of two surfaces. From the topological point of view, its geometry is represented by a CATEdgeCurve. From a geometric point of view, this curve may be seen as a curve on the first surface or as a curve on the second surface. Hence, _a CATEdgeCurve is the geometric representation of the topological edge, which may be seen under several representations_. When the curve is not the result of an intersection, the CATEdgeCurve may contain CATCurves that are not CATPCurves. [Top] A CATMacroPoint Represents CATPoints Consider now the intersection point of two CATEdgeCurves. From the topological point of view, its geometry is represented by a CATMacroPoint. From a geometric point of view, this point may be seen as a point on the first edge curve (called CATPointOnEdgeCurve or POEC) or as a POEC on the second edge curve. Hence, a _CATMacroPoint is the geometric representation of the topological vertex, which may be seen under several representations_. When the curve is not the result of an intersection, the CATMacroPoint may contain CATPoints that are not CATPointOnEdgeCurves. [Top] The Cell Geometry Depends on What It Bounds Here is detailed the precise rules of the geometry-topology relations, according to the type of domains that a cell bounds. What Is Related to a Volume The geometric entity corresponding to a volume is the whole space, which is the same for all volumes. It is the reason why we do not have to precise it. What Is Related to a Face The geometric entity corresponding to a face is a CATSurface. What Is Related to an Edge The geometric entity corresponding to an edge is a CATEdgeCurve. Imagine you want to use this CATEdgeCurve as geometry for the topology. Depending on how the edge is used to border (or not) a cell of higher dimension, the CATEdgeCurve will represent different types of curve. 
+[Top] Representing Geometry A CATEdgeCurve Represents CATCurves Consider the intersection curve of two surfaces. From the topological point of view, its geometry is represented by a CATEdgeCurve. From a geometric point of view, this curve may be seen as a curve on the first surface or as a curve on the second surface. Hence, _a CATEdgeCurve is the geometric representation of the topological edge, which may be seen under several representations_. When the curve is not the result of an intersection, the CATEdgeCurve may contain CATCurves that are not CATPCurves. [Top] A CATMacroPoint Represents CATPoints Consider now the intersection point of two CATEdgeCurves. From the topological point of view, its geometry is represented by a CATMacroPoint. From a geometric point of view, this point may be seen as a point on the first edge curve (called CATPointOnEdgeCurve or POEC) or as a POEC on the second edge curve. Hence, a _CATMacroPoint is the geometric representation of the topological vertex, which may be seen under several representations_. When the curve is not the result of an intersection, the CATMacroPoint may contain CATPoints that are not CATPointOnEdgeCurves. [Top] The Cell Geometry Depends on What It Bounds Here is detailed the precise rules of the geometry-topology relations, according to the type of domains that a cell bounds. What Is Related to a Volume The geometric entity corresponding to a volume is the whole space, which is the same for all volumes. It is the reason why we do not have to precise it. What Is Related to a Face The geometric entity corresponding to a face is a CATSurface. What Is Related to an Edge The geometric entity corresponding to an edge is a CATEdgeCurve. Imagine you want to use this CATEdgeCurve as geometry for the topology. Depending on how the edge is used to border (or not) a cell of higher dimension, the CATEdgeCurve will represent different types of curve.
 
   * The edge will only border a face: the edge curve represents (at least) a CATPCurve.
   * The edge will border several faces: the edge curve represents (at least) as many CATPCurves as there are faces bounded by this edge.
   * The edge belongs to a CATWire: the edge curve represents any type of CATCurves.
 
-[Top] What Is Related to a Vertex The geometric entity corresponding to a vertex is a CATMacroPoint. Imagine you want to use this CATMacroPoint as geometry for the topology. Depending on how the vertex is used to border (or not) a cell of higher dimension, this CATMacroPoint will represent different types of points. 
+[Top] What Is Related to a Vertex The geometric entity corresponding to a vertex is a CATMacroPoint. Imagine you want to use this CATMacroPoint as geometry for the topology. Depending on how the vertex is used to border (or not) a cell of higher dimension, this CATMacroPoint will represent different types of points.
 
   * If the vertex will border an edge: the macro point represents (at least) a POEC corresponding to this limit of the edge.
   * If the vertex will border several edges: the macro point represents (at least) as many POECs as there are edges bounded by this vertex.
   * If the vertex will be drowned in a face (it will belong to a CATVertexInFace domain): the macro point represents (at least) a CATPointOnSurface. Note that for the moment, the CATVertexInFace also directly refers to the CATPointOnSurface, but this will be removed.
   * If the vertex will be drowned in a volume (it will belong to a CATPointInVolume domain): the macro-point represents (at least) any type of CATPoints.
 
-Fig. 2: Geomery associated with topology: the case of the Wire and VertexInVolume domain ![](images/TopoGeom2.gif) 
----|---  
+Fig. 2: Geomery associated with topology: the case of the Wire and VertexInVolume domain ![](images/TopoGeom2.gif)
+---|---
 [Top] Main Steps to Create Cells Related to Geometry We suppose in all these examples that a CATGeoFactory and a CATBody have been already created. These examples only detail the cell construction. You must then create the domain (Lump, Shell, Wire, VertexInVolume) containing the cells and add it to the body to complete it. For code examples, see. [Top] Main Steps to Create a Vertex
 
 Fig. 2: Geomery associated with topology: the case of the Wire and VertexInVolume domain ![](images/TopoGeom2.gif)
@@ -92,7 +92,7 @@ Note: A CATEdgeCurve cannot be directly created. Only its derived types (CATSimC
   2. Create a CATShell.
   3. Create a CATVolume and border it by the faces, building up the shell.
 
-[Top] Example: Wire Creation This section details step by step the creation of a Wire containing one edge. 
+[Top] Example: Wire Creation This section details step by step the creation of a Wire containing one edge.
 
 2. Create a CATShell.
 3. Create a CATVolume and border it by the faces, building up the shell.
@@ -100,7 +100,7 @@ Note: A CATEdgeCurve cannot be directly created. Only its derived types (CATSimC
 
     CATCartesianPoint * Point1=factory->CreateCartesianPoint(0,0,0);
     CATCartesianPoint * Point2=factory->CreateCartesianPoint(0,10,0);
-    CATLine *           Line  =factory->CreateLine(Point1,Point2);      
+    CATLine *           Line  =factory->CreateLine(Point1,Point2);
 
   2. **CATEdgeCurve Creation**
 
@@ -161,17 +161,17 @@ In Short
 
 * * *
 
-References [1] | [The CGM Objects](../CAAGobTechArticles/GeoObjects.md)  
----|---  
-[2] | [Topology Concepts](TopoConcepts.md)  
-[3] | [The CGM Topological Model](TopoModel.md)  
-[Top]  
+References [1] | [The CGM Objects](../CAAGobTechArticles/GeoObjects.md)
+---|---
+[2] | [Topology Concepts](TopoConcepts.md)
+[3] | [The CGM Topological Model](TopoModel.md)
+[Top]
 
 * * *
 
-History Version: **1** [Mar 2000] | Document created  
----|---  
-[Top]  
+History Version: **1** [Mar 2000] | Document created
+---|---
+[Top]
 
 * * *
 

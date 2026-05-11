@@ -12,7 +12,7 @@ converted: "2026-05-11T17:33:46.513396"
 tags: ["CATIA"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenFAQ.htm"
 converted: "2026-05-11T17:33:46.513396"
-CAA V5 Encyclopedia |  CAA V5 Frequently Asked Questions  
+CAA V5 Encyclopedia |  CAA V5 Frequently Asked Questions
 
 * * *
 
@@ -88,10 +88,10 @@ ENOVIA Portal
 
 * * *
 
-**_History_**  
----  
-Version: **1** [Oct 2000] | Document created  
-[Top]  
+**_History_**
+---
+Version: **1** [Oct 2000] | Document created
+[Top]
 
 * * *
 

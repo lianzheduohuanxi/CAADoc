@@ -15,28 +15,42 @@ converted: "2026-05-11T17:31:51.067330"
     Option Explicit
 
 ```vbscript
+```vbscript
+```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2002
     ' ***********************************************************************
-    '   Purpose:      This macro allows you to create a title block 
+    '   Purpose:      This macro allows you to create a title block
     '                       from Drawing Table
-    '   Author: 
+    '   Author:
     '   Languages:   VBScript
-    '   Locales:       English 
-    '   CATIA Level: V5R10 
+    '   Locales:       English
+    '   CATIA Level: V5R10
     ' ***********************************************************************
 ```
 
+```
+
+```
+
     Sub CATMain()
+```vbscript
+```vbscript
         ' Set the CATIA popup file alerts to False
         ' It prevents to stop the macro at each alert during its execution
+
+```
+
+```
 
 ```vbscript
         CATIA.DisplayFileAlerts = False
 ```
 
 ```vbscript
+```vbscript
+```vbscript
         ' Optional: allows to find the sample wherever it's installed
-        dim sDocPath As String 
+        dim sDocPath As String
         sDocPath=CATIA.SystemService.Environ("CATDocView")
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
           Err.Raise 9999,,"No Doc Path Defined"
@@ -53,6 +67,12 @@ converted: "2026-05-11T17:31:51.067330"
         ' Set the drawing document standard
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' Create a new drawing document
 Set oDrwDocument = CATIA.Documents.Add("Drawing")
@@ -60,6 +80,12 @@ Set oDrwDocument = CATIA.Documents.Add("Drawing")
         oDrwDocument.Standard = catISO
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
         ' Retrieve the drawing document's sheets collection
         Set oDrwSheets = oDrwDocument.Sheets
@@ -68,6 +94,12 @@ Set oDrwDocument = CATIA.Documents.Add("Drawing")
         ' Set the sheet properties
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' Retrieve the active sheet
 Set oDrwSheet = oDrwSheets.ActiveSheet
@@ -77,6 +109,12 @@ Set oDrwSheet = oDrwSheets.ActiveSheet
         oDrwSheet.Scale2 = 1
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
         ' Retrieve the active view of the sheet
         Set oDrwView = oDrwSheet.Views.ActiveView
@@ -87,6 +125,12 @@ Set oDrwSheet = oDrwSheets.ActiveSheet
         ' Set the drawing table's name
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' Create a new drawing table
 Set oDrwTable = oDrwTables.Add(107, 70, 9, 9, 5, 20)
@@ -95,6 +139,10 @@ Set oDrwTable = oDrwTables.Add(107, 70, 9, 9, 5, 20)
         ' Do not update drawing table modifications
         oDrwTable.ComputeMode = CatTableComputeOFF
         ' Merge drawing table's cells
+```
+
+```
+
         oDrwTable.MergeCells 1, 1, 2, 2
         oDrwTable.MergeCells 1, 3, 1, 7
         oDrwTable.MergeCells 2, 3, 2, 7
@@ -112,7 +160,10 @@ Set oDrwTable = oDrwTables.Add(107, 70, 9, 9, 5, 20)
         oDrwTable.MergeCells 8, 7, 2, 1
         oDrwTable.MergeCells 8, 8, 2, 1
         oDrwTable.MergeCells 8, 9, 2, 1
+```vbscript
         ' Set the drawing table's row sizes
+```
+
         oDrwTable.SetRowSize 1, 20
         oDrwTable.SetRowSize 2, 4
         oDrwTable.SetRowSize 3, 5
@@ -122,7 +173,10 @@ Set oDrwTable = oDrwTables.Add(107, 70, 9, 9, 5, 20)
         oDrwTable.SetRowSize 7, 2
         oDrwTable.SetRowSize 8, 3
         oDrwTable.SetRowSize 9, 7
+```vbscript
         ' Set the drawing table's column sizes
+```
+
         oDrwTable.SetColumnSize 1, 45
         oDrwTable.SetColumnSize 2, 20
         oDrwTable.SetColumnSize 3, 15
@@ -132,11 +186,20 @@ Set oDrwTable = oDrwTables.Add(107, 70, 9, 9, 5, 20)
         oDrwTable.SetColumnSize 7, 20
         oDrwTable.SetColumnSize 8, 15
         oDrwTable.SetColumnSize 9, 15
+```vbscript
+```vbscript
         ' Update drawing table modifications
         oDrwTable.ComputeMode = CatTableComputeON
 
-        CATIA.ActiveWindow.ActiveViewer.Reframe 
+        CATIA.ActiveWindow.ActiveViewer.Reframe
 
 ```
 
+```
+
+```
+
+```vbscript
     End Sub
+
+```

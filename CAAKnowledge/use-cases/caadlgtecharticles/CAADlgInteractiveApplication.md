@@ -11,31 +11,31 @@ converted: "2026-05-11T17:17:56.042541"
 ---
 # 3D PLM Enterprise Architecture
 
-| 
+|
 ## User Interface - Dialogs
 
-| 
+|
 ### Designing Your Interactive Application
 
-_How to create a separate interactive application_  
----|---|---  
-Technical Article  
+_How to create a separate interactive application_
+---|---|---
+Technical Article
 
 * * *
 ### Abstract
 
-This article explains you how to create an interactive application, along with the methods you should overwrite from the interactive application base class 
+This article explains you how to create an interactive application, along with the methods you should overwrite from the interactive application base class
 
   * **What Is an Interactive Application?**
   * **An Interactive Application Example**
   * **In Short**
 
----  
+---
 
 * * *
 ### What Is an Interactive Application?
 
-A CAA V5 interactive application is a program that you can launch and that can execute generally with end user input until the end-user stops it. The base class for CAA V5 interactive applications is the the _CATInteractiveApplication_ class. The Dialog framework gives you some key components to design you interactive application. They include: 
+A CAA V5 interactive application is a program that you can launch and that can execute generally with end user input until the end-user stops it. The base class for CAA V5 interactive applications is the the _CATInteractiveApplication_ class. The Dialog framework gives you some key components to design you interactive application. They include:
 
   * The _CATInteractiveApplication_ class to derive to create your application
   * The _[CATDlgDocument](../CAADlgQuickRefs/CAADlgCATDlgDocument.md)_ class to derive to create your application main window and presentations
@@ -72,7 +72,7 @@ class CAADlgInterApplication : public CATInteractiveApplication
 
     };
 
----  
+---
 
 and at the CAADlgInterWindow header file:
 
@@ -87,9 +87,9 @@ class CAADlgInterWindow: public CATDlgDocument
       public:
         CAADlgInterWindow(CATInteractiveApplication * pp);
         virtual ~CAADlgInterWindow();
-        void Build();    
-      private:                                          
-        void CloseAppli(CATCommand           * iSendingCommand,    
+        void Build();
+      private:
+        void CloseAppli(CATCommand           * iSendingCommand,
                         CATNotification      * iSentNotification,
                         CATCommandClientData   UsefulData);
 
@@ -98,12 +98,12 @@ private:
 void CloseAppli(CATCommand           * iSendingCommand,
 CATNotification      * iSentNotification,
 CATCommandClientData   UsefulData);
-      private:            
+      private:
         CATInteractiveApplication * _pApplication;
 
-    };  
+    };
 
----  
+---
 
 CATInteractiveApplication * _pApplication;
 These class declarations follow the diagram. A pointer to the application is stored as a document data member. The document includes a `Build` method to valuate its objects rather than doing this in the constructor. The method `CloseAppli` is used to close both the application and the document when the user requests it.
@@ -116,7 +116,7 @@ The _CAADlgInterApplication_ source file:
     { }
 
 CAADlgInterApplication ::CAADlgInterApplication (const CATString & IAppliName)
-    void CAADlgInterApplication ::**BeginApplication**() 
+    void CAADlgInterApplication ::**BeginApplication**()
 
     {
 void CAADlgInterApplication ::**BeginApplication**()
@@ -136,9 +136,9 @@ SetVisibility(CATDlgShow);          // make window visible
 int  CAADlgInterApplication ::**EndApplication**()    // called by Destroy
     CAADlgInterApplication ::~MyApplication() { }
 
-    CAADlgInterApplication **ApplicationInstance** ("MyNiceApplication"); // instantiate the application  
+    CAADlgInterApplication **ApplicationInstance** ("MyNiceApplication"); // instantiate the application
 
----  
+---
 
 The _CAADlgWindowApplication_ source file is the following:
 
@@ -147,7 +147,7 @@ The _CAADlgWindowApplication_ source file is the following:
     CAADlgInterWindow ::CAADlgInterWindow (CATInteractiveApplication * iParentCommand)
 
        :**CATDlgDocument**(iParentCommand, "CAADlgInterWindowId"),
-       _pApplication(iParentCommand)  
+       _pApplication(iParentCommand)
     {
       // Empty constructor to allocate, but not to valuate
     }
@@ -157,14 +157,20 @@ The _CAADlgWindowApplication_ source file is the following:
       // set a callback to close the application when closing the window
 void CAADlgInterWindow ::Build() {
       AddAnalyseNotificationCB(this,
+```vbscript
                                GetWindCloseNotification(),
+```
+
                                (CATCommandMethod)&MyDocument::CloseAppli,
                                NULL);
 
     }
 ```vbscript
 AddAnalyseNotificationCB(this,
+```vbscript
 GetWindCloseNotification(),
+```
+
 (CATCommandMethod)&MyDocument::CloseAppli,
 NULL);
     CAADlgInterWindow ::~CAADlgInterWindow () { }
@@ -175,16 +181,16 @@ NULL);
                     CATCommandClientData UsefulData)
 ```
 
-    { _pApplication->**Destroy**(); 
+    { _pApplication->**Destroy**();
 void CAADlgInterWindow ::CloseAppli            // close the application
 (CATCommand * _ICommand,
 CATNotification * _INotification,
 CATCommandClientData UsefulData)
-      _pApplication = NULL ; 
+      _pApplication = NULL ;
 
     }
 
----  
+---
 
 [Top]
 
@@ -198,9 +204,9 @@ The interactive application is simply instantiated without the need of creating 
 * * *
 ### History
 
-Version: **1** [Jan 2000] | Document created  
----|---  
-[Top]  
+Version: **1** [Jan 2000] | Document created
+---|---
+[Top]
 
 * * *
 

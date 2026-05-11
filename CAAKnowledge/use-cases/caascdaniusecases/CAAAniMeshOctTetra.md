@@ -2,117 +2,13 @@
 title: "Creating Octree Tetrahedron Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CAAScrBase", "CAAInfLauchMacro", "CAAScdInfUseCases", "CAAAniMeshOctTetraSource", "CAAAniTocAnalysisDocument", "CAAScdAniUseCases", "CAAScdAniTechArticles", "CAAAniMeshOctTetra", "CATIA", "CAAScrJavaScript"]
+tags: ["CAAScrBase", "CAAAniMeshOctTetra", "CATIA", "CAAScdAniUseCases", "CAAScrJavaScript", "CAAAniMeshOctTetraSource", "CAAAniTocAnalysisDocument", "CAAScdInfUseCases", "CAAScdAniTechArticles", "CAAInfLauchMacro"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshOctTetra.htm"
-converted: "2026-05-11T11:06:32.385719"
+converted: "2026-05-11T11:27:02.532772"
 ---
-
-## Analysis Modeler
-		
-		
-## []Creating Octree Tetrahedron Mesh Parts
-		
-	
 
 ---
 
-	
-		![](../CAAScrBase/images/atarget.gif)
-		
-
-[]This macro shows you how to create an octree tetrahedron 
-		mesh parts.
-		
-
-This macro opens an Analysis document and creates an octree tetrahedron 
-		mesh part. Global specifications associated with this mesh part are set. 
-		The local specification: *MSHLocalMeshSize* is created at one of the 
-		edges of the part. This scenario requires "FEM Solid (FMD) product".
-		
-
-		![](images/OctreeMesh.gif)
-		
-
- 
-		
-	
-	
-		![](../CAAScrBase/images/ainfo.gif)
-		
-
-[]CAAAniMeshOctTetra is launched in CATIA [[1]]. 
-		No open document is needed.
-		
-
-[CAAAniMeshOctTetra.catvbs] 
-		is located in the CAAScdAniUseCases module.
-		[Execute macro] (Windows only).
-		
-
- 
-		
-	
-	
-		![](../CAAScrBase/images/ascenari.gif)
-		
-
-[]CAAAniMeshOctTetra includes the following steps:
-		
-
-			
-- [Prolog]
-			
-- [Extracting the Product and Publications for 
-			Meshing]
-			
-- [Creating Mesh Part and Assigning Values to its 
-			Attributes]
-			
-- [Epilog]
-		
-		
-#### []Prolog
-		
-			
-				
-```
-...
-```
-
-				
-```
-' ----------------------------------------------------------- 
-
-' Optional: allows to find the sample wherever it's installed
-
- sDocPath=CATIA.SystemService.Environ("CATDocView")
-
- If 
-(Not CATIA.FileSystem.FolderExists(sDocPath))
- Then
-
- Err.Raise 9999,,"No Doc Path Defined"
-
- End If
-
-' ----------------------------------------------------------- 
-
-' Open the Analysis document
- 
-sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis")
-
-Set
- oAnalysisDocument = CATIA.Documents.Open(sFilePath)
-```
-
-				
-```
-...
-```
-
-				
-			
-		
 		
 
 Open the Analysis document. The Analysis document is retrieved in the 
@@ -120,73 +16,15 @@ Open the Analysis document. The Analysis document is retrieved in the
 		`sDocPath` variable. In the collection of documents, two documents 
 		can be retrieved; the Analysis document and the Part document.
 		
-#### []**Extracting the Product and Publications for 
+
+#### **Extracting the Product and Publications for 
 		Meshing**
-		
-			
-				
-```
-...
-```
-
-				
-```
-' Retrieve the Analysis Manager and Analysis Model
-
-Set
- oAnalysisManager = oAnalysisDocument.Analysis
-
-' Retrieve the part document from Analysis manager
-
-Set
- oAnalysisLinkedDocument = oAnalysisManager.LinkedDocuments
-
-Set
- partDocument = oAnalysisLinkedDocuments.Item(1)
-
-Set
- product = partDocument.Product
-```
-
-				
-```
-' Retrieve the analysis model from the list of models
-
-Set
- oAnalysisModels = oAnalysisManager.AnalysisModels
-
-Set
- oAnalysisModel = oAnalysisManager.Item(1)
-
-' Retrieve mesh manager and mesh part 
-
-Set 
-oAnalysisMeshManager = oAnalysisModel.MeshManager
-
-Set 
-oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
-
-' Retrieve publications from product and retrieve the published face.
-
-Set
- publications1 = product.Publications
-
-Set
- pubEdge = publications1.Item("Edge")
-
-Set
- pubPartBody = publications1.Item("PartBody")
-...
-```
-
-				
-			
 		
 		
 
 According to the general
 		[
-		Analysis Document] structure, this macro uses some standard procedures 
+		Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm) structure, this macro uses some standard procedures 
 		to navigate or retrieve the required objects. First, from the **Document**, 
 		we find the **Analysis Manager Object**, the **Analysis Models** and 
 		the **Mesh Manager Objects**. The extraction of pre-defined geometric 
@@ -194,24 +32,108 @@ According to the general
 		to the selection of a B-Rep elements inside the interactive application. 
 		In this macro reference is created from published body and published edge.
 		
-#### []Creating Mesh Part and Assigning Values to its 
+
+#### Creating Mesh Part and Assigning Values to its 
 		Attributes
 		
-			
-				
-```
+		
+
+#### Epilog
+		
+		
+
+To run the macro interactively CATDocView 
+		environment variable must be defined. After running the macro the mesh may not be immediately visible,
+                the user has to go to the Afvanced meshing tools workbench to see the mesh.
+	
+
+![](../CAAScrBase/images/aendtask.gif)
+
+[Top]
+
+---
+
+#### In Short
+
+This use case has shown how to create octree tetrahedron mesh parts and how to 
+assign its local and global specifications.
+
+ 
+
+[Top]
+
+---
+
+#### References
+
+---
+
+*Copyright  2001, Dassault Systmes. All rights reserved.*
+
+
+
+```vbscript
 ...
 ```
 
-				
+```vbscript
+' ----------------------------------------------------------- 
+' Optional: allows to find the sample wherever it's installed
+
+  sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,,"No Doc Path Defined"
+    End If
+' ----------------------------------------------------------- 
+&#39; Open the Analysis document 
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis&quot;)
+Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```
-' Add the new Octree tetrahedron mesh part to the list of mesh parts
 
-Set 
-octreePart = meshParts.Add ("MSHPartOctree3D")
+```vbscript
+...
+```
 
-' Add reference previously created
+```vbscript
+...
+```
 
+```vbscript
+&#39; Retrieve the Analysis Manager and Analysis Model
+Set oAnalysisManager = oAnalysisDocument.Analysis
+
+&#39; Retrieve the part document from Analysis manager
+Set oAnalysisLinkedDocument = oAnalysisManager.LinkedDocuments
+Set partDocument = oAnalysisLinkedDocuments.Item(1)
+Set product = partDocument.Product
+```
+
+```vbscript
+&#39; Retrieve the analysis model from the list of models
+Set oAnalysisModels = oAnalysisManager.AnalysisModels
+Set oAnalysisModel = oAnalysisManager.Item(1)
+
+&#39; Retrieve mesh manager and mesh part 
+Set oAnalysisMeshManager = oAnalysisModel.MeshManager
+Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+
+&#39; Retrieve publications from product and retrieve the published face.
+Set publications1 = product.Publications
+Set pubEdge = publications1.Item("Edge")
+Set pubPartBody = publications1.Item("PartBody")
+...
+```
+
+```vbscript
+...
+```
+
+```vbscript
+&#39; Add the new Octree tetrahedron mesh part to the list of mesh parts
+Set octreePart = meshParts.Add ("MSHPartOctree3D")
+
+&#39; Add reference previously created
 octreePart.AddSupportFromPublication product, pubPartBody
 
 octreePart.SetGlobalSpecification "SizeValue", "10.0 mm"
@@ -231,79 +153,22 @@ octreePart.SetGlobalSpecification "MeshViolationValue", "0.5 mm"
 octreePart.SetGlobalSpecification "ProportionalSag", 1
 octreePart.SetGlobalSpecification "ProportionalSagValue", "0.5 mm"
 
-' Add the Mesh local size as local specifications and assign it attributes
-
-Set 
-meshspecs1 = octreePart.AnalysisMeshLocalSpecifications
-
-Set 
-spec1 = meshspecs1.Add("MSHLocalMeshSize")
+&#39; Add the Mesh local size as local specifications and assign it attributes
+Set meshspecs1 = octreePart.AnalysisMeshLocalSpecifications
+Set spec1 = meshspecs1.Add("MSHLocalMeshSize")
 spec1.SetAttribute "MSHMeshSizeMag", "1.5 mm"
 spec1.AddSupportFromPublication "ConnectorList", product, pubedge
 
-'Update the mesh part
-
+&#39;Update the mesh part
 octreePart.Update
 
 ...
 ```
 
-				
-			
-		
-		
-#### []Epilog
-		
-			
-				
-```
+```vbscript
 ...
 ```
 
-End Sub
-				
-```
+```vbscript
 ...
 ```
-
-				
-			
-		
-		
-
-To run the macro interactively CATDocView 
-		environment variable must be defined. After running the macro the mesh may not be immediately visible,
- the user has to go to the Afvanced meshing tools workbench to see the mesh.
-	
-
-![](../CAAScrBase/images/aendtask.gif)
-
-[[Top]]
-
----
-
-#### []In Short
-
-This use case has shown how to create octree tetrahedron mesh parts and how to 
-assign its local and global specifications.
-
- 
-
-[[Top]]
-
----
-
-#### []References
-
-	
-		|[1]
-		[Replaying 
-		a Macro]
-	
-	
-		|[[Top]]
-	
-
----
-
-*Copyright 2001, Dassault Systmes. All rights reserved.*

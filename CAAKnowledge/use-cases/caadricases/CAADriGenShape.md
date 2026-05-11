@@ -11,15 +11,15 @@ converted: "2026-05-11T17:31:51.006322"
 ---
 # Mechanical Design
 
-| 
+|
 ## Drafting
 
-| 
+|
 ### Editing Generated Shapes in Generative Views
 
-_How to access generated shapes in generative views_  
----|---|---  
-Use Case  
+_How to access generated shapes in generative views_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
@@ -35,7 +35,7 @@ This article discusses the CAADrwGenShape use case. This use case explains how t
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
@@ -51,11 +51,11 @@ CAADrwGenShape is a use case of the CAADraftingInterfaces.edu framework that ill
 #### What Does CAADrwGenShape Do?
 
 CAADrwGenShape is a use case of the CAADraftingInterfaces.edu framework that illustrates DraftingInterfaces framework capabilities.
-Fig. 1: Initial Document ![](images/CAADrwGenShape.jpg)  
-
----  
 Fig. 1: Initial Document ![](images/CAADrwGenShape.jpg)
-Fig. 1 represents the Drawing document used by the use case.   
+
+---
+Fig. 1: Initial Document ![](images/CAADrwGenShape.jpg)
+Fig. 1 represents the Drawing document used by the use case.
 
 This Use Case shows how to retrieve contours of GenShape. In the section view of Fig 1, there are 6 contours.
 
@@ -64,21 +64,21 @@ This Use Case shows how to retrieve contours of GenShape. In the section view of
 
 To launch CAADrwGenShape, you will need to set up the build time environment, then compile CAADrwGenShape along with its prerequisites, set up the run time environment, and then execute the use case [1].
 
-When you launch the use case, pass the full pathname of the Drawing file as argument. A Drawing file is delivery in the following path: CAADraftingInterfaces.edu\CNext\resources\graphic\DrawingForGenShapeUseCase.CATDrawing. 
+When you launch the use case, pass the full pathname of the Drawing file as argument. A Drawing file is delivery in the following path: CAADraftingInterfaces.edu\CNext\resources\graphic\DrawingForGenShapeUseCase.CATDrawing.
 
-  * With Windows 
+  * With Windows
 
 When you launch the use case, pass the full pathname of the Drawing file as argument. A Drawing file is delivery in the following path: CAADraftingInterfaces.edu\CNext\resources\graphic\DrawingForGenShapeUseCase.CATDrawing.
         e:> mkrun -c cmd
-        CAADrwGenShape c/.../DrawingForGenShapeUseCase.CATDrawing  
+        CAADrwGenShape c/.../DrawingForGenShapeUseCase.CATDrawing
 
----  
-  * With UNIX 
+---
+  * With UNIX
 
         $ mkrun -c cmd
-        CAADrwGenShape /u/users/.../DrawingForGenShapeUseCase.CATDrawing  
+        CAADrwGenShape /u/users/.../DrawingForGenShapeUseCase.CATDrawing
 
----  
+---
 
 [Top]
 #### Where to Find the CAADrwGenShape Code
@@ -86,11 +86,11 @@ When you launch the use case, pass the full pathname of the Drawing file as argu
 The CAADrwGenShape use case is made of a single source file named CAADrwGenShape.cpp located in the CAADrwGenShape.m module of the CAADraftingInterfaces.edu framework:
 
 The CAADrwGenShape use case is made of a single source file named CAADrwGenShape.cpp located in the CAADrwGenShape.m module of the CAADraftingInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwGenShape.m\`  
+Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwGenShape.m\`
 
 The CAADrwGenShape use case is made of a single source file named CAADrwGenShape.cpp located in the CAADrwGenShape.m module of the CAADraftingInterfaces.edu framework:
 Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwGenShape.m\`
-Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwGenShape.m/`  
+Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwGenShape.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
@@ -111,7 +111,7 @@ There are seven steps in CAADrwGenShape:
 [Top]
 #### Opening a Drawing Document
 
-    int main(int    iArgc,   // Number of arguments (1) 
+    int main(int    iArgc,   // Number of arguments (1)
              char** iArgv)   // Path to the new *.CATDrawing document
     {
      // Check arguments
@@ -134,20 +134,26 @@ const char *pfileNameDrawing = iArgv[1];
 int rc =0;
     CATSession *pSampleSession = NULL;
     HRESULT hr = ::Create_Session("SampleSession",pSampleSession);
+```vbscript
     if (FAILED(hr)) return 1;
+
+```
 
     CATDocument* pDocDrawing = NULL;
 
+```vbscript
     if (FAILED(CATDocumentServices::OpenDocument(pfileNameDrawing, pDocDrawing)))
+
+```
 
     {
       // Ends session
       ::Delete_Session("SampleSession");
       return 2;
     }
-    ...  
+    ...
 
----  
+---
 
 This section represents the usual sequence for loading a CATIA document [2].
 
@@ -159,18 +165,30 @@ This section represents the usual sequence for loading a CATIA document [2].
 CATIDftDrawing *piDrawing = NULL;
     CATIDftDocumentServices *piDftDocServices = NULL;
 
+```vbscript
     if (SUCCEEDED(pDocDrawing->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftDocServices)))
+
+```
 
     {
 CATIDftDrawing *piDrawing = NULL;
 CATIDftDocumentServices *piDftDocServices = NULL;
 if (SUCCEEDED(pDocDrawing->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftDocServices)))
+```vbscript
+```vbscript
       if (SUCCEEDED(piDftDocServices->GetDrawing(IID_CATIDftDrawing, (void **)&piDrawing)))
+
+```
+
+```
 
       {
 ```vbscript
 if (SUCCEEDED(pDocDrawing->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftDocServices)))
+```vbscript
 if (SUCCEEDED(piDftDocServices->GetDrawing(IID_CATIDftDrawing, (void **)&piDrawing)))
+```
+
         piDftDocServices->Release();
         piDftDocServices=NULL;
 ```
@@ -198,15 +216,15 @@ piDftDocServices=NULL;
 
       }
     }
-    else 
+    else
     {
       // Ends session
       ::Delete_Session("SampleSession");
-      return 3; 
+      return 3;
     }
-    ...  
+    ...
 
----  
+---
 
 The root feature of a drawing document is the Drawing, that is, the feature that implements the _CATIDftDrawing_ interface. We can get a pointer to _CATIDftDrawing_ using the _CATIDftDocumentServices_ interface, which is implemented by the document. The `GetDrawing` method first argument is the _CATIDftDrawing_ interface IID.
 
@@ -229,7 +247,13 @@ if (piDrawing)
           // ==========================================
 CATIDftView *piCurrentView = NULL;
 if (SUCCEEDED(piDrawing->GetActiveView(&piCurrentView)))
-          if (NULL != piCurrentView) 
+```vbscript
+```vbscript
+          if (NULL != piCurrentView)
+
+```
+
+```
 
           {
 ```vbscript
@@ -243,13 +267,19 @@ if (NULL != piCurrentView)
 if (NULL != piCurrentView)
 CATIUnknownList * piList = NULL;
 if (SUCCEEDED( piCurrentView->GetComponents(IID_CATIDrwGenDrawShape,&piList)))
+```vbscript
               if (piList)
+```
+
 ```
 
               {
 CATIUnknownList * piList = NULL;
 if (SUCCEEDED( piCurrentView->GetComponents(IID_CATIDrwGenDrawShape,&piList)))
+```vbscript
 if (piList)
+```
+
                 unsigned int piListSize = 0;
                 piList->Count(&piListSize);
 
@@ -266,20 +296,26 @@ CATUnicodeString PartName;
                 {
 CATUnicodeString PartName;
 for(unsigned int i=0 ; i<piListSize ; i++)
+```vbscript
                   if( SUCCEEDED( piList->Item(i, &item) ) )
+
+```
 
                   {
 ```vbscript
 for(unsigned int i=0 ; i<piListSize ; i++)
+```vbscript
 if( SUCCEEDED( piList->Item(i, &item) ) )
                     if(SUCCEEDED( item->QueryInterface(IID_CATIDrwGenDrawShape, (void**) & piGenShape) ) )
 ```
 
+```
+
                     {
 
-    ...  
+    ...
 
----  
+---
 
 A Drawing may contain several sheets, but only one is current at a time. The current sheet is the sheet containing the active view, that is the view currently edited. GetActiveView method defined in CATIDftDrawing interface returns the active view of active sheet in the drawing document. GetComponents method is a generic method to retrieve all elements identified by an IID. These elements are returned in a CATIUnknownList.
 
@@ -290,19 +326,31 @@ A Drawing may contain several sheets, but only one is current at a time. The cur
     CATListOfInt ListOfNbPtPerContour;
     CATListPtrCATMathPoint2D ListOfPoints;
     int NbContour=0;
+```vbscript
     if (piGenShape && SUCCEEDED(piGenShape->GetDescription(NbContour, ListOfNbPtPerContour, ListOfPoints)))
+
+```
 
     {
       // Check geometry
 CATListPtrCATMathPoint2D ListOfPoints;
 int NbContour=0;
 if (piGenShape && SUCCEEDED(piGenShape->GetDescription(NbContour, ListOfNbPtPerContour, ListOfPoints)))
+```vbscript
+```vbscript
       for (int numcont=1 ; numcont<=NbContour ; numcont++)
+
+```
+
+```
 
       {
 ```vbscript
 if (piGenShape && SUCCEEDED(piGenShape->GetDescription(NbContour, ListOfNbPtPerContour, ListOfPoints)))
+```vbscript
 for (int numcont=1 ; numcont<=NbContour ; numcont++)
+```
+
         int NbPtcnt = ListOfNbPtPerContour[numcont];
         for (int numpt=1 ; numpt<=NbPtcnt ; numpt++)
 ```
@@ -312,7 +360,10 @@ for (int numcont=1 ; numcont<=NbContour ; numcont++)
 int NbPtcnt = ListOfNbPtPerContour[numcont];
 for (int numpt=1 ; numpt<=NbPtcnt ; numpt++)
           CATMathPoint2D *tmpt = ListOfPoints[numpt];
-          if (tmpt) 
+```vbscript
+          if (tmpt)
+
+```
 
           {
 CATMathPoint2D *tmpt = ListOfPoints[numpt];
@@ -329,11 +380,11 @@ cerr << " Number point = " << numpt << " X= = "<< tmpt->GetX() << "Y = " << tmpt
         }
       }
     }
-    ...  
+    ...
 
----  
+---
 
-This sample show how to retrieve points defining the contours by using GetDescription method.  
+This sample show how to retrieve points defining the contours by using GetDescription method.
 
 [Top]
 #### Getting Part Instance Name from a Generated Shape
@@ -341,13 +392,19 @@ This sample show how to retrieve points defining the contours by using GetDescri
     ...
     IUnknown *piUnk=NULL;
 IUnknown *piUnk=NULL;
+```vbscript
     if (SUCCEEDED(piGenShape->GetProduct(IID_CATIProduct,&piUnk)))
+
+```
 
     {
 IUnknown *piUnk=NULL;
 if (SUCCEEDED(piGenShape->GetProduct(IID_CATIProduct,&piUnk)))
       CATIProduct *piProd =NULL;
+```vbscript
       if (SUCCEEDED(piUnk->QueryInterface(IID_CATIProduct,(void **)&piProd)))
+
+```
 
       {
 ```vbscript
@@ -383,9 +440,9 @@ piProd->Release();piProd=NULL;
       piUnk->Release();piUnk=NULL;
 
     }
-    ...  
+    ...
 
----  
+---
 
 [Top]
 #### Getting Pattern used by a Generated Shape
@@ -394,21 +451,24 @@ piProd->Release();piProd=NULL;
     // Get Pattern used by the generated shape,
     CATIDftPattern *piDftPattern=NULL;
 CATIDftPattern *piDftPattern=NULL;
+```vbscript
     if (SUCCEEDED(piGenShape->GetPattern(&piDftPattern)))
 
-    { 
+```
+
+    {
 CATIDftPattern *piDftPattern=NULL;
 if (SUCCEEDED(piGenShape->GetPattern(&piDftPattern)))
       int patternType=0;
       piDftPattern->GetPatternType(&patternType);
-      if (patternType == 1) 
+      if (patternType == 1)
       cerr << "Hatching Pattern found" << endl;
       piDftPattern->Release(),piDftPattern=NULL;
 
     }
-    ...  
+    ...
 
----  
+---
 
 This section represents the usual sequence to retrieve the Pattern [3].
 
@@ -422,17 +482,23 @@ This section represents the usual sequence to retrieve the Pattern [3].
       ... // Check rc
       rc = CATDocumentServices::**Remove** (*pDoc);
       ... // Check rc
-      // Ends session and drops document	
+      // Ends session and drops document
 rc = CATDocumentServices::**SaveAs**(*pDoc, (char *)fileName);
+```vbscript
+```vbscript
 rc = CATDocumentServices::**Remove** (*pDoc);
       rc = ::**Delete_Session**("SampleSession");
+
+```
+
+```
 
       ... // Check rc
 
       return 0;
-    }  
+    }
 
----  
+---
 
 This section represents the usual sequence for saving a newly created CATIA document [2].
 
@@ -455,18 +521,18 @@ This use case shows the way to :
 * * *
 ### References
 
-[1] |  [ Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-[2] |  [ Load an existing Document](../CAAOmbUseCases/CAAOmbLoadDoc.md)  
-[3] | [Creating a Pattern](CAADriCreatePattern.md)  
-[Top]  
+[1] |  [ Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)
+---|---
+[2] |  [ Load an existing Document](../CAAOmbUseCases/CAAOmbLoadDoc.md)
+[3] | [Creating a Pattern](CAADriCreatePattern.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [May 2004] | Document created  
----|---  
-[Top]  
+Version: **1** [May 2004] | Document created
+---|---
+[Top]
 
 * * *
 

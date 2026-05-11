@@ -11,8 +11,8 @@ converted: "2026-05-11T17:31:52.420050"
 ---
 ## Infrastructure
 
- | 
- ## Invoking CATIA from a Scripting Language  
+ |
+ ## Invoking CATIA from a Scripting Language
 
  * * *
 
@@ -21,22 +21,22 @@ converted: "2026-05-11T17:31:52.420050"
 Access to the CATIA object model is provided using scripts in different ways depending on the operating system and on the applications that can share their own objects with CATIA. This also applies for ENOVIA DMU and DELMIA products. In the following you can subsitute "DMU" or "DELMIA" to "CATIA" if you need to access or launch another application based on the common V5 platform.
  CATIA is an OLE Automation server for Windows and allows macro record and replay for both Windows and UNIX. The following summarizes CATIA scripting capabilities.
 
- With Windows: | 
+ With Windows: |
 
      * In-process access using Visual Basic Scripting Edition or Visual Basic for Application since CATIA hosts both scripting engines.
      * Out-process access from the following OLE Automation clients:
        * Visual Basic for Applications via other applications like those of Office
        * Windows Scripting Host and scripting languages such as VB Script or JScript
-       * an a html page.  
- ---|---  
- With UNIX: | 
-     * in-process access using Visual Basic Scripting Edition.  
+       * an a html page.
+ ---|---
+ With UNIX: |
+     * in-process access using Visual Basic Scripting Edition.
 
  The macros recorded from the Tools menu and the Record Macro dialog box can use:
 
      * the VBScript language,
      * the VBA language
-     * the CATScript language. This CATIA specific language was designed to allow compatibility between the Unix Basic Script engine and the Windows VBScript engine. As CATIA doesn't anymore hosts the Basic Script engine on Unix since V5R7, it has only been kept for compatibility purpose. It is actually processed by a VBScript engine after removal of the typing information.   
+     * the CATScript language. This CATIA specific language was designed to allow compatibility between the Unix Basic Script engine and the Windows VBScript engine. As CATIA doesn't anymore hosts the Basic Script engine on Unix since V5R7, it has only been kept for compatibility purpose. It is actually processed by a VBScript engine after removal of the typing information.
 
  In-process access means that the script interpretation is performed in the same process as CATIA. You usually run the macros from the Macros window triggered from the interactive **Tools- >Macros** command. In this case, the macro is processed by CATIA just like any other command.
 
@@ -52,37 +52,46 @@ In-process access means that the script interpretation is performed in the same 
  In-process access means that the script interpretation is performed in the same process as CATIA using the scripting engine(s) hosted by CATIA. You can run in-process macros with UNIX and Windows. You have three means to run in-process macros:
 
 In-process access means that the script interpretation is performed in the same process as CATIA using the scripting engine(s) hosted by CATIA. You can run in-process macros with UNIX and Windows. You have three means to run in-process macros:
-     1. You usually run the macros from the Macros window triggered from the interactive **Tools- >Macros** command. In this case, the macro is processed by CATIA just like any other command.  
-Note that you can add arguments to the ` CATMain` function: 
+     1. You usually run the macros from the Macros window triggered from the interactive **Tools- >Macros** command. In this case, the macro is processed by CATIA just like any other command.
+Note that you can add arguments to the ` CATMain` function:
 
-            Sub CATMain(X, Y)  
-                ' Here we expect X as a scalar and Y as an object  
+            Sub CATMain(X, Y)
+```vbscript
+                ' Here we expect X as a scalar and Y as an object
+```
+
                 MsgBox X  & TypeName(Y)
+```vbscript
               End Sub
+
+```
 
 MsgBox X  & TypeName(Y)
 End Sub
- When launching such a macro, a dialog windows will request valuation of arguments. 
+ When launching such a macro, a dialog windows will request valuation of arguments.
 
  ![](images/CAAScdInfMacArgs.gif)
 
  Note that even if you use a macro language allowing to type to those arguments, the types won't be user at runtime, so it is recommended to give an explicit name to the variable to avoid end-user mystakes:
 
+```vbscript
             Sub CATMain(iThisNumber, oThatObject)
 
 Sub CATMain(iThisNumber, oThatObject)
-     2. You can start CATIA and request that a macro being executed as soon as CATIA is started using the -macro option followed by the full path of the macro you want to run: 
+```
+
+     2. You can start CATIA and request that a macro being executed as soon as CATIA is started using the -macro option followed by the full path of the macro you want to run:
 
             CNEXT -macro E/Users\Macros\MacroToRun.CATScript
 
  This runs the `CATMain` function defined in the `MacroToRun.CATScript` file. Macros can however be stored in other macro libraries like `catvba` documents or any other V5 documents like `CATPart` or ` CATProduct` documents. You can use the following syntax to run the ` CATMain` function defined in the `myMacro` macro of the ` myDocument` document:
 
-            CNEXT -macro myDocument.catvba myMacro 
+            CNEXT -macro myDocument.catvba myMacro
             CNEXT -macro myDocument.CATPart myMacro
 
- CATIA sessions launched this way will remain active after the end of the macro unless you explicitly end it in the macro using the `CATIA.Quit` method.  
+ CATIA sessions launched this way will remain active after the end of the macro unless you explicitly end it in the macro using the `CATIA.Quit` method.
 
-     3. You can start CATIA in batch to execute a macro using the -batch option followed by the full path of the macro you want to run: 
+     3. You can start CATIA in batch to execute a macro using the -batch option followed by the full path of the macro you want to run:
 
             CNEXT -batch -macro E/Users\Macros\BatchMacro.CATScript
 
@@ -103,23 +112,29 @@ The macro should first connect to CATIA to then access its data. This connection
 You can run out-process macros with Windows only.
  You can use the following syntax when using or Visual Basic for application
 
-     * If CATIA is already running, the macro should simply connect to CATIA using the **GetObject** method 
+     * If CATIA is already running, the macro should simply connect to CATIA using the **GetObject** method
 
 ```vbscript
-           Dim CATIA As Object  
+```vbscript
+           Dim CATIA As Object
 
                Set CATIA = GetObject(, "CATIA.Application")
 
 ```
 
+```
+
  The first argument is left blank.
 
-     * If CATIA is not already running, the macro should start CATIA using the **CreateObject** method 
+     * If CATIA is not already running, the macro should start CATIA using the **CreateObject** method
 
-> Dim CATIA As Object  
+> Dim CATIA As Object
 
 ```vbscript
+```vbscript
         Set CATIA = CreateObject("CATIA.Application")
+
+```
 
 ```
 
@@ -129,13 +144,16 @@ You can run out-process macros with Windows only.
 Set CATIA = CreateObject("CATIA.Application")
  Another way is to use the Windows Scripting Host. This is a language-independent scripting host which enables scripts written in different languages such as Visual Basic, JScript, and Perl, to be run from the Windows desktop, the Windows Explorer, or the command console.
 
- With Visual Basic, your script should begin by the connection to CATIA, using either CreateObject or GetObject, as follows: 
-
 ```
+
+ With Visual Basic, your script should begin by the connection to CATIA, using either CreateObject or GetObject, as follows:
 
 > Dim CATIA
 ```vbscript
+```vbscript
     Set CATIA = WScript.CreateObject("CATIA.Application")
+
+```
 
 ```
 
@@ -143,7 +161,10 @@ Set CATIA = CreateObject("CATIA.Application")
 
 > Dim CATIA
 ```vbscript
+```vbscript
     Set CATIA = WScript.GetObject("", "CATIA.Application")
+
+```
 
 ```
 
@@ -151,9 +172,9 @@ Set CATIA = CreateObject("CATIA.Application")
 Set CATIA = WScript.GetObject("", "CATIA.Application")
  Note that the GetObject method requires that its first argument be blank.
 
- To run the macros from the Windows desktop, simply double click on the macro name. These names are suffixed using vbs for Visual Basic.
-
 ```
+
+ To run the macros from the Windows desktop, simply double click on the macro name. These names are suffixed using vbs for Visual Basic.
 
  ![](images/CAAInfExplorer.jpg)
 

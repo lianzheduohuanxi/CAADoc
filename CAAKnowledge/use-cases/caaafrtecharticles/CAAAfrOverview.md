@@ -11,20 +11,20 @@ converted: "2026-05-11T17:17:55.934142"
 ---
 # 3D PLM Enterprise Architecture
 
-| 
+|
 ## User Interface - Frame
 
-| 
+|
 ### Application Frame Overview
 
-_The basics of interactivity_  
----|---|---  
-Technical Article  
+_The basics of interactivity_
+---|---|---
+Technical Article
 
 * * *
 ### Abstract
 
-This article explains which paradigms CAA V5 uses to show objects and let end users play with them. 
+This article explains which paradigms CAA V5 uses to show objects and let end users play with them.
 
   * **The Anatomy of a Typical CAA V5 Application Window**
   * **The Application Window**
@@ -37,7 +37,7 @@ This article explains which paradigms CAA V5 uses to show objects and let end us
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### The Anatomy of a Typical CAA V5 Application Window
@@ -49,7 +49,7 @@ The CAA V5 application window is the host for all CAA V5 documents. As an MDI (M
 The CAA V5 application window is the host for all CAA V5 documents. As an MDI (Multiple Document Interface) application window, it can display several document windows at the same time as child windows of its application window, one document window, and thus one document, being active at the same time. Have a look at the screen shot below.
 It shows the application window that contains two document windows. It shows also a palette of the tools available to work on the active document. This is a Part document, and its window contains the 3D part, and the part's specification tree as a 2D graph immersed into the 3D viewer displayed in the document window. The active document being a Part document, the tools available are those dedicated to parts. They are made of commands you can find in pull-down menus and toolbars. The active command being dedicated to pad definition, it displays a dialog box to enable the end user to enter its own parameters to define or modify the pad being edited.
 
-Which are the objects that make all we have described above work, and how do they relate to each other? Which interfaces should they implement? This is the purpose of this article. These main objects are: 
+Which are the objects that make all we have described above work, and how do they relate to each other? Which interfaces should they implement? This is the purpose of this article. These main objects are:
 
   * The application window
   * The document window
@@ -59,7 +59,7 @@ Which are the objects that make all we have described above work, and how do the
   * The document controller, in other words the editor
   * The interactive objects to manage the highlight, the temporary object visualization ...
 
-Most of these objects are detailed in the technical article entitled "The Frame Objects of the V5 Interactive Application" [1]. 
+Most of these objects are detailed in the technical article entitled "The Frame Objects of the V5 Interactive Application" [1].
 
 [Top]
 ### The Application Window
@@ -107,7 +107,7 @@ The Product and Part documents, as well as the sketch, load their own editing to
 [Top]
 ### Workshops and Workbenches
 
-A CAA V5 document is associated with its own editing tools gathered in a **workshop**. Editing tools are commands that you arrange in menus and toolbars that make up the workshop. Some menus and the standard toolbar are independent from the type of the active document. They gather commands such as New, Open, or Print. They belong to the application window and are automatically added to any document's workshop. When a document is active, its own workshop is available in addition to these menus and to the standard toolbar. Changing the active document changes the active workshop if the new active document has a type different from the previous active one. Otherwise, the same workshop remains active, but possibly in a different configuration, in other words workbench. Add-ins allows you to add commands to workshops or workbenches without rebuilding their shared libraries and DLLs. To perform the appropriate transition between these two workbenches, the application should know what to do. 
+A CAA V5 document is associated with its own editing tools gathered in a **workshop**. Editing tools are commands that you arrange in menus and toolbars that make up the workshop. Some menus and the standard toolbar are independent from the type of the active document. They gather commands such as New, Open, or Print. They belong to the application window and are automatically added to any document's workshop. When a document is active, its own workshop is available in addition to these menus and to the standard toolbar. Changing the active document changes the active workshop if the new active document has a type different from the previous active one. Otherwise, the same workshop remains active, but possibly in a different configuration, in other words workbench. Add-ins allows you to add commands to workshops or workbenches without rebuilding their shared libraries and DLLs. To perform the appropriate transition between these two workbenches, the application should know what to do.
 
 [Top]
 #### Workbenches
@@ -118,7 +118,10 @@ You often want to group commands according to a given set of tasks they are rela
 Nevertheless, in a complex application, the number of toolbars for a given document may dramatically increase, and you may want to make available to the end user only the toolbars dedicated to a given process at a time. To each process corresponds a set of toolbars and menu items, and changing the current process changes the available set of toolbars and menus while remaining in the same workshop.
 
 ```vbscript
+```vbscript
 For example, in a car repair workshop, you could imagine that the workshop is organized for engine tuning, engine maintenance, and engine repair. The workshop thus includes three workbenches, one equipped with tuning appliances, the other with equipment dedicated to changing spark plugs, oil filters, exhaust pipes, and engine sump draining, and the third with heavy equipment to repair engines. The same can happen in a CAD application, with different workbenches to work on a 3D model, such as a surface workbench, a solid feature workbench, and an analysis workbench, each of these workbenches providing a given usage configuration of the workshop dedicated to a specific process.
+
+```
 
 ```
 
@@ -139,7 +142,7 @@ The workshop and the workbenches show commands arranged in menus and toolbars. B
 The workshop and the workbenches show commands arranged in menus and toolbars. Both can be extended by add-ins. An add-in is made of one or several toolbars and menu items added to the workshop or workbench after it was created. This allows for smooth extensions, without the need of rebuilding any shared library or DLL, except the one for the add-in. Once created, the add-in is part of the workshop or workbench to which it belongs. To enable for add-ins, workshops and workbenches expose an interface including the workshop or workbench identifier. For example, assume that a workbench identifier is ShapeDesign. The interface this workbench exposes should be named CATIShapeDesignAddin. Creating and add-in is described in the use case [4]
 The structure of the workshop associated with the (document) UI-active object is described by the following picture.
 
- _The workshop is made up of commands that are document independent, such as New and Open in the File menu. These commands are group together in an entity called General workshop. These commands are always available, even if no document is active. The workshop also contains commands that are document dependent. It can also include one or several add-ins. These add-ins are part of the workshop, and are always available to the end user when the workshop itself is available. A workshop can also include workbenches. A workbench can in turn have its own add-ins. Like with workshops, the add-ins are part of the workbench and are always available to the end user when the workbench itself is available. Only one workbench is available at a time. On the figure beside, Workbench2 is available, along with its three add-ins. To have Workbench1 available, the end user must select it in the Start menu. Then Workbench1 and its two add-ins replace Workbench2 and its three add-ins._ _In fact, the end user sees only workbenches, and all the commands available at a given time seem to be part of the workbench, even if the application programmer has put several commands in the workshop, several others in one or several of its add-ins, others in the workbench [8], and others again in one or several of the workbench add-ins [9]. The __application programmer can also put commands in the workshop document independent part thanks to an add-in [10]_  
+ _The workshop is made up of commands that are document independent, such as New and Open in the File menu. These commands are group together in an entity called General workshop. These commands are always available, even if no document is active. The workshop also contains commands that are document dependent. It can also include one or several add-ins. These add-ins are part of the workshop, and are always available to the end user when the workshop itself is available. A workshop can also include workbenches. A workbench can in turn have its own add-ins. Like with workshops, the add-ins are part of the workbench and are always available to the end user when the workbench itself is available. Only one workbench is available at a time. On the figure beside, Workbench2 is available, along with its three add-ins. To have Workbench1 available, the end user must select it in the Start menu. Then Workbench1 and its two add-ins replace Workbench2 and its three add-ins._ _In fact, the end user sees only workbenches, and all the commands available at a given time seem to be part of the workbench, even if the application programmer has put several commands in the workshop, several others in one or several of its add-ins, others in the workbench [8], and others again in one or several of the workbench add-ins [9]. The __application programmer can also put commands in the workshop document independent part thanks to an add-in [10]_
 
 [Top]
 #### Transitions between Workbenches
@@ -147,35 +150,35 @@ The structure of the workshop associated with the (document) UI-active object is
 The Start menu offers to the end user a set of workbenches. Some of them are provided by Dassault Systmes as part of its products and solutions, others are provided by third-parties, others can be home-made. From the end user viewpoint, all these workbenches are on the same level, even if some are used more than others. They can be selected by a simple click, even by error, and what happens depends on which document and workbench were active at the moment the end user clicks on another workbench. To perform the appropriate transition between these two workbenches, the application should know what to do. You will provide this knowledge using the _CATIWorkbenchTransition_ interface you will implement either on the workbench, or on the workshop.
 
 The Start menu offers to the end user a set of workbenches. Some of them are provided by Dassault Systmes as part of its products and solutions, others are provided by third-parties, others can be home-made. From the end user viewpoint, all these workbenches are on the same level, even if some are used more than others. They can be selected by a simple click, even by error, and what happens depends on which document and workbench were active at the moment the end user clicks on another workbench. To perform the appropriate transition between these two workbenches, the application should know what to do. You will provide this knowledge using the _CATIWorkbenchTransition_ interface you will implement either on the workbench, or on the workshop.
-Transitions between workbenches can be classified in two main types, depending on whether the active document can be connected to a document of the type required by the selected workbench, or on the opposite has nothing to do with such as document. In the latter case, no document can be retrieved, and a new one should be created as if the end user had selected File->New. Otherwise, if, for example, a Part document is the active document and if the end user selects the Product Structure workbench, the end user intent may be to work at the product level rather than at the part level, meaning that the part was edited in-context. In this way, the product pointing to the part must be retrieved upwards in the Part specification tree and made the active one, while the Product Structure workbench is made available. The application should then be able to retrieve from the active document and using the selected workbench the document to make active, if it exists, whether this document contains or is contained by the active document. These two main cases are detailed below and can be classified into the following types of transitions. 
+Transitions between workbenches can be classified in two main types, depending on whether the active document can be connected to a document of the type required by the selected workbench, or on the opposite has nothing to do with such as document. In the latter case, no document can be retrieved, and a new one should be created as if the end user had selected File->New. Otherwise, if, for example, a Part document is the active document and if the end user selects the Product Structure workbench, the end user intent may be to work at the product level rather than at the part level, meaning that the part was edited in-context. In this way, the product pointing to the part must be retrieved upwards in the Part specification tree and made the active one, while the Product Structure workbench is made available. The application should then be able to retrieve from the active document and using the selected workbench the document to make active, if it exists, whether this document contains or is contained by the active document. These two main cases are detailed below and can be classified into the following types of transitions.
 
-  1. The active document type and the document type with which the selected workbench is associated cannot be connected. This case can be divided into the following transition sub-cases: 
-     1. Transition to a workbench associated with the type of the document already active. The selected workbench belongs to the same workshop than the active workbench. The end user intent is to select another set of commands to work on the same document. 
+  1. The active document type and the document type with which the selected workbench is associated cannot be connected. This case can be divided into the following transition sub-cases:
+     1. Transition to a workbench associated with the type of the document already active. The selected workbench belongs to the same workshop than the active workbench. The end user intent is to select another set of commands to work on the same document.
 
 ```vbscript
 For example, assume that the end user selects the Free Style workbench when a Part document and the Part Design workbench are active. Since the Free Style and Part Design workbenches belong to the same workshop and are both dedicated to Part documents, the active document remains active, and only the Free Style workbench is activated for that document.
      2. Transition to the same workbench. A new document of the same type is created. This is equivalent to using File->New.
-     3. Transition to a workbench associated with a document type that can neither point to nor be pointed by the active document type. A new documentof the type associated with the selected workbench is created. The end user intent is to create such a document, as with File->New. 
+     3. Transition to a workbench associated with a document type that can neither point to nor be pointed by the active document type. A new documentof the type associated with the selected workbench is created. The end user intent is to create such a document, as with File->New.
 
 ```
 
 ```vbscript
 For example, assume that the active document is a Part document and the active workbench is Part Design. The end user selects the Material Library workbench, which is for CATMaterial documents. Since a CATPart document cannot contain, or be contained by, a CATMaterial document, a new empty CATMaterial document is created in another window, and the selected workbench is activated.
-  2. The active document type and the document type with which the selected workbench is associated can be connected. This case can be divided into the following transition sub-cases: 
-     1. Transition to a workbench corresponding to a document type that can be pointed to by the active document. 
+  2. The active document type and the document type with which the selected workbench is associated can be connected. This case can be divided into the following transition sub-cases:
+     1. Transition to a workbench corresponding to a document type that can be pointed to by the active document.
 
 ```
 
 ```vbscript
-For example, assume that the active document is a Product document and the active workbench is Assembly Design. The end user selects the Part Design workbench. It is associated to a Part document, usually pointed to or contained by a Product document. Two sub-cases arise: 
+For example, assume that the active document is a Product document and the active workbench is Assembly Design. The end user selects the Part Design workbench. It is associated to a Part document, usually pointed to or contained by a Product document. Two sub-cases arise:
 ```
 
         * There is a selection in the active document. From this selection, the application attempts to create or open a document of the required type. In both cases, the application attempts first to create or open the document in context, and if this fails, creates another window, and activates the selected workbench. If the document to activate is already opened in another window, it is activated in that window, thus not in context.
         * There is no selection in the active document. the application creates a new empty document in another window, and activates the selected workbench.
-     2. Transition to a workbench corresponding to a document type that can point to the active document. 
+     2. Transition to a workbench corresponding to a document type that can point to the active document.
 
 ```vbscript
-For example, assume that the active document is a Part document and the active workbench is Part Design. The end user selects the Assembly Design workbench. It is associated to a Product document, which usually points to Part documents. The following sub-cases may arise: 
+For example, assume that the active document is a Part document and the active workbench is Part Design. The end user selects the Assembly Design workbench. It is associated to a Product document, which usually points to Part documents. The following sub-cases may arise:
 ```
 
         * The active document is edited in context. the application activates the containing document and the selected workbench.
@@ -184,7 +187,7 @@ For example, assume that the active document is a Part document and the active w
 You should consider these cases when you create a new workbench, and figure out the different cases that can happen depending on the type of the document this workbench is associated with. As you can see, and even transitions happen between workbenches, the associated document types always appear as a key point, and, as a consequence, the workshop dedicated to the document type that can often be used to implement once the same transitions involving all its workbenches. This can simplify a bit your job if you are not the workshop developer, since in this case you may have nothing to do.
 
 You should consider these cases when you create a new workbench, and figure out the different cases that can happen depending on the type of the document this workbench is associated with. As you can see, and even transitions happen between workbenches, the associated document types always appear as a key point, and, as a consequence, the workshop dedicated to the document type that can often be used to implement once the same transitions involving all its workbenches. This can simplify a bit your job if you are not the workshop developer, since in this case you may have nothing to do.
-Transitions from and to your workbench should be designed knowing that the application calls the workbenches and workshops involved in the transition in the following order: 
+Transitions from and to your workbench should be designed knowing that the application calls the workbenches and workshops involved in the transition in the following order:
 
   1. The active workbench
   2. The active workshop
@@ -193,7 +196,7 @@ Transitions from and to your workbench should be designed knowing that the appli
 
 Any of them can decide what to do when a transition occurs. The application calls them in that order until one of them decide. Its followers are then not called. If none decides, the transition manager deducts that the selected workbench belongs to the current workshop, and loads it.
 
-To simplify the workbench interrelationships, each workbench must specify what should happen when it is selected, that is specify all its incoming transitions, even when it already is the active workshop and is selected by the end user. In addition, if your workbench is dedicated to a document type which can be pointed or contained by the document type to which the active document belongs, you should also implement the outgoing transitions to that workbench. 
+To simplify the workbench interrelationships, each workbench must specify what should happen when it is selected, that is specify all its incoming transitions, even when it already is the active workshop and is selected by the end user. In addition, if your workbench is dedicated to a document type which can be pointed or contained by the document type to which the active document belongs, you should also implement the outgoing transitions to that workbench.
 
 ![CAAAfrWbTransition.gif \(5286 bytes\)](images/CAAAfrWbTransition.gif)
 
@@ -204,11 +207,11 @@ Each command you want to make available in your workshop or workbench must have 
 
 **What happens at run-time?** The first time a document of the type you designed is created, opened or double-clicked, the application, by means of the _CATApplicationFrame_ class instance, asks for the document's workshop using the `GetWorkshop(Name)` method of the _CATIUIActivate_ interface implemented by the UI-activable object of your document. `GetWorkshop` returns the workshop name, here Tools. Then the application queries a pointer to the workshop factory interface, and requests this factory to create an instance of the workshop class. This class implements the _CATIWorkshop_ interface which provides the methods ` GetWorkshop` to create and return an instance of the workshop, ` GetCommands` to instantiate the workshop's command headers, and ` GetInterface` to return the interface derived from _CATIWorkshopConfiguration_ and exposed by the workshop to allow for workbenches. Once these methods have been called and the appropriate objects created and returned to the _CATApplicationFrame_ class instance, your document is loaded and displayed in its window, and the workshop you've designed for it is available. Then, for any created, opened or double-clicked document of the same type, the same workshop object is used (`GetWorkshop` is not called again). Nevertheless, a new set of command headers is created and associated with the document to keep the workshop's status for the document. The workshop status is the availability or unavailability of each command depending on the document contents.
 
-To be emphasized or explained: 
+To be emphasized or explained:
 
   * A command must have a command header for each workshop in which is is available
   * A command header should be instantiated in the `CreateCommands` method of the object that creates the starter and arranges the layout
-  * Scope of the command header identifier: 
+  * Scope of the command header identifier:
     * if declared in a workshop or in one of its add-ins, it can be used anywhere in the workshop, that is in the workshop, any of its add-ins, and in the workbenches and any of their add-ins
     * if declared in a workbench or in one of its add-ins, it can be used anywhere in the workbench and in any of its add-ins
     * it is not recommended to use the same command header identifier for two instances of command headers for a given command in two workbenches of the same workshop.
@@ -252,22 +255,22 @@ In the same way, the Profile toolbar is created as a container contained by the 
 [Top]
 ### Providing the Interactive Behavior
 
-In the Model View Controller paradigm, 
+In the Model View Controller paradigm,
 
   * M = Document
-  * V = Window  
-  * C = **Editor**  
+  * V = Window
+  * C = **Editor**
 
-The editor is described by the _CATFrmEditor_ class [1]. This class manages the **interactivity** of the document. An instance of this class is created in the _CATIEditor_ (ObjectModelerBase) interface implemented by the document. 
+The editor is described by the _CATFrmEditor_ class [1]. This class manages the **interactivity** of the document. An instance of this class is created in the _CATIEditor_ (ObjectModelerBase) interface implemented by the document.
 
 [Top]
-#### The objects providing the interactive behavior 
+#### The objects providing the interactive behavior
 
   * The **CSO** , for Current Set of Objects: contains the current object(s). The selected objects are placed in the CSO, and the CSO can be used by any command to retrieve the selected objects. The Cut & Paste, Copy & Paste, and Drag & Drop use the CSO as input. The CSO is known by the current command. Objects contained in the CSO have usually their graphical representation highlighted.
   * The **SDO** , for Set of Dialog Objects: contains objects to be placed in toolbars such as input fields.
   * The **ISO** , for Interactive Set of Objects: used to contain interactive objects, that is objects that are not part of the document, but which are displayed to enable their document object handling, such as manipulator handles. A command can itself be put in the ISO, or an object it aggregates. Such objects should implement the _CATI2DGeoVisu_ or _CATI3DGeoVisu_ interface. The classes _CATIExtGeo2DVisu_ and _CATIExtGeo3DVisu_ provide basic implementations of these interfaces respectively
   * The **CATSO** , for Set of Objects.
-  * The **CATXSO** , specialized by the following objects, known by the viewer: 
+  * The **CATXSO** , specialized by the following objects, known by the viewer:
     * The **HSO** , for Highlighted Set of Objects: the objects that the command highlights. Each object in the CSO is also in the HSO
     * The **PSO** , for Prehighlighted Set of Objects: the objects that are handled by a manipulator set by the current command, and that are preactivated and moved.
 
@@ -281,7 +284,7 @@ A workshop is at a given time in a given context. What does this mean? Let's tak
 ![CAAAfrPartWindow.jpg \(64977 bytes\)](images/CAAAfrPartWindow.jpg)
 
 A workshop is at a given time in a given context. What does this mean? Let's take an example to illustrate this. Imagine the active document is a Part document which includes a cylindric pad, as shown by the following figure.
-At this moment, the Pad and Pocket icons are displayed grayed and cannot be clicked. This is because no free sketch exists in the document that can be used to create a pad or a pocket, and thus these commands are unusable. It's safe then to make them unavailable. On the opposite, the Hole icon is colored, meaning that the Hole command is available, since you can create a hole in the pad by simply selecting a face and entering the hole definition parameters in the dialog box displayed by the Hole command. Grayed and colored icons show clearly which commands are not available and which commands can be used at a given moment, depending on the document's context, that is often depending on what it contains. This prevents from mistakes and end user errors the client application should handle with additional code and error messages. When you change the active document, the workshop retrieves the document's context and displays as gray the icons of the unavailable commands in this context. 
+At this moment, the Pad and Pocket icons are displayed grayed and cannot be clicked. This is because no free sketch exists in the document that can be used to create a pad or a pocket, and thus these commands are unusable. It's safe then to make them unavailable. On the opposite, the Hole icon is colored, meaning that the Hole command is available, since you can create a hole in the pad by simply selecting a face and entering the hole definition parameters in the dialog box displayed by the Hole command. Grayed and colored icons show clearly which commands are not available and which commands can be used at a given moment, depending on the document's context, that is often depending on what it contains. This prevents from mistakes and end user errors the client application should handle with additional code and error messages. When you change the active document, the workshop retrieves the document's context and displays as gray the icons of the unavailable commands in this context.
 
 This behavior is managed by the _CATFrmEditor_ class instance associated with the document. This object contains the list of all the command headers defined for a type of UI-active objects. Refer to the "Life Cycle Management" section in the article [6].
 
@@ -297,26 +300,26 @@ The CAA V5 application window includes commands which are common to all document
 * * *
 ### References
 
-[1] | [Understanding the Application Frame Layout](CAAAfrLayoutV5.md)  
----|---  
-[2] | [ Creating a Document's Window](../CAAAfrUseCases/CAAAfrSampleCustomWindow1.md)  
-[3] | [ Creating a Workbench](../CAAAfrUseCases/CAAAfrSampleWorkbench.md)  
-[4] | [Creating an Add-in](../CAAAfrUseCases/CAAAfrSampleAddin.md)  
-[5] |  [ Managing Transitions between Workbenches](../CAAAfrUseCases/CAAAfrSampleWorkbenchTransitions.md)  
-[6] | [The Command Headers](CAAAfrCommandHeaders.md)  
-[7] |  [ Creating Customized Command Headers](../CAAAfrUseCases/CAAAfrSampleCustomCommandHeader.md)  
-[8] | [ Creating a Workbench](../CAAAfrUseCases/CAAAfrSampleWorkbench.md)  
-[9] | [Creating an Add-in](../CAAAfrUseCases/CAAAfrSampleAddin.md)  
-[10] | [ Making Your Document Independent Command Available in All Workbenches](../CAAAfrUseCases/CAAAfrSampleGeneralWksAddin.md)  
-[Top]  
+[1] | [Understanding the Application Frame Layout](CAAAfrLayoutV5.md)
+---|---
+[2] | [ Creating a Document's Window](../CAAAfrUseCases/CAAAfrSampleCustomWindow1.md)
+[3] | [ Creating a Workbench](../CAAAfrUseCases/CAAAfrSampleWorkbench.md)
+[4] | [Creating an Add-in](../CAAAfrUseCases/CAAAfrSampleAddin.md)
+[5] |  [ Managing Transitions between Workbenches](../CAAAfrUseCases/CAAAfrSampleWorkbenchTransitions.md)
+[6] | [The Command Headers](CAAAfrCommandHeaders.md)
+[7] |  [ Creating Customized Command Headers](../CAAAfrUseCases/CAAAfrSampleCustomCommandHeader.md)
+[8] | [ Creating a Workbench](../CAAAfrUseCases/CAAAfrSampleWorkbench.md)
+[9] | [Creating an Add-in](../CAAAfrUseCases/CAAAfrSampleAddin.md)
+[10] | [ Making Your Document Independent Command Available in All Workbenches](../CAAAfrUseCases/CAAAfrSampleGeneralWksAddin.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Jan 2000] | Document created  
----|---  
-Version: **2** [Fev 2003] | Document updated  
-[Top]  
+Version: **1** [Jan 2000] | Document created
+---|---
+Version: **2** [Fev 2003] | Document updated
+[Top]
 
 * * *
 

@@ -10,45 +10,71 @@ converted: "2026-05-11T17:31:51.617511"
 
 ---
 ```vbscript
+```vbscript
+```vbscript
     'COPYRIGHT DASSAULT SYSTEMES 2000
     '***********************************************************************
     '  Purpose:      Open an analysis document
-    '                Create a basic surface mesh  
+    '                Create a basic surface mesh
     '                assign the surface as support
     '                specify the global specifications and assign values
     '  Assumptions:   Looks for Surface.CATAnalysis in the directory
     '  Author:       bmw
     '  Languages:    VBScript
-    '  Locales:      English 
+    '  Locales:      English
     '  CATIA Level:  V5R16
     '***********************************************************************
 ```
 
+```
+
+```
+
     Sub CATMain()
-    '----------------------------------------------------------- 
+```vbscript
+```vbscript
+    '-----------------------------------------------------------
     'Optional: allows to find the sample wherever it's installed
 
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 
-```vbscript
-          Err.Raise 9999,,"No Doc Path Defined"
-        End If
+```
+
 ```
 
 ```vbscript
-    '----------------------------------------------------------- 
-    'Open the Analysis document 
+          Err.Raise 9999,,"No Doc Path Defined"
+```vbscript
+        End If
+```
+
+```
+
+```vbscript
+```vbscript
+```vbscript
+    '-----------------------------------------------------------
+    'Open the Analysis document
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Surface.CATAnalysis")
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```
 
+```
+
+```
+
+```vbscript
     'Retrieve the Analysis Manager and Analysis Model
+```
+
 ```vbscript
     Set oAnalysisManagar = oAnalysisDocument.Analysis
 ```
 
+```vbscript
+```vbscript
 ```vbscript
     'Retrieve the product from Analysis manager
     Set oAnalysisLinkedDocument = oAnalysisManagar.LinkedDocuments
@@ -57,27 +83,40 @@ converted: "2026-05-11T17:31:51.617511"
     'Retrieve the analysis model from the list of models
     Set oAnalysisModels = oAnalysisManagar.AnalysisModels
     Set oAnalysisModel = oAnalysisModels.Item(1)
-    'Retrieve mesh manager and mesh part 
+    'Retrieve mesh manager and mesh part
     Set meshManagar = oAnalysisModel.MeshManager
     Set meshPart = meshManagar.AnalysisMeshParts
     'Retrieve publications from product and retrieve the published face.
     Set publications = product.Publications
     Set pubSurf = publications.Item("Round Hole.1")
     'Add the new basic surface mesh part to the list of mesh parts
-    Set surfPart = meshPart.Add ("MSHPartBasicSurf") 
+    Set surfPart = meshPart.Add ("MSHPartBasicSurf")
     'Add the support from the published surface
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 'Add the new basic surface mesh part to the list of mesh parts
 Set surfPart = meshPart.Add ("MSHPartBasicSurf")
 'Add the support from the published surface
+```
+
+```
+
     surfPart.AddSupportFromPublication product, pubSurf
 
 ```
 
 surfPart.AddSupportFromPublication product, pubSurf
+```vbscript
     'Set the global Specifications
+```
+
     surfPart.SetGlobalSpecification "GlobalMethod", 1
     surfPart.SetGlobalSpecification "QuadsOnly", 2
     surfPart.SetGlobalSpecification "ElementOrder", "Parabolic"
@@ -98,13 +137,22 @@ surfPart.AddSupportFromPublication product, pubSurf
     surfPart.SetGlobalSpecification "MeshAbsSag", 1
     surfPart.SetGlobalSpecification "MeshAbsSaglValue", "1.1 mm"
 
+```vbscript
+```vbscript
     'Create local specification
 
+```
+
+```
+
 ```vbscript
-    Set meshSpecs = surfPart.AnalysisMeshLocalSpecifications 
-    Set spec = meshSpecs.Add("MSHTopProjectCurve") 
+    Set meshSpecs = surfPart.AnalysisMeshLocalSpecifications
+```vbscript
+    Set spec = meshSpecs.Add("MSHTopProjectCurve")
+```
+
     spec.AddSupportFromPublication "ConnectorList", product1, pubCurve
-    spec.SetAttribute "Tolerance", "500 mm" 
+    spec.SetAttribute "Tolerance", "500 mm"
 
 ```
 
@@ -117,7 +165,13 @@ surfPart.AddSupportFromPublication product, pubSurf
 
 spec.AddSupportFromPublication "ConnectorList", product1, pubPoint
 spec.SetAttribute "Tolerance", "500 mm"
+```vbscript
     'Update the mesh part
+```
+
     surfPart.Update
 
+```vbscript
     End Sub
+
+```

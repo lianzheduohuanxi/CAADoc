@@ -11,8 +11,8 @@ converted: "2026-05-11T17:31:52.446744"
 ---
 ## Infrastructure
 
- | 
- ## About Subs and Functions  
+ |
+ ## About Subs and Functions
 
  * * *
 
@@ -29,7 +29,10 @@ converted: "2026-05-11T17:31:52.446744"
 
 > Dim ReturnedObject As AnyObject
 ```vbscript
+```vbscript
     Set ReturnedObject = Object.Function (arg1, arg2, arg3)
+
+```
 
 ```
 
@@ -37,9 +40,9 @@ converted: "2026-05-11T17:31:52.446744"
 Set ReturnedObject = Object.Function (arg1, arg2, arg3)
  You must use **Set** only if the returned value is an object, but not if it is a character string or a number. Nevertheless, character string and number defined as CATIA literals are objects and **Set** must be used if a **Function** returns a literal object.
 
- Finally, you don't have to use **Set** if you store your return value in a **Property** :
-
 ```
+
+ Finally, you don't have to use **Set** if you store your return value in a **Property** :
 
 > myObject.aggregatedObject = Object.Function (arg1, arg2, arg3)
 

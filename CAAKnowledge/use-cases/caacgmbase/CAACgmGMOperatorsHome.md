@@ -12,12 +12,12 @@ converted: "2026-05-11T17:33:47.820915"
 tags: ["CAAGMOperatorsInterfaces"]
 source_file: "Doc/online/CAACgmBase/CAACgmGMOperatorsHome.htm"
 converted: "2026-05-11T17:33:47.820915"
-GM Operators  
+GM Operators
 
----  
+---
 converted: "2026-05-11T17:33:47.820915"
 GM Operators
-This section deals with the GMOperatorsInterfaces operators which are being used in Version 6 and V5 as well. CAA developers are encouraged to migrate to these new interfaces. Here is the documentation associated with GMOperatorsInterfaces and CAAGMOperatorsInterfaces.edu frameworks.   
+This section deals with the GMOperatorsInterfaces operators which are being used in Version 6 and V5 as well. CAA developers are encouraged to migrate to these new interfaces. Here is the documentation associated with GMOperatorsInterfaces and CAAGMOperatorsInterfaces.edu frameworks.
 
 [List of Use Case Modules ](../CAACgmOperators/CAACgmUcOperatorsSummary.md)
 
@@ -89,6 +89,6 @@ This section deals with the GMOperatorsInterfaces operators which are being used
     * [Progress Bar](../CAACgmOperators/CAACgmUcProgressBar.md)
     * [Limits and Bounding Boxes](../CAACgmOperators/CAACgmTaLimitsAndBoundingBox.md)
 
----  
-History Version: **1** [Feb 2011] | Document created  
+---
+History Version: **1** [Feb 2011] | Document created
 ---|---

@@ -11,20 +11,20 @@ converted: "2026-05-11T17:31:50.690774"
 ---
 # Geometric Modeler
 
-| 
+|
 ## Topology
 
-| 
+|
 ### Using the Body Checker
 
-_How to check the validity of a surface_  
----|---|---  
-Use Case  
+_How to check the validity of a surface_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
 
-A CGM surface which exhibits curvature radii less than the resolution is not valid. The "Body Checker" can be used to determine whether a surface is valid with respect to this criteria. 
+A CGM surface which exhibits curvature radii less than the resolution is not valid. The "Body Checker" can be used to determine whether a surface is valid with respect to this criteria.
 
   * **What You Will Learn With This Use Case**
   * **The CAATopBodyChecker Use Case**
@@ -34,7 +34,7 @@ A CGM surface which exhibits curvature radii less than the resolution is not val
   * **Step-by-Step**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
@@ -74,11 +74,11 @@ where bodyChecker1.NCGM is the input file delivered in the CAATopologicalOperato
 where bodyChecker1.NCGM is the input file delivered in the CAATopologicalOperators.edu/FunctionTests/InputData file.
 The CAATopBodyChecker use case is made of a main named CAATopBodyChecker .cpp located in the CAATopBodyChecker .m module of the CAATopologicalOperators.edu framework:
 
-Windows | `InstallRootDirectory\CAATopologicalOperators.edu\`CAATopBodyChecker `.m\`  
+Windows | `InstallRootDirectory\CAATopologicalOperators.edu\`CAATopBodyChecker `.m\`
 
 The CAATopBodyChecker use case is made of a main named CAATopBodyChecker .cpp located in the CAATopBodyChecker .m module of the CAATopologicalOperators.edu framework:
 Windows | `InstallRootDirectory\CAATopologicalOperators.edu\`CAATopBodyChecker `.m\`
-Unix | `InstallRootDirectory/CAATopologicalOperators.edu/`CAATopBodyChecker `.m/`  
+Unix | `InstallRootDirectory/CAATopologicalOperators.edu/`CAATopBodyChecker `.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
@@ -86,10 +86,10 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 ### Step-by-Step
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
-There are thee main steps in CAATopBodyChecker.cpp: 
+There are thee main steps in CAATopBodyChecker.cpp:
 
   1. Loading the container and retrieving the body to be checked
-  2. Creating the CATBodyChecker object 
+  2. Creating the CATBodyChecker object
   3. Displaying the diagnosis
   4. Closing the container
 
@@ -104,9 +104,9 @@ The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject (
     ...
 The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject (and the curves and surfaces in particular). In this use case, the factory is defined by reading a NCGM file that was previously stored,  the global function `::CATLoadCGMContainer` must be used to retrieve the factory. The body is retrieved by using the CATICGMContainer::FindObjectFromTag method. There is only one body in the container which is loaded. 2353356 is the body tag.
 CATGeoFactory* piGeomFactory = CATLoadCGMContainer(filetoread);
-    CATICGMObject * piCGMObj1 = piGeomFactory->FindObjectFromTag(2353356);   
+    CATICGMObject * piCGMObj1 = piGeomFactory->FindObjectFromTag(2353356);
 
----  
+---
 
 [Top]
 #### Creating and Running the CATBodyChecker
@@ -117,7 +117,10 @@ The CATBodyChecker object is created by using the CATBodyChecker::Create static 
     //
     // b - Specify the Full Mode
 CATBodyChecker * pBodyChecker = CATBodyChecker::Create(piGeomFactory, &topdata, piBodyToBeChecked);
+```vbscript
     if (NULL != pBodyChecker)
+
+```
 
     {
 CATBodyChecker * pBodyChecker = CATBodyChecker::Create(piGeomFactory, &topdata, piBodyToBeChecked);
@@ -130,13 +133,16 @@ if (NULL != pBodyChecker)
 CATBodyChecker::CheckMode eChkMode = CATBodyChecker::BodyChkModeFull;
 pBodyChecker->SetCheckMode(eChkMode);
     CATBoolean bRet = FALSE;
+```vbscript
     bRet = pBodyChecker->Run();
 
-    ....  
+```
 
----  
+    ....
 
-[Top] 
+---
+
+[Top]
 #### Displaying the Diagnosis
 
 All the errors found in the body to be checked are displayed if you have specified the Full Mode. If the light mode is specified, several errors of the same type can be diagnosed.
@@ -153,15 +159,15 @@ while( pBodyChecker->NextDiagnosis() )
 
     cout << strDiagnosis.ConvertToChar() << endl;
 
-    }  
+    }
 
----  
+---
 
 cout << strDiagnosis.ConvertToChar() << endl;
 This is the message which is displayed on the standard output at execution:
 
-CATTabulatedCylinder[2353360] : Surface has invalid curvature  
-Invalid curvature radius found = 0.000403962 <= Allowed [0.001]  
+CATTabulatedCylinder[2353360] : Surface has invalid curvature
+Invalid curvature radius found = 0.000403962 <= Allowed [0.001]
 At surface parameter = (PatchU=48, ParamU=373.951; PatchV=1, ParamV=0)
 
 [Top]
@@ -171,28 +177,28 @@ The use case ends with the closure of the geometry factory, done by the ` ::CATC
 
      _//
      // Closes the container
-     //_	
-     **::CATCloseCGMContainer**(piGeomFactory);  
+     //_
+     **::CATCloseCGMContainer**(piGeomFactory);
 
----  
+---
 
 [Top]
 
 * * *
 ### References
 
-[1] |  [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-[2] | [Overview of the Topological Operators](CAATopOverview.md)  
-[Top]  
----  
+[1] |  [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)
+---|---
+[2] | [Overview of the Topological Operators](CAATopOverview.md)
+[Top]
+---
 
 * * *
 ### History
 
-Version: **1** [Aug 2004] | Document created  
----|---  
-[Top]  
+Version: **1** [Aug 2004] | Document created
+---|---
+[Top]
 
 * * *
 

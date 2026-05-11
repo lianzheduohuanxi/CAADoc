@@ -11,20 +11,20 @@ converted: "2026-05-11T17:17:56.072469"
 ---
 # 3D PLM Enterprise Architecture
 
-| 
+|
 ## User Interface - Dialogs
 
-| 
+|
 ### Dialog Programmer's Guide
 
-_Programming step-by-step_  
----|---|---  
-Technical Article  
+_Programming step-by-step_
+---|---|---
+Technical Article
 
 * * *
 ### Abstract
 
-This article provides a canvas of the steps to perform to create a dialog window or box, exposes the main options you can take, and points to the appropriate articles dealing with each of these steps. To have full information about a given object, refer to the [Dialog Class Catalog](../CAADlgQuickRefs/CAADlgObjectList.md). 
+This article provides a canvas of the steps to perform to create a dialog window or box, exposes the main options you can take, and points to the appropriate articles dealing with each of these steps. To have full information about a given object, refer to the [Dialog Class Catalog](../CAADlgQuickRefs/CAADlgObjectList.md).
 
   * **Designing Your Dialog**
   * **Designing Your Dialog Classes**
@@ -38,12 +38,12 @@ This article provides a canvas of the steps to perform to create a dialog window
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### Designing Your Dialog
 
-You should first spend a bit of your time on designing what is your dialog for, and what it should contain. It roughly falls in the following categories: 
+You should first spend a bit of your time on designing what is your dialog for, and what it should contain. It roughly falls in the following categories:
 
   * It is a dialog window or a dialog box. This is the most common case, whether the window contains one or several presentations of a document, or it is a dialog box. You should create a class that derives from [CATDlgDialog](../CAADlgQuickRefs/CAADlgCATDlgDialog.md). This is the case that  is taken in this article to describe what you should do
   * It is a message pop-up. You just need to instantiate the [CATDlgNotify](../CAADlgQuickRefs/CAADlgCATDlgNotify.md) class
@@ -55,7 +55,7 @@ Once you have determined the type of dialog window you need, try to figure out w
 [Top]
 ### Designing Your Dialog Classes
 
-Most of the time, you create your own dialog class by deriving the _CATDlgDialog_ class. 
+Most of the time, you create your own dialog class by deriving the _CATDlgDialog_ class.
 
   * You can set the style explicitly, or let the caller set it.
   * Set a pointer to each control, or more generally to each object that can send notifications, as a data member. You may need to use this pointer in one or several methods. Nevertheless, the pointer to an object that sends a notification is passed as an argument of the callback method.
@@ -64,7 +64,7 @@ Most of the time, you create your own dialog class by deriving the _CATDlgDialog
 [Top]
 ### Coding the Dialog Class Main Methods
 
-The methods of a dialog class are: 
+The methods of a dialog class are:
 
   * The constructor
   * The ` Build` method
@@ -84,9 +84,9 @@ The constructor must just provide a NULL pointer for each dialog object or contr
 DialogWindow::DialogWindow(pParent, pIdentifier, Style)
                   _pFirstDataMember(NULL), ...
 
-    {}  
+    {}
 
----  
+---
 
 Since the caller can set the style as a concatenation of the available style parameters, you need to provide callback methods for the OK, Apply, and Cancel push buttons, plan that the dialog box can be set to modal or to non resizable. If you want to explicitly set the style without leaving the caller set it for you, do not provide a style parameter in your constructor, and pass the style in the _CATDlgDialog_ parent class constructor.
 
@@ -99,11 +99,11 @@ DialogWindow::DialogWindow(pParent, pIdentifier)
                                CATDlgWndOKCancel| CATDlgGridLayout),
                   _pFirstDataMember(NULL), ...
 
-    {}  
+    {}
 
----  
+---
 
-**[Rule 1.6.1.3.2:](../CAADocTechArticles/CAADocErgoTopic1.htm#1.6.1.3)** the forth recommended styles for the buttons are: 
+**[Rule 1.6.1.3.2:](../CAADocTechArticles/CAADocErgoTopic1.htm#1.6.1.3)** the forth recommended styles for the buttons are:
 
   * CATDlgWndBtnOKCancel: **OK + Cancel**
   * CATDlgWndBtnOKCancelPreview: **OK + Cancel + Preview**
@@ -126,9 +126,9 @@ MacroBox::MacroBox(pParent, pIdentifier)
                            CATDlgWndTitleBarHelp | CATDlgGridLayout),
                   _pMacroNameFrame(NULL), ...
 
-    {}  
+    {}
 
----  
+---
 
 [Top]
 #### Coding the Build Method
@@ -140,14 +140,14 @@ The ` Build` method instantiates the objects making up the dialog box, manages t
       // 1. Instantiate boxes, indicators, and controls
       // 2. Arrange the dialog objects
       // 3. Set callbacks
-    }  
+    }
 
----  
+---
 
 To make sure that the parent/child relations between the objects you create are properly set, instantiate each object at the place it lies on in the dialog box, possibly using line indentation. For example, assume you want to create the following dialog box. Its parent child tree structure is shown beside.
 
- All the dialog objects instances making up the dialog box are declared as pointers to the appropriate classes. These pointers are stored as data members of the dialog box class. The containment parent/child structure is shown beside. It is used to set the parent of each object as the first argument of the constructors.  
----|---  
+ All the dialog objects instances making up the dialog box are declared as pointers to the appropriate classes. These pointers are stored as data members of the dialog box class. The containment parent/child structure is shown beside. It is used to set the parent of each object as the first argument of the constructors.
+---|---
 
 To make sure that the parent/child relations between the objects you create are properly set, instantiate each object at the place it lies on in the dialog box, possibly using line indentation. For example, assume you want to create the following dialog box. Its parent child tree structure is shown beside.
 All the dialog objects instances making up the dialog box are declared as pointers to the appropriate classes. These pointers are stored as data members of the dialog box class. The containment parent/child structure is shown beside. It is used to set the parent of each object as the first argument of the constructors.
@@ -163,16 +163,28 @@ The Build method of such as dialog box could be as follows.
     ...
 The Build method of such as dialog box could be as follows.
       _pMacroNameFrame   = new CATDlgFrame(this, "MacroNameFrameId", CATDlgGridLayout);
+```vbscript
         _pMacroNameCombo   = new CATDlgCombo(_pMacroNameFrame, "MacroNameComboId");
+```
+
     	_pMacroNameCombo->SetVisibleTextWidth(31);
     	_pMacroNameCombo->SetVisibleTextHeight(5);
       _pMacroInFrame     = new CATDlgFrame(this, "MacroInFrameId", CATDlgGridLayout);
+```vbscript
+```vbscript
         _pMacroInLabel     = new CATDlgLabel(_pMacroInFrame, "MacroInFrameId");
         _pMacroInCombo     = new CATDlgCombo(_pMacroInFrame, "MacroInFrameId");
+```
+
+```
+
         _pMacroInCombo->SetVisibleTextWidth(17);
 
         CATUnicodeString ucMacroInComboString ;
+```vbscript
         ucMacroInComboString  = **CATMsgCatalog::BuildMessage**("MacroBox",
+
+```
 
     	                                     "MacroInComboText",NULL,0,
     	                                     "External File");
@@ -183,35 +195,44 @@ ucMacroInComboString  = **CATMsgCatalog::BuildMessage**("MacroBox",
        _pMacroInCombo-->SetField(ucMacroInComboString);
 
       _pDescriptionFrame = new CATDlgFrame(this, "DescriptionFrameId", CATDlgGridLayout);
+```vbscript
         _pDescriptionLabel = new CATDlgLabel(_pDescriptionFrame, "DescriptionLabelId");
+```
+
         _pDescriptionLabel->SetTitle("                                          ");
 
       _pButtonFrame      = new CATDlgFrame(this, "ButtonFrameId", CATDlgGridLayout);
-        _pRunButton        = new CATDlgPushButton(_pButtonFrame, "RunButtonId"); 
-        _pCancelButton     = new CATDlgPushButton(_pButtonFrame, "CancelButtonId"); 
-        _pEditButton       = new CATDlgPushButton(_pButtonFrame, "EditButtonId"); 
-        _pCreateButton     = new CATDlgPushButton(_pButtonFrame, "CreateButtonId"); 
-        _pSelectButton     = new CATDlgPushButton(_pButtonFrame, "SelectButtonId"); 
-        _pDeleteButton     = new CATDlgPushButton(_pButtonFrame, "DeleteButtonId"); 
+```vbscript
+```vbscript
+        _pRunButton        = new CATDlgPushButton(_pButtonFrame, "RunButtonId");
+        _pCancelButton     = new CATDlgPushButton(_pButtonFrame, "CancelButtonId");
+        _pEditButton       = new CATDlgPushButton(_pButtonFrame, "EditButtonId");
+        _pCreateButton     = new CATDlgPushButton(_pButtonFrame, "CreateButtonId");
+        _pSelectButton     = new CATDlgPushButton(_pButtonFrame, "SelectButtonId");
+        _pDeleteButton     = new CATDlgPushButton(_pButtonFrame, "DeleteButtonId");
 
-    ...  
+```
 
----  
+```
 
-To assign the resources to the combo lines use the _CATMsgCatalog_ class [1]. Where `MacroBox` is the CATNls file which contains the following lines: 
+    ...
+
+---
+
+To assign the resources to the combo lines use the _CATMsgCatalog_ class [1]. Where `MacroBox` is the CATNls file which contains the following lines:
 
     ...
     MacroInComboText.Title ="..." ;
-    ...  
+    ...
 
----  
+---
 
 [Top]
 ##### Arrange the dialog objects
 
-To arrange boxes, indicators, and controls, use the grid layout [2]. You can manage object arrangement as the objects are instantiated, and thus mix object instantiation and object layout code lines. You can also, if you prefer, clearly separate object instantiation from object layout. Each box layout in separately described: 
+To arrange boxes, indicators, and controls, use the grid layout [2]. You can manage object arrangement as the objects are instantiated, and thus mix object instantiation and object layout code lines. You can also, if you prefer, clearly separate object instantiation from object layout. Each box layout in separately described:
 
-  * Main window 
+  * Main window
 
 ![CATDlgProgramming2.jpg \(24684 bytes\)](images/CATDlgProgramming2.jpg)
 
@@ -235,38 +256,38 @@ To arrange boxes, indicators, and controls, use the grid layout [2]. You can man
           _pButtonFrame->SetGridRowResizable(5,1);
           _pButtonFrame->SetGridColumnResizable(0,1);
 
-        ...  
+        ...
 
----  
-  * Macro Name frame 
+---
+  * Macro Name frame
 
 ![CATDlgProgramming3.jpg \(23791 bytes\)](images/CATDlgProgramming3.jpg)
 
-        ...	
+        ...
         _pMacroNameCombo->SetGridConstraints(0, 0, 1, 1, CATGRID_4SIDES);
-        ...  
+        ...
 
----  
-  * Macro in frame 
+---
+  * Macro in frame
 
 ![CATDlgProgramming4.jpg \(24233 bytes\)](images/CATDlgProgramming4.jpg)
 
         ...
         _pMacroInLabel->SetGridConstraints(0, 0, 1, 1, CATGRID_4SIDES);
         _pMacroInCombo->SetGridConstraints(0, 1, 1, 1, CATGRID_4SIDES);
-        ...  
+        ...
 
----  
-  * Description frame 
+---
+  * Description frame
 
 ![CATDlgProgramming5.jpg \(24164 bytes\)](images/CATDlgProgramming5.jpg)
 
         ...
         _pDescriptionLabel->SetGridConstraints(0, 0, 1, 1, CATGRID_4SIDES);
-        ...  
+        ...
 
----  
-  * Push button frame 
+---
+  * Push button frame
 
 ![CATDlgProgramming6.jpg \(25229 bytes\)](images/CATDlgProgramming6.jpg)
 
@@ -278,9 +299,9 @@ To arrange boxes, indicators, and controls, use the grid layout [2]. You can man
         _pSelectButton->SetGridConstraints(4, 0, 1, 1, CATGRID_4SIDES);
         _pDeleteButton->SetGridConstraints(5, 0, 1, 1, CATGRID_4SIDES);
 
-        ...  
+        ...
 
----  
+---
 
 ##### Set Callbacks
 
@@ -295,7 +316,7 @@ The callbacks are set for the controls to specify the appropriate method to call
 
     ...
 
----  
+---
 
 The arguments to pass are a pointer to the push button, a pointer to the notification sent, retrieved thanks to a method of the push button class that retrieves such expected notifications from the push button, and the method to execute when such a notification is sent by that push button. This method is described in Coding the Callback Methods. The fourth argument is set to NULL, but could contain data, namely a void * pointer, to pass to the ` RunButton` method.
 
@@ -311,9 +332,9 @@ The callbacks methods are usually methods of the dialog box class, and should be
 
     {
     ...
-    }  
+    }
 
----  
+---
 
 You can retrieve the activated control from the first parameter, and the notification instance sent by this control from the second parameter. The third argument lets you retrieve the data you possibly pass as the fourth argument of the AddAnalyseNotificationCB method.
 
@@ -331,9 +352,9 @@ MacroBox::~MacroBox()
       _pFirstDataMember = NULL ;
 
       ...
-    }  
+    }
 
----  
+---
 
 Of course, if you have added data members as pointers to other objects, you must take care of their deletion and set a NULL pointer to each of them.
 
@@ -346,24 +367,27 @@ This is explained in the referenced article [1].
 ### Troubleshooting
 #### The Frames or Controls Are not Arranged as I Expect
 
- I use a grid layout, and the grid rows, columns, and span numbers I assigned seem to be OK. Nevertheless, in the window, or in some of its container, a controls doesn't appear.  
----|---  
+ I use a grid layout, and the grid rows, columns, and span numbers I assigned seem to be OK. Nevertheless, in the window, or in some of its container, a controls doesn't appear.
+---|---
 I use a grid layout, and the grid rows, columns, and span numbers I assigned seem to be OK. Nevertheless, in the window, or in some of its container, a controls doesn't appear.
- The grid layout parameters aren't set for this control.  
+ The grid layout parameters aren't set for this control.
 
 ```vbscript
- Set the grid layout parameters using the SetGridConstraints method for this control.  
+ Set the grid layout parameters using the SetGridConstraints method for this control.
 ```
 
 #### The Titles or Icons of My Controls Are not Taken into Account
 
 The grid layout parameters aren't set for this control.
+```vbscript
 Set the grid layout parameters using the SetGridConstraints method for this control.
- I have created the resources for my controls in the appropriate files, but they don't display.  
+ I have created the resources for my controls in the appropriate files, but they don't display.
+
+```
 
 I have created the resources for my controls in the appropriate files, but they don't display.
- The resources are not found at run time.  
- launch mkCreateRuntimeView   
+ The resources are not found at run time.
+ launch mkCreateRuntimeView
 
 [Top]
 
@@ -377,18 +401,18 @@ Creating a dialog window or a dialog box implies to code a constructor and a des
 * * *
 ### References
 
-[1] | [Assigning Resources to a Dialog Box](CAADlgResources.md)  
----|---  
-[2] | [Arranging Dialog Objects Using Grid ](CAADlgGridLayout.md)  
-[Top]  
+[1] | [Assigning Resources to a Dialog Box](CAADlgResources.md)
+---|---
+[2] | [Arranging Dialog Objects Using Grid ](CAADlgGridLayout.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Jan 2000] | Document created  
----|---  
-Version: **1** [Fev 2003] | Document updated  
-[Top]  
+Version: **1** [Jan 2000] | Document created
+---|---
+Version: **1** [Fev 2003] | Document updated
+[Top]
 
 * * *
 

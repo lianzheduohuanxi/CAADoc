@@ -10,13 +10,13 @@ converted: "2026-05-11T17:33:51.672167"
 ```
 
 ---
-# CAA C++ API Modifications  
+# CAA C++ API Modifications
 
-| 
-##  GeometricObjects Framework Modifications in V5R21 
+|
+##  GeometricObjects Framework Modifications in V5R21
 
 * * *
 
-**Entity|  SP| Modification| To Do** | GeometricObjects/Public/CATGeoFactory.h/CATGeoFactory/GetProtectedInterfaces  
-**Prototype:**`virtual void * GetProtectedInterfaces()= 0;`| GA| [INDM](CAACenAPIChangeDetail.htm#Abstract)| Correction of an exposition error. Must not be used. Check that you don't use it  
+**Entity|  SP| Modification| To Do** | GeometricObjects/Public/CATGeoFactory.h/CATGeoFactory/GetProtectedInterfaces
+**Prototype:**`virtual void * GetProtectedInterfaces()= 0;`| GA| [INDM](CAACenAPIChangeDetail.htm#Abstract)| Correction of an exposition error. Must not be used. Check that you don't use it
 ---|---|---|---

@@ -11,15 +11,15 @@ converted: "2026-05-11T17:31:50.931544"
 ---
 # Mechanical Design
 
-| 
+|
 ## Drafting
 
-| 
+|
 ### Editing Callout in Generative Views
 
-_How to access and modify callouts in generative view_  
----|---|---  
-Use Case  
+_How to access and modify callouts in generative view_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
@@ -35,7 +35,7 @@ This article discusses the CAADrwCallout use case. This use case explains how to
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
@@ -50,36 +50,36 @@ CAADrwCallout is a use case of the CAADraftingInterfaces.edu framework that illu
 [Top]
 #### What Does CAADrwCallout Do?
 
-Fig. 1: Initial Document  
----  
-![](images/CAADrwCallout1.jpg)  
-Fig. 1 represents a Drawing document containing generative views created from a Part document.  
+Fig. 1: Initial Document
+---
+![](images/CAADrwCallout1.jpg)
+Fig. 1 represents a Drawing document containing generative views created from a Part document.
 
-Fig. 2 The Document modified by the Use Case  
----  
-![](images/CAADrwCallout2.jpg)  
-Fig. 2 represents the Drawing document modified by the use case program.  All Callouts have been modified by ApplyStyle internal method defined in this Use Case, thus, arrows of callout have been changed.  
+Fig. 2 The Document modified by the Use Case
+---
+![](images/CAADrwCallout2.jpg)
+Fig. 2 represents the Drawing document modified by the use case program.  All Callouts have been modified by ApplyStyle internal method defined in this Use Case, thus, arrows of callout have been changed.
 
 [Top]
 #### How to Launch CAADrwCallout
 
 To launch CAADrwCallout, you will need to set up the build time environment, then compile CAADrwCallout along with its prerequisites, set up the run time environment, and then execute the use case [1].
 
-When you launch the use case, pass the full pathname of the Drawing file as argument. A Drawing file is delivery in the following path: CAADraftingInterfaces.edu\CNext\resources\graphic\DrawingForCalloutUseCase.CATDrawing. 
+When you launch the use case, pass the full pathname of the Drawing file as argument. A Drawing file is delivery in the following path: CAADraftingInterfaces.edu\CNext\resources\graphic\DrawingForCalloutUseCase.CATDrawing.
 
-  * With Windows 
+  * With Windows
 
 When you launch the use case, pass the full pathname of the Drawing file as argument. A Drawing file is delivery in the following path: CAADraftingInterfaces.edu\CNext\resources\graphic\DrawingForCalloutUseCase.CATDrawing.
         e:> mkrun -c cmd
-        CAADrwCallout c/.../DrawingForCalloutUseCase.CATDrawing c/DrawingTestOutput.CATDrawing  
+        CAADrwCallout c/.../DrawingForCalloutUseCase.CATDrawing c/DrawingTestOutput.CATDrawing
 
----  
-  * With UNIX 
+---
+  * With UNIX
 
         $ mkrun -c cmd
-        CAADrwCallout /u/users/.../DrawingForCalloutUseCase.CATDrawing  /u/users/DrawingTestOutput.CATDrawing  
+        CAADrwCallout /u/users/.../DrawingForCalloutUseCase.CATDrawing  /u/users/DrawingTestOutput.CATDrawing
 
----  
+---
 
 [Top]
 #### Where to Find the CAADrwCallout Code
@@ -87,11 +87,11 @@ When you launch the use case, pass the full pathname of the Drawing file as argu
 The CAADrwCallout use case is made of a single source file named CAADrwCallout.cpp located in the CAADrwCallout.m module of the CAADraftingInterfaces.edu framework:
 
 The CAADrwCallout use case is made of a single source file named CAADrwCallout.cpp located in the CAADrwCallout.m module of the CAADraftingInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCallout.m\`  
+Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCallout.m\`
 
 The CAADrwCallout use case is made of a single source file named CAADrwCallout.cpp located in the CAADrwCallout.m module of the CAADraftingInterfaces.edu framework:
 Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCallout.m\`
-Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCallout.m/`  
+Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCallout.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
@@ -112,7 +112,7 @@ There are seven steps in CAADrwCallout:
 [Top]
 #### Opening a Drawing Document
 
-    int main(int iArgc, // Number of arguments (3) 
+    int main(int iArgc, // Number of arguments (3)
     char** iArgv) // Path to the existing file *.CATDrawing document
     {
     // Check arguments
@@ -137,22 +137,28 @@ const char *pfileNameOut = iArgv[2];
 int rc =0;
     CATSession *pSampleSession = NULL;
     HRESULT hr = ::Create_Session("SampleSession",pSampleSession);
+```vbscript
     if (FAILED(hr)) return 1;
+
+```
 
     CATIDftDrawing *piDrawing = NULL;
     CATIDftDocumentServices *piDftDocServices = NULL;
     CATDocument* pDocDrawing = NULL;
 
+```vbscript
     if (FAILED(CATDocumentServices::OpenDocument(pfileNameDrawing, pDocDrawing)))
+
+```
 
     {
     // Ends session
     ::Delete_Session("SampleSession");
     return 2;
     }
-    ...  
+    ...
 
----  
+---
 
 This section represents the usual sequence for loading a CATIA document [2].
 
@@ -162,25 +168,37 @@ This section represents the usual sequence for loading a CATIA document [2].
     ...
     CATIDftDrawing *piDrawing = NULL;
     CATIDftDocumentServices *piDftDocServices = NULL;
+```vbscript
     if (SUCCEEDED(pDocDrawing->QueryInterface(IID_CATIDftDocumentServices,(void **)&piDftDocServices)))
+
+```
 
     {
 CATIDftDrawing *piDrawing = NULL;
 CATIDftDocumentServices *piDftDocServices = NULL;
 if (SUCCEEDED(pDocDrawing->QueryInterface(IID_CATIDftDocumentServices,(void **)&piDftDocServices)))
+```vbscript
+```vbscript
       if (SUCCEEDED(piDftDocServices->GetDrawing(IID_CATIDftDrawing, (void **)&piDrawing)))
+
+```
+
+```
 
       {
 CATIDftDocumentServices *piDftDocServices = NULL;
 if (SUCCEEDED(pDocDrawing->QueryInterface(IID_CATIDftDocumentServices,(void **)&piDftDocServices)))
+```vbscript
 if (SUCCEEDED(piDftDocServices->GetDrawing(IID_CATIDftDrawing, (void **)&piDrawing)))
+```
+
         piDftDocServices->Release();
         piDftDocServices=NULL;
 
       }
-    ...  
+    ...
 
----  
+---
 
 The root feature of a Drawing document is the Drawing itself, that is, the feature that implements the _CATIDftDrawing_ interface. We can get a pointer to _CATIDftDrawing_ using the _CATIDftDocumentServices_ interface, which is implemented by the document. The `GetDrawing` method first argument is the _CATIDftDrawing_ interface IID.
 
@@ -192,7 +210,10 @@ The root feature of a Drawing document is the Drawing itself, that is, the featu
     // ================================
     CATIUnknownList * piListOfView = NULL;
 CATIUnknownList * piListOfView = NULL;
+```vbscript
     if (SUCCEEDED(piDrawing->GetViews(&piListOfView)))
+
+```
 
     {
 CATIUnknownList * piListOfView = NULL;
@@ -203,7 +224,7 @@ if (SUCCEEDED(piDrawing->GetViews(&piListOfView)))
       IUnknown * itemView = NULL;
       CATIDftView *piCurrentView = NULL;
 
-      // Loop on all callouts of the processed view 
+      // Loop on all callouts of the processed view
       // -----------------------------------------------
 IUnknown * itemView = NULL;
 CATIDftView *piCurrentView = NULL;
@@ -212,27 +233,42 @@ CATIDftView *piCurrentView = NULL;
       {
 ```vbscript
 for(unsigned int numview=0 ; numview<piViewListSize ; numview++)
+```vbscript
         if( SUCCEEDED( piListOfView->Item(numview, &itemView) ) )
+```
+
 ```
 
         {
 ```vbscript
 for(unsigned int numview=0 ; numview<piViewListSize ; numview++)
+```vbscript
 if( SUCCEEDED( piListOfView->Item(numview, &itemView) ) )
           if (itemView)
+```
+
 ```
 
           {
 ```vbscript
 if( SUCCEEDED( piListOfView->Item(numview, &itemView) ) )
+```vbscript
+```vbscript
 if (itemView)
             if (SUCCEEDED(itemView->QueryInterface(IID_CATIDftView,(void **)&piCurrentView)))
+```
+
+```
+
 ```
 
             {
 ```vbscript
 if (itemView)
+```vbscript
 if (SUCCEEDED(itemView->QueryInterface(IID_CATIDftView,(void **)&piCurrentView)))
+```
+
               CATIUnknownList * piListOfCallout = NULL;
 
 ```
@@ -245,13 +281,19 @@ CATIUnknownList * piListOfCallout = NULL;
               {
 ```vbscript
 if( SUCCEEDED( piCurrentView->GetComponents(IID_CATIDrwCalloutAccess, &piListOfCallout) ) )
+```vbscript
                 if (piListOfCallout)
+```
+
 ```
 
                 {
 ```vbscript
 if( SUCCEEDED( piCurrentView->GetComponents(IID_CATIDrwCalloutAccess, &piListOfCallout) ) )
+```vbscript
 if (piListOfCallout)
+```
+
                   unsigned int piListSize = 0;
                   piListOfCallout->Count(&piListSize);
 
@@ -269,21 +311,27 @@ IUnknown * item = NULL;
                   {
 ```vbscript
 for(unsigned int i=0 ; i<piListSize ; i++)
+```vbscript
                     if( SUCCEEDED( piListOfCallout->Item(i, &item) ) )
+```
+
 ```
 
                     {
 ```vbscript
 for(unsigned int i=0 ; i<piListSize ; i++)
+```vbscript
 if( SUCCEEDED( piListOfCallout->Item(i, &item) ) )
                       if(SUCCEEDED( item->QueryInterface(IID_CATIDrwCalloutAccess, (void**) & piCallout) ) )
 ```
 
+```
+
                       {
 
-    ...  
+    ...
 
----  
+---
 
 The GetViews method returns the list of all views in Drawing document. The GetComponents method of CATIDftView interface is a generic method to return elements identified by his IID.
 
@@ -296,7 +344,10 @@ The GetViews method returns the list of all views in Drawing document. The GetCo
     CATIDftView *piDefView=NULL;
 
 CATIDftView *piDefView=NULL;
+```vbscript
     if (SUCCEEDED(piCallout->GetAssociatedView(&piDefView)))
+
+```
 
     {
 CATIDftView *piDefView=NULL;
@@ -305,9 +356,9 @@ if (SUCCEEDED(piCallout->GetAssociatedView(&piDefView)))
       ViewName.BuildFromWChar(pViewName);
       cerr << " View name associated to the processed callout: " << ViewName.CastToCharPtr() << endl;
 
-    ...  
+    ...
 
----  
+---
 
 GetAssociatedView method defined in CATIDrwCalloutAccess interface returns the View from which Callout is defined. In case of Broken View, Callout are created in the same View, So GetAssociatedView is useless.
 
@@ -326,13 +377,16 @@ GetAssociatedView method defined in CATIDrwCalloutAccess interface returns the V
 CATIDrwCalloutAccess::CATDrwCalloutType calloutType;
       piCallout->GetCalloutType(calloutType);
 
+```vbscript
       if (calloutType == CATIDrwCalloutAccess::SectionCallout)
+
+```
 
       {
 CATIDrwCalloutAccess::CATDrwCalloutType calloutType;
 piCallout->GetCalloutType(calloutType);
 if (calloutType == CATIDrwCalloutAccess::SectionCallout)
-        CATListPtrCATMathPoint2D ListOfPoints;    
+        CATListPtrCATMathPoint2D ListOfPoints;
         int depli=0;
         CATMathDirection vecpro;
 
@@ -340,7 +394,10 @@ if (calloutType == CATIDrwCalloutAccess::SectionCallout)
         // ---------------------------------------------------------
 int depli=0;
 CATMathDirection vecpro;
+```vbscript
         if (SUCCEEDED(piGenerSpec->GetSectionProfile(ListOfPoints,depli,vecpro)))
+
+```
 
         {
 ```vbscript
@@ -362,15 +419,18 @@ for (int numpt=1 ; numpt<=NbPt ; numpt++)
             // Memory clean
 CATMathPoint2D *tmpt = ListOfPoints[numpt];
 cerr << " Number point = " << numpt << ", X= "<< tmpt->GetX() << "Y = " << tmpt->GetY() << endl;
+```vbscript
             if (tmpt) delete tmpt , tmpt=NULL;
 
+```
+
           }
-        } 
+        }
       }
 
-    ...  
+    ...
 
----  
+---
 
 From the Associated view to the Callout, It is possible to retrieve the definition of the View. For example for a Section View, the Cutting Profile may be obtained by GetSectionProfile method defined in CATIGenerSpec Interface.
 
@@ -381,33 +441,63 @@ Note: depli and vecpro arguments are dedicated to give information about the typ
     ...
     int NbTexts;
     rc = piCallout->GetNumberOfTexts(NbTexts);
+```vbscript
+```vbscript
     if (SUCCEEDED(rc))
+
+```
+
+```
 
     {
 int NbTexts;
 rc = piCallout->GetNumberOfTexts(NbTexts);
+```vbscript
+```vbscript
 if (SUCCEEDED(rc))
       for (int iNumText = 1; iNumText <= NbTexts ; iNumText++)
 
+```
+
+```
+
       {
 rc = piCallout->GetNumberOfTexts(NbTexts);
+```vbscript
+```vbscript
 if (SUCCEEDED(rc))
 for (int iNumText = 1; iNumText <= NbTexts ; iNumText++)
+```
+
+```
+
         CATIDrwAnnotationComponent *piAnnot=NULL;
         rc = piCallout->GetCalloutText(iNumText,&piAnnot);
+```vbscript
+```vbscript
         if (SUCCEEDED(rc))
+
+```
+
+```
 
         {
 CATIDrwAnnotationComponent *piAnnot=NULL;
 rc = piCallout->GetCalloutText(iNumText,&piAnnot);
+```vbscript
 if (SUCCEEDED(rc))
+```
+
           CATIDrwSimpleText *piText=NULL;
           CATIDftText *piDftText = NULL;
 
           // Callout texts may be based on simple text instance until V5R13 CATIA level.
 CATIDrwSimpleText *piText=NULL;
 CATIDftText *piDftText = NULL;
+```vbscript
           if (SUCCEEDED(piAnnot->QueryInterface(IID_CATIDrwSimpleText,(void **)&piText)))
+
+```
 
           {
 ```vbscript
@@ -430,7 +520,10 @@ piText->Release(); piText=NULL;
 piText->Release(); piText=NULL;
 else if(SUCCEEDED(piAnnot->QueryInterface(IID_CATIDftText,(void **)&piDftText)))
             wchar_t *ptextName=NULL;
+```vbscript
             if (SUCCEEDED(piDftText->GetString(&ptextName)))
+
+```
 
             {
 else if(SUCCEEDED(piAnnot->QueryInterface(IID_CATIDftText,(void **)&piDftText)))
@@ -439,7 +532,10 @@ if (SUCCEEDED(piDftText->GetString(&ptextName)))
               CATUnicodeString strTextName;
               strTextName.BuildFromWChar(ptextName);
               cerr << " texte name = " <<strTextName.CastToCharPtr() << endl;
+```vbscript
               if (ptextName) delete[] ptextName; ptextName = NULL;
+
+```
 
             }
 CATUnicodeString strTextName;
@@ -461,25 +557,49 @@ piDftText->Release();piDftText=NULL;
 
       int thickness = 2;
 int thickness = 2;
+```vbscript
       rc = piCallout->SetProfileThickness(thickness);
 
+```
+
       int linetype = 3;
+```vbscript
       rc = piCallout->SetProfileLineType(linetype);
+
+```
 
       int NbArrows;
       rc =piCallout->GetNumberOfArrow(NbArrows);
+```vbscript
+```vbscript
       if (SUCCEEDED(rc))
+
+```
+
+```
 
       {
 int NbArrows;
 rc =piCallout->GetNumberOfArrow(NbArrows);
+```vbscript
+```vbscript
 if (SUCCEEDED(rc))
         for (int iNumArrow = 1; iNumArrow <= NbArrows ; iNumArrow++)
 
+```
+
+```
+
         {
 rc =piCallout->GetNumberOfArrow(NbArrows);
+```vbscript
+```vbscript
 if (SUCCEEDED(rc))
 for (int iNumArrow = 1; iNumArrow <= NbArrows ; iNumArrow++)
+```
+
+```
+
           double ArrowLength,ArrowLengthSymb,ArrowAngleSymb,ArrowOrientation;
           CATSymbolType ArrowTypeSymb;
           ArrowLength=35.0;
@@ -487,30 +607,42 @@ for (int iNumArrow = 1; iNumArrow <= NbArrows ; iNumArrow++)
           ArrowLengthSymb=6.0;
           ArrowAngleSymb=45.0;
 
+```vbscript
           rc = piCallout->SetInfoOfArrow(iNumArrow,ArrowLength,ArrowTypeSymb,ArrowLengthSymb,ArrowAngleSymb);
+
+```
 
         }
 
 ```vbscript
 ArrowAngleSymb=45.0;
 rc = piCallout->SetInfoOfArrow(iNumArrow,ArrowLength,ArrowTypeSymb,ArrowLengthSymb,ArrowAngleSymb);
+```vbscript
         if (NbArrows != 0)
+```
+
 ```
 
         {
 rc = piCallout->SetInfoOfArrow(iNumArrow,ArrowLength,ArrowTypeSymb,ArrowLengthSymb,ArrowAngleSymb);
+```vbscript
 if (NbArrows != 0)
+```
+
           CATDftArrowExtremity calloutAttachment;
           rc = piCallout->GetArrowsAttachment(calloutAttachment);
           calloutAttachment= CATDftArrowTail;
+```vbscript
           rc = piCallout->SetArrowsAttachment(calloutAttachment);
+
+```
 
         }
       }
     }
-    ...  
+    ...
 
----  
+---
 
 Note: Up to V5R13, associated texts to the Callout may be based on simple text instance.
 
@@ -523,17 +655,23 @@ Note: Up to V5R13, associated texts to the Callout may be based on simple text i
       ... // Check rc
       rc = CATDocumentServices::**Remove** (*pDoc);
       ... // Check rc
-      // Ends session and drops document	
+      // Ends session and drops document
 rc = CATDocumentServices::**SaveAs**(*pDoc, (char *)fileName);
+```vbscript
+```vbscript
 rc = CATDocumentServices::**Remove** (*pDoc);
       rc = ::**Delete_Session**("SampleSession");
+
+```
+
+```
 
       ... // Check rc
 
       return 0;
-    }  
+    }
 
----  
+---
 
 This section represents the usual sequence for saving a newly created CATIA document [3].
 
@@ -557,17 +695,17 @@ This use case shows the way to :
 * * *
 ### References
 
-[1] |  [ Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-[2] |  [ Load an existing Document](../CAAOmbUseCases/CAAOmbLoadDoc.md)  
-[Top]  
+[1] |  [ Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)
+---|---
+[2] |  [ Load an existing Document](../CAAOmbUseCases/CAAOmbLoadDoc.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [May 2004] | Document created  
----|---  
-[Top]  
+Version: **1** [May 2004] | Document created
+---|---
+[Top]
 
 * * *
 

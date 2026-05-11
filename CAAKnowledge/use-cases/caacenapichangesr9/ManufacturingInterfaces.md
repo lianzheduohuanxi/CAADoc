@@ -13,12 +13,12 @@ converted: "2026-05-11T17:33:52.917769"
 tags: ["CATIMfgTool", "CATIMfgToolPathToolAssembly", "CATIMfgCustomizeRep"]
 source_file: "Doc/online/CAACenAPIChangesR9/ManufacturingInterfaces.htm"
 converted: "2026-05-11T17:33:52.917769"
-CAA C++ API Modifications |  ManufacturingInterfaces |   
+CAA C++ API Modifications |  ManufacturingInterfaces |
 
 * * *
 
-** Entity | SP | Modification | To Do** | ManufacturingInterfaces/Protected/CATIMfgCustomizeRep.h/CATIMfgCustomizeRep/HasRep | GA | MRTHC | [Migration to CATBoolean](../CAACenQuickRefs/CAACenWhatsNew.htm#CATBoolean)  
----|---|---|---  
-ManufacturingInterfaces/Protected/CATIMfgCustomizeRep.h/CATIMfgCustomizeRep/HasPermanentRep | GA | MRTHC | [Migration to CATBoolean](../CAACenQuickRefs/CAACenWhatsNew.htm#CATBoolean)  
-ManufacturingInterfaces/Protected/CATIMfgTool.h/CATIMfgTool/GetEditableStatus | GA | MRTHC | [Migration to CATBoolean](../CAACenQuickRefs/CAACenWhatsNew.htm#CATBoolean)  
+** Entity | SP | Modification | To Do** | ManufacturingInterfaces/Protected/CATIMfgCustomizeRep.h/CATIMfgCustomizeRep/HasRep | GA | MRTHC | [Migration to CATBoolean](../CAACenQuickRefs/CAACenWhatsNew.htm#CATBoolean)
+---|---|---|---
+ManufacturingInterfaces/Protected/CATIMfgCustomizeRep.h/CATIMfgCustomizeRep/HasPermanentRep | GA | MRTHC | [Migration to CATBoolean](../CAACenQuickRefs/CAACenWhatsNew.htm#CATBoolean)
+ManufacturingInterfaces/Protected/CATIMfgTool.h/CATIMfgTool/GetEditableStatus | GA | MRTHC | [Migration to CATBoolean](../CAACenQuickRefs/CAACenWhatsNew.htm#CATBoolean)
 ManufacturingInterfaces/Protected/CATIMfgToolPathToolAssembly.h/CATIMfgToolPathToolAssembly/GetTool | GA | MRTHC | [Migration to CATBoolean](../CAACenQuickRefs/CAACenWhatsNew.htm#CATBoolean)

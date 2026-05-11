@@ -4,85 +4,42 @@ category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAInfGettingStarted"]
 source_file: "Doc/online/CAAScdInfUseCases/CAAInfGettingStartedSource.htm"
-converted: "2026-05-11T11:06:32.766957"
+converted: "2026-05-11T11:27:02.688648"
 ---
 
-```
 Language="VBSCRIPT"
 
 'My macro creates five cylinders
 
-Sub 
-CATMain()
+Sub CATMain()
 
-Dim 
-documents1
- As 
-Documents
+Dim documents1 As Documents
+Set documents1 = CATIA.Documents
 
-Set 
-documents1 = CATIA.Documents
+Dim partDocument1 As Document
+Set partDocument1 = documents1.Add("Part")
 
-Dim 
-partDocument1
- As 
-Document
+Dim part1 As Part
+Set part1 = partDocument1.Part
 
-Set 
-partDocument1 = documents1.Add("Part")
+Dim bodies1 As Bodies
+Set bodies1 = part1.Bodies
 
-Dim 
-part1
- As 
-Part
+Dim body1 As Body
+Set body1 = bodies1.Item("MechanicalTool.1")
 
-Set 
-part1 = partDocument1.Part
+Dim sketches1 As Sketches
+Set sketches1 = body1.Sketches
 
-Dim 
-bodies1
- As 
-Bodies
+Dim originElements1 As OriginElements
+Set originElements1 = part1.OriginElements
 
-Set 
-bodies1 = part1.Bodies
-
-Dim 
-body1
- As 
-Body
-
-Set 
-body1 = bodies1.Item("MechanicalTool.1")
-
-Dim 
-sketches1
- As 
-Sketches
-
-Set 
-sketches1 = body1.Sketches
-
-Dim 
-originElements1
- As 
-OriginElements
-
-Set 
-originElements1 = part1.OriginElements
-
-Dim 
-reference1
- As 
-AnyObject
-
-Set 
-reference1 = originElements1.PlaneXY
+Dim reference1 As AnyObject
+Set reference1 = originElements1.PlaneXY
 
 x = 0
 
-Dim 
-arrayOfVariantOfDouble1(8)
+Dim arrayOfVariantOfDouble1(8)
 arrayOfVariantOfDouble1(0) = 0.000000
 arrayOfVariantOfDouble1(1) = 0.000000
 arrayOfVariantOfDouble1(2) = 0.000000
@@ -93,101 +50,144 @@ arrayOfVariantOfDouble1(6) = 0.000000
 arrayOfVariantOfDouble1(7) = 1.000000
 arrayOfVariantOfDouble1(8) = 0.000000
 
-For 
-I = 1
- To 
-5
+For I = 1 To 5
 
- Dim 
-sketch1
- As 
-Sketch
+  Dim sketch1 As Sketch
+  Set sketch1 = sketches1.Add(reference1)
 
- Set 
-sketch1 = sketches1.Add(reference1)
+  sketch1.SetAbsoluteAxisData arrayOfVariantOfDouble1
 
- sketch1.SetAbsoluteAxisData arrayOfVariantOfDouble1
+  Dim factory2D1 As Factory2D
+  Set factory2D1 = sketch1.OpenEdition()
 
- Dim 
-factory2D1
- As 
-Factory2D
+  Dim geometricElements1 As GeometricElements
+  Set geometricElements1 = sketch1.GeometricElements
 
- Set 
-factory2D1 = sketch1.OpenEdition()
+  Dim axis2D1 As GeometricElement
+  Set axis2D1 = geometricElements1.Item("AbsoluteAxis")
 
- Dim 
-geometricElements1
- As 
-GeometricElements
+  Dim line2D1 As AnyObject
+  Set line2D1 = axis2D1.GetItem("HDirection")
 
- Set 
-geometricElements1 = sketch1.GeometricElements
+  line2D1.ReportName = 1
 
- Dim 
-axis2D1
- As 
-GeometricElement
+  Dim line2D2 As AnyObject
+  Set line2D2 = axis2D1.GetItem("VDirection")
 
- Set 
-axis2D1 = geometricElements1.Item("AbsoluteAxis")
+  line2D2.ReportName = 2
 
- Dim 
-line2D1
- As 
-AnyObject
+  Dim circle2D1 As Circle2D
+  Set circle2D1 = factory2D1.CreateClosedCircle(x, 0.000000, 10.000000)
 
- Set 
-line2D1 = axis2D1.GetItem("HDirection")
+  circle2D1.ReportName = 3
 
- line2D1.ReportName = 1
+  sketch1.CloseEdition 
 
- Dim 
-line2D2
- As 
-AnyObject
+  part1.Update 
 
- Set 
-line2D2 = axis2D1.GetItem("VDirection")
+  Dim shapeFactory1 As Factory
+  Set shapeFactory1 = part1.ShapeFactory
 
- line2D2.ReportName = 2
+  Dim pad1 As Pad
+  Set pad1 = shapeFactory1.AddNewPad(sketch1, 20.000000)
 
- Dim 
-circle2D1
- As 
-Circle2D
+  part1.Update 
 
- Set 
-circle2D1 = factory2D1.CreateClosedCircle(x, 0.000000, 10.000000)
-
- circle2D1.ReportName = 3
-
- sketch1.CloseEdition 
-
- part1.Update 
-
- Dim 
-shapeFactory1
- As 
-Factory
-
- Set 
-shapeFactory1 = part1.ShapeFactory
-
- Dim 
-pad1
- As 
-Pad
-
- Set 
-pad1 = shapeFactory1.AddNewPad(sketch1, 20.000000)
-
- part1.Update 
-
- x = x + 25
+  x = x + 25
  
-
 Next
+End Sub  
 
+
+```vbscript
+Language="VBSCRIPT"
+
+'My macro creates five cylinders
+
+Sub CATMain()
+
+Dim documents1 As Documents
+Set documents1 = CATIA.Documents
+
+Dim partDocument1 As Document
+Set partDocument1 = documents1.Add("Part")
+
+Dim part1 As Part
+Set part1 = partDocument1.Part
+
+Dim bodies1 As Bodies
+Set bodies1 = part1.Bodies
+
+Dim body1 As Body
+Set body1 = bodies1.Item("MechanicalTool.1")
+
+Dim sketches1 As Sketches
+Set sketches1 = body1.Sketches
+
+Dim originElements1 As OriginElements
+Set originElements1 = part1.OriginElements
+
+Dim reference1 As AnyObject
+Set reference1 = originElements1.PlaneXY
+
+x = 0
+
+Dim arrayOfVariantOfDouble1(8)
+arrayOfVariantOfDouble1(0) = 0.000000
+arrayOfVariantOfDouble1(1) = 0.000000
+arrayOfVariantOfDouble1(2) = 0.000000
+arrayOfVariantOfDouble1(3) = 1.000000
+arrayOfVariantOfDouble1(4) = 0.000000
+arrayOfVariantOfDouble1(5) = 0.000000
+arrayOfVariantOfDouble1(6) = 0.000000
+arrayOfVariantOfDouble1(7) = 1.000000
+arrayOfVariantOfDouble1(8) = 0.000000
+
+For I = 1 To 5
+
+  Dim sketch1 As Sketch
+  Set sketch1 = sketches1.Add(reference1)
+
+  sketch1.SetAbsoluteAxisData arrayOfVariantOfDouble1
+
+  Dim factory2D1 As Factory2D
+  Set factory2D1 = sketch1.OpenEdition()
+
+  Dim geometricElements1 As GeometricElements
+  Set geometricElements1 = sketch1.GeometricElements
+
+  Dim axis2D1 As GeometricElement
+  Set axis2D1 = geometricElements1.Item("AbsoluteAxis")
+
+  Dim line2D1 As AnyObject
+  Set line2D1 = axis2D1.GetItem("HDirection")
+
+  line2D1.ReportName = 1
+
+  Dim line2D2 As AnyObject
+  Set line2D2 = axis2D1.GetItem("VDirection")
+
+  line2D2.ReportName = 2
+
+  Dim circle2D1 As Circle2D
+  Set circle2D1 = factory2D1.CreateClosedCircle(x, 0.000000, 10.000000)
+
+  circle2D1.ReportName = 3
+
+  sketch1.CloseEdition 
+
+  part1.Update 
+
+  Dim shapeFactory1 As Factory
+  Set shapeFactory1 = part1.ShapeFactory
+
+  Dim pad1 As Pad
+  Set pad1 = shapeFactory1.AddNewPad(sketch1, 20.000000)
+
+  part1.Update 
+
+  x = x + 25
+ 
+Next
 End Sub
 ```

@@ -12,11 +12,11 @@ converted: "2026-05-11T17:33:49.950844"
 tags: []
 source_file: "Doc/online/CAABtlQuickRefs/CAABtlMANMkThemIx.htm"
 converted: "2026-05-11T17:33:49.950844"
-RADE |  Multi-Workspace Application Builder |  Summary of Commands Around mkmk _Links to the mkmk family commands_  
+RADE |  Multi-Workspace Application Builder |  Summary of Commands Around mkmk _Links to the mkmk family commands_
 
 converted: "2026-05-11T17:33:49.950844"
 RADE |  Multi-Workspace Application Builder |  Summary of Commands Around mkmk _Links to the mkmk family commands_
-Quick Reference  
+Quick Reference
 
 * * *
 
@@ -35,9 +35,9 @@ The commands to prepare a runtime environment are:
 
 * * *
 
-History Version: **1** [Mar 2000] | Document created  
----|---  
-[Top]  
+History Version: **1** [Mar 2000] | Document created
+---|---
+[Top]
 
 * * *
 

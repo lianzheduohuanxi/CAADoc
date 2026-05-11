@@ -10,8 +10,8 @@ converted: "2026-05-11T17:33:50.602815"
 ```
 
 ---
-| CAA C++ API Modifications|  TopologicalOperators  |   
----|---|---  
+| CAA C++ API Modifications|  TopologicalOperators  |
+---|---|---
 
 * * *
 

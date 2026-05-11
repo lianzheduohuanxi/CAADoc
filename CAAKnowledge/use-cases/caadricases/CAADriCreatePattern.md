@@ -11,15 +11,15 @@ converted: "2026-05-11T17:31:50.962468"
 ---
 # Mechanical Design
 
-| 
+|
 ## Drafting
 
-| 
+|
 ### Creating a Hatching Pattern On 2D Geometry
 
-_How to use area fill interfaces_  
----|---|---  
-Use Case  
+_How to use area fill interfaces_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
@@ -35,7 +35,7 @@ This article discusses the CAADrwCreatePattern.cpp use case. This use case expla
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
@@ -53,32 +53,32 @@ CAADrwCreatePattern is a use case of the CAADraftingInterfaces.edu framework tha
 CAADrwCreatePattern is a use case of the CAADraftingInterfaces.edu framework that illustrates DraftingInterfaces framework capabilities.
 This sample creates a hatching pattern on 2Dgeometry in batch mode:
 
-Fig. 1: The Start Up Model containing 2D geometry  ![](images/CAADrwAreaFill1.jpg)    
+Fig. 1: The Start Up Model containing 2D geometry  ![](images/CAADrwAreaFill1.jpg)
 
----  
+---
 This sample creates a hatching pattern on 2Dgeometry in batch mode:
 Fig. 1: The Start Up Model containing 2D geometry  ![](images/CAADrwAreaFill1.jpg)
-Fig. 2: The Start Up Model processed by CAADrwCreatePattern batch.  
+Fig. 2: The Start Up Model processed by CAADrwCreatePattern batch.
 
-![](images/CAADrwAreaFill2.jpg)  
+![](images/CAADrwAreaFill2.jpg)
 
 [Top]
 #### How to Launch CAADrwCreatePattern
 
 To launch CAADrwCreatePattern, you will need to set up the build time environment, then compile CAADrwCreatePattern along with its prerequisites, set up the run time environment, and then execute the use case [1].
 
-When you launch the use case, pass the full pathname of the file into which you you want to store the created document as argument: for example Result.CATDrawing. The input file CAADrwCreatePattern.CATDrawing containing the 2D geometry  is stored on CAADraftingInterfaces.edu/CNext/resources/graphic directory. 
+When you launch the use case, pass the full pathname of the file into which you you want to store the created document as argument: for example Result.CATDrawing. The input file CAADrwCreatePattern.CATDrawing containing the 2D geometry  is stored on CAADraftingInterfaces.edu/CNext/resources/graphic directory.
 
-  * With Windows 
+  * With Windows
 
-        e:> CAADrwCreatePattern CAADrwCreatePattern.CATDrawing Result.CATDrawing  
+        e:> CAADrwCreatePattern CAADrwCreatePattern.CATDrawing Result.CATDrawing
 
----  
-  * With UNIX 
+---
+  * With UNIX
 
-        $ CAADrwCreatePattern /u/users/CAADrwCreatePattern.CATDrawing Result.CATDrawing  
+        $ CAADrwCreatePattern /u/users/CAADrwCreatePattern.CATDrawing Result.CATDrawing
 
----  
+---
 
 [Top]
 #### Where to Find the CAADrwCreatePattern Code
@@ -86,11 +86,11 @@ When you launch the use case, pass the full pathname of the file into which you 
 The CAADrwCreatePattern use case is made of one source file named CAADrwCreatePattern.cpp located in the CAADrwCreatePattern.m module of the CAADraftingInterfaces.edu framework:
 
 The CAADrwCreatePattern use case is made of one source file named CAADrwCreatePattern.cpp located in the CAADrwCreatePattern.m module of the CAADraftingInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCreatePattern.m\`  
+Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCreatePattern.m\`
 
 The CAADrwCreatePattern use case is made of one source file named CAADrwCreatePattern.cpp located in the CAADrwCreatePattern.m module of the CAADraftingInterfaces.edu framework:
 Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCreatePattern.m\`
-Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCreatePattern.m/`  
+Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCreatePattern.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
@@ -106,12 +106,12 @@ There are five steps in CAADRWCreatePattern:
   4. Hatching Pattern Creation
   5. Break Elements Creation
   6. Area Fill Creation
-  7. Saving the Document and Exiting 
+  7. Saving the Document and Exiting
 
 [Top]
 #### Reading the Drawing Document
 
-    int main(int    iArgc,   // Number of arguments (1) 
+    int main(int    iArgc,   // Number of arguments (1)
              char** iArgv)   // Path to the new *.CATDrawing document
     {
        // Check arguments
@@ -126,7 +126,10 @@ char** iArgv)   // Path to the new *.CATDrawing document
 
        CATSession *pSampleSession = NULL;
        HRESULT hr = ::Create_Session("SampleSession",pSampleSession);
+```vbscript
        if (FAILED(hr)) return 1;
+
+```
 
        // READ THE DRAWING DOCUMENT
        // =========================
@@ -137,7 +140,10 @@ char** iArgv)   // Path to the new *.CATDrawing document
        CATIContainer_var spDrwcont;
        CATISpecObject_var spSpecObj;
        CATIDrwFactory_var spDrwFact;
+```vbscript
        if (FAILED(CATDocumentServices::OpenDocument(pfileName, pDoc)))
+
+```
 
        {
           // Ends session
@@ -148,16 +154,16 @@ if (FAILED(CATDocumentServices::OpenDocument(pfileName, pDoc)))
 
        }
 
-       ...  
+       ...
 
----  
+---
 
 This section represents the usual sequence for creating a CATIA document.
 
 [Top]
 #### Accessing the Drawing in the Document
 
-    ...   
+    ...
       if (SUCCEEDED(pDoc->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftDocServices)))
        {
 ```vbscript
@@ -174,23 +180,23 @@ piDftDocServices->Release();
 spSpecObj=piDrawing;
 spDrwcont = spSpecObj->GetFeatContainer();
 spDrwFact = spDrwcont;
-       else 
+       else
 
        {
           // Ends session
           ::Delete_Session("SampleSession");
-          return 3;  
+          return 3;
        }
-    ...  
+    ...
 
----  
+---
 
 The root feature of a drawing document is the Drawing that is the feature that implements the CATIDrawing interface. We can get a pointer to CATIDrawing using the CATIDftDocumentServices interface, which is implemented by the document. The GetDrawing method first argument is the interface you want to get on the drawing.
 
 [Top]
 #### Reading 2D geometry on which Area fill will be created
 
-    ...   
+    ...
       // MAIN VIEW RETRIEVAL
        // ===================
 
@@ -210,41 +216,61 @@ The root feature of a drawing document is the Drawing that is the feature that i
        CATListValCATI2DWFGeometry_var spListElem;
        CATUnicodeString namealias;
        hr = spSketch->GetComponents(CATI2DCurve::ClassName(),spListElem);
+```vbscript
+```vbscript
        for (int i=1; i<=spListElem.Size(); i++)
 
+```
+
+```
+
        {
-          // Get all geometric elements containing the string "area" in their external name. 
+          // Get all geometric elements containing the string "area" in their external name.
 CATUnicodeString namealias;
 hr = spSketch->GetComponents(CATI2DCurve::ClassName(),spListElem);
+```vbscript
+```vbscript
 for (int i=1; i<=spListElem.Size(); i++)
           namealias = CATIAlias_var(spListElem[i])->GetAlias();
           if (namealias.SearchSubString("area") != -1)
 
+```
+
+```
+
           {
 namealias = CATIAlias_var(spListElem[i])->GetAlias();
+```vbscript
 if (namealias.SearchSubString("area") != -1)
+```
+
              ListValidElem.Append(spListElem[i]);
 
           }
        }
-    ...  
+    ...
 
----  
+---
 
 The 2D geometry in the Start Up CATDrawing Document is identified by external name applied on each element. These elements are automatically arranged by the way to used to create it: Profile command in Geometry Creation Toolbar. If these elements are not arranged, the area fill will be created with a wrong display.
 
 [Top]
 #### Hatching Pattern Creation
 
-    ...   
+    ...
      CATIDftHatchingPattern *iHatching = NULL;
 
 CATIDftHatchingPattern *iHatching = NULL;
+```vbscript
     	if (SUCCEEDED( spDrwFact->CreateHatchingPattern(IID_CATIDftHatchingPattern, (void **) &iHatching) ))
+
+```
 
        {
 CATIDftHatchingPattern *iHatching = NULL;
 if (SUCCEEDED( spDrwFact->CreateHatchingPattern(IID_CATIDftHatchingPattern, (void **) &iHatching) ))
+```vbscript
+```vbscript
           hr = iHatching->SetOffset(15.0);
           hr = iHatching->SetAngle ((double)  ( CATRadianToDegree * CATPIBY4));
           hr = iHatching->SetPitch (8.0);
@@ -252,32 +278,42 @@ if (SUCCEEDED( spDrwFact->CreateHatchingPattern(IID_CATIDftHatchingPattern, (voi
           hr = iHatching->SetThikness(1);
           hr = iHatching->SetColor(4);
 
-       }  
+```
+
+```
+
+       }
 hr = iHatching->SetTexture (1);
+```vbscript
+```vbscript
 hr = iHatching->SetThikness(1);
 hr = iHatching->SetColor(4);
-       else 
+```
+
+```
+
+       else
 
        {
           // Ends session
           ::Delete_Session("SampleSession");
           return 4;
        }
-    ...  
+    ...
 
----  
+---
 
 To create geometric elements in a view, the view has to be current.
 
 [Top]
 #### Break Elements Creation
 
-    ...   
+    ...
        // BreakElem are relimited elements to create the area fill domain.
 
        // Gets the BreakElem factory
        CATIDrwBreakElemFactory_var spBreakElemfact;
-       if (spDrwcont != NULL_var) 
+       if (spDrwcont != NULL_var)
           spBreakElemfact = spDrwcont;
        else
 
@@ -286,7 +322,10 @@ CATIDrwBreakElemFactory_var spBreakElemfact;
 if (spDrwcont != NULL_var)
 spBreakElemfact = spDrwcont;
 else
+```vbscript
           if (iHatching) iHatching->Release();
+
+```
 
           // Ends session
           ::Delete_Session("SampleSession");
@@ -305,11 +344,14 @@ return 5;
 
 ```
 
-       // Loop on geometry elements 
+       // Loop on geometry elements
 CATI2DCurve_var spCurveElm;
 double pStartParam, pEndParam, pInter ;
 int index=0, creation=0, containment=0;
+```vbscript
        for (i=1; i<=spListElem.Size(); i++)
+
+```
 
        {
 int index=0, creation=0, containment=0;
@@ -317,7 +359,10 @@ for (i=1; i<=spListElem.Size(); i++)
           spCurveElm = spListElem[i];
           spCurveElm->GetParamExtents(&pStartParam,&pEndParam);
 
+```vbscript
           if (pStartParam > pEndParam)
+
+```
 
           {
 spCurveElm = spListElem[i];
@@ -325,7 +370,7 @@ spCurveElm->GetParamExtents(&pStartParam,&pEndParam);
 if (pStartParam > pEndParam)
              pInter = pStartParam;
              pStartParam = pEndParam;
-             pEndParam = pInter;						
+             pEndParam = pInter;
 
           }
 
@@ -336,15 +381,15 @@ pEndParam = pInter;
           ListBreakElem.Append(spBreakElem);
 
        }
-    ...  
+    ...
 
----  
+---
 
 [Top]
 #### Area Fill Creation
 
-    ...   
-       // AREA FILL CREATION 
+    ...
+       // AREA FILL CREATION
        // =================
 
        // Notes: The area fill object will be correctly created if BreakElem elements are
@@ -357,19 +402,28 @@ CATIDrwAnnotationFactory_var spAnnFactory = spMainView;
        CATIDrwAreaFill_var AreaFill;
 
        CATISpecObject *piSpecObj = NULL;
+```vbscript
        if (SUCCEEDED(iHatching->QueryInterface(IID_CATISpecObject, (void **)&piSpecObj)))
+
+```
 
        {
 CATIDrwAreaFill_var AreaFill;
 CATISpecObject *piSpecObj = NULL;
 if (SUCCEEDED(iHatching->QueryInterface(IID_CATISpecObject, (void **)&piSpecObj)))
+```vbscript
           AreaFill = spAnnFactory -> CreateDrwAreaFill(ListBreakElem, piSpecObj, "");
+```
+
           piSpecObj->Release();
 
        }
 ```vbscript
 if (SUCCEEDED(iHatching->QueryInterface(IID_CATISpecObject, (void **)&piSpecObj)))
+```vbscript
 AreaFill = spAnnFactory -> CreateDrwAreaFill(ListBreakElem, piSpecObj, "");
+```
+
 piSpecObj->Release();
        else
 ```
@@ -378,40 +432,46 @@ piSpecObj->Release();
 AreaFill = spAnnFactory -> CreateDrwAreaFill(ListBreakElem, piSpecObj, "");
 piSpecObj->Release();
 else
+```vbscript
           if (iHatching) iHatching->Release();
+
+```
 
           // Ends session
           ::Delete_Session("SampleSession");
 else
 if (iHatching) iHatching->Release();
-          return 5;   
+          return 5;
 
        }
 
        // memory cleaning
-       if (iHatching) iHatching->Release(); 
+```vbscript
+       if (iHatching) iHatching->Release();
 
-    ...  
+```
 
----  
+    ...
+
+---
 
 [Top]
 #### Saving the Document and Exiting
 
-    ...   
+    ...
       // Save the result
       CATDocumentServices::SaveAs(*pDoc, (char *)pfileNameOut);
        CATDocumentServices::Remove (*pDoc);
-       //Ends session and drops document	
+       //Ends session and drops document
        ::Delete_Session("SampleSession");
 
 CATDocumentServices::SaveAs(*pDoc, (char *)pfileNameOut);
 CATDocumentServices::Remove (*pDoc);
        return 0;
 
-    }  
+    }
 
----  
+---
 
 This section represents the usual sequence for saving a newly created CATIA document.
 
@@ -427,16 +487,16 @@ This use case shows the objects and interfaces used when creating an area fill i
 * * *
 ### References
 
-[1] | [Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-[2] | [Open a Document](../CAAOmbUseCases/CAAOmbLoadDoc.md)  
-[Top]  
+[1] | [Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)
+---|---
+[2] | [Open a Document](../CAAOmbUseCases/CAAOmbLoadDoc.md)
+[Top]
 
 History
 
-Version: **1** [Jan 2001] | Document created  
----|---  
-[Top]  
+Version: **1** [Jan 2001] | Document created
+---|---
+[Top]
 
 * * *
 

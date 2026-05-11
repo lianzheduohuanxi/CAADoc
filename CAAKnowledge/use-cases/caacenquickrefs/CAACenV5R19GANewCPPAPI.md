@@ -12,13 +12,13 @@ converted: "2026-05-11T17:33:47.426935"
 tags: ["CATIEhiMechanicalImport", "CATIMfgCatalogServices", "CATIDlgTableViewLineModel", "CATIDrwCumulatedDimSystem", "CATITPSCylinder", "CATIDftElementInSystem", "CATIDrwDimSystem", "CATITPSThread", "CATIIniSearchJapaneseGraphNameCriterion", "CATICfgCatLnk", "CATIPspPlacePartOnRun", "CATICkeParm_var", "CATITPSPlane", "CATIPrdHandleImpactsOnInstance", "CAACloudQsrItf", "CATIDlgTableViewColumnModel", "CATIAApplicationFrame", "CATImplementHandler", "CATIQsrCAAPowerFit", "CATIGSMMask"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R19GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.426935"
-CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R19 GA  
+CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R19 GA
 
 * * *
 
 The following are the new CAA V5R19 GA C++ Authorized APIs, compared with CAA V5R18 at GA level.
 
-  * AdvancedMathematics framework 
+  * AdvancedMathematics framework
     * Macro or #define CATPolynomXR19NbStaticCoeff
     * Macro or #define CATPolynomXYR19NbStaticCoeff
     * Global Function ComputeOptimalImage
@@ -26,13 +26,13 @@ The following are the new CAA V5R19 GA C++ Authorized APIs, compared with CAA V5
     * Global Function IsMonotone
     * Global Function MinimizeNewton
     * Global Function SolveNewton
-  * ApplicationFrame framework 
+  * ApplicationFrame framework
     * Global Function CATAfrSetCommandHeaderIconName
     * Global Function CATAfrSetCommandHeaderTitle
-  * CAACloudQsrItf framework 
+  * CAACloudQsrItf framework
     * Interface CATIQsrCAAFactory
     * Interface CATIQsrCAAPowerFit
-  * CATIAApplicationFrame framework 
+  * CATIAApplicationFrame framework
     * Class CATDlgTableView
     * Class CATExtIDlgTableViewColumnModel
     * Class CATExtIDlgTableViewController
@@ -70,35 +70,35 @@ The following are the new CAA V5R19 GA C++ Authorized APIs, compared with CAA V5
     * Interface CATIDlgTableViewModel
     * Typedef CATDlgTableStyle
     * Typedef CATListOfCATBaseUnknown_var
-  * CATImmENOVIAProvider framework 
+  * CATImmENOVIAProvider framework
     * Class CATPDMNavServices
-  * CATPDMBase framework 
+  * CATPDMBase framework
     * Class CATPDMCATIAServices
     * Class CATPDMCSServices
     * Global Function E2ESendTo
     * Global Function LoadFromPDM
     * Global Function SetEV5PersistencyMode
-  * CATPDMBaseInterfaces framework 
+  * CATPDMBaseInterfaces framework
     * Class CATListOfCATIPLMIdentificator
     * Interface CATIPDMUEResId
     * Interface CATIPLMIdentificator
-  * CATPlantShipInterfaces framework 
+  * CATPlantShipInterfaces framework
     * Interface CATIPspPlacePartOnRun
-  * CATTPSInterfaces framework 
+  * CATTPSInterfaces framework
     * Interface CATITPSCylinder
     * Interface CATITPSPlane
     * Interface CATITPSThread
-  * DNBD5IInterfaces framework 
+  * DNBD5IInterfaces framework
     * Interface DNBID5IExtractKinematics
-  * DNBMHIInterfaces framework 
+  * DNBMHIInterfaces framework
     * Interface DNBIMHILoadParameters
     * Interface DNBIMHIOpenAccess
     * Interface DNBIMHISaveAccess
-  * Dialog framework 
+  * Dialog framework
     * Class CATDlgComboCloseUpNotification
-  * Drafting2DLInterfaces framework 
+  * Drafting2DLInterfaces framework
     * Class CAT2DLDrawingServices
-  * DraftingInterfaces framework 
+  * DraftingInterfaces framework
     * Class CATDimSystemDefinition
     * Enumeration CATDrwDimSystemType
     * Enumeration CATDrwSystOffsetMode
@@ -107,23 +107,23 @@ The following are the new CAA V5R19 GA C++ Authorized APIs, compared with CAA V5
     * Interface CATIDrwCumulatedDimSystem
     * Interface CATIDrwDimSystem
     * Interface CATIDrwStackedDimSystem
-  * ENOCESInterfaces framework 
+  * ENOCESInterfaces framework
     * Enumeration CESSearchProjectOption
     * Enumeration CESSearchType
     * Interface ENOVICESAuthentication
     * Interface ENOVICESState
     * Interface ENOVICESViewAttribute
     * Interface ENOVIPartSelection
-  * ENOVInterfaces framework 
+  * ENOVInterfaces framework
     * Interface ENOVIActionEvents
-  * ElecHarnessItf framework 
+  * ElecHarnessItf framework
     * Interface CATIEhiMechanicalImport
-  * GSMInterfaces framework 
+  * GSMInterfaces framework
     * Enumeration CATGSMMaskType
     * Interface CATIGSMMaskFactory
     * Interface CATIGSMMaskSet
     * Interface CATIGSMMask
-  * GeometricObjects framework 
+  * GeometricObjects framework
     * Macro or #define CATBoneFilletType
     * Macro or #define CATConeManifoldType
     * Macro or #define CATContextualManifoldType
@@ -140,31 +140,31 @@ The following are the new CAA V5R19 GA C++ Authorized APIs, compared with CAA V5
     * Macro or #define CATSubdivisionManifoldType
     * Macro or #define CATTorusManifoldType
     * Global Function SetNotScaledKnotVector
-  * GeometricOperators framework 
+  * GeometricOperators framework
     * Class CATCurveUserParameterization
     * Global Function CATCreateCurveUserParameterization
-  * InteractiveInterfaces framework 
+  * InteractiveInterfaces framework
     * Interface CATIIniSearchJapaneseGraphNameCriterion
     * Interface CATIIniSearchJapaneseNameCriterion
-  * KnowledgeInterfaces framework 
+  * KnowledgeInterfaces framework
     * Class CATLISTV(CATICkeParm_var)
-  * ManufacturingInterfaces framework 
+  * ManufacturingInterfaces framework
     * Interface CATIMfgActivityToolVisu
     * Interface CATIMfgCatalogServices
-  * Mathematics framework 
+  * Mathematics framework
     * Macro or #define CATToleranceCheckDefault
     * Macro or #define CATToleranceCheckStandard
     * Macro or #define CATTolerance_CheckValue
     * Macro or #define CATTolerance_ControlDefault
     * Global Function CATToleranceError
-  * MecModInterfaces framework 
+  * MecModInterfaces framework
     * Interface CATIMmiInternalCopyWithLink
-  * ObjectModelerBase framework 
+  * ObjectModelerBase framework
     * Class CATDocumentIntegrityServices
     * Interface CATIOmbContainerLinksUpdateStatus
-  * ObjectModelerSystem framework 
+  * ObjectModelerSystem framework
     * Class CATListPtrCATBaseUnknown
-  * ObjectSpecsModeler framework 
+  * ObjectSpecsModeler framework
     * Macro or #define E_ATTRLINK
     * Macro or #define E_CANNOTLOAD
     * Macro or #define E_FACETNOTFOUND
@@ -175,24 +175,24 @@ The following are the new CAA V5R19 GA C++ Authorized APIs, compared with CAA V5
     * Macro or #define E_OUTOFBOUND
     * Macro or #define E_TYPEMISMATCH
     * Macro or #define S_NOSTATUS
-  * ProductStructure framework 
+  * ProductStructure framework
     * Class CATPrsWorkModeServices
-  * ProductStructureInterfaces framework 
+  * ProductStructureInterfaces framework
     * Interface CATIPrdHandleImpactsOnInstance
     * Interface CATIPrdHandleImpactsOnReference
-  * System framework 
+  * System framework
     * Macro or #define CATDeclareHandler
     * Macro or #define CATImplementHandler
     * Macro or #define CATLISTP_DEFINE
     * Macro or #define CATLISTV_DEFINE
-  * TopologicalOperators framework 
+  * TopologicalOperators framework
     * Global Function CATCreateTopNewSplitShell
     * Global Function CATCreateTopTrim
-  * VPMInterfaces framework 
+  * VPMInterfaces framework
     * Interface CATICfgCatLnk
     * Interface ENOVIMultiSiteObjectMng
     * Interface ENOVIObjectServiceCode
-  * VisualizationBase framework 
+  * VisualizationBase framework
     * Class CATGraphicElementGlobalNormale
     * Class CATPickOptions
     * Enumeration DITHER_MODE
@@ -201,11 +201,11 @@ The following are the new CAA V5R19 GA C++ Authorized APIs, compared with CAA V5
 
 * * *
 
-History Version: **1** [Mar 2008] | Document created  
----|---  
-[Top]  
+History Version: **1** [Mar 2008] | Document created
+---|---
+[Top]
 
 * * *
 
-_Copyright © 1999-2008, Dassault Systèmes. All rights reserved._  
+_Copyright © 1999-2008, Dassault Systèmes. All rights reserved._
 Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)

@@ -10,24 +10,24 @@ converted: "2026-05-11T17:33:51.068143"
 ```
 
 ---
-# CAA C++ API Modifications  
+# CAA C++ API Modifications
 
-| 
-##  CATIAV4Interfaces Framework Modifications in V5R15 
+|
+##  CATIAV4Interfaces Framework Modifications in V5R15
 
 * * *
 
-**Entity|  SP| Modification| To Do** | CATIAV4Interfaces/Public/CATIV4IInteropSettingAtt.h/CATIV4IInteropSettingAtt/GetPrj_Warn  
-**Prototype:**`virtual HRESULT GetPrj_Warn(CATString & oDefaultWarn)= 0;`| GA| [MHBDM](CAACenAPIChangeDetail.htm#Abstract)| Removed, corresponding setting never implemented, so was useless.  
----|---|---|---  
-CATIAV4Interfaces/Public/CATIV4IInteropSettingAtt.h/CATIV4IInteropSettingAtt/SetPrj_Warn  
-**Prototype:**`virtual HRESULT SetPrj_Warn(CATString & iDefaultWarn)= 0;`| GA| [MHBDM](CAACenAPIChangeDetail.htm#Abstract)| Removed, corresponding setting never implemented, so was useless.  
+**Entity|  SP| Modification| To Do** | CATIAV4Interfaces/Public/CATIV4IInteropSettingAtt.h/CATIV4IInteropSettingAtt/GetPrj_Warn
+**Prototype:**`virtual HRESULT GetPrj_Warn(CATString & oDefaultWarn)= 0;`| GA| [MHBDM](CAACenAPIChangeDetail.htm#Abstract)| Removed, corresponding setting never implemented, so was useless.
+---|---|---|---
 CATIAV4Interfaces/Public/CATIV4IInteropSettingAtt.h/CATIV4IInteropSettingAtt/SetPrj_Warn
-CATIAV4Interfaces/Public/CATIV4IInteropSettingAtt.h/CATIV4IInteropSettingAtt/GetPrj_WarnInfo  
-
-**Prototype:**`virtual HRESULT GetPrj_WarnInfo(CATSettingInfo* oInfo)= 0;`| GA| [MHBDM](CAACenAPIChangeDetail.htm#Abstract)| Removed, corresponding setting never implemented, so was useless.  
+**Prototype:**`virtual HRESULT SetPrj_Warn(CATString & iDefaultWarn)= 0;`| GA| [MHBDM](CAACenAPIChangeDetail.htm#Abstract)| Removed, corresponding setting never implemented, so was useless.
 CATIAV4Interfaces/Public/CATIV4IInteropSettingAtt.h/CATIV4IInteropSettingAtt/SetPrj_Warn
 CATIAV4Interfaces/Public/CATIV4IInteropSettingAtt.h/CATIV4IInteropSettingAtt/GetPrj_WarnInfo
-CATIAV4Interfaces/Public/CATIV4IInteropSettingAtt.h/CATIV4IInteropSettingAtt/SetPrj_WarnLock  
+
+**Prototype:**`virtual HRESULT GetPrj_WarnInfo(CATSettingInfo* oInfo)= 0;`| GA| [MHBDM](CAACenAPIChangeDetail.htm#Abstract)| Removed, corresponding setting never implemented, so was useless.
+CATIAV4Interfaces/Public/CATIV4IInteropSettingAtt.h/CATIV4IInteropSettingAtt/SetPrj_Warn
+CATIAV4Interfaces/Public/CATIV4IInteropSettingAtt.h/CATIV4IInteropSettingAtt/GetPrj_WarnInfo
+CATIAV4Interfaces/Public/CATIV4IInteropSettingAtt.h/CATIV4IInteropSettingAtt/SetPrj_WarnLock
 
 **Prototype:**`virtual HRESULT SetPrj_WarnLock(unsigned char iLocked)= 0;`| GA| [MHBDM](CAACenAPIChangeDetail.htm#Abstract)| Removed, corresponding setting never implemented, so was useless.

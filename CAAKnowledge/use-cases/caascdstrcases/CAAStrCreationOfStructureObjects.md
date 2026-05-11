@@ -9,16 +9,16 @@ converted: "2026-05-11T17:31:50.885094"
 ```
 
 ---
-| 
+|
 ## Structure Design
 
-| 
-## Creating Structure Objects  
+|
+## Creating Structure Objects
 
 * * *
 
-  This macro shows you how to create structure objects. It retrieves a Product document , creates some members, plates and end plates. ![](images/CAAScdStrImg1.jpg)    
----|---  
+  This macro shows you how to create structure objects. It retrieves a Product document , creates some members, plates and end plates. ![](images/CAAScdStrImg1.jpg)
+---|---
   CAAStrCreationOfStructureObjects is launched in CATIA [1]. Some documents are needed.
 
   * [CAAStrCreationOfStructureObjects.CATScript](CAAStrCreationOfStructureObjectsSource.md) is located in the CAAScdStrUseCases module. [Execute macro](macros/CAAStrCreationOfStructureObjects.CATScript) (windows only).
@@ -36,13 +36,18 @@ CAAStrCreationOfStructureObjects includes five steps:
 
 #### Prolog
 
-| 
+|
 
       ...
+```vbscript
 ```vbscript
         Dim doc As Document
 
         Dim StrWorkbench As StrWorkbench
+```
+
+```vbscript
+```vbscript
         Dim strFactory As StrObjectFactory
 
         Set doc = CATIA.ActiveDocument
@@ -56,19 +61,31 @@ CAAStrCreationOfStructureObjects includes five steps:
         Set documents = CATIA.Documents
 ```
 
-      ...  
+```
 
----  
+```
+
+      ...
+
+---
 
 This step describes how to get the structure object factory.
 #### Creating ends of members
 
       ...
 This step describes how to get the structure object factory.
+```vbscript
+```vbscript
       ' column 1
+
+```
+
+```
 
 ```vbscript
         Dim reference11 As Reference
+```vbscript
+```vbscript
         Set reference11 = rootProduct.CreateReferenceFromName("Produit1/grid/!Selection_BorderFVertex:(BEdge:(Brp:(GSMIntersect.12;(Brp:(GSMPlane.3);Brp:(GSMIntersect.10;(Brp:(GSMPlane.1);Brp:(GSMPlane.2)))));None:(Limits1:();Limits2:()));GSMIntersect.12)")
         Dim extremity11 As AnyObject
         Set extremity11 = strFactory.AddDefExtFromReference(reference11, 0)
@@ -79,6 +96,12 @@ This step describes how to get the structure object factory.
         Set extremity12 = strFactory.AddDefExtFromReference(reference12, 0)
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
         ' column 2
         Dim reference21 As Reference
@@ -112,9 +135,13 @@ This step describes how to get the structure object factory.
         Set extremity42 = strFactory.AddDefExtFromReference(reference42, 0)
 ```
 
-      ...  
+```
 
----  
+```
+
+      ...
+
+---
 
 We have to define all the ends we need to define the members. All  these ends are on grid geometry.
 #### Creating members
@@ -122,11 +149,19 @@ We have to define all the ends we need to define the members. All  these ends a
     ...
 We have to define all the ends we need to define the members. All  these ends are on grid geometry.
         dim sectionName as string
+```vbscript
+```vbscript
         sectionName = InputBox("Section path","Parameters", ".../HEA120.CATPart")
-        ' column 1    
+        ' column 1
+
+```
+
+```
 
 ```vbscript
         Dim docSection1 As Document
+```vbscript
+```vbscript
         Set docSection1 = documents.Read(sectionName)
 
         Dim section1 As StrSection
@@ -134,16 +169,28 @@ We have to define all the ends we need to define the members. All  these ends a
 
 ```
 
+```
+
+```
+
 ```vbscript
 Dim section1 As StrSection
+```vbscript
+```vbscript
 Set section1 = strFactory.AddSection(docSection1)
         dim member1 as StrMember
+```
+
+```
+
 ```
 
 ```vbscript
         Set member1 = strFactory.AddMember(section1, "catStrCenterCenter", 0, extremity11, extremity12, "Column")
 ```
 
+```vbscript
+```vbscript
 ```vbscript
         ' column 2
         Dim docSection2 As Document
@@ -153,11 +200,17 @@ Set section1 = strFactory.AddSection(docSection1)
         Set section2 = strFactory.AddSection(docSection2)
 ```
 
+```
+
+```
+
         dim member2 as StrMember
 ```vbscript
         Set member2 = strFactory.AddMember(section2, "catStrCenterCenter", 0, extremity21, extremity22, "Column")
 ```
 
+```vbscript
+```vbscript
 ```vbscript
         ' column 3
         Dim docSection3 As Document
@@ -167,11 +220,17 @@ Set section1 = strFactory.AddSection(docSection1)
         Set section3 = strFactory.AddSection(docSection3)
 ```
 
+```
+
+```
+
         dim member3 as StrMember
 ```vbscript
         Set member3 = strFactory.AddMember(section3, "catStrCenterCenter", 0, extremity31, extremity32, "Column")
 ```
 
+```vbscript
+```vbscript
 ```vbscript
         ' column 4
         Dim docSection4 As Document
@@ -181,14 +240,18 @@ Set section1 = strFactory.AddSection(docSection1)
         Set section4 = strFactory.AddSection(docSection4)
 ```
 
+```
+
+```
+
         dim member4 as StrMember
 ```vbscript
         Set member4 = strFactory.AddMember(section4, "catStrCenterCenter", 0, extremity41, extremity42, "Column")
 ```
 
-      ...  
+      ...
 
----  
+---
 
 Members are created using the section document and ends defined in the previous step. The variable sectionName has to be valuated with the section path.
 #### Creating end-plates
@@ -196,6 +259,8 @@ Members are created using the section document and ends defined in the previous 
     ...
 ```vbscript
         Dim plate1 As StrPlate
+```vbscript
+```vbscript
         Set plate1 = strFactory.AddRectangularEndPlate(member1, catEndExtremity, 0.005, 0.2, 0.2, catStrStandardOrientation, "EndPlate")
 
         Dim plate2 As StrPlate
@@ -209,18 +274,27 @@ Members are created using the section document and ends defined in the previous 
 
 ```
 
+```
+
+```
+
     ...
 
----  
+---
 
 End plates are created at  the base of each member.
 #### Creating a plate
 
     ...
 ```vbscript
+```vbscript
         Dim contour(3) As Reference
 
         Set contour(0) = rootProduct.CreateReferenceFromName("Produit1/Column_2/!Selection_FVertex:(Vertex:(Neighbours:(Face:(Brp:(StrFunRibSweep.1;0:(Brp:(GSMLine.1);Brp:(IntSection.1;9999)));None:();Cf11:());Face:(Brp:(StrFunRibSweep.1;1);None:();Cf11:());Face:(Brp:(StrFunRibSweep.1;0:(Brp:(GSMLine.1);Brp:(IntSection.1;10018)));None:();Cf11:()));Cf11:());StrFunRibSweep.1;Z0;G4702)")
+```
+
+```vbscript
+```vbscript
         Set contour(1) = rootProduct.CreateReferenceFromName("Produit1/Column_4/!Selection_FVertex:(Vertex:(Neighbours:(Face:(Brp:(StrFunRibSweep.1;0:(Brp:(GSMLine.1);Brp:(IntSection.1;10039)));None:();Cf11:());Face:(Brp:(StrFunRibSweep.1;2);None:();Cf11:());Face:(Brp:(StrFunRibSweep.1;0:(Brp:(GSMLine.1);Brp:(IntSection.1;10058)));None:();Cf11:()));Cf11:());StrFunRibSweep.1;Z0;G4702)")
         Set contour(2) = rootProduct.CreateReferenceFromName("Produit1/Column_5/!Selection_FVertex:(Vertex:(Neighbours:(Face:(Brp:(StrFunRibSweep.1;0:(Brp:(GSMLine.1);Brp:(IntSection.1;10068)));None:();Cf11:());Face:(Brp:(StrFunRibSweep.1;1);None:();Cf11:());Face:(Brp:(StrFunRibSweep.1;0:(Brp:(GSMLine.1);Brp:(IntSection.1;10069)));None:();Cf11:()));Cf11:());StrFunRibSweep.1;Z0;G4702)")
         Set contour(3) = rootProduct.CreateReferenceFromName("Produit1/Column_3/!Selection_FVertex:(Vertex:(Neighbours:(Face:(Brp:(StrFunRibSweep.1;0:(Brp:(GSMLine.1);Brp:(IntSection.1;10029)));None:();Cf11:());Face:(Brp:(StrFunRibSweep.1;1);None:();Cf11:());Face:(Brp:(StrFunRibSweep.1;0:(Brp:(GSMLine.1);Brp:(IntSection.1;10030)));None:();Cf11:()));Cf11:());StrFunRibSweep.1;Z0;G4702)")
@@ -233,9 +307,13 @@ End plates are created at  the base of each member.
 
 ```
 
+```
+
+```
+
     ...
 
----  
+---
 
 We have created a plate on top of the four members. The contour is defined by the selection of  vertices on these members.
 
@@ -253,8 +331,8 @@ This use case has shown how to create structure objects
 * * *
 #### References
 
-[1] | [Replaying a macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)  
----|---  
+[1] | [Replaying a macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)
+---|---
 [Top]
 
 * * *

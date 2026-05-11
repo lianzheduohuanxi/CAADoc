@@ -9,14 +9,14 @@ converted: "2026-05-11T17:33:48.130556"
 ```
 
 ---
-# Topological Objects  
+# Topological Objects
 
----  
+---
 This section deals with Topological Objects.
 
-* * *  
+* * *
 
----  
+---
 In this section:
     * [Topology Concepts](CAACgmTaTobTopoConcepts.md) introduces the CGM topology objects, and the manifold and non-manifold topologies.
     * [The CGM Topological Model](CAACgmTaTobTopoModel.md) describes how the topology concepts are implemented.

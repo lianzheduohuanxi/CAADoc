@@ -12,28 +12,28 @@ converted: "2026-05-11T17:33:47.082066"
 tags: ["CATIMSHSelectedElement", "CATITPSNoa", "CATIMfResultManagement", "CATICkeFunctionFactory", "CATISchPostPaste", "CATIParmManipulator", "CATIEleUipFilteringCriteria", "CATISchAppObsoleteClass", "CATIEhiPrtWkbCfgAddin", "CATIMSHSelectedFace", "CATIDftGDT", "CATISchAppSourcePostPaste", "CATIMfgDesignHole", "CATICkeUnit", "CATIMfgMacrosTabPage", "CATInitBatchOnHost", "CATIDesktopDocUE", "CATIBRepAccess", "CATISketchPositioning", "CATIParmSelector"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R11GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.082066"
-CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R11 GA  
+CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R11 GA
 
 * * *
 
 The following are the new CAA V5R11 GA C++ Authorized APIs, compared with CAA V5R10 at GA level.
 
-  * Administration framework 
+  * Administration framework
     * CATGetHFXLevel
-  * AnalysisMeshingModel framework 
+  * AnalysisMeshingModel framework
     * CATIMSHSelectedEdge
     * CATIMSHSelectedElement
     * CATIMSHSelectedFace
     * CATIMSHSelectedNode
     * CATMSHExtIMesher
     * CATMSHModifyNotification
-  * AutomationInterfaces framework 
+  * AutomationInterfaces framework
     * CATScriptUtilities
-  * CATAnalysisGPSInterfaces framework 
+  * CATAnalysisGPSInterfaces framework
     * CATAnalysisGenerativeFEM
     * CATIGPSCfgAddin
     * CATIGPSStructuralTemplate
-  * CATAnalysisInterfaces framework 
+  * CATAnalysisInterfaces framework
     * CATISamAnalysisSetInit
     * CATISamBasicComponentManager
     * CATISamCtxMenuProvider
@@ -54,20 +54,20 @@ The following are the new CAA V5R11 GA C++ Authorized APIs, compared with CAA V5
     * CATSamValue
     * SAMHiddenState
     * SAMReadOnlyState
-  * CATAnalysisResources framework 
+  * CATAnalysisResources framework
     * CATEAnalysisSetInit
     * CATSamBasicComponentManagerAdaptor
-  * CATAssemblyInterfaces framework 
+  * CATAssemblyInterfaces framework
     * CATIAsmSelectMove3D
-  * CATHullConceptualInterfaces framework 
+  * CATHullConceptualInterfaces framework
     * CATIHCDCfgWorkbenchAddin
-  * CATIAApplicationFrame framework 
+  * CATIAApplicationFrame framework
     * CATISelectMove3D
-  * CATMatInterfaces framework 
+  * CATMatInterfaces framework
     * CATIPositionedMaterial
-  * CATPDMBaseInterfaces framework 
+  * CATPDMBaseInterfaces framework
     * CATIPDMUnixNTMapping
-  * CATSchPlatformInterfaces framework 
+  * CATSchPlatformInterfaces framework
     * CATEASchAppCCPCGCntrInfo
     * CATEASchAppObsoleteClass
     * CATEASchAppSourcePostPaste
@@ -80,18 +80,18 @@ The following are the new CAA V5R11 GA C++ Authorized APIs, compared with CAA V5
     * CATISchObsoleteModel
     * CATISchMovable2
     * CATISchPostPaste
-  * CATSchPlatformModeler framework 
+  * CATSchPlatformModeler framework
     * CATSchEventServices
-  * CATTPSInterfaces framework 
+  * CATTPSInterfaces framework
     * CATITPSDrawable
     * CATITPSNoa
     * CATITPSNoaRepresentation
     * CATTPSNoaRepType
-  * CATTubingInterfaces framework 
+  * CATTubingInterfaces framework
     * CATITubCfgAddin
-  * ComponentsCatalogsInterfaces framework 
+  * ComponentsCatalogsInterfaces framework
     * CATCciCatalogBrowserDisplayOptions
-  * ConstraintModeler framework 
+  * ConstraintModeler framework
     * CATDimAngle0PI
     * CATDimAngle1PI
     * CATDimAngle2PI
@@ -110,17 +110,17 @@ The following are the new CAA V5R11 GA C++ Authorized APIs, compared with CAA V5
     * CATMfTS_FIRST_CHANGE
     * CATMfTS_PARAMETER_CHANGE
     * CATMfTS_PART_CHANGE
-  * ConstraintModelerInterfaces framework 
+  * ConstraintModelerInterfaces framework
     * CATFeatureType
     * CATIAncestry
     * CATIBloc
     * CATICst
     * CATICstData
     * CATLISTV(CATICst_var)
-  * DMAPSInterfaces framework 
+  * DMAPSInterfaces framework
     * CATPcsNavigProvider
     * CATSPPLogicalActivitiesFilter
-  * DNBInspectInterfaces framework 
+  * DNBInspectInterfaces framework
     * DNBIInsCircleMathServices
     * DNBIInsConstFeature
     * DNBIInsCylinderMathServices
@@ -130,9 +130,9 @@ The following are the new CAA V5R11 GA C++ Authorized APIs, compared with CAA V5
     * DNBIInsSphereMathServices
     * DNBIInsTagPoint
     * DNBInsWarningAttribute
-  * Dialog framework 
+  * Dialog framework
     * CATDlgMultiListSortMethod
-  * DraftingInterfaces framework 
+  * DraftingInterfaces framework
     * CATDftRefreshContext
     * CATIDftAnnotation
     * CATIDftGDT
@@ -154,9 +154,9 @@ The following are the new CAA V5R11 GA C++ Authorized APIs, compared with CAA V5
     * DftTextSetting
     * DftThreadType
     * DftWrappingMode
-  * ENOVDDManager framework 
+  * ENOVDDManager framework
     * DDMNGUtil
-  * ENOVInterfaces framework 
+  * ENOVInterfaces framework
     * CATIDesktopDocUE
     * ENOVIABODocument
     * ENOVIABOFolder
@@ -170,49 +170,49 @@ The following are the new CAA V5R11 GA C++ Authorized APIs, compared with CAA V5
     * ENOVIABORelation
     * ENOVIABOVersionMaster
     * ENOVIABusinessObject
-  * ENOVaultClientCPP framework 
+  * ENOVaultClientCPP framework
     * ENOVIVaultResultSet
     * VAULT_E_READ_ONLY
-  * ElecDeviceItf framework 
+  * ElecDeviceItf framework
     * CATElbDevice
     * CATElecDevice
     * CATIElbPrdWkbCfgAddin
     * CATIElbPrtWkbCfgAddin
     * CATIElbUipDevices
-  * ElecHarnessItf framework 
+  * ElecHarnessItf framework
     * CATIEhiPrdWkbCfgAddin
     * CATIEhiPrtWkbCfgAddin
-  * ElecRoutingItf framework 
+  * ElecRoutingItf framework
     * CATEwrEquipotential
     * CATEwrWire
     * CATIEwrUipEquipotentials
     * CATIEwrUipWires
     * CATIEwrWkbCfgAddin
-  * ElecSchematicItf framework 
+  * ElecSchematicItf framework
     * CATIEdiReplaceCable
     * CATIEdiWireCtr
-  * ElectricalInterfaces framework 
+  * ElectricalInterfaces framework
     * CATIEleUipFilteringCriteria
     * CATIEleUipSystems
-  * FreeFormOperators framework 
+  * FreeFormOperators framework
     * CATCrvDegreeModification
     * CATSurDegreeModification
     * CreateCrvDegreeModification
     * CreateSurDegreeModification
-  * GSMInterfaces framework 
+  * GSMInterfaces framework
     * CATGSMCornerTrimMode
     * CATGSMPositionDirCompMode
     * CATGSMSweepTrimMode
     * CATIGSMCircleCenterTangent
     * CATIGSMFilletTriTangent
-  * GeometricObjects framework 
+  * GeometricObjects framework
     * CATCGMAttribute_CreateAttribute
     * CATCloseCGMContainer
     * CATCreateCGMContainer
     * CATLoadCGMContainer
     * CATSaveCGMContainer
     * CATTopCheckJournalType
-  * GeometricOperators framework 
+  * GeometricOperators framework
     * CATCreateDistanceMin
     * CATCreateNurbsCurveTools
     * CATCreateNurbsSurfaceTools
@@ -225,9 +225,9 @@ The following are the new CAA V5R11 GA C++ Authorized APIs, compared with CAA V5
     * IsFatal
     * IsInfo
     * IsOK
-  * InteractiveInterfaces framework 
+  * InteractiveInterfaces framework
     * CATICCPable
-  * KnowledgeInterfaces framework. Most of these APIs come from the LiteralFeatures framework. 
+  * KnowledgeInterfaces framework. Most of these APIs come from the LiteralFeatures framework.
     * Boolean
     * CATCke
     * CATCkeEvalContext
@@ -285,37 +285,37 @@ The following are the new CAA V5R11 GA C++ Authorized APIs, compared with CAA V5
     * CATIParmTolerance
     * CATIParmValuator
     * CATIRelationEvents
-  * ManufacturingInterfaces framework 
+  * ManufacturingInterfaces framework
     * CATIMfgCatalogFactories
     * CATIMfgDesignHole
     * CATIMfgMacroMotionsGeomMapping
     * CATIMfgMacrosTabPage
     * CATIMfgMappingForMachiningAxis
     * CATIMfgResourceQueryDocument
-  * MecModInterfaces framework 
+  * MecModInterfaces framework
     * CATI3DGeometricalElement
     * CATLISTP(CATIBRepAccess)
-  * MechanicalModeler framework 
+  * MechanicalModeler framework
     * CATIMfResultManagement
     * CATLISTP(CATIRSur)
-  * Navigator4DIDEAS framework 
+  * Navigator4DIDEAS framework
     * RunIDEASMS7Conversion
     * RunIDEASMS8Conversion
     * RunIDEASMS9Conversion
-  * Navigator4DUG framework 
+  * Navigator4DUG framework
     * RunUG16Conversion
     * RunUG17Conversion
     * RunUG18Conversion
     * RunUGNXConversion
-  * NavigatorInterfaces framework 
+  * NavigatorInterfaces framework
     * CATIDMUNavigatorAddin
-  * NewTopologicalObjects framework 
+  * NewTopologicalObjects framework
     * AddResults
     * ReplaceResult
-  * ObjectModelerBase framework 
+  * ObjectModelerBase framework
     * CATINavigateFilter
     * CATOmbDocPropertyServices
-  * OptimizationInterfaces framework 
+  * OptimizationInterfaces framework
     * CATOptApproximationGradientAlgorithmAttributeAccessName
     * CATOptApproximationGradientAlgorithmCATIType
     * CATOptApproximationGradientAlgorithmConvergenceSpeedAttribute
@@ -384,25 +384,25 @@ The following are the new CAA V5R11 GA C++ Authorized APIs, compared with CAA V5
     * CATOptimizationLogNbEvalParmAttribute
     * CATOptimizationLogPointsDTAttribute
     * OPTNLSFileName
-  * PSNInteroperability framework 
+  * PSNInteroperability framework
     * CATCreateVPMProductStructure
     * CATGetVPMEnvironment
     * CATInitBatchOnHost
-  * PrintBase framework 
+  * PrintBase framework
     * CATLISTP(CATPrinter)
     * CATLISTV(CATPrintForm)
-  * ProductStructure framework 
+  * ProductStructure framework
     * CATIContextualProduct
-  * SketcherInterfaces framework 
+  * SketcherInterfaces framework
     * CATI2DConnectCurve
     * CATISketchPositioning
     * CATSktPosDirection
     * CATSktPosOrientationMode
     * CATSktPosOriginMode
     * CATSktPosSupportMode
-  * SketcherToolsUI framework 
+  * SketcherToolsUI framework
     * CATSketcherSettings
-  * System framework 
+  * System framework
     * CATCreateInstance
     * CATDeclareComponent
     * CATGMT
@@ -423,10 +423,10 @@ The following are the new CAA V5R11 GA C++ Authorized APIs, compared with CAA V5
     * CATUINTPTR
     * CATULONG32
     * CATULONGPTR
-  * ToolPathEditorInterfaces framework 
+  * ToolPathEditorInterfaces framework
     * CATIMfgTPECutAreasEditor
     * CATIMfgTPECutAreasUserHeader
-  * TopologicalOperators framework 
+  * TopologicalOperators framework
     * CATCreateExtrapolateBody
     * CATCreateTopBoundary
     * CATCreateTopExtrapolWireOnShell
@@ -435,7 +435,7 @@ The following are the new CAA V5R11 GA C++ Authorized APIs, compared with CAA V5
     * CATHybBoundary
     * CATTopExtrapolWireOnShell
     * CATWireExtrapolationOp
-  * VPMInterfaces framework 
+  * VPMInterfaces framework
     * CATIAVPMBOProductClass
     * CATICfgMilestoneCallBack
     * CATListOfCATICfgSimpleSpecification_var
@@ -457,7 +457,7 @@ The following are the new CAA V5R11 GA C++ Authorized APIs, compared with CAA V5
     * VPMIWflDataListener
     * VPMIWflProcessListener
     * VPMIWflQuery
-  * VPMSTEPExchanges framework 
+  * VPMSTEPExchanges framework
     * ENOVIExReportLogFormat
     * ERROR_CHECKDATA_CHILD
     * ERROR_CHECKDATA_COMPAREPC
@@ -556,11 +556,11 @@ The following are the new CAA V5R11 GA C++ Authorized APIs, compared with CAA V5
     * PROCESS_IMPORT_VAULT
     * ReportAttrKind
     * ReportModifKind
-  * VisualizationBase framework 
+  * VisualizationBase framework
     * CAT3DGeomRep
     * CATVizBaseIUnknown
     * DrawMenb
-  * XMLParser framework 
+  * XMLParser framework
     * CATISAXAttributes
     * CATISAXContentHandler
     * CATISAXDeclHandler
@@ -579,9 +579,9 @@ The following are the new CAA V5R11 GA C++ Authorized APIs, compared with CAA V5
 
 * * *
 
-History Version: **1** [Feb 2003] | Document created  
----|---  
-[Top]  
+History Version: **1** [Feb 2003] | Document created
+---|---
+[Top]
 
 * * *
 

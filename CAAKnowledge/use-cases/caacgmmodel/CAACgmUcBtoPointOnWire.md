@@ -9,10 +9,10 @@ converted: "2026-05-11T17:33:48.162955"
 ```
 
 ---
-# Computing a Mathematical Point on a Wire  
+# Computing a Mathematical Point on a Wire
 
----  
-Use Case  
+---
+Use Case
 ## Abstract
 
 You can create a point on a wire by using the CATICGMComputePointOnWire operator. How to use this operator is illustrated in the CAAGMModelComputePointOnWire use case.
@@ -24,8 +24,8 @@ You can create a point on a wire by using the CATICGMComputePointOnWire operator
       * Where to Find the CAAGMModelComputePointOnWire Code
     * Step-by-Step
     * In Short
-    * References  
----  
+    * References
+---
 ## What You Will Learn With This Use Case
 
 This use case is intended to help you use the basic topological operators. It particularly details the creation of a point on a wire.
@@ -44,8 +44,8 @@ The CATICGMComputePointOnWire operator is to be used according to the following 
 CAAGMModelComputePointOnWire  is a use case of the CAAGMModelInterfaces.edu framework.
 ### What Does CAAGMModelComputePointOnWire Do
 
-Fig. 1: The Geometry of the CAAGMModelComputePointOnWire Use Case ![Use Case Geometry](images/CAACgmBtoComputePointOnWire.gif) | This use case creates a CATMathPoint at a ratio of 0.5 from the start extremity of the CATWire. To visualize this point a cartesian point is created at the CATMathPoint location.  
----|---  
+Fig. 1: The Geometry of the CAAGMModelComputePointOnWire Use Case ![Use Case Geometry](images/CAACgmBtoComputePointOnWire.gif) | This use case creates a CATMathPoint at a ratio of 0.5 from the start extremity of the CATWire. To visualize this point a cartesian point is created at the CATMathPoint location.
+---|---
 ### How to Launch CAAGMModelComputePointOnWire
 
 Fig. 1: The Geometry of the CAAGMModelComputePointOnWire Use Case ![Use Case Geometry](images/CAACgmBtoComputePointOnWire.gif) | This use case creates a CATMathPoint at a ratio of 0.5 from the start extremity of the CATWire. To visualize this point a cartesian point is created at the CATMathPoint location.
@@ -79,16 +79,16 @@ CAAGMModelComputePointOnWire.cpp is divided into three logical steps:
 3. Writing the Model and Closing the Factory [1]
 The CATCGMCreateComputePointOnWire global method is used to create an instance of operator. The body retrieved from the GetResult method **applied to the CATICGMTopWire object** is passed as the third function argument value. The ratio in the fourth argument is calculated from the wire start extremity.
 
-The created point is retrieved by using the GetMathPoint method. 
+The created point is retrieved by using the GetMathPoint method.
 
     CATICGMComputePointOnWire* pPointOnWire = ::CATCGMCreateComputePointOnWire(piGeomFactory,
 
-                                                        &topdata, 
+                                                        &topdata,
 The created point is retrieved by using the GetMathPoint method.
 CATICGMComputePointOnWire* pPointOnWire = ::CATCGMCreateComputePointOnWire(piGeomFactory,
                                                         pWireBody,  0.5);
 
-    ...                                  
+    ...
 CATICGMComputePointOnWire* pPointOnWire = ::CATCGMCreateComputePointOnWire(piGeomFactory,
 pWireBody,  0.5);
     CATMathPoint oPointOnWire;
@@ -105,14 +105,14 @@ The CATICGMComputePointOnWire topological operators allows you to create a point
 
 ## References
 
-[1] | [An Introduction to Geometric Modeler Use Cases](CAACgmUcGMModelUseCaseOverw.md)  
----|---  
-[2] | [How to Use Geometric Operators](CAACgmUcGMModelOpeOverw.md)  
-[3] | [Browsing the Geometric Container](CAACgmUcGemBrowser.md)  
-[4] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
-[5] | [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.md)  
-[6] | [The Curves of CATIA Geometric Modeler](CAACgmTaGobCurves.md)  
+[1] | [An Introduction to Geometric Modeler Use Cases](CAACgmUcGMModelUseCaseOverw.md)
+---|---
+[2] | [How to Use Geometric Operators](CAACgmUcGMModelOpeOverw.md)
+[3] | [Browsing the Geometric Container](CAACgmUcGemBrowser.md)
+[4] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
+[5] | [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.md)
+[6] | [The Curves of CATIA Geometric Modeler](CAACgmTaGobCurves.md)
 ## History
 
-Version: **1** [Jan 2007] | Document created  
+Version: **1** [Jan 2007] | Document created
 ---|---

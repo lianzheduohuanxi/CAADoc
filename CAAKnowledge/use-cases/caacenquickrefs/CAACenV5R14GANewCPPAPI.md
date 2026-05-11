@@ -12,7 +12,7 @@ converted: "2026-05-11T17:33:47.180388"
 tags: ["CATICfgUserExit2", "CATIV4IV4WritingSettingAtt", "CATIMf3DBehavior", "CATIAVPMVDAUnlock", "CATISPAMeasureSettingAtt", "CATISchematicInit", "CATIPDAdapterInterfaces", "CATIMciMultiCADSettingAtt", "CATIDftFormat", "CATIMfgActivityInformation", "CATILieToleranceSheetSettingAtt", "CATIArrAttachSubscriber", "CATIStrColorSTDObjectSettingAtt", "CATITPSEditorUIFTASettingAtt", "CATIMfGeometryAccess", "CATIArrAttachmentFactory", "CATIStrMaterialSFDObjectSettingAtt", "CATISPASectioningSettingAtt", "CATIMfTriDimResult", "CATIDftSheetFormat"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R14GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.180388"
-CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R14 GA  
+CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R14 GA
 
 * * *
 
@@ -373,9 +373,9 @@ The following are the new CAA V5R14 GA C++ Authorized APIs, compared with CAA V5
 
 * * *
 
-History Version: **1** [Jul 2004] | Document created  
----|---  
-[Top]  
+History Version: **1** [Jul 2004] | Document created
+---|---
+[Top]
 
 * * *
 

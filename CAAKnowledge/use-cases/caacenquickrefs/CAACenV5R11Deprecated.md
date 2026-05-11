@@ -12,7 +12,7 @@ converted: "2026-05-11T17:33:47.051543"
 tags: ["CATITPSReferenceFrame", "CATIGSMAssemble", "CATITTRS", "CATIVpmAFLAffectedObject", "CATIVpmAFLAction", "CATIDrwAnnotationFactory", "CATIMechanicalPartProperties"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R11Deprecated.htm"
 converted: "2026-05-11T17:33:47.051543"
-CAA V5 Encyclopedia |  Deprecated CAA V5R9 APIs Removed from CAA V5R11  
+CAA V5 Encyclopedia |  Deprecated CAA V5R9 APIs Removed from CAA V5R11
 
 * * *
 
@@ -23,8 +23,8 @@ The following deprecated classes, interfaces, methods, or global functions in V5
   * **AddProductView** method in interface CATIVpmAFLAction
   * **AddProductView** method in interface CATIVpmAFLAction
   * **CATIMechanicalPartProperties** interface in MechanicalModeler
-  * **CATListOfCATIVpmAFLXeff.** collection in VPMInterfaces 
-  * **CATMmrGeoElement3D** global function in MechanicalModeler 
+  * **CATListOfCATIVpmAFLXeff.** collection in VPMInterfaces
+  * **CATMmrGeoElement3D** global function in MechanicalModeler
   * **CreateArrow** method in interface CATIDrwAnnotationFactory
   * **GetConstructedRGEs** method in interface CATITTRS
   * **GetDocType** method in interface CATIVpmAFLAffectedObject
@@ -34,7 +34,7 @@ The following deprecated classes, interfaces, methods, or global functions in V5
   * **GetObjectFromParameter** method in class CATCkeEvalContext
   * **GetPosition** method in interface CATIGSMAssemble
   * **GetRefTTRS** method in interface CATITPSReferenceFrame
-  * **GetReferenceFromObject** global function in MecModInterfaces 
+  * **GetReferenceFromObject** global function in MecModInterfaces
   * **GetValue** method in interface CATIVpmAFLAction
   * **GetValue** method in interface CATIVpmAFLAffectedObject
   * **IsValid** method in interface CATITTRS
@@ -55,9 +55,9 @@ The following deprecated classes, interfaces, methods, or global functions in V5
 
 * * *
 
-History Version: **1** [Mar 2003] | Document created  
----|---  
-[Top]  
+History Version: **1** [Mar 2003] | Document created
+---|---
+[Top]
 
 * * *
 

@@ -10,6 +10,8 @@ converted: "2026-05-11T17:31:51.667250"
 
 ---
 ```vbscript
+```vbscript
+```vbscript
     ' COPYRIGTH DASSAULT SYSTEMES 2000
     ' ***********************************************************************
     '   Purpose:      Open an analysis document
@@ -19,51 +21,87 @@ converted: "2026-05-11T17:31:51.667250"
     '   Assumptions:   Looks for WeldConnection.CATAnalysis in the directory and surface Analysis Connection
     '   Author:       bmw
     '   Languages:    VBScript
-    '   Locales:      English 
+    '   Locales:      English
     '   CATIA Level:  V5R16
     ' ***********************************************************************
 
 ```
 
-    Sub CATMain()
+```
+
+```
 
 ```vbscript
-    ' ----------------------------------------------------------- 
+    Sub CATMain()
+
+```
+
+```vbscript
+```vbscript
+```vbscript
+    ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 
+```
+
+```
+
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
+```vbscript
+```vbscript
         End If
-    ' ----------------------------------------------------------- 
+    ' -----------------------------------------------------------
+
+```
+
+```
 
 ```
 
 ```vbscript
 End If
+```vbscript
+```vbscript
 ' -----------------------------------------------------------
-    ' Open the Analysis document 
+    ' Open the Analysis document
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\WeldConnections.CATAnalysis")
 ```
 
+```
+
+```
+
+```vbscript
 ```vbscript
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```
 
+```
+
 ```vbscript
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
-    ' Retrieve the analysis Manager 
+```vbscript
+    ' Retrieve the analysis Manager
+```
+
 ```
 
 ```vbscript
     Set oAnalysisManagar = oAnalysisDocument.Analysis
+```vbscript
     Set oAnalysisSet = oAnalysisManagar.AnalysisSets
 ```
 
+```
+
+```vbscript
+```vbscript
 ```vbscript
     ' Retrieve the part document and product
     Set oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
@@ -73,39 +111,73 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
     Set oAnalysisModels = oAnalysisManagar.AnalysisModels
     Set oAnalysisModel = oAnalysisModels.Item(1)
     'Retrieve the mesh manager and list of mesh parts
-    Set oAnalysisMeshManager = oAnalysisModel.MeshManager 
+    Set oAnalysisMeshManager = oAnalysisModel.MeshManager
     Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
 ```
 
+```
+
+```
+
+```vbscript
     'Retrieve the connection design manager and connection
+```
+
 ```vbscript
     Set connection = oAnalysisSet.ItemByType("ConnectionDesignManager")
+```vbscript
+```vbscript
     Set connSet = connection.AnalysisSets
     Set conn = connSet.ItemByType("ConnectionDesignSet")
     Set entity = conn.AnalysisEntities
     Set surfConn  = entity.Item(4)
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
     'Create reference from the surface analysis connection
     Set reference1 = oAnalysisManagar.CreateReferenceFromObject(surfConn)
     'Add new nodes to nodes connection mesh part to the list of mesh parts
-    Set nodeMesh = oAnalysisMeshParts.Add ("MSHPartConnPointPoint") 
+    Set nodeMesh = oAnalysisMeshParts.Add ("MSHPartConnPointPoint")
     'Assign previously created reference as support
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 'Add new nodes to nodes connection mesh part to the list of mesh parts
 Set nodeMesh = oAnalysisMeshParts.Add ("MSHPartConnPointPoint")
 'Assign previously created reference as support
+```
+
+```
+
     nodeMesh.AddSupportFromReference NOTHING, reference1
+```vbscript
     'Assign values to its global specifications
+```
+
     nodeMesh.SetGlobalSpecification "Tolerance", 10.
     nodeMesh.SetGlobalSpecification "StopUpdateOnError", 2
     nodeMesh.SetGlobalSpecification "MiddleCombination", 12
+```vbscript
     'Update the mesh part
+```
+
     nodeMesh.Update
 
 ```
 
+```vbscript
     End Sub
+
+```

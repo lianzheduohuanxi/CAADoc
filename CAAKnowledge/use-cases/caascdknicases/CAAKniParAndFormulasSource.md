@@ -13,7 +13,13 @@ tags: ["CATIA", "CAAKniSamplePartR13", "CAAKniParAndFormulas", "CAAScdKniUseCase
 source_file: "Doc/online/CAAScdKniUseCases/CAAKniParAndFormulasSource.htm"
 converted: "2026-05-11T17:31:51.992811"
     Option Explicit
+```vbscript
+```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2001
+
+```
+
+```
 
 ```vbscript
     Dim Language as String
@@ -21,72 +27,95 @@ converted: "2026-05-11T17:31:51.992811"
 ```
 
 ```vbscript
+```vbscript
+```vbscript
     ' ***********************************************************************
     '   Purpose:      This macro:
     '                 1 - Checks whether the active document is a CATPart
-    '                 2 - Retrieves the Relations collection. This is required    
+    '                 2 - Retrieves the Relations collection. This is required
     '                     to create formulas
     '                 3 - Retrieves the Parameters collection. This is required
     '                     to create parameters
-    '                 4 - Creates parameters  
-    '                 5 - Creates formulas                              
-    '                 6 - Displays the list of relations         
-    '                 7 - Displays the list of parameters         
-    '                 Notes: a) The parameter list which is displayed contains 
-    '                           all the document parameters (i.e. the user parameters 
+    '                 4 - Creates parameters
+    '                 5 - Creates formulas
+    '                 6 - Displays the list of relations
+    '                 7 - Displays the list of parameters
+    '                 Notes: a) The parameter list which is displayed contains
+    '                           all the document parameters (i.e. the user parameters
     '                           and the others as well)
     '                        b) If you replay the macro - you create new parameters
-    '                           and formulas, but parameter names are not those specified.  
+    '                           and formulas, but parameter names are not those specified.
     '
     '   Author:       Carole ROULLE, Pierre Grignon
     '   Languages:    VBScript
     '   Locales:      English (United States)
-    '   CATIA Level:  V5R6  
+    '   CATIA Level:  V5R6
     '   revision V5R13
     ' ***********************************************************************
 ```
 
+```
+
+```
+
+```vbscript
     Sub CATMain()
 
+```
+
+```vbscript
+```vbscript
 ```vbscript
      ' Set the CATIA popup file alerts to False
      ' It prevents to stop the macro at each alert during its execution
      CATIA.DisplayFileAlerts = False
-     ' Retrieve your active document - CATIA is your application 
+     ' Retrieve your active document - CATIA is your application
      ' You get the active document by using the ActiveDocument property
      ' on your application object
-        ' ----------------------------------------------------------- 
+        ' -----------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
-        dim sDocPath As String 
+        dim sDocPath As String
         sDocPath=CATIA.SystemService.Environ("CATDocView")
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
           Err.Raise 9999,,"No Doc Path Defined"
         End If
-        ' ----------------------------------------------------------- 
-        ' Open the Part document 
+        ' -----------------------------------------------------------
+        ' Open the Part document
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+```
+
+```
+
 ```
 
     		"online\CAAScdKniUseCases\samples\CAAKniSamplePartR13.CATPart")
 ```vbscript
 Dim sFilePath
+```vbscript
+```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Dim oDoc As Document
         set oDoc = CATIA.Documents.Open(sFilePath)
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
     ' Set the CATIA popup file alerts to False
     ' It prevents to stop the macro at each alert during its execution
     CATIA.DisplayFileAlerts = False
-    ' Retrieve your active document - CATIA is your application 
+    ' Retrieve your active document - CATIA is your application
     ' You get the active document by using the ActiveDocument property
     ' on your application object
-    Dim oActiveDoc As Document 
-    Set oActiveDoc = CATIA.ActiveDocument 
+    Dim oActiveDoc As Document
+    Set oActiveDoc = CATIA.ActiveDocument
     ' Check whether the document is a CATPart
-    If (InStr(oActiveDoc.Name,".CATPart")) <> 0  Then 
+    If (InStr(oActiveDoc.Name,".CATPart")) <> 0  Then
             ' Retrieve the collection object which contains
             ' all the document relations.
             ' The statements below are only valid when the active
@@ -95,65 +124,96 @@ sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
             Set oRelations = oActiveDoc.Part.Relations
             ' Retrieve the collection object which contains
             ' all the document parameters
-            Dim oParameters As Parameters 
-            Set oParameters = oActiveDoc.Part.Parameters        
-            ' Remove the SphereRadius parameter 
-            ' if it exists in the Parameters collection 
+            Dim oParameters As Parameters
+            Set oParameters = oActiveDoc.Part.Parameters
+            ' Remove the SphereRadius parameter
+            ' if it exists in the Parameters collection
             Dim i As Integer
             For i = 1 to oParameters.Count
               if (oParameters.Item(i).Name = "SphereRadius") then
 ```
 
-```vbscript
-Dim i As Integer
-For i = 1 to oParameters.Count
-if (oParameters.Item(i).Name = "SphereRadius") then
-                oParameters.Remove "SphereRadius"  
-              end if
-            Next
+```
+
 ```
 
 ```vbscript
+Dim i As Integer
+```
+
+For i = 1 to oParameters.Count
+```vbscript
+if (oParameters.Item(i).Name = "SphereRadius") then
+```
+
+                oParameters.Remove "SphereRadius"
+              end if
+```vbscript
+```vbscript
+            Next
+
+```
+
+```
+
+```vbscript
+```vbscript
+```vbscript
             ' Create the ProjectId parameter
-            ' This parameter is a string type parameter 
-            ' Its initial value is CATLifKnowledgeAdvisor
-            Dim oString1 As Parameter 
-            Set oString1 = oParameters.CreateString("ProjectId","CATLifKnowledgeAdvisor")
-            ' Create the ProjectKey parameter 
             ' This parameter is a string type parameter
-            ' Its initial value is a blank string 
+            ' Its initial value is CATLifKnowledgeAdvisor
+            Dim oString1 As Parameter
+            Set oString1 = oParameters.CreateString("ProjectId","CATLifKnowledgeAdvisor")
+            ' Create the ProjectKey parameter
+            ' This parameter is a string type parameter
+            ' Its initial value is a blank string
             Dim oString2 As Parameter
             Set oString2 = oParameters.CreateString("ProjectKey","")
             ' Create an integer type parameter
             ' Its name is Stringlength - its initial value is 0
-            Dim oStringLength As Parameter 
+            Dim oStringLength As Parameter
             Set oStringLength = oParameters.CreateInteger("StringLength",0)
             ' Create a Length type parameter
             ' Its initial name is blank
             ' Its initial value is 0
             ' Note that units are specified in internal units
-            ' i.e the units used by the geometric modeler (mm for Length) 
-            Dim oSphereRadius As Parameter 
-            Set oSphereRadius = oParameters.CreateDimension("","LENGTH", 0) 
+            ' i.e the units used by the geometric modeler (mm for Length)
+            Dim oSphereRadius As Parameter
+            Set oSphereRadius = oParameters.CreateDimension("","LENGTH", 0)
             ' Rename the created parameter and assigns a value to it
-            ' Note: this cannot be done if a parameter 
+            ' Note: this cannot be done if a parameter
             ' already named SphereRadius exists in the document
             ' This is why a search for a SphereRadius parameter has
             ' been performed above.
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' already named SphereRadius exists in the document
 ' This is why a search for a SphereRadius parameter has
 ' been performed above.
+```
+
+```
+
             oSphereRadius.Rename "SphereRadius"
-            oSphereRadius.Value = 50 
+            oSphereRadius.Value = 50
+```vbscript
             ' Display the minum tolerance for "SphereRadius"
+```
+
             msgbox "Min Tolerance for the LENGTH parameter " & oSphereRadius.MinimumTolerance
 ```
 
 ```vbscript
-            ' Create a Volume type parameter 
+```vbscript
+```vbscript
+            ' Create a Volume type parameter
             ' Its name is SphereVolume
             ' Its initial value is 0 m3
             Dim oSphereVol As Parameter
@@ -164,13 +224,19 @@ if (oParameters.Item(i).Name = "SphereRadius") then
             ' object - the constrained parameter is passed as the third argument of the
             ' method - The formula expression is passed as the fourth argument.
             ' Note that the Extract function is provided by the Knowledge Advisor
-            ' string function dictionary 
+            ' string function dictionary
 
             Dim oFormula1 As Formula
             Set oFormula1 = oRelations.CreateFormula("Formula1", "", oString2,_
 ```
 
-                                                   "ProjectId.Extract(0,3)" ) 
+```
+
+```
+
+                                                   "ProjectId.Extract(0,3)" )
+```vbscript
+```vbscript
 ```vbscript
             ' Create a formula which also applies to the ProjectKey parameter
             ' This formula will be created as inactive
@@ -178,17 +244,29 @@ if (oParameters.Item(i).Name = "SphereRadius") then
             Set oFormula2 = oRelations.CreateFormula("Formula2", "", oString2,_
 ```
 
-                    "ProjectId.Extract(4,3)" ) 
+```
+
+```
+
+                    "ProjectId.Extract(4,3)" )
+```vbscript
+```vbscript
 ```vbscript
             ' Create a formula which applies to the StringLength parameter
-            ' The formula expression passed as the fourth argument 
+            ' The formula expression passed as the fourth argument
             ' uses the Length function which is provided with the string functions of the
             ' Knowledge Advisor dictionary
             Dim oFormula3 As Formula
             Set oFormula3 = oRelations.CreateFormula("Formula3", "", oStringLength,_
 ```
 
-                                       "ProjectId.Length()" )  
+```
+
+```
+
+                                       "ProjectId.Length()" )
+```vbscript
+```vbscript
 ```vbscript
             ' Create a formula which applies to the SphereVolume parameter
             ' It just calculates the volume from the radius
@@ -196,39 +274,79 @@ if (oParameters.Item(i).Name = "SphereRadius") then
             Set oFormula4 = oRelations.CreateFormula("Formula4", "", oSphereVol,_
 ```
 
-                                     "(4/3)*PI*SphereRadius**3") 
+```
+
+```
+
+                                     "(4/3)*PI*SphereRadius**3")
 ```vbscript
-            ' Display the list of relations 
+```vbscript
+```vbscript
+            ' Display the list of relations
             ' The formula names and expressions are displayed in a message box
             Dim ostrRel As String
+```
+
+```
+
             ostrRel = "Here is the list of relations" & vbCrLf
             For i = 1 to oRelations.Count
+```vbscript
               ostrRel = ostrRel & vbCrLf & oRelations.Item(i).Name &_
+```
+
 ```
 
                         "   " & oRelations.Item(i).Value
 ```vbscript
 For i = 1 to oRelations.Count
-ostrRel = ostrRel & vbCrLf & oRelations.Item(i).Name &_
-            Next
-            MsgBox ostrRel       
+```
 
-            Dim ostrPar As String
-            For i = 1 to oParameters.Count
-              ostrPar = ostrPar & vbCrLf & oParameters.Item(i).Name 
+ostrRel = ostrRel & vbCrLf & oRelations.Item(i).Name &_
+```vbscript
             Next
-            MsgBox ostrPar       
+```
+
+            MsgBox ostrRel
+
+```vbscript
+            Dim ostrPar As String
+```vbscript
+```vbscript
+            For i = 1 to oParameters.Count
+              ostrPar = ostrPar & vbCrLf & oParameters.Item(i).Name
+            Next
+```
+
+```
+
+            MsgBox ostrPar
+```vbscript
+```vbscript
     ' Update the document
-    CATIA.ActiveDocument.Part.Update 
+    CATIA.ActiveDocument.Part.Update
+
+```
+
+```
 
 ```
 
 ```vbscript
+```vbscript
+```vbscript
 ' Update the document
 CATIA.ActiveDocument.Part.Update
-    else 
+```
+
+```
+
+    else
        MsgBox "The active document must be a CATPart"
+```vbscript
     End If
     End Sub
+
+```
 
 ```

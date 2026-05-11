@@ -2,107 +2,131 @@
 title: "Untitled"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CAAScrBase", "CAAAniPostProBasicReport", "CAAScdAniUseCases", "CATIA"]
+tags: ["CAAScrBase", "CATIA", "CAAScdAniUseCases", "CAAAniPostProBasicReport"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProBasicReportSource.htm"
-converted: "2026-05-11T11:06:32.315859"
+converted: "2026-05-11T11:27:02.503663"
 ---
 
-```
 ' COPYRIGHT DASSAULT SYSTEMES 2000
 
 ' ***********************************************************************
-
-' Purpose: To generate basic report
-
-' Assumptions: displacement symbol image exists in the document
-
-' Author: bmw
-
-' Languages: VBScript
-
-' Locales: English 
-
-' CATIA Level: V5R16
-
+'   Purpose:      To generate basic report
+'   Assumptions:   displacement symbol image exists in the document
+'   Author:       bmw
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R16
 ' ***********************************************************************
 
-Sub 
-CATMain()
+Sub CATMain()
 
 ' ----------------------------------------------------------- 
-
 ' Optional: allows to find the sample wherever it's installed
 
- sDocPath=CATIA.SystemService.Environ("CATDocView")
- sOut = CATIA.SystemService.Environ("CATTemp")
+  sDocPath=CATIA.SystemService.Environ("CATDocView")
+  sOut = CATIA.SystemService.Environ("CATTemp")
 
- If 
-(Not CATIA.FileSystem.FolderExists(sDocPath))
- Then
-
- Err.Raise 9999,,"No Doc Path Defined"
-
- End If
-
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,,"No Doc Path Defined"
+    End If
 ' ----------------------------------------------------------- 
 
 ' Open the CATAnalysis Document
-
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis")
+Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
-Set
- oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+Set fileSystem1 = CATIA.FileSystem
+Set folder1 = fileSystem1.GetFolder(sOut)
 
-Set 
-fileSystem1 = CATIA.FileSystem
+Set oAnalysisManager = oAnalysisDocument.Analysis
 
-Set 
-folder1 = fileSystem1.GetFolder(sOut)
+Set oAnalysisModels = oAnalysisManager.AnalysisModels
+Set oAnalysisModel = oAnalysisModels.Item(1)
+Set oAnalysisPostManager = oAnalysisModel.PostManager
+
+Set oAnalysisCases = oAnalysisModel.AnalysisCases
+Set oAnalysisCase = oAnalysisCases.Item(1)
+
+oAnalysisPostManager.AddExistingCaseForReport oAnalysisCase
+
+'basic report on frequency case saved in folder1, title=test1, no image added
+'===============================================
+oAnalysisPostManager.BuildReport folder1, "Test1", False
+
+'basic report on frequency case saved in folder1, title=test2, add created images
+'=================================================
+oAnalysisPostManager.BuildReport folder1, "test2", True
+
+'basic report on frequency case saved in folder1, title=test3, no image added (old method)
+'======================================================
+oAnalysisPostManager.ExtractHTMLReport folder1, "test3"
+
+End Sub
+
+
+```vbscript
+' COPYRIGHT DASSAULT SYSTEMES 2000
+
+' ***********************************************************************
+'   Purpose:      To generate basic report
+'   Assumptions:   displacement symbol image exists in the document
+'   Author:       bmw
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R16
+' ***********************************************************************
+
+
+Sub CATMain()
+
+' ----------------------------------------------------------- 
+' Optional: allows to find the sample wherever it's installed
+
+  sDocPath=CATIA.SystemService.Environ("CATDocView")
+  sOut = CATIA.SystemService.Environ(&quot;CATTemp&quot;)
+
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,,"No Doc Path Defined"
+    End If
+' ----------------------------------------------------------- 
+
+
+' Open the CATAnalysis Document
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis&quot;)
+Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+Set fileSystem1 = CATIA.FileSystem
+Set folder1 = fileSystem1.GetFolder(sOut)
 ```
 
-```
-Set 
-oAnalysisManager = oAnalysisDocument.Analysis
+```vbscript
+Set oAnalysisManager = oAnalysisDocument.Analysis
 
-Set 
-oAnalysisModels = oAnalysisManager.AnalysisModels
+Set oAnalysisModels = oAnalysisManager.AnalysisModels
+Set oAnalysisModel = oAnalysisModels.Item(1)
+Set oAnalysisPostManager = oAnalysisModel.PostManager
 
-Set 
-oAnalysisModel = oAnalysisModels.Item(1)
-
-Set 
-oAnalysisPostManager = oAnalysisModel.PostManager
-
-Set 
-oAnalysisCases = oAnalysisModel.AnalysisCases
-
-Set 
-oAnalysisCase = oAnalysisCases.Item(1)
+Set oAnalysisCases = oAnalysisModel.AnalysisCases
+Set oAnalysisCase = oAnalysisCases.Item(1)
 
 oAnalysisPostManager.AddExistingCaseForReport oAnalysisCase
 ```
 
-```
+```vbscript
 'basic report on frequency case saved in folder1, title=test1, no image added
-
 '===============================================
-
 oAnalysisPostManager.BuildReport folder1, "Test1", False
 ```
 
-```
+```vbscript
 'basic report on frequency case saved in folder1, title=test2, add created images
-
 '=================================================
-
 oAnalysisPostManager.BuildReport folder1, "test2", True
 ```
 
-```
+```vbscript
 'basic report on frequency case saved in folder1, title=test3, no image added (old method)
-
 '======================================================
-
 oAnalysisPostManager.ExtractHTMLReport folder1, "test3"
 
 End Sub

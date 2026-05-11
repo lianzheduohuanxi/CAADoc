@@ -11,20 +11,20 @@ converted: "2026-05-11T17:17:56.124848"
 ---
 # 3D PLM Enterprise Architecture
 
-| 
+|
 ## 3D Visualization - Print
 
-| 
+|
 ### Adding Print Standard Functions to Your Application
 
-_Taking advantage of the Print, Capture, Album, and Printer Manager dialog boxes_  
----|---|---  
-Use Case  
+_Taking advantage of the Print, Capture, Album, and Printer Manager dialog boxes_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
 
-This article shows how to print a given object on a printer. 
+This article shows how to print a given object on a printer.
 
   * **What You Will Learn With This Use Case**
   * **The CAAPrtApplicationUse Case**
@@ -35,7 +35,7 @@ This article shows how to print a given object on a printer.
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
@@ -56,29 +56,29 @@ This use case shows the Print, Capture, Album, and  Printer Manager items of the
 
 In the `File` menu, click `Print...` item.The following dialog box appears. It enables you to print the contents of the viewer.For more details about each widget of this dialog box, launch a CATIA session, open any document, and select the Print command in the File menu. Thanks to the ? icon you can get tool tip information.
 
-![](images/CAAPrtSamplePrintPrintItem.jpg)  
----  
+![](images/CAAPrtSamplePrintPrintItem.jpg)
+---
 
 **Capture Item**
 
 In the `Tools` menu, point to `Image` and click `Capture...` item. The following toolbar appears. For more details about each widget of this dialog box, launch a CATIA session, open any document, and select the Capture command in the Image sub-menu of the Tools menu. Thanks to the ? icon you can get tool tip information.
 
-![](images/CAAPrtSamplePrintCaptureItem.jpg)  
----  
+![](images/CAAPrtSamplePrintCaptureItem.jpg)
+---
 
 **Album Item**
 
 In the `Tools` menu, point to `Image` and click `Album...` item. The following toolbar appears. For more details about each widget of this dialog box, launch a CATIA session, open any document, and select the Album command in the Image sub-menu of the Tools menu. Thanks to the ? icon you can have tool tip information.
 
-![](images/CAAPrtSamplePrintAlbumItem.jpg)  
----  
+![](images/CAAPrtSamplePrintAlbumItem.jpg)
+---
 
 **Printer Setup Item**
 
 In the `File` menu, click `Printer Setup...` item. The Printers dialog box appears. It enables you to add/configure your printers. For more details about each widget of this dialog box, launch a CATIA session, open any document, and select the Printer Setup command in the File menu. Thanks to the ? icon you can have tool tip information.
 
-![](images/CAAPrtSamplePrintManagerItem.jpg)  
----  
+![](images/CAAPrtSamplePrintManagerItem.jpg)
+---
 
 [Top]
 #### How to Launch CAAPrtApplication
@@ -91,29 +91,29 @@ To launch CAAPrtApplication, you will need to set up the build time environment,
 To launch CAAPrtApplication, you will need to set up the build time environment, then compile CAAPrtApplication along with its prerequisites, set up the run time environment, and then execute the use case [1].
 The CAAPrtApplication use case is made of an application class and of a window class whose header and source files are located in the CAAPrtApplication.m module of the CAAPrint.edu framework:
 
-Windows | `InstallRootDirectory\CAAPrint.edu\CAAPrtApplication.m`  
+Windows | `InstallRootDirectory\CAAPrint.edu\CAAPrtApplication.m`
 
 The CAAPrtApplication use case is made of an application class and of a window class whose header and source files are located in the CAAPrtApplication.m module of the CAAPrint.edu framework:
 Windows | `InstallRootDirectory\CAAPrint.edu\CAAPrtApplication.m`
-Unix | `InstallRootDirectory/CAAPrint.edu/CAAPrtApplication.m`  
+Unix | `InstallRootDirectory/CAAPrint.edu/CAAPrtApplication.m`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 CAAPrtApplication includes the following files:
 
-**LocalInterfaces directory**  
----  
+**LocalInterfaces directory**
+---
 CAAPrtApplication includes the following files:
-CAAPrtApplication.h | Header file for the interactive application  
-CAAPrtDialog.h | Header file for the dialog window that hosts the viewer  
-
-**src directory**  
 CAAPrtApplication.h | Header file for the interactive application
 CAAPrtDialog.h | Header file for the dialog window that hosts the viewer
-CAAPrtApplication.cpp | Source file for the interactive application  
-CAAPrtDialog.cpp | Source file for the dialog window that hosts the viewer  
 
-This article explains the `CAAPrtDialog` class and its callbacks methods. 
+**src directory**
+CAAPrtApplication.h | Header file for the interactive application
+CAAPrtDialog.h | Header file for the dialog window that hosts the viewer
+CAAPrtApplication.cpp | Source file for the interactive application
+CAAPrtDialog.cpp | Source file for the dialog window that hosts the viewer
+
+This article explains the `CAAPrtDialog` class and its callbacks methods.
 
 #### Step-by-Step
 
@@ -121,13 +121,13 @@ CAAPrtDialog.cpp | Source file for the dialog window that hosts the viewer
 This article explains the `CAAPrtDialog` class and its callbacks methods.
 To open and display a TIFF image file in a 2D viewer, there are four main steps:
 
-# | Step | Where  
----|---|---  
+# | Step | Where
+---|---|---
 To open and display a TIFF image file in a 2D viewer, there are four main steps:
-1 | Adds the Print dialog box | PrintCB method  
-2 | Adds the Capture toolbar | CaptureCB method  
-3 | Adds the Album dialog box | AlbumCB method  
-4 | Adds the Printer Manager dialog box | PrinterManagerCB method  
+1 | Adds the Print dialog box | PrintCB method
+2 | Adds the Capture toolbar | CaptureCB method
+3 | Adds the Album dialog box | AlbumCB method
+4 | Adds the Printer Manager dialog box | PrinterManagerCB method
 
 These capabilities are proposed to the end user as items of the File menu. A callback set for each of these items displays the appropriate dialog box. The control is then passed to the Print framework that manages the requested tasks. The four methods detailed below are callback methods. Their arguments are unused.
 
@@ -149,11 +149,11 @@ CATCommandClientData   iUsefulData)
 
       print->**SetVisibility**(CATDlgShow); _// Shows the Print dialog box_
 
-    }  
+    }
 
----  
+---
 
-The cursor is set as busy and looks like an hour glass as long as the Print dialog box is not displayed. This is done using the `SetBusyCursor` method. The Print dialog box constructor has the following parameters: 
+The cursor is set as busy and looks like an hour glass as long as the Print dialog box is not displayed. This is done using the `SetBusyCursor` method. The Print dialog box constructor has the following parameters:
 
   * `this` is the dialog box parent set as the application window
   * `"Print"` is the dialog box identifier, unused here
@@ -175,11 +175,11 @@ CATCommandClientData   iUsefulData)
       CATPrintCaptureDialog * capture = new **CATPrintCaptureDialog**(this, "Capture", _viewer);
       capture->**SetVisibility**(CATDlgShow);
 
-    }  
+    }
 
----  
+---
 
-The Capture toolbar constructor has the following parameters: 
+The Capture toolbar constructor has the following parameters:
 
   * `this` is the toolbar parent set as the application window
   * `"Capture"` is the toolbar identifier, unused here
@@ -206,11 +206,11 @@ CATCommandClientData   iUsefulData)
 
       album->SetVisibility(CATDlgShow); _// Shows the Album dialog box_
 
-    }  
+    }
 
----  
+---
 
-The Album dialog box constructor has the following parameters: 
+The Album dialog box constructor has the following parameters:
 
   * `this` is the dialog box parent set as the application window
   * `"Album"` is the dialog box identifier, unused here.
@@ -228,8 +228,8 @@ The `SetVisibility` method displays the dialog box. The Album dialog box manages
 void CAAPrtDialog::PrinterManagerCB(CATCommandCATCommand * iSendingCommand,
 CATNotification      * iSentNotification,
 CATCommandClientData   iUsefulData)
-      _// Instantiates the Printer Manager dialog boxcommand_ 
-      CATPrinterManagerDialog *printMan = new **CATPrinterManagerDialog**(this, 
+      _// Instantiates the Printer Manager dialog boxcommand_
+      CATPrinterManagerDialog *printMan = new **CATPrinterManagerDialog**(this,
 
                                                   "PrintMan", CATDlgWndModal);
 
@@ -237,11 +237,11 @@ _// Instantiates the Printer Manager dialog boxcommand_
 CATPrinterManagerDialog *printMan = new **CATPrinterManagerDialog**(this,
       printMan->**SetVisibility**(CATDlgShow); _// Shows the Printer Manager dialog box_
 
-    }  
+    }
 
----  
+---
 
-The Printer Manager dialog box constructor has the following parameters: 
+The Printer Manager dialog box constructor has the following parameters:
 
   * `this` is the dialog box parent set as the application window
   * `"PrinMan"` is the dialog box identifier, unused here
@@ -261,17 +261,17 @@ This use case shows how to add the Print dialog boxes and toolbars to your appli
 * * *
 ### References
 
-[1] | [Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-[Top]  
+[1] | [Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)
+---|---
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Jan 2000] | Document created  
----|---  
-Version: **2** [Nov 2003] | Document updated  
-[Top]  
+Version: **1** [Jan 2000] | Document created
+---|---
+Version: **2** [Nov 2003] | Document updated
+[Top]
 
 * * *
 

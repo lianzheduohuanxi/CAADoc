@@ -9,13 +9,13 @@ converted: "2026-05-11T17:33:48.368669"
 ```
 
 ---
-# Creating and Transforming Geometry  
+# Creating and Transforming Geometry
 
----  
-Use Case  
+---
+Use Case
 ## Abstract
 
-The GeometricObjects framework exposes the interfaces for the geometry: points, curves, surfaces, and some related classes (such as knot vector or surface and curve parameters for example). The use cases illustrates the creation of geometric objects. First surface is created. Then a CATPLine is created upon it, that is later cloned and transformed. The way to create CATPLine, to use the clone and transformation managers, as well as to use the surface parameter class or the surface evaluator classes is not particular to the foreign surface, but common to all the CATIA surfaces. The same methodology can be used to introduce foreign curves, only differing by the parent class to derive. 
+The GeometricObjects framework exposes the interfaces for the geometry: points, curves, surfaces, and some related classes (such as knot vector or surface and curve parameters for example). The use cases illustrates the creation of geometric objects. First surface is created. Then a CATPLine is created upon it, that is later cloned and transformed. The way to create CATPLine, to use the clone and transformation managers, as well as to use the surface parameter class or the surface evaluator classes is not particular to the foreign surface, but common to all the CATIA surfaces. The same methodology can be used to introduce foreign curves, only differing by the parent class to derive.
     * What You Will Learn With This Use Case
     * The CAAGMModelCreation Use Case
       * What Does CAAGMModelCreation Do
@@ -23,14 +23,14 @@ The GeometricObjects framework exposes the interfaces for the geometry: points, 
       * Where to Find the CAAGMModelCreation Code
     * Step-by-Step
     * In Short
-    * References  
----  
+    * References
+---
 ## What You Will Learn With This Use Case
 
 The use case creates an instance (`piEggBox`) of a surface. This surface is a "foreign" surface: its definition has been declared in another use case CAAGMModelForeign [5], but this do not change any operation that can be done on it. Once introduced according to the appropriate process, a foreign surface can be used as any CATIA surface.
 
-Fig 1: The "Eggs Box" Using the New Type of Surface ![Foreign Surface](images/CAACgmGobForeignSurface.gif) | Using this instance, the use case defines a CATPLine on it (`piPLine`), transforms the created CATPLine (`piTransfLine`), retrieves the corresponding underlying surface (`piTransfEggBox`), evaluates the normal at the four corners of the transformed surface. All these operations are the same for any CATIA surfaces or geometry.  
----|---  
+Fig 1: The "Eggs Box" Using the New Type of Surface ![Foreign Surface](images/CAACgmGobForeignSurface.gif) | Using this instance, the use case defines a CATPLine on it (`piPLine`), transforms the created CATPLine (`piTransfLine`), retrieves the corresponding underlying surface (`piTransfEggBox`), evaluates the normal at the four corners of the transformed surface. All these operations are the same for any CATIA surfaces or geometry.
+---|---
 ## The CAAGMModelCreation Use Case
 
 CAAGMModelCreation is a use case of the CAAGMModelInterfaces.edu framework that illustrates GeometricObjects framework capabilities.
@@ -42,7 +42,10 @@ This use case creates a surface and use it in several geometric operations. The 
 This use case creates a surface and use it in several geometric operations. The created surface is a foreign surface, but what is done for the foreign surface is exactly the same as what must be done for any CATIA surface: the use is the same.
 To launch CAAGMModelCreation, you will need to set up the build time environment, then compile CAAGMModelCreation.m and CAAGMModelForeign.m along with their prerequisites, set up the run time environment, and then execute the use case [6].
 
+```vbscript
 If you simply type CAAGMModelCreation with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example:
+
+```
 
 `CAAGMModelCreation e/GeomObjectCreation.NCGM`
 
@@ -62,7 +65,7 @@ The use case uses a class defined in the CAAGMModelForeign use case [5].
 
 where `InstallRootFolder` [6] is the folder where the API CD-ROM is installed.
 The use case uses a class defined in the CAAGMModelForeign use case [5].
-The main program peforms the following steps: 
+The main program peforms the following steps:
 
     * Creating the Geometry Factory
     * Creating a CATIForeignSurface with an attribute `CAAForeignSurfaceData`
@@ -77,7 +80,10 @@ The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject (
 
 The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject (and the curves and surfaces in particular) [3]. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
     CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**() ;
+```vbscript
     if (NULL==piGeomFactory) return (1);
+
+```
 
 ### Creating a CATIForeignSurface
 
@@ -87,7 +93,10 @@ The data is an attribute of the new type `CAAGMModelForeignSurfaceData`. The att
 
 The foreign surface instance is created by the method `CreateForeignSurface` of the CATGeoFactory, using the created attribute.
 
+```vbscript
 If an error occurs, the program closes the factory and returns an error code.
+
+```
 
     CATMathPoint origin(50.,-10.,5.);
     CATMathDirection directionU(1.,0.,0.), directionV(0.,1.,0.);
@@ -99,12 +108,12 @@ If an error occurs, the program closes the factory and returns an error code.
     double vMin    = -11. ;
     double vMax    = 34. ;
 
-     // ------------ Creates the foreign data 
+     // ------------ Creates the foreign data
 double uMax    = 23. ;
 double vMin    = -11. ;
 double vMax    = 34. ;
-    CAAGMModelForeignSurfaceData* pData = 
-         new **CAAGMModelForeignSurfaceData**(origin, 
+    CAAGMModelForeignSurfaceData* pData =
+         new **CAAGMModelForeignSurfaceData**(origin,
                                       uPeriod*directionU,
                                       vPeriod*directionV,
                                       height/(uPeriod * vPeriod),
@@ -112,14 +121,20 @@ double vMax    = 34. ;
                                       uMax,
                                       vMin,
                                       vMax) ;
+```vbscript
     if (NULL==pData)
+
+```
 
     {
       **::CATCloseCGMContainer**(piGeomFactory);
 vMin,
 vMax) ;
 if (NULL==pData)
+```vbscript
       return (1);
+
+```
 
     }
 
@@ -127,19 +142,28 @@ if (NULL==pData)
 return (1);
     CATIForeignSurface* piEggBox = NULL;
     piEggBox = piGeomFactory ->**CreateForeignSurface**(pData) ;
+```vbscript
+```vbscript
     if (NULL==piEggBox)
+
+```
+
+```
 
     {
       ::CATCloseCGMContainer(piGeomFactory);
 CATIForeignSurface* piEggBox = NULL;
 piEggBox = piGeomFactory ->**CreateForeignSurface**(pData) ;
+```vbscript
 if (NULL==piEggBox)
       return (1);
+
+```
 
     }
 ### Creating a CATPLine
 
-A CATPLine is a line in the space of a surface [4], whatever the surface is: directly a CATIA surface or a CATIForeignSurface. To create a CATPLine, one must specifies the starting and end points: these points are expressed in terms of parameters on the surface. No assumption must be made on the parameterization of the surface. The ways to define a CATSurParameter are: 
+A CATPLine is a line in the space of a surface [4], whatever the surface is: directly a CATIA surface or a CATIForeignSurface. To create a CATPLine, one must specifies the starting and end points: these points are expressed in terms of parameters on the surface. No assumption must be made on the parameterization of the surface. The ways to define a CATSurParameter are:
 
     * Projecting a 3D point on the surface with the geometric operator CATICGMProjectionPtSur.
     * Using the `CATSurface::GetParam` method (only for canonical surfaces and a point that is known to be on the surface).
@@ -152,7 +176,7 @@ Now, the CATPLine can be created by using the `CATGeoFactory::CreatePLine` metho
     CATSurLimits surLimits;
     piEggBox ->**GetLimits**(surLimits);
     CATSurParam lowParam, highParam;
-    surLimits.GetExtremities(lowParam, highParam); 
+    surLimits.GetExtremities(lowParam, highParam);
 
     // Defines the starting and end parameters
 piEggBox ->**GetLimits**(surLimits);
@@ -162,7 +186,7 @@ surLimits.GetExtremities(lowParam, highParam);
     double iLambdaV = 0.2;
 
     // barycenter of surLimits affected with the 0.5 and 0.2 coefficients
-    **CATSurParam** start **(0.5,0.2,surLimits)** ; 
+    **CATSurParam** start **(0.5,0.2,surLimits)** ;
 double iLambdaU = 0.5;
 double iLambdaV = 0.2;
     iLambdaU = 0.8;
@@ -171,14 +195,20 @@ double iLambdaV = 0.2;
 
     _// Creates the Pline_
     CATPLine * piPLine = piGeomFactory->**CreatePLine**(start,end,piEggBox);
+```vbscript
     if (NULL==piPLine)
+
+```
 
     {
       ::CATCloseCGMContainer(piGeomFactory);
 _// Creates the Pline_
 CATPLine * piPLine = piGeomFactory->**CreatePLine**(start,end,piEggBox);
 if (NULL==piPLine)
+```vbscript
       return (1);
+
+```
 
     }
 ### Cloning the CATPLine
@@ -206,14 +236,20 @@ In the use case, the default mode is used: hence, the surface on which the CATPL
 Notice that this process is independent from the type of surface.
     CATCloneManager * pCloneManager= **new CATCloneManager**(piGeomFactory,
                                                          CatCGMSingleDuplicate);
+```vbscript
     if (NULL==pCloneManager)
+
+```
 
     {
        ::CATCloseCGMContainer(piGeomFactory);
 CATCloneManager * pCloneManager= **new CATCloneManager**(piGeomFactory,
 CatCGMSingleDuplicate);
 if (NULL==pCloneManager)
+```vbscript
        return (1);
+
+```
 
     }
 
@@ -227,33 +263,45 @@ if (NULL==pCloneManager)
 pCloneManager->**Run**();
     CATICGMObject* piClonedPLine=NULL;
     piClonedPLine = pCloneManager->**ReadImage**(piPLine);
+```vbscript
+```vbscript
     if (NULL==piClonedPLine)
+
+```
+
+```
 
     {
        ::CATCloseCGMContainer(piGeomFactory);
 CATICGMObject* piClonedPLine=NULL;
 piClonedPLine = pCloneManager->**ReadImage**(piPLine);
+```vbscript
 if (NULL==piClonedPLine)
        return (1);
 
+```
+
     }
 
-    // Retrieves the persistent tags of the underlying surface of the initial 
+    // Retrieves the persistent tags of the underlying surface of the initial
     // and duplicated Plines
     // as the duplication mode is single, the underlying surface must be the same
-    unsigned long tagSurfCloned = 
+    unsigned long tagSurfCloned =
          ( ((CATPLine *)piClonedPLine )->GetSurface())->GetPersistentTag();
-    unsigned long tagSurfPLine  = 
+    unsigned long tagSurfPLine  =
          (              piPLine        ->GetSurface())->GetPersistentTag();
 
 unsigned long tagSurfCloned =
 unsigned long tagSurfPLine  =
-    if (**tagSurfCloned != tagSurfPLine**)    
+```vbscript
+    if (**tagSurfCloned != tagSurfPLine**)
+
+```
 
     {
        ::CATCloseCGMContainer(piGeomFactory);
        return (3);
-    }          
+    }
     **delete** pCloneManager;
     pCloneManager = NULL;
 ### Applying a Transform to the CATPLine
@@ -282,16 +330,22 @@ Notice that this process is independent from the type of surface.
     // duplication of non-invariant objects by default
 Notice that this process is independent from the type of surface.
 CATMathTransformation mathTransf(CATMathVector(20.,10.,40.));
-    CATTransfoManager * pTransfoManager = 
-                        new **CATTransfoManager**(mathTransf,piGeomFactory); 
+    CATTransfoManager * pTransfoManager =
+                        new **CATTransfoManager**(mathTransf,piGeomFactory);
+```vbscript
     if (NULL==pTransfoManager)
+
+```
 
     {
        ::CATCloseCGMContainer(piGeomFactory);
 CATTransfoManager * pTransfoManager =
 new **CATTransfoManager**(mathTransf,piGeomFactory);
 if (NULL==pTransfoManager)
+```vbscript
        return (1);
+
+```
 
     }
 
@@ -305,33 +359,45 @@ if (NULL==pTransfoManager)
 pTransfoManager->**Run**();
     CATICGMObject* piTransfPLine=NULL;
     piTransfPLine = pTransfoManager->**ReadImage**(piPLine);
+```vbscript
+```vbscript
     if (NULL==piTransfPLine)
+
+```
+
+```
 
     {
        ::CATCloseCGMContainer(piGeomFactory);
 CATICGMObject* piTransfPLine=NULL;
 piTransfPLine = pTransfoManager->**ReadImage**(piPLine);
+```vbscript
 if (NULL==piTransfPLine)
        return (1);
+
+```
 
     }
 
     // In this case, the underlying surface is also duplicated.
 return (1);
-    unsigned long tagSurfTransf = 
+    unsigned long tagSurfTransf =
 
                 ( ((CATPLine *)piTransfPLine )->GetSurface())->GetPersistentTag();
-    if (tagSurfTransf == tagSurfPLine)    
+    if (tagSurfTransf == tagSurfPLine)
     {
        ::CATCloseCGMContainer(piGeomFactory);
 unsigned long tagSurfTransf =
 if (tagSurfTransf == tagSurfPLine)
+```vbscript
        return (4);
 
-    }     
+```
+
+    }
 ### Evaluating the Normals
 
-The evaluation is independent from the type of surface. 
+The evaluation is independent from the type of surface.
 
     * The duplicated surface is first retrieved from the transfo manager.
     * Then, one gets the surface limits (`GetLimits`).
@@ -346,12 +412,15 @@ The evaluation is independent from the type of surface.
        ::CATCloseCGMContainer(piGeomFactory);
 CATSurface * piTransfEggBox = (CATSurface*)(pTransfoManager->**ReadImage**(piEggBox));
 if (NULL==piTransfEggBox)
+```vbscript
        return (1);
+
+```
 
      }
 
      // Gets its limits
-     piTransfEggBox ->**GetLimits**(surLimits); 
+     piTransfEggBox ->**GetLimits**(surLimits);
 
      // First corner
 piTransfEggBox ->**GetLimits**(surLimits);
@@ -396,7 +465,7 @@ ofstream filetowrite(pfileName, ios::binary ) ;
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
        filetowrite.close();
-     }	
+     }
 
      //
      // Closes the container
@@ -408,14 +477,14 @@ ofstream filetowrite(pfileName, ios::binary ) ;
 The use case illustrates how to create and use geometry.
 ## References
 
-[1] | [The Management of Foreign Data](CAACgmTaGobAttribute.md)  
----|---  
-[2] | [The Clone and Transformation Managers](CAACgmTaGobClone.md)  
-[3] | [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.md)  
-[4] | [The Curves of CATIA Geometric Modeler](CAACgmTaGobCurves.md)  
-[5] | [Creating Foreign Surfaces](CAACgmUcGobForeign.md)  
-[6] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[1] | [The Management of Foreign Data](CAACgmTaGobAttribute.md)
+---|---
+[2] | [The Clone and Transformation Managers](CAACgmTaGobClone.md)
+[3] | [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.md)
+[4] | [The Curves of CATIA Geometric Modeler](CAACgmTaGobCurves.md)
+[5] | [Creating Foreign Surfaces](CAACgmUcGobForeign.md)
+[6] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
 ## History
 
-Version: **1** [Apr 2000] | Document created  
+Version: **1** [Apr 2000] | Document created
 ---|---

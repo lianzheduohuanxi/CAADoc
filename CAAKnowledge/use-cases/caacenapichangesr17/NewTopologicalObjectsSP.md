@@ -10,11 +10,11 @@ converted: "2026-05-11T17:33:51.354208"
 ```
 
 ---
-| 
+|
 # CAA C++ API Modifications
 
-| 
-##  NewTopologicalObjects Framework Modifications in V5R17 
+|
+##  NewTopologicalObjects Framework Modifications in V5R17
 
 * * *
 

@@ -11,20 +11,20 @@ converted: "2026-05-11T17:17:55.660612"
 ---
 # 3D PLM Enterprise Architecture
 
-| 
+|
 ## User Interface - Frame
 
-| 
+|
 ### Contextual Help for an Add-on
 
-_How to create a documentation file tree_  
----|---|---  
-Use Case  
+_How to create a documentation file tree_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
 
-This article shows how to create a documentation file tree for an Add-On of the CATIA Application. 
+This article shows how to create a documentation file tree for an Add-On of the CATIA Application.
 
   * **What You Will Learn With This Use Case**
   * **The CAADoc Use Case**
@@ -44,19 +44,19 @@ This use case is intended to show you the structure and the contents of a docume
 CAADoc is a use case of the CAAApplicationFrame.edu framework that illustrates contextual help on commands created in the CAAGeometry sample use case. [Top]
 #### What Does CAADoc Do
 
-The CAAGeometry is a sample document that contains a set of commands in a workshop and in two workbenches: CAA V5: Geometrical Creation and CAA V5: Geometrical Analysis. For some commands there is a contextual help. To do that, we have created a documentation file tree which respects a structure to enable the visualization of HTML pages when the end user clicks F1 on a command.  Launch CATIA , when the application is ready: 
+The CAAGeometry is a sample document that contains a set of commands in a workshop and in two workbenches: CAA V5: Geometrical Creation and CAA V5: Geometrical Analysis. For some commands there is a contextual help. To do that, we have created a documentation file tree which respects a structure to enable the visualization of HTML pages when the end user clicks F1 on a command.  Launch CATIA , when the application is ready:
 * In the **Start** menu click **Infrastructure** and select **CAA V5: Geometrical Creation**
 * In the **File New   **Dialog box select **CAAGeometry** and click **OK**
 * On the **Tools** menu click **Options**
 
   * Select the **Help** Tab Page in the **General** options
   * Enter **< InstallRootDirectory>/CAADoc/CAAApplicationFrame.edu/CAADoc **in the **Technical Documentation** editor
-Where <InstallRootDirectory> is the directory where the CAA CD-ROM is installed. 
+Where <InstallRootDirectory> is the directory where the CAA CD-ROM is installed.
   * Click**OK**
 
 * Launch the **Point![](images/CAAAfrHOLCAAPoint.jpg) **command
-* Click **F1** The following HTML page is displayed: _Fig.1: The Point Command Page_ 
----  
+* Click **F1** The following HTML page is displayed: _Fig.1: The Point Command Page_
+---
 
 The top of the page contains a link towards the home page of the Add-On [Fig.3] (Home icon). The Point command is a command created in the CAAGeometry workshop so at the right of the banner, you have the icon representing this workshop.
 
@@ -68,38 +68,38 @@ To display this page, the V5 application creates automatically a frame set which
   * At the left of the frame, the table of contents page associated with the workshop, empty when accessed by contextual help,
   * At the center of the frame, the page associated with the command.
 
-* Launch the **Cuboid** command 
+* Launch the **Cuboid** command
 * Click **F1** The following HTML page is displayed:
 
-_Fig.2: The Cuboid Command Page_ ![](images/CAAAfrHOLCuboidCmd.jpg)  
----  
+_Fig.2: The Cuboid Command Page_ ![](images/CAAAfrHOLCuboidCmd.jpg)
+---
 
 _Fig.2: The Cuboid Command Page_ ![](images/CAAAfrHOLCuboidCmd.jpg)
 The top of the page contains a link towards the home page of the Add-On [Fig.3]. The Cuboid command is a command created in the CAAV5 Geometrical Creation workbench so at the right of the page, you have the icon representing this workbench.
 
 To display this page, the V5 application creates automatically a frame set which contains the same five HTML pages as for the Point command.
 
-* Click the ![](images/CAAAfrHOLnavhome.jpg) icon 
+* Click the ![](images/CAAAfrHOLnavhome.jpg) icon
 
 To display this page, the V5 application creates automatically a frame set which contains the same five HTML pages as for the Point command.
 The following HTML page is displayed:
 
-_Fig.3: The Home Page_ ![](images/CAAAfrHOLHomePage.jpg)  
+_Fig.3: The Home Page_ ![](images/CAAAfrHOLHomePage.jpg)
 
----  
+---
 
 The following HTML page is displayed:
 _Fig.3: The Home Page_ ![](images/CAAAfrHOLHomePage.jpg)
-This is the home page of the Add-On. You retrieve the icon of the workshop and an icon for each workbench. In clicking them you will reach an information page about these entities. 
+This is the home page of the Add-On. You retrieve the icon of the workshop and an icon for each workbench. In clicking them you will reach an information page about these entities.
 
-* Click the ![](images/CAAAfrHOLAnaWb.jpg) icon 
+* Click the ![](images/CAAAfrHOLAnaWb.jpg) icon
 
 This is the home page of the Add-On. You retrieve the icon of the workshop and an icon for each workbench. In clicking them you will reach an information page about these entities.
 The following HTML page is displayed:
 
-_Fig.4: The CAA V5 Geometrical Analysis workbench Home Page_ ![](images/CAAAfrHOLAnaWbHomePage.jpg)  
+_Fig.4: The CAA V5 Geometrical Analysis workbench Home Page_ ![](images/CAAAfrHOLAnaWbHomePage.jpg)
 
----  
+---
 
 The following HTML page is displayed:
 _Fig.4: The CAA V5 Geometrical Analysis workbench Home Page_ ![](images/CAAAfrHOLAnaWbHomePage.jpg)
@@ -115,8 +115,8 @@ To display this page, the V5 application creates automatically a frame frame set
 
 The following HTML page is displayed:
 
-_Fig.5: The CAA V5 Geometrical Creation workbench Home Page_ ![](images/CAAAfrHOLCreWbHomePage.jpg)  
----  
+_Fig.5: The CAA V5 Geometrical Creation workbench Home Page_ ![](images/CAAAfrHOLCreWbHomePage.jpg)
+---
 
 The following HTML page is displayed:
 _Fig.5: The CAA V5 Geometrical Creation workbench Home Page_ ![](images/CAAAfrHOLCreWbHomePage.jpg)
@@ -137,7 +137,7 @@ To launch CAADoc , you will need to set up the build time environment, then comp
 
 Next set up the run time environment, and then execute the use case [2].
 
-Then, in the window where you run the mkrun command, do not type the module name on the command line, but type CNEXT instead. When the application is ready make the scenario given in the above section. 
+Then, in the window where you run the mkrun command, do not type the module name on the command line, but type CNEXT instead. When the application is ready make the scenario given in the above section.
 
 [Top]
 #### Where to Find the CAADoc Files
@@ -145,11 +145,11 @@ Then, in the window where you run the mkrun command, do not type the module name
 Then, in the window where you run the mkrun command, do not type the module name on the command line, but type CNEXT instead. When the application is ready make the scenario given in the above section.
 The CAADoc use case is made of several files located in the CAADoc module of the CAAApplicationFrame.edu framework:
 
-Windows | `<InstallRootDirectory>\CAADoc\CAAApplicationFrame.edu\CAADoc\`  
+Windows | `<InstallRootDirectory>\CAADoc\CAAApplicationFrame.edu\CAADoc\`
 
 The CAADoc use case is made of several files located in the CAADoc module of the CAAApplicationFrame.edu framework:
 Windows | `<InstallRootDirectory>\CAADoc\CAAApplicationFrame.edu\CAADoc\`
-Unix | `<InstallRootDirectory>/CAADoc/CAAApplicationFrame.edu/CAADoc/`  
+Unix | `<InstallRootDirectory>/CAADoc/CAAApplicationFrame.edu/CAADoc/`
 
 where `<InstallRootDirectory>` is the directory where the CAA CD-ROM is installed.
 
@@ -176,8 +176,8 @@ The online directory contains the **HomePage.htm** file [Fig.3] and a set of dir
 
 The **CATIAfr_C2** directory contains the following files:
 
-![](images/CAAAfrHOLPLcontents.jpg)  
----  
+![](images/CAAAfrHOLPLcontents.jpg)
+---
 
 The CATIA banner page: CATIAbnr.md file
 
@@ -207,20 +207,20 @@ The Geometry workshop banner page: GeoWbCATIAbnr.md file
 
 ![](images/CAAAfrHOLGeoWsCATIABnr.jpg)
 
-**AnaWb_C2** , **CreWb_C2** and **GeoWs_C2** are directories associated with the CAA V5 Geometrical Analysis workbench, the CAA V5 Geometrical Creation workbench and the CAAGeometry workshop respectively. 
+**AnaWb_C2** , **CreWb_C2** and **GeoWs_C2** are directories associated with the CAA V5 Geometrical Analysis workbench, the CAA V5 Geometrical Creation workbench and the CAAGeometry workshop respectively.
 
 > Detail of the **AnaWb** directory contents:
-> 
+>
 > ![](images/CAAAfrHOLCAADocOnlineAnaWb.jpg)
-> 
->   * **AnaWbboundingelement.htm** :  the page for the Bounding Elements command 
+>
+>   * **AnaWbboundingelement.htm** :  the page for the Bounding Elements command
 >   * **AnaWbCATIAtoc.htm** : an empty page which can contain tools for the AnaWb directory.
 >   * **AnaWbpr01.htm** : the page associated with the CAA V5 Geometrical Analysis workbench.
 >   * **AnaWbtoc.htm** : a page which contains links to another commands of the same module.
-> 
+>
 
-> 
-> Note that the AnaWb suffix, the name of the directories, are mandatory before the command pages and before the product line toc file. 
+>
+> Note that the AnaWb suffix, the name of the directories, are mandatory before the command pages and before the product line toc file.
 
 The **images** directory contains all the images used through the HTML pages of the AnaWb_C2, CreWb_C2 and GeoWs_C2 directories.
 
@@ -229,14 +229,16 @@ The **icons_C2** directory contains the **no_navigation.htm** file
 
 The **images** directory contains all the images used through the HTML pages of the AnaWb_C2, CreWb_C2 and GeoWs_C2 directories.
 The **icons_C2** directory contains the **no_navigation.htm** file
-This directory contains only the **msgcatalog** directory. 
+This directory contains only the **msgcatalog** directory.
 
 ![](images/CAAAfrHOLCAADocResources.jpg)
 
-This msgcatalog directory contains the **CommonId2url**.CATNls file. 
+This msgcatalog directory contains the **CommonId2url**.CATNls file.
 
 This msgcatalog directory contains the **CommonId2url**.CATNls file.
     CAAAfrGeometryWksHeader.CAAAfrPointHdr = "GeoWs_C2/GeoWspoint.md" ;
+```vbscript
+```vbscript
     CAAAfrGeometryWksHeader.CAAAfrPlaneHdr = "GeoWs_C2/GeoWsplane.md" ;
 
     CAAAfrGeometryWksHeader.CAAAfrExploreHdr = "GeoWs_C2/GeoWsexplore.md" ;
@@ -245,28 +247,35 @@ This msgcatalog directory contains the **CommonId2url**.CATNls file.
     CAAAfrGeoCreationWkbHeader.CAAAfrCuboidHdr = "CreWb_C2/CreWbcuboid.md" ;
     CAAAfrGeoCreationWkbHeader.CAAAfrCylinder1Hdr = "CreWb_C2/CreWbcylinder1.md" ;
     CAAAfrGeoCreationWkbHeader.CAAAfrCylinder2Hdr = "CreWb_C2/CreWbcylinder2.md" ;
-    CAAAfrGeoChartWindowAdnHeader.CAAAfrHistogramChartWindowHdr = "GeoWs_C2/GeoWsChartWindow.md" ;  
+    CAAAfrGeoChartWindowAdnHeader.CAAAfrHistogramChartWindowHdr = "GeoWs_C2/GeoWsChartWindow.md" ;
 
----  
+```
+
+```
+
+---
 
 CAAAfrGeoCreationWkbHeader.CAAAfrCylinder2Hdr = "CreWb_C2/CreWbcylinder2.md" ;
+```vbscript
 CAAAfrGeoChartWindowAdnHeader.CAAAfrHistogramChartWindowHdr = "GeoWs_C2/GeoWsChartWindow.md" ;
+```
+
 In the CAAAfrGeometryWksHeader.CATRsc the resources file associated with the CAAAfrGeometryWksHeader class you find:
 
     CAAAfrGeometryWksHeader.CAAAfrPointHdr.LongHelpId      = "CAAAfrGeometryWksHeader.CAAAfrPointHdr" ;
     CAAAfrGeometryWksHeader.CAAAfrPlaneHdr.LongHelpId      = "CAAAfrGeometryWksHeader.CAAAfrPlaneHdr" ;
-    CAAAfrGeometryWksHeader.CAAAfrExploreHdr.LongHelpId     = "CAAAfrGeometryWksHeader.CAAAfrExploreHdr" ;  
+    CAAAfrGeometryWksHeader.CAAAfrExploreHdr.LongHelpId     = "CAAAfrGeometryWksHeader.CAAAfrExploreHdr" ;
 
----  
+---
 #### Inserting the French Version
 ##### The French Documentation
 
-The French version is created at the first level of the CAADoc documentation file tree. 
+The French version is created at the first level of the CAADoc documentation file tree.
 
 ![](images/CAAAfrHOLCAADocFrench.jpg)
 
 The French directory contains two sub-directories: the **online** and the **resources** directories:
-##### Contents of the online directory 
+##### Contents of the online directory
 
 The **online** directory contains the French directory
 
@@ -274,9 +283,9 @@ The **online** directory contains the French directory
 
 The French directory contains the **HomePage.htm** file [Fig.3] and a set of directories such as the English version:
 
-![](images/CAAAfrHOLCAADocFrenchonlineFrench.jpg)  
----  
-##### The **resources** directory  
+![](images/CAAAfrHOLCAADocFrenchonlineFrench.jpg)
+---
+##### The **resources** directory
 
 ![](images/CAAAfrHOLCAADocResourcesFrench.jpg)
 
@@ -294,22 +303,22 @@ This article explains the structure and the contents of a documentation file tre
 * * *
 ### References
 
-[1] | [Contextual Help](../CAAAfrTechArticles/CAAAfrHelpOnLine.md)  
----|---  
-[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
-[Top]  
+[1] | [Contextual Help](../CAAAfrTechArticles/CAAAfrHelpOnLine.md)
+---|---
+[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Dec 2002] | Document created  
----|---  
 Version: **1** [Dec 2002] | Document created
-Version: **2** [Dec 2003] | Navigation icon introduction  
-Version: **3** [Oct 2014] | Review  
-Version: **4** [May 2016] | Default LongHelpId  
+---|---
+Version: **1** [Dec 2002] | Document created
+Version: **2** [Dec 2003] | Navigation icon introduction
+Version: **3** [Oct 2014] | Review
+Version: **4** [May 2016] | Default LongHelpId
 
-[Top]  
+[Top]
 
 * * *
 

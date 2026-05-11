@@ -2,290 +2,144 @@
 title: "Untitled"
 category: "use-case"
 module: "CAAScdPriUseCases"
-tags: ["CAAScrBase", "CAAInfLauchMacro", "CAAPriPad", "CAAPriPadSource", "CAAScdInfUseCases", "CAAlink", "CAAScdPriUseCases", "CATIA", "CAAScrJavaScript"]
+tags: ["CAAScrBase", "CATIA", "CAAScrJavaScript", "CAAScdInfUseCases", "CAAScdPriUseCases", "CAAPriPadSource", "CAAInfLauchMacro", "CAAPriPad", "CAAlink"]
 source_file: "Doc/online/CAAScdPriUseCases/CAAPriPad.htm"
-converted: "2026-05-11T11:06:32.850275"
+converted: "2026-05-11T11:27:02.726351"
 ---
-
-## Part Design
- 
- 
-## []Creating Pad
- 
- 
 
 ---
 
- 
- |![](../CAAScrBase/images/atarget.gif)
- 
-
-[]This macro shows you how to create a pad from a
- sketch.
- 
-
-This macro opens the [CAAPriPad.CATPart]
- document that contains a sketch only. 
-
- It creates [*Pad*]
- object from a [*Sketch*]*
- *object with a [*ShapeFactory*]
- method and a update it.
- 
- 
- 
- |![](../CAAScrBase/images/ainfo.gif)
- 
-
-[]CAAPriPad is launched in CATIA [[1]].
- No open document is needed.
- 
-
-[CAAPriPad.CATScript] is located in the
- CAAScdPriUseCases module. [Execute
- macro] (windows only).
- 
-
- 
- 
- 
- 
- |![](../CAAScrBase/images/ascenari.gif)
- 
-
-[]CAAPriPad includes the following steps:
- 
-
- 
-- [Prolog]
- 
-- [Creating the Pad]
- 
-- [Modifying the Pad First Limit]
- 
-- [Mirroring the Pad]
- 
- 
-#### Prolog[]
- 
-
-The macro first loads CAAPriPad.CATPart that contains a sketch:
- Sketch.1 
- 
-
-This object have been created with the Sketcher workbench. 
- 
-
-![](images/img001.jpg)
- 
- 
- 
-```
-...
-
-' ------------
-
-' Get the part
-
-' ------------
-
-Dim 
-oPart
- As 
-Part
-
-Set 
-oPart = CATIA.ActiveDocument.Part
-
-' ------------
-
-' Get the part body in the part
-
-' ------------
-
-Dim 
-oBody
- As 
-Body
-
-Set 
-oBody = oPart.Bodies.Item ( "PartBody" ) 
-
-' ------------
-
-' Get the sketch in the body
-
-' ------------
-
-Dim 
-oSketch
- As 
-Sketch
-
-Set 
-oSketch = oBody.Sketches.Item ( "Sketch.1" ) 
- ...
-```
-
- 
- 
- 
- 
+      
 
 Once the part document has been loaded, the `oPart`, `oBody`
- and `oSketch` variables are declared to receive the instance of
- the part, the partbody and the sketch.
- 
-#### Creating the Pad[]
- 
- 
- 
-```
-...
+      and `oSketch` variables are declared to receive the instance of
+      the part, the partbody and the sketch.
+      
 
-' ------------
-
-' Create the pad with a default first limit
-
-' ------------
-
-MsgBox "Click OK to create the pad."
-
-Dim 
-oPad
- As 
-Pad
-
-Set 
-oPad = oPart.ShapeFactory.AddNewPad ( oSketch, 20.000000 ) 
-
-' ------------
-
-' Update the part
-
-' ------------
-
-oPart.Update 
-...
-```
-
- 
- 
- 
- 
+#### Creating the Pad
+      
+      
 
 The *Pad* object is created from the o`Sketch` object
- with a default first limit of 20mm. The *Pad* object is created
- using the `AddNewPad` method of the *ShapeFactory* object.
- 
+      with a default first limit of 20mm. The *Pad* object is created
+      using the `AddNewPad` method of the *ShapeFactory* object.
+      
 
 The *Pad* is then updated with the following result.
- 
+      
 
 ![](images/img002.jpg)
- 
-#### Modifying the pad first limit[]
- 
- 
- 
-```
-...
+      
 
-' ------------
-
-' Define the pad first limit
-
-' ------------
-
-MsgBox "Click OK to set the pad first limit to 40mm."
-oPad.FirstLimit.Dimension.Value = 40.000000
-
-' ------------
-
-' Update the part
-
-' ------------
-
-oPart.Update 
- ...
-```
-
- 
- 
- 
- 
+#### Modifying the pad first limit
+      
+      
 
 The `FirstLimit` property of the *Pad* object is set to
- 40mm.
- 
+      40mm.
+      
 
 ![](images/img003.jpg)
- 
-#### Mirroring the pad[]
- 
- 
- 
-```
-...
+      
 
-' ------------
-
-' Define the pad to be symmetric relative to the sketch plane
-
-' ------------
-
-MsgBox "Click OK to mirror the extrusion offset."
-oPad.IsSymmetric = True
-
-' ------------
-
-' Update the part
-
-' ------------
-
-oPart.Update 
- ...
-```
-
- 
- 
- 
- 
+#### Mirroring the pad
+      
+      
 
 The `IsSymmetric` property of the *Pad* object is set
- to 40mm.
- 
+      to 40mm.
+      
 
 ![](images/img004.jpg)
- 
- 
+    
+  
 
 ![](../CAAScrBase/images/aendtask.gif)
 
-[[Top]]
+[Top]
 
 ---
 
-#### []In Short
+#### In Short
 
 This use case has shown how to create and modify a pad using macros.
 
-[[Top]]
+[Top]
 
 ---
 
-#### []References
-
- 
- |[1]
- |[Replaying
- a macro]
- 
- 
- 
- 
- |[[Top]]
+#### References
 
 ---
 
-*Copyright 2001, Dassault Systmes. All rights reserved.*
+*Copyright  2001, Dassault Systmes. All rights reserved.*
+
+
+
+```vbscript
+...
+' ------------
+' Get the part
+' ------------
+Dim oPart As Part
+Set oPart = CATIA.ActiveDocument.Part
+
+' ------------
+' Get the part body in the part
+' ------------
+Dim oBody As Body
+Set oBody = oPart.Bodies.Item  ( &quot;PartBody&quot; ) 
+
+' ------------
+' Get the sketch in the body
+' ------------
+Dim oSketch As Sketch
+Set oSketch = oBody.Sketches.Item  ( &quot;Sketch.1&quot; ) 
+   ...
+```
+
+```vbscript
+...
+' ------------
+' Create the pad with a default first limit
+' ------------
+MsgBox &quot;Click OK to create the pad.&quot;
+Dim oPad As Pad
+Set oPad = oPart.ShapeFactory.AddNewPad  ( oSketch, 20.000000 ) 
+
+' ------------
+' Update the part
+' ------------
+oPart.Update 
+...
+```
+
+```vbscript
+...
+' ------------
+' Define the pad first limit
+' ------------
+MsgBox &quot;Click OK to set the pad first limit to 40mm.&quot;
+oPad.FirstLimit.Dimension.Value = 40.000000
+
+' ------------
+' Update the part
+' ------------
+oPart.Update 
+  ...
+```
+
+```vbscript
+...
+' ------------
+' Define the pad to be symmetric relative to the sketch plane
+' ------------
+MsgBox &quot;Click OK to mirror the extrusion offset.&quot;
+oPad.IsSymmetric = True
+
+' ------------
+' Update the part
+' ------------
+oPart.Update 
+  ...
+```

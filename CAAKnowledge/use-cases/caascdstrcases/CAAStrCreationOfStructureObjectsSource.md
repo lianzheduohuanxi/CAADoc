@@ -15,23 +15,37 @@ converted: "2026-05-11T17:31:50.888586"
     Option Explicit
 
 ```vbscript
+```vbscript
+```vbscript
     ' COPYRIGTH DASSAULT SYSTEMES 2000
     ' ***********************************************************************
     '   Purpose:      Create structure objects
-    '   Assumtions:   
-    '   Author: 
+    '   Assumtions:
+    '   Author:
     '   Languages:    VBScript
-    '   Locales:      English 
-    '   CATIA Level:  V5R6 
+    '   Locales:      English
+    '   CATIA Level:  V5R6
     ' ***********************************************************************
 ```
 
+```
+
+```
+
+```vbscript
     Sub CATMain()
 
+```
+
+```vbscript
 ```vbscript
         Dim doc As Document
 
         Dim StrWorkbench As StrWorkbench
+```
+
+```vbscript
+```vbscript
         Dim strFactory As StrObjectFactory
 
         Set doc = CATIA.ActiveDocument
@@ -45,6 +59,12 @@ converted: "2026-05-11T17:31:50.888586"
         Set documents = CATIA.Documents
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
         '============================================================
         ' extremities definition for columns
@@ -94,14 +114,26 @@ converted: "2026-05-11T17:31:50.888586"
         '============================================================
 ```
 
+```
+
+```
+
 ```vbscript
         dim sectionName as string
+```vbscript
+```vbscript
         sectionName = InputBox("Section path","Parameters", "e/tmp\HEA120.CATPart")
-        ' column 1    
+        ' column 1
+```
+
+```
+
 ```
 
 ```vbscript
         Dim docSection1 As Document
+```vbscript
+```vbscript
         Set docSection1 = documents.Read(sectionName)
 
         Dim section1 As StrSection
@@ -109,16 +141,28 @@ converted: "2026-05-11T17:31:50.888586"
 
 ```
 
+```
+
+```
+
 ```vbscript
 Dim section1 As StrSection
+```vbscript
+```vbscript
 Set section1 = strFactory.AddSection(docSection1)
         dim member1 as StrMember
+```
+
+```
+
 ```
 
 ```vbscript
         Set member1 = strFactory.AddMember(section1, "catStrCenterCenter", 0, extremity11, extremity12, "Column")
 ```
 
+```vbscript
+```vbscript
 ```vbscript
         ' column 2
         Dim docSection2 As Document
@@ -128,11 +172,17 @@ Set section1 = strFactory.AddSection(docSection1)
         Set section2 = strFactory.AddSection(docSection2)
 ```
 
+```
+
+```
+
         dim member2 as StrMember
 ```vbscript
         Set member2 = strFactory.AddMember(section2, "catStrCenterCenter", 0, extremity21, extremity22, "Column")
 ```
 
+```vbscript
+```vbscript
 ```vbscript
         ' column 3
         Dim docSection3 As Document
@@ -142,11 +192,17 @@ Set section1 = strFactory.AddSection(docSection1)
         Set section3 = strFactory.AddSection(docSection3)
 ```
 
+```
+
+```
+
         dim member3 as StrMember
 ```vbscript
         Set member3 = strFactory.AddMember(section3, "catStrCenterCenter", 0, extremity31, extremity32, "Column")
 ```
 
+```vbscript
+```vbscript
 ```vbscript
         ' column 4
         Dim docSection4 As Document
@@ -156,11 +212,17 @@ Set section1 = strFactory.AddSection(docSection1)
         Set section4 = strFactory.AddSection(docSection4)
 ```
 
+```
+
+```
+
         dim member4 as StrMember
 ```vbscript
         Set member4 = strFactory.AddMember(section4, "catStrCenterCenter", 0, extremity41, extremity42, "Column")
 ```
 
+```vbscript
+```vbscript
 ```vbscript
         '============================================================
         ' end plates creation
@@ -200,4 +262,11 @@ Set section1 = strFactory.AddSection(docSection1)
         Set plate = strFactory.AddPlate(support, 0.005, catStrStandardOrientation, contour, 0.0, "PlateType")
 ```
 
+```
+
+```
+
+```vbscript
     End Sub
+
+```

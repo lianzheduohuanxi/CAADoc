@@ -11,13 +11,13 @@ converted: "2026-05-11T17:31:51.123204"
 ---
 # DrawingSheets Collection
 
-See Also | UseCases | Properties | Methods  
----|---|---|---  
+See Also | UseCases | Properties | Methods
+---|---|---|---
 
-[![](../CAAScrAutomationImages/images/draftdoc.gif)](CAADriObjDrawingDocument.md)  
-![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/drsheets.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)[![](../CAAScrAutomationImages/images/drsheet.gif)](CAADriObjDrawingSheet.md)  
----  
+[![](../CAAScrAutomationImages/images/draftdoc.gif)](CAADriObjDrawingDocument.md)
+![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/drsheets.gif)
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)[![](../CAAScrAutomationImages/images/drsheet.gif)](CAADriObjDrawingSheet.md)
+---
 
 A collection of all the [DrawingSheet](CAADriObjDrawingSheet.md) objects that are currently open in a [DrawingDocument](CAADriObjDrawingDocument.md) object.
 ## Using the DrawingSheets Collection
@@ -35,10 +35,13 @@ Use the Item method to retrieve a drawing sheet from the collection.
 
     DrawingSheets.Item(index)
 
-where index is the drawing sheet name or index number in the DrawingSheets collection. 
+where index is the drawing sheet name or index number in the DrawingSheets collection.
 
 ```vbscript
+```vbscript
 For more information about using a single DrawingSheet object, see the [DrawingSheet](CAADriObjDrawingSheet.md) object.
+
+```
 
 ```
 

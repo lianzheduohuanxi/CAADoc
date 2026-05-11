@@ -11,15 +11,15 @@ converted: "2026-05-11T17:31:51.267374"
 ---
 # Machining
 
-| 
+|
 ## 3 Axis Surface Machining
 
-| 
+|
 ### Managing Geometry with Machining Areas
 
-_Customize the geometry tab page of a surface machining operation with machining areas_  
----|---|---  
-Use Case  
+_Customize the geometry tab page of a surface machining operation with machining areas_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
@@ -35,7 +35,7 @@ This article discusses the CAASmiUserOperationWithMA use case. It explains how t
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
@@ -74,11 +74,11 @@ This use case is a part of _Surface Machining Operation Sample_ [1]. You should 
 This use case is a part of _Surface Machining Operation Sample_ [1]. You should build all the modules of this sample at a time to be able to launch it [2].
 Don't forget to edit the interface dictionary located in:
 
-Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CNext\code\dictionary\`  
+Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CNext\code\dictionary\`
 
 Don't forget to edit the interface dictionary located in:
 Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CNext\code\dictionary\`
-Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`  
+Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed, and uncomment the appropriate lines by removing the '#' character.
 
@@ -88,11 +88,11 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed,
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed, and uncomment the appropriate lines by removing the '#' character.
 This use case is made of source files located in the CAASmiConnectUserOperationWithMA.m module of the CAASurfaceMachiningItf.edu framework:
 
-Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CAASmiConnectUserOperationWithMA.m`  
+Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CAASmiConnectUserOperationWithMA.m`
 
 This use case is made of source files located in the CAASmiConnectUserOperationWithMA.m module of the CAASurfaceMachiningItf.edu framework:
 Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CAASmiConnectUserOperationWithMA.m`
-Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CAASmiConnectUserOperationWithMA.m`  
+Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CAASmiConnectUserOperationWithMA.m`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
@@ -115,36 +115,51 @@ To overload the geometry tab page, we should create an extension class that will
     // Tie the implementation to its interface
     #include "TIE_CATIMfgGeometryActivity.h"
     TIE_CATIMfgGeometryActivity( CAAESmiUserOperationWithMAGeometryEditor);
-    ...  
+    ...
 
----  
+---
 
 In _GetMainPanelEditor,_ we create a machining area (with _CATISmgFactory_) and associate it with CAASmgOperationWithMA. Then, we call the geometry dialog frame described below.
 
       ...
 In _GetMainPanelEditor,_ we create a machining area (with _CATISmgFactory_) and associate it with CAASmgOperationWithMA. Then, we call the geometry dialog frame described below.
+```vbscript
       if (!!spFeatCont)
+
+```
 
       {
 ```vbscript
 if (!!spFeatCont)
         CATISmgFactory * pSmgFactory = NULL;
         oRC = spFeatCont->QueryInterface(IID_CATISmgFactory, (void**) &pSmgFactory);
+```vbscript
         if (SUCCEEDED(oRC))
+```
+
 ```
 
         {
           // Creates a empty machining area
 CATISmgFactory * pSmgFactory = NULL;
 oRC = spFeatCont->QueryInterface(IID_CATISmgFactory, (void**) &pSmgFactory);
+```vbscript
+```vbscript
 if (SUCCEEDED(oRC))
           oRC = pSmgFactory->**CreateMachiningArea**(spMachFeature);
           if (SUCCEEDED(oRC))
 
+```
+
+```
+
           {
             // Link the machining area to the activity
 oRC = pSmgFactory->**CreateMachiningArea**(spMachFeature);
+```vbscript
 if (SUCCEEDED(oRC))
+```
+
             pActivity->SetFeature(spMachFeature);
 
           }
@@ -161,9 +176,9 @@ pActivity->SetFeature(spMachFeature);
 
       // Creates the geometry frame
       oFrame = new CAASmiUserOperationWithMAGeometryPanel(iFather,this);
-      ...  
+      ...
 
----  
+---
 
 [Top]
 #### Creating a geometry dialog frame
@@ -176,31 +191,49 @@ In the constructor class, we build a dialog combo filled with all the machining 
       // Creates a combo box
 In the constructor class, we build a dialog combo filled with all the machining areas in the model and we add a event notification sent whenever a value is selected in the combo list. Then, we get the **default dialog frame** of the selected**machining area** with the _CATIEdit_ interface.
       _pDlgCombo = new CATDlgCombo(this,"DlgCombo",CATDlgCmbDropDown);
+```vbscript
+```vbscript
       if (_pDlgCombo)
 
+```
+
+```
+
       {
-        ...	
+        ...
         // Fills the combo box
 _pDlgCombo = new CATDlgCombo(this,"DlgCombo",CATDlgCmbDropDown);
+```vbscript
+```vbscript
 if (_pDlgCombo)
         if (!!spFeatCont)
+
+```
+
+```
 
         {
           // Finds all machining areas inside the model
 ```vbscript
 if (!!spFeatCont)
-          _pListOfMAs = spFeatCont->ListMembers("CATIM3xFeature");		
+```vbscript
+          _pListOfMAs = spFeatCont->ListMembers("CATIM3xFeature");
+```
+
           int NumbOfMAs = _pListOfMAs.Size();
           for (int i=1;i<=NumbOfMAs;i++)
 ```
 
-          {  				
+          {
 _pListOfMAs = spFeatCont->ListMembers("CATIM3xFeature");
 int NumbOfMAs = _pListOfMAs.Size();
 for (int i=1;i<=NumbOfMAs;i++)
             CATUnicodeString Name;
             CATBaseUnknown_var spMachArea = _pListOfMAs[i];
+```vbscript
             if (!!spMachArea)
+
+```
 
             {
 CATUnicodeString Name;
@@ -208,13 +241,19 @@ CATBaseUnknown_var spMachArea = _pListOfMAs[i];
 if (!!spMachArea)
               CATIAlias * pAlias = NULL;
               HRESULT RC = spMachArea->QueryInterface(IID_CATIAlias, (void**) &pAlias);
+```vbscript
               if (SUCCEEDED(RC))
+
+```
 
               {
 CATIAlias * pAlias = NULL;
 HRESULT RC = spMachArea->QueryInterface(IID_CATIAlias, (void**) &pAlias);
 if (SUCCEEDED(RC))
+```vbscript
                 Name = pAlias->GetAlias();
+```
+
                 _pDlgCombo->SetLine(Name);
                 pAlias->Release();
                 pAlias = NULL;
@@ -231,7 +270,7 @@ pAlias = NULL;
           }
         }
 
-        // Adds a callback 
+        // Adds a callback
 ```vbscript
         AddAnalyseNotificationCB(
           _pDlgCombo,
@@ -244,30 +283,42 @@ pAlias = NULL;
 _pDlgCombo,
 _pDlgCombo->GetComboSelectNotification(),
 (CATCommandMethod) &CAASmiUserOperationWithMAGeometryPanel::SelectMachArea,NULL);
+```vbscript
         if (!!spCurrentMachArea)
+
+```
 
         {
 (CATCommandMethod) &CAASmiUserOperationWithMAGeometryPanel::SelectMachArea,NULL);
 if (!!spCurrentMachArea)
           CATIEdit * pEdit = NULL;
           RC = spCurrentMachArea->QueryInterface(IID_CATIEdit, (void**) &pEdit);
+```vbscript
+```vbscript
           if (SUCCEEDED(RC))
+
+```
+
+```
 
           {
 CATIEdit * pEdit = NULL;
 RC = spCurrentMachArea->QueryInterface(IID_CATIEdit, (void**) &pEdit);
+```vbscript
 if (SUCCEEDED(RC))
+```
+
             CATDlgFrame * pMAFrame = pEdit->**GetPanelItem**(this,"**MAFrameID** ");
-            if (pMAFrame) 
+            if (pMAFrame)
               pMAFrame->SetGridConstraints( 1, 0, 2, 1, CATGRID_4SIDES);
             pEdit->Release();
             pEdit = NULL;
 
           }
-        }		
-      ...  
+        }
+      ...
 
----  
+---
 
 The _SelectMachArea_ method is called whenever a new machining area is selected in the combo list. Here, the default dialog frame is updated with the _CATIEdit_ interface:
 
@@ -276,21 +327,30 @@ The _SelectMachArea_ method is called whenever a new machining area is selected 
 The _SelectMachArea_ method is called whenever a new machining area is selected in the combo list. Here, the default dialog frame is updated with the _CATIEdit_ interface:
       CATIEdit * pEdit = NULL;
       RC = spMA->QueryInterface(IID_CATIEdit, (void**) &pEdit);
+```vbscript
+```vbscript
       if (SUCCEEDED(RC))
+
+```
+
+```
 
       {
         // As a frame called "MAFrameID" has already been created, the method GetPanelItem
         // will refresh it
 RC = spMA->QueryInterface(IID_CATIEdit, (void**) &pEdit);
+```vbscript
 if (SUCCEEDED(RC))
+```
+
         pEdit->**GetPanelItem**(this,"**MAFrameID** ");
         pEdit->Release();
         pEdit = NULL;
 
       }
-     ...  
+     ...
 
----  
+---
 
 [Top]
 
@@ -310,18 +370,18 @@ We will see now how to compute the tool path of our operation [3].
 * * *
 ### References
 
-[1] | [Surface Machining Operation Sample Overview](../CAASmiTechArticles/CAASmiOperationSampleOverview.md)  
----|---  
-[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
-[3] | [Computing a Tool Path with Machining Areas](CAASmiUserOperationWithMAToolPath.md)  
-[Top]  
+[1] | [Surface Machining Operation Sample Overview](../CAASmiTechArticles/CAASmiOperationSampleOverview.md)
+---|---
+[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)
+[3] | [Computing a Tool Path with Machining Areas](CAASmiUserOperationWithMAToolPath.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Mar 2002] | Document created  
----|---  
-[Top]  
+Version: **1** [Mar 2002] | Document created
+---|---
+[Top]
 
 * * *
 

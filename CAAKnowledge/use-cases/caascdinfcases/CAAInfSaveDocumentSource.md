@@ -15,48 +15,80 @@ converted: "2026-05-11T17:31:52.396971"
 Option Explicit
 
 ```vbscript
+```vbscript
+```vbscript
      ' COPYRIGHT DASSAULT SYSTEMES 2001
      ' *****************************************************************************
      '   Purpose:       Save an Existing Document.
      '   Assumtions:   Looks for CAAInfReadDocument.CATPart
-     '                         in the CATDocView   
-     '   Author: 
+     '                         in the CATDocView
+     '   Author:
      '   Languages:   VBScript
-     '   Locales:        English 
-     '   CATIA Level:  V5R7 
+     '   Locales:        English
+     '   CATIA Level:  V5R7
      ' *****************************************************************************
 
 ```
 
+```
+
+```
+
      Sub CATMain()
+```vbscript
+```vbscript
          ' -----------------------------------------------------------------------------------------------
          ' Optional: allows to find the sample wherever it may be installed
 
+```
+
+```
+
 ```vbscript
          Dim sDocPath As String
+```vbscript
+```vbscript
          sDocPath=CATIA.SystemService.Environ("CATDocView")
          If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
            Err.Raise 9999,,"No Doc Path Defined"
          End If
 ```
 
+```
+
+```
+
 ```vbscript
-         ' ------------------------------------------------------------------------------------------------ 
+```vbscript
+```vbscript
+         ' ------------------------------------------------------------------------------------------------
          'Open the document and add it as the last item of the collection of documents.
          'Create and display a new window for the document.
          'Activate the document and its window.
-         Dim sFilePath 
+         Dim sFilePath
          sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+```
+
+```
+
 ```
 
             "online\CAAScdInfUseCases\samples\CAAInfReadDocument.CATPart")
 ```vbscript
 Dim sFilePath
+```vbscript
+```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
          Dim iPartDoc As Document
          Set iPartDoc = CATIA.Documents.Open(sFilePath)
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
          'The document just opened is the active document.
          'Save the active document and then close it.
@@ -64,18 +96,30 @@ sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
           CATIA.ActiveDocument.Close()
          'Open the same document again.
           Set iPartDoc = CATIA.Documents.Open(sFilePath)
-         'Save the document just opened using the variable name defined for it. 
+         'Save the document just opened using the variable name defined for it.
          'Close the document in the same way.
+```
+
+```
+
 ```
 
 ```vbscript
 Set iPartDoc = CATIA.Documents.Open(sFilePath)
+```vbscript
+```vbscript
 'Save the document just opened using the variable name defined for it.
 'Close the document in the same way.
+```
+
+```
+
           iPartDoc.Save()
           iPartDoc.Close()
 ```
 
+```vbscript
+```vbscript
 ```vbscript
          'Open the same document a third time.
           Set iPartDoc = CATIA.Documents.Open(sFilePath)
@@ -84,4 +128,11 @@ Set iPartDoc = CATIA.Documents.Open(sFilePath)
           CATIA.Documents.Item("CAAInfReadDocument.CATPart").Close()
 ```
 
+```
+
+```
+
+```vbscript
      End Sub
+
+```

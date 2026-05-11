@@ -11,15 +11,15 @@ converted: "2026-05-11T17:31:51.529141"
 ---
 # Equipment & Systems
 
-| 
+|
 ## Schematics Platform Modeler
 
-| 
+|
 ### Creating Schematic Application Components
 
-_Working with Schematic Components_  
----|---|---  
-Use Case  
+_Working with Schematic Components_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
@@ -35,7 +35,7 @@ This article discusses the CAASchAppSample3 use case.
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
@@ -66,11 +66,11 @@ To launch CAASchAppSample3, you will need to set up the build time environment, 
 CAASchAppSample3 code is located in the CAASchAppSample3.m use case module of the CAASchPlatformModeler.edu framework:
 
 CAASchAppSample3 code is located in the CAASchAppSample3.m use case module of the CAASchPlatformModeler.edu framework:
-Windows | `InstallRootDirectory\CAASchPlatformModeler.edu\CAASchAppSample3.m`  
+Windows | `InstallRootDirectory\CAASchPlatformModeler.edu\CAASchAppSample3.m`
 
 CAASchAppSample3 code is located in the CAASchAppSample3.m use case module of the CAASchPlatformModeler.edu framework:
 Windows | `InstallRootDirectory\CAASchPlatformModeler.edu\CAASchAppSample3.m`
-Unix | `InstallRootDirectory/CAASchPlatformModeler.edu/CAASchAppSample3.m`  
+Unix | `InstallRootDirectory/CAASchPlatformModeler.edu/CAASchAppSample3.m`
 
 where `InstallRootDirectory` is the root directory of your CAA V5 installation. It is made of a two unique source files named CAASchAppSample3Main.cpp and CAASchAppSample3.cpp.
 
@@ -100,9 +100,9 @@ The CAASchAppSample2 code is derived from the CAASchAppBaseEnv base class. The b
 
 The CAASchAppSample2 code is derived from the CAASchAppBaseEnv base class. The base class contains functionality common to the other CAASchApp samples. Initializing the environment involves the following methods:
     CAASchAppSample2::InitEnvironment
-    CreateCATProductEnv::CreateCATProductEnv  
+    CreateCATProductEnv::CreateCATProductEnv
 
----  
+---
 
 CAASchAppSample2::InitEnvironment
 CreateCATProductEnv::CreateCATProductEnv
@@ -123,7 +123,10 @@ According to the rules for the Schematics Modeler, if you want to create a route
 
 According to the rules for the Schematics Modeler, if you want to create a route, you must first use your application object factory to create the route (feature) object. The sample uses the _CATISchAppObjectFactory_ interface method `AppCreateRoute` to create the route object instance. The application route reference is already residing in the input model, and `AppCreateRoute` retrieves it and creates the application route instance from it.
         CATISchSession* piSchSession = NULL;
+```vbscript
         if ( SUCCEEDED( pSession->QueryInterface (IID_CATISchSession,(void**)&piSchSession)))
+
+```
 
         {
 CATISchSession* piSchSession = NULL;
@@ -133,7 +136,7 @@ if ( SUCCEEDED( pSession->QueryInterface (IID_CATISchSession,(void**)&piSchSessi
 
           piSchSession->Release(); piSchSession = NULL;
 
-        } 
+        }
 piSchSession->GetSchObjInterface(SCHEDUApplication_Name,
 IID_CATISchAppObjectFactory, (void**)&_piSchAppObjFact);
 piSchSession->Release(); piSchSession = NULL;
@@ -157,7 +160,10 @@ else
           {
 ```vbscript
 if (NULL != _piSchAppObjFact)
+```vbscript
 if (SUCCEEDED(_piSchAppObjFact->AppCreateRoute (SCHEDUClass_String,
+```
+
             cout << "CAASchAppSample3::DoSample: First application route found" << endl;
 ```
 
@@ -179,7 +185,7 @@ else
 cout << "Route: "
             return E_FAIL;
 
-          } 
+          }
 
           if (SUCCEEDED(_piSchAppObjFact->AppCreateRoute (SCHEDUClass_String,
                &_piUKAppRoute2)))
@@ -207,7 +213,7 @@ else
 cout << "Route: "
             return E_FAIL;
 
-          } 
+          }
         }
 return E_FAIL;
         else
@@ -218,9 +224,9 @@ else
           cout << "Cannot get Schematic Application Object Factory" << endl;
           return E_FAIL;
 
-        }   
+        }
 
----  
+---
 
 The method `AppCreateRoute` is implemented in the file **CAAESchAppObjectFactory.cpp**. See the the section [Creating an Application Reference Object](CAASchSample1.htm#AppReferenceObject) in CAASchSample1 for more information.
 
@@ -231,25 +237,37 @@ After the route feature object is created, the Schematics base factory interface
 
 After the route feature object is created, the Schematics base factory interface _CATISchBaseFactory_ method `CreateSchRouteByPoints` is used to create the Route.
         CATISchRoute   *_piSchRoute1;
+```vbscript
         if ( _piUKAppRoute1 )
+
+```
 
         {
 CATISchRoute   *_piSchRoute1;
 if ( _piUKAppRoute1 )
           double LDbPts[4] = {50.0, 50.0, 500.0, 50.0};
           int iSize = 4;
-          RC = _piBaseFact->CreateSchRouteByPoints (_piUKAppRoute1, 
+          RC = _piBaseFact->CreateSchRouteByPoints (_piUKAppRoute1,
                             LDbPts, iSize, &_piSchRoute1);
+```vbscript
           if (SUCCEEDED(RC) && _piSchRoute1)
+
+```
 
           {
 int iSize = 4;
 RC = _piBaseFact->CreateSchRouteByPoints (_piUKAppRoute1,
 LDbPts, iSize, &_piSchRoute1);
 if (SUCCEEDED(RC) && _piSchRoute1)
-            RC = _piSchRoute1->QueryInterface (IID_CATISpecObject, 
+```vbscript
+            RC = _piSchRoute1->QueryInterface (IID_CATISpecObject,
+```
+
                  (void **) &_piSpecSchRoute1);
+```vbscript
             if (SUCCEEDED(RC) && _piSpecSchRoute1)
+
+```
 
             {
 RC = _piSchRoute1->QueryInterface (IID_CATISpecObject,
@@ -260,9 +278,9 @@ if (SUCCEEDED(RC) && _piSpecSchRoute1)
 
             }
           }
-        }  
+        }
 
----  
+---
 
 [Top]
 #### Creating a Route from Primitives
@@ -283,14 +301,20 @@ if ( _piUKAppRoute2 )
            iLDbLinePath[2] = 400.0;
            iLDbLinePath[3] = 700.0;
            RC = _piGRRFact->CreateGRRRoute (iLDbLinePath, iSizeOfPath, &_piSchGRRRoute1);
+```vbscript
            if (!SUCCEEDED(RC) || !_piSchGRRRoute1)
+```
+
 ```
 
            {
 iLDbLinePath[2] = 400.0;
 iLDbLinePath[3] = 700.0;
 RC = _piGRRFact->CreateGRRRoute (iLDbLinePath, iSizeOfPath, &_piSchGRRRoute1);
+```vbscript
 if (!SUCCEEDED(RC) || !_piSchGRRRoute1)
+```
+
               cout << "CreateRouteTest: "
 
                    << "Cannot create route graphical representation"
@@ -301,7 +325,7 @@ cout << "CreateRouteTest: "
               return 0;
 ```
 
-           } 
+           }
 cout << "CreateRouteTest: "
 return 0;
            iLDbLinePath[0] = 400.0;
@@ -309,13 +333,22 @@ return 0;
            iLDbLinePath[2] = 900.0;
            iLDbLinePath[3] = 400.0;
            RC = _piGRRFact->CreateGRRRoute (iLDbLinePath, iSizeOfPath, &_piSchGRRRoute2);
+```vbscript
+```vbscript
            if (!SUCCEEDED(RC) || !_piSchGRRRoute2)
+
+```
+
+```
 
            {
 iLDbLinePath[2] = 900.0;
 iLDbLinePath[3] = 400.0;
 RC = _piGRRFact->CreateGRRRoute (iLDbLinePath, iSizeOfPath, &_piSchGRRRoute2);
+```vbscript
 if (!SUCCEEDED(RC) || !_piSchGRRRoute2)
+```
+
               cout << "CreateRouteTest: "
 
                    << "Cannot create route graphical representation"
@@ -336,24 +369,42 @@ return 0;
 return 0;
 cout << "CreateRouteTest: GRRRoutes created" << endl;
         CATSchListServices SchList;
+```vbscript
         if (SUCCEEDED(SchList.CreateCATIUnknownList (&_piLUK)))
+
+```
 
         {
 CATSchListServices SchList;
 if (SUCCEEDED(SchList.CreateCATIUnknownList (&_piLUK)))
+```vbscript
+```vbscript
            if (_piLUK)
+
+```
+
+```
 
            {
 CATSchListServices SchList;
 if (SUCCEEDED(SchList.CreateCATIUnknownList (&_piLUK)))
+```vbscript
+```vbscript
 if (_piLUK)
-              if (SUCCEEDED (_piSchGRRRoute1->QueryInterface (IID_IUnknown, 
+              if (SUCCEEDED (_piSchGRRRoute1->QueryInterface (IID_IUnknown,
+```
+
+```
+
                   (void **) &_piUK)) )
 
               {
 ```vbscript
 if (_piLUK)
+```vbscript
 if (SUCCEEDED (_piSchGRRRoute1->QueryInterface (IID_IUnknown,
+```
+
 (void **) &_piUK)) )
                  _piLUK->Add(0,_piUK);
                  CAASchAppDeleteBaseUnknown (_piUK);
@@ -363,33 +414,54 @@ if (SUCCEEDED (_piSchGRRRoute1->QueryInterface (IID_IUnknown,
 (void **) &_piUK)) )
 _piLUK->Add(0,_piUK);
 CAASchAppDeleteBaseUnknown (_piUK);
-              if (SUCCEEDED (_piSchGRRRoute2->QueryInterface (IID_IUnknown, 
+```vbscript
+              if (SUCCEEDED (_piSchGRRRoute2->QueryInterface (IID_IUnknown,
+```
+
                   (void **) &_piUK)) )
 
               {
 CAASchAppDeleteBaseUnknown (_piUK);
+```vbscript
 if (SUCCEEDED (_piSchGRRRoute2->QueryInterface (IID_IUnknown,
+```
+
 (void **) &_piUK)) )
                  _piLUK->Add(1,_piUK);
                  CAASchAppDeleteBaseUnknown (_piUK);
 
               }
-           } 
+           }
         }
 
         //-------------------------------------------------------------------------
         //  Create schematic route by primitives
         //-------------------------------------------------------------------------
-        RC = _piBaseFact->CreateSchRouteByPrim (_piUKAppRoute2, _piLUK, &_piSchRoute2);               
+        RC = _piBaseFact->CreateSchRouteByPrim (_piUKAppRoute2, _piLUK, &_piSchRoute2);
+```vbscript
+```vbscript
 RC = _piBaseFact->CreateSchRouteByPrim (_piUKAppRoute2, _piLUK, &_piSchRoute2);
         if (SUCCEEDED(RC) && _piSchRoute2)
 
+```
+
+```
+
         {
 RC = _piBaseFact->CreateSchRouteByPrim (_piUKAppRoute2, _piLUK, &_piSchRoute2);
+```vbscript
+```vbscript
 if (SUCCEEDED(RC) && _piSchRoute2)
-          RC = _piSchRoute2->QueryInterface (IID_CATISpecObject, 
+          RC = _piSchRoute2->QueryInterface (IID_CATISpecObject,
+```
+
+```
+
                (void **) &_piSpecSchRoute2);
+```vbscript
           if (SUCCEEDED(RC) && _piSpecSchRoute2)
+
+```
 
           {
 RC = _piSchRoute2->QueryInterface (IID_CATISpecObject,
@@ -401,7 +473,7 @@ if (SUCCEEDED(RC) && _piSpecSchRoute2)
           }
         }
 
----  
+---
 
 [Top]
 
@@ -420,15 +492,15 @@ This use case has demonstrated how to create a string class object, route, using
 * * *
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
----|---  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)
+---|---
 
 * * *
 ### History
 
-Version: **1** [April 2001] | Document created  
----|---  
-[Top]  
+Version: **1** [April 2001] | Document created
+---|---
+[Top]
 
 * * *
 

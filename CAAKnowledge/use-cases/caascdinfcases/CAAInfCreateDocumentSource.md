@@ -15,20 +15,31 @@ converted: "2026-05-11T17:31:52.356061"
     Option Explicit
 
 ```vbscript
+```vbscript
+```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2001
     ' *****************************************************************************
     '   Purpose:       Create a New Document.
     '   Assumtions:   None
-    '   Author: 
+    '   Author:
     '   Languages:   VBScript
-    '   Locales:        English 
-    '   CATIA Level:  V5R7 
+    '   Locales:        English
+    '   CATIA Level:  V5R7
     ' *****************************************************************************
 
 ```
 
+```
+
+```
+
+```vbscript
     Sub CATMain()
 
+```
+
+```vbscript
+```vbscript
 ```vbscript
         'Create a new part document.
         'Add the new document to the end of the collection of documents.
@@ -36,10 +47,23 @@ converted: "2026-05-11T17:31:52.356061"
         'Activate the new document and the window.
 ```
 
+```
+
+```
+
 ```vbscript
         Dim oNewPartDoc As Document
+```vbscript
+```vbscript
         Set oNewPartDoc = CATIA.Documents.Add("Part")
 
 ```
 
+```
+
+```
+
+```vbscript
     End Sub
+
+```

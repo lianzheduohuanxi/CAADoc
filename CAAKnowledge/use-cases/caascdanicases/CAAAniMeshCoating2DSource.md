@@ -10,6 +10,8 @@ converted: "2026-05-11T17:31:51.630483"
 
 ---
 ```vbscript
+```vbscript
+```vbscript
     'COPYRIGHT DASSAULT SYSTEMES 2000
     '***********************************************************************
     '  Purpose:      Open an analysis document
@@ -20,127 +22,221 @@ converted: "2026-05-11T17:31:51.630483"
     '                mesh part
     '  Author:       bmw
     '  Languages:    VBScript
-    '  Locales:      English 
+    '  Locales:      English
     '  CATIA Level:  V5R16
     '***********************************************************************
 
 ```
 
-    Sub CATMain()
+```
+
+```
 
 ```vbscript
-    '----------------------------------------------------------- 
+    Sub CATMain()
+
+```
+
+```vbscript
+```vbscript
+```vbscript
+    '-----------------------------------------------------------
     'Optional: allows to find the sample wherever it's installed
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 
+```
+
+```
+
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
+```vbscript
+```vbscript
         End If
-    '----------------------------------------------------------- 
+    '-----------------------------------------------------------
+
+```
+
+```
 
 ```
 
 ```vbscript
 End If
+```vbscript
+```vbscript
 '-----------------------------------------------------------
     'Open the CATAnalysis Document
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis")
 ```
 
+```
+
+```
+
+```vbscript
 ```vbscript
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```
 
-```vbscript
-Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
-    'Retrieve the analysis Manager 
 ```
 
+```vbscript
+Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+```vbscript
+    'Retrieve the analysis Manager
+```
+
+```
+
+```vbscript
 ```vbscript
     Set oAnalysisManager = oAnalysisDocument.Analysis
 
 ```
 
+```
+
 ```vbscript
 Set oAnalysisManager = oAnalysisDocument.Analysis
+```vbscript
     'Retrieve the part document and product
+```
+
 ```
 
 ```vbscript
     Set oAnalysisLinkedDocuments = oAnalysisManager.LinkedDocuments
+```vbscript
+```vbscript
     Set partDocument = oAnalysisLinkedDocuments.Item(1)
     Set product = partDocument.Product
 
 ```
 
+```
+
+```
+
 ```vbscript
 Set partDocument = oAnalysisLinkedDocuments.Item(1)
+```vbscript
+```vbscript
 Set product = partDocument.Product
     'Retrieve the published face
 ```
 
+```
+
+```
+
 ```vbscript
     Set publications1 = product.Publications
+```vbscript
+```vbscript
     Set pubFace = publications1.Item("Top")
+
+```
+
+```
 
 ```
 
 ```vbscript
 Set publications1 = product.Publications
+```vbscript
+```vbscript
 Set pubFace = publications1.Item("Top")
     'Retrieve the analysis model
 ```
 
-```vbscript
-    Set oAnalysisModels = oAnalysisManager.AnalysisModels
-    Set oAnalysisModel = oAnalysisModels.Item(1)
+```
+
 ```
 
 ```vbscript
+    Set oAnalysisModels = oAnalysisManager.AnalysisModels
+```vbscript
+    Set oAnalysisModel = oAnalysisModels.Item(1)
+```
+
+```
+
+```vbscript
+```vbscript
+```vbscript
     'Retrieve The mesh manager and the list of mesh parts
-    Set oAnalysisMeshManager = oAnalysisModel.MeshManager 
+    Set oAnalysisMeshManager = oAnalysisModel.MeshManager
     Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
     'Retrieve the already existing Octree mesh part
     Set oAnalysisMeshPart = oAnalysisMeshParts.Item(1)
     'Create reference from the mesh part
     Set reference1 = oAnalysisManager.CreateReferenceFromObject(oAnalysisMeshPart)
     'Add the coating2D mesh to the list of mesh parts
-    Set coat2D = oAnalysisMeshParts.Add ("MSHPart2DCoating") 
+    Set coat2D = oAnalysisMeshParts.Add ("MSHPart2DCoating")
     'Add the reference previously created
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 'Add the coating2D mesh to the list of mesh parts
 Set coat2D = oAnalysisMeshParts.Add ("MSHPart2DCoating")
 'Add the reference previously created
+```
+
+```
+
     coat2D.AddSupportFromReference NOTHING, reference1
+```vbscript
     'Set the global specifications
+```
+
     coat2D.SetGlobalSpecification "ExtractionType", 1
 
 ```
 
 coat2D.SetGlobalSpecification "ExtractionType", 1
+```vbscript
+```vbscript
     'Add the local specification
+
+```
+
+```
 
 ```vbscript
     Set meshSpecs = coat2D.AnalysisMeshLocalSpecifications
+```vbscript
     Set spec = meshSpecs.Add("MSHCoatingLocalSpecification")
+```
+
     spec.SetAttribute "LocalExtractionType", 2
 
 ```
 
 ```vbscript
 Set spec = meshSpecs.Add("MSHCoatingLocalSpecification")
+```
+
 spec.SetAttribute "LocalExtractionType", 2
     spec.AddSupportFromPublication "ConnectorList", product, pubFace
 
+```vbscript
     'Update the mesh part
-    coat2D.Update
-
 ```
 
+    coat2D.Update
+
+```vbscript
     End Sub
+
+```

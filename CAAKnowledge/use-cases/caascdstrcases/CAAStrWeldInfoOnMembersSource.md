@@ -10,6 +10,8 @@ converted: "2026-05-11T17:31:50.911084"
 
 ---
 ```vbscript
+```vbscript
+```vbscript
     '//============================================================================
     '// COPYRIGHT DASSAULT SYSTEMES 2013
     '//============================================================================
@@ -20,10 +22,19 @@ converted: "2026-05-11T17:31:50.911084"
     '//============================================================================
 ```
 
+```
+
+```
+
+```vbscript
     Sub CATMain()
+
+```
 
 ```vbscript
     Dim ObjPart As Part
+```vbscript
+```vbscript
     Set ObjPart = CATIA.ActiveDocument.Part
 
     Dim FactoryObj As SfmFactory
@@ -33,6 +44,12 @@ converted: "2026-05-11T17:31:50.911084"
     Set ManagerObj = FactoryObj.GetManager
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
     'RETRIEVING THE SUPERMembers
     Dim SuperMembers As References
@@ -51,14 +68,26 @@ converted: "2026-05-11T17:31:50.911084"
     'DECK Member
 ```
 
+```
+
+```
+
 ```vbscript
 Set SelctionObj = CATIA.ActiveDocument.Selection
+```vbscript
 'DECK Member
+```
+
     SelctionObj.Add SplitMember1
     Dim DeckMember1 As SfmMember
+```vbscript
     Set DeckMember1 = SelctionObj.FindObject("CATIASfmMember")
 ```
 
+```
+
+```vbscript
+```vbscript
 ```vbscript
     'Retrieving Super Plates
     Dim SuperPlates As References
@@ -74,8 +103,14 @@ Set SelctionObj = CATIA.ActiveDocument.Selection
     Set OperatingSplitPlate = OperatingSplitPlateRefs.Item(1)
 ```
 
+```
+
+```
+
 ```vbscript
     Dim WeldsUC1 As SfmWelds
+```vbscript
+```vbscript
     Set WeldsUC1 = DeckMember1.GetWelds(OperatingSplitPlate)
 
     Dim WeldUC1 As SfmWeld
@@ -83,9 +118,16 @@ Set SelctionObj = CATIA.ActiveDocument.Selection
 
 ```
 
+```
+
+```
+
 ```vbscript
 Dim WeldUC1 As SfmWeld
+```vbscript
 Set WeldUC1 = WeldsUC1.Item(1)
+```
+
     ustrWeldTypeUC1 = WeldUC1.WeldType
     ustrAddedMaterialUC1 = WeldUC1.AddedMaterial
     ustrFitUpUC1 = WeldUC1.FitUp
@@ -95,6 +137,8 @@ Set WeldUC1 = WeldsUC1.Item(1)
 
 ```vbscript
     Dim WeldsUC2 As SfmWelds
+```vbscript
+```vbscript
     Set WeldsUC2 = DeckMember1.GetWelds(Nothing)
 
     Dim WeldUC2 As SfmWeld
@@ -102,9 +146,16 @@ Set WeldUC1 = WeldsUC1.Item(1)
 
 ```
 
+```
+
+```
+
 ```vbscript
 Dim WeldUC2 As SfmWeld
+```vbscript
 Set WeldUC2 = WeldsUC2.Item(1)
+```
+
     ustrWeldTypeUC2 = WeldUC2.WeldType
     ustrAddedMaterialUC2 = WeldUC2.AddedMaterial
     ustrFitUpUC2 = WeldUC2.FitUp
@@ -112,4 +163,7 @@ Set WeldUC2 = WeldsUC2.Item(1)
 
 ```
 
+```vbscript
     End Sub
+
+```

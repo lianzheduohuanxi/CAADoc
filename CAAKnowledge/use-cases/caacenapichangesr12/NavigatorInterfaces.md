@@ -10,8 +10,8 @@ converted: "2026-05-11T17:33:50.575195"
 ```
 
 ---
-| CAA C++ API Modifications|  NavigatorInterfaces  |   
----|---|---  
+| CAA C++ API Modifications|  NavigatorInterfaces  |
+---|---|---
 
 * * *
 

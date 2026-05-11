@@ -13,12 +13,23 @@ tags: ["CATIA", "CAAInfGettingStarted"]
 source_file: "Doc/online/CAAScdInfUseCases/CAAInfGettingStartedSource.htm"
 converted: "2026-05-11T17:31:52.376020"
     Language="VBSCRIPT"
+```vbscript
+```vbscript
     'My macro creates five cylinders
 
+```
+
+```
+
+```vbscript
     Sub CATMain()
+
+```
 
 ```vbscript
     Dim documents1 As Documents
+```vbscript
+```vbscript
     Set documents1 = CATIA.Documents
 
     Dim partDocument1 As Document
@@ -44,15 +55,23 @@ converted: "2026-05-11T17:31:52.376020"
 
 ```
 
+```
+
+```
+
 ```vbscript
 Dim reference1 As AnyObject
+```vbscript
 Set reference1 = originElements1.PlaneXY
+```
+
     x = 0
 
 ```
 
 ```vbscript
     Dim arrayOfVariantOfDouble1(8)
+```vbscript
     arrayOfVariantOfDouble1(0) = 0.000000
     arrayOfVariantOfDouble1(1) = 0.000000
     arrayOfVariantOfDouble1(2) = 0.000000
@@ -65,23 +84,39 @@ Set reference1 = originElements1.PlaneXY
 
 ```
 
+```
+
+```vbscript
 ```vbscript
     For I = 1 To 5
 
       Dim sketch1 As Sketch
+```
+
+```vbscript
+```vbscript
       Set sketch1 = sketches1.Add(reference1)
+
+```
+
+```
 
 ```
 
 ```vbscript
 Dim sketch1 As Sketch
+```vbscript
 Set sketch1 = sketches1.Add(reference1)
+```
+
       sketch1.SetAbsoluteAxisData arrayOfVariantOfDouble1
 
 ```
 
 ```vbscript
       Dim factory2D1 As Factory2D
+```vbscript
+```vbscript
       Set factory2D1 = sketch1.OpenEdition()
 
       Dim geometricElements1 As GeometricElements
@@ -95,45 +130,81 @@ Set sketch1 = sketches1.Add(reference1)
 
 ```
 
+```
+
+```
+
 ```vbscript
 Dim line2D1 As AnyObject
+```vbscript
+```vbscript
 Set line2D1 = axis2D1.GetItem("HDirection")
       line2D1.ReportName = 1
 
 ```
 
+```
+
+```
+
 ```vbscript
       Dim line2D2 As AnyObject
+```vbscript
+```vbscript
       Set line2D2 = axis2D1.GetItem("VDirection")
+
+```
+
+```
 
 ```
 
 ```vbscript
 Dim line2D2 As AnyObject
+```vbscript
+```vbscript
 Set line2D2 = axis2D1.GetItem("VDirection")
       line2D2.ReportName = 2
 
 ```
 
+```
+
+```
+
 ```vbscript
       Dim circle2D1 As Circle2D
+```vbscript
+```vbscript
       Set circle2D1 = factory2D1.CreateClosedCircle(x, 0.000000, 10.000000)
+
+```
+
+```
 
 ```
 
 ```vbscript
 Dim circle2D1 As Circle2D
+```vbscript
+```vbscript
 Set circle2D1 = factory2D1.CreateClosedCircle(x, 0.000000, 10.000000)
       circle2D1.ReportName = 3
 
-      sketch1.CloseEdition 
-
-      part1.Update 
+```
 
 ```
 
+```
+
+      sketch1.CloseEdition
+
+      part1.Update
+
 ```vbscript
       Dim shapeFactory1 As Factory
+```vbscript
+```vbscript
       Set shapeFactory1 = part1.ShapeFactory
 
       Dim pad1 As Pad
@@ -141,14 +212,24 @@ Set circle2D1 = factory2D1.CreateClosedCircle(x, 0.000000, 10.000000)
 
 ```
 
+```
+
+```
+
 ```vbscript
 Dim pad1 As Pad
+```vbscript
 Set pad1 = shapeFactory1.AddNewPad(sketch1, 20.000000)
-      part1.Update 
+```
+
+      part1.Update
+
+```
 
       x = x + 25
 
+```vbscript
     Next
-    End Sub  
+    End Sub
 
 ```

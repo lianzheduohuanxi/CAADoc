@@ -13,15 +13,15 @@ converted: "2026-05-11T17:31:52.425072"
 
 source_file: "Doc/online/CAAScdInfTechArticles/CAAInfObjApplication.htm"
 converted: "2026-05-11T17:31:52.425072"
- See Also | Use Cases | Properties | Methods  
+ See Also | Use Cases | Properties | Methods
 
- ![Application object](../CAAScrAutomationImages/images/applicat.gif)  
-![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/docs.gif)  
-![](../CAAScrAutomationImages/images/parmult.gif)[![](../CAAScrAutomationImages/images/windows.gif)](CAAInfObjWindows.md)  
-![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/printers.gif)  
-![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/filesys.gif)  
-![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/sysserv.gif)  
- ---  
+ ![Application object](../CAAScrAutomationImages/images/applicat.gif)
+![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/docs.gif)
+![](../CAAScrAutomationImages/images/parmult.gif)[![](../CAAScrAutomationImages/images/windows.gif)](CAAInfObjWindows.md)
+![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/printers.gif)
+![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/filesys.gif)
+![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/sysserv.gif)
+ ---
 
  **_Represents the current CNext application and its frame window._**
 

@@ -12,11 +12,11 @@ converted: "2026-05-11T17:33:46.040567"
 tags: []
 source_file: "Doc/online/CAAOptTechArticles/CAAOptGlossary.htm"
 converted: "2026-05-11T17:33:46.040567"
-3D PLM PPR Hub Open Gateway |  Knowledge Modeler |  Optimization Glossary _To understand what we are talking about_  
+3D PLM PPR Hub Open Gateway |  Knowledge Modeler |  Optimization Glossary _To understand what we are talking about_
 
 converted: "2026-05-11T17:33:46.040567"
 3D PLM PPR Hub Open Gateway |  Knowledge Modeler |  Optimization Glossary _To understand what we are talking about_
-Technical Article  
+Technical Article
 
 * * *
 
@@ -29,7 +29,7 @@ Abstract The purpose of this article is to give you the right definition for eac
   * **Relies on ObjectSpecsModeler Concepts**
   * **Where To Find Each Concept In The Code**
 
----  
+---
 
 * * *
 
@@ -37,15 +37,15 @@ General - Product Definiton **Product Engineering Optimizer:** Product required 
 
 * * *
 
-References [1] | [ KnowledgeAdvisor Glossary](../CAAKniTechArticles/CAAKniGlossary.md)  
----|---  
-[Top]  
+References [1] | [ KnowledgeAdvisor Glossary](../CAAKniTechArticles/CAAKniGlossary.md)
+---|---
+[Top]
 
 * * *
 
-History Version: **1** [Nov 2004] | Document created  
----|---  
-[Top]  
+History Version: **1** [Nov 2004] | Document created
+---|---
+[Top]
 
 * * *
 

@@ -12,19 +12,19 @@ converted: "2026-05-11T17:33:49.934183"
 tags: ["CATIA", "CATIAB12", "CAADrwCreateDim", "CATIUnknownList"]
 source_file: "Doc/online/CAABtlQuickRefs/CAABtlFAQ.htm"
 converted: "2026-05-11T17:33:49.934183"
-RADE |  Multi-Workspace Application Builder |  Frequently Asked Questions _Find answers to usual questions regarding mkmk family tools_  
+RADE |  Multi-Workspace Application Builder |  Frequently Asked Questions _Find answers to usual questions regarding mkmk family tools_
 
 converted: "2026-05-11T17:33:49.934183"
 RADE |  Multi-Workspace Application Builder |  Frequently Asked Questions _Find answers to usual questions regarding mkmk family tools_
-Quick Reference  
+Quick Reference
 
 * * *
 
 Abstract This article gathers answers to usual problems one user may encounter when using mkmk and related commands. Answers are grouped by topics listed below.
     * **Warnings Issued by Underlying Compilers and Linkers**
     * **Why Should I Avoid Unloading and Loading Modules?**
-    * **Using /clr option is not supported**  
----  
+    * **Using /clr option is not supported**
+---
 
 * * *
 
@@ -36,9 +36,9 @@ Using /clr is not supported. When building C++ modules, the /clr option can't be
 
 * * *
 
-History Version: **1** [Dec 2003] | Document created  
----|---  
-[Top]  
+History Version: **1** [Dec 2003] | Document created
+---|---
+[Top]
 
 * * *
 

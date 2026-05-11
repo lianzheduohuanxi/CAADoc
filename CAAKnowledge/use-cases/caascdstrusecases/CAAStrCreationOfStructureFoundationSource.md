@@ -2,109 +2,101 @@
 title: "Untitled"
 category: "use-case"
 module: "CAAScdStrUseCases"
-tags: ["CAAScrBase", "CAAStrCreationOfStructureObjects", "CATIA"]
+tags: ["CAAScrBase", "CATIA", "CAAStrCreationOfStructureObjects"]
 source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfStructureFoundationSource.htm"
-converted: "2026-05-11T11:06:32.501508"
+converted: "2026-05-11T11:27:02.584456"
 ---
 
-```
 Option Explicit
-
 ' COPYRIGTH DASSAULT SYSTEMES 2000
 
 ' ***********************************************************************
-
-' Purpose: Create structure foundation
-
-' Assumtions: 
-
-' Author: 
-
-' Languages: VBScript
-
-' Locales: English 
-
-' CATIA Level: V5R7 
-
+'   Purpose:      Create structure foundation
+'   Assumtions:   
+'   Author: 
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R7 
 ' ***********************************************************************
 
-Sub 
-CATMain()
+Sub CATMain()
 
- Dim 
-doc
- As 
-Document
+    Dim doc As Document
 
- Dim 
-StrWorkbench
- As 
-StrWorkbench
+    Dim StrWorkbench As StrWorkbench
+    Dim strFactory As StrObjectFactory
 
- Dim 
-strFactory
- As 
-StrObjectFactory
+    Set doc = CATIA.ActiveDocument
+    Dim rootProduct As Product
+    Set rootProduct = doc.Product
 
- Set 
-doc = CATIA.ActiveDocument
+    Dim products As Products
+    Set products = rootProduct.Products
 
- Dim 
-rootProduct
- As 
-Product
+    Dim component As Product
+    Set component = products.AddNewProduct("Foundation")
 
- Set 
-rootProduct = doc.Product
+    Set strFactory = component.GetTechnologicalObject("StructureObjectFactory")
 
- Dim 
-products 
-As 
-Products
- 
-Set 
-products = rootProduct.Products
+    ' Creating a foundation assembly
 
- 
-Dim 
-component 
-As 
-Product
- 
-Set 
-component = products.AddNewProduct("Foundation")
+    Dim foundation As StrFoundation 
+    Set foundation = strFactory.ExtendProductAsFoundation("")
 
- 
-Set 
-strFactory = component.GetTechnologicalObject("StructureObjectFactory")
+    ' Retreiving the created foundation assembly
 
- 
-' Creating a foundation assembly
-
- 
-Dim 
-foundation 
-As 
-StrFoundation 
- 
-Set 
-foundation = strFactory.ExtendProductAsFoundation("")
-
- 
-' Retreiving the created foundation assembly
-
- 
-Dim 
-foundations 
-As 
-StrFoundations
- 
-Set 
-foundations = rootProduct.GetTechnologicalObject("StructureFoundations")		
+    Dim foundations As StrFoundations
+    Set foundations = rootProduct.GetTechnologicalObject("StructureFoundations")		
 	
- 
-Set 
-foundation = foundations.Item(1)
+    Set foundation = foundations.Item(1)
+
+End Sub
+
+
+
+```vbscript
+Option Explicit
+' COPYRIGTH DASSAULT SYSTEMES 2000
+
+' ***********************************************************************
+'   Purpose:      Create structure foundation
+'   Assumtions:   
+'   Author: 
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R7 
+' ***********************************************************************
+
+Sub CATMain()
+
+    Dim doc As Document
+
+    Dim StrWorkbench As StrWorkbench
+    Dim strFactory As StrObjectFactory
+
+    Set doc = CATIA.ActiveDocument
+    Dim rootProduct As Product
+    Set rootProduct = doc.Product
+
+    Dim products As Products
+    Set products = rootProduct.Products
+
+    Dim component As Product
+    Set component = products.AddNewProduct(&quot;Foundation&quot;)
+
+    Set strFactory = component.GetTechnologicalObject(&quot;StructureObjectFactory&quot;)
+
+    ' Creating a foundation assembly
+
+    Dim foundation As StrFoundation 
+    Set foundation = strFactory.ExtendProductAsFoundation(&quot;&quot;)
+
+    ' Retreiving the created foundation assembly
+
+    Dim foundations As StrFoundations
+    Set foundations = rootProduct.GetTechnologicalObject(&quot;StructureFoundations&quot;)		
+	
+    Set foundation = foundations.Item(1)
 
 End Sub
 ```

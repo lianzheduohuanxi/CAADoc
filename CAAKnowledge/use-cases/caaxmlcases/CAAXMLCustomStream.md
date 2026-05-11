@@ -11,15 +11,15 @@ converted: "2026-05-11T17:33:45.595301"
 ---
 # 3D PLM Enterprise Architecture
 
-| 
+|
 ## Middleware Abstraction
 
-| 
+|
 ### Reading XML from a Custom Source
 
-_Parsing XML from a user-defined source with DOM or SAX_  
----|---|---  
-Use Case  
+_Parsing XML from a user-defined source with DOM or SAX_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
@@ -35,7 +35,7 @@ This article shows how to create your own XML source to feed XML directly to a D
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
@@ -66,18 +66,18 @@ where `<file1>` is the path of the file containing the first XML chunk, `<fileN>
 
 A sample XML file split in three chunks is provided with the use case. To use it, launch the following command from the command line:
 
-Windows | `cd InstallRoot\OS\resources\xml\CAAXMLCustomStream  
-CAAXMLCustomStream caaxmlchunk1.xml caaxmlchunk2.xml caaxmlchunk3.xml`  
+Windows | `cd InstallRoot\OS\resources\xml\CAAXMLCustomStream
+CAAXMLCustomStream caaxmlchunk1.xml caaxmlchunk2.xml caaxmlchunk3.xml`
 
 A sample XML file split in three chunks is provided with the use case. To use it, launch the following command from the command line:
 Windows | `cd InstallRoot\OS\resources\xml\CAAXMLCustomStream
 CAAXMLCustomStream caaxmlchunk1.xml caaxmlchunk2.xml caaxmlchunk3.xml`
-Unix | `cd InstallRoot/OS/resources/xml/CAAXMLCustomStream ; CAAXMLCustomStream caaxmlchunk1.xml caaxmlchunk2.xml caaxmlchunk3.xml`  
+Unix | `cd InstallRoot/OS/resources/xml/CAAXMLCustomStream ; CAAXMLCustomStream caaxmlchunk1.xml caaxmlchunk2.xml caaxmlchunk3.xml`
 
 where:
 
   * `InstallRoot` is the directory in which you have installed the run time part or the product line
-  * `OS` is the directory containing the installed code 
+  * `OS` is the directory containing the installed code
     * `aix_a` for 32-bit AIX
     * `hpux_b` for HP-UX
     * `solaris_a` for Solaris
@@ -90,11 +90,11 @@ where:
 The CAAXMLCustomStream use case is made of several classes located in the CAAXMLCustomStream.m module of the CAAXMLParser.edu framework:
 
 The CAAXMLCustomStream use case is made of several classes located in the CAAXMLCustomStream.m module of the CAAXMLParser.edu framework:
-Windows | `InstallRootDirectory\CAAXMLParser.edu\CAAXMLCustomStream.m\`  
+Windows | `InstallRootDirectory\CAAXMLParser.edu\CAAXMLCustomStream.m\`
 
 The CAAXMLCustomStream use case is made of several classes located in the CAAXMLCustomStream.m module of the CAAXMLParser.edu framework:
 Windows | `InstallRootDirectory\CAAXMLParser.edu\CAAXMLCustomStream.m\`
-Unix | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLCustomStream.m/`  
+Unix | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLCustomStream.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
@@ -102,45 +102,63 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 ### Step-by-Step
 
 To create your own XML source and use it to parse XML, there are six main steps:
-# |  Step  
----|---  
+# |  Step
+---|---
 To create your own XML source and use it to parse XML, there are six main steps:
-1 | Implement an XML Custom Stream  
-2 | Create a V5 DOM Component and a V5 SAX Component  
-3 | Use the V5 SAX Component to Create a SAX Input Source Based on Your XML Stream  
-4 | Parse the Custom Source Using DOM  
-5 | Dump Your DOM Tree in the Console  
-6 | Manage Errors  
+1 | Implement an XML Custom Stream
+2 | Create a V5 DOM Component and a V5 SAX Component
+3 | Use the V5 SAX Component to Create a SAX Input Source Based on Your XML Stream
+4 | Parse the Custom Source Using DOM
+5 | Dump Your DOM Tree in the Console
+6 | Manage Errors
 
 Please note that most of the APIs from the XMLParser framework return a _HRESULT_. To avoid excessive indentation of the code, which would cause poor readibility, the following coding style has been used: all the code is put in a `do {} while(0)` loop; if one of the APIs returns a bad _HRESULT_ , the execution is stopped with a `break` and the error handler is invoked.
 
     HRESULT hr = E_FAIL;
     do {
+```vbscript
+```vbscript
         hr = XMLParserAPI_1();
         if (FAILED(hr)) { break; }
         hr = XMLParserAPI_2();
         if (FAILED(hr)) { break; }
 
+```
+
+```
+
         ...
 hr = XMLParserAPI_1();
+```vbscript
+```vbscript
 if (FAILED(hr)) { break; }
 hr = XMLParserAPI_2();
 if (FAILED(hr)) { break; }
         hr = XMLParserAPI_N();
         if (FAILED(hr)) { break; }
 
+```
+
+```
+
     } while(0);
 ```vbscript
 if (FAILED(hr)) { break; }
+```vbscript
+```vbscript
 hr = XMLParserAPI_N();
 if (FAILED(hr)) { break; }
     if (FAILED(hr)) {
 ```
 
+```
+
+```
+
         // Error handling code.
     }
 
----  
+---
 
 [Top]
 #### Implement an XML Custom Stream
@@ -164,7 +182,7 @@ public:
 
     };
 
----  
+---
 
     // CAAXMLMultiFileStream.cpp
     #include "CAAXMLMultiFileStream.h" // Import the definition of the component
@@ -176,7 +194,7 @@ public:
     **#include "TIE_CATIXMLInputStream.h"
     TIE_CATIXMLInputStream(CAAXMLMultiFileStream);**
 
----  
+---
 
 The _CATIXMLInputStream_ interface contains just one method, called `Read`. You use this method to return fragments of XML to parser. The parser calls this method repeatedly, any time it has finished analyzing the current XML fragment and needs the next one to be fetched. You never call this method directly: you pass your implementation of _CATIXMLInputStream_ to the parser and the parser will call it automatically when it needs it.
 
@@ -188,16 +206,16 @@ The _CATIXMLInputStream_ interface contains just one method, called `Read`. You 
         unsigned int & oSizeRead)** {
 
         ...
-    }  
+    }
 
----  
+---
 
 The method accepts the following parameters:
 
-`ioByteArray` | A buffer where you must put the XML fragment.  
----|---  
-`iByteArrayCapacity` | The size of the `ioByteArray` buffer.  
-`oSizeRead` | The size of the fragment returned to the parser. Returning a zero-length read size signals the end of the XML input to the parser.  
+`ioByteArray` | A buffer where you must put the XML fragment.
+---|---
+`iByteArrayCapacity` | The size of the `ioByteArray` buffer.
+`oSizeRead` | The size of the fragment returned to the parser. Returning a zero-length read size signals the end of the XML input to the parser.
 
 [Top]
 #### Create a V5 DOM Component and a V5 SAX Component
@@ -205,20 +223,23 @@ The method accepts the following parameters:
     ...
     CATIXMLDOMDocumentBuilder_var builder;
     hr = **::CreateCATIXMLDOMDocumentBuilder**(builder);
-    ...  
+    ...
 
----  
+---
 
 To parse the XML, you will use a DOM parser, so the next step is to instantiate a V5 DOM component. The V5 DOM component can be created by calling the `CreateCATIXMLDOMDocumentBuilder` global function. This function returns a V5 handler on the _CATIXMLDOMDocumentBuilder_ interface, which is the main interface for the V5 DOM component. Using this interface you will be able to create documents (either by parsing an XML input source, as here, or from scratch) and save existing documents to disk.
 
     ...
 To parse the XML, you will use a DOM parser, so the next step is to instantiate a V5 DOM component. The V5 DOM component can be created by calling the `CreateCATIXMLDOMDocumentBuilder` global function. This function returns a V5 handler on the _CATIXMLDOMDocumentBuilder_ interface, which is the main interface for the V5 DOM component. Using this interface you will be able to create documents (either by parsing an XML input source, as here, or from scratch) and save existing documents to disk.
     CATIXMLSAXFactory_var factory;
+```vbscript
     hr = **::CreateCATIXMLSAXFactory**(factory);
 
-    ...  
+```
 
----  
+    ...
+
+---
 
 hr = **::CreateCATIXMLSAXFactory**(factory);
 To provide the XML, you will need to provide a custom input source to the DOM parser. Custom input source are created by the _CATIXMLSAXFactory_ interface, so you will also need a V5 SAX component. The V5 SAX component can be created by calling the `CreateCATIXMLSAXFactory` global function. This function returns a V5 handler on the _CATIXMLSAXFactory_ interface, which is the main interface for the V5 SAX component. Using this interface you will be able to create SAX1 and SAX2 parsers and to create input source to feed XML to the parser.
@@ -240,11 +261,14 @@ CATIXMLInputStream_var customStream = customStreamImpl;
 customStreamImpl->Release();
 customStreamImpl = NULL;
     CATISAXInputSource_var source;
+```vbscript
     hr = factory->**CreateInputSourceFromStream**(customStream, "MyCustomSource", source);
 
-    ...  
+```
 
----  
+    ...
+
+---
 
 To create a custom XML source, you first need to instantiate your custom XML stream component by doing a `new` of its main implementation class and getting its _CATIXMLInputStream_ handle. Then, you use the `CreateInputSourceFromStream` method from the _CATISAXInputSource_ interface to create the custom XML source. The methods takes as a parameter your custom implementation of the _CATIXMLInputStream_ interface. It uses this implementation to obtain the XML content to parse. ![catixmlinputstream.png \(1853 bytes\)](images/catixmlinputstream.png)
 
@@ -260,11 +284,14 @@ To create a custom XML source, you first need to instantiate your custom XML str
     readOptionValues.Append(**"false"**);
 
     CATIDOMDocument_var document;
+```vbscript
     hr = builder->**Parse**(source, document, readOptions, readOptionValues);
 
-    ...  
+```
 
----  
+    ...
+
+---
 
 hr = builder->**Parse**(source, document, readOptions, readOptionValues);
 To parse the custom input source, you need to invoke the `Parse` method of the _CATIXMLDOMDocumentBuilder_ interface. If you want to parse using SAX, you can just as well pass the input to the `Parse` method of a _CATISAXParser_ (SAX1) or a _CATISAXXMLReader_ (SAX2).
@@ -277,16 +304,19 @@ The DOM parser can run in two modes: non-validating and validating. You determin
     ...
     CATUnicodeString rawOutput;
 CATUnicodeString rawOutput;
+```vbscript
     hr = builder->**Write**(document, rawOutput);
+
+```
 
     ...
 CATUnicodeString rawOutput;
 hr = builder->**Write**(document, rawOutput);
     cout << rawOutput.ConvertToChar() << endl;
 
-    ...  
+    ...
 
----  
+---
 
 To obtain an XML representation of your DOM tree, call the `Write` method of the _CATIXMLDOMDocumentBuilder_ interface. The resulting XML is returned in a CATUnicodeString. For a discussion of supported encodings and write options, see [3] and [4].
 
@@ -305,19 +335,19 @@ This use case shows you how to create your own XML sources and use them with a D
 * * *
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-[2] | [ Managing Errors Using HRESULT](../CAASysTechArticles/CAASysErrors.md)  
-[3] | [ Using XML in V5](../CAAXmlTechArticles/CAAXmlV5Overview.md)  
-[4] | [XML Tips and Tricks](../CAAXmlTechArticles/CAAXmlTipsAndTricks.md)  
-[Top]  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)
+---|---
+[2] | [ Managing Errors Using HRESULT](../CAASysTechArticles/CAASysErrors.md)
+[3] | [ Using XML in V5](../CAAXmlTechArticles/CAAXmlV5Overview.md)
+[4] | [XML Tips and Tricks](../CAAXmlTechArticles/CAAXmlTipsAndTricks.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [May 2005] | Document created  
----|---  
-[Top]  
+Version: **1** [May 2005] | Document created
+---|---
+[Top]
 
 * * *
 

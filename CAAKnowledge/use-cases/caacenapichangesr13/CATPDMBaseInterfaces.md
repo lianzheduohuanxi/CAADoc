@@ -13,7 +13,7 @@ converted: "2026-05-11T17:33:50.671798"
 tags: []
 source_file: "Doc/online/CAACenAPIChangesR13/CATPDMBaseInterfaces.htm"
 converted: "2026-05-11T17:33:50.671798"
-CAA C++ API Modifications|  CATPDMBaseInterfaces  |   
+CAA C++ API Modifications|  CATPDMBaseInterfaces  |
 
 * * *
 

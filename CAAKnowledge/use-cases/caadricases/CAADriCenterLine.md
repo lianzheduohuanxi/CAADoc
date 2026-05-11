@@ -11,15 +11,15 @@ converted: "2026-05-11T17:31:50.937531"
 ---
 # Mechanical Design
 
-| 
+|
 ## Drafting
 
-| 
+|
 ### Creating Center Lines in a CATDrawing Document
 
-_How to create annotations on interactive or generative geometry_  
----|---|---  
-Use Case  
+_How to create annotations on interactive or generative geometry_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
@@ -36,7 +36,7 @@ This article discusses the CAADrwCenterLine use case. This use case explains how
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
@@ -49,12 +49,12 @@ In this use case you will learn how to create annotations (center lines) on inte
 In this use case you will learn how to create annotations (center lines) on interactive and generative geometry.
 There are two levels of interfaces:
 
-  1. IDMxxx2D for consulting 
+  1. IDMxxx2D for consulting
   2. CATI2Dxxx for editing.
 
-Fig. 1: The 2D Interfaces UML Diagram ![](images/CAADrwCenterLine2.jpg)  
+Fig. 1: The 2D Interfaces UML Diagram ![](images/CAADrwCenterLine2.jpg)
 
----  
+---
 
 2. CATI2Dxxx for editing.
 Fig. 1: The 2D Interfaces UML Diagram ![](images/CAADrwCenterLine2.jpg)
@@ -74,9 +74,9 @@ CAADrwCenterLine is a use case of the CAADraftingInterfaces.edu framework that i
 CAADrwCenterLine is a use case of the CAADraftingInterfaces.edu framework that illustrates DraftingInterfaces framework capabilities.
 This use case is made of a state command that waits for a selection and creates center lines on selected circles.
 
-Fig. 2: Running the Command on Generative and Interactive Geometry ![](images/CAADrwCenterLine1.jpg)  
+Fig. 2: Running the Command on Generative and Interactive Geometry ![](images/CAADrwCenterLine1.jpg)
 
----  
+---
 
 This use case is made of a state command that waits for a selection and creates center lines on selected circles.
 Fig. 2: Running the Command on Generative and Interactive Geometry ![](images/CAADrwCenterLine1.jpg)
@@ -103,11 +103,11 @@ Top]
 Top]
 The CAADrwCenterLine use case is made of two source files named CAADrwCenterLine.h and CAADrwCenterLine.cpp located in the CAADrwCenterLine.m module of the CAADraftingInterfaces.edu framework:
 
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCenterLine.m\`  
+Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCenterLine.m\`
 
 The CAADrwCenterLine use case is made of two source files named CAADrwCenterLine.h and CAADrwCenterLine.cpp located in the CAADrwCenterLine.m module of the CAADraftingInterfaces.edu framework:
 Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCenterLine.m\`
-Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCenterLine.m/`  
+Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCenterLine.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
@@ -124,13 +124,13 @@ There are two steps in CAADrwCenterLine:
 #### Building the State Chart and Creating the Appropriate Selection Agent
 
     void CAADrwCenterLineCmd::BuildGraph()
-    {  
+    {
        // Creation of the acquisition agent
 void CAADrwCenterLineCmd::BuildGraph()
        _ObjectAgent = new CATPathElementAgent("_ObjectAgent A");
-       _ObjectAgent ->SetBehavior( CATDlgEngWithPrevaluation | 
-                                   CATDlgEngMultiAcquisition | 
-                                   CATDlgEngWithCSO); 
+       _ObjectAgent ->SetBehavior( CATDlgEngWithPrevaluation |
+                                   CATDlgEngMultiAcquisition |
+                                   CATDlgEngWithCSO);
 
        // We only want to get circles
 _ObjectAgent ->SetBehavior( CATDlgEngWithPrevaluation |
@@ -149,11 +149,14 @@ AddCSOClient(_ObjectAgent);
 CATDialogState* pState1 = GetInitialState("Sel circle");
 pState1->AddDialogAgent(_ObjectAgent);
        AddTransition(pState1, NULL, IsOutputSetCondition(_ObjectAgent),
+```vbscript
                      Action((ActionMethod)&CAADrwCenterLineCmd::CreateCtrLine, NULL, NULL));
 
-    }  
+```
 
----  
+    }
+
+---
 
 In this section we create a CATPathElementAgent and set the corresponding element type to IDMCircle. So only circles could be selected [2].
 
@@ -161,19 +164,25 @@ In this section we create a CATPathElementAgent and set the corresponding elemen
 #### Retrieving the Selection and Creating the Center Line
 
     boolean CAADrwCenterLineCmd::CreateCtrLine(void *iData)
-    { 
+    {
 boolean CAADrwCenterLineCmd::CreateCtrLine(void *iData)
-       CATSO* pObjSO = _ObjectAgent->GetListOfValues(); 
+       CATSO* pObjSO = _ObjectAgent->GetListOfValues();
        CATPathElement *pElemPath = NULL;
 
-       if (NULL != pObjSO)  
+```vbscript
+       if (NULL != pObjSO)
+
+```
 
        {
           // We will scan the CSO from the begining
 CATPathElement *pElemPath = NULL;
 if (NULL != pObjSO)
           pObjSO->InitElementList();
+```vbscript
           while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement())  )
+
+```
 
           {
 
@@ -182,7 +191,10 @@ if (NULL != pObjSO)
 while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement())  )
              IDMCircle2D *piElementRef = (IDMCircle2D *)pElemPath->**FindElement(IID_IDMCircle2D)** ;
 
+```vbscript
              if (NULL != piElementRef)
+
+```
 
              {
                 // Find the annotation factory (on the view)
@@ -213,9 +225,9 @@ _ObjectAgent -> InitializeAcquisition();
 return TRUE;
        return FALSE;
 
-    }  
+    }
 
----  
+---
 
 The acquisition agent did put the selected circles into the CSO. So we get the SO and loop on it. The selected circles can be generative ones or interactive ones. We get the annotation factory on the view and call the center line factory method giving the circle as argument.
 
@@ -231,17 +243,17 @@ This use case shows how to create a state command dealing with geometry selectio
 * * *
 ### References
 
-[1] | [Building and Lauching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-[2] | [Implementing the Statechart Diagram](../CAADegUseCases/CAADegSampleGraph.md)  
-[Top]  
+[1] | [Building and Lauching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)
+---|---
+[2] | [Implementing the Statechart Diagram](../CAADegUseCases/CAADegSampleGraph.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Jan 2000] | Document created  
----|---  
-[Top]  
+Version: **1** [Jan 2000] | Document created
+---|---
+[Top]
 
 * * *
 

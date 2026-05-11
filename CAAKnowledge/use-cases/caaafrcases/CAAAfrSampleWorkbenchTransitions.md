@@ -11,20 +11,20 @@ converted: "2026-05-11T17:17:55.847355"
 ---
 # 3D PLM Enterprise Architecture
 
-| 
+|
 ## User Interface - Frame
 
-| 
+|
 ### Managing Transitions between Workbenches
 
-_Making a process-driven user interface_  
----|---|---  
-Use Case  
+_Making a process-driven user interface_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
 
-This article shows how to create the transition to the two workbenches of the Geometry workshop. 
+This article shows how to create the transition to the two workbenches of the Geometry workshop.
 
   * **What You Will Learn With This Use Case**
   * **The CAAAfrGeometryWksTransition Use Case**
@@ -35,7 +35,7 @@ This article shows how to create the transition to the two workbenches of the Ge
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
@@ -55,12 +55,15 @@ The CAAAfrGeometryWksTransition use case to manage the transitions between any w
 
 See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched. For the specific scenario :
 
-Do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following: 
+```vbscript
+Do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following:
+
+```
 
   * Create any type of document, for example a Part document
   * Select a workbench of the CAAGeometry document, using the Start menu. For example, select Start->xxxx->CAA Geometrical Creation
 
-This creates a new CAAGeometry document with the CAA Geometrical Creation workbench active. 
+This creates a new CAAGeometry document with the CAA Geometrical Creation workbench active.
 
 [Top]
 #### Where to Find the CAAAfrGeometryWksTransition Code
@@ -68,11 +71,11 @@ This creates a new CAAGeometry document with the CAA Geometrical Creation workbe
 This creates a new CAAGeometry document with the CAA Geometrical Creation workbench active.
 The CAAAfrGeometryWksTransition use case is made of a single class named _CAAEAfrGeometryWksTransition_ located in the CAAAfrGeometryWksTransition.m module of the CAAApplicationFrame.edu framework:
 
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeometryWksTransition.m\`  
+Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeometryWksTransition.m\`
 
 The CAAAfrGeometryWksTransition use case is made of a single class named _CAAEAfrGeometryWksTransition_ located in the CAAAfrGeometryWksTransition.m module of the CAAApplicationFrame.edu framework:
 Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeometryWksTransition.m\`
-Unix | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeometryWksTransition.m/`  
+Unix | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeometryWksTransition.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
@@ -80,21 +83,21 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 ### Step-by-Step
 
 To manage transitions between any workbench and the workbenches of the CAAGeometry document, there are two steps:
-# | Step | Where  
----|---|---  
+# | Step | Where
+---|---|---
 To manage transitions between any workbench and the workbenches of the CAAGeometry document, there are two steps:
-1 | Create the extension class that implements CATIWorkbenchTransition | CAAEAfrGeometryWksTransition class  
-2 | Update the interface dictionary | interface dictionary  
+1 | Create the extension class that implements CATIWorkbenchTransition | CAAEAfrGeometryWksTransition class
+2 | Update the interface dictionary | interface dictionary
 
 [Top]
 #### Creating the Extension Class that Implements CATIWorkbenchTransition
 
 2 | Update the interface dictionary | interface dictionary
-This class is a data extension of a made of the workshop identifier suffixed by `_trans`, that is here `CAAAfrGeometryWks_trans` for the Geometry workshop. 
+This class is a data extension of a made of the workshop identifier suffixed by `_trans`, that is here `CAAAfrGeometryWks_trans` for the Geometry workshop.
 
-  1. Create the CAAEAfrGeometryWksTransition.h file 
+  1. Create the CAAEAfrGeometryWksTransition.h file
 
-         #include "CATExtIWorkbenchTransition.h" 
+         #include "CATExtIWorkbenchTransition.h"
 
 This class is a data extension of a made of the workshop identifier suffixed by `_trans`, that is here `CAAAfrGeometryWks_trans` for the Geometry workshop.
 1. Create the CAAEAfrGeometryWksTransition.h file
@@ -107,25 +110,25 @@ class CAAEAfrGeometryWksTransition : public CATExtIWorkbenchTransition
               CAAEAfrGeometryWksTransition();
               virtual ~CAAEAfrGeometryWksTransition();
 
-         };  
+         };
 
----  
+---
 
 virtual ~CAAEAfrGeometryWksTransition();
 The CATDeclareClass macro states that this class belongs to a component. The class has only a constructor and a destructor.
 
-  2. Create the CAAEAfrGeometryWksTransition.cpp file. 
+  2. Create the CAAEAfrGeometryWksTransition.cpp file.
 
          // Local FW
          #include "CAAEAfrGeometryWksTransition.h"
 
-         **CATImplementClass**(CAAEAfrGeometryWksTransition, 
-                           **DataExtension** , 
+         **CATImplementClass**(CAAEAfrGeometryWksTransition,
+                           **DataExtension** ,
                            CATBaseUnknown,
 CATBaseUnknown,
                            CAAAfrGeometryWks_trans);
 
-         #include <TIE_CATIWorkbenchTransition.h> 
+         #include <TIE_CATIWorkbenchTransition.h>
 CATBaseUnknown,
 CAAAfrGeometryWks_trans);
          TIE_CATIWorkbenchTransition(CAAEAfrGeometryWksTransition);
@@ -143,14 +146,14 @@ CAAEAfrGeometryWksTransition::CAAEAfrGeometryWksTransition()
 
 CAAEAfrGeometryWksTransition::CAAEAfrGeometryWksTransition()
 _newDoc = "CAAGeometry" ;
-         CAAEAfrGeometryWksTransition::~CAAEAfrGeometryWksTransition() {}  
+         CAAEAfrGeometryWksTransition::~CAAEAfrGeometryWksTransition() {}
 
----  
+---
 
 CAAEAfrGeometryWksTransition::~CAAEAfrGeometryWksTransition() {}
 The `CATImplementClass` macro reads: the _CAAEAfrGeometryWksTransition_ class is a data extension of the late type _CAAAfrGeometryWks_trans_. As any extension class, its third argument is _CATBaseUnknown_. The constructor assigns the type CAAGeometry to the document type to create using the `_newDoc` data member of the base class _CATExtIWorkbenchTransition_. This type is the one to which the workbench is dedicated.
 
-Since the `DoTransition` method is not implemented, the one of the base class _CATExtIWorkbenchTransition_ is executed instead. It creates a new CAAGeometry document, except if: 
+Since the `DoTransition` method is not implemented, the one of the base class _CATExtIWorkbenchTransition_ is executed instead. It creates a new CAAGeometry document, except if:
 
   * The Geometry workshop is the active workshop, and the end user requests another workbench of this workshop. In this case, the active document was an CAAGeometry document, and remains an CAAGeometry document after the transition.
   * The Geometry workshop is the active workshop and the end user selects another workshop, or a worbench belonging to another workshop.
@@ -160,9 +163,9 @@ Since the `DoTransition` method is not implemented, the one of the base class _C
 
 Update the interface dictionary, that is a file named, for example, CAAApplicationFrame.dico, whose directory's pathname is concatenated at run time in the CATDictionaryPath environment variable, and containing the following declaration to state that the _CAAAfrGeometryWks_trans_ late type implements the _CATIWorkbenchTransition_ interface, and whose code is located in the libCAAAfrGeometryWksTransition shared library or DLL.
 
-    CAAAfrGeometryWks_trans CATIWorkbenchTransition libCAAAfrGeometryWksTransition  
+    CAAAfrGeometryWks_trans CATIWorkbenchTransition libCAAAfrGeometryWksTransition
 
----  
+---
 
 [Top]
 
@@ -172,7 +175,10 @@ Update the interface dictionary, that is a file named, for example, CAAApplicati
 The CAA process-centric user interface implies that the application should know what to do when the end user selects a workbench in the Start menu. This knowledge is provided by the workshop, or possibly the workbench, supplier by implementing the _CATIWorkbenchTransition_ interface.
 
 ```vbscript
+```vbscript
 For standalone documents, that is, documents that do not contain or are not linked to, or that are not contained or linked by, other documents, the _CATIWorkbenchTransition_ interface is implemented once by the document's workshop supplier, and applies to all the document's workbenches.
+
+```
 
 ```
 
@@ -183,15 +189,15 @@ Otherwise, each workbench of the embedded or linked document should implement th
 * * *
 ### References
 
-[Top]  
----  
+[Top]
+---
 
 * * *
 ### History
 
-Version: **1** [Jan 2000] | Document created  
----|---  
-[Top]  
+Version: **1** [Jan 2000] | Document created
+---|---
+[Top]
 
 * * *
 

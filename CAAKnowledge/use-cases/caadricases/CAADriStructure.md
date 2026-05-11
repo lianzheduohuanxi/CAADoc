@@ -11,15 +11,15 @@ converted: "2026-05-11T17:31:51.020431"
 ---
 # Mechanical Design
 
-| 
+|
 ## Drafting
 
-| 
+|
 ### Creating Sheets and Views in a CATDrawing Document
 
-_How to structure a CATDrawing document_  
----|---|---  
-Use Case  
+_How to structure a CATDrawing document_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
@@ -35,7 +35,7 @@ This article discusses the CAADrwStructure use case. This use case explains how 
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
@@ -50,13 +50,13 @@ CAADrwStructure is a use case of the CAADraftingInterfaces.edu framework that il
 [Top]
 #### What Does CAADrwStructure Do
 
-  Fig. 1: The Document Created by the Use Case   
----  
-![](images/CAADrwStructure1.jpg)  
+  Fig. 1: The Document Created by the Use Case
+---
+![](images/CAADrwStructure1.jpg)
 
 This picture represents a CATDrawing document created by the use case program. The program first creates a basic drafting structure composed of a drawing, a sheet and two views (these views are not displayed in the graph). Then the second sheet is created with an additional view.
 
-**Remark** : A sheet always contains: 
+**Remark** : A sheet always contains:
 
   * A main view which contains the elements directly created in the sheet
   * A background view, which is dedicated to the frames and title blocks.
@@ -69,18 +69,18 @@ These two views are created by the sheet factory. They are part of the sheet and
 These two views are created by the sheet factory. They are part of the sheet and so they cannot be deleted and they are not showed in the graph.
 To launch CAADrwStructure, you will need to set up the build time environment, then compile CAADrwStructure along with its prerequisites, set up the run time environment, and then execute the use case [1].
 
-When you launch the use case, pass the full pathname of the file into which you you want to store the created document as argument. 
+When you launch the use case, pass the full pathname of the file into which you you want to store the created document as argument.
 
-  * With Windows 
+  * With Windows
 
-        e:> CAADrwStructure DrawingTest.CATDrawing  
+        e:> CAADrwStructure DrawingTest.CATDrawing
 
----  
-  * With UNIX 
+---
+  * With UNIX
 
-        $ CAADrwStructure /u/users/DrawingTest.CATDrawing  
+        $ CAADrwStructure /u/users/DrawingTest.CATDrawing
 
----  
+---
 
 [Top]
 #### Where to Find the CAADrwStructure Code
@@ -88,11 +88,11 @@ When you launch the use case, pass the full pathname of the file into which you 
 The CAADrwStructure use case is made of a single source file named CAADrwStructure.cpp located in the CAADrwStructure.m module of the CAADraftingInterfaces.edu framework:
 
 The CAADrwStructure use case is made of a single source file named CAADrwStructure.cpp located in the CAADrwStructure.m module of the CAADraftingInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwStructure.m\`  
+Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwStructure.m\`
 
 The CAADrwStructure use case is made of a single source file named CAADrwStructure.cpp located in the CAADrwStructure.m module of the CAADraftingInterfaces.edu framework:
 Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwStructure.m\`
-Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwStructure.m/`  
+Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwStructure.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
@@ -103,9 +103,9 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 There are five steps in CAADrwStructure:
 
   1. Creating and Initializing the document
-  2. Accessing the drawing feature and drawing container  in the document 
-  3. Creating standard in the drawing document 
-  4. Appending format to the current sheet in the drawing document 
+  2. Accessing the drawing feature and drawing container  in the document
+  3. Creating standard in the drawing document
+  4. Appending format to the current sheet in the drawing document
   5. Creating an Additional Sheet and Adding it to the drawing feature
   6. Creating a view and adding it to the just created sheet
   7. Creating a geometric element in this view
@@ -114,7 +114,7 @@ There are five steps in CAADrwStructure:
 [Top]
 #### Creating and Initializing the Document
 
-    int main(int    iArgc,   // Number of arguments (1) 
+    int main(int    iArgc,   // Number of arguments (1)
              char** iArgv)   // Path to the new *.CATDrawing document
     {
       // Check arguments
@@ -129,15 +129,24 @@ char** iArgv)   // Path to the new *.CATDrawing document
       // creates a session
       CATSession *pSampleSession = NULL;
       HRESULT hr = **::Create_Session**("SampleSession",pSampleSession);
+```vbscript
       if (FAILED(hr)) return 1;
+
+```
 
       CATDocument* pDoc = NULL;
       hr = **CATDocumentServices::New**("CATDrawing", pDoc);
+```vbscript
+```vbscript
       if (FAILED(hr)) return 2;
 
-    ...  
+```
 
----  
+```
+
+    ...
+
+---
 
 This section represents the usual sequence for creating a CATIA document.
 
@@ -150,26 +159,44 @@ This section represents the usual sequence for creating a CATIA document.
     CATIDftDrawing *piDftDrawing = NULL;
     CATIDftDocumentServices *piDftDocServices = NULL;
     CATIContainer_var spDrwCont;
+```vbscript
     if (SUCCEEDED(pDoc->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftDocServices)))
+
+```
 
     {
 CATIDftDrawing *piDftDrawing = NULL;
 CATIDftDocumentServices *piDftDocServices = NULL;
 CATIContainer_var spDrwCont;
 if (SUCCEEDED(pDoc->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftDocServices)))
+```vbscript
+```vbscript
       if (SUCCEEDED(piDftDocServices->**GetDrawing**(IID_CATIDftDrawing, (void **)&piDftDrawing)))
+
+```
+
+```
 
       {
 CATIContainer_var spDrwCont;
 if (SUCCEEDED(pDoc->QueryInterface(IID_CATIDftDocumentServices, (void **)&piDftDocServices)))
+```vbscript
+```vbscript
 if (SUCCEEDED(piDftDocServices->**GetDrawing**(IID_CATIDftDrawing, (void **)&piDftDrawing)))
         if (piDftDrawing)
+
+```
+
+```
 
         {
           // Gets the drawing container.
 ```vbscript
 if (SUCCEEDED(piDftDocServices->**GetDrawing**(IID_CATIDftDrawing, (void **)&piDftDrawing)))
+```vbscript
 if (piDftDrawing)
+```
+
           CATISpecObject *piSpecObj=NULL;
           if (SUCCEEDED(piDftDrawing->QueryInterface(IID_CATISpecObject,(void **)&piSpecObj)))
 ```
@@ -177,7 +204,10 @@ if (piDftDrawing)
           {
 CATISpecObject *piSpecObj=NULL;
 if (SUCCEEDED(piDftDrawing->QueryInterface(IID_CATISpecObject,(void **)&piSpecObj)))
+```vbscript
             spDrwCont = piSpecObj->**GetFeatContainer**();
+```
+
             piSpecObj->Release();
             piSpecObj=NULL;
 
@@ -192,39 +222,48 @@ piSpecObj=NULL;
     }
     ...
 
----  
+---
 
 The root feature of a drawing document is the Drawing that is the feature that implements the CATIDrawing interface. We can get a pointer to CATIDrawing using the CATIDftDocumentServices interface, which is implemented by the document. The GetDrawing method first argument is the interface you want to get on the drawing.
 
 [Top]
-####  
+####
 #### Creating drawing standard in the drawing document
 
-    ...   
+    ...
     // Gets standard manager from the drawing container.
     CATIDftStandardManager *piStdmgr = NULL;
 
     if (SUCCEEDED(spDrwCont->QueryInterface(IID_CATIDftStandardManager,(void**)&piStdmgr)))
     {
-      // Find a standard in the list of allowed standards (ie. the list of xml files in the resources/standard/drafting directory)  
+      // Find a standard in the list of allowed standards (ie. the list of xml files in the resources/standard/drafting directory)
 CATIDftStandardManager *piStdmgr = NULL;
 if (SUCCEEDED(spDrwCont->QueryInterface(IID_CATIDftStandardManager,(void**)&piStdmgr)))
       CATIStringList *piListstd = NULL;
+```vbscript
       if ( SUCCEEDED(piStdmgr->**GetAvailableStandards**(&piListstd)) && piListstd )
+
+```
 
       {
 CATIStringList *piListstd = NULL;
 if ( SUCCEEDED(piStdmgr->**GetAvailableStandards**(&piListstd)) && piListstd )
         unsigned int nbrstd = 0;
         piListstd->Count(&nbrstd);
+```vbscript
         for (unsigned int indice = 0; indice < nbrstd; indice ++)
+
+```
 
         {
 unsigned int nbrstd = 0;
 piListstd->Count(&nbrstd);
 for (unsigned int indice = 0; indice < nbrstd; indice ++)
           wchar_t *wstd = NULL;
+```vbscript
           if ( SUCCEEDED ( piListstd->Item ( indice, &wstd ) ) && wstd )
+
+```
 
           {
 ```vbscript
@@ -234,7 +273,7 @@ if ( SUCCEEDED ( piListstd->Item ( indice, &wstd ) ) && wstd )
      	const CATUnicodeString ANSI_UncS = "ANSI";
     	CATUnicodeString stdname;
     	stdname.BuildFromWChar(wstd);
-    	if ( stdname == ANSI_UncS ) 
+    	if ( stdname == ANSI_UncS )
 ```
 
     	{
@@ -254,7 +293,7 @@ break;
         }
 break;
 delete[] wstd; wstd = NULL;
-        piListstd->Release(); piListstd=NULL; 
+        piListstd->Release(); piListstd=NULL;
 
       }
 delete[] wstd; wstd = NULL;
@@ -264,43 +303,58 @@ piListstd->Release(); piListstd=NULL;
     }
     ...
 
-    ---  
+    ---
 
-    CATIDftStandardManager interface is implemented on applicative container of 
-     drawing application. GetAvailableStandards method returns the list of available 
-     standards. ImportStandard method allows to apply a standard on the drawing 
-     document. 
+    CATIDftStandardManager interface is implemented on applicative container of
+     drawing application. GetAvailableStandards method returns the list of available
+     standards. ImportStandard method allows to apply a standard on the drawing
+     document.
 
     [Top]
 
-    #### Appending format to the current sheet in the drawing 
+    #### Appending format to the current sheet in the drawing
      drawing document
 
-    ...   
+    ...
      // Get available formats from drawing
     CATIDftDrawingFormats *piDftFormats = NULL;
     CATUnicodeString myFormatName;
+```vbscript
     if (SUCCEEDED(piDftDrawing->QueryInterface(IID_CATIDftDrawingFormats,(void **)&piDftFormats)))
+
+```
 
     {
 CATIDftDrawingFormats *piDftFormats = NULL;
 CATUnicodeString myFormatName;
 if (SUCCEEDED(piDftDrawing->QueryInterface(IID_CATIDftDrawingFormats,(void **)&piDftFormats)))
+```vbscript
       CATLISTV(CATISpecObject_var) spListFormat;
+```vbscript
       if (SUCCEEDED(piDftFormats->**GetAvailableFormats**(spListFormat)))
+
+```
+
+```
 
       {
 ```vbscript
 if (SUCCEEDED(piDftDrawing->QueryInterface(IID_CATIDftDrawingFormats,(void **)&piDftFormats)))
+```vbscript
 CATLISTV(CATISpecObject_var) spListFormat;
 if (SUCCEEDED(piDftFormats->**GetAvailableFormats**(spListFormat)))
+```
+
         int nbformats= spListFormat.Size();
 ```
 
         // Gets the first format in the list.
 ```vbscript
 CATLISTV(CATISpecObject_var) spListFormat;
+```vbscript
 if (SUCCEEDED(piDftFormats->**GetAvailableFormats**(spListFormat)))
+```
+
 int nbformats= spListFormat.Size();
         if (nbformats >= 1)
 ```
@@ -309,7 +363,10 @@ int nbformats= spListFormat.Size();
 int nbformats= spListFormat.Size();
 if (nbformats >= 1)
           CATIDftFormat_var spFormat = spListFormat[1];
+```vbscript
           if (FAILED(spFormat->**GetFormatName**(myFormatName)))
+
+```
 
           {
             // Memory clean.
@@ -342,7 +399,10 @@ piDftFormats->Release();
 piDftFormats=NULL;
     CATIUnknownList *piListOfSheet=NULL;
     CATIDftSheetFormat *piDftSheetFormat=NULL;
+```vbscript
     if (SUCCEEDED(piDftDrawing->**GetSheets**(&piListOfSheet)))
+
+```
 
     {
 CATIUnknownList *piListOfSheet=NULL;
@@ -361,34 +421,55 @@ piListOfSheet->Count(&nbSheet);
       {
 piListOfSheet->Count(&nbSheet);
 for(unsigned int i=0 ; i<nbSheet ; i++)
+```vbscript
         if( SUCCEEDED( piListOfSheet->Item(i, &item) ) )
+
+```
 
         {
 ```vbscript
 for(unsigned int i=0 ; i<nbSheet ; i++)
+```vbscript
 if( SUCCEEDED( piListOfSheet->Item(i, &item) ) )
           if (item)
+```
+
 ```
 
           {
 ```vbscript
 if( SUCCEEDED( piListOfSheet->Item(i, &item) ) )
+```vbscript
+```vbscript
 if (item)
             if (SUCCEEDED(item->QueryInterface (IID_CATIDftSheetFormat,(void **)&piDftSheetFormat)))
+```
+
+```
+
 ```
 
             {
 ```vbscript
 if (item)
+```vbscript
+```vbscript
 if (SUCCEEDED(item->QueryInterface (IID_CATIDftSheetFormat,(void **)&piDftSheetFormat)))
               if (FAILED(piDftSheetFormat->**SetSheetFormat**(myFormatName)))
+```
+
+```
+
 ```
 
               {
                 // Memory clean.
 ```vbscript
 if (SUCCEEDED(item->QueryInterface (IID_CATIDftSheetFormat,(void **)&piDftSheetFormat)))
+```vbscript
 if (FAILED(piDftSheetFormat->**SetSheetFormat**(myFormatName)))
+```
+
                 item->Release();
                 item=NULL;
                 piDftSheetFormat->Release();
@@ -423,63 +504,87 @@ piDftSheetFormat=NULL;
         }
       }
     }
-    ...  
+    ...
 
----  
+---
 
-CATIDftDrawingFormat interface is implemented on drawing root. GetAvailableFormats method returns the list of available formats. SetSheetFormat method initializes the format on the sheet. 
+CATIDftDrawingFormat interface is implemented on drawing root. GetAvailableFormats method returns the list of available formats. SetSheetFormat method initializes the format on the sheet.
 
 [Top]
 
 #### Creating an Additional Sheet and Adding it to the Drawing Feature
 
-    ...   
+    ...
     CATIDftSheet *piDftNewSheet = NULL;
     wchar_t *pSheetName= L"MyNewSheet";
+```vbscript
     if (SUCCEEDED(piDftDrawing->**AddSheet**(&piDftNewSheet,pSheetName)))
 
-    ...  
+```
 
----  
+    ...
+
+---
 
 AddSheet method on CATIDftDrawing interface creates the sheet and add it to the drawing root. If this method is called in interactive context, sheet tab page will be updated.
 
 [Top]
 #### Creating a View and Adding it to the Just Created Sheet
 
-    ...   
+    ...
     // The drawing factory is implemented on the drawing container
     CATIDrwFactory_var spDrwFact = spDrwCont;
 
     // Create a view with Make Up
 CATIDrwFactory_var spDrwFact = spDrwCont;
     CATIDftViewMakeUp *piNewViewMU = NULL;
+```vbscript
     if (NULL_var != spDrwFact && SUCCEEDED(spDrwFact -> **CreateViewWithMakeUp**(IID_CATIDftViewMakeUp, (void **)&piNewViewMU)))
+
+```
 
     {
 CATIDftViewMakeUp *piNewViewMU = NULL;
 if (NULL_var != spDrwFact && SUCCEEDED(spDrwFact -> **CreateViewWithMakeUp**(IID_CATIDftViewMakeUp, (void **)&piNewViewMU)))
+```vbscript
+```vbscript
       if (piNewViewMU)
+
+```
+
+```
 
       {
         // Get the view from the MakeUp
 ```vbscript
 if (NULL_var != spDrwFact && SUCCEEDED(spDrwFact -> **CreateViewWithMakeUp**(IID_CATIDftViewMakeUp, (void **)&piNewViewMU)))
+```vbscript
 if (piNewViewMU)
-        CATIView *piNewView = NULL; 
+```
+
+        CATIView *piNewView = NULL;
         if (SUCCEEDED(piNewViewMU->**GetView**(&piNewView)))
 ```
 
         {
 CATIView *piNewView = NULL;
 if (SUCCEEDED(piNewViewMU->**GetView**(&piNewView)))
+```vbscript
+```vbscript
           if (piNewView)
 
+```
+
+```
+
           {
-            // The view has to be typed: FrontView for Interactive view. 
+            // The view has to be typed: FrontView for Interactive view.
 ```vbscript
 if (SUCCEEDED(piNewViewMU->**GetView**(&piNewView)))
+```vbscript
 if (piNewView)
+```
+
             piNewView->**SetViewType**(FrontView);
             piNewViewMU->**SetAxisData**(100.0,50.0);
 
@@ -488,22 +593,28 @@ if (piNewView)
            // At last, add the view to the sheet
 piNewView->**SetViewType**(FrontView);
 piNewViewMU->**SetAxisData**(100.0,50.0);
+```vbscript
            if (piDftNewSheet) piDftNewSheet->**AddView**(piNewViewMU);
 
-    ...  
+```
 
----  
+    ...
+
+---
 
 The CATIDrwFactory is implemented by the drawing container. A MakeUp object is associated to the view. So we create the two objects by using CreateViewWithMakeUp method.The view has to be typed and added to the sheet.
 
 [Top]
 #### Creating a Geometric Element in this View
 
-    ...   
+    ...
     // Activate this new view in the new sheet
     CATIDftView *piDftNewView=NULL;
 CATIDftView *piDftNewView=NULL;
+```vbscript
     if (SUCCEEDED(piNewView->QueryInterface(IID_CATIDftView,(void **)&piDftNewView)))
+
+```
 
     {
 CATIDftView *piDftNewView=NULL;
@@ -526,37 +637,52 @@ CATI2DWFFactory_var spGeomFactory(piNewView);
     center[1]=60.0;
     double radius = 50.0;
     CATISpecObject_var spCercle;
-    if (NULL_var != spGeomFactory) 
+```vbscript
+    if (NULL_var != spGeomFactory)
+
+```
 
     {
 center[1]=60.0;
 double radius = 50.0;
 CATISpecObject_var spCercle;
 if (NULL_var != spGeomFactory)
+```vbscript
+```vbscript
       spCercle = spGeomFactory->**CreateCircle**(center,radius);
 
-    ...  
+```
 
----  
+```
+
+    ...
+
+---
 
 To create geometric elements in a view, the view has to be current. Wire frame factory is obtained from the current view.
 
 [Top]
 #### Saving the Document and Exiting
 
-    ...   
+    ...
       // Save the result
       hr = **CATDocumentServices::SaveAs**(*pDoc, (char *)fileName);
+```vbscript
+```vbscript
       if (FAILED(hr)) return 6;
 
-      // Ends session and drops document	
+```
+
+```
+
+      // Ends session and drops document
       **CATDocumentServices::Remove** (*pDoc);
       **::Delete_Session**("SampleSession");
 
       return 0;
-    }  
+    }
 
----  
+---
 
 This section represents the usual sequence for saving a newly created CATIA document.
 
@@ -572,17 +698,17 @@ This use case shows the objects and interfaces used when creating sheets and vie
 * * *
 ### References
 
-[1] |  [ Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-[2] |  [ Creating a New Document](../CAAOmbUseCases/CAAOmbNewDoc.md)  
-[Top]  
+[1] |  [ Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)
+---|---
+[2] |  [ Creating a New Document](../CAAOmbUseCases/CAAOmbNewDoc.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Jan 2000] | Document created  
----|---  
-[Top]  
+Version: **1** [Jan 2000] | Document created
+---|---
+[Top]
 
 * * *
 

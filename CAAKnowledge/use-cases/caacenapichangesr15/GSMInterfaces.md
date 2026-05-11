@@ -10,10 +10,10 @@ converted: "2026-05-11T17:33:51.101431"
 ```
 
 ---
-# CAA C++ API Modifications  
+# CAA C++ API Modifications
 
-| 
-##  GSMInterfaces Framework Modifications in V5R15 
+|
+##  GSMInterfaces Framework Modifications in V5R15
 
 * * *
 

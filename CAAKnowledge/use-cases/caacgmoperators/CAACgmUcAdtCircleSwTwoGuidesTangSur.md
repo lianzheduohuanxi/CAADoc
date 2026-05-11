@@ -12,12 +12,12 @@ converted: "2026-05-11T17:33:48.833466"
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CAAGMOperatorsCircleSweepTwoEdgesTangSur", "CAAGMModelGemBrowser", "CAAAdtCircleSweepTwoEdgesTangSur", "CATICGMFrFTopologicalSweep", "CATIA", "CATICGMTopPrism"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCircleSwTwoGuidesTangSur.htm"
 converted: "2026-05-11T17:33:48.833466"
-Creating a Circle Sweep with Two Guides and a Tangency Surface  
+Creating a Circle Sweep with Two Guides and a Tangency Surface
 
----  
+---
 converted: "2026-05-11T17:33:48.833466"
 Creating a Circle Sweep with Two Guides and a Tangency Surface
-Use Case  
+Use Case
 Abstract The CATICGMFrFTopologicalSweep operator enables you to create sweeps. This use case explains how to create a circle sweep with two guides and a tangency surface.
 
     * What You Will Learn With This Use Case
@@ -27,12 +27,12 @@ Abstract The CATICGMFrFTopologicalSweep operator enables you to create sweeps. T
       * Where to Find the CAAGMOperatorsCircleSweepTwoEdgesTangSur Code
     * Step-by-Step
     * In Short
-    * References  
----  
-What You Will Learn With This Use Case In this use case, you learn how to use the CATICGMFrFTopologicalSweep operator to create circle sweeps with two guides and a tangency surface. ![Swept Surface Definition Dialog Box](images/CAACgmAdttwoedgestangsurresult.gif) | CATICGMFrFTopologicalSweep is to be used according to the general scheme of topological operators. If need be, you can take a look at "Overview of the Topological Operators" [1] for more information.  
----|---  
+    * References
+---
 What You Will Learn With This Use Case In this use case, you learn how to use the CATICGMFrFTopologicalSweep operator to create circle sweeps with two guides and a tangency surface. ![Swept Surface Definition Dialog Box](images/CAACgmAdttwoedgestangsurresult.gif) | CATICGMFrFTopologicalSweep is to be used according to the general scheme of topological operators. If need be, you can take a look at "Overview of the Topological Operators" [1] for more information.
-The CAAGMOperatorsCircleSweepTwoEdgesTangSur Use Case CAAGMOperatorsCircleSweepTwoEdgesTangSur is a use case of the CAAGMOperatorsInterfaces.edu framework that illustrates the GMOperatorsInterfaces framework capabilities. ![Circle Sweep](images/CAACgmAdttwoedgestangsur.gif) | The circle sweep which is created by this use case looks something like this:  
+---|---
+What You Will Learn With This Use Case In this use case, you learn how to use the CATICGMFrFTopologicalSweep operator to create circle sweeps with two guides and a tangency surface. ![Swept Surface Definition Dialog Box](images/CAACgmAdttwoedgestangsurresult.gif) | CATICGMFrFTopologicalSweep is to be used according to the general scheme of topological operators. If need be, you can take a look at "Overview of the Topological Operators" [1] for more information.
+The CAAGMOperatorsCircleSweepTwoEdgesTangSur Use Case CAAGMOperatorsCircleSweepTwoEdgesTangSur is a use case of the CAAGMOperatorsInterfaces.edu framework that illustrates the GMOperatorsInterfaces framework capabilities. ![Circle Sweep](images/CAACgmAdttwoedgestangsur.gif) | The circle sweep which is created by this use case looks something like this:
 
 What You Will Learn With This Use Case In this use case, you learn how to use the CATICGMFrFTopologicalSweep operator to create circle sweeps with two guides and a tangency surface. ![Swept Surface Definition Dialog Box](images/CAACgmAdttwoedgestangsurresult.gif) | CATICGMFrFTopologicalSweep is to be used according to the general scheme of topological operators. If need be, you can take a look at "Overview of the Topological Operators" [1] for more information.
 The CAAGMOperatorsCircleSweepTwoEdgesTangSur Use Case CAAGMOperatorsCircleSweepTwoEdgesTangSur is a use case of the CAAGMOperatorsInterfaces.edu framework that illustrates the GMOperatorsInterfaces framework capabilities. ![Circle Sweep](images/CAACgmAdttwoedgestangsur.gif) | The circle sweep which is created by this use case looks something like this:
@@ -60,28 +60,28 @@ Creating the Two Guides and the Tangency Surface The curves to be used as guides
     //
 guides.Append(pGuideGeom2);
 guides.Append(pGuideGeom1);
-    CATICGMFrFTopologicalSweep * pSweepOpe = CATCGMCreateFrFTopologicalCircleSweep(piGeomFactory, 
+    CATICGMFrFTopologicalSweep * pSweepOpe = CATCGMCreateFrFTopologicalCircleSweep(piGeomFactory,
 
             &topdata, &guides);
 
 Setting the Parameters The SetLimitGuideSlopeCondition method enables you to:
-    * Specify the guide which is on the tangency surface. You just have to give the rank of this guide in the guide list (1 is the first guide appended). 
+    * Specify the guide which is on the tangency surface. You just have to give the rank of this guide in the guide list (1 is the first guide appended).
     * Specify the tangency surface (arg 2)
     * A composite law. Only a NULL argument can be passed for this CATIA Version.
 
-    //       2 - Specify the slope. 
-    //           When the angle is 0, the sweep to be generated is tangent to 
+    //       2 - Specify the slope.
+    //           When the angle is 0, the sweep to be generated is tangent to
     //           the reference element. The rank specified is
-    //           the rank of the guide which is a projection on the surface 
+    //           the rank of the guide which is a projection on the surface
     //           in the CATLISTP(CATGeometry) list of guides.
     //
     CATGeometry * referenceElement = (CATGeometry *)pPBody;
     int rank = 2;
     pSweepOpe->SetLimitGuideSlopeCondition(rank, referenceElement,pCompLaw );
 
-In Short This use case is an example of how to create a circle sweep with two guides and a tangency surface. References [1] |  [Overview of the Topological Operators](CAACgmUcTopOverview.md)  
+In Short This use case is an example of how to create a circle sweep with two guides and a tangency surface. References [1] |  [Overview of the Topological Operators](CAACgmUcTopOverview.md)
 
-[2] |  [Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
-[3] |  [Using the Basic Topological Operators](CAACgmUcTopSpline.md)  
-History Version: **1** [Aug 2002] | Document created  
+[2] |  [Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
+[3] |  [Using the Basic Topological Operators](CAACgmUcTopSpline.md)
+History Version: **1** [Aug 2002] | Document created
 ---|---

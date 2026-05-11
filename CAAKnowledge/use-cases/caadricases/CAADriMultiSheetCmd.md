@@ -11,15 +11,15 @@ converted: "2026-05-11T17:31:51.012436"
 ---
 # Mechanical Design
 
-| 
+|
 ## Drafting
 
-| 
+|
 ### Creating a Multi Sheet Interactive Command
 
-_How to create an interactive command working on several sheets_  
----|---|---  
-Use Case  
+_How to create an interactive command working on several sheets_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
@@ -35,7 +35,7 @@ This article discusses the CAADrwMultiSheetCmd use case. This use case explains 
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will You With This Use Case
@@ -72,20 +72,20 @@ To launch CAADrwMultiSheetCmd, you will need to set up the build time environmen
   8. Select TEXT SHEET 1 text in Sheet 1. (Sheet 1 is the current sheet)
   9. Select TEXT SHEET 2 text in Sheet 2. (Sheet 2 is the current sheet). The TEXT SHEET2 is moved (See Fig: 3) recording to TEXT SHEET1 text position.
 
-Fig 1: Sheet.1 is the current sheet ![](images/CAADrwMultiSheet1.jpg)  
+Fig 1: Sheet.1 is the current sheet ![](images/CAADrwMultiSheet1.jpg)
 
----  
+---
 8. Select TEXT SHEET 1 text in Sheet 1. (Sheet 1 is the current sheet)
 9. Select TEXT SHEET 2 text in Sheet 2. (Sheet 2 is the current sheet). The TEXT SHEET2 is moved (See Fig: 3) recording to TEXT SHEET1 text position.
 Fig 1: Sheet.1 is the current sheet ![](images/CAADrwMultiSheet1.jpg)
-Fig 2: Sheet.2 is the current sheet ![](images/CAADrwMultiSheet2.jpg)  
+Fig 2: Sheet.2 is the current sheet ![](images/CAADrwMultiSheet2.jpg)
 
----  
+---
 Fig 1: Sheet.1 is the current sheet ![](images/CAADrwMultiSheet1.jpg)
 Fig 2: Sheet.2 is the current sheet ![](images/CAADrwMultiSheet2.jpg)
-Fig 3: Sheet.2 is the current sheet ![](images/CAADrwMultiSheet3.jpg)  
+Fig 3: Sheet.2 is the current sheet ![](images/CAADrwMultiSheet3.jpg)
 
----  
+---
 
 [Top]
 #### Where to Find the CAADrwMultiSheetCmd Code
@@ -93,11 +93,11 @@ Fig 3: Sheet.2 is the current sheet ![](images/CAADrwMultiSheet3.jpg)
 The CAADrwMultiSheetCmd use case is made of two source files named CAADrwMultiSheetCmd.h and CAADrwMultiSheetCmd.cpp located in the CAADrwMultiSheetCmd.m module of the CAADraftingInterfaces.edu framework:
 
 The CAADrwMultiSheetCmd use case is made of two source files named CAADrwMultiSheetCmd.h and CAADrwMultiSheetCmd.cpp located in the CAADrwMultiSheetCmd.m module of the CAADraftingInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwMultiSheetCmd.m\`  
+Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwMultiSheetCmd.m\`
 
 The CAADrwMultiSheetCmd use case is made of two source files named CAADrwMultiSheetCmd.h and CAADrwMultiSheetCmd.cpp located in the CAADrwMultiSheetCmd.m module of the CAADraftingInterfaces.edu framework:
 Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwMultiSheetCmd.m\`
-Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwMultiSheetCmd.m/`  
+Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwMultiSheetCmd.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
@@ -129,7 +129,10 @@ _pObjectAgent(NULL)
       __piSheetsOnDrawing = NULL;
       CATApplicationFrame *appFrame = CATApplicationFrame::GetFrame();
       CATIAApplication *ptApp = NULL;
+```vbscript
       if (SUCCEEDED(appFrame->QueryInterface(IID_CATIAApplication, (void**) &ptApp)))
+
+```
 
       {
 __piSheetsOnDrawing = NULL;
@@ -137,7 +140,10 @@ CATApplicationFrame *appFrame = CATApplicationFrame::GetFrame();
 CATIAApplication *ptApp = NULL;
 if (SUCCEEDED(appFrame->QueryInterface(IID_CATIAApplication, (void**) &ptApp)))
         CATIADocument *ptDoc = NULL;
+```vbscript
         if (SUCCEEDED(ptApp->get_ActiveDocument(ptDoc)))
+
+```
 
         {
 ```vbscript
@@ -180,15 +186,21 @@ ptApp->Release();
       // Activate Multi sheet mode
 ```vbscript
 GetMultiSheetMode(_PreviousMode);
+```vbscript
+```vbscript
       if (!_PreviousMode) SetMultiSheetMode(TRUE);
+
+```
+
+```
 
       _Xposition =0.0;
       _Yposition =0.0;
 ```
 
-    }  
+    }
 
----  
+---
 
 [Top]
 #### Reading the Current Multi Sheet Mode
@@ -207,14 +219,20 @@ GetMultiSheetMode(_PreviousMode);
     {
 void  CAADrwMultiSheetCmd::GetMultiSheetMode(boolean  &oMode)
       oMode = FALSE;
+```vbscript
       if (!!__piSheetsOnDrawing)
+
+```
 
       {
 void  CAADrwMultiSheetCmd::GetMultiSheetMode(boolean  &oMode)
 oMode = FALSE;
 if (!!__piSheetsOnDrawing)
         CATIDftMultiSheetMode *multiSheetManager=NULL;
+```vbscript
         if (SUCCEEDED(__piSheetsOnDrawing->QueryInterface(IID_CATIDftMultiSheetMode, (void **) &multiSheetManager)))
+
+```
 
         {
 ```vbscript
@@ -227,9 +245,9 @@ if (SUCCEEDED(__piSheetsOnDrawing->QueryInterface(IID_CATIDftMultiSheetMode, (vo
 
         }
       }
-    }  
+    }
 
----  
+---
 
 [Top]
 #### Activating the Multi Sheet Mode
@@ -254,7 +272,10 @@ void  CAADrwMultiSheetCmd::SetMultiSheetMode(boolean  iMode)
 void  CAADrwMultiSheetCmd::SetMultiSheetMode(boolean  iMode)
 if (!!__piSheetsOnDrawing)
         CATIDftMultiSheetMode *multiSheetManager=NULL;
+```vbscript
         if (SUCCEEDED(__piSheetsOnDrawing->QueryInterface(IID_CATIDftMultiSheetMode, (void **) &multiSheetManager)))
+
+```
 
         {
 ```vbscript
@@ -267,25 +288,25 @@ if (SUCCEEDED(__piSheetsOnDrawing->QueryInterface(IID_CATIDftMultiSheetMode, (vo
 
         }
       }
-    }  
+    }
 
----  
+---
 
 [Top]
 #### Building the State Chart and Creating the Appropriate Selection Agent
 
-![](images/CAADrwMultiSheet4.jpg)  
----  
+![](images/CAADrwMultiSheet4.jpg)
+---
 
     // ----------------------------------------------------------------------------
     void CAADrwMultiSheetCmd::BuildGraph()
-    {  
+    {
       // Creation of the acquisition agent
 void CAADrwMultiSheetCmd::BuildGraph()
       _pObjectAgent = new CATPathElementAgent("pObjectAgent");
-      _pObjectAgent ->SetBehavior( CATDlgEngWithPrevaluation | 
-                                   CATDlgEngMultiAcquisition | 
-                                   CATDlgEngWithCSO); 
+      _pObjectAgent ->SetBehavior( CATDlgEngWithPrevaluation |
+                                   CATDlgEngMultiAcquisition |
+                                   CATDlgEngWithCSO);
 
       // We want to select text
 _pObjectAgent ->SetBehavior( CATDlgEngWithPrevaluation |
@@ -307,19 +328,25 @@ CATDialogState* state2 = AddDialogState("Sel text to align");
 state1->AddDialogAgent(_pObjectAgent);
 state2->AddDialogAgent(_pObjectAgent);
       AddTransition(state1, state2, IsOutputSetCondition(_pObjectAgent),
+```vbscript
                     Action((ActionMethod)&CAADrwMultiSheetCmd::CheckText, NULL, NULL));
+
+```
 
       // Transition definition
 ```vbscript
 AddTransition(state1, state2, IsOutputSetCondition(_pObjectAgent),
+```vbscript
 Action((ActionMethod)&CAADrwMultiSheetCmd::CheckText, NULL, NULL));
       AddTransition(state2, NULL, IsOutputSetCondition(_pObjectAgent),
                     Action((ActionMethod)&CAADrwMultiSheetCmd::MoveText, NULL, NULL));
 ```
 
-    }  
+```
 
----  
+    }
+
+---
 
 In this section we create a CATPathElementAgent and set the corresponding element type to CATIDrwText. So only Complex Texts could be selected.
 
@@ -328,13 +355,16 @@ In this section we create a CATPathElementAgent and set the corresponding elemen
 
     // ----------------------------------------------------------------------------
     boolean CAADrwMultiSheetCmd::CheckText(void *)
-    { 
+    {
       // We get the Selected set of objects
 boolean CAADrwMultiSheetCmd::CheckText(void *)
-      CATSO* pObjSO = _pObjectAgent->GetListOfValues(); 
+      CATSO* pObjSO = _pObjectAgent->GetListOfValues();
       CATPathElement *pElemPath = NULL;
 
-      if (NULL != pObjSO)  
+```vbscript
+      if (NULL != pObjSO)
+
+```
 
       {
         // There is a selection, we will scan it from the beginning
@@ -350,9 +380,12 @@ pObjSO->InitElementList();
 while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement()))
           CATIDrwText *piText = (CATIDrwText *)pElemPath->FindElement(IID_CATIDrwText);
 
+```vbscript
           if (NULL != piText)
 
-          {            
+```
+
+          {
 CATIDrwText *piText = (CATIDrwText *)pElemPath->FindElement(IID_CATIDrwText);
 if (NULL != piText)
             piText->GetPosition(_Xposition,_Yposition);
@@ -371,9 +404,9 @@ return TRUE;
       return FALSE;
 
     }
-    ...  
+    ...
 
----  
+---
 
 The acquisition agent did put the selected text into the CSO. So we get the set of object and loop on it.
 
@@ -382,20 +415,26 @@ The acquisition agent did put the selected text into the CSO. So we get the set 
 
     // ----------------------------------------------------------------------------
     boolean CAADrwMultiSheetCmd::MoveText(void *)
-    { 
+    {
       // We get the Selected set of objects
 boolean CAADrwMultiSheetCmd::MoveText(void *)
-      CATSO* pObjSO = _pObjectAgent->GetListOfValues(); 
+      CATSO* pObjSO = _pObjectAgent->GetListOfValues();
       CATPathElement *pElemPath = NULL;
 
-      if (NULL != pObjSO)  
+```vbscript
+      if (NULL != pObjSO)
+
+```
 
       {
         // There is a selection, we will scan it from the beginning
 CATPathElement *pElemPath = NULL;
 if (NULL != pObjSO)
         pObjSO->InitElementList();
+```vbscript
         while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement()))
+
+```
 
         {
           // Make sure the element is a text
@@ -403,14 +442,20 @@ pObjSO->InitElementList();
 while (NULL != (pElemPath = (CATPathElement*)pObjSO->NextElement()))
           CATIDrwText *piText = (CATIDrwText *)pElemPath->FindElement(IID_CATIDrwText);
 
+```vbscript
           if (NULL != piText)
 
-          {            
+```
+
+          {
 CATIDrwText *piText = (CATIDrwText *)pElemPath->FindElement(IID_CATIDrwText);
 if (NULL != piText)
             piText->SetPosition(_Xposition,_Yposition);
             CATIModelEvents_var event(piText);
+```vbscript
             if (event !=NULL_var)
+
+```
 
             {
 piText->SetPosition(_Xposition,_Yposition);
@@ -435,22 +480,22 @@ piText->Release();
         return TRUE;
 
       }
-    ...  
+    ...
 
----  
+---
 
 **Note** : When a text is modified and needs to regenerate its graphical representations, it just has to send CATModify event to warn all its.
 
 [Top]
 #### Restoring the Previous Multi Sheet Mode Value
 
-    ...            
+    ...
     // Restore Active Multi sheet mode
       SetMultiSheetMode(_PreviousMode);
       return FALSE;
-    }  
+    }
 
----  
+---
 
 **Note** : The Multi Sheet Mode Value has to be restore in the destructor.
 
@@ -466,17 +511,17 @@ This use case shows how to create a command working on several sheets: Retrieve 
 * * *
 ### References
 
-[1] | [Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-[2] | [Implementing the Statechart Diagram](../CAADegUseCases/CAADegSampleGraph.md)  
-[Top]  
+[1] | [Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)
+---|---
+[2] | [Implementing the Statechart Diagram](../CAADegUseCases/CAADegSampleGraph.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Aug 2000] | Document created  
----|---  
-[Top]  
+Version: **1** [Aug 2000] | Document created
+---|---
+[Top]
 
 * * *
 

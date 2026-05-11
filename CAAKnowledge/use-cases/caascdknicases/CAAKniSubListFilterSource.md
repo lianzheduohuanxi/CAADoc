@@ -13,7 +13,13 @@ tags: ["CAAScdKniUseCases", "CATIA", "CAAKniSamplePartR13", "CAAKniSubListFilter
 source_file: "Doc/online/CAAScdKniUseCases/CAAKniSubListFilterSource.htm"
 converted: "2026-05-11T17:31:51.997304"
     Option Explicit
+```vbscript
+```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2001
+
+```
+
+```
 
 ```vbscript
     Dim Language as String
@@ -21,70 +27,102 @@ converted: "2026-05-11T17:31:51.997304"
 ```
 
 ```vbscript
+```vbscript
+```vbscript
     ' ***********************************************************************
     '   Purpose:      You can add user parameters to a given feature by using the
     '                 Knowledge Advisor product. This macro filters the parameters
-    '                 related to a pad.1 feature. You can apply this macro to any 
+    '                 related to a pad.1 feature. You can apply this macro to any
     '                 part with a pad.1 feature or modify this macro to filter
     '                 the parameters related to any other feature.
-    '                 This macro illustrates how to use the SubList method of a 
+    '                 This macro illustrates how to use the SubList method of a
     '                 Parameters collection.
-    '                
+    '
     '   Author:       Carole ROULLE, Pierre Grignon
     '   Languages:    VBScript
     '   Locales:      English (United States)
-    '   CATIA Level:  V5R6  
+    '   CATIA Level:  V5R6
     '   revision V5R13
     ' ***********************************************************************
 ```
 
+```
+
+```
+
+```vbscript
     Sub CATMain()
 
+```
+
+```vbscript
+```vbscript
 ```vbscript
      ' Set the CATIA popup file alerts to False
      ' It prevents to stop the macro at each alert during its execution
      CATIA.DisplayFileAlerts = False
-     ' Retrieve your active document - CATIA is your application 
+     ' Retrieve your active document - CATIA is your application
      ' You get the active document by using the ActiveDocument property
      ' on your application object
-        ' ----------------------------------------------------------- 
+        ' -----------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
-        dim sDocPath As String 
+        dim sDocPath As String
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
           Err.Raise 9999,,"No Doc Path Defined"
         End If
-        ' ----------------------------------------------------------- 
+        ' -----------------------------------------------------------
+```
+
+```
+
 ```
 
 ```vbscript
         Dim sFilePath
+```vbscript
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+```
+
 ```
 
     		"online\CAAScdKniUseCases\samples\CAAKniSamplePartR13.CATPart")
 ```vbscript
 Dim sFilePath
+```vbscript
+```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Dim oDoc As Document
         set oDoc = CATIA.Documents.Open(sFilePath)
 
 ```
 
+```
+
+```
+
 ```vbscript
 set oDoc = CATIA.Documents.Open(sFilePath)
+```vbscript
      ' Retrieve your active document
 ```
 
-```vbscript
-     Dim oActiveDoc As Document 
-     Set oActiveDoc = CATIA.ActiveDocument 
 ```
 
 ```vbscript
+     Dim oActiveDoc As Document
+```vbscript
+     Set oActiveDoc = CATIA.ActiveDocument
+```
+
+```
+
+```vbscript
+```vbscript
+```vbscript
      ' Check whether the document is a CATPart
-     If (InStr(oActiveDoc.Name,".CATPart")) <> 0  Then 
+     If (InStr(oActiveDoc.Name,".CATPart")) <> 0  Then
         ' Retrieve the collection object which contains
         ' all the document parameters
         Dim oParamList As Paraneters
@@ -100,38 +138,66 @@ set oDoc = CATIA.Documents.Open(sFilePath)
              if oBodies.item(j).Shapes.item(i).name = "Pad.1" then
                ' Display the list of parameters related to the Pad.1 feature
                ' If False is specified in the second argument of the SubList
-               ' method, the list which is returned contains the parameters directly 
+               ' method, the list which is returned contains the parameters directly
                ' related to Pad.1 (for example the pad limits) plus
                ' the user parameters added right below Pad.1.
                ' If True is specified in the second argument, the returned list contains
                ' all the parameters related to Pad.1 itself plus the parameters related
-               ' to its children (for example, the parameters of the sketch from which 
-               ' the pad was extruded from)          
+               ' to its children (for example, the parameters of the sketch from which
+               ' the pad was extruded from)
 
                Dim oPad1SubList As Parameters
                Set oPad1SubList = oParamList.SubList(oBodies.item(j).Shapes.item(i), False)
                  for k = 1 to oPad1SubList.Count
 ```
 
+```
+
+```
+
 ```vbscript
 Dim oPad1SubList As Parameters
+```vbscript
 Set oPad1SubList = oParamList.SubList(oBodies.item(j).Shapes.item(i), False)
+```
+
+```
+
 for k = 1 to oPad1SubList.Count
                     msgbox oPad1SubList.Item(k).name
                  next
-             End if 
-             Next 
-        Next       
+```vbscript
+             End if
+```
+
+```vbscript
+             Next
+```vbscript
+```vbscript
+        Next
+
+```
+
+```
 
 ```
 
 ```vbscript
 Next
+```vbscript
 Next
+```
+
      Else
         MsgBox "The active document must be a CATPart"
+```vbscript
     End If
 
 ```
 
+```
+
+```vbscript
     End Sub
+
+```

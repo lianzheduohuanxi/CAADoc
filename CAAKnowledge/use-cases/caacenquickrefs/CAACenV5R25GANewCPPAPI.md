@@ -12,63 +12,63 @@ converted: "2026-05-11T17:33:47.564481"
 tags: ["CATIThreadManagement", "CATICGMDistanceBodyBody", "CATITPSExtendedCylinder", "CATIACbdUserImportIDF", "CATIPrdHandlePDMObject", "CATIAVPMVDACreateExtension", "CATIA", "CATICGMHealGaps", "CATIPDMSaveContext", "CATIAV4Interfaces", "CATIMfgSpiralMilling3x"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R25GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.564481"
-CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5-6R2015 GA  
+CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5-6R2015 GA
 
 * * *
 
 The following are the new CAA V5-6R2015 GA C++ Authorized APIs, compared with CAA V5-6R2014 at GA level.
 
-  * AdvancedMathematics framework 
+  * AdvancedMathematics framework
     * Global Function CreateCombination
     * Global Function CreateCombination
-  * CATIAV4Interfaces framework 
+  * CATIAV4Interfaces framework
     * Global Function CAT4iGetCompositsNumber
     * Global Function CATV4iGirema
-  * CATPDMBaseInterfaces framework 
+  * CATPDMBaseInterfaces framework
     * Enumeration CATPDMSaveContext
     * Interface CATIPDMSaveContext
-  * CATTPSInterfaces framework 
+  * CATTPSInterfaces framework
     * Interface CATITPSExtendedCylinder
-  * GMModelInterfaces framework 
+  * GMModelInterfaces framework
     * Class CATLISTP(CATCGMDiagnosis)
     * Interface CATCGMRefCounted
-  * GMOperatorsInterfaces framework 
+  * GMOperatorsInterfaces framework
     * Global Function CATCGMCreateDistanceBodyBodyOp
     * Global Function CATCGMCreateDistanceBodyBodyOp
     * Global Function CATCGMCreateDistanceBodyBodyOp
     * Global Function CATCGMCreateHealGaps
     * Interface CATICGMDistanceBodyBody
     * Interface CATICGMHealGaps
-  * GeometricObjects framework 
+  * GeometricObjects framework
     * Macro or #define CATBoneFilletConstantType
     * Global Function CATCreateCGMContainer
-  * GeometricOperators framework 
+  * GeometricOperators framework
     * Global Function CreatePlanarMapping
-  * ManufacturingInterfaces framework 
+  * ManufacturingInterfaces framework
     * Interface CATIMfgSpiralMilling3x
-  * Mathematics framework 
+  * Mathematics framework
     * Class CATLISTV(CATMathAxis)
     * Macro or #define CATGeometricModelTransactionEndTryWithoutRethrow
     * Macro or #define CATToleranceCheckDefault
     * Global Function CATTan
-  * Multimedia framework 
+  * Multimedia framework
     * Enumeration CATPrintVertexOption
-  * ObjectModelerBase framework 
+  * ObjectModelerBase framework
     * Global Function UpdateDocumentAccessStatus
-  * ObjectModelerCollection framework 
+  * ObjectModelerCollection framework
     * Class CORBAAny
     * Class sequence
     * Macro or #define max
-  * PCBoardBase framework 
+  * PCBoardBase framework
     * Class CATCbdUserImportAdapter
     * Interface CATIACbdUserImportIDF
-  * PartInterfaces framework 
+  * PartInterfaces framework
     * Interface CATIThreadManagement
-  * ProductStructureInterfaces framework 
+  * ProductStructureInterfaces framework
     * Interface CATIPrdHandlePDMObject
-  * VPMDesktopObjects framework 
+  * VPMDesktopObjects framework
     * Interface CATIAVPMVDACreateExtension
-  * VPMInterfaces framework 
+  * VPMInterfaces framework
     * Class ENOVQObjectIdentity
     * Enumeration VPM_Boolean
     * Enumeration VPM_Logical
@@ -79,11 +79,11 @@ The following are the new CAA V5-6R2015 GA C++ Authorized APIs, compared with CA
 
 * * *
 
-History Version: **1** [Jul 2014] | Document created  
----|---  
-[Top]  
+History Version: **1** [Jul 2014] | Document created
+---|---
+[Top]
 
 * * *
 
-_Copyright © 1999-2014, Dassault Systèmes. All rights reserved._  
+_Copyright © 1999-2014, Dassault Systèmes. All rights reserved._
 Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)

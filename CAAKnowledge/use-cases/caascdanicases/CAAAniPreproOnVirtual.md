@@ -11,16 +11,16 @@ converted: "2026-05-11T17:31:51.835848"
 ---
 ## Analysis Modeler
 
-| 
-## Creating Virtual Parts  
+|
+## Creating Virtual Parts
 
 * * *
 
- This macro shows you how to create an Analysis document for a generative structural analysis. With this scenario, you will cover all the steps of a generative analysis application. It creates an Analysis document, imports a Part document provided with the sample. An Analysis Case is created as for modal analysis. Some pre-processing data is defined by using the publication defined on the part. This example will focus on the creation of virtual parts. Then the virtual parts are clamped. On top of the design some additional mass is added. This example will also illustrate how to read pre-processing data. ![](images/PreproWithVirtual.jpg)    
----|---  
+ This macro shows you how to create an Analysis document for a generative structural analysis. With this scenario, you will cover all the steps of a generative analysis application. It creates an Analysis document, imports a Part document provided with the sample. An Analysis Case is created as for modal analysis. Some pre-processing data is defined by using the publication defined on the part. This example will focus on the creation of virtual parts. Then the virtual parts are clamped. On top of the design some additional mass is added. This example will also illustrate how to read pre-processing data. ![](images/PreproWithVirtual.jpg)
+---|---
 This macro shows you how to create an Analysis document for a generative structural analysis. With this scenario, you will cover all the steps of a generative analysis application. It creates an Analysis document, imports a Part document provided with the sample. An Analysis Case is created as for modal analysis. Some pre-processing data is defined by using the publication defined on the part. This example will focus on the creation of virtual parts. Then the virtual parts are clamped. On top of the design some additional mass is added. This example will also illustrate how to read pre-processing data. ![](images/PreproWithVirtual.jpg)
- CAAAniPreproOnVirtual is launched in CATIA [1]. No open document is needed. [CAAAniPreproOnVirtual.catvbs](CAAAniPreproOnVirtualSource.md) is located in the CAAScdAniUseCases module. [Execute macro](macros/CAAAniPreproOnVirtual.catvbs) (Windows only).    
- CAAAniPreproOnVirtual includes the following steps: 
+ CAAAniPreproOnVirtual is launched in CATIA [1]. No open document is needed. [CAAAniPreproOnVirtual.catvbs](CAAAniPreproOnVirtualSource.md) is located in the CAAScdAniUseCases module. [Execute macro](macros/CAAAniPreproOnVirtual.catvbs) (Windows only).
+ CAAAniPreproOnVirtual includes the following steps:
 
   1. Prolog
   2. Importing the Part Document
@@ -33,30 +33,45 @@ This macro shows you how to create an Analysis document for a generative structu
 
 #### Prolog
 
-| 
+|
 
     ...
 ```vbscript
-    ' ----------------------------------------------------------- 
-    ' Get the collection of documents in session 
-    ' Create the CATAnalysis Document 
+```vbscript
+```vbscript
+    ' -----------------------------------------------------------
+    ' Get the collection of documents in session
+    ' Create the CATAnalysis Document
+```
+
+```
+
 ```
 
 ```vbscript
-       Set TheAnalysisDocument = documents1.Add("Analysis") 
+       Set TheAnalysisDocument = documents1.Add("Analysis")
 ```
 
 ```vbscript
-    ' if WB name already is "GPSCfg", not to use StartWorkbench 
-       WBName = CATIA.GetWorkbenchId 
-       if (WBName <> "GPSCfg") Then 
+```vbscript
+    ' if WB name already is "GPSCfg", not to use StartWorkbench
+```
+
+       WBName = CATIA.GetWorkbenchId
+       if (WBName <> "GPSCfg") Then
+```vbscript
+```vbscript
           CATIA.StartWorkbench("GPSCfg")
        End If
 ```
 
-     ...  
+```
 
----  
+```
+
+     ...
+
+---
 
 Create the Analysis document. The use of StartWorkbench will customize the analysis document as a generative one. it mean's that a 3D meshpart and an isotropic property will be automatically created as in the Generative workbench.
 #### Importing the Part Document
@@ -65,11 +80,20 @@ In order to import the document you have to give the path of this document, the 
 
     ...
 In order to import the document you have to give the path of this document, the late type which implements CATISamImportDefine and an array of CATVariant if you want to customize the import.
-    '_____________________________________________________________________________________ 
-    ' Start to scan the existing structure of analysis document: Retrieve the AnalysisManager 
+```vbscript
+```vbscript
+    '_____________________________________________________________________________________
+    ' Start to scan the existing structure of analysis document: Retrieve the AnalysisManager
+
+```
+
+```
 
 ```vbscript
-       Set analysisManager1 = TheAnalysisDocument.Analysis 
+```vbscript
+       Set analysisManager1 = TheAnalysisDocument.Analysis
+
+```
 
 ```
 
@@ -79,38 +103,56 @@ In order to import the document you have to give the path of this document, the 
 
 ```
 
-    				 "CATAnalysisImport", arrayOfVariantOfShort1 
-    ' _____________________________________________________________________________________ 
+    				 "CATAnalysisImport", arrayOfVariantOfShort1
+```vbscript
+    ' _____________________________________________________________________________________
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' _____________________________________________________________________________________
-    ' Reframe All. 
+    ' Reframe All.
+```
+
+```
+
 ```
 
 ```vbscript
-       Set specsAndGeomWindow1 = CATIA.ActiveWindow 
-       Set viewer3D1 = specsAndGeomWindow1.ActiveViewer 
-       viewer3D1.Reframe 
+       Set specsAndGeomWindow1 = CATIA.ActiveWindow
+```vbscript
+       Set viewer3D1 = specsAndGeomWindow1.ActiveViewer
+```
+
+       viewer3D1.Reframe
 ```
 
 ```vbscript
-    ' _____________________________________________________________________________________ 
-    ' Scan the analysis document: Retrieve the Pointed documents to extract the reference for preprocessing 
-       Set analysisLinkedDocuments1 = analysisManager1.LinkedDocuments 
-       CATIA.SystemService.Print analysisLinkedDocuments1.Name 
-       If (analysisLinkedDocuments1.Count <> 1 ) Then 
-          Err.Raise 9999,,"NbDoc Li NE 1" 
-       End If 
-    ' _____________________________________________________________________________________ 
-    ' Retrieve the CATPart Document and associated publications for preprocessing. 
-       Set TheDoc = analysisLinkedDocuments1.Item(1) 
-       CATIA.SystemService.Print TheDoc.FullName 
-       Set product1 = TheDoc.Product 
-       Set publications1 = product1.Publications 
+```vbscript
+```vbscript
+    ' _____________________________________________________________________________________
+    ' Scan the analysis document: Retrieve the Pointed documents to extract the reference for preprocessing
+       Set analysisLinkedDocuments1 = analysisManager1.LinkedDocuments
+       CATIA.SystemService.Print analysisLinkedDocuments1.Name
+       If (analysisLinkedDocuments1.Count <> 1 ) Then
+          Err.Raise 9999,,"NbDoc Li NE 1"
+       End If
+    ' _____________________________________________________________________________________
+    ' Retrieve the CATPart Document and associated publications for preprocessing.
+       Set TheDoc = analysisLinkedDocuments1.Item(1)
+       CATIA.SystemService.Print TheDoc.FullName
+       Set product1 = TheDoc.Product
+       Set publications1 = product1.Publications
 ```
 
-    ...  
+```
 
----  
+```
+
+    ...
+
+---
 
 The Part document is fetched in the documentation installation path, this path has already been stored in the `sDocPath` variable. In the collection of documents analysisLinkedDocuments1, two documents can be retrieved: the Analysis document and the Part document. The extraction of pre-defined geometrical arena is done by using the Publication interface. Each publication is identified by a logical name. This is equivalent as the selection of a Publication element inside the interactive applications.
 
@@ -124,12 +166,20 @@ Inserting a new __ Frequency Case __ allows you to create objects sets for the n
 
     ...
 ```vbscript
-    ' _____________________________________________________________________________________ 
-    ' Create a Case for frequency computation in the current analysis model. 
+```vbscript
+```vbscript
+    ' _____________________________________________________________________________________
+    ' Create a Case for frequency computation in the current analysis model.
+```
+
+```
+
 ```
 
 ```vbscript
        Set analysisModels1 = analysisManager1.AnalysisModels
+```vbscript
+```vbscript
        Set analysisModel1 = analysisModels1.Item(1)
 
        Set analysisCases1 = analysisModel1.AnalysisCases
@@ -142,9 +192,13 @@ Inserting a new __ Frequency Case __ allows you to create objects sets for the n
        Set analysisSet6 = analysisSets1.Add("SensorSet",catAnalysisSetOut)
 ```
 
-      ...  
+```
 
----  
+```
+
+      ...
+
+---
 
 [Top]
 #### Creating Virtual Parts inside the Property Set
@@ -153,39 +207,60 @@ Inserting a new __ Frequency Case __ allows you to create objects sets for the n
 
     ...
 ```vbscript
+```vbscript
     Set analysisSet4 = analysisSets2.ItemByType("PropertySet")
 
     Set analysisEntities1 = analysisSet4.AnalysisEntities
+```
+
+```vbscript
+```vbscript
     Set analysisEntity1 = analysisEntities1.Add("SAMVirPartRigid")
     Set publication1 = publications1.Item("SmallHole")
+```
+
+```
+
     analysisEntity1.AddSupportFromPublication product1, publication1
 
 ```
 
-    ...  
+    ...
 
----  
+---
 
 [Top]
 #### Defining Boundaries
 
       ...
 ```vbscript
+```vbscript
+```vbscript
     ' _____________________________________________________________________________________
     ' Clamp the Rigid Virtal Parts
 
 ```
 
+```
+
+```
+
 ```vbscript
        Set analysisEntities2 = analysisSet1.AnalysisEntities
+```vbscript
+```vbscript
        Set analysisEntity5 = analysisEntities2.Add("SAMClamp")
        Set reference1 = analysisManager1.CreateReferenceFromObject(analysisEntity4)
+```
+
+```
+
        analysisEntity5.AddSupportFromReference reference1, reference1
 ```
 
-    ...  
+    ...
 
----  
+---
 
 From the restraint set defined on the analysis case, we retrieve the collection of analysis entities. We add to this collection a fix (clamp) boundary condition and apply it on the virtual part. For this we have to create a reference on the analysis feature and use the AddSupportFromReference method. Then, same is done for the 3 other virtual parts.
 
@@ -196,38 +271,63 @@ Distributed Masses are used to model purely inertial (non-structural) system cha
 
     ...
 ```vbscript
+```vbscript
+```vbscript
     ' _____________________________________________________________________________________
     ' Distribute some Masses on top of the Part
 
 ```
 
+```
+
+```
+
 ```vbscript
        Set analysisEntities3 = analysisSet2.AnalysisEntities
+```vbscript
+```vbscript
        Set analysisEntity9 = analysisEntities3.Add("SAMDistributedMass")
        Set publication5 = publications1.Item("TopFace")
+```
+
+```
+
        analysisEntity9.AddSupportFromPublication product1, publication5
 
        Set basicComponents1 = analysisEntity9.BasicComponents
+```vbscript
        Set basicComponent1 = basicComponents1.GetItem("SAMMassMag")
+```
+
        basicComponent1.SetValue "", 0, 0, 0, 25.000000
 
 ```
 
 ```vbscript
 Set basicComponent1 = basicComponents1.GetItem("SAMMassMag")
-basicComponent1.SetValue "", 0, 0, 0, 25.000000
-    ' _____________________________________________________________________________________
-    ' Read the Value of the Mass
 ```
 
+basicComponent1.SetValue "", 0, 0, 0, 25.000000
+```vbscript
+```vbscript
+    ' _____________________________________________________________________________________
+    ' Read the Value of the Mass
+
+```
+
+```
+
+```vbscript
 ```vbscript
       CATIA.SystemService.Print " Mass Applied of the Part: " & basicComponent1.GetValue ("",0,0,0)
 
 ```
 
-    ...  
+```
 
----  
+    ...
+
+---
 
 Note that to valuate the parameters, you can SetValue method and to read them again, you can use the GetValue that will return the value stored in the document.
 
@@ -235,11 +335,14 @@ Note that to valuate the parameters, you can SetValue method and to read them ag
 #### Computing the Case
 
     ...
-    ' Launch the computation of the Case 
-       MyCase.Compute ...
-    ...  
+```vbscript
+    ' Launch the computation of the Case
+```
 
----  
+       MyCase.Compute ...
+    ...
+
+---
 
 This method will launch the mesher, generate the finite element model for preprocessing and launch the solver to generate the finite element results.
 
@@ -247,9 +350,12 @@ This method will launch the mesher, generate the finite element model for prepro
 #### Epilog
 
     ...
-     End Sub  
+```vbscript
+     End Sub
 
----  
+```
+
+---
 
 ![](../CAAScrBase/images/aendtask.gif)
 
@@ -265,10 +371,10 @@ This use case has shown how to produce in VB a complete analysis document with a
 * * *
 #### References
 
-[1] | [Replaying a macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)  
----|---  
-[2] | [Physical types for structural analysis](../CAAScdAniTechArticles/CAAAniPreprocessingFeatures.md)  
-[Top]  
+[1] | [Replaying a macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)
+---|---
+[2] | [Physical types for structural analysis](../CAAScdAniTechArticles/CAAAniPreprocessingFeatures.md)
+[Top]
 
 * * *
 

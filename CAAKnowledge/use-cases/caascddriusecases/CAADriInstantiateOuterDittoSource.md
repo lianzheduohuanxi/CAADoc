@@ -2,301 +2,261 @@
 title: "Untitled"
 category: "use-case"
 module: "CAAScdDriUseCases"
-tags: ["CAAScdDriUseCases", "CAAScrBase", "CAADriInstantiateDittoTarget", "CAADriInstantiateOuterDitto", "CAADriInstantiateDittoSource", "CATIA"]
+tags: ["CAAScrBase", "CAAScdDriUseCases", "CATIA", "CAADriInstantiateDittoSource", "CAADriInstantiateDittoTarget", "CAADriInstantiateOuterDitto"]
 source_file: "Doc/online/CAAScdDriUseCases/CAADriInstantiateOuterDittoSource.htm"
-converted: "2026-05-11T11:06:32.893011"
+converted: "2026-05-11T11:27:02.746275"
 ---
 
-```
 Option Explicit
-
 ' COPYRIGHT DASSAULT SYSTEMES 2003
 
 ' ***********************************************************************
-
-' Purpose: This macro allows you to instantiate a ditto in 
-
-' a view from a ditto in another document
-
-' Author: 
-
-' Languages: VBScript
-
-' Locales: English 
-
-' CATIA Level: V5R11
-
+'   Purpose:      This macro allows you to instantiate a ditto in 
+'                 a view from a ditto in another document
+'   Author: 
+'   Languages:   VBScript
+'   Locales:     English 
+'   CATIA Level: V5R11
 ' ***********************************************************************
 
-Sub 
-CATMain()
+Sub CATMain()
 
- 
-' Set the CATIA popup file alerts to False
+    ' Set the CATIA popup file alerts to False
+    ' It prevents to stop the macro at each alert during its execution
+    CATIA.DisplayFileAlerts = False
 
- 
-' It prevents to stop the macro at each alert during its execution
+    ' Optional: allows to find the sample wherever it's installed
+    dim sDocPath As String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,,"No Doc Path Defined"
+    End If
 
- CATIA.DisplayFileAlerts = False
+    ' Open the drawing document containing the existing ditto
+    Dim oDrawingSource As DrawingDocument
+    Set oDrawingSource = CATIA.Documents.Open(sDocPath & _
+             "\online\CAAScdDriUseCases\samples\CAADriInstantiateDittoSource.CATDrawing")
+    
+    ' Retrieve the sheet containing the ditto to be copied
+    Dim oSheetSource As DrawingSheet
+    Set oSheetSource = oDrawingSource.Sheets.Item("Sheet.3")
+    
+    ' Retrieve the view containing the ditto to be copied
+    Dim oViewSource As DrawingView
+    Set oViewSource = oSheetSource.Views.Item("View.1")
+    
+    ' Retrieve the ditto
+    Dim oDitto As DrawingComponent
+    Set oDitto = oViewSource.Components.Item(1)
+    
+    ' Create an object of selection for the source document
+    Dim oSelectionSource As Selection
+    Set oSelectionSource = oDrawingSource.Selection
+    
+    ' Clear the selection
+    oSelectionSource.Clear
+    ' Add the ditto to be duplicated in the selection
+    oSelectionSource.Add oDitto
+    ' Copy the view
+    oSelectionSource.Copy
+    ' Clear the selection
+    oSelectionSource.Clear
+    
+    ' Open the drawing document where the ditto will be instantiated
+    Dim oDrawingTarget As DrawingDocument
+    Set oDrawingTarget = CATIA.Documents.Open(sDocPath & _
+             "\online\CAAScdDriUseCases\samples\CAADriInstantiateDittoTarget.CATDrawing")
+    CATIA.ActiveWindow.ActiveViewer.Reframe
+    
+    ' Retrieve the sheet where the ditto will be instantiated
+    Dim oSheetTarget As DrawingSheet
+    Set oSheetTarget = oDrawingTarget.Sheets.Item("Sheet.1")
+    oSheetTarget.Activate
 
- 
-' Optional: allows to find the sample wherever it's installed
+    ' Retrieve the view where the ditto will be instantiated
+    Dim oViewTarget As DrawingView
+    Set oViewTarget = oSheetTarget.Views.Item("View.3")
+    
+    ' Indicate the ditto location
+    Dim ReturnStatus As String
+    Dim iDittoCoordinates(1)
+    Dim oDraw
+    Set oDraw = oDrawingTarget
+    ReturnStatus = oDraw.Indicate2D("Indicate the ditto location", iDittoCoordinates)
+       
+    ' Create an object of selection for the target document
+    Dim oSelectionTarget As Selection
+    Set oSelectionTarget = oDrawingTarget.Selection
+    
+    ' Clear the selection
+    oSelectionTarget.Clear
+    ' Add the view in the selection, where the ditto will be instantiated
+    oSelectionTarget.Add oViewTarget
+    ' Paste the clipboard
+    oSelectionTarget.Paste
+    ' Clear the selection
+    oSelectionTarget.Clear
+    
+    ' Retrieve the drawing components collection of the target drawing view
+    Dim o2DComponents As DrawingComponents
+    Set o2DComponents = oViewTarget.Components
+    
+    ' Retrieve the ditto and define its location
+    Dim o2DComponent As DrawingComponent
+    Set o2DComponent = o2DComponents.Item("DrwDetail.1")
+    o2DComponent.X = iDittoCoordinates(0)
+    o2DComponent.Y = iDittoCoordinates(1)
+    
+    ' Retrieve the modifiable text of the ditto
+    Dim oText As DrawingText
+    Set oText = o2DComponent.GetModifiableObject(1)
+    
+    ' Modify the modifiable text value
+    Dim ReturnValue As String
+    ReturnValue = InputBox("Enter a value", "", "New Value For Text")
+    oText.Text = ReturnValue
 
- dim 
-sDocPath
- As 
-String 
- sDocPath=CATIA.SystemService.Environ("CATDocView")
+    ' Clear the variables
+    Set oText = Nothing
+    Set o2DComponent = Nothing
+    Set o2DComponents = Nothing
+    Set oSelectionTarget = Nothing
+    Set oDraw = Nothing
+    Set oViewTarget = Nothing
+    Set oSheetTarget = Nothing
+    Set oDrawingTarget = Nothing
+    Set oSelectionSource = Nothing
+    Set oViewSource = Nothing
+    Set oSheetSource = Nothing
+    Set oDrawingSource = Nothing
+    
+End Sub
 
- If 
-(Not CATIA.FileSystem.FolderExists(sDocPath))
- Then
 
- Err.Raise 9999,,"No Doc Path Defined"
 
- End If
+```vbscript
+Option Explicit
+' COPYRIGHT DASSAULT SYSTEMES 2003
 
- 
-' Open the drawing document containing the existing ditto
+' ***********************************************************************
+'   Purpose:      This macro allows you to instantiate a ditto in 
+'                 a view from a ditto in another document
+'   Author: 
+'   Languages:   VBScript
+'   Locales:     English 
+'   CATIA Level: V5R11
+' ***********************************************************************
 
- Dim 
-oDrawingSource
- As 
-DrawingDocument
+Sub CATMain()
 
- Set 
-oDrawingSource = CATIA.Documents.Open(sDocPath & _
- "\online\CAAScdDriUseCases\samples\CAADriInstantiateDittoSource.CATDrawing")
- 
- 
-' Retrieve the sheet containing the ditto to be copied
+    ' Set the CATIA popup file alerts to False
+    ' It prevents to stop the macro at each alert during its execution
+    CATIA.DisplayFileAlerts = False
 
- Dim 
-oSheetSource
- As 
-DrawingSheet
+    ' Optional: allows to find the sample wherever it's installed
+    dim sDocPath As String 
+    sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,,&quot;No Doc Path Defined&quot;
+    End If
 
- Set 
-oSheetSource = oDrawingSource.Sheets.Item("Sheet.3")
- 
- 
-' Retrieve the view containing the ditto to be copied
+    ' Open the drawing document containing the existing ditto
+    Dim oDrawingSource As DrawingDocument
+    Set oDrawingSource = CATIA.Documents.Open(sDocPath &amp; _
+             &quot;\online\CAAScdDriUseCases\samples\CAADriInstantiateDittoSource.CATDrawing&quot;)
+    
+    ' Retrieve the sheet containing the ditto to be copied
+    Dim oSheetSource As DrawingSheet
+    Set oSheetSource = oDrawingSource.Sheets.Item(&quot;Sheet.3&quot;)
+    
+    ' Retrieve the view containing the ditto to be copied
+    Dim oViewSource As DrawingView
+    Set oViewSource = oSheetSource.Views.Item(&quot;View.1&quot;)
+    
+    ' Retrieve the ditto
+    Dim oDitto As DrawingComponent
+    Set oDitto = oViewSource.Components.Item(1)
+    
+    ' Create an object of selection for the source document
+    Dim oSelectionSource As Selection
+    Set oSelectionSource = oDrawingSource.Selection
+    
+    ' Clear the selection
+    oSelectionSource.Clear
+    ' Add the ditto to be duplicated in the selection
+    oSelectionSource.Add oDitto
+    ' Copy the view
+    oSelectionSource.Copy
+    ' Clear the selection
+    oSelectionSource.Clear
+    
+    ' Open the drawing document where the ditto will be instantiated
+    Dim oDrawingTarget As DrawingDocument
+    Set oDrawingTarget = CATIA.Documents.Open(sDocPath &amp; _
+             &quot;\online\CAAScdDriUseCases\samples\CAADriInstantiateDittoTarget.CATDrawing&quot;)
+    CATIA.ActiveWindow.ActiveViewer.Reframe
+    
+    ' Retrieve the sheet where the ditto will be instantiated
+    Dim oSheetTarget As DrawingSheet
+    Set oSheetTarget = oDrawingTarget.Sheets.Item(&quot;Sheet.1&quot;)
+    oSheetTarget.Activate
 
- Dim 
-oViewSource
- As 
-DrawingView
+    ' Retrieve the view where the ditto will be instantiated
+    Dim oViewTarget As DrawingView
+    Set oViewTarget = oSheetTarget.Views.Item(&quot;View.3&quot;)
+    
+    ' Indicate the ditto location
+    Dim ReturnStatus As String
+    Dim iDittoCoordinates(1)
+    Dim oDraw
+    Set oDraw = oDrawingTarget
+    ReturnStatus = oDraw.Indicate2D(&quot;Indicate the ditto location&quot;, iDittoCoordinates)
+       
+    ' Create an object of selection for the target document
+    Dim oSelectionTarget As Selection
+    Set oSelectionTarget = oDrawingTarget.Selection
+    
+    ' Clear the selection
+    oSelectionTarget.Clear
+    ' Add the view in the selection, where the ditto will be instantiated
+    oSelectionTarget.Add oViewTarget
+    ' Paste the clipboard
+    oSelectionTarget.Paste
+    ' Clear the selection
+    oSelectionTarget.Clear
+    
+    ' Retrieve the drawing components collection of the target drawing view
+    Dim o2DComponents As DrawingComponents
+    Set o2DComponents = oViewTarget.Components
+    
+    ' Retrieve the ditto and define its location
+    Dim o2DComponent As DrawingComponent
+    Set o2DComponent = o2DComponents.Item(&quot;DrwDetail.1&quot;)
+    o2DComponent.X = iDittoCoordinates(0)
+    o2DComponent.Y = iDittoCoordinates(1)
+    
+    ' Retrieve the modifiable text of the ditto
+    Dim oText As DrawingText
+    Set oText = o2DComponent.GetModifiableObject(1)
+    
+    ' Modify the modifiable text value
+    Dim ReturnValue As String
+    ReturnValue = InputBox(&quot;Enter a value&quot;, &quot;&quot;, &quot;New Value For Text&quot;)
+    oText.Text = ReturnValue
 
- Set 
-oViewSource = oSheetSource.Views.Item("View.1")
- 
- 
-' Retrieve the ditto
-
- Dim 
-oDitto
- As 
-DrawingComponent
-
- Set 
-oDitto = oViewSource.Components.Item(1)
- 
- 
-' Create an object of selection for the source document
-
- Dim 
-oSelectionSource
- As 
-Selection
-
- Set 
-oSelectionSource = oDrawingSource.Selection
- 
- 
-' Clear the selection
-
- oSelectionSource.Clear
- 
-' Add the ditto to be duplicated in the selection
-
- oSelectionSource.Add oDitto
- 
-' Copy the view
-
- oSelectionSource.Copy
- 
-' Clear the selection
-
- oSelectionSource.Clear
- 
- 
-' Open the drawing document where the ditto will be instantiated
-
- Dim 
-oDrawingTarget
- As 
-DrawingDocument
-
- Set 
-oDrawingTarget
- 
-= CATIA.Documents.Open(sDocPath & _
- "\online\CAAScdDriUseCases\samples\CAADriInstantiateDittoTarget.CATDrawing")
- CATIA.ActiveWindow.ActiveViewer.Reframe
- 
- 
-' Retrieve the sheet where the ditto will be instantiated
-
- Dim 
-oSheetTarget
- As 
-DrawingSheet
-
- Set 
-oSheetTarget = oDrawingTarget.Sheets.Item("Sheet.1")
- oSheetTarget.Activate
-
- 
-' Retrieve the view where the ditto will be instantiated
-
- Dim 
-oViewTarget
- As 
-DrawingView
-
- Set 
-oViewTarget = oSheetTarget.Views.Item("View.3")
- 
- 
-' Indicate the ditto location
-
- Dim 
-ReturnStatus
- As 
-String
-
- Dim 
-iDittoCoordinates(1)
-
- Dim 
-oDraw
-
- Set 
-oDraw = oDrawingTarget
- ReturnStatus = oDraw.Indicate2D("Indicate the ditto location", iDittoCoordinates)
- 
- 
-' Create an object of selection for the target document
-
- Dim 
-oSelectionTarget
- As 
-Selection
-
- Set 
-oSelectionTarget = oDrawingTarget.Selection
- 
- 
-' Clear the selection
-
- oSelectionTarget.Clear
- 
-' Add the view in the selection, where the ditto will be instantiated
-
- oSelectionTarget.Add oViewTarget
- 
-' Paste the clipboard
-
- oSelectionTarget.Paste
- 
-' Clear the selection
-
- oSelectionTarget.Clear
- 
- 
-' Retrieve the drawing components collection of the target drawing view
-
- Dim 
-o2DComponents
- As 
-DrawingComponents
-
- Set 
-o2DComponents = oViewTarget.Components
- 
- 
-' Retrieve the ditto and define its location
-
- Dim 
-o2DComponent
- As 
-DrawingComponent
-
- Set 
-o2DComponent = o2DComponents.Item("DrwDetail.1")
- o2DComponent.X = iDittoCoordinates(0)
- o2DComponent.Y = iDittoCoordinates(1)
- 
- 
-' Retrieve the modifiable text of the ditto
-
- Dim 
-oText
- As 
-DrawingText
-
- Set 
-oText = o2DComponent.GetModifiableObject(1)
- 
- 
-' Modify the modifiable text value
-
- Dim 
-ReturnValue
- As 
-String
- ReturnValue = InputBox("Enter a value", "", "New Value For Text")
- oText.Text = ReturnValue
-
- 
-' Clear the variables
-
- Set 
-oText = Nothing
-
- Set 
-o2DComponent = Nothing
-
- Set 
-o2DComponents = Nothing
-
- Set 
-oSelectionTarget = Nothing
-
- Set 
-oDraw = Nothing
-
- Set 
-oViewTarget = Nothing
-
- Set 
-oSheetTarget = Nothing
-
- Set 
-oDrawingTarget = Nothing
-
- Set 
-oSelectionSource = Nothing
-
- Set 
-oViewSource = Nothing
-
- Set 
-oSheetSource = Nothing
-
- Set 
-oDrawingSource = Nothing
- 
-
+    ' Clear the variables
+    Set oText = Nothing
+    Set o2DComponent = Nothing
+    Set o2DComponents = Nothing
+    Set oSelectionTarget = Nothing
+    Set oDraw = Nothing
+    Set oViewTarget = Nothing
+    Set oSheetTarget = Nothing
+    Set oDrawingTarget = Nothing
+    Set oSelectionSource = Nothing
+    Set oViewSource = Nothing
+    Set oSheetSource = Nothing
+    Set oDrawingSource = Nothing
+    
 End Sub
 ```

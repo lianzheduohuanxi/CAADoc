@@ -11,15 +11,15 @@ converted: "2026-05-11T17:33:45.859498"
 ---
 # Geometric Modeler
 
-| 
+|
 ## Topology
 
-| 
-###  Scanning an Edge Curve 
+|
+###  Scanning an Edge Curve
 
-_How to Use the CATEdgeCurveIterator Operator_  
----|---|---  
-Use Case  
+_How to Use the CATEdgeCurveIterator Operator_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
@@ -29,12 +29,12 @@ Between the topology and the geometry, there are intermediate objects that are u
   * **What You Will Learn With This Use Case**
   * **The CAATopEdgeCurve Use Case**
     * What Does CAATopEdgeCurve Do?
-    * How to Launch CAATopEdgeCurve 
+    * How to Launch CAATopEdgeCurve
     * Where to Find the CAATopEdgeCurve Code
   * **Step-by-Step**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
@@ -43,26 +43,26 @@ This use case is intended to make you understand how an edge curve is constructe
 ##### About the Edge Curve ?
 
 This use case is intended to make you understand how an edge curve is constructed and how to use the _CATEdgeCurveIterator_ operator to scan an edge curve.
-An edge curve is an aggregation of  several curves. The curves aggregated are the curves which define the boundaries of the adjacent faces. They can be of various type: CATPNurbs, CATLine or even CATEdgeCurve. Among the aggregated curves, there is one which is used as a reference to determine the orientation of the edge curve and if needed reparameterize the other curve, this is the "ref curve".      
+An edge curve is an aggregation of  several curves. The curves aggregated are the curves which define the boundaries of the adjacent faces. They can be of various type: CATPNurbs, CATLine or even CATEdgeCurve. Among the aggregated curves, there is one which is used as a reference to determine the orientation of the edge curve and if needed reparameterize the other curve, this is the "ref curve".
 
- EDGE CURVE ORIENTATION / “REF CURVE” ORIENTATION = 1      
+ EDGE CURVE ORIENTATION / “REF CURVE” ORIENTATION = 1
 
-The "ref curve" is: 
+The "ref curve" is:
 
-  1. Either the first canonical curve (HasMathCurve returns non NULL) 
-  2. or the first curve which is neither a CATPCurve nor a CATEdgeCurve 
-  3. or the first curve. 
+  1. Either the first canonical curve (HasMathCurve returns non NULL)
+  2. or the first curve which is neither a CATPCurve nor a CATEdgeCurve
+  3. or the first curve.
 
-There are three kinds of edge curve: 
+There are three kinds of edge curve:
 
-  1. The CATIntCurve which results from the intersection of surfaces. CAA developers are not allowed to create directly such edge curves 
-  2. The CATSimCurve which is created from curves which have a linear parameterization 
-  3. The CATMergedCurve type which is created for curves which do not have a linear parameterization. By default, some operators create a CATMergedCurve even if the underlying curves have a linear parameterization. This is to adjust to any case of input geometry. 
+  1. The CATIntCurve which results from the intersection of surfaces. CAA developers are not allowed to create directly such edge curves
+  2. The CATSimCurve which is created from curves which have a linear parameterization
+  3. The CATMergedCurve type which is created for curves which do not have a linear parameterization. By default, some operators create a CATMergedCurve even if the underlying curves have a linear parameterization. This is to adjust to any case of input geometry.
 
 To manipulate an edge curve, you must:
 
-  1. retrieve the edge curve from the corresponding edge by using  CATEdge::GetCurve 
-  2. if need be, retrieve the “ref curve” from an edge curve by using   CATEdgeCurve::GetRefCurve 
+  1. retrieve the edge curve from the corresponding edge by using  CATEdge::GetCurve
+  2. if need be, retrieve the “ref curve” from an edge curve by using   CATEdgeCurve::GetRefCurve
   3. retrieve the CATCurve making up the edge curve by using the CATEdgeCurveIterator operator.
 
 [Top]
@@ -75,9 +75,9 @@ CAATopEdgeCurve is a use case of the CAATopologicalObjects.edu framework that il
 
 The CAATopEdgeCurve use case:
 
-  * loads the container and retrieves the edge to be scanned 
+  * loads the container and retrieves the edge to be scanned
   * retrieves the edge curve from to edge to be analyzed  and scans this edge curve
-  * writes the model and closes the factory. Note that, in this use case the output model is the same as the input model. 
+  * writes the model and closes the factory. Note that, in this use case the output model is the same as the input model.
 
 [Top]
 #### How to Launch CAATopEdgeCurve
@@ -89,7 +89,7 @@ With Windows CAATopEdgeCurve `e/edgeCurve1.NCGM`
 
 With UNIX  CAATopEdgeCurve `/u/``edgeCurve1.NCGM`
 
-where  ` edgeCurve1`.NCGM is an input file delivered in the CAATopologicalObjects.edu/FunctionTests/InputData file. 
+where  ` edgeCurve1`.NCGM is an input file delivered in the CAATopologicalObjects.edu/FunctionTests/InputData file.
 
 [Top]
 #### WWhere to Find the CAATopEdgeCurve Code
@@ -97,11 +97,11 @@ where  ` edgeCurve1`.NCGM is an input file delivered in the CAATopologicalObject
 where  ` edgeCurve1`.NCGM is an input file delivered in the CAATopologicalObjects.edu/FunctionTests/InputData file.
 The CAATopEdgeCurve use case is made of a main named CAAEdgeCurve.cpp located in the CAATopEdgeCurve.m module of the CAATopologicalObjects.edu framework:
 
-Windows | `InstallRootDirectory\CAATopologicalObjects.edu\CAATopEdgeCurve.m\`  
+Windows | `InstallRootDirectory\CAATopologicalObjects.edu\CAATopEdgeCurve.m\`
 
 The CAATopEdgeCurve use case is made of a main named CAAEdgeCurve.cpp located in the CAATopEdgeCurve.m module of the CAATopologicalObjects.edu framework:
 Windows | `InstallRootDirectory\CAATopologicalObjects.edu\CAATopEdgeCurve.m\`
-Unix | `InstallRootDirectory/CAATopologicalObjects.edu/CAATopEdgeCurve.m/`  
+Unix | `InstallRootDirectory/CAATopologicalObjects.edu/CAATopEdgeCurve.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
@@ -109,7 +109,7 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 ### Step-by-Step
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
-There are three main steps in CAATopEdgeCurve.cpp: 
+There are three main steps in CAATopEdgeCurve.cpp:
 
   1. Loading the container and retrieving the edge to be scanned
   2. Analyzing the edge contents
@@ -119,19 +119,19 @@ There are three main steps in CAATopEdgeCurve.cpp:
 
 3. Writing the model and closing the factory
     CATGeoFactory* piGeomFactory = CATLoadCGMContainer(filetoread);...
-    CATICGMObject * piCGMObj1 = piGeomFactory->FindObjectFromTag( 1857  );   
+    CATICGMObject * piCGMObj1 = piGeomFactory->FindObjectFromTag( 1857  );
 
----  
+---
 CATGeoFactory* piGeomFactory = CATLoadCGMContainer(filetoread);...
 CATICGMObject * piCGMObj1 = piGeomFactory->FindObjectFromTag( 1857  );
-Here is the input model. The edge to be analyzed is highlighted.  
+Here is the input model. The edge to be analyzed is highlighted.
 
 ![edge curve](images/edgecurve.gif)[Top] Analyzing the Edge Contents There are three steps:
 
 Here is the input model. The edge to be analyzed is highlighted.
   1. retrieve the edge curve
   2. retrieve the "ref curve" from the edge curve
-  3. scan the edge curve  
+  3. scan the edge curve
 
              // (a) - retrieve the edge curve from the edge
     	...
@@ -139,19 +139,19 @@ Here is the input model. The edge to be analyzed is highlighted.
     	//
             // (b) - retrieve the "ref curve"
     	//
-    	CATCurve * RefCurve = pEdgeCurve->GetRefCurve(); 
+    	CATCurve * RefCurve = pEdgeCurve->GetRefCurve();
     	...
             //
             // (c) - scans the edge curve
     	//       In this particular case, the scanned edge curve embeddes
-    	//       two edge curves. 
-    	//               !----------- Simcurve 393 
+    	//       two edge curves.
+    	//               !----------- Simcurve 393
             //               !                    !--------- PLine 385
     	//               !                    !--------- PLine 386
     	//               !----------- Intcurve 1843
             //               !                    !--------- PLine 1841
     	//               !                    !--------- PLine 1842
-    	//       SetLeafScan(1) returns the four PLines. 
+    	//       SetLeafScan(1) returns the four PLines.
             //                                               385
             //                                               386
             //                                              1841
@@ -166,12 +166,12 @@ Here is the input model. The edge to be analyzed is highlighted.
             //                                              1842
     	...
     	CATEdgeCurveIterator Iterator(pEdgeCurve);   // create the iterator
-    	Iterator.SetLeafScan(0);                     
+    	Iterator.SetLeafScan(0);
     	Iterator.SetRepetitions(0);
 
-    	...    
+    	...
 
----  
+---
 Iterator.SetLeafScan(0);
 Iterator.SetRepetitions(0);
 The edge curve which is scanned is itself made up of two edge curves. If you need to retrieve only the underlying CATCurves and not the possible edge curves which are making up the initial edge curve, you can specify the 1 option in SetLeafScan, otherwise you get all the objects at all levels under the edge curve.[Top]  Writing the Model and Closing the Factory To save the model in a file, the `::CATSaveCGMContainer` global function is used. Notice that in the use case, the save is conditioned by an input parameter representing the file inside which the model must be saved. The use case ends with the closure of the geometry factory, done by the `::CATCloseCGMContainer` global function.
@@ -196,29 +196,29 @@ ofstream filetowrite(pfileName, ios::binary ) ;
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
        filetowrite.close();
-     }	
+     }
 
      _//
      // Close the container
-     //_	
-     **::CATCloseCGMContainer**(piGeomFactory);  
+     //_
+     **::CATCloseCGMContainer**(piGeomFactory);
 
----  
+---
 
 [Top]
 
 * * *
 
-References [1] |  [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-[Top]  
----  
+References [1] |  [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)
+---|---
+[Top]
+---
 
 * * *
 
-History Version: **1** [Jan 200 9 ] | Document created  
----|---  
-[Top]  
+History Version: **1** [Jan 200 9 ] | Document created
+---|---
+[Top]
 
 * * *
 

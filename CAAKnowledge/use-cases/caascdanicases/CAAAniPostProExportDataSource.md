@@ -10,19 +10,27 @@ converted: "2026-05-11T17:31:51.749542"
 
 ---
 ```vbscript
+```vbscript
+```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2000
     ' ***********************************************************************
     '   Purpose:      Export data on image
-    '   Assumptions:  
+    '   Assumptions:
     '   Author:       bmw
     '   Languages:    VBScript
-    '   Locales:      English 
+    '   Locales:      English
     '   CATIA Level:  V5R16
     ' ***********************************************************************
 ```
 
+```
+
+```
+
     Sub CATMain()
-    ' ----------------------------------------------------------- 
+```vbscript
+```vbscript
+    ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
 
       sDocPath=CATIA.SystemService.Environ("CATDocView")
@@ -30,24 +38,42 @@ converted: "2026-05-11T17:31:51.749542"
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 
+```
+
+```
+
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
+```vbscript
+```vbscript
         End If
-    ' ----------------------------------------------------------- 
+    ' -----------------------------------------------------------
+
+```
+
+```
 
 ```
 
 ```vbscript
 End If
+```vbscript
+```vbscript
 ' -----------------------------------------------------------
     ' Open the CATAnalysis Document
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis")
+```
+
+```
+
 ```
 
 ```vbscript
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```
 
+```vbscript
+```vbscript
 ```vbscript
     ' Retrieve the Analysis Manager
     Set oAnalysisManager = oAnalysisDocument.Analysis
@@ -65,23 +91,54 @@ End If
     Set folder1 = fileSystem1.GetFolder(sout)
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
     'export data in exportfile1.txt (format txt)
     '==============================
+```
+
+```
+
     oAnalysisImage.ExportData folder1, "exportfile1", "txt"
 
+```vbscript
+```vbscript
     'export data in exportfile2.xls (format xls)
     '==============================
+```
+
+```
+
     oAnalysisImage.ExportData folder1, "exportfile2", "xls"
 
-    'export data (with mesh part id) in exportfile3.txt (format txt) 
+```vbscript
+```vbscript
+    'export data (with mesh part id) in exportfile3.txt (format txt)
     '==================================================
+```
+
+```
+
     oAnalysisImage.ExportDataWithMeshPartId folder1, "exportfile3", "txt"
 
-    'export data (with mesh part id) in exportfile4.xls (format xls) 
+```vbscript
+```vbscript
+    'export data (with mesh part id) in exportfile4.xls (format xls)
     '==================================================
+```
+
+```
+
     oAnalysisImage.ExportDataWithMeshPartId folder1, "exportfile4", "xls"
 
 ```
 
+```vbscript
     End Sub
+
+```

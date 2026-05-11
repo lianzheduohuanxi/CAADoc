@@ -13,7 +13,7 @@ converted: "2026-05-11T17:33:50.767009"
 tags: []
 source_file: "Doc/online/CAACenAPIChangesR13/ProductStructure.htm"
 converted: "2026-05-11T17:33:50.767009"
-CAA C++ API Modifications|  ProductStructure  |   
+CAA C++ API Modifications|  ProductStructure  |
 
 * * *
 

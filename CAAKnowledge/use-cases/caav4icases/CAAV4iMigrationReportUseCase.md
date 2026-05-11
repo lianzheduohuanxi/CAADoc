@@ -11,20 +11,20 @@ converted: "2026-05-11T17:33:45.775884"
 ---
 # 3D PLM PPR Hub Open Gateway
 
-| 
+|
 ## V4 Access
 
-| 
+|
 ### Reading Migration Report of a Model
 
-_Working with the elements of model_  
----|---|---  
-Use Case  
+_Working with the elements of model_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
 
-This article shows how to read Migration Report 
+This article shows how to read Migration Report
 
   * **What You Will Learn With This Use Case**
   * **o The CAAV4iMigrationReportExtraction Use Case**
@@ -35,29 +35,32 @@ This article shows how to read Migration Report
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
 
-This use case is intended to show you how to read Migration Report of a model. 
+This use case is intended to show you how to read Migration Report of a model.
 
-[Top] 
+[Top]
 ### The CAAV4iMigrationReportExtraction Use Case
 
-CAAV4iMigrationReportExtraction is a use case of the CAACATIAV4Interfaces.edu framework that illustrates CATIAV4Interfaces framework capabilities. 
+CAAV4iMigrationReportExtraction is a use case of the CAACATIAV4Interfaces.edu framework that illustrates CATIAV4Interfaces framework capabilities.
 
-[Top] 
+[Top]
 #### What Does CAAV4iMigrationReportExtraction Do
 
 CAAV4iMigrationReportExtraction is a use case of the CAACATIAV4Interfaces.edu framework that illustrates CATIAV4Interfaces framework capabilities.
-The CAAV4iMigrationReportExtraction reads the Migration report file in ReadReportFile().  
-Then it creates a session and open the .CATPart (in OpenDocument(pfileNamePart, pDoc)) provided in input.  
-From this pDoc we get the entities of the part with GetListOfBodies() and stored in bodyList object  
-Now migrated object decoding is done and gets the Type.  
-If Type == 1, we retrieve the V4 model’s corresponding V5 object from RetrieveObject() and print its name   
-If Type == 2, it’s an attribute of the previous found V5 object and print attributes value.  
-The output looks like : 
+The CAAV4iMigrationReportExtraction reads the Migration report file in ReadReportFile().
+Then it creates a session and open the .CATPart (in OpenDocument(pfileNamePart, pDoc)) provided in input.
+From this pDoc we get the entities of the part with GetListOfBodies() and stored in bodyList object
+Now migrated object decoding is done and gets the Type.
+If Type == 1, we retrieve the V4 model’s corresponding V5 object from RetrieveObject() and print its name
+```vbscript
+If Type == 2, it’s an attribute of the previous found V5 object and print attributes value.
+```
+
+The output looks like :
 
     attributcxr1.model   0000000000000000    OK
 
@@ -93,43 +96,43 @@ The output looks like :
 
     *LN4   0000000012309F70    OK
 
-Close the report,release the buffer,remove the pDoc and finally delete the session. if the reading failed, code returns an error with rc = 1. 
+Close the report,release the buffer,remove the pDoc and finally delete the session. if the reading failed, code returns an error with rc = 1.
 #### How to Launch CAAV4iMigrationReportExtraction
 
 Close the report,release the buffer,remove the pDoc and finally delete the session. if the reading failed, code returns an error with rc = 1.
-To launch CAAV4iMigrationReportExtraction, you will need to set up the build time environment, then compile CAAV4iMigrationReportExtraction along with its prerequisites, set up the run time environment, and then execute the use case [1].  
-CAAV4iMigrationReportExtraction takes two parameters.  
+To launch CAAV4iMigrationReportExtraction, you will need to set up the build time environment, then compile CAAV4iMigrationReportExtraction along with its prerequisites, set up the run time environment, and then execute the use case [1].
+CAAV4iMigrationReportExtraction takes two parameters.
 
-mkrun -c CAAV4iMigrationReportExtraction PathReport PathPart  
+mkrun -c CAAV4iMigrationReportExtraction PathReport PathPart
 
 Where:
 
-  PathReport: is the complete path of the report file  
-  PathPart : is the complete path of the CATPart file. 
+  PathReport: is the complete path of the report file
+  PathPart : is the complete path of the CATPart file.
 
 You can use the model attribut.CATPart located in CAACATIAV4Interfaces.edu/InputData
 
   * Windows : `InstallRootDirectory\CAA``CATIAV4Interfaces``.edu\InputData`
   * Unix : `InstallRootDirectory/CAA``CATIAV4Interfaces``.edu/InputData`
 
-[Top] 
+[Top]
 #### Where to Find the CAAV4iMigrationReportExtraction Code
 
-The CAAV4iMigrationReportExtraction use case is made of a single file located in the CAAV4iMigrationReportExtraction.m module of the CAACATIAV4Interfaces.edu framework:  
 The CAAV4iMigrationReportExtraction use case is made of a single file located in the CAAV4iMigrationReportExtraction.m module of the CAACATIAV4Interfaces.edu framework:
-  Windows | `InstallRootDirectory\CAACATIAV4Interfaces.edu\`CAAV4iMigrationReportExtraction`.m\`  
+The CAAV4iMigrationReportExtraction use case is made of a single file located in the CAAV4iMigrationReportExtraction.m module of the CAACATIAV4Interfaces.edu framework:
+  Windows | `InstallRootDirectory\CAACATIAV4Interfaces.edu\`CAAV4iMigrationReportExtraction`.m\`
 
 The CAAV4iMigrationReportExtraction use case is made of a single file located in the CAAV4iMigrationReportExtraction.m module of the CAACATIAV4Interfaces.edu framework:
 Windows | `InstallRootDirectory\CAACATIAV4Interfaces.edu\`CAAV4iMigrationReportExtraction`.m\`
-Unix | `InstallRootDirectory/CAACATIAV4Interfaces.edu/`CAAV4iMigrationReportExtraction`.m/`  
+Unix | `InstallRootDirectory/CAACATIAV4Interfaces.edu/`CAAV4iMigrationReportExtraction`.m/`
 
-where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed. 
+where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
-[Top] 
+[Top]
 ### Step-by-Step
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
-There are 4 logical steps in CAAV4iMigrationReportExtraction : 
+There are 4 logical steps in CAAV4iMigrationReportExtraction :
 
   1. Opening the report file
   2. Opening the model
@@ -137,7 +140,7 @@ There are 4 logical steps in CAAV4iMigrationReportExtraction :
   4. Migrated object decoding
   5. Retrieving the object and its attribute
 
-[Top] 
+[Top]
 #### Opening the report file
 
     ...
@@ -145,16 +148,16 @@ There are 4 logical steps in CAAV4iMigrationReportExtraction :
        CATUnicodeString Name(pfileNameReport);
        int errread= ::ReadReportFile(Name, Buffer, LgBuffer, FileDesc, ier );
 
-    ...  
+    ...
 
----  
+---
 
-[Top] 
+[Top]
 #### Opening the model
 
     ...
 
-      // The second argument of CAAV4iMigrationReportExtraction is complete path of the CATPart file. 
+      // The second argument of CAAV4iMigrationReportExtraction is complete path of the CATPart file.
 
       const char *pfileNamePart =  iArgv[2];
       // open the v5 document
@@ -162,27 +165,27 @@ const char *pfileNamePart =  iArgv[2];
       CATDocument *pDoc = NULL;
       HRESULT hr = CATDocumentServices::OpenDocument( pfileNamePart, pDoc) ;
 
-    ...  
+    ...
 
----  
+---
 
-[Top] 
+[Top]
 #### Get the entities of the part
 
     ...
       CATListValCATBaseUnknown_var bodyList;
      int errlst = GetListOfBodies(pDoc,bodyList );
-    ...  
+    ...
 
----  
+---
 
-[Top] 
+[Top]
 #### Migrated object decoding
 
     ...
-    PathReport: Reportfile is present in 
+    PathReport: Reportfile is present in
 PathReport: Reportfile is present in
-    CAACATIAV4Interfaces.edu\CNext\resources\graphic\MigrationReportExtraction\report.txt 
+    CAACATIAV4Interfaces.edu\CNext\resources\graphic\MigrationReportExtraction\report.txt
 
     Report Structure:
 
@@ -194,12 +197,12 @@ PathReport: Reportfile is present in
            --------------------------------------------------------
     Report snippet :
 
-    attributcxr1.model | OK 
-       *MASTER         | OK 
-          *SET1        | OK 
-             *LN1      | OK 
-                       | discret 1        : value discret 1                                                        
-                       | discret 2        : bbbb discret 2                                                         
+    attributcxr1.model | OK
+       *MASTER         | OK
+          *SET1        | OK
+             *LN1      | OK
+                       | discret 1        : value discret 1
+                       | discret 2        : bbbb discret 2
                        | numeric 1        : 10 …
 
     --------------------------------------------------------
@@ -211,14 +214,17 @@ PathReport: Reportfile is present in
       //                   oType = 1 -> element;          : Label | Value
       //                   oType = 2 -> attribute;               :       | Label : Value
       // for each type=>  Label and Value are returned
-    ...  
+    ...
 
----  
+---
 
-[Top] 
+[Top]
 #### Retrieving the object and its attribute
 
-If above calculated Type from DecodeLine () equals to 1, it retrieve v4 element’s corresponding V5 object. 
+```vbscript
+If above calculated Type from DecodeLine () equals to 1, it retrieve v4 element’s corresponding V5 object.
+
+```
 
     ...
             // retrieving migrated object, using modified label
@@ -253,8 +259,8 @@ If above calculated Type from DecodeLine () equals to 1, it retrieve v4 element�
 
     ----------------------------------------------------------------------------------------------------------------------------
 
----  
-### Close the report file and delete buffer 
+---
+### Close the report file and delete buffer
 
     ...
 
@@ -262,45 +268,45 @@ If above calculated Type from DecodeLine () equals to 1, it retrieve v4 element�
        int errclose = ::CloseReportFile(Buffer,FileDesc,ier);
     ...
 
----  
+---
 ### Release the loaded document
 
     ...
            CATDocumentServices::Remove (*pDoc);
-    ...  
+    ...
 
----  
-### Delete the session 
+---
+### Delete the session
 
     ...
 
     hrs = ::Delete_Session(pSessionName);
     ...
 
----  
+---
 
-[Top] 
+[Top]
 
 * * *
 ### In Short
 
 These sample show a way to read Migration Report of a model.
 
-_[_Top] 
+_[_Top]
 
 * * *
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-[Top]  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)
+---|---
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Jan 2014] | Document created  
----|---  
-[Top]  
+Version: **1** [Jan 2014] | Document created
+---|---
+[Top]
 
 * * *
 

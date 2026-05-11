@@ -11,8 +11,8 @@ converted: "2026-05-11T17:31:52.422043"
 ---
 ## Infrastructure
 
- | 
- ## About Numbers, Literals, and Units  
+ |
+ ## About Numbers, Literals, and Units
 
  * * *
 
@@ -36,10 +36,10 @@ Except when explicitly documented, numerical values stored and internally handle
 
      MyHole.Diameter.ValuateFromString("2in")
 
-> ![](../CAAScrBase/images/ainfo.gif) | ** ** To be compatible with formulas syntax, if you don't specify a Unit for the argument of **ValuateFromString** , the MKSA units are used:  length are expressed in meters and angles in radians.   
+> ![](../CAAScrBase/images/ainfo.gif) | ** ** To be compatible with formulas syntax, if you don't specify a Unit for the argument of **ValuateFromString** , the MKSA units are used:  length are expressed in meters and angles in radians.
 The character string is interpreted as a value of 5.08 expressed in mm. You can enter a decimal value since the **Dimension** object derives from the **RealParam** object which allows for real values to be set. You may want to enter inches instead. Simply write:
 MyHole.Diameter.ValuateFromString("2in")
-As a thumb rule, always specify the unit when using **ValuateFromString** or formulas.  
+As a thumb rule, always specify the unit when using **ValuateFromString** or formulas.
 
  The available unit symbols you can use are those listed in the Units tab-page of the **Tools- >Options** menu. The **RealParam** and the **IntParam** objects provide to their derived objects the **Value** method which sets or returns the value expressed in the MKSA unit system, except for length expressed in millimeters and angles expressed in decimal degrees.
 

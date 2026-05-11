@@ -11,20 +11,20 @@ converted: "2026-05-11T17:17:55.997189"
 ---
 # 3D PLM Enterprise Architecture
 
-| 
+|
 ## User Interface - Dialogs
 
-| 
+|
 ### Saving and Restoring the Dialog Box State
 
-How to keep and retrieve the dialog object values   
----|---|---  
-Use Case  
+How to keep and retrieve the dialog object values
+---|---|---
+Use Case
 
 * * *
 ### Abstract
 
-This article shows how to save parameters so that one can find the Dialog box in the same state that it was before its closing. 
+This article shows how to save parameters so that one can find the Dialog box in the same state that it was before its closing.
 
   * **What You Will Learn With This Use Case**
   * **The CAADlgFrameReplace Use Case**
@@ -44,17 +44,17 @@ This use case is intended to show you how to use a setting file and repository [
 CAADlgFrameReplace is a use case of the CAADialog.edu framework that illustrates Dialog and System framework capabilities. [Top]
 #### What Does CAADlgFrameReplace Do
 
-CAADlgFrameReplace simulates the  "Point Definition" V5 Dialog box. It creates the "Frame Replacement Demonstrator" Dialog box that you can see just below. The end user can select the mode of creation for the point: by coordinate values, by the center of a circle or between two points [2].   |  | _Fig. 1a_ _:Coordinates_  
----  
-![](images/CAADlgTabulationFrameReplace2.jpg)  
-| _Fig. 1b: Circle Center_  
----  
-![](images/CAADlgTabulationFrameReplace1.jpg)  
-| _Fig. 1c: Between_  
----  
-![](images/CAADlgTabulationFrameReplace3.jpg)  
+CAADlgFrameReplace simulates the  "Point Definition" V5 Dialog box. It creates the "Frame Replacement Demonstrator" Dialog box that you can see just below. The end user can select the mode of creation for the point: by coordinate values, by the center of a circle or between two points [2].   |  | _Fig. 1a_ _:Coordinates_
+---
+![](images/CAADlgTabulationFrameReplace2.jpg)
+| _Fig. 1b: Circle Center_
+---
+![](images/CAADlgTabulationFrameReplace1.jpg)
+| _Fig. 1c: Between_
+---
+![](images/CAADlgTabulationFrameReplace3.jpg)
 
-When the end user clicks **OK** , the following values are kept: 
+When the end user clicks **OK** , the following values are kept:
 
   * The "`Point Type`" ( an integer )
   * The point coordinates (`X, Y, Z`)  (three double)
@@ -62,9 +62,9 @@ When the end user clicks **OK** , the following values are kept:
 The others values are not kept, for the following reasons:
 
   * `Circle`, `P1` and `P2` : The values, in a V5 context, will be a string, the _GetDisplayName_ of a _CATISpecObject._ You can save a string, but it is not possible to save a _CATISpecObject_ instance, so there is no need to keep the value of these fields.
-  * `Ratio` : The Dialog object is a _CATDlgEditor_ class. It is the only one Dialog object which natively keeps the last values. You retrieve them with the up and down arrows. 
+  * `Ratio` : The Dialog object is a _CATDlgEditor_ class. It is the only one Dialog object which natively keeps the last values. You retrieve them with the up and down arrows.
 
-When the end user clicks **Cancel** or **closes** the window, the current values of the Dialog objects are not kept. 
+When the end user clicks **Cancel** or **closes** the window, the current values of the Dialog objects are not kept.
 
 [Top]
 #### How to Launch CAADlgFrameReplace
@@ -80,17 +80,17 @@ When the `CAADlgDialogDemonstrator` application is launched:
   * Click **OK**
   * On the **Tabulation**   menu click **Frame Replacement  **
   * Click **Coordinates** in the combo
-  * Enter a value in **X** , **Y** and **Z** field 
+  * Enter a value in **X** , **Y** and **Z** field
   * Click **OK  **
   * On the **Tabulation**   menu click **Frame Replacement  **
   * Click **Between** in the combo
-  * Enter different values in the **Ratio** field  
+  * Enter different values in the **Ratio** field
   * Click **OK  **
   * On the **Tabulation**   menu click **Frame Replacement  **
-  * On the **Ratio** field retrieve the different value with the **up** and**down** arrows 
+  * On the **Ratio** field retrieve the different value with the **up** and**down** arrows
   * On the **Tabulation**   menu click **Frame Replacement**
   * Click **Coordinates** in the combo
-  * Enter a value in **X** , **Y** and **Z** field 
+  * Enter a value in **X** , **Y** and **Z** field
   * Click **Cancel**
   * On the **Tabulation**   menu click **Frame Replacement  **
   * On the**File** menu click**Exit**
@@ -101,11 +101,11 @@ When the `CAADlgDialogDemonstrator` application is launched:
 The CAADlgFrameReplace use case is made of several classes located in the CAADlgDialogDemonstrator.m module of the CAADialog.edu framework:
 
 The CAADlgFrameReplace use case is made of several classes located in the CAADlgDialogDemonstrator.m module of the CAADialog.edu framework:
-Windows | `InstallRootDirectory\CAADialog.edu\CAADlgDialogDemonstrator.m\`  
+Windows | `InstallRootDirectory\CAADialog.edu\CAADlgDialogDemonstrator.m\`
 
 The CAADlgFrameReplace use case is made of several classes located in the CAADlgDialogDemonstrator.m module of the CAADialog.edu framework:
 Windows | `InstallRootDirectory\CAADialog.edu\CAADlgDialogDemonstrator.m\`
-Unix | `InstallRootDirectory/CAADialog.edu/CAADlgDialogDemonstrator.m/`  
+Unix | `InstallRootDirectory/CAADialog.edu/CAADlgDialogDemonstrator.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
@@ -154,12 +154,12 @@ class CAADlgFrameReplaceDlg: public **CATDlgDialog**
           ...
 void Build ();
 private:
-          virtual void **CloseWindowOK** (CATCommand * iSendingCommand, 
-                                    CATNotification * iSentNotification, 
+          virtual void **CloseWindowOK** (CATCommand * iSendingCommand,
+                                    CATNotification * iSentNotification,
                                     CATCommandClientData iUsefulData);
 
-          virtual void **CloseWindow** (CATCommand * iSendingCommand, 
-                                    CATNotification * iSentNotification, 
+          virtual void **CloseWindow** (CATCommand * iSendingCommand,
+                                    CATNotification * iSentNotification,
                                     CATCommandClientData iUsefulData);
 
          ...
@@ -174,40 +174,49 @@ CATCommandClientData iUsefulData);
 private:
          CATSettingRepository * _pSettingFrameReplace ;
 
-    };  
+    };
 
----  
+---
 
 where
 
-  * The `Build` method enables you to construct the Dialog objects and to initialize them with the values saved in the setting file. 
+  * The `Build` method enables you to construct the Dialog objects and to initialize them with the values saved in the setting file.
   * The `CloseWindowOK` method is a callback method which is called when the end user pushes the Ok Button
   * The `CloseWindow` method is a callback method which is called when the end user pushes the Cancel Button or closes the window.
-  * `_pSettingFrameReplace` is a _CATSettingRepository_ class pointer. It will be initialized in the constructor class. You should not release this pointer. 
+  * `_pSettingFrameReplace` is a _CATSettingRepository_ class pointer. It will be initialized in the constructor class. You should not release this pointer.
 
 #### Retrieving the Setting Repository
 
-In the _CAADlgFrameReplaceDlg_ class constructor you retrieve a setting repository pointer thanks to the static `GetRepository` method. The first and unique argument of this method is the name of the setting file. 
+In the _CAADlgFrameReplaceDlg_ class constructor you retrieve a setting repository pointer thanks to the static `GetRepository` method. The first and unique argument of this method is the name of the setting file.
 
 In the _CAADlgFrameReplaceDlg_ class constructor you retrieve a setting repository pointer thanks to the static `GetRepository` method. The first and unique argument of this method is the name of the setting file.
     CAADlgFrameReplaceDlg::CAADlgFrameReplaceDlg(CATDialog * pParentDlg) :
       CATDlgDialog (pParentDlg,"CAADlgFrameReplaceDlg",
           CATDlgWndAutoResize | CATDlgWndBtnOKCancel |CATDlgWndNoResize ),
           _CurrentSelection(0),_pComboPointType(NULL),_pSpinnerX(NULL),
+```vbscript
           _pSpinnerY(NULL),_pSpinnerZ(NULL)
+
+```
 
     {
        ...
 CATDlgWndAutoResize | CATDlgWndBtnOKCancel |CATDlgWndNoResize ),
 _CurrentSelection(0),_pComboPointType(NULL),_pSpinnerX(NULL),
+```vbscript
 _pSpinnerY(NULL),_pSpinnerZ(NULL)
+```vbscript
        _pSettingFrameReplace = CATSettingRepository::**GetRepository**("CAADlgFrameReplaceDlg" );
 
-    }  
+```
 
----  
+```
 
-In the _CAADlgFrameReplaceDlg_ class destructor you have just to set NULL the `_pSettingFrameReplace` pointer. 
+    }
+
+---
+
+In the _CAADlgFrameReplaceDlg_ class destructor you have just to set NULL the `_pSettingFrameReplace` pointer.
 
 In the _CAADlgFrameReplaceDlg_ class destructor you have just to set NULL the `_pSettingFrameReplace` pointer.
     CAADlgFrameReplaceDlg::~CAADlgFrameReplaceDlg()
@@ -218,9 +227,9 @@ CAADlgFrameReplaceDlg::~CAADlgFrameReplaceDlg()
         _pSettingFrameReplace = NULL ;
 
         ...
-    }  
+    }
 
----  
+---
 
 [Top]
 #### Retrieving the Last Values
@@ -239,9 +248,9 @@ void CAADlgFrameReplaceDlg::Build()
 
        c/ Defining the callbacks
 
-    }  
+    }
 
----  
+---
 ##### a/ Creating the Dialog objects and Arranging them
 ##### This part is described in the use case about the tabulation layout [2].
 ##### b/ Retrieving the Initial Values
@@ -252,7 +261,10 @@ To retrieve a value in a setting repository use the `ReadSetting` method. The ar
   * The value of the attribute
 
 ```vbscript
+```vbscript
 For the use case:
+
+```
 
 ```
 
@@ -262,7 +274,10 @@ For the use case:
     ...
           double X(0.0f),Y(0.0f),Z(0.0f);
 double X(0.0f),Y(0.0f),Z(0.0f);
+```vbscript
           if ( NULL != _pSettingFrameReplace )
+
+```
 
           {
 double X(0.0f),Y(0.0f),Z(0.0f);
@@ -281,7 +296,10 @@ _pSettingFrameReplace->ReadSetting("**ZCoord** ",&Z);
           _pSpinnerZ ->SetValue(Z,0);
 
           _CurrentSelection = Coordinates ;
+```vbscript
           if ( NULL != _pSettingFrameReplace )
+
+```
 
           {
 _pSpinnerZ ->SetValue(Z,0);
@@ -296,30 +314,39 @@ _pSettingFrameReplace->**ReadSetting**("**ComboPointType** ",&_CurrentSelection)
           _pComboPointType->**SetSelect**(_CurrentSelection,0);
 
     ...
-    }  
+    }
 
----  
-##### Where `_pSpinnerX, _pSpinnerY` and` _pSpinnerZ `are _CATDlgSpinner_ class instances created in the first part of the `Build` method, but not explained in this article. `_pComboPointType` is a _CATDlgCombo_ class instance created in the first part of the `Build `method, but also not explained in this article. 
+---
+##### Where `_pSpinnerX, _pSpinnerY` and` _pSpinnerZ `are _CATDlgSpinner_ class instances created in the first part of the `Build` method, but not explained in this article. `_pComboPointType` is a _CATDlgCombo_ class instance created in the first part of the `Build `method, but also not explained in this article.
 ##### c/ Defining the Callbacks
 
     ...
-       AddAnalyseNotificationCB (this, 
+       AddAnalyseNotificationCB (this,
+```vbscript
                                    GetDiaCANCELNotification(),
+```
+
                                    (CATCommandMethod)&CAADlgFrameReplaceDlg::**CloseWindow** ,
                                    NULL);
 
-       AddAnalyseNotificationCB (this, 
+       AddAnalyseNotificationCB (this,
+```vbscript
                                    GetDiaOKNotification(),
+```
+
                                    (CATCommandMethod)&CAADlgFrameReplaceDlg::**CloseWindowOK** ,
                                    NULL);
-       AddAnalyseNotificationCB (this, 
+       AddAnalyseNotificationCB (this,
+```vbscript
                                    GetWindCloseNotification(),
+```
+
                                    (CATCommandMethod)&CAADlgFrameReplaceDlg::**CloseWindow** ,
                                    NULL);
 
-    ...  
+    ...
 
----  
+---
 
 [Top]
 #### Saving the Values
@@ -333,17 +360,29 @@ When the end user clicks OK, the dialog box must be closed. The current values o
     {
        ...
 void CAADlgFrameReplaceDlg::CloseWindowOK(CATCommand* cmd, CATNotification* evt, CATCommandClientData data)
+```vbscript
        if ( NULL != _pSettingFrameReplace )
+
+```
 
        {
 void CAADlgFrameReplaceDlg::CloseWindowOK(CATCommand* cmd, CATNotification* evt, CATCommandClientData data)
 if ( NULL != _pSettingFrameReplace )
+```vbscript
+```vbscript
            if ( NULL != _pComboPointType )
+
+```
+
+```
 
            {
 ```vbscript
 if ( NULL != _pSettingFrameReplace )
+```vbscript
 if ( NULL != _pComboPointType )
+```
+
               int PointType = _pComboPointType->GetSelect() ;
               _pSettingFrameReplace->**WriteSetting**("ComboPointType",&PointType);
 ```
@@ -352,7 +391,10 @@ if ( NULL != _pComboPointType )
 
 int PointType = _pComboPointType->GetSelect() ;
 _pSettingFrameReplace->**WriteSetting**("ComboPointType",&PointType);
+```vbscript
            if ( (NULL !=_pSpinnerX) && (NULL !=_pSpinnerY) && (NULL !=_pSpinnerZ) )
+
+```
 
            {
 _pSettingFrameReplace->**WriteSetting**("ComboPointType",&PointType);
@@ -365,55 +407,55 @@ if ( (NULL !=_pSpinnerX) && (NULL !=_pSpinnerY) && (NULL !=_pSpinnerZ) )
               _pSettingFrameReplace->**WriteSetting**("ZCoord",&ZVal);
 
            }
-    ...  
+    ...
 
----  
+---
 
-To retrieve the values after the session closing use the `SaveRepository` method. The setting repository is saved in a setting file whose the name is those of the setting repository.  
+To retrieve the values after the session closing use the `SaveRepository` method. The setting repository is saved in a setting file whose the name is those of the setting repository.
 
     ...
            _pSettingFrameReplace->**SaveRepository**();
      ...
-    }  
+    }
 
----  
-
-When the end user clicks Cancel or closes the window, there is nothing to save. The end user will retrieve the values before the current modifications. 
+---
 
 When the end user clicks Cancel or closes the window, there is nothing to save. The end user will retrieve the values before the current modifications.
-    void CAADlgFrameReplaceDlg::**CloseWindow**(CATCommand* cmd, CATNotification* evt, 
+
+When the end user clicks Cancel or closes the window, there is nothing to save. The end user will retrieve the values before the current modifications.
+    void CAADlgFrameReplaceDlg::**CloseWindow**(CATCommand* cmd, CATNotification* evt,
                                                               CATCommandClientData data)
 
     {
      ...
-    }  
+    }
 
----  
+---
 
 [Top]
 
 * * *
 ### In Short
 
-This use case explains how to use the setting file and repository to save and restore the Dialog object values. 
+This use case explains how to use the setting file and repository to save and restore the Dialog object values.
 
 [Top]
 
 * * *
 ### References
 
-[1] | [Setting Repositories and Attributes](../CAASysTechArticles/CAASysSettingRepositories.md)  
----|---  
-[2] | [Creating Dialog Boxes Automatically Resizable](CAADlgSampleTabulation.md)  
-[3] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
-[Top]  
+[1] | [Setting Repositories and Attributes](../CAASysTechArticles/CAASysSettingRepositories.md)
+---|---
+[2] | [Creating Dialog Boxes Automatically Resizable](CAADlgSampleTabulation.md)
+[3] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Fev 2003] | Document created  
----|---  
-[Top]  
+Version: **1** [Fev 2003] | Document created
+---|---
+[Top]
 
 * * *
 

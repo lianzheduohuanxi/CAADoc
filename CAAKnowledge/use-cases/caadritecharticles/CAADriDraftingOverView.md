@@ -11,20 +11,20 @@ converted: "2026-05-11T17:31:51.038395"
 ---
 # Mechanical Design
 
-| 
+|
 ## Drafting
 
-| 
+|
 ### Drafting Modeler Overview
 
-_Describing the foundations of the Drafting Modeler_  
----|---|---  
-Technical Article  
+_Describing the foundations of the Drafting Modeler_
+---|---|---
+Technical Article
 
 * * *
 ### Abstract
 
-This article discusses the Drafting modeler foundations.  
+This article discusses the Drafting modeler foundations.
 
   * **Drafting Modeler Overview**
   * **Drafting Product Prerequisites**
@@ -39,25 +39,25 @@ This article discusses the Drafting modeler foundations.  
   * **References**
   * **In Short**
 
----  
+---
 
 * * *
 ### Drafting Modeler Overview
 
 The Drafting application is in relation with several domains. The Drafting modeler enables you to automate tasks linked to these domains. See below the added value of the Drafting modeler.
 
-![](images/DraftingEcosystem.gif)  
----  
+![](images/DraftingEcosystem.gif)
+---
 The Drafting application is in relation with several domains. The Drafting modeler enables you to automate tasks linked to these domains. See below the added value of the Drafting modeler.
-Main domains linked to the Drafting application    
-
-![](images/DraftingAddedValue.gif)  
 Main domains linked to the Drafting application
-Added value of the Drafting modeler    
+
+![](images/DraftingAddedValue.gif)
+Main domains linked to the Drafting application
+Added value of the Drafting modeler
 
 The Drafting modeler manages geometry, constraint, annotation, dress-up and structuring objects (Sheet, View, Detail Sheet, Ditto). All elements created by the Drafting modeler are fully integrated in the Drawing document. That means, they will recognized by internal mechanism such as sketcher picking assistant, dimensioning, associative orientation and positioning and  constraints.
 
-  The Drafting workbench is loaded and the current drawing sheet (Sheet.1) opens. The drawing specification tree is displayed to the left of the sheet. This tree shows aggregations between structuring objects. "Front View" view  of "Sheet.1" sheet is the active view of the active sheet: That means all elements created by indication will be aggregated on this view. At the top of the document, a tab page manages the active sheet.      
+  The Drafting workbench is loaded and the current drawing sheet (Sheet.1) opens. The drawing specification tree is displayed to the left of the sheet. This tree shows aggregations between structuring objects. "Front View" view  of "Sheet.1" sheet is the active view of the active sheet: That means all elements created by indication will be aggregated on this view. At the top of the document, a tab page manages the active sheet.
 
 The Drafting modeler manages geometry, constraint, annotation, dress-up and structuring objects (Sheet, View, Detail Sheet, Ditto). All elements created by the Drafting modeler are fully integrated in the Drawing document. That means, they will recognized by internal mechanism such as sketcher picking assistant, dimensioning, associative orientation and positioning and  constraints.
 The Drafting workbench is loaded and the current drawing sheet (Sheet.1) opens. The drawing specification tree is displayed to the left of the sheet. This tree shows aggregations between structuring objects. "Front View" view  of "Sheet.1" sheet is the active view of the active sheet: That means all elements created by indication will be aggregated on this view. At the top of the document, a tab page manages the active sheet.
@@ -80,7 +80,7 @@ The view may contain:
 [Top]
 ### Drafting Product Prerequisites
 
-The drafting application is managed by two products: 
+The drafting application is managed by two products:
 
   * Interactive drafting product that addresses 2D design and drawing production requirements.
   * Generative drafting product that provides functionalities to generate drawings from 3D parts and assembly definitions.
@@ -94,9 +94,9 @@ Two frameworks contain the drafting modeler API:
   * SketcherInterfaces: This framework is dedicated to manage sketcher component: detail, 2D geometry and constraint objects.
 
 [Top]
-### Drafting Structuring objects 
+### Drafting Structuring objects
 
-The drawing application data is included in an applicative container: the drawing container may be obtained from drawing root by using ` GetFeatContainer` method [[1](../CAADriUseCases/CAADriStructure.htm#Step2)]. 
+The drawing application data is included in an applicative container: the drawing container may be obtained from drawing root by using ` GetFeatContainer` method [[1](../CAADriUseCases/CAADriStructure.htm#Step2)].
 
 When a drawing document is created, the following objects are created at the same time:
 
@@ -118,10 +118,10 @@ _Note: To create a sheet, it is better to use`the AddSheet` method of the CATIDf
 
 A sheet aggregates views and a view aggregates all objects instantiated in it. There is always an active view in a sheet. To create objects directly in a sheet, the main view of the sheet has to be activated.
 
-![](images/StructuringObjectUML.gif)  
----  
+![](images/StructuringObjectUML.gif)
+---
 A sheet aggregates views and a view aggregates all objects instantiated in it. There is always an active view in a sheet. To create objects directly in a sheet, the main view of the sheet has to be activated.
-This figure shows the UML diagram of drafting structuring objects.  
+This figure shows the UML diagram of drafting structuring objects.
 
 A view inherits from sketch to manages 2D geometry and 2D constraints. Two kinds of geometry coexist in a view:
 
@@ -135,17 +135,17 @@ Two kinds of interfaces allow to get information on geometry:
 
 [Top]
 
-### Drafting 2D Compoment Objects 
+### Drafting 2D Compoment Objects
 
 A 2D component is a re-usable set of geometry and annotations. This component is located in a sheet and can be edited like a view. This is why this component is called Detail View. The 2D component can be instantiated several times, each instance providing a component with a specific orientation, position and scale. The detail view can be either in the same drawing as the CATDrawing of the corresponding instances or in a separate CATDrawing.
 
 A 2D component is a re-usable set of geometry and annotations. This component is located in a sheet and can be edited like a view. This is why this component is called Detail View. The 2D component can be instantiated several times, each instance providing a component with a specific orientation, position and scale. The detail view can be either in the same drawing as the CATDrawing of the corresponding instances or in a separate CATDrawing.
 The Catalog Browser command allows to instantiate a ditto from an external CATDrawing document _CATDrawing1_ in a new Drawing document _CATDrawing2._ To do that, a special copy of _Detail Ref_ is created (_Detail Ref2_) and an instance of this copy (Ditto Inst 1). _Detail Ref2_ Detail is a **_no accessible local reference_** of the Reference Detail (Detail Ref)._See figure 1._
 
-_Figure 1_  
+_Figure 1_
 
----  
-![](images/detailditto.jpg)  
+---
+![](images/detailditto.jpg)
 
 _Figure 1_
 Detail Ref 2 can not be directly modified. Only Detail Ref can be modified. When you instantiate for the second time the ditto (from Detail Ref) , in the new CATDrawing _CATDrawing 2_ , a new instance of the “copied” detail (Detail Ref2) is created (Ditto Inst 2).
@@ -160,7 +160,10 @@ A modifiable text in instance is a text with a specific attribute to inform the 
 
     CATIADrawingComponent * piMyDrawComp = NULL;
     HRESULT rc = piMyDitto -> QueryInterface (IID_CATIADrawingComponent,(void**)&piMyDrawComp);
+```vbscript
     if ( SUCCEEDED(rc) )
+
+```
 
     {
 CATIADrawingComponent * piMyDrawComp = NULL;
@@ -168,7 +171,10 @@ HRESULT rc = piMyDitto -> QueryInterface (IID_CATIADrawingComponent,(void**)&piM
 if ( SUCCEEDED(rc) )
       long Count = 0;
       piMyDrawComp -> GetModifiableObjectsCount (Count);
+```vbscript
       for ( int Idx = 1; Idx<=Count; Idx++ )
+
+```
 
       {
 long Count = 0;
@@ -176,23 +182,38 @@ piMyDrawComp -> GetModifiableObjectsCount (Count);
 for ( int Idx = 1; Idx<=Count; Idx++ )
         CATVariant Variant;
         rc = BuildVariant ((long)Idx, Variant);
+```vbscript
+```vbscript
         if ( SUCCEEDED(rc) )
+
+```
+
+```
 
         {
 CATVariant Variant;
 rc = BuildVariant ((long)Idx, Variant);
+```vbscript
 if ( SUCCEEDED(rc) )
+```
+
           CATIABase * piABase = NULL;
           rc = piMyDrawComp -> GetModifiableObject (Variant, **piABase**);
+```vbscript
+```vbscript
           if ( SUCCEEDED(rc) )
 
-         {  
+```
 
----  
+```
+
+         {
+
+---
 
 [Top]
 
-### Drafting 2D Geometry Objects 
+### Drafting 2D Geometry Objects
 
 These objects are created by using 2D wire frame factory defined in SketcherInterface framework. A pointer on _CATI2DWFFactory_ interface may be obtained by using a `QueryInterface` on the view [[1](../CAADriUseCases/CAADriStructure.htm#Step7)].
 
@@ -203,24 +224,24 @@ Notes:
   2. If an interactive command deals with geometry, at the end of the 2D geometry creation step, `SaveEdition` method defined on _CATISketchEditor_ interface has to be executed. _CATISketch_ interface inherits from _CATISketchEditor_ , so, `SaveEdtion may be executed from _CATISketch_ interface.`
 
 [Top]
-### Drafting 2D Constraint objects 
+### Drafting 2D Constraint objects
 
 These objects are created by using 2D constraint factory defined in SketcherInterface framework. A pointer on _CATI2DConstraintFactory_ interface may be obtained by using a `QueryInterface` on the view. In this factory  CreateConstraint method allows to create constraint in the view.
 
 [Top]
-### Drafting Annotation objects 
+### Drafting Annotation objects
 
 These objects are created by using 2D constraint factory defined in SketcherInterface framework. A pointer on _CATI2DConstraintFactory_ interface may be obtained by using a `QueryInterface` on the view. In this factory  CreateConstraint method allows to create constraint in the view.
 These objects are created by using drawing annotation factory. A pointer on _CATIDrwAnnotationFactory_ interface may be obtained by using a ` QueryInterface` on the view [[2](../CAADriUseCases/CAADriCreateDim.htm#Step5)]. All the annotations inherit from AnnotationComponent object which inherits from Annotation object. _CATIDrwAnnotation_ interface manages associative position and associative orientation between annotations or annotation and geometry. CATIDrwAnnotationComponent is dedicated to manage global informations relative to the annotation text.
 
 When an annotation is modified feature has to be rebuild to get the result [[3](../CAADriUseCases/CAADriDimDressup.htm#References)].
 
-![](images/AnnotationObjectUML.gif)  
----  
-                          This figure shows the UML diagram of annotation objects    
+![](images/AnnotationObjectUML.gif)
+---
+                          This figure shows the UML diagram of annotation objects
 
 [Top]
-### Drafting Dress-up objects 
+### Drafting Dress-up objects
 
 These objects are created by using drawing annotation factory. A pointer on _CATIDrwAnnotationFactory_ interface may be obtained by using a ` QueryInterface` on the view. Sometime these elements require geometry to be created. The Center Line Creation sample explains how to create center line from 2D geometry or Generative Geometry [[4](../CAADriUseCases/CAADriCenterLine.md)].
 
@@ -237,7 +258,7 @@ Particular Generative views may be easily created by using the following interfa
   3. CreateStandAloneSectionView: To create a section view with a cutting profile associative to 3D element. This 3D element may be a a Planar Face, a 3D Sketch [[6](../CAADriUseCases/CAADriCreateSectionFrom3DSketch.md)] or Plane[[7](../CAADriUseCases/CAADriCreateSectionFromPlane.md)]  . The cutting profile is associative to the 3D element.
 
 [Top]
-### Drafting Generated Objects 
+### Drafting Generated Objects
 
 These objects are automatically created when a Generative View is created or updated. Generative Geometry is defined from 3D Document and associated on it. Generative Geometry can not be edited, only graphic properties may be modified  [[8](../CAADriUseCases/CAADriGenGeomAccess.htm#References)].
 
@@ -254,18 +275,18 @@ The _CATIDftMultiSheet_ interface, implemented by the sheet enables to keep an i
 * * *
 ### References
 
-[1] |  [Create Sheets and Views in a CATDrawing Document](../CAADriUseCases/CAADriStructure.md)  
----|---  
-[2] |  [Create a Distance Dimension Between on Interactive Geometry](../CAADriUseCases/CAADriCreateDim.md)  
-[3] |  [Editing Dimension Dress-Up](../CAADriUseCases/CAADriDimDressup.md)  
-[4] |  [Creating a Center Line in CATDrawing Document](../CAADriUseCases/CAADriCenterLine.md)  
-[5] |  [Creating _a view from 3D_](../CAADriUseCases/CAADriCreateViewFrom3D.md)  
-[6] |  [ Creating a Section view from a 3D Sketch](../CAADriUseCases/CAADriCreateSectionFrom3DSketch.md)  
-[7] |  [ Creating a Section view from Plane](../CAADriUseCases/CAADriCreateSectionFromPlane.md)  
-[8] |  [Editing Generetated Geometry in a Generative View](../CAADriUseCases/CAADriGenGeomAccess.md)  
-[9] |  [ Creating an Add-in](../CAAAfrUseCases/CAAAfrSampleAddin.md)  
-[10] |  [Create a Multisheet Interactive Command](../CAADriUseCases/CAADriMultiSheetCmd.md)  
-[Top]  
+[1] |  [Create Sheets and Views in a CATDrawing Document](../CAADriUseCases/CAADriStructure.md)
+---|---
+[2] |  [Create a Distance Dimension Between on Interactive Geometry](../CAADriUseCases/CAADriCreateDim.md)
+[3] |  [Editing Dimension Dress-Up](../CAADriUseCases/CAADriDimDressup.md)
+[4] |  [Creating a Center Line in CATDrawing Document](../CAADriUseCases/CAADriCenterLine.md)
+[5] |  [Creating _a view from 3D_](../CAADriUseCases/CAADriCreateViewFrom3D.md)
+[6] |  [ Creating a Section view from a 3D Sketch](../CAADriUseCases/CAADriCreateSectionFrom3DSketch.md)
+[7] |  [ Creating a Section view from Plane](../CAADriUseCases/CAADriCreateSectionFromPlane.md)
+[8] |  [Editing Generetated Geometry in a Generative View](../CAADriUseCases/CAADriGenGeomAccess.md)
+[9] |  [ Creating an Add-in](../CAAAfrUseCases/CAAAfrSampleAddin.md)
+[10] |  [Create a Multisheet Interactive Command](../CAADriUseCases/CAADriMultiSheetCmd.md)
+[Top]
 
 * * *
 ### In Short
@@ -277,9 +298,9 @@ This article has explained the foundations of the Drafting Modeler.
 * * *
 ### History
 
-Version: **1** [Mar 2004] | Document created  
----|---  
-[Top]  
+Version: **1** [Mar 2004] | Document created
+---|---
+[Top]
 
 * * *
 

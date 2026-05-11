@@ -10,11 +10,11 @@ converted: "2026-05-11T17:33:51.442066"
 ```
 
 ---
-| 
+|
 # CAA C++ API Modifications
 
-| 
-##  CATInstantCollabDesignItf Framework Modifications in V5R18 
+|
+##  CATInstantCollabDesignItf Framework Modifications in V5R18
 
 * * *
 

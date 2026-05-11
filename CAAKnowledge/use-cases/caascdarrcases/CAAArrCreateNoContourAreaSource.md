@@ -15,12 +15,14 @@ converted: "2026-05-11T17:31:51.557571"
     Option Explicit
 
 ```vbscript
+```vbscript
+```vbscript
     '// COPYRIGHT DASSAULT SYSTEMES  2000
     '******************************************************************************
     ' Purpose:       This CATScript demonstrates how to create an Area without
     '                a contour.
     ' Assumptions:   This assumes that a macro is being executed interactively.
-    ' Author     :                               
+    ' Author     :
     ' Languages  :   VBScript
     ' CATIA Level:   V5R6
     ' Locale     :   English
@@ -28,21 +30,42 @@ converted: "2026-05-11T17:31:51.557571"
 
 ```
 
+```
+
+```
+
+```vbscript
     Sub CATMain()
 
+```
+
+```vbscript
+```vbscript
 ```vbscript
        ' On Error Resume Next
        '----------------------------------------------
        'Create a new product document
 ```
 
+```
+
+```
+
 ```vbscript
        Dim objProdDoc        As ProductDocument
+```vbscript
+```vbscript
        Dim objRootProd       As Product
        Set objProdDoc      = CATIA.Documents.Add("Product")
        Set objRootProd     = objProdDoc.Product
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
        '----------------------------------------------
        'Retrieving Root Product's Relative Axis and Position Information
@@ -60,14 +83,27 @@ converted: "2026-05-11T17:31:51.557571"
        Dim dblAreaPosition(11)  As Double
 ```
 
+```
+
+```
+
        objPosition.GetComponents dblAreaPosition
        dblAreaPosition(9)    = 300.0
+```vbscript
        dblAreaPosition(10)   = 400.0
        dblAreaPosition(11)   = 300.0
 
+```
+
+```vbscript
 ```vbscript
        Set objArea     = objArrProd.ArrangementAreas.AddArea(objMove, dblAreaPosition, 50.0)
 
 ```
 
-    End Sub 
+```
+
+```vbscript
+    End Sub
+
+```

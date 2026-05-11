@@ -2,186 +2,180 @@
 title: "Untitled"
 category: "use-case"
 module: "CAAScdInfUseCases"
-tags: ["CAAScrBase", "CAAInfFileAccess", "CATIA"]
+tags: ["CAAInfFileAccess", "CAAScrBase", "CATIA"]
 source_file: "Doc/online/CAAScdInfUseCases/CAAInfFileAccessSource.htm"
-converted: "2026-05-11T11:06:32.781379"
+converted: "2026-05-11T11:27:02.694469"
 ---
 
-```
 Option Explicit
-
 ' COPYRIGTH DASSAULT SYSTEMES 2001
 
 ' ***********************************************************************
-
-' Purpose: Create a text file, duplicate it and read the result.
-
-' Assumtions: 
-
-' Author: 
-
-' Languages: VBScript BasicScript
-
-' Locales: English 
-
-' CATIA Level: V5R6 
-
+'   Purpose:      Create a text file, duplicate it and read the result.
+'   Assumtions:      
+'   Author: 
+'   Languages:    VBScript BasicScript
+'   Locales:      English 
+'   CATIA Level:  V5R6 
 ' ***********************************************************************
 
-Sub 
-CATMain()
+Sub CATMain()
 
- Dim 
-sLF
- As 
-String
- sLF = Chr(10) 
+    Dim sLF As String
+    sLF = Chr(10) 
 
- Dim 
-sMessage
- As 
-String
- sMessage = InputBox ("Enter a message", "Message", "Hello World")
+    Dim sMessage As String
+    sMessage = InputBox ("Enter a message", "Message", "Hello World")
 
- 
-' ------------------------------------------
+    ' ------------------------------------------
+    ' Get the file system object
+    Dim oFileSys As FileSystem
+    Set oFileSys = CATIA.FileSystem
 
- 
-' Get the file system object
+    ' ------------------------------------------
+    ' Retrieve a folder for temporary files
+    Dim sTmpPath As String 
+    sTmpPath=CATIA.SystemService.Environ("CATTemp")
+    If (Not oFileSys.FolderExists(sTmpPath)) Then
+      Err.Raise 9999,,"No Tmp Path Defined"
+    End If
 
- Dim 
-oFileSys
- As 
-FileSystem
+    ' ------------------------------------------
+    ' Delete possibly existing input and output files
+    Dim sFilOu As String ' Output file full path
+    sFilOu = CATIA.FileSystem.ConcatenatePaths(sTmpPath, "caatmpfilou.txt")
+    If (oFileSys.FileExists(sFilou)) Then 
+        oFileSys.DeleteFile sFilOu
+    End If
 
- Set 
-oFileSys = CATIA.FileSystem
+    Dim sFilIn As String ' Intput file full path
+    sFilIn = CATIA.FileSystem.ConcatenatePaths(sTmpPath, "caatmpfilin.txt")
+    If (oFileSys.FileExists(sFilIn)) Then 
+        oFileSys.DeleteFile sFilIn
+    End If
 
- 
-' ------------------------------------------
+    ' ---------------------------------------
+    ' Create file FilIn  
+    Dim oFilIn As File    
+    Set oFilIn = oFileSys.CreateFile(sFilIn, FALSE)
+    Dim oStream As TextStream
+    Set oStream = oFilIn.OpenAsTextStream("ForWriting")
+    oStream.Write "<MESSAGE>"  & sLF
+    oStream.Write "<VALUE>"
+    oStream.Write sMessage 
+    oStream.Write "</VALUE>"   & sLF
+    oStream.Write "</MESSAGE>" & sLF
+    oStream.Close
 
- 
-' Retrieve a folder for temporary files
+    ' ---------------------------------------
+    ' Duplicate FilIn in FilOu 
+    oFileSys.CopyFile sFilIn, sFilOu, FALSE
 
- Dim 
-sTmpPath
- As 
-String 
- sTmpPath=CATIA.SystemService.Environ("CATTemp")
+    ' ---------------------------------------
+    ' Get the result from the output file  
+    Dim oFilOu As File
+    Set oFilOu = oFileSys.GetFile(sFilOu)
+    Set oStream = oFilOu.OpenAsTextStream("ForReading")
 
- If 
-(Not oFileSys.FolderExists(sTmpPath))
- Then
+    Dim sBuffer As String
+    sMessage = ""
+    sBuffer = oStream.ReadLine
+    Do  Until oStream.AtEndOfStream
+        sMessage = sMessage & sBuffer 
+        sBuffer = oStream.ReadLine
+    Loop
 
- Err.Raise 9999,,"No Tmp Path Defined"
+    oStream.Close
 
- End If
+    msgbox sMessage
 
- 
-' ------------------------------------------
+End Sub
 
- 
-' Delete possibly existing input and output files
 
- Dim 
-sFilOu
- As 
-String 
-' Output file full path
 
- sFilOu = CATIA.FileSystem.ConcatenatePaths(sTmpPath, "caatmpfilou.txt")
+```vbscript
+Option Explicit
+' COPYRIGTH DASSAULT SYSTEMES 2001
 
- If 
-(oFileSys.FileExists(sFilou))
- Then 
+' ***********************************************************************
+'   Purpose:      Create a text file, duplicate it and read the result.
+'   Assumtions:      
+'   Author: 
+'   Languages:    VBScript BasicScript
+'   Locales:      English 
+'   CATIA Level:  V5R6 
+' ***********************************************************************
 
- oFileSys.DeleteFile sFilOu
 
- End If
+Sub CATMain()
 
- Dim 
-sFilIn
- As 
-String 
-' Intput file full path
+    Dim sLF As String
+    sLF = Chr(10) 
 
- sFilIn = CATIA.FileSystem.ConcatenatePaths(sTmpPath, "caatmpfilin.txt")
+    Dim sMessage As String
+    sMessage = InputBox ("Enter a message", "Message", "Hello World")
 
- If 
-(oFileSys.FileExists(sFilIn))
- Then 
+    ' ------------------------------------------
+    ' Get the file system object
+    Dim oFileSys As FileSystem
+    Set oFileSys = CATIA.FileSystem
 
- oFileSys.DeleteFile sFilIn
+    ' ------------------------------------------
+    ' Retrieve a folder for temporary files
+    Dim sTmpPath As String 
+    sTmpPath=CATIA.SystemService.Environ("CATTemp")
+    If (Not oFileSys.FolderExists(sTmpPath)) Then
+      Err.Raise 9999,,"No Tmp Path Defined"
+    End If
 
- End If
+    ' ------------------------------------------
+    ' Delete possibly existing input and output files
+    Dim sFilOu As String ' Output file full path
+    sFilOu = CATIA.FileSystem.ConcatenatePaths(sTmpPath, "caatmpfilou.txt")
+    If (oFileSys.FileExists(sFilou)) Then 
+        oFileSys.DeleteFile sFilOu
+    End If
 
- 
-' ---------------------------------------
+    Dim sFilIn As String ' Intput file full path
+    sFilIn = CATIA.FileSystem.ConcatenatePaths(sTmpPath, "caatmpfilin.txt")
+    If (oFileSys.FileExists(sFilIn)) Then 
+        oFileSys.DeleteFile sFilIn
+    End If
 
- 
-' Create file FilIn 
+    ' ---------------------------------------
+    ' Create file FilIn  
+    Dim oFilIn As File    
+    Set oFilIn = oFileSys.CreateFile(sFilIn, FALSE)
+    Dim oStream As TextStream
+    Set oStream = oFilIn.OpenAsTextStream("ForWriting")
+    oStream.Write "&lt;MESSAGE&gt;"  & sLF
+    oStream.Write "&lt;VALUE&gt;"
+    oStream.Write sMessage 
+    oStream.Write "&lt;/VALUE&gt;"   & sLF
+    oStream.Write "&lt;/MESSAGE&gt;" & sLF
+    oStream.Close
 
- Dim 
-oFilIn
- As 
-File 
+    ' ---------------------------------------
+    ' Duplicate FilIn in FilOu 
+    oFileSys.CopyFile sFilIn, sFilOu, FALSE
 
- Set 
-oFilIn = oFileSys.CreateFile(sFilIn, FALSE)
+    ' ---------------------------------------
+    ' Get the result from the output file  
+    Dim oFilOu As File
+    Set oFilOu = oFileSys.GetFile(sFilOu)
+    Set oStream = oFilOu.OpenAsTextStream("ForReading")
 
- Dim 
-oStream
- As 
-TextStream
+    Dim sBuffer As String
+    sMessage = ""
+    sBuffer = oStream.ReadLine
+    Do  Until oStream.AtEndOfStream
+        sMessage = sMessage & sBuffer 
+        sBuffer = oStream.ReadLine
+    Loop
 
- Set 
-oStream = oFilIn.OpenAsTextStream("ForWriting")
- oStream.Write "<MESSAGE>" & sLF
- oStream.Write "<VALUE>"
- oStream.Write sMessage 
- oStream.Write "</VALUE>" & sLF
- oStream.Write "</MESSAGE>" & sLF
- oStream.Close
+    oStream.Close
 
- 
-' ---------------------------------------
-
- 
-' Duplicate FilIn in FilOu 
-
- oFileSys.CopyFile sFilIn, sFilOu, FALSE
-
- 
-' ---------------------------------------
-
- 
-' Get the result from the output file 
-
- Dim 
-oFilOu
- As 
-File
-
- Set 
-oFilOu = oFileSys.GetFile(sFilOu)
-
- Set 
-oStream = oFilOu.OpenAsTextStream("ForReading")
-
- Dim 
-sBuffer
- As 
-String
- sMessage = ""
- sBuffer = oStream.ReadLine
- Do Until oStream.AtEndOfStream
- sMessage = sMessage & sBuffer 
- sBuffer = oStream.ReadLine
- Loop
-
- oStream.Close
-
- msgbox sMessage
+    msgbox sMessage
 
 End Sub
 ```

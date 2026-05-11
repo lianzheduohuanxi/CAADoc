@@ -15,13 +15,15 @@ converted: "2026-05-11T17:31:51.571552"
     Option Explicit
 
 ```vbscript
+```vbscript
+```vbscript
     '// COPYRIGHT DASSAULT SYSTEMES  2000
     '******************************************************************************
     ' Purpose:       This CATScript demonstrates how to create an ArrangementRun
     '                and change it's visualization to "Solid" mode, define a
     '                round section data and apply a constant bend radius of 10 mm.
     ' Assumptions:   This assumes that a macro is being executed interactively.
-    ' Author     :               
+    ' Author     :
     ' Languages  :   VBScript
     ' CATIA Level:   V5R6
     ' Locale     :   English
@@ -29,21 +31,42 @@ converted: "2026-05-11T17:31:51.571552"
 
 ```
 
+```
+
+```
+
+```vbscript
     Sub CATMain()
 
+```
+
+```vbscript
+```vbscript
 ```vbscript
        ' On Error Resume Next
        '----------------------------------------------
        'Create a new product document
 ```
 
+```
+
+```
+
 ```vbscript
        Dim objProdDoc        As ProductDocument
+```vbscript
+```vbscript
        Dim objRootProd       As Product
        Set objProdDoc      = CATIA.Documents.Add("Product")
        Set objRootProd     = objProdDoc.Product
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
        '----------------------------------------------
        'Retrieving Root Product's Relative Axis and Position Information
@@ -60,8 +83,13 @@ converted: "2026-05-11T17:31:51.571552"
        Dim objArrRun             As ArrangementRun
 ```
 
+```
+
+```
+
 ```vbscript
        dblRunPoints(0)   =  300.0
+```vbscript
        dblRunPoints(1)   =  100.0
        dblRunPoints(2)   =  0.0
 
@@ -87,7 +115,7 @@ converted: "2026-05-11T17:31:51.571552"
 
        dblRunPoints(18)  =  100.0
        dblRunPoints(19)  =  300.0
-       dblRunPoints(20)  =  7.5 
+       dblRunPoints(20)  =  7.5
 
        dblRunPoints(21)  =  158.58
        dblRunPoints(22)  =  158.58
@@ -119,7 +147,7 @@ converted: "2026-05-11T17:31:51.571552"
 
        dblRunPoints(42)  =  100.0
        dblRunPoints(43)  =  300.0
-       dblRunPoints(44)  =  17.5  
+       dblRunPoints(44)  =  17.5
 
        dblRunPoints(45)  =  158.58
        dblRunPoints(46)  =  158.58
@@ -151,7 +179,7 @@ converted: "2026-05-11T17:31:51.571552"
 
        dblRunPoints(66)  =  100.0
        dblRunPoints(67)  =  300.0
-       dblRunPoints(68)  =  27.5 
+       dblRunPoints(68)  =  27.5
 
        dblRunPoints(69)  =  158.58
        dblRunPoints(70)  =  158.58
@@ -167,8 +195,12 @@ converted: "2026-05-11T17:31:51.571552"
 
 ```
 
+```
+
 ```vbscript
        Set objArrRun             = objArrProd.ArrangementRuns.AddRun(objMove,dblRunPoints, dblMathDirection)
+```vbscript
+```vbscript
        '----------------------------------------------
        ' Change Properties of ArrangementRun
        objArrRun.SectionType     = CatArrangementRouteSectionRound
@@ -176,20 +208,39 @@ converted: "2026-05-11T17:31:51.571552"
        objArrRun.VisuMode        = CatArrangementRouteVisuModeSolid
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
        '----------------------------------------------
        ' Define Bend Radius of Nodes
-       Dim intK As Integer   
+       Dim intK As Integer
        For intK = 1 To objArrRun.ArrangementNodes.Count
 ```
 
-```vbscript
-' Define Bend Radius of Nodes
-Dim intK As Integer
-For intK = 1 To objArrRun.ArrangementNodes.Count
-         objArrRun.ArrangementNodes.Item(intK).BendRadius = 10.0
-       Next
+```
 
 ```
 
-    End Sub 
+```vbscript
+```vbscript
+```vbscript
+' Define Bend Radius of Nodes
+Dim intK As Integer
+```
+
+```
+
+```
+
+For intK = 1 To objArrRun.ArrangementNodes.Count
+         objArrRun.ArrangementNodes.Item(intK).BendRadius = 10.0
+```vbscript
+       Next
+
+    End Sub
+
+```

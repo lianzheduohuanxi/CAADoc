@@ -11,15 +11,15 @@ converted: "2026-05-11T17:31:51.281341"
 ---
 # Machining
 
-| 
+|
 ## 3 Axis Surface Machining
 
-| 
+|
 ### Managing Geometry with User Machining Features
 
-_Customize the geometry tab page of a surface machining operation with user machining features_  
----|---|---  
-Use Case  
+_Customize the geometry tab page of a surface machining operation with user machining features_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
@@ -35,7 +35,7 @@ This article discusses the CAASmiUserOperationWithUserMF use case. It explains h
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
@@ -66,7 +66,7 @@ CAASmgMachiningFeature has a geometry attribute : **CAASmgGuide**. This paramete
 
 The geometry management is done by several functionalities:
 
- Description of functionalities illustrated: 
+ Description of functionalities illustrated:
 
   * _Select a curve_ : select an edge with the edge selection toolbar.
   * _Select a set of curves_ : select a NC Geometry Feature of edges.
@@ -82,11 +82,11 @@ This use case is a part of _Surface Machining Operation Sample_ [1]. You should 
 This use case is a part of _Surface Machining Operation Sample_ [1]. You should build all the modules of this sample at a time to be able to launch it [2].
 Don't forget to edit the interface dictionary located in:
 
-Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CNext\code\dictionary\`  
+Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CNext\code\dictionary\`
 
 Don't forget to edit the interface dictionary located in:
 Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CNext\code\dictionary\`
-Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`  
+Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed, and uncomment the appropriate lines by removing the '#' character.
 
@@ -96,11 +96,11 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed,
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed, and uncomment the appropriate lines by removing the '#' character.
 This use case is made of source files located in the CAASmiUserOperationGeomUI.m module of the CAASurfaceMachiningItf.edu framework :
 
-Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CAASmiUserOperationGeomUI.m`  
+Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CAASmiUserOperationGeomUI.m`
 
 This use case is made of source files located in the CAASmiUserOperationGeomUI.m module of the CAASurfaceMachiningItf.edu framework :
 Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CAASmiUserOperationGeomUI.m`
-Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CAASmiUserOperationGeomUI.m`  
+Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CAASmiUserOperationGeomUI.m`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
@@ -109,11 +109,11 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 CAASmiUserOperationWithUserMF is divided into the following steps:
 
-  * Implementing CATIMfgGeometryActivity: 
+  * Implementing CATIMfgGeometryActivity:
     * Declaring CATIMfgGeometryActivity Implementation
     * Coding GetMainPanelEditor
     * Creating a New Machining Feature CAASmgMachiningFeature
-  * Creating the geometry dialog frame: 
+  * Creating the geometry dialog frame:
     * Geometry Management: Coding SelectCurve
     * Geometry Management: Coding SelectZone
     * Geometry Management: Coding RemoveAll
@@ -131,9 +131,9 @@ To overload the geometry tab page, we should create an extension class that will
       // Tie the implementation to its interface
       #include "TIE_CATIMfgGeometryActivity.h"
       TIE_CATIMfgGeometryActivity( CAAESmiUserOperationGeometryEditor);
-      ...  
+      ...
 
----  
+---
 
 [Top]
 #### Coding GetMainPanelEditor
@@ -145,26 +145,47 @@ In _GetMainPanelEditor,_ we create a new **CAASmgMachiningFeature** and we assoc
 In _GetMainPanelEditor,_ we create a new **CAASmgMachiningFeature** and we associate it with **CAASmgOperation**. Then we call the geometry dialog frame described below.
       CATIMfgActivity * pActivity = NULL;
       oRC = QueryInterface(IID_CATIMfgActivity, (void**) &pActivity);
+```vbscript
+```vbscript
       if (SUCCEEDED(oRC))
+
+```
+
+```
 
       {
 CATIMfgActivity * pActivity = NULL;
 oRC = QueryInterface(IID_CATIMfgActivity, (void**) &pActivity);
+```vbscript
+```vbscript
 if (SUCCEEDED(oRC))
-        spMachFeature = pActivity->GetFeature(); 
+        spMachFeature = pActivity->GetFeature();
         if (NULL_var == spMachFeature)
+
+```
+
+```
 
         {
           // Create a user machining feature
 spMachFeature = pActivity->GetFeature();
+```vbscript
+```vbscript
 if (NULL_var == spMachFeature)
           oRC = CreateCAAMachiningFeature(spMachFeature);
           if (SUCCEEDED(oRC))
 
+```
+
+```
+
           {
             // Link the machining feature to the activity
 oRC = CreateCAAMachiningFeature(spMachFeature);
+```vbscript
 if (SUCCEEDED(oRC))
+```
+
             pActivity->SetFeature(spMachFeature);
 
           }
@@ -178,11 +199,14 @@ pActivity->SetFeature(spMachFeature);
       // Creates the frame
 pActivity->Release();
 pActivity = NULL;
+```vbscript
       oFrame = new CAASmiUserOperationGeometryPanel(iFather,spMachFeature);
 
-      ...  
+```
 
----  
+      ...
+
+---
 
 [Top]
 #### Creating a New Machining Feature CAASmgMachiningFeature
@@ -192,27 +216,36 @@ The _CreateCAAMachiningFeature_ method is used to create **CAASmgMachiningFeatur
 At first, we retrieve the startup of **CAASmgMachiningFeature** from the catalog generated by CAASmiUserMachFeatureCatalog.m module.
 
       ...
-      // Loads catalog	  
+      // Loads catalog
 At first, we retrieve the startup of **CAASmgMachiningFeature** from the catalog generated by CAASmiUserMachFeatureCatalog.m module.
-      CATUnicodeString CatalogFeature ("CAAUserMachiningFeatures.CATfct");	
+      CATUnicodeString CatalogFeature ("CAAUserMachiningFeatures.CATfct");
       CATUnicodeString ClientID ("CAAManufacturing");
       CATUnicodeString NewSUFeatType("CAASmgMachiningFeature");
       CATOsmSUHandler novelSUHandler(NewSUFeatType, ClientID, CatalogFeature);
 
       CATISpecObject_var spInstance = NULL_var;
       oRC = novelSUHandler.Instanciate(spInstance, spFeatCont, "");
+```vbscript
+```vbscript
       if (FAILED(oRC)) return oRC;
 
-      ...  
+```
 
----  
+```
+
+      ...
+
+---
 
 Then, we instanciate **CAASmgMachiningFeature** and we add the **CAASmgGuide** attribute with the _AddNcGeometryParameter_ method of _CATISmgNcGeometryManager_. This method adds a geometry attribute which support standard geometries or nc geometry features.
 
       ...
-      // Creates the machining feature (associated in Catalog)	  
+      // Creates the machining feature (associated in Catalog)
 Then, we instanciate **CAASmgMachiningFeature** and we add the **CAASmgGuide** attribute with the _AddNcGeometryParameter_ method of _CATISmgNcGeometryManager_. This method adds a geometry attribute which support standard geometries or nc geometry features.
+```vbscript
       if (SUCCEEDED(oRC))
+
+```
 
       {
         oFeature = spInstance;
@@ -223,17 +256,20 @@ if (SUCCEEDED(oRC))
 oFeature = spInstance;
         CATISmgNcGeometryManager_var spSmgManager = oFeature;
         if (spSmgManager != NULL_var)
+```vbscript
           oRC = spSmgManager->AddNcGeometryParameter("CAASmgGuide",SmgEdgeType);
 ```
 
-      }
-      ...  
+```
 
----  
+      }
+      ...
+
+---
 
 Finally, we add our feature in the Manufacturing Container.
 
-      ...	
+      ...
       // Adds the feature in the MfgView
 Finally, we add our feature in the Manufacturing Container.
       SEQUENCE(CATBaseUnknown_ptr) ListOfMfgView;
@@ -247,7 +283,10 @@ spFeatCont->ListMembersHere(CATIMfgViewAccess::ClassName(), ListOfMfgView);
 int NbMfgView = ListOfMfgView.length();
 if(NbMfgView)
         CATBaseUnknown * pBaseView = ListOfMfgView[NbMfgView - 1];
+```vbscript
         if (pBaseView)
+
+```
 
         {
 ```vbscript
@@ -262,9 +301,9 @@ if (pBaseView)
 
         }
       }
-      ...  
+      ...
 
----  
+---
 
 [Top]
 #### Geometry Management: Coding SelectCurve
@@ -274,9 +313,9 @@ In _CAASmiUserOperationGeometryPanel_ class, _SelectCurve_ is called whenever th
       ...
       // Sends Selection command
       new CAASmiUserOperationGeometrySelCom (this,_spGuide);
-      ...  
+      ...
 
----  
+---
 
 [Top]
 #### Geometry Management: Coding SelectZone
@@ -287,7 +326,10 @@ In _CAASmiUserOperationGeometryPanel_ class, _SelectZone_ is called whenever the
 In _CAASmiUserOperationGeometryPanel_ class, _SelectZone_ is called whenever the user clicks on "_Select a set of curves_ " button. It activates the standard dialog editor of NC Geometry Features management via the _CATIEdit_ interface.
       CATIEdit * pEdit = NULL;
       HRESULT RC = _spGuide->QueryInterface(IID_CATIEdit, (void**) &pEdit);
+```vbscript
       if (SUCCEEDED(RC))
+
+```
 
       {
         // For zone management
@@ -299,9 +341,9 @@ if (SUCCEEDED(RC))
         pEdit = NULL;
 
       }
-      ...  
+      ...
 
----  
+---
 
 [Top]
 #### Geometry Management: Coding RemoveAll
@@ -312,7 +354,10 @@ In _CAASmiUserOperationGeometryPanel_ class, _RemoveAll_ is called whenever the 
 In _CAASmiUserOperationGeometryPanel_ class, _RemoveAll_ is called whenever the user clicks on "_Remove all_ " button. It uses the _RemoveAll_ method of _CATISmgNcGeometryParameter_ interface.
       CATISmgNcGeometryParameter * pSmgParameter = NULL;
       HRESULT RC = _spGuide->QueryInterface(IID_CATISmgNcGeometryParameter, (void**) &pSmgParameter);
+```vbscript
       if (SUCCEEDED(RC))
+
+```
 
       {
 CATISmgNcGeometryParameter * pSmgParameter = NULL;
@@ -323,9 +368,9 @@ if (SUCCEEDED(RC))
         pSmgParameter = NULL;
 
       }
-      ...  
+      ...
 
----  
+---
 
 [Top]
 #### Geometry Management: Coding NewZone
@@ -337,7 +382,10 @@ In _CAASmiUserOperationGeometryPanel_ class, _NewZone_ is called whenever the us
 In _CAASmiUserOperationGeometryPanel_ class, _NewZone_ is called whenever the user clicks on "_Add a empty set_ " button. A Nc Geometry Feature is created by the _CreateNcGeometryFeature_ method of _CATISmgFactory_. The Nc Geometry Feature is added with _Add_ method of _CATISmgNcGeometryParameter_.
       CATISmgFactory * pSmgFactory = NULL;
       HRESULT RC = spFeatCont->QueryInterface(IID_CATISmgFactory, (void**)&pSmgFactory);
+```vbscript
       if (SUCCEEDED(RC))
+
+```
 
       {
 CATISmgFactory * pSmgFactory = NULL;
@@ -352,29 +400,38 @@ if (SUCCEEDED(RC))
       // Adds it in the guide parameter
 pSmgFactory->Release();
 pSmgFactory = NULL;
+```vbscript
       if (!!_spGuide && !!spNcFeature)
+
+```
 
       {
 ```vbscript
 if (!!_spGuide && !!spNcFeature)
         CATISmgNcGeometryParameter * pSmgParameter = NULL;
         RC = _spGuide->QueryInterface(IID_CATISmgNcGeometryParameter, (void**) &pSmgParameter);
+```vbscript
         if (SUCCEEDED(RC))
+```
+
 ```
 
         {
 CATISmgNcGeometryParameter * pSmgParameter = NULL;
 RC = _spGuide->QueryInterface(IID_CATISmgNcGeometryParameter, (void**) &pSmgParameter);
+```vbscript
 if (SUCCEEDED(RC))
+```
+
           pSmgParameter->**Add**(spNcFeature);
           pSmgParameter->Release();
           pSmgParameter = NULL;
 
         }
       }
-      ...  
+      ...
 
----  
+---
 
 [Top]
 #### Geometry Management: Coding Export
@@ -385,7 +442,10 @@ In _CAASmiUserOperationGeometryPanel_ class, _Export_ is called whenever the use
 In _CAASmiUserOperationGeometryPanel_ class, _Export_ is called whenever the user clicks on "_Export curves in a new set_ " button. It uses the _Export_ method of _CATISmgNcGeometryParameter_ interface.
       CATISmgNcGeometryParameter * pSmgParameter = NULL;
       HRESULT RC = _spGuide->QueryInterface(IID_CATISmgNcGeometryParameter, (void**) &pSmgParameter);
+```vbscript
       if (SUCCEEDED(RC))
+
+```
 
       {
 CATISmgNcGeometryParameter * pSmgParameter = NULL;
@@ -396,9 +456,9 @@ if (SUCCEEDED(RC))
         pSmgParameter = NULL;
 
       }
-      ...  
+      ...
 
----  
+---
 
 [Top]
 
@@ -418,18 +478,18 @@ We will see now how to compute the tool path of our operation [3].
 * * *
 ### References
 
-[1] | [Surface Machining Operation Sample Overview](../CAASmiTechArticles/CAASmiOperationSampleOverview.md)  
----|---  
-[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
-[3] | [Computing a Tool Path with User Machining Features](CAASmiUserOperationWithUserMFToolPath.md)  
-[Top]  
+[1] | [Surface Machining Operation Sample Overview](../CAASmiTechArticles/CAASmiOperationSampleOverview.md)
+---|---
+[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)
+[3] | [Computing a Tool Path with User Machining Features](CAASmiUserOperationWithUserMFToolPath.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Mar 2002] | Document created  
----|---  
-[Top]  
+Version: **1** [Mar 2002] | Document created
+---|---
+[Top]
 
 * * *
 

@@ -10,11 +10,11 @@ converted: "2026-05-11T17:33:51.566267"
 ```
 
 ---
-| 
+|
 # CAA C++ API Modifications
 
-| 
-##  MechanicalModelerUI Framework Modifications in V5R19 
+|
+##  MechanicalModelerUI Framework Modifications in V5R19
 
 * * *
 

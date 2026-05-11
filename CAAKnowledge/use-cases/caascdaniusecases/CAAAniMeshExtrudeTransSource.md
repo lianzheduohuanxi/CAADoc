@@ -2,164 +2,202 @@
 title: "CAAAniMeshExtrudeTrans.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CAAAniMeshExtrudeTrans", "CAAScrBase", "CAAScdAniUseCases", "CATIA"]
+tags: ["CAAScrBase", "CATIA", "CAAScdAniUseCases", "CAAAniMeshExtrudeTrans"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshExtrudeTransSource.htm"
-converted: "2026-05-11T11:06:32.402095"
+converted: "2026-05-11T11:27:02.540882"
 ---
 
-```
 ' COPYRIGHT DASSAULT SYSTEMES 2000
 
 ' ***********************************************************************
-
-' Purpose: Open an analysis document
-
-' Create Extrude with translation mesh
-
-' assign the Surface Mesh as support
-
-' specify the global specifications
-
-' Assumptions: Looks for surface.CATAnalysis in the directory and surface Analysis Connection
-
-' Author: bmw
-
-' Languages: VBScript
-
-' Locales: English 
-
-' CATIA Level: V5R16
-
+'   Purpose:      Open an analysis document
+'                 Create Extrude with translation mesh
+'                 assign the Surface Mesh as support
+'                 specify the global specifications
+'   Assumptions:   Looks for surface.CATAnalysis in the directory and surface Analysis Connection
+'   Author:       bmw
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R16
 ' ***********************************************************************
 
-Sub 
-CATMain()
+Sub CATMain()
 
 ' ----------------------------------------------------------- 
-
 ' Optional: allows to find the sample wherever it's installed
 
- sDocPath=CATIA.SystemService.Environ("CATDocView")
+  sDocPath=CATIA.SystemService.Environ("CATDocView")
 
- If 
-(Not CATIA.FileSystem.FolderExists(sDocPath))
- Then
-
- Err.Raise 9999,,"No Doc Path Defined"
-
- End If
-
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,,"No Doc Path Defined"
+    End If
 ' ----------------------------------------------------------- 
 
 ' Open the CATAnalysis Document
-
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Surface.CATAnalysis")
-
-Set
- oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ' Retrieve the analysis Manager 
-
-Set 
-oAnalysisManagar = oAnalysisDocument.Analysis
-
-Set 
-oAnalysisSet = oAnalysisManagar.AnalysisSets
+Set oAnalysisManagar = oAnalysisDocument.Analysis
+Set oAnalysisSet = oAnalysisManagar.AnalysisSets
 
 ' Retrieve the part document and product
-
-Set 
-oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
-
-Set 
-partDocument = oAnalysisLinkedDocuments.Item(1)
-
-Set 
-product = partDocument.Product
+Set oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
+Set partDocument = oAnalysisLinkedDocuments.Item(1)
+Set product = partDocument.Product
 
 ' Retrieve the published line
-
 ' the mesh will be extruded with translation along this line
-
-Set 
-publications = product.Publications
-
-Set 
-pubDirection = publications.Item("Direction")
+Set publications = product.Publications
+Set pubDirection = publications.Item("Direction")
 
 ' Retrieve the analysis model
-
-Set 
-oAnalysisModels = oAnalysisManagar.AnalysisModels
-
-Set 
-oAnalysisModel = oAnalysisModels.Item(1)
+Set oAnalysisModels = oAnalysisManagar.AnalysisModels
+Set oAnalysisModel = oAnalysisModels.Item(1)
 
 'Retrieve the mesh manager and list of mesh parts
-
-Set 
-oAnalysisMeshManager = oAnalysisModel.MeshManager 
-
-Set 
-oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
-
-Set 
-surfMesh = oAnalysisMeshParts.Item("Surface Mesh.1")
+Set oAnalysisMeshManager = oAnalysisModel.MeshManager 
+Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+Set surfMesh = oAnalysisMeshParts.Item("Surface Mesh.1")
 
 'Create the reference of the surface mesh
-
-Set 
-reference = oAnalysisManagar.CreateReferenceFromObject(surfMesh)
+Set reference = oAnalysisManagar.CreateReferenceFromObject(surfMesh)
 
 'Add the extrude with translation mesh part to the list of mesh parts
-
-Set 
-extrudeMesh = oAnalysisMeshParts.Add("MSHPartExtrTranslation")
+Set extrudeMesh = oAnalysisMeshParts.Add("MSHPartExtrTranslation")
 
 'Assign the surface mesh part as support
-
 extrudeMesh.AddSupportFromReference NOTHING, reference
 
 'Set the global specifications
-
 extrudeMesh.SetGlobalSpecification "Condensation", 1
 extrudeMesh.SetGlobalSpecification "Tolerance", "1.0 mm"
-extrudeMesh.SetGlobalSpecification "Length", "10.0 mm"
-extrudeMesh.SetGlobalSpecification "Length1", "200.0 mm"
+extrudeMesh.SetGlobalSpecification  "Length", "10.0 mm"
+extrudeMesh.SetGlobalSpecification  "Length1", "200.0 mm"
 
 'Set the specification; the direction of translation
-
 extrudeMesh.SetSpecificationFromPublication "Direction", product, pubDirection, 0
 
 'Retrieve the basic component and sub components
-
-Set 
-basicComps = extrudeMesh.BasicComponents
-
-Set 
-subBasicComps = basicComps.Item(1).BasicComponents
+Set basicComps = extrudeMesh.BasicComponents
+Set subBasicComps = basicComps.Item(1).BasicComponents
 
 'Retrieve each of the attribute and set its value
-
-Set 
-subBasicComp1 = subBasicComps.Item("Type")
+Set subBasicComp1 = subBasicComps.Item("Type")
 subBasicComp1.SetValue "", 0, 0, 0, "Arithmetic"
 
-Set 
-subBasicComp2 = subBasicComps.Item("NbNodes")
+Set subBasicComp2 = subBasicComps.Item("NbNodes")
 subBasicComp2.SetValue "", 0, 0, 0, 20
 
-Set 
-subBasicComp3 = subBasicComps.Item("Symmetric")
+Set subBasicComp3 = subBasicComps.Item("Symmetric")
 subBasicComp3.SetValue "", 0, 0, 0, 2
 
-Set 
-subBasicComp4 = subBasicComps.Item("Ratio")
+Set subBasicComp4 = subBasicComps.Item("Ratio")
 subBasicComp4.SetValue "", 0, 0, 0, 10
 
 'Update the mesh
-
 extrudeMesh.Update
+
+End Sub
+
+
+
+```vbscript
+' COPYRIGHT DASSAULT SYSTEMES 2000
+
+' ***********************************************************************
+'   Purpose:      Open an analysis document
+'                 Create Extrude with translation mesh
+'                 assign the Surface Mesh as support
+'                 specify the global specifications
+'   Assumptions:   Looks for surface.CATAnalysis in the directory and surface Analysis Connection
+'   Author:       bmw
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R16
+' ***********************************************************************
+
+Sub CATMain()
+
+' ----------------------------------------------------------- 
+' Optional: allows to find the sample wherever it's installed
+
+  sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,,"No Doc Path Defined"
+    End If
+' ----------------------------------------------------------- 
+
+
+' Open the CATAnalysis Document
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Surface.CATAnalysis&quot;)
+Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+
+' Retrieve the analysis Manager 
+Set oAnalysisManagar = oAnalysisDocument.Analysis
+Set oAnalysisSet = oAnalysisManagar.AnalysisSets
+
+' Retrieve the part document and product
+Set oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
+Set partDocument = oAnalysisLinkedDocuments.Item(1)
+Set product = partDocument.Product
+
+' Retrieve the published line
+' the mesh will be extruded with translation along this line
+Set publications = product.Publications
+Set pubDirection = publications.Item("Direction")
+
+' Retrieve the analysis model
+Set oAnalysisModels = oAnalysisManagar.AnalysisModels
+Set oAnalysisModel = oAnalysisModels.Item(1)
+
+'Retrieve the mesh manager and list of mesh parts
+Set oAnalysisMeshManager = oAnalysisModel.MeshManager 
+Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+Set surfMesh = oAnalysisMeshParts.Item("Surface Mesh.1")
+
+'Create the reference of the surface mesh
+Set reference = oAnalysisManagar.CreateReferenceFromObject(surfMesh)
+
+
+'Add the extrude with translation mesh part to the list of mesh parts
+Set extrudeMesh = oAnalysisMeshParts.Add("MSHPartExtrTranslation")
+
+
+'Assign the surface mesh part as support
+extrudeMesh.AddSupportFromReference NOTHING, reference
+
+'Set the global specifications
+extrudeMesh.SetGlobalSpecification "Condensation", 1
+extrudeMesh.SetGlobalSpecification "Tolerance", "1.0 mm"
+extrudeMesh.SetGlobalSpecification  "Length", "10.0 mm"
+extrudeMesh.SetGlobalSpecification  "Length1", "200.0 mm"
+
+'Set the specification; the direction of translation
+extrudeMesh.SetSpecificationFromPublication "Direction", product, pubDirection, 0
+
+'Retrieve the basic component and sub components
+Set basicComps = extrudeMesh.BasicComponents
+Set subBasicComps = basicComps.Item(1).BasicComponents
+
+'Retrieve each of the attribute and set its value
+Set subBasicComp1 = subBasicComps.Item("Type")
+subBasicComp1.SetValue "", 0, 0, 0, "Arithmetic"
+
+Set subBasicComp2 = subBasicComps.Item("NbNodes")
+subBasicComp2.SetValue "", 0, 0, 0, 20
+
+Set subBasicComp3 = subBasicComps.Item("Symmetric")
+subBasicComp3.SetValue "", 0, 0, 0, 2
+
+Set subBasicComp4 = subBasicComps.Item("Ratio")
+subBasicComp4.SetValue "", 0, 0, 0, 10
+
+'Update the mesh
+extrudeMesh.Update
+
 
 End Sub
 ```

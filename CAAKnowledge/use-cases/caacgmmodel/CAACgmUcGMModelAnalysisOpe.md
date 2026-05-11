@@ -9,10 +9,10 @@ converted: "2026-05-11T17:33:48.237061"
 ```
 
 ---
-# Analyzing the Parameters of a Point on a Curve  
+# Analyzing the Parameters of a Point on a Curve
 
----  
-Use Case  
+---
+Use Case
 ## Abstract
 
 The CAAGMModelAnalysisOpe use case illustrates how to analyze the parameters (normals, curvature and torsion) of a point on a curve by using the _CATICGMLocalAnalysis1D_ operator.
@@ -23,8 +23,8 @@ The CAAGMModelAnalysisOpe use case illustrates how to analyze the parameters (no
       * Where to Find the CAAGMModelAnalysisOpe Code
     * Step-by-Step
     * In Short
-    * References  
----  
+    * References
+---
 ## What You Will Learn With This Use Case
 
 This use case [1] is intended to help you to use the CATICGMLocalAnalysis1D operator. See [2] for an overview of this type of operators.
@@ -33,14 +33,17 @@ This use case [1] is intended to help you to use the CATICGMLocalAnalysis1D oper
 CAAGMModelAnalysisOpe is a use case of the CAAGMModelInterfaces.edu framework.
 ### What Does CAAGMModelAnalysisOpe Do
 
- This use case creates the input data to be passed to the CATICGMLocalAnalysis1D operator (a circle with a radius of 50mm), creates the operator and performs the geometric analyzes. The result can be optionally saved into an NCGM container and displayed using the CAAGMModelGemBrowser use case [3].  
----|---  
-### How to Launch CAAGMModelAnalysisOpe 
+ This use case creates the input data to be passed to the CATICGMLocalAnalysis1D operator (a circle with a radius of 50mm), creates the operator and performs the geometric analyzes. The result can be optionally saved into an NCGM container and displayed using the CAAGMModelGemBrowser use case [3].
+---|---
+### How to Launch CAAGMModelAnalysisOpe
 
 This use case creates the input data to be passed to the CATICGMLocalAnalysis1D operator (a circle with a radius of 50mm), creates the operator and performs the geometric analyzes. The result can be optionally saved into an NCGM container and displayed using the CAAGMModelGemBrowser use case [3].
 To launch CAAGMModelAnalysisOpe, you will need to set up the build time environment, then compile CAAGMModelAnalysisOpe.m along with its prerequisites, set up the run time environment, and then execute the use case [4].
 
+```vbscript
 If you simply type CAAGMModelAnalysisOpe with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example:
+
+```
 
 `CAAGMModelAnalysisOpe e/analysis1D.NCGM`
 
@@ -55,7 +58,7 @@ where `InstallRootFolder` [4] is the folder where the API CD-ROM is installed.
 ## Step-by-Step
 
 where `InstallRootFolder` [4] is the folder where the API CD-ROM is installed.
-The initial step which consists in creating the geometry factory as well as the last step which consists in writing the model and closing the factory are described in [1]. The coding steps dedicated to the CATICGMLocalAnalysis1D operator are explained below: 
+The initial step which consists in creating the geometry factory as well as the last step which consists in writing the model and closing the factory are described in [1]. The coding steps dedicated to the CATICGMLocalAnalysis1D operator are explained below:
 
     1. Creating the Geometry Factory [1].
     2. Creating the Curve and the point to be analyzed
@@ -85,12 +88,12 @@ The geometry is created by the `CATGeoFactory` with the CreateCircle method. No 
 
 CATCrvParam paramcircle = pCircle->CreateParam(0.);
 The geometry is created by the `CATGeoFactory` with the CreateCircle method. No geometric point is created, the point to be analyzed is specified by its parameter.
-The CATCGMCreateLocalAnalysis1D global function is used to create the operator.b> The normals, curvature and torsion are then analyzed and compared with the expected values which are round values easy to check for a circle. 
+The CATCGMCreateLocalAnalysis1D global function is used to create the operator.b> The normals, curvature and torsion are then analyzed and compared with the expected values which are round values easy to check for a circle.
 
-    CATICGMLocalAnalysis1D * pAnalysisCircle =:: **CATCGMCreateLocalAnalysis1D**(pConfig,pCircle,paramcircle); 
+    CATICGMLocalAnalysis1D * pAnalysisCircle =:: **CATCGMCreateLocalAnalysis1D**(pConfig,pCircle,paramcircle);
 
     ...
-    // c - Retrieve the main normal and the binormal and check 
+    // c - Retrieve the main normal and the binormal and check
     // that the angle between them must be equal to PI/2
     //
 CATICGMLocalAnalysis1D * pAnalysisCircle =:: **CATCGMCreateLocalAnalysis1D**(pConfig,pCircle,paramcircle);
@@ -110,7 +113,7 @@ CATMathVector binormal = pAnalysisCircle->GetBiNormal();
     //
 double curvature = pAnalysisCircle->GetCurvature();
 cout << "curvature " << fabs(curvature*radius) << endl;
-    double torsion = pAnalysisCircle->GetTorsion(); 
+    double torsion = pAnalysisCircle->GetTorsion();
     cout << "torsion " << fabs(torsion) << endl;
 
     ...
@@ -141,12 +144,12 @@ CATICGMLocalAnalysis1Db> is a geometric operator which follows the same scheme a
 
 ## References
 
-[1] | [An Introduction to Geometric Modeler Use Cases](CAACgmUcGMModelUseCaseOverw.md)  
----|---  
-[2] | [How to Use Geometric Operators](CAACgmUcGMModelOpeOverw.md)  
-[3] | [Browsing the Geometric Container](CAACgmUcGemBrowser.md)  
-[4] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[1] | [An Introduction to Geometric Modeler Use Cases](CAACgmUcGMModelUseCaseOverw.md)
+---|---
+[2] | [How to Use Geometric Operators](CAACgmUcGMModelOpeOverw.md)
+[3] | [Browsing the Geometric Container](CAACgmUcGemBrowser.md)
+[4] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
 ## History
 
-Version: **1** [Jan 2007] | Document created  
+Version: **1** [Jan 2007] | Document created
 ---|---

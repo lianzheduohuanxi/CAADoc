@@ -12,11 +12,11 @@ converted: "2026-05-11T17:33:45.870486"
 tags: ["CAATobReverseEdgeOrientation", "CATICGMObject", "CAATopologicalObjects", "CATICGMContainer"]
 source_file: "Doc/online/CAATobUseCases/CAATopReverseEdgeOrientation.htm"
 converted: "2026-05-11T17:33:45.870486"
-Geometric Modeler |  Topology |  Reversing the Orientation of an Edge _How to Modify the Topology_  
+Geometric Modeler |  Topology |  Reversing the Orientation of an Edge _How to Modify the Topology_
 
 converted: "2026-05-11T17:33:45.870486"
 Geometric Modeler |  Topology |  Reversing the Orientation of an Edge _How to Modify the Topology_
-Use Case  
+Use Case
 
 * * *
 
@@ -25,28 +25,28 @@ Abstract This use case illustrates how to use the smart duplicator to modify the
   * **What You Will Learn With This Use Case**
   * **The CAATobReverseEdgeOrientation Use Case**
     * What Does CAATobReverseEdgeOrientation Do?
-    * How to Launch CAATobReverseEdgeOrientation 
+    * How to Launch CAATobReverseEdgeOrientation
     * Where to Find the CAATobReverseEdgeOrientation Code
   * **Step-by-Step**
   * **References**
 
----  
+---
 
 * * *
 
 What You Will Learn With This Use Case This use case is intended to make you understand how to modify a topology by using the CATSmartBodyDuplicator operator. It also illustrates how to manipulate topological objects to change parameters such as matter sides or orientations. [Top] The CAATobReverseEdgeOrientation Use Case CAATobReverseEdgeOrientation is a use case of the CAATopologicalObjects.edu framework that illustrates the NewTopologicalObjects framework capabilities. [Top] What Does CAATobReverseEdgeOrientation Do? The CAATobReverseEdgeOrientation use case:
 
-  * loads the container and retrieves the edge to be reversed 
+  * loads the container and retrieves the edge to be reversed
   * reverses the edge orientation
   * writes the model and closes the factory. Note that, in this use case the output model is the same as the input model.
 
-[Top] How to Launch CAATobReverseEdgeOrientation To launch CAATobReverseEdgeOrientation , you will need to set up the build time environment, then compile CAATobReverseEdgeOrientation.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. With Windows CAATobReverseEdgeOrientation `e:/tobereversed.NCGM" e/outputFile.NCGM` With UNIX CAATobReverseEdgeOrientation `/u/`tobereversed`.NCGM e/outputFile.NCGM` where tobereversed.NCGM is an input file delivered in the CAATopologicalObjects.edu/FunctionTests/InputData file and outputFile.NCGM the file where you want to store the created data. [Top] WWhere to Find the CAATobReverseEdgeOrientation Code The CAATobReverseEdgeOrientation use case is made of a main named ReverseEdgeOrientationOpe.cpp located in the CAATobReverseEdgeOrientation .m module of the CAATopologicalObjects.edu framework: Windows | `InstallRootDirectory\CAATopologicalObjects.edu\CAATobReverseEdgeOrientation .m\`  
----|---  
-Unix | `InstallRootDirectory/CAATopologicalObjects.edu/CAATobReverseEdgeOrientation .m/`  
+[Top] How to Launch CAATobReverseEdgeOrientation To launch CAATobReverseEdgeOrientation , you will need to set up the build time environment, then compile CAATobReverseEdgeOrientation.m along with its prerequisites, set up the run time environment, and then execute the use case [1]. With Windows CAATobReverseEdgeOrientation `e:/tobereversed.NCGM" e/outputFile.NCGM` With UNIX CAATobReverseEdgeOrientation `/u/`tobereversed`.NCGM e/outputFile.NCGM` where tobereversed.NCGM is an input file delivered in the CAATopologicalObjects.edu/FunctionTests/InputData file and outputFile.NCGM the file where you want to store the created data. [Top] WWhere to Find the CAATobReverseEdgeOrientation Code The CAATobReverseEdgeOrientation use case is made of a main named ReverseEdgeOrientationOpe.cpp located in the CAATobReverseEdgeOrientation .m module of the CAATopologicalObjects.edu framework: Windows | `InstallRootDirectory\CAATopologicalObjects.edu\CAATobReverseEdgeOrientation .m\`
+---|---
 Unix | `InstallRootDirectory/CAATopologicalObjects.edu/CAATobReverseEdgeOrientation .m/`
-where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed. [Top] Step-by-Step There are three main steps in ReverseEdgeOrientation.cpp: 
+Unix | `InstallRootDirectory/CAATopologicalObjects.edu/CAATobReverseEdgeOrientation .m/`
+where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed. [Top] Step-by-Step There are three main steps in ReverseEdgeOrientation.cpp:
 
-  1. Loading the container and retrieving the edge to be reversed 
+  1. Loading the container and retrieving the edge to be reversed
   2. Reversing the edge orientation
   3. Writing the model and closing the factory
 
@@ -54,20 +54,20 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 3. Writing the model and closing the factory
     CATGeoFactory* piGeomFactory = CATLoadCGMContainer(filetoread);...
-    CATICGMObject * piCGMObj1 = piGeomFactory->FindObjectFromTag( 456  ); 
+    CATICGMObject * piCGMObj1 = piGeomFactory->FindObjectFromTag( 456  );
     CATEdge* piEdge = (CATEdge *) piCGMObj1;
 
----  
+---
 CATICGMObject * piCGMObj1 = piGeomFactory->FindObjectFromTag( 456  );
 CATEdge* piEdge = (CATEdge *) piCGMObj1;
 Here is the input model. The edge to be reversed is highlighted. ![](images/reverseEdge.gif) [Top] Reversing the edge orientation If the edge is modified, the loop which contents this edge as well as the face on which this edge relies on have to be modified. The consistency of the whole topology must be achieved. This is what you have to do:
 
-  1. Touch the edge to be reversed, "smart duplicate" the initial body and retrieve the duplicated edge, face and loop. You can turn to [Using the Smart Duplicator](CAATobSmartDuplicator.md) for more information on how to use the CATSmartBodyDuplicator operator. 
+  1. Touch the edge to be reversed, "smart duplicate" the initial body and retrieve the duplicated edge, face and loop. You can turn to [Using the Smart Duplicator](CAATobSmartDuplicator.md) for more information on how to use the CATSmartBodyDuplicator operator.
 
          CATBody * copBody = piGeomFactory->CreateBody();
-         CATSmartBodyDuplicator * smartDuplicator = 
+         CATSmartBodyDuplicator * smartDuplicator =
          copBody->CreateSmartDuplicator(piBody, topdata);
-         if (smartDuplicator == NULL) return (1); 
+         if (smartDuplicator == NULL) return (1);
          smartDuplicator->SetFullDuplication(1);  // you duplicate the link
          smartDuplicator->Run();
 
@@ -91,8 +91,8 @@ CATFace * duplicatedFace= (CATFace *)smartDuplicator->GetDuplicatedCell(piFace);
 
          ...
 
----  
-  2. Create a new edge with an opposite direction (for more information on how to create edges and associate geometry with topology, refer to [Using the TopologicalObjects](CAATobTetra.md)). 
+---
+  2. Create a new edge with an opposite direction (for more information on how to create edges and associate geometry with topology, refer to [Using the TopologicalObjects](CAATobTetra.md)).
 
          // Create a new edge
 2. Create a new edge with an opposite direction (for more information on how to create edges and associate geometry with topology, refer to [Using the TopologicalObjects](CAATobTetra.md)).
@@ -116,7 +116,7 @@ ReplEdg -> AddBoundingCell(EndVtx[1-k], NaturalSide[k], 0, OldEndPoec[1-k]);
          EndVtx[0] -> SetGeometryOnEdge(ReplEdg, CATSideRight, OldEndPoec[0]);
          EndVtx[1] -> SetGeometryOnEdge(ReplEdg, CATSideLeft,  OldEndPoec[1]);
 
----  
+---
 EndVtx[0] -> SetGeometryOnEdge(ReplEdg, CATSideRight, OldEndPoec[0]);
 EndVtx[1] -> SetGeometryOnEdge(ReplEdg, CATSideLeft,  OldEndPoec[1]);
   3. Replace the old edge with the new edge in the duplicated loop by adding a new edge and removing the old one.
@@ -131,30 +131,30 @@ CATLONG32 Rank = duplicatedLoop -> GetCellRank(duplicatedEdge, &ori);
          // Remove the old edge
 CATLONG32 Rank = duplicatedLoop -> GetCellRank(duplicatedEdge, &ori);
 duplicatedLoop -> InsertEdge(ReplEdg, Rank, -ori);
-         duplicatedLoop -> RemoveCell(duplicatedEdge); 
+         duplicatedLoop -> RemoveCell(duplicatedEdge);
 
-  4. Invert the matter side with respect to the face 
+  4. Invert the matter side with respect to the face
 
          CATSide curside = piEdge->GetSideOnFace(piFace) ;  // the previous side
 
          // Invert the side
 4. Invert the matter side with respect to the face
 CATSide curside = piEdge->GetSideOnFace(piFace) ;  // the previous side
-         if(curside  ==  CATSideRight) 
+         if(curside  ==  CATSideRight)
 
          { newside = CATSideLeft;}
 CATSide curside = piEdge->GetSideOnFace(piFace) ;  // the previous side
 if(curside  ==  CATSideRight)
-         else if (curside  ==  CATSideLeft) 
+         else if (curside  ==  CATSideLeft)
 
          { newside = CATSideRight;}
-         ... 
+         ...
 ```vbscript
 if(curside  ==  CATSideRight)
 else if (curside  ==  CATSideLeft)
          ReplEdg -> SetSideOnFace(duplicatedFace, newside);
 
-  5. Reset the new edge orientation vs the underlying PCurve 
+  5. Reset the new edge orientation vs the underlying PCurve
 
          CATEdgeCurveIterator EdgeCurveIterator(ecrv);
          CATCurve * CurCurve = NULL;
@@ -169,7 +169,7 @@ CATPCurve  * CurPCurve = NULL;
 while ( ( CurCurve = EdgeCurveIterator.Next() )  )
          	ReplEdg -> SetGeometryOnFace(duplicatedFace,
          		newside,
-         		CurPCurve); 
+         		CurPCurve);
 
          		}
 
@@ -194,27 +194,27 @@ ofstream filetowrite(pFileName1, ios::binary ) ;
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
        filetowrite.close();
-     }	
+     }
 
      _//
      // Close the container
      //_
-     **::CATCloseCGMContainer**(piGeomFactory);  
+     **::CATCloseCGMContainer**(piGeomFactory);
 
----  
+---
 [Top]
 
 * * *
 
-References [1] |  [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-[Top]  
+References [1] |  [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)
+---|---
+[Top]
 
 * * *
 
-History Version: **1** [Jan 200 9 ] | Document created  
----|---  
-[Top]  
+History Version: **1** [Jan 200 9 ] | Document created
+---|---
+[Top]
 
 * * *
 

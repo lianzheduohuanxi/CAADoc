@@ -2,120 +2,69 @@
 title: "CAAAniMeshTranslation.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CAAScrBase", "CAAAniMeshTranslation", "CAAScdAniUseCases", "CATIA"]
+tags: ["CAAScrBase", "CATIA", "CAAAniMeshTranslation", "CAAScdAniUseCases"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshTranslationSource.htm"
-converted: "2026-05-11T11:06:32.425258"
+converted: "2026-05-11T11:27:02.550668"
 ---
 
-```
 ' COPYRIGHT DASSAULT SYSTEMES 2000
 
 ' ***********************************************************************
-
-' Purpose: Open an analysis document
-
-' Create Translation mesh
-
-' assign the Surface Mesh as support
-
-' specify the global specifications
-
-' Assumptions: Looks for surface.CATAnalysis in the directory and surface Analysis Connection
-
-' Author: bmw
-
-' Languages: VBScript
-
-' Locales: English 
-
-' CATIA Level: V5R16
-
+'   Purpose:      Open an analysis document
+'                 Create Translation mesh
+'                 assign the Surface Mesh as support
+'                 specify the global specifications
+'   Assumptions:   Looks for surface.CATAnalysis in the directory and surface Analysis Connection
+'   Author:       bmw
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R16
 ' ***********************************************************************
 
-Sub 
-CATMain()
+Sub CATMain()
 
 ' ----------------------------------------------------------- 
-
 ' Optional: allows to find the sample wherever it's installed
+  sDocPath=CATIA.SystemService.Environ("CATDocView")
 
- sDocPath=CATIA.SystemService.Environ("CATDocView")
-
- If 
-(Not CATIA.FileSystem.FolderExists(sDocPath))
- Then
-
- Err.Raise 9999,,"No Doc Path Defined"
-
- End If
-
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,,"No Doc Path Defined"
+    End If
 ' ----------------------------------------------------------- 
 
 ' Open the CATAnalysis Document
-
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Surface.CATAnalysis")
-
-Set
- oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ' Retrieve the analysis Manager 
-
-Set 
-oAnalysisManagar = oAnalysisDocument.Analysis
-
-Set 
-oAnalysisSet = oAnalysisManagar.AnalysisSets
+Set oAnalysisManagar = oAnalysisDocument.Analysis
+Set oAnalysisSet = oAnalysisManagar.AnalysisSets
 
 ' Retrieve the part document and product
-
-Set 
-oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
-
-Set 
-partDocument = oAnalysisLinkedDocuments.Item(1)
-
-Set 
-product = partDocument.Product
+Set oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
+Set partDocument = oAnalysisLinkedDocuments.Item(1)
+Set product = partDocument.Product
 
 'Retrieve the published line 
-
-Set 
-publications = product.Publications
-
-Set 
-pubDirection = publications.Item("Direction")
+Set publications = product.Publications
+Set pubDirection = publications.Item("Direction")
 
 ' Retrieve the analysis model
-
-Set 
-oAnalysisModels = oAnalysisManagar.AnalysisModels
-
-Set 
-oAnalysisModel = oAnalysisModels.Item(1)
+Set oAnalysisModels = oAnalysisManagar.AnalysisModels
+Set oAnalysisModel = oAnalysisModels.Item(1)
 
 'Retrieve the mesh manager and list of mesh parts
-
-Set 
-oAnalysisMeshManager = oAnalysisModel.MeshManager 
-
-Set 
-oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
-
-Set 
-surfMesh = oAnalysisMeshParts.Item("Surface Mesh.1")
+Set oAnalysisMeshManager = oAnalysisModel.MeshManager 
+Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+Set surfMesh = oAnalysisMeshParts.Item("Surface Mesh.1")
 
 'Create the reference of the surface mesh
-
-Set 
-reference = oAnalysisManagar.CreateReferenceFromObject(surfMesh)
+Set reference = oAnalysisManagar.CreateReferenceFromObject(surfMesh)
 
 'Add the mesh part to list of mesh parts
-
-Set 
-meshTrans = oAnalysisMeshParts.Add("MSHPartTranslation")
+Set meshTrans = oAnalysisMeshParts.Add("MSHPartTranslation")
 
 'Assign the reference to the mesh part
-
 meshTrans.AddSupportFromReference NOTHING, reference
 
 meshTrans.SetGlobalSpecification "TranslationValue", "-100.0 mm"
@@ -124,11 +73,89 @@ meshTrans.SetGlobalSpecification "Tolerance", "1.0 mm"
 meshTrans.SetGlobalSpecification "NbCopies", 3
 
 'Set the specification; the the direction of translation
-
 meshTrans.SetSpecificationFromPublication "Direction", product, pubDirection, 0
 
 'Update the mesh
+meshTrans.Update
 
+End Sub
+
+
+
+```vbscript
+' COPYRIGHT DASSAULT SYSTEMES 2000
+
+' ***********************************************************************
+'   Purpose:      Open an analysis document
+'                 Create Translation mesh
+'                 assign the Surface Mesh as support
+'                 specify the global specifications
+'   Assumptions:   Looks for surface.CATAnalysis in the directory and surface Analysis Connection
+'   Author:       bmw
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R16
+' ***********************************************************************
+
+Sub CATMain()
+
+
+' ----------------------------------------------------------- 
+' Optional: allows to find the sample wherever it's installed
+  sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,,"No Doc Path Defined"
+    End If
+' ----------------------------------------------------------- 
+
+
+
+' Open the CATAnalysis Document
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Surface.CATAnalysis&quot;)
+Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+
+' Retrieve the analysis Manager 
+Set oAnalysisManagar = oAnalysisDocument.Analysis
+Set oAnalysisSet = oAnalysisManagar.AnalysisSets
+
+' Retrieve the part document and product
+Set oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
+Set partDocument = oAnalysisLinkedDocuments.Item(1)
+Set product = partDocument.Product
+
+'Retrieve the published line 
+Set publications = product.Publications
+Set pubDirection = publications.Item("Direction")
+
+' Retrieve the analysis model
+Set oAnalysisModels = oAnalysisManagar.AnalysisModels
+Set oAnalysisModel = oAnalysisModels.Item(1)
+
+'Retrieve the mesh manager and list of mesh parts
+Set oAnalysisMeshManager = oAnalysisModel.MeshManager 
+Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+Set surfMesh = oAnalysisMeshParts.Item("Surface Mesh.1")
+
+'Create the reference of the surface mesh
+Set reference = oAnalysisManagar.CreateReferenceFromObject(surfMesh)
+
+'Add the mesh part to list of mesh parts
+Set meshTrans = oAnalysisMeshParts.Add("MSHPartTranslation")
+
+'Assign the reference to the mesh part
+meshTrans.AddSupportFromReference NOTHING, reference
+
+meshTrans.SetGlobalSpecification "TranslationValue", "-100.0 mm"
+meshTrans.SetGlobalSpecification "Condensation", 0
+meshTrans.SetGlobalSpecification "Tolerance", "1.0 mm"
+meshTrans.SetGlobalSpecification "NbCopies", 3
+
+'Set the specification; the the direction of translation
+meshTrans.SetSpecificationFromPublication "Direction", product, pubDirection, 0
+
+'Update the mesh
 meshTrans.Update
 
 End Sub

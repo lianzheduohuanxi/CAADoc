@@ -12,18 +12,18 @@ converted: "2026-05-11T17:33:48.523639"
 tags: ["CAAGMModelInterfaces", "CAAGMModelSphereCreation"]
 source_file: "Doc/online/CAACgmModel/CAACgmUcSphereCreation.htm"
 converted: "2026-05-11T17:33:48.523639"
-Creating a Frustum of a Sphere  
+Creating a Frustum of a Sphere
 
----  
+---
 converted: "2026-05-11T17:33:48.523639"
 Creating a Frustum of a Sphere
-Use Case  
+Use Case
 Abstract A frustum is a portion of a sphere intercepted between two parallels and two meridians.
 
     * API to be Used
     * Use Case Description
-    * References  
----  
+    * References
+---
 APIs to be Used A frustum of a sphere is defined by:
     * an axis
     * a radius
@@ -38,11 +38,11 @@ To create a frustum of a sphere, use the CATGeoFactory::CreateSphere method whic
     CATMathDirection D3(0.,0.,1.);
     CATMathPoint  mathpoint(5.,15.,50.);
     CATCartesianPoint * pCartP = piGeomFactory->CreateCartesianPoint (5.,15.,50.);
-    axis.Set(mathpoint,D1,D2,D3); 
+    axis.Set(mathpoint,D1,D2,D3);
 
     double startMeridianAngle = -0.2*CAT2PI;  // -72 deg
     double endMeridianAngle = 0.2*CAT2PI;     // 72 deg
-    double startParallelAngle = -0.20*CAT2PI; // -72 deg 
+    double startParallelAngle = -0.20*CAT2PI; // -72 deg
     double endParallelAngle = +0.10*CAT2PI;   // 36 deg
     double radius(25.);
 
@@ -52,25 +52,25 @@ To create a frustum of a sphere, use the CATGeoFactory::CreateSphere method whic
     //
     cout << "Sphere creation" << endl;
     CATSphere * pSphere =  piGeomFactory->CreateSphere(axis,radius,
-    startMeridianAngle, endMeridianAngle, startParallelAngle, endParallelAngle);  
+    startMeridianAngle, endMeridianAngle, startParallelAngle, endParallelAngle);
 
----  
+---
 CATSphere * pSphere =  piGeomFactory->CreateSphere(axis,radius,
 startMeridianAngle, endMeridianAngle, startParallelAngle, endParallelAngle);
-you get this result: Fig.1 Sphere: meridian and parallel angles ![Major start and end angles of a torus](images/CGM_sphere_0.png) 
+you get this result: Fig.1 Sphere: meridian and parallel angles ![Major start and end angles of a torus](images/CGM_sphere_0.png)
 
 you get this result: Fig.1 Sphere: meridian and parallel angles ![Major start and end angles of a torus](images/CGM_sphere_0.png)
-Meridian start angle: -72 deg   
-Meridian end angle: + 72 deg   
-Right-hand rule defines positive angles  
-First direction of the sphere axis is the  
-angle reference |  Parallel start angle: -72 deg   
-Parallel end angle: + 36 deg   
-Positive angles: sphere axis direction.  
+Meridian start angle: -72 deg
+Meridian end angle: + 72 deg
+Right-hand rule defines positive angles
+First direction of the sphere axis is the
+angle reference |  Parallel start angle: -72 deg
+Parallel end angle: + 36 deg
+Positive angles: sphere axis direction.
 
-References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
+References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
 
-[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)  
-[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)  
-History Version: **1** [Sept 2012] | Document created  
+[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)
+[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)
+History Version: **1** [Sept 2012] | Document created
 ---|---

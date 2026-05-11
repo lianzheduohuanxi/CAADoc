@@ -12,7 +12,7 @@ converted: "2026-05-11T17:33:47.309649"
 tags: ["CATIA", "CATIMmiResultFreeze", "CATImmENOVIAProvider", "CATImmCAAServices"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R17SP1NewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.309649"
-CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R17 SP1  
+CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R17 SP1
 
 * * *
 
@@ -29,11 +29,11 @@ The following are the new CAA V5R17 SP1 C++ Authorized APIs, compared with CAA V
 
 * * *
 
-History Version: **1** [Aug 2006] | Document created  
----|---  
-[Top]  
+History Version: **1** [Aug 2006] | Document created
+---|---
+[Top]
 
 * * *
 
-_Copyright © 1999-2006, Dassault Systèmes. All rights reserved._  
+_Copyright © 1999-2006, Dassault Systèmes. All rights reserved._
 Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)

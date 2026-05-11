@@ -11,20 +11,20 @@ converted: "2026-05-11T17:31:51.261386"
 ---
 # Machining
 
-| 
+|
 ## 3 Axis Surface Machining
 
-| 
+|
 ### Customizing the Surface Machining Operation Editor
 
-_Customize default operation tab pages_  
----|---|---  
-Use Case  
+_Customize default operation tab pages_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
 
-This article discusses the CAASmiUserOperationUI use case. It explains how to customize strategy, tool and macros tab pages of the surface machining operation editor. This paper accompanies the _Surface Machining Operation Sample_ [1], but it can be used for any Manufacturing Activities.  
+This article discusses the CAASmiUserOperationUI use case. It explains how to customize strategy, tool and macros tab pages of the surface machining operation editor. This paper accompanies the _Surface Machining Operation Sample_ [1], but it can be used for any Manufacturing Activities.
 
   * **What You Will Learn With This Use Case**
   * **The CAASmiUserOperationUI Use Case**
@@ -35,7 +35,7 @@ This article discusses the CAASmiUserOperationUI use case. It explains how to cu
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
@@ -59,15 +59,15 @@ CAASmiUserOperationUI is a use case of the CAASurfaceMachiningItf.edu framework 
 CAASmiUserOperationUI is a use case of the CAASurfaceMachiningItf.edu framework that illustrates Surface Machining capabilities. It is a part of the sample described in the technical article [1].
 This use case customizes three tab pages of the **CAASmgOperation** editing panel:
 
-  1. CAASmgOperation has 1 strategy parameter 
+  1. CAASmgOperation has 1 strategy parameter
 
 ![](images/CAASmiOperationUIStrategy.jpg)
 
-  2. CAASmgOperation has 2 macros parameters 
+  2. CAASmgOperation has 2 macros parameters
 
 **![](images/CAASmiOperationUIMacros.jpg)**
 
-  3. CAASmgOperation has 2 allowed types of tool and an End Mill default tool: 
+  3. CAASmgOperation has 2 allowed types of tool and an End Mill default tool:
 
 ![](images/CAASmiOperationUITool.jpg)
 
@@ -79,11 +79,11 @@ This use case is a part of _Surface Machining Operation Sample_ [1]. You should 
 This use case is a part of _Surface Machining Operation Sample_ [1]. You should build all the modules of this sample at a time to be able to launch it [2].
 Don't forget to edit the interface dictionary located in:
 
-Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CNext\code\dictionary\`  
+Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CNext\code\dictionary\`
 
 Don't forget to edit the interface dictionary located in:
 Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CNext\code\dictionary\`
-Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`  
+Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed, and uncomment the appropriate lines by removing the '#' character.
 
@@ -93,11 +93,11 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed,
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed, and uncomment the appropriate lines by removing the '#' character.
 This use case is made of source files located in the CAASmiUserOperationUI.m module of the CAASurfaceMachiningItf.edu framework:
 
-Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CAASmiUserOperationUI.m`  
+Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CAASmiUserOperationUI.m`
 
 This use case is made of source files located in the CAASmiUserOperationUI.m module of the CAASurfaceMachiningItf.edu framework:
 Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CAASmiUserOperationUI.m`
-Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CAASmiUserOperationUI.m`  
+Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CAASmiUserOperationUI.m`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
@@ -122,33 +122,54 @@ To overload the strategy tab page, we should create an extension class that will
     // Tie the implementation to its interface
     #include "TIE_CATIMfgStrategyActivity.h"
     TIE_CATIMfgStrategyActivity( CAAESmiUserOperationStrategyEditor);
-    ...  
+    ...
 
----  
+---
 
 In _GetMainPanelEditor,_ we create a frame that contains the frame-editor of our strategy parameter "CAAStep"
 
       ...
 In _GetMainPanelEditor,_ we create a frame that contains the frame-editor of our strategy parameter "CAAStep"
       oFrame = new CATDlgFrame (iFather, "StrategyFrame", CATDlgGridLayout|CATDlgFraNoTitle);
+```vbscript
+```vbscript
       if (oFrame)
+
+```
+
+```
 
       {
         // Gets strategy parameter
 oFrame = new CATDlgFrame (iFather, "StrategyFrame", CATDlgGridLayout|CATDlgFraNoTitle);
+```vbscript
 if (oFrame)
+```
+
         CATIMfgActivityParameters * pActivityParameters = NULL;
         oRC = QueryInterface(IID_CATIMfgActivityParameters, (void**) &pActivityParameters);
+```vbscript
+```vbscript
         if (SUCCEEDED(oRC))
+
+```
+
+```
 
         {
 CATIMfgActivityParameters * pActivityParameters = NULL;
 oRC = QueryInterface(IID_CATIMfgActivityParameters, (void**) &pActivityParameters);
+```vbscript
 if (SUCCEEDED(oRC))
-          CATBaseUnknown_var spBaseParm = NULL_var; 
+```
+
+          CATBaseUnknown_var spBaseParm = NULL_var;
           oRC = pActivityParameters->FindElement("CAAStep",spBaseParm);
           CATICkeParamFrame_var spParamFrame (spBaseParm);
+```vbscript
           if (!!spParamFrame)
+
+```
 
           {
             ...
@@ -161,9 +182,9 @@ if (!!spParamFrame)
 
             ...
       }
-      ...  
+      ...
 
----  
+---
 
 [Top]
 #### Implementing CATIMacroEditorActivity
@@ -174,25 +195,40 @@ To overload the macros tab page, we should create an extension class that will i
     // Tie the implementation to its interface
     #include "TIE_CATIMfgMacroEditorActivity.h"
     TIE_CATIMfgMacroEditorActivity( CAAESmiUserOperationMacroEditor);
-    ...  
+    ...
 
----  
+---
 
 In _GetMainPanelEditor,_ we create a frame that contains frame-editors of our macros parameters "CAAToolAngle" and "CAAApproachDistance"
 
       ...
 In _GetMainPanelEditor,_ we create a frame that contains frame-editors of our macros parameters "CAAToolAngle" and "CAAApproachDistance"
       oFrame = new CATDlgFrame (iFather, "MacrosFrame", CATDlgGridLayout|CATDlgFraNoTitle);
+```vbscript
+```vbscript
       if (oFrame)
+
+```
+
+```
 
       {
         ...
         // CAAToolAngle
 oFrame = new CATDlgFrame (iFather, "MacrosFrame", CATDlgGridLayout|CATDlgFraNoTitle);
+```vbscript
+```vbscript
 if (oFrame)
         oRC = pActivityParameters->FindElement("CAAToolAngle",spBaseParm);
+```
+
+```
+
         CATICkeParamFrame_var spParamFrame (spBaseParm);
+```vbscript
         if (!!spParamFrame)
+
+```
 
         {
           ...
@@ -224,11 +260,11 @@ if (!!spParamFrame)
               pDlgFrame->SetGridConstraints( 1, 1, 1, 1, CATGRID_4SIDES);
 
       }
-      ...  
-     } 
-     ...  
+      ...
+     }
+     ...
 
----  
+---
 
 [Top]
 #### Implementing CATIMfgToolActivity
@@ -238,9 +274,9 @@ To customize tool tab page, we should create an extension class that will implem
     ...
     #include "TIE_CATIMfgToolActivity.h"
     TIE_CATIMfgToolActivity( CAAESmiUserOperationToolEditor);
-    ...  
+    ...
 
----  
+---
 
 In _GetAuthorizedToolTypeList,_ we set the types of allowed tools of our operation
 
@@ -255,7 +291,7 @@ HRESULT CAAESmiUserOperationToolEditor::GetAuthorizedToolTypeList (CATListOfCATU
 
      }
 
----  
+---
 
 In _CreateDefaultTool,_ we set the default tool of our operation
 
@@ -264,21 +300,30 @@ In _CreateDefaultTool,_ we set the default tool of our operation
       ...
           // Retrieves Resource Factory
 HRESULT CAAESmiUserOperationToolEditor::CreateDefaultTool (CATBaseUnknown_var & oTool)
+```vbscript
       if (!!spResourceContainer)
+
+```
 
       {
 ```vbscript
 if (!!spResourceContainer)
         CATIMfgResourceFactory * pResourceFactory = NULL;
         oRC = spResourceContainer->QueryInterface(IID_CATIMfgResourceFactory, (void**) &pResourceFactory);
+```vbscript
         if (SUCCEEDED(oRC))
+```
+
 ```
 
         {
           // Creates Default Tool
 CATIMfgResourceFactory * pResourceFactory = NULL;
 oRC = spResourceContainer->QueryInterface(IID_CATIMfgResourceFactory, (void**) &pResourceFactory);
+```vbscript
 if (SUCCEEDED(oRC))
+```
+
           CATUnicodeString ToolTypeToCreate = MfgEndMillTool;
           oTool = pResourceFactory->CreateResource(ToolTypeToCreate);
           pResourceFactory->Release();
@@ -295,12 +340,21 @@ pResourceFactory = NULL;
 if(!!oTool)
             CATIMfgTool * pMfgTool = NULL;
             oRC = oTool->QueryInterface(IID_CATIMfgTool, (void**) &pMfgTool);
+```vbscript
+```vbscript
             if (SUCCEEDED(oRC))
+
+```
+
+```
 
             {
 CATIMfgTool * pMfgTool = NULL;
 oRC = oTool->QueryInterface(IID_CATIMfgTool, (void**) &pMfgTool);
+```vbscript
 if (SUCCEEDED(oRC))
+```
+
               pMfgTool->SetDefaultValues();
               pMfgTool->SetDefaultName();
               pMfgTool->Release();
@@ -313,12 +367,21 @@ pMfgTool->Release();
 pMfgTool = NULL;
             CATIMfgActivity * pActivity = NULL;
             oRC = QueryInterface(IID_CATIMfgActivity, (void**) &pActivity);
+```vbscript
+```vbscript
             if (SUCCEEDED(oRC))
+
+```
+
+```
 
             {
 CATIMfgActivity * pActivity = NULL;
 oRC = QueryInterface(IID_CATIMfgActivity, (void**) &pActivity);
+```vbscript
 if (SUCCEEDED(oRC))
+```
+
               pActivity->SetDefaultTool(oTool);
               pActivity->Release();
               pActivity = NULL;
@@ -328,9 +391,9 @@ if (SUCCEEDED(oRC))
         }
       }
       ...
-    }  
+    }
 
----  
+---
 
 [Top]
 
@@ -344,20 +407,20 @@ This article provides an example on how to customize strategy, tool and macros t
 * * *
 ### References
 
-[1] | [Surface Machining Operation Sample Overview](../CAASmiTechArticles/CAASmiOperationSampleOverview.md)  
----|---  
-[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
-[3] | [Customizing Tool Editor for Drilling Tool](../CAAMaiUseCases/CAAMaiToolEditionCustomization.md)  
-[4] | [Managing Geometry with User Machining Features](CAASmiUserOperationWithUserMF.md)  
-[5] | [Managing Geometry with Machining Areas](CAASmiUserOperationWithMA.md)  
-[Top]  
+[1] | [Surface Machining Operation Sample Overview](../CAASmiTechArticles/CAASmiOperationSampleOverview.md)
+---|---
+[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)
+[3] | [Customizing Tool Editor for Drilling Tool](../CAAMaiUseCases/CAAMaiToolEditionCustomization.md)
+[4] | [Managing Geometry with User Machining Features](CAASmiUserOperationWithUserMF.md)
+[5] | [Managing Geometry with Machining Areas](CAASmiUserOperationWithMA.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Mar 2002] | Document created  
----|---  
-[Top]  
+Version: **1** [Mar 2002] | Document created
+---|---
+[Top]
 
 * * *
 

@@ -12,24 +12,24 @@ converted: "2026-05-11T17:33:49.314941"
 tags: ["CAAGMOperatorsSilhouette", "CATICGMTopSilhouette", "CAAGMOperatorsInterfaces"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcTopSilhouette.htm"
 converted: "2026-05-11T17:33:49.314941"
-Creating a Silhouette  
+Creating a Silhouette
 
----  
+---
 converted: "2026-05-11T17:33:49.314941"
 Creating a Silhouette
-Use Case  
+Use Case
 Abstract A silhouette is a two-dimensional representation of the shape of body as projected orthographically upon a planar screen. Portions of the projection that miss the screen are trimmed at its boundary.
 
     * Operator to be Used
     * Use Case Description
-    * References  
----  
+    * References
+---
 Abstract A silhouette is a two-dimensional representation of the shape of body as projected orthographically upon a planar screen. Portions of the projection that miss the screen are trimmed at its boundary.
-Operator to be Used To create a silhouette, use the CATICGMTopSilhouette operator found in GMOperatorsInterfaces. This operator has to be created by the CATCGMCreateTopSilhouette global function. Use Case Description The CAAGMOperatorsSilhouette.m module in CAAGMOperatorsInterfaces.edu illustrates how to create a silhouette. This use case is to be run with the Silhouette.NCGM input file which is delivered in CAAGMOperatorsInterfaces.edu/FunctionTests/InputData. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md).  
+Operator to be Used To create a silhouette, use the CATICGMTopSilhouette operator found in GMOperatorsInterfaces. This operator has to be created by the CATCGMCreateTopSilhouette global function. Use Case Description The CAAGMOperatorsSilhouette.m module in CAAGMOperatorsInterfaces.edu illustrates how to create a silhouette. This use case is to be run with the Silhouette.NCGM input file which is delivered in CAAGMOperatorsInterfaces.edu/FunctionTests/InputData. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md).
 
-With the input data below: Fig.1 Silhouette Operation: Input Data ![Silhouette Operation: Input data](images/CGM_silhouette_0.png)  
+With the input data below: Fig.1 Silhouette Operation: Input Data ![Silhouette Operation: Input data](images/CGM_silhouette_0.png)
 
----  
+---
 Operator to be Used To create a silhouette, use the CATICGMTopSilhouette operator found in GMOperatorsInterfaces. This operator has to be created by the CATCGMCreateTopSilhouette global function. Use Case Description The CAAGMOperatorsSilhouette.m module in CAAGMOperatorsInterfaces.edu illustrates how to create a silhouette. This use case is to be run with the Silhouette.NCGM input file which is delivered in CAAGMOperatorsInterfaces.edu/FunctionTests/InputData. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md).
 With the input data below: Fig.1 Silhouette Operation: Input Data ![Silhouette Operation: Input data](images/CGM_silhouette_0.png)
 and the code below:
@@ -46,19 +46,19 @@ CATICGMTopSilhouette* pSilhouetteOp = CATCGMCreateTopSilhouette(pGeomFactory, &t
     pSilhouetteOp->Release();
     pSilhouetteOp = NULL;
 
-    ...  
+    ...
 
----  
+---
 pSilhouetteOp->Release();
 pSilhouetteOp = NULL;
-you get this result: Fig.2 Result of Silhouette Operation ![Silhouette Operation: Output data](images/CGM_silhouette_1.png)  
+you get this result: Fig.2 Result of Silhouette Operation ![Silhouette Operation: Output data](images/CGM_silhouette_1.png)
 
----  
-References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)  
-[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)  
-[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.md)  
-[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.md)  
-History Version: **1** [May 2012] | Document created  
+---
+References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
+---|---
+[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)
+[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)
+[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.md)
+[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.md)
+History Version: **1** [May 2012] | Document created
 ---|---

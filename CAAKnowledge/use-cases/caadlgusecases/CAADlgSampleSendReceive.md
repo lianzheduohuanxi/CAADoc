@@ -2,76 +2,30 @@
 title: "Untitled"
 category: "use-case"
 module: "CAADlgUseCases"
-tags: ["CATImplementClass", "CAADlgModel", "CAADlgRemoveNotification", "CAADlgNotifAdd", "CAASysTechArticles", "CAADlgViewScreen", "CAADocStyleSheets", "CAADlgElement", "CAASysCallbackversusSendReceive", "CAADocRunSample", "CAADlgNotifRemove", "CAADlgAddNotification", "CATIA", "CAADocUseCases", "CAADlgContainer", "CAADlgErrorNotification", "CAADialog", "CAASysSendReceive", "CAADlgNotifError", "CAADlgSendReceive"]
+tags: ["CATIA", "CAADlgAddNotification", "CAASysTechArticles", "CAADocStyleSheets", "CAADlgNotifRemove", "CAADlgContainer", "CAADialog", "CAADlgRemoveNotification", "CAADlgErrorNotification", "CAADocUseCases", "CAADlgModel", "CAADlgNotifAdd", "CATImplementClass", "CAASysSendReceive", "CAADlgNotifError", "CAASysCallbackversusSendReceive", "CAADlgViewScreen", "CAADlgSendReceive", "CAADocRunSample", "CAADlgElement"]
 source_file: "Doc/online/CAADlgUseCases/CAADlgSampleSendReceive.htm"
-converted: "2026-05-11T11:06:33.009064"
+converted: "2026-05-11T11:27:02.790993"
 ---
-
-# 3D PLM Enterprise Architecture
- 
- 
-## Middleware Abstraction
- 
- 
-### []The Send/Receive Mechanism
- *Making commands collaborate*
- 
- 
- |Use Case
- 
 
 ---
 
- 
- 
-### Abstract
- 
-
-This article shows how to create and instantiate commands, and how
- notifications can be sent and received by commands.
- 
-
- 
-- [**What You Will Learn With This Use Case**]
- 
-- [**The CAADlgSendReceive Use Case**]
- 
-
- 
-- [What Does CAADlgSendReceive Do]
- 
-- [How to Launch CAADlgSendReceive]
- 
-- [Where to Find the CAADlgSendReceive Code]
- 
- 
- 
-- [**Step-by-Step**]
- 
-- [**In Short**]
- 
-- [**References**]
- 
- 
- 
-
 ---
 
-### []What You Will Learn With This Use Case
+### What You Will Learn With This Use Case
 
-This use case is intended to show you how the Send/Receive mechanism [[1]]
+This use case is intended to show you how the Send/Receive mechanism [1]
 works and how to use it in your own applications.
 
-[[Top]]
+[Top]
 
-### []The CAADlgSendReceive Case
+### The CAADlgSendReceive Case
 
 CAADlgSendReceive is a use case of the CAADialog.edu framework that
 illustrates CATIA System and Dialog frameworks capabilities.
 
-[[Top]]
+[Top]
 
-#### []What Does CAADlgSendReceive Do
+#### What Does CAADlgSendReceive Do
 
 This use case creates commands that build a command tree structure, create
 and send notifications, analyze them, and process them or ask the sending
@@ -81,11 +35,6 @@ send notifications are made of a model that has elements, such as points, lines,
 and so on. This model has a container as parent, and the container has the
 command selector as parent. The possibly active commands are a screen view and a
 plot view of the model and of its elements.
-
- Fig. 1: Command Diagram
- 
- |![](images/CAADlgSendReceive.gif)
- 
 
 The screen and plot views are instantiated without parent. Their default
 parent is then the command selector. The container is also instantiated with the
@@ -108,130 +57,42 @@ has requested the focus, and that is the last chance for the notification to be
 processed. The screen view and the plot view are the two commands that may have
 the focus and that request it in turn.
 
-[[Top]]
+[Top]
 
-#### []How to Launch CAADlgSendReceive
+#### How to Launch CAADlgSendReceive
 
 To launch CAADlgSendReceive, you will need to set up the build time
 environment, then compile CAADlgSendReceive along with its prerequisites, set up
-the run time environment, and then execute the use case [[2]].
+the run time environment, and then execute the use case [2].
 
-[[Top]]
+[Top]
 
-#### []Where to Find the CAADlgSendReceive Code
+#### Where to Find the CAADlgSendReceive Code
 
 The CAADlgSendReceive use case is made of a several classes located in the
 CAADlgSendReceive.m module of the CAADialog.edu framework:
 
- 
- |Windows
- |`InstallRootDirectory\CAADialog.edu\CAADlgSendReceive.m\`
- 
- 
- |Unix
- |`InstallRootDirectory/CAADialog.edu/CAADlgSendReceive.m/`
- 
-
 where `InstallRootDirectory` is the directory where the CAA CD-ROM
 is installed.
 
-[[Top]]
+[Top]
 
-### []Step-by-Step
+### Step-by-Step
 
 To create an event publisher, an event subscriber or listener, and a scenario
 to make them play together, there are four steps:
 
- 
- |#
- |Step
- |Where
- 
- 
- |[1]
- |Creating a Notification Class
- |*CAADlgNotifAdd* class
- 
- 
- |[2]
- |Sending a Notification
- |*CAADlgModel* class
- 
- 
- |[3]
- |Filtering Notifications
- |*CAADlgContainer* class
- 
- 
- |[4]
- |Taking the Focus
- |*CAADlgViewScreen* class
- 
- 
- |[5]
- |Making the Active Command React to Notifications
- |*CAADlgViewScreen* class
- 
- 
- |[6]
- |Returning the Added or Removed Object
- |*CAADlgModel* class
- 
+[Top]
 
-[[Top]]
-
-#### []Creating a Notification Class
+#### Creating a Notification Class
 
 The *CAADlgAddNotification* class is taken as example.
-
- 
- ********
-```
-#include "CATNotification.h"
-class CAADlgAddNotification: public 
-CATNotification
-
-{
- 
-CATDeclareClass
-;
- public:
- CAADlgAddNotification();
- virtual CAADlgAddNotification();
- private:
- CAADlgAddNotification(const CAADlgAddNotification&iObjectToCopy);
- CAADlgAddNotification & operator = (const CAADlgAddNotification &iObjectToCopy);
-};
-```
-
- 
- 
 
 A notification is a CAA V5 component. Its class C++-derives from the
 notification base class *CATNotification*. The `CATDeclareClass`
 macro makes *CAADlgAddNotification** *part of a component. The copy constructor
 and the assignment operator are set as private and are not implemented to prevent the compiler to create one as
 public, and thus prevent from illegal copies of the notification instances.
-
- 
- ********
-```
-#include "CAADlgAddNotification.h"
-
-CATImplementClass(CAADlgAddNotification, 
-Implementation
-, CATBaseUnknown,CATNull);
-
-CAADlgAddNotification::CAADlgAddNotification(): CATNotification(
-CATNotificationDeleteOn
-)
-{}
-CAADlgAddNotification::CAADlgAddNotification()
-{}
-```
-
- 
- 
 
 The `CATImplementClass` macro declares that *CAADlgAddNotification**
 *
@@ -241,43 +102,14 @@ if the second one is set to `Implementation`.
 
 The *CAADlgAddNotification** *class constructor use `CATNotificationDeleteOn
 `as argument for the *CATNotification* class constructor.` `It
-means that the notification will be automatically deleted by the system. [[3]] 
+means that the notification will be automatically deleted by the system. [3] 
 
-[[Top]]
+[Top]
 
-#### []Sending a Notification
+#### Sending a Notification
 
 The model sends notifications whenever an element is added to it, or removed
 from it. Let's take the adding example.
-
- 
- ********
-```
-void CAADlgModel::Add(CAADlgElement * iNewElement) 
-{
- if ( NULL != iNewElement )
- {
- ... // The element is successfully added
-
- CAADlgAddNotification * pAddNotification = new CAADlgAddNotification();
- 
-SendNotification
-(GetFather(), pAddNotification);
- pAddNotification = NULL;
- }
- else
- {
- CAADlgErrorNotification * pErrorNotification = new CAADlgErrorNotification(); 
- 
-SendNotification
-(GetFather(), pErrorNotification);
- pErrorNotification = NULL;
- }
-}
-```
-
- 
- 
 
 When an element is successfully added, a *CAADlgAddNotification* class
 instance is sent
@@ -287,36 +119,9 @@ Otherwise, an error notification is sent. This is an instance of the *CAADlgErro
 class. Each instance is deleted as soon as it is sent, and its pointer is set to
 `NULL`.
 
-[[Top]]
+[Top]
 
-#### []Filtering Notifications
-
- 
- ************
-```
-CATNotifPropagationMode CAADlgContainer::
-AnalyseNotification
-(CATCommand *iSending, 
- CATNotification *iReceive) 
-{
- if (iReceive->IsAKindOf("CAADlgNotifError"))
- {
- printf("The Command Container catches an error \n");
- return(
-CATNotifDontTransmitToFather
-);
- }
- else
- {
- return(
-CATNotifTransmitToFather
-);
- };
-}
-```
-
- 
- 
+#### Filtering Notifications
 
 The container traps only the notifications that are instances of *CAADlgNotifError*
 thanks to redefining the `AnalyseNotification` method of *CATCommand*.
@@ -327,23 +132,11 @@ notifications are of no interest for the container, and returning `CATNotifTrans
 requests the sending command to resend the notification to the container parent,
 namely the command selector.
 
-[[Top]]
+[Top]
 
-#### []Taking the Focus
+#### Taking the Focus
 
 The screen view command is taken as an example.
-
- 
- 
-```
-void CAADlgViewScreen::WantedFocus() 
-{
- RequestStatusChange(CATCommandMsgRequestSharedMode);
-}
-```
-
- 
- 
 
 The `WantedFocus` method requests that the *CAADlgViewScreen*
 instance be set as the active command using the `RequestStatusChange`
@@ -352,45 +145,12 @@ in shared mode, that is it pushes on the command stack the previous active
 command without deleting it. This previous command will then take the focus
 again when the *CAADlgViewScreen* instance will be deleted.
 
-[[Top]]
+[Top]
 
-#### []Making the Active Command React to Notifications
+#### Making the Active Command React to Notifications
 
 The active command also redefines the `AnalyseNotification`
 method. Here is the one of the screen view class.
-
- 
- ********
-```
-CATNotifPropagationMode CAADlgViewScreen::
-AnalyseNotification
-(CATCommand *iSending, 
- CATNotification *iReceive) 
-{
- if ( iReceive->IsAKindOf("CAADlgAddNotification") ||
- iReceive->IsAKindOf("CAADlgRemoveNotification") )
- {
- CAADlgElement *pElement= NULL;
- pElement = (CAADlgElement *)iSending->
-SendObject
-(CAADlgElement::ClassName(), iReceive);
-
- if ( NULL != pElement) 
- {
- pElement->Release(); 
- pElement = NULL ;
- return(CATNotifDontTransmitToFather);
- }
- else 
- return(CATNotifTransmitToFather);
- }
- else 
- return(CATNotifTransmitToFather);
-}
-```
-
- 
- 
 
 If the notification is of one of the expected types, the `SendObject`
 method is called to request the object that sends the notification to provide a
@@ -398,38 +158,12 @@ pointer to the object that was either added or removed. `SendObject`
 calls the `SendCommandSpecificObject` that must be redefined by the
 sending command.
 
-[[Top]]
+[Top]
 
-#### []Returning the Added or Removed Object
+#### Returning the Added or Removed Object
 
 Any command that sends notifications to state a model change can be asked to
 send a pointer to the object that changes the model. This is the role of `SendCommandSpecificObject`.
-
- 
- ****
-```
-void *CAADlgModel::
-SendCommandSpecificObject
-(const char *iObjectClassNeeded, 
- CATNotification *iReceived) 
-{
- void * pObjectToReturn = NULL;
-
- if ( iReceived->IsAKindOf("CAADlgAddNotification") || 
- iReceived->IsAKindOf("CAADlgRemoveNotification") ) 
- {
- if ( _pTheLastElementManipulated->IsAKindOf(iObjectClassNeeded) )
- {
- pObjectToReturn = _pTheLastElementManipulated;
- pObjectToReturn->AddRef();
- }
- } 
- return pObjectToReturn ;
-}
-```
-
- 
- 
 
 `SendCommandSpecificObject` is called using a class name and the
 pointer to the notification received. After testing if the notification is one
@@ -437,14 +171,14 @@ of those that are sent by the model, a pointer to the last object manipulated,
 that is the last added or removed object, is returned. Otherwise `NULL`
 is returned.
 
-`SendCommandSpecificObject` addrefs the sent object, and after a `SendObject`
+`SendCommandSpecificObject`  addrefs the sent object, and after a `SendObject`
  call the method releases the pointer.
 
-[[Top]]
+[Top]
 
 ---
 
-### []In Short
+### In Short
 
 The Send/Receive communication protocol enables commands to communicate using
 notifications that progress from one command to its parent in the command tree
@@ -455,47 +189,129 @@ tree structure, it is sent to the active command, that is, the one that has the
 focus. This command in turn analyzes the notification, and can ask the sending
 command to send the model object for which the notification was sent.
 
-[[Top]]
+[Top]
 
 ---
 
-### []References
-
- 
- |[1]
- |[The
- Send/Receive Communication Protocol]
- 
- 
- |[2]
- |[Building
- and Launching a CAA V5 Use Case]
- 
- 
- |[3]
- |[Callback
- versus Send/Receive Mechanism]
- 
- 
- |[[Top]]
- 
+### References
 
 ---
 
-### []History
-
- 
- |Version: **1** [May 2000]
- |Document created
- 
- 
- |Version: **2** [Feb 2004]
- |Document updated 
- 
- 
- |[[Top]]
- 
+### History
 
 ---
 
-*Copyright 2000, Dassault Systmes. All rights reserved.*
+*Copyright  2000, Dassault Systmes. All rights reserved.*
+
+
+
+```vbscript
+#include &quot;CATNotification.h&quot;
+class CAADlgAddNotification: public CATNotification
+{
+  CATDeclareClass;
+  public:
+    CAADlgAddNotification();
+    virtual CAADlgAddNotification();
+  private:
+    CAADlgAddNotification(const CAADlgAddNotification&amp;iObjectToCopy);
+    CAADlgAddNotification &amp; operator = (const CAADlgAddNotification &amp;iObjectToCopy);
+};
+```
+
+```vbscript
+#include &quot;CAADlgAddNotification.h&quot;
+
+CATImplementClass(CAADlgAddNotification, Implementation, CATBaseUnknown,CATNull);
+
+CAADlgAddNotification::CAADlgAddNotification(): CATNotification(CATNotificationDeleteOn)
+{}
+CAADlgAddNotification::CAADlgAddNotification()
+{}
+```
+
+```vbscript
+void CAADlgModel::Add(CAADlgElement * iNewElement) 
+{
+  if ( NULL != iNewElement )
+  {
+    ... // The element is successfully added
+
+     CAADlgAddNotification * pAddNotification = new CAADlgAddNotification();
+     SendNotification(GetFather(), pAddNotification);
+     pAddNotification = NULL;
+  }
+  else
+  {
+     CAADlgErrorNotification * pErrorNotification = new CAADlgErrorNotification();     
+     SendNotification(GetFather(), pErrorNotification);
+     pErrorNotification = NULL;
+  }
+}
+```
+
+```vbscript
+CATNotifPropagationMode CAADlgContainer::AnalyseNotification(CATCommand      *iSending, 
+                                                             CATNotification *iReceive) 
+{
+  if (iReceive-&gt;IsAKindOf(&quot;CAADlgNotifError&quot;))
+  {
+      printf(&quot;The Command Container catches an error \n&quot;);
+      return(CATNotifDontTransmitToFather);
+  }
+  else
+  {
+    return(CATNotifTransmitToFather);
+  };
+}
+```
+
+```vbscript
+void CAADlgViewScreen::WantedFocus() 
+{
+  RequestStatusChange(CATCommandMsgRequestSharedMode);
+}
+```
+
+```vbscript
+CATNotifPropagationMode CAADlgViewScreen::AnalyseNotification(CATCommand      *iSending, 
+                                                              CATNotification *iReceive) 
+{
+  if ( iReceive-&gt;IsAKindOf(&quot;CAADlgAddNotification&quot;) ||
+       iReceive-&gt;IsAKindOf(&quot;CAADlgRemoveNotification&quot;) )
+  {
+    CAADlgElement *pElement= NULL;
+    pElement = (CAADlgElement *)iSending-&gt;SendObject(CAADlgElement::ClassName(), iReceive);
+
+    if ( NULL != pElement) 
+    {
+      pElement-&gt;Release(); 
+      pElement = NULL ;
+      return(CATNotifDontTransmitToFather);
+      }
+    else 
+      return(CATNotifTransmitToFather);
+  }
+  else 
+    return(CATNotifTransmitToFather);
+}
+```
+
+```vbscript
+void *CAADlgModel::SendCommandSpecificObject(const char      *iObjectClassNeeded, 
+                                             CATNotification *iReceived) 
+{
+  void * pObjectToReturn = NULL;
+
+  if ( iReceived-&gt;IsAKindOf(&quot;CAADlgAddNotification&quot;) || 
+       iReceived-&gt;IsAKindOf(&quot;CAADlgRemoveNotification&quot;) ) 
+  {
+    if ( _pTheLastElementManipulated-&gt;IsAKindOf(iObjectClassNeeded) )
+    {
+      pObjectToReturn = _pTheLastElementManipulated;
+      pObjectToReturn-&gt;AddRef();
+    }
+  } 
+  return pObjectToReturn ;
+}
+```

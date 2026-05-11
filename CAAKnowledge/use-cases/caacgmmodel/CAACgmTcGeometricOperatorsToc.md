@@ -9,11 +9,11 @@ converted: "2026-05-11T17:33:48.085262"
 ```
 
 ---
-#   
+#
 
----  
+---
 converted: "2026-05-11T17:33:48.085262"
-This section introduces the geometric operators.  
+This section introduces the geometric operators.
 
----  
+---
 In this section:

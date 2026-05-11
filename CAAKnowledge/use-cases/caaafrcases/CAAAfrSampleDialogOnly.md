@@ -11,20 +11,20 @@ converted: "2026-05-11T17:17:55.713101"
 ---
 # 3D PLM Enterprise Architecture
 
-| 
+|
 ## User Interface - Command
 
-| 
+|
 ### Creating a Command that Consists in a Dialog Window
 
-_Creating a command without states_  
----|---|---  
-Use Case  
+_Creating a command without states_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
 
-This article shows how to create a command without states using a single dialog box. 
+This article shows how to create a command without states using a single dialog box.
 
   * **What You Will Learn With This Use Case**
   * **The CAAAfrBoundingElementCmd Use Case**
@@ -35,12 +35,12 @@ This article shows how to create a command without states using a single dialog 
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
 
-This use case is intended to show how to use a dialog box as a standalone command without states. This command is an undefined command which is unknown by the command selector [1]. It means that it can run in parallel with the active command known by the command selector. 
+This use case is intended to show how to use a dialog box as a standalone command without states. This command is an undefined command which is unknown by the command selector [1]. It means that it can run in parallel with the active command known by the command selector.
 
 [Top]
 ### The CAAAfrBoundingElementCmd Use Case
@@ -51,25 +51,25 @@ CAAAfrBoundingElementCmd is a use case of the CAAApplicationFrame.edu framework 
 #### What Does CAAAfrBoundingElementCmd Do
 
 CAAAfrBoundingElementCmd is a use case of the CAAApplicationFrame.edu framework that illustrates the ApplicationFrame framework capabilities.
-CAAAfrBoundingElementCmd is a dialog command made up of a dialog box. It creates a bounding element, namely a sphere, for all or some of the geometric objects currently existing in the document. While computing the bounding sphere, it displays a progress bar. 
+CAAAfrBoundingElementCmd is a dialog command made up of a dialog box. It creates a bounding element, namely a sphere, for all or some of the geometric objects currently existing in the document. While computing the bounding sphere, it displays a progress bar.
 
 The dialog is as follows:
 
-![CAAAfrBoundingElt1.jpg ](images/CAAAfrBoundingElt1.jpg)  
----  
+![CAAAfrBoundingElt1.jpg ](images/CAAAfrBoundingElt1.jpg)
+---
 
 The document displayed includes points, lines, planes and circles. Select the CAAAfrBoundingElementCmd command.
 
-![CAAAfrBoundingElt2.jpg](images/CAAAfrBoundingElt2.jpg)  
----  
+![CAAAfrBoundingElt2.jpg](images/CAAAfrBoundingElt2.jpg)
+---
 
 The Model Bounding Sphere dialog box is displayed. You can check the options that take the points and lines  into account in the bounding sphere computing, and press Compute. This launches the bounding sphere computation. A progress bar is shown in the dialog box to show the progress status.
 
-![CAAAfrBoundingElt3.jpg](images/CAAAfrBoundingElt3.jpg)  
----  
+![CAAAfrBoundingElt3.jpg](images/CAAAfrBoundingElt3.jpg)
+---
 
 The Model Bounding Sphere dialog box is displayed. You can check the options that take the points and lines  into account in the bounding sphere computing, and press Compute. This launches the bounding sphere computation. A progress bar is shown in the dialog box to show the progress status.
-The bounding sphere is computed. The dialog box was moved to show the bounding sphere displayed using three of its great circles. You can create other elements or delete some elements and next click "Compute" : a new bounding sphere will be displayed. The command remains active as long as you don't click Close. 
+The bounding sphere is computed. The dialog box was moved to show the bounding sphere displayed using three of its great circles. You can create other elements or delete some elements and next click "Compute" : a new bounding sphere will be displayed. The command remains active as long as you don't click Close.
 
 The CAAAfrBoundingElementCmd use case explains how to create such command but does not explain
 
@@ -81,7 +81,10 @@ The CAAAfrBoundingElementCmd use case explains how to create such command but do
 
 See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The CAAGeometry Sample](../CAASysUseCases/CAASysCAAGeometryOverview.md)" use case for a detailed description of how this use case should be launched. For the specific scenario :
 
-Do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following: 
+```vbscript
+Do not type the module name on the command line, but type CNEXT instead. When the application is ready, do the following:
+
+```
 
   * Select Start->Infrastructure->CAA V5: Geometry Analysis
   * Create several geometric objects such as points, lines, planes, and so on, using the Basic Elements toolbar, or using the same commands in the Insert menu
@@ -93,15 +96,15 @@ Do not type the module name on the command line, but type CNEXT instead. When th
 The CAAAfrBoundingElementCmd use case is made of a single class named _CAAAfrBoundingElementCmd_ located in the CAAAfrGeoCommands.m module of the CAAApplicationFrame.edu framework:
 
 The CAAAfrBoundingElementCmd use case is made of a single class named _CAAAfrBoundingElementCmd_ located in the CAAAfrGeoCommands.m module of the CAAApplicationFrame.edu framework:
-Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeoCommands.m\`  
+Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeoCommands.m\`
 
 The CAAAfrBoundingElementCmd use case is made of a single class named _CAAAfrBoundingElementCmd_ located in the CAAAfrGeoCommands.m module of the CAAApplicationFrame.edu framework:
 Windows | `InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeoCommands.m\`
-Unix | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeoCommands.m/`  
+Unix | `InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeoCommands.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
-CAAAfrBoundingElementCmd is part of the "CAA V5: Geometry Analysis" workbench. 
+CAAAfrBoundingElementCmd is part of the "CAA V5: Geometry Analysis" workbench.
 
 [Top]
 ### Step-by-Step
@@ -125,12 +128,18 @@ The CAAAfrBoundingElementCmd class header file is as follows.
       **DeclareResource**(CAAAfrBoundingElementCmd, CATDlgDialog);
 
 class CAAAfrBoundingElementCmd : public CATDlgDialog
+```vbscript
       public :
+
+```
 
         CAAAfrBoundingElementCmd();
         virtual ~CAAAfrBoundingElementCmd();
 
+```vbscript
       private :
+
+```
 
         ...
 ```vbscript
@@ -152,11 +161,11 @@ private :
 
         ...
         **CATFrmEditor**      * _pEditor ;
-    };  
+    };
 
----  
+---
 
-This header file contains the following declaration: 
+This header file contains the following declaration:
 
   * The class derives from _CATDlgDialog_
   * The `DeclareResource` macro states that the resources of the _CAAAfrBoundingElementCmd_ command class are located in the CAAAfrBoundingElementCmd.CATNls file. If  resources were assigned to the _CATDlgDialog_ class, they would be concatenated with those of _CAAAfrBoundingElementCmd_
@@ -165,7 +174,7 @@ This header file contains the following declaration:
   * A callback, `EditorClose` , when the current document is closed
   * The editor, associated with the document, is kept to compare which one which sends a close notification.
 
-Now, there is the description of the source file. 
+Now, there is the description of the source file.
 
 [Top]
 #### Enabling the Launching of the Command from a Command Header
@@ -173,22 +182,22 @@ Now, there is the description of the source file. 
 The CAAAfrBoundingElementCmd command is launched from a _CATCommandHeader_ class instance [5]. In the CAA V5: Geometry Analysis" workbench, you have such line:
 
     ...
-    new CAAAfrGeoAnalysisWkbHeader("CAAAfrBoundingEltHdr" , 
-                                      "CAAAfrGeoCommands", 
-                                      "CAAAfrBoundingElementCmd" , 
+    new CAAAfrGeoAnalysisWkbHeader("CAAAfrBoundingEltHdr" ,
+                                      "CAAAfrGeoCommands",
+                                      "CAAAfrBoundingElementCmd" ,
                                       (void *) NULL);
-    ...  
+    ...
 
----  
+---
 
 So, to be able to create an instance of the command by its name you should have these two lines in its source file:
 
     ...
     #include "**CATCreateExternalObject**.h"
     **CATCreateClass**(CAAAfrBoundingElementCmd);
-    ...  
+    ...
 
----  
+---
 
 [Top]
 #### Creating the Dialog Box Constructor
@@ -197,7 +206,7 @@ The CAAAfrBoundingElementCmd command is not seen by the command selector. Its st
 
     ...
     CAAAfrBoundingElementCmd::CAAAfrBoundingElementCmd()
-              :CATDlgDialog ((CATApplicationFrame::GetFrame())->GetMainWindow(), 
+              :CATDlgDialog ((CATApplicationFrame::GetFrame())->GetMainWindow(),
                               "CAAAfrBoundingElementId",
                               CATDlgGridLayout | **CATDlgWndBtnClose** )
     {
@@ -209,11 +218,11 @@ The CAAAfrBoundingElementCmd command is not seen by the command selector. Its st
        ...
        _pEditor = **CATFrmEditor::GetCurrentEditor**();
     }
-    ...  
+    ...
 
----  
+---
 
-The dialog window has the application main window as parent [7]. The `CATDlgGridLayout` style enables you to use the grid layout for its internal arrangement [8] and the `CATDlgWndBtnClose` style is one of the fourth style recommended. 
+The dialog window has the application main window as parent [7]. The `CATDlgGridLayout` style enables you to use the grid layout for its internal arrangement [8] and the `CATDlgWndBtnClose` style is one of the fourth style recommended.
 
 `_pEditor` is a data member which keeps the current editor when the command is launched. This data will be useful to check if the document that the end user want close is the document associated with this command- See the Managing the Lifecycle of the Command and of its Objects section.
 
@@ -229,9 +238,9 @@ The dialog window has the application main window as parent [7]. The `CATDlgGrid
          CATDlgLabel * pPointLineLabel = new CATDlgLabel(pPointLineHeaderFrame, "LabelPointLineId");
 
          ... See the code for the details
-    ...  
+    ...
 
----  
+---
   2. Arranging the dialog objects
 
     ...
@@ -246,12 +255,12 @@ pPointLineSep  ->SetGridConstraints(0,1,1,1,CATGRID_4SIDES|CATGRID_CST_HEIGHT);
          _// Show the window_
          SetVisibility(CATDlgShow);
 
-    ...  
+    ...
 
----  
+---
 _// Show the window_
 SetVisibility(CATDlgShow);
-  3. Declaring the callbacks associated with the dialog object  
+  3. Declaring the callbacks associated with the dialog object
 
          ...
 
@@ -263,21 +272,24 @@ SetVisibility(CATDlgShow);
                          (CATCommandMethod)&CAAAfrBoundingElementCmd::ClickClose,
                                      NULL);
 
-           ...  
+           ...
 
----  
+---
 
 NULL);
-The `ClickClose` method is executed whenever the dialog window is closed: by the Close button (`GetDiaCLOSENotification`)**** or the banner (`GetWindCloseNotification`). 
+The `ClickClose` method is executed whenever the dialog window is closed: by the Close button (`GetDiaCLOSENotification`)**** or the banner (`GetWindCloseNotification`).
 
   4. Declaring the callback for a document's closure
 
-This step is mandatory. If the end user closes the current document and the command is alive: it will not be automatically deleted once it is not seen by the command selector. So your command must set a callback when the document will send the "close" event. 
+This step is mandatory. If the end user closes the current document and the command is alive: it will not be automatically deleted once it is not seen by the command selector. So your command must set a callback when the document will send the "close" event.
 
     ...
 4. Declaring the callback for a document's closure
 This step is mandatory. If the end user closes the current document and the command is alive: it will not be automatically deleted once it is not seen by the command selector. So your command must set a callback when the document will send the "close" event.
+```vbscript
      if ( (NULL != _pEditor) && (NULL != **CATFrmLayout::GetCurrentLayout**()) )
+
+```
 
       {
          ::AddCallback(this,
@@ -295,11 +307,11 @@ CATFrmLayout::GetCurrentLayout(),
 ```
 
       }
-    ...  
+    ...
 
----  
+---
 
-Refer to the technical article [7] to understand the role of the unique _CATFrmLayout_ class instance. It is the object which sends the `CATFrmEditor::EDITOR_CLOSE_ENDED` notification. 
+Refer to the technical article [7] to understand the role of the unique _CATFrmLayout_ class instance. It is the object which sends the `CATFrmEditor::EDITOR_CLOSE_ENDED` notification.
 
 [Top]
 #### Managing the Lifecycle of the Command and of its Objects
@@ -320,33 +332,36 @@ The command can be deleted for two reasons:
 
       **RequestDelayedDestruction**();
 
-    }  
+    }
 
----  
+---
 
 In this case, the `ClickClose` method is called. It hides the dialog box and requests the dialog box to be deleted.
 
-  * When the document is closed: 
+  * When the document is closed:
 
 In this case, the `ClickClose` method is called. It hides the dialog box and requests the dialog box to be deleted.
     void CAAAfrBoundingElementCmd::**EditorClose**(CATCallbackEvent  iEvent, void  * iFrom,
                                                   CATNotification * iNotification,
                                                   CATSubscriberData iClientData,
-                                                  CATCallback       iCallBack ) 
+                                                  CATCallback       iCallBack )
 
     {
 void CAAAfrBoundingElementCmd::**EditorClose**(CATCallbackEvent  iEvent, void  * iFrom,
 CATNotification * iNotification,
 CATSubscriberData iClientData,
 CATCallback       iCallBack )
+```vbscript
        if ( _pEditor == **iFrom** )
+
+```
 
        {
           **RequestDelayedDestruction**();
        }
-    }  
+    }
 
----  
+---
 
 The unique _CATFrmLayout_ class instance sends a "`EDITOR_CLOSE_ENDED"` notification when anything document is closed. So the `EditorClose`**** method is called.  It is necessary to check that it is the "good" editor before closing the window. `iFrom` is the editor associated with the document which is closing. If `iFrom` is the good document the dialog box deletion is requested.
 
@@ -354,7 +369,7 @@ The destructor, as usual, releases the data members and set NULL the data member
 
 The unique _CATFrmLayout_ class instance sends a "`EDITOR_CLOSE_ENDED"` notification when anything document is closed. So the `EditorClose`**** method is called.  It is necessary to check that it is the "good" editor before closing the window. `iFrom` is the editor associated with the document which is closing. If `iFrom` is the good document the dialog box deletion is requested.
 The destructor, as usual, releases the data members and set NULL the data member pointers. In addition, the current destructor must delete the callback on the _CATFrmLayout_ :
-    CAAAfrBoundingElementCmd::~CAAAfrBoundingElementCmd() 
+    CAAAfrBoundingElementCmd::~CAAAfrBoundingElementCmd()
 
     {
       // releases the data members and set NULL the data member pointers
@@ -365,41 +380,41 @@ The destructor, as usual, releases the data members and set NULL the data member
        }
 
        _pEditor = NULL ;
-    }  
+    }
 
----  
+---
 
-![](../CAAIcons/images/warning.gif)If the command uses interactive objects such as the ISO, HSO, PSO objects [9], in the destructor you must not remove any objects from this interactive objects. The _CATFrmEditor_ which manages them has already made it. But if the window is closed by the end user, you must remove the objects in the `ClickClose` method. 
+![](../CAAIcons/images/warning.gif)If the command uses interactive objects such as the ISO, HSO, PSO objects [9], in the destructor you must not remove any objects from this interactive objects. The _CATFrmEditor_ which manages them has already made it. But if the window is closed by the end user, you must remove the objects in the `ClickClose` method.
 
 [Top]
 
 * * *
 ### In Short
 
-This use case shows how to create a command without state that consists only in a dialog window and that in addition, is not known by the command selector. 
+This use case shows how to create a command without state that consists only in a dialog window and that in addition, is not known by the command selector.
 
 [Top]
 
 * * *
 ### References
 
-[1] | [The CAA Command Model](../CAADegTechArticles/CAADegCommandModel.md)  
----|---  
-[2] | [Creating an Interruptible Task](CAAAfrSampleProgressTask.md)  
-[3] | [Creating Contextual Menus in a State Dialog Command](../CAADegUseCases/CAADegSampleCtxMenu.md)  
-[5] | [The Command Headers](../CAAAfrTechArticles/CAAAfrCommandHeaders.md)  
-[6] | [Dialog Programmer's Guide](../CAADlgTechArticles/CAADlgProgrammerGuide.md)  
-[7] | [Understanding the Application Frame Layout](../CAAAfrTechArticles/CAAAfrLayoutV5.md)  
-[8] | [Arranging the Dialog Objects Using the Grid Layout](../CAADlgTechArticles/CAADlgGridLayout.md)  
-[9] | [Application Frame Overview](../CAAAfrTechArticles/CAAAfrOverview.md)  
+[1] | [The CAA Command Model](../CAADegTechArticles/CAADegCommandModel.md)
+---|---
+[2] | [Creating an Interruptible Task](CAAAfrSampleProgressTask.md)
+[3] | [Creating Contextual Menus in a State Dialog Command](../CAADegUseCases/CAADegSampleCtxMenu.md)
+[5] | [The Command Headers](../CAAAfrTechArticles/CAAAfrCommandHeaders.md)
+[6] | [Dialog Programmer's Guide](../CAADlgTechArticles/CAADlgProgrammerGuide.md)
+[7] | [Understanding the Application Frame Layout](../CAAAfrTechArticles/CAAAfrLayoutV5.md)
+[8] | [Arranging the Dialog Objects Using the Grid Layout](../CAADlgTechArticles/CAADlgGridLayout.md)
+[9] | [Application Frame Overview](../CAAAfrTechArticles/CAAAfrOverview.md)
 
 * * *
 ### History
 
-Version: **1** [Jan 2000] | Document created  
----|---  
-Version: **2** [Fev 2003] | Document updated  
-[Top]  
+Version: **1** [Jan 2000] | Document created
+---|---
+Version: **2** [Fev 2003] | Document updated
+[Top]
 
 * * *
 

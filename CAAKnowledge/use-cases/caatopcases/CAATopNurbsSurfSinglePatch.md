@@ -11,20 +11,20 @@ converted: "2026-05-11T17:31:50.734376"
 ---
 # Geometric Modeler
 
-| 
+|
 ## Topology
 
-| 
+|
 ### Creating a Single Patch NURBS Surface
 
-_How to create and dress a single patch NURBS_  
----|---|---  
-Use Case  
+_How to create and dress a single patch NURBS_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
 
-A NURBS can be dressed by using the CATTopSkin operator. You can do this operation either on a single patch or a multi patch NURBS. This article explains how to proceed for a single patch NURBS. 
+A NURBS can be dressed by using the CATTopSkin operator. You can do this operation either on a single patch or a multi patch NURBS. This article explains how to proceed for a single patch NURBS.
 
   * **What You Will Learn With This Use Case**
   * **The CAATopNurbsSurfSinglePatch Use Case**
@@ -35,7 +35,7 @@ A NURBS can be dressed by using the CATTopSkin operator. You can do this operati
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
@@ -65,7 +65,10 @@ The CAATopNurbsSurfSinglePatch use case:
 To launch CAATopNurbsSurfSinglePatch , you will need to set up the build time environment, then compile CAATopNurbsSurfSinglePatch .m along with its prerequisites, set up the run time environment, and then execute the use case [1].
 
 To launch CAATopNurbsSurfSinglePatch , you will need to set up the build time environment, then compile CAATopNurbsSurfSinglePatch .m along with its prerequisites, set up the run time environment, and then execute the use case [1].
+```vbscript
 If you simply type CAATopNurbsSurfSinglePatch with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example:
+
+```
 
 With Windows CAATopNurbsSurfSinglePatch `e/`NurbsSurfSinglePatch `.NCGM`
 
@@ -79,11 +82,11 @@ This NCGM file can be displayed using the CAAGemBrowser use case.
 This NCGM file can be displayed using the CAAGemBrowser use case.
 The CAATopNurbsSurfSinglePatch use case is made of a main named CAATopNurbsSurfSinglePatch .cpp located in the CAATopNurbsSurfSinglePatch .m module of the CAATopologicalOperators.edu framework:
 
-Windows | `InstallRootDirectory\CAATopologicalOperators.edu\`CAATopNurbsSurfSinglePatch `.m\`  
+Windows | `InstallRootDirectory\CAATopologicalOperators.edu\`CAATopNurbsSurfSinglePatch `.m\`
 
 The CAATopNurbsSurfSinglePatch use case is made of a main named CAATopNurbsSurfSinglePatch .cpp located in the CAATopNurbsSurfSinglePatch .m module of the CAATopologicalOperators.edu framework:
 Windows | `InstallRootDirectory\CAATopologicalOperators.edu\`CAATopNurbsSurfSinglePatch `.m\`
-Unix | `InstallRootDirectory/CAATopologicalOperators.edu/`CAATopNurbsSurfSinglePatch `.m/`  
+Unix | `InstallRootDirectory/CAATopologicalOperators.edu/`CAATopNurbsSurfSinglePatch `.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
@@ -91,7 +94,7 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 ### Step-by-Step
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
-There are six steps in CAATopNurbsSurfSinglePatch.cpp: 
+There are six steps in CAATopNurbsSurfSinglePatch.cpp:
 
   1. Creating the geometry factory
   2. Creating the grid of poles
@@ -107,22 +110,25 @@ The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. 
 
 The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
     CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**() ;
-    if (NULL==piGeomFactory) return (1);  
+```vbscript
+    if (NULL==piGeomFactory) return (1);
 
----  
+```
+
+---
 
 [Top]
 #### Creating the grid of poles
 
-Before going any further, do not skip the warning below: 
-
-**warning** When creating a knot vector in CATIA, the number of knots to be specified in the CATKnotVector constructor is the number of knots **with different values**. The total number of nodes is deduced from the multiplicity array. Given this:  
-**Total** number of nodes (including nodes with same value) = number of poles + degree + 1  
 Before going any further, do not skip the warning below:
-Number of poles = sum of multiplicities - last multiplicity  
-Number of poles = sum of multiplicities - (degree + 1)  
 
----  
+**warning** When creating a knot vector in CATIA, the number of knots to be specified in the CATKnotVector constructor is the number of knots **with different values**. The total number of nodes is deduced from the multiplicity array. Given this:
+**Total** number of nodes (including nodes with same value) = number of poles + degree + 1
+Before going any further, do not skip the warning below:
+Number of poles = sum of multiplicities - last multiplicity
+Number of poles = sum of multiplicities - (degree + 1)
+
+---
 
 Number of poles = sum of multiplicities - last multiplicity
 Number of poles = sum of multiplicities - (degree + 1)
@@ -150,26 +156,35 @@ CATMathGridOfPoints gridOfPoints(nbPoleU,nbPoleV);
     // Display the control points
     //
 gridOfPoints.SetPoint(CATMathPoint( 0., 0., 0.),0,0);
+```vbscript
     for (int i = 0; i < nbPoleU; i++)
+
+```
 
         {
 ```vbscript
 for (int i = 0; i < nbPoleU; i++)
+```vbscript
             for (int j = 0; j < nbPoleV; j++)
+```
+
 ```
 
             {
 ```vbscript
 for (int i = 0; i < nbPoleU; i++)
+```vbscript
 for (int j = 0; j < nbPoleV; j++)
+```
+
                 CATMathPoint ptToBeDisplayed = gridOfPoints.GetPoint(i,j);
                 CATCartesianPoint* piCartPt = piGeomFactory->CreateCartesianPoint(ptToBeDisplayed);
 ```
 
             }
-        }  
+        }
 
----  
+---
 
 Displaying the control points allows you to check their position with respect to the NURBS.
 
@@ -189,9 +204,9 @@ Note that CATIA Version 5 does not support periodic NURBS. You can create a peri
     CATKnotVector NonUniformU(Degree,IsPeriodic,KnotsCount,Knots,
             Multiplicities,IndexOffset);
     CATKnotVector NonUniformV(Degree,IsPeriodic,KnotsCount,Knots,
-            Multiplicities,IndexOffset);__  
+            Multiplicities,IndexOffset);__
 
----  
+---
 
 [Top]
 #### Creating the NURBS Surface
@@ -199,9 +214,12 @@ Note that CATIA Version 5 does not support periodic NURBS. You can create a peri
 Prior to creating the NURBS, the control point weights are initialized.
 
 Prior to creating the NURBS, the control point weights are initialized.
-    long isRational=1;    
+    long isRational=1;
     double * aWeights=new double[nbPoleU*nbPoleV];
-    for (i = 0; i < nbPoleU*nbPoleV; i++) 
+```vbscript
+    for (i = 0; i < nbPoleU*nbPoleV; i++)
+
+```
 
       {
 long isRational=1;
@@ -215,29 +233,32 @@ for (i = 0; i < nbPoleU*nbPoleV; i++)
     //
 aWeights[i] = 1.;   // Initialize the control point weights
     CATNurbsSurface * piSurf1 = piGeomFactory->
-            CreateNurbsSurface(NonUniformU, NonUniformV,isRational,gridOfPoints,aWeights);  
+            CreateNurbsSurface(NonUniformU, NonUniformV,isRational,gridOfPoints,aWeights);
 
----  
+---
 
 CATNurbsSurface * piSurf1 = piGeomFactory->
 CreateNurbsSurface(NonUniformU, NonUniformV,isRational,gridOfPoints,aWeights);
-Then the (3,3) control point weight is modified. 
+Then the (3,3) control point weight is modified.
 
-    // Assign a weight value (80) to the (3,3) poles 
+    // Assign a weight value (80) to the (3,3) poles
     //
-    piSurf1->SetOneWeight(3,3,80);  
+    piSurf1->SetOneWeight(3,3,80);
 
----  
+---
 
 [Top]
 #### Creating the skin
 
 ```vbscript
+```vbscript
 For how to create a skin, see the [CAATopOverview](CAATopOverview.md) use case[2]. You have to define the limits on which the skin is to be applied. In this use case, the maximum limits are specified.
 
 ```
 
-    // Retrieve the maximum limits 
+```
+
+    // Retrieve the maximum limits
     CATSurLimits surMaxLimits ;
 CATSurLimits surMaxLimits ;
     piSurf1->GetMaxLimits(surMaxLimits) ;
@@ -245,7 +266,7 @@ CATSurLimits surMaxLimits ;
     CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();
     CATTopData topdata(pConfig);
 
-    // Create the CATTopSkin operator to be applied to the max limits    
+    // Create the CATTopSkin operator to be applied to the max limits
 CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();
 CATTopData topdata(pConfig);
     CATTopSkin * pSkinOpe =::CATCreateTopSkin(piGeomFactory,
@@ -256,15 +277,15 @@ CATTopSkin * pSkinOpe =::CATCreateTopSkin(piGeomFactory,
             piSurf1,
 
             &surMaxLimits);
-    ...  
+    ...
 
----  
+---
 
-This is the skin you obtain (the green bullets are the control points): 
+This is the skin you obtain (the green bullets are the control points):
 
 ![](images/singlepatchrational.gif)
 
-this is to be compared with the equivalent non rational one:  
+this is to be compared with the equivalent non rational one:
 
 ![](images/singlepatchnonrational.gif)
 
@@ -299,14 +320,14 @@ ofstream filetowrite(pfileName, ios::binary ) ;
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
        filetowrite.close();
-     }	
+     }
 
      _//
      // Closes the container
-     //_	
-     **::CATCloseCGMContainer**(piGeomFactory);  
+     //_
+     **::CATCloseCGMContainer**(piGeomFactory);
 
----  
+---
 
 [Top]
 
@@ -315,9 +336,9 @@ ofstream filetowrite(pfileName, ios::binary ) ;
 
 Here are a few relations to remember when creating a NURBS
 
-**Total** number of nodes = number of poles + degree + 1  
+**Total** number of nodes = number of poles + degree + 1
 Here are a few relations to remember when creating a NURBS
-Number of poles = sum of multiplicities - last multiplicity  
+Number of poles = sum of multiplicities - last multiplicity
 Number of poles = sum of multiplicities - (degree + 1)
 
 [Top]
@@ -325,19 +346,19 @@ Number of poles = sum of multiplicities - (degree + 1)
 * * *
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-[2] | [Overview of the Topological Operators](CAATopOverview.md)  
-[3] | [About Nurbs](../CAAGobTechArticles/Nurbs.md)  
-[Top]  
----  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)
+---|---
+[2] | [Overview of the Topological Operators](CAATopOverview.md)
+[3] | [About Nurbs](../CAAGobTechArticles/Nurbs.md)
+[Top]
+---
 
 * * *
 ### History
 
-Version: **1** [Feb 2000] | Document created  
----|---  
-[Top]  
+Version: **1** [Feb 2000] | Document created
+---|---
+[Top]
 
 * * *
 

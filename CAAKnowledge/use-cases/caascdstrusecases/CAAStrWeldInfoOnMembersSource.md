@@ -2,182 +2,164 @@
 title: "Untitled"
 category: "use-case"
 module: "CAAScdStrUseCases"
-tags: ["CATIASfmMember", "CAAScrBase", "CAAStrWeldInfoOnMembers", "CATIA"]
+tags: ["CAAScrBase", "CATIA", "CAAStrWeldInfoOnMembers", "CATIASfmMember"]
 source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnMembersSource.htm"
-converted: "2026-05-11T11:06:32.503152"
+converted: "2026-05-11T11:27:02.585366"
 ---
 
-```
 '//============================================================================
-
 '// COPYRIGHT DASSAULT SYSTEMES 2013
-
 '//============================================================================
-
 '// Language="VBSCRIPT"
-
 '// Sample of macro for getting weld information on structural objects.
-
+'//============================================================================
+'// 03/21/2013  Creation                                                    BE9
 '//============================================================================
 
-'// 03/21/2013 Creation BE9
+Sub CATMain()
 
-'//============================================================================
-
-Sub 
-CATMain()
-
-Dim 
-ObjPart
- As 
-Part
-
-Set 
-ObjPart = CATIA.ActiveDocument.Part
- 
-
-Dim 
-FactoryObj
- As 
-SfmFactory
-
-Set 
-FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
- 
-
-Dim 
-ManagerObj
- As 
-SfmManager
-
-Set 
-ManagerObj = FactoryObj.GetManager
+Dim ObjPart As Part
+Set ObjPart = CATIA.ActiveDocument.Part
+   
+Dim FactoryObj As SfmFactory
+Set FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
+  
+Dim ManagerObj As SfmManager
+Set ManagerObj = FactoryObj.GetManager
 
 'RETRIEVING THE SUPERMembers
+Dim SuperMembers As References
+Set SuperMembers = ManagerObj.GetSuperMembers
 
-Dim 
-SuperMembers
- As 
-References
-
-Set 
-SuperMembers = ManagerObj.GetSuperMembers
-
-Dim 
-SuperMember1
- As 
-SfmMember
-
-Set 
-SuperMember1 = SuperMembers.Item(1)
+Dim SuperMember1 As SfmMember
+Set SuperMember1 = SuperMembers.Item(1)
 
 'Retrieving The Split Members
+Dim SplitMembers As References
+Set SplitMembers = SuperMember1.SplitProfiles
 
-Dim 
-SplitMembers
- As 
-References
+Dim SplitMember1 As Reference
+Set SplitMember1 = SplitMembers.Item(1)
 
-Set 
-SplitMembers = SuperMember1.SplitProfiles
-
-Dim 
-SplitMember1
- As 
-Reference
-
-Set 
-SplitMember1 = SplitMembers.Item(1)
-
-Set 
-SelctionObj = CATIA.ActiveDocument.Selection
-
+Set SelctionObj = CATIA.ActiveDocument.Selection
 'DECK Member
-
 SelctionObj.Add SplitMember1
-
-Dim 
-DeckMember1
- As 
-SfmMember
-
-Set 
-DeckMember1 = SelctionObj.FindObject("CATIASfmMember")
+Dim DeckMember1 As SfmMember
+Set DeckMember1 = SelctionObj.FindObject("CATIASfmMember")
 
 'Retrieving Super Plates
-
-Dim 
-SuperPlates
- As 
-References
-
-Set 
-SuperPlates = ManagerObj.GetSuperPlates
+Dim SuperPlates As References
+Set SuperPlates = ManagerObj.GetSuperPlates
 
 'Retrieving Operating Super Plate
-
-Dim 
-SuperPlate1
- As 
-SfmSuperPlate
-
-Set 
-SuperPlate1 = SuperPlates.Item(1)
+Dim SuperPlate1 As SfmSuperPlate
+Set SuperPlate1 = SuperPlates.Item(1)
 
 'Retrieving the SplitPlates of SuperPlate1
+Dim OperatingSplitPlateRefs As References
+Set OperatingSplitPlateRefs = SuperPlate1.SplitPlates
 
-Dim 
-OperatingSplitPlateRefs
- As 
-References
+Dim OperatingSplitPlate As Reference
+Set OperatingSplitPlate = OperatingSplitPlateRefs.Item(1)
 
-Set 
-OperatingSplitPlateRefs = SuperPlate1.SplitPlates
+Dim WeldsUC1 As SfmWelds
+Set WeldsUC1 = DeckMember1.GetWelds(OperatingSplitPlate)
 
-Dim 
-OperatingSplitPlate
- As 
-Reference
-
-Set 
-OperatingSplitPlate = OperatingSplitPlateRefs.Item(1)
-
-Dim 
-WeldsUC1
- As 
-SfmWelds
-
-Set 
-WeldsUC1 = DeckMember1.GetWelds(OperatingSplitPlate)
-
-Dim 
-WeldUC1
- As 
-SfmWeld
-
-Set 
-WeldUC1 = WeldsUC1.Item(1)
+Dim WeldUC1 As SfmWeld
+Set WeldUC1 = WeldsUC1.Item(1)
 
 ustrWeldTypeUC1 = WeldUC1.WeldType
 ustrAddedMaterialUC1 = WeldUC1.AddedMaterial
 ustrFitUpUC1 = WeldUC1.FitUp
 ustrEdgePrepUC1 = WeldUC1.EdgePreparation
 
-Dim 
-WeldsUC2
- As 
-SfmWelds
+Dim WeldsUC2 As SfmWelds
+Set WeldsUC2 = DeckMember1.GetWelds(Nothing)
 
-Set 
-WeldsUC2 = DeckMember1.GetWelds(Nothing)
+Dim WeldUC2 As SfmWeld
+Set WeldUC2 = WeldsUC2.Item(1)
 
-Dim 
-WeldUC2
- As 
-SfmWeld
+ustrWeldTypeUC2 = WeldUC2.WeldType
+ustrAddedMaterialUC2 = WeldUC2.AddedMaterial
+ustrFitUpUC2 = WeldUC2.FitUp
+ustrEdgePrepUC2 = WeldUC2.EdgePreparation
 
-Set 
-WeldUC2 = WeldsUC2.Item(1)
+End Sub
+
+
+```vbscript
+'//============================================================================
+'// COPYRIGHT DASSAULT SYSTEMES 2013
+'//============================================================================
+'// Language="VBSCRIPT"
+'// Sample of macro for getting weld information on structural objects.
+'//============================================================================
+'// 03/21/2013  Creation                                                    BE9
+'//============================================================================
+
+Sub CATMain()
+
+Dim ObjPart As Part
+Set ObjPart = CATIA.ActiveDocument.Part
+   
+Dim FactoryObj As SfmFactory
+Set FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
+  
+Dim ManagerObj As SfmManager
+Set ManagerObj = FactoryObj.GetManager
+
+'RETRIEVING THE SUPERMembers
+Dim SuperMembers As References
+Set SuperMembers = ManagerObj.GetSuperMembers
+
+Dim SuperMember1 As SfmMember
+Set SuperMember1 = SuperMembers.Item(1)
+
+'Retrieving The Split Members
+Dim SplitMembers As References
+Set SplitMembers = SuperMember1.SplitProfiles
+
+Dim SplitMember1 As Reference
+Set SplitMember1 = SplitMembers.Item(1)
+
+Set SelctionObj = CATIA.ActiveDocument.Selection
+'DECK Member
+SelctionObj.Add SplitMember1
+Dim DeckMember1 As SfmMember
+Set DeckMember1 = SelctionObj.FindObject("CATIASfmMember")
+
+'Retrieving Super Plates
+Dim SuperPlates As References
+Set SuperPlates = ManagerObj.GetSuperPlates
+
+'Retrieving Operating Super Plate
+Dim SuperPlate1 As SfmSuperPlate
+Set SuperPlate1 = SuperPlates.Item(1)
+
+'Retrieving the SplitPlates of SuperPlate1
+Dim OperatingSplitPlateRefs As References
+Set OperatingSplitPlateRefs = SuperPlate1.SplitPlates
+
+Dim OperatingSplitPlate As Reference
+Set OperatingSplitPlate = OperatingSplitPlateRefs.Item(1)
+
+
+Dim WeldsUC1 As SfmWelds
+Set WeldsUC1 = DeckMember1.GetWelds(OperatingSplitPlate)
+
+Dim WeldUC1 As SfmWeld
+Set WeldUC1 = WeldsUC1.Item(1)
+
+ustrWeldTypeUC1 = WeldUC1.WeldType
+ustrAddedMaterialUC1 = WeldUC1.AddedMaterial
+ustrFitUpUC1 = WeldUC1.FitUp
+ustrEdgePrepUC1 = WeldUC1.EdgePreparation
+
+Dim WeldsUC2 As SfmWelds
+Set WeldsUC2 = DeckMember1.GetWelds(Nothing)
+
+Dim WeldUC2 As SfmWeld
+Set WeldUC2 = WeldsUC2.Item(1)
 
 ustrWeldTypeUC2 = WeldUC2.WeldType
 ustrAddedMaterialUC2 = WeldUC2.AddedMaterial

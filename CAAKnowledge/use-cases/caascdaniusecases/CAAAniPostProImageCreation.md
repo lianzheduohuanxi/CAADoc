@@ -2,180 +2,29 @@
 title: "Generating Images"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CAAScrBase", "CAAInfLauchMacro", "CAAScdInfUseCases", "CAAAniPostProImageCreationSource", "CAAScdAniTechArticles", "CAAAniTocAnalysisDocument", "CAAAniPostProImageCreation", "CAAScdAniUseCases", "CATIA", "CAAScrJavaScript"]
+tags: ["CAAScrBase", "CATIA", "CAAScdAniUseCases", "CAAScrJavaScript", "CAAAniTocAnalysisDocument", "CAAScdInfUseCases", "CAAScdAniTechArticles", "CAAAniPostProImageCreationSource", "CAAInfLauchMacro", "CAAAniPostProImageCreation"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniPostProImageCreation.htm"
-converted: "2026-05-11T11:06:32.431714"
+converted: "2026-05-11T11:27:02.552985"
 ---
-
-## Analysis Modeler
- 
-## []Generating Images
 
 ---
 
- 
- 
- |![](../CAAScrBase/images/atarget.gif)
- 
-
-[]This use case shows you how to generate image under 
-		different Analysis Sets.
-		
-
-The macro opens an Analysis document which already contains a computed 
-		frequency case and images. Images are created under Restraints.1 and Frequency 
-		Case Solution.1.
-		
-
- 
- 
-
-![](images/ImageCreation.gif)
- 
-
- 
- 
- |![](../CAAScrBase/images/ainfo.gif)
- 
-
-[]CAAAniPostProImageCreation is launched in CATIA [[1]].
- No open document is needed.
- 
-
-[
-		CAAAniPostProImageCreation.catvbs] 
- is located in the CAAScdAniUseCases module. [Execute 
- macro] (Windows only).
- 
-
- 
- 
- |![](../CAAScrBase/images/ascenari.gif)
- 
-
-[]CAAAniPostProImageCreation includes the following steps:
- 
-
- 
-- [Prolog]
- 
-- [Retrieve Analysis Cases and Analysis Sets from 
-		the Analysis Document]
-		
-- [Create Image under different Analysis Sets]
-		
-- [Epilog]
- 
- 
-#### []Prolog
- 
- 
- 
-```
-...
-```
-
-			
-```
-' ----------------------------------------------------------- 
-
-' Optional: allows to find the sample wherever it's installed
-
- sDocPath=CATIA.SystemService.Environ("CATDocView")
-
- If 
-(Not CATIA.FileSystem.FolderExists(sDocPath))
- Then
-
- Err.Raise 9999,,"No Doc Path Defined"
-
- End If
-
-' ----------------------------------------------------------- 
-
-' Open the Analysis document
- 
-sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis")
-
-Set
- oAnalysisDocument = CATIA.Documents.Open(sFilePath)
-```
-
-			
-```
-...
-```
-
- 
+      
 
 Open the Analysis document. The Analysis document is retrieved in the documentation 
 		installation path, this path has already been stored in the `sDocPath` 
 		variable. In the collection of documents, two documents can be retrieved; 
 		the Analysis document and the Part document. 
 		
-#### []**Retrieve Analysis Cases and Analysis Sets 
+
+#### **Retrieve Analysis Cases and Analysis Sets 
 		from Analysis Document**
- 
- 
- 
-```
-...
-```
-
-			
-```
-' Retrieve the Analysis Manager
-
-Set
- oAnalysisManager = oAnalysisDocument.Analysis
-			
-
-' Retrieve the analysis model from the list of models
-
-Set
- oAnalysisModels = oAnalysisManager.AnalysisModels
-
-Set
- oAnalysisModel = oAnalysisModels.Item(1)
-```
-
-			
-```
-' Retrieve the analysis cases and the first analysis case
-
-Set 
-oAnalysisCases = oAnalysisModel.AnalysisCases
-
-Set 
-oAnalysisCase = oAnalysisCases.Item(1)
-```
-
-			
-```
-' Retrieve the analysis sets and analysis set by its name
-
-Set 
-oAnalysisSets = oAnalysisCase.AnalysisSets
-
-Set 
-oAnalysisSet = oAnalysisSets.Item("Frequency Case Solution.1", catAnalysisSetSearchAll)
-```
-
-			
-```
-' Get the list of images from analysis set 
-
-Set 
-oAnalysisImages = oAnalysisSet.AnalysisImages
-
-...
-```
-
+      
 		
 
 According to the general
 		[
-		Analysis Document] structure, this macro uses some standard 
+		Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm) structure, this macro uses some standard 
 		procedures to navigate or retrieve the required objects. First, from the **
 		Document**, we find the **Analysis Manager Object**, and the **
 		Analysis Model**.
@@ -186,63 +35,13 @@ The Analysis case is retrieved from list of cases by its index. The
 		model contains only one analysis case hence we pass 1 to the method *
 		Item.
 		*Otherwise we pass the appropriate index of the desired case if there 
-		are more Analysis cases. The Analysis  set is retrieved from the 
+		are more Analysis cases. The Analysis  set is retrieved from the 
 		list of Analysis sets by its name. The name is same as that appears in 
 		the interactive application.
- 
-#### []Create Image under different Analysis Sets
- 
- 
- 
-```
-...
-```
+      
 
-			
-```
-' Create image under Frequency Case Solution.1
-
-Set 
-analysisImage1 = oAnalysisImages.Add("Disp_Symbol", False, False, True)
-
-Set 
-analysisImage2 = oAnalysisImages.Add("Mesh_Deformed", True, False, True)
-```
-
-```
-' Retrieve the Restraint set from the list of analysis sets
-
-Set 
-analysisSet2 = oAnalysisSets.Item("Restraints.1", catAnalysisSetSearchAll)
-```
-
-			
-```
-' Retrieve list of Analysis Images from Restraint set
-
-Set 
-analysisEntities1 = analysisSet2.AnalysisEntities
-
-Set 
-analysisEntity1 = analysisEntities1.Item(1)
-
-Set 
-analysisImages2 = analysisEntity1.AnalysisImages
-```
-
-			
-```
-' Add new image under the Restraint set
-
-Set 
-analysisImage3 = analysisImages2.Add("Restraint", True, True, False)
-```
-
-			
-```
-...
-```
-
+#### Create Image under different Analysis Sets
+      
 		
 
 Images can be created under different Analysis sets, for example Analysis 
@@ -252,43 +51,132 @@ Images can be created under different Analysis sets, for example Analysis
 		or not (Boolean), 
 		to show the mesh or not (Boolean), duplicate (Boolean).
 		
-#### []Epilog
- 
- 
-```
-...
-End Sub
-...
-```
 
+#### Epilog
 		
 
 To run the macro interactively CATDocView 
 		environment variable must be defined.
- 
-  
+  
+    
+    
+       
 
 ![](../CAAScrBase/images/aendtask.gif)
 
-[[Top]]
+[Top]
 
 ---
 
-#### []In Short
+#### In Short
 
 This use case has shown how to generate images under different Analysis sets.
 
-[[Top]]
+[Top]
 
 ---
 
-#### []References
- 
- 
- |[1]|[Replaying 
- a Macro]
- |[[Top]]
+#### References
 
 ---
 
-*Copyright 2001, Dassault Systmes. All rights reserved.*
+*Copyright  2001, Dassault Systmes. All rights reserved.*
+
+ 
+
+ 
+
+ 
+
+ 
+
+```vbscript
+...
+```
+
+```vbscript
+&#39; ----------------------------------------------------------- 
+&#39; Optional: allows to find the sample wherever it&#39;s installed
+  sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,,&quot;No Doc Path Defined&quot;
+    End If
+&#39; ----------------------------------------------------------- 
+' Open the Analysis document 
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis&quot;)
+Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+```
+
+```vbscript
+...
+```
+
+```vbscript
+...
+```
+
+```vbscript
+' Retrieve the Analysis Manager
+Set oAnalysisManager = oAnalysisDocument.Analysis
+			
+' Retrieve the analysis model from the list of models
+Set oAnalysisModels = oAnalysisManager.AnalysisModels
+Set oAnalysisModel = oAnalysisModels.Item(1)
+```
+
+```vbscript
+' Retrieve the analysis cases and the first analysis case
+Set oAnalysisCases = oAnalysisModel.AnalysisCases
+Set oAnalysisCase = oAnalysisCases.Item(1)
+```
+
+```vbscript
+' Retrieve the analysis sets and analysis set by its name
+Set oAnalysisSets = oAnalysisCase.AnalysisSets
+Set oAnalysisSet = oAnalysisSets.Item("Frequency Case Solution.1", catAnalysisSetSearchAll)
+```
+
+```vbscript
+' Get the list of images from analysis set 
+Set oAnalysisImages = oAnalysisSet.AnalysisImages
+
+...
+```
+
+```vbscript
+...
+```
+
+```vbscript
+' Create image under Frequency Case Solution.1
+Set analysisImage1 = oAnalysisImages.Add("Disp_Symbol", False, False, True)
+Set analysisImage2 = oAnalysisImages.Add("Mesh_Deformed", True, False, True)
+```
+
+```vbscript
+' Retrieve the Restraint set from the list of analysis sets
+Set analysisSet2 = oAnalysisSets.Item("Restraints.1", catAnalysisSetSearchAll)
+```
+
+```vbscript
+' Retrieve list of Analysis Images from Restraint set
+Set analysisEntities1 = analysisSet2.AnalysisEntities
+Set analysisEntity1 = analysisEntities1.Item(1)
+Set analysisImages2 = analysisEntity1.AnalysisImages
+```
+
+```vbscript
+' Add new image under the Restraint set
+Set analysisImage3 = analysisImages2.Add("Restraint", True, True, False)
+```
+
+```vbscript
+...
+```
+
+```vbscript
+...
+End Sub
+...
+```

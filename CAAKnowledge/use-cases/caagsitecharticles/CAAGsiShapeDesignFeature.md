@@ -11,20 +11,20 @@ converted: "2026-05-11T17:31:50.673531"
 ---
 # Shape Design & Styling
 
-| 
+|
 ## Generative Shape Design
 
-| 
+|
 ### About Generative Shape Design Features
 
-_An introduction to wireframe & surfacic features_  
----|---|---  
-Technical Article  
+_An introduction to wireframe & surfacic features_
+---|---|---
+Technical Article
 
 * * *
 ### Abstract
 
-This article discusses the Shape Design Features. It will give you a general understanding of what is a Shape/Wireframe Feature, how to use it, and what is inside it. 
+This article discusses the Shape Design Features. It will give you a general understanding of what is a Shape/Wireframe Feature, how to use it, and what is inside it.
 
   * **What Is a Shape/Wireframe Feature?**
   * **What Are the Shape/Wireframe Features?**
@@ -43,12 +43,12 @@ This article discusses the Shape Design Features. It will give you a general und
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What Is a Shape/Wireframe Feature?
 
-The GSMInterfaces Framework exports some capability to create Shape/Wireframe Feature such as Points, Lines, Sweep, Extrapolation...  
+The GSMInterfaces Framework exports some capability to create Shape/Wireframe Feature such as Points, Lines, Sweep, Extrapolation...
 The GSMInterfaces Framework exports some capability to create Shape/Wireframe Feature such as Points, Lines, Sweep, Extrapolation...
 Those Objects are Geometrical Features (or Procedures) that have additional properties compare to Geometrical Objects like CATPoint, CATLine, CATPlane, etc.
 
@@ -61,14 +61,17 @@ Every basic Wireframe Feature is defined as a subtype of a Multitype Feature (e.
 [Top]
 ### What Are the Shape/Wireframe Features?
 
-Here is the list of all the Shape/Wireframe Features: Affinity, Blend, Boundary, Circle, Combine, Conic, Connect, Corner, Extract, Extrapol, Extremum, Extrude, Fill, Fillet, Inverse, Line, Plane, Split, Trim, Point, Healing, Helix, Intersect, Join, Loft, Near,Offset, Parallel, Project, Revolute, Rotate, Scaling, Spline, Sweep, Symmetry, Translate. 
+Here is the list of all the Shape/Wireframe Features: Affinity, Blend, Boundary, Circle, Combine, Conic, Connect, Corner, Extract, Extrapol, Extremum, Extrude, Fill, Fillet, Inverse, Line, Plane, Split, Trim, Point, Healing, Helix, Intersect, Join, Loft, Near,Offset, Parallel, Project, Revolute, Rotate, Scaling, Spline, Sweep, Symmetry, Translate.
 
 ```vbscript
-For Wireframe features here are the subtype of Point, Line, Plane, Circle: 
+```vbscript
+For Wireframe features here are the subtype of Point, Line, Plane, Circle:
 
 ```
 
-  * Point 
+```
+
+  * Point
     * PointCoord
     * PointOnSurface
     * PointOnPlane
@@ -77,7 +80,7 @@ For Wireframe features here are the subtype of Point, Line, Plane, Circle:
     * PointTangent
     * PointBetween
     * PointCKE
-  * Line 
+  * Line
     * LinePtPt
     * LinePtDir
     * LineAngle
@@ -85,7 +88,7 @@ For Wireframe features here are the subtype of Point, Line, Plane, Circle:
     * LineBiTangent
     * LineNormal
     * LineNormalCrv
-  * Plane 
+  * Plane
     * PlaneEquation
     * Plane3Points
     * Plane2Lines
@@ -97,7 +100,7 @@ For Wireframe features here are the subtype of Point, Line, Plane, Circle:
     * PlaneOffsetPt
     * PlaneAngle
     * PlaneMean
-  * Circle 
+  * Circle
     * CircleCtrRad
     * CircleCtrPt
     * Circle2PointsRad
@@ -105,7 +108,7 @@ For Wireframe features here are the subtype of Point, Line, Plane, Circle:
     * CircleBitangentRad
     * CircleBitangentPt
     * CircleTritangent
-  * and the Particular case of Sweep 
+  * and the Particular case of Sweep
     * SweepSegment
     * SweepCircle
     * SweepUnspec
@@ -136,7 +139,7 @@ Every CATIA V5 has the capability to be copied/cut and pasted in another locatio
 Every CATIA V5 has the capability to be copied/cut and pasted in another location. In that case, the default behavior is to keep the reference the feature has before being copied and it duplicates with itself the components it has. In order to change the reference the copy has, you have to edit the feature copy and re-valuate the input specifications it has.
 Every CATIA V5 feature has the capability to be replaced by another one. It has for effect, that every refering features that was pointing to the former feature will refer to the new one. In order to validate this change every referring feature is asked if the replacement is possible according to it. As Generative Shape Design Application allow sharing among features, i. e. several features can refers a same feature, this capability can lead up to surprise if the original design was now well done.
 
-A particular Sample explains how the Replace mechanism can be implemented onto a new feature [4]. 
+A particular Sample explains how the Replace mechanism can be implemented onto a new feature [4].
 
 [Top]
 ##### Edit Capability
@@ -177,7 +180,7 @@ A Shape/Wireframe feature uses an Operator to generate the topological result th
 ##### Multitype Features
 
 A Shape/Wireframe feature uses an Operator to generate the topological result that represents it in 3D View. These operators create Topological Objects linked together. Each Wireframe/Shape Feature has its own representation that is made of Topological Objects. Those operators are able to handle several dimension, for example the Extrude feature call a Hybrid Prism Operator that is able to extrude a Vertex, a Wire (a group of edge), or a Shell. The same Operator is called with different input for the Pad Feature. An example can be found for those topological operators [5].
-Several basic features are multitype features, that kind of feature enable the user to dynamically change its type, and thus change the way the feature is driven. You can change a Plane Equation into a Plane Offset without creating a new feature and replace the old one by the new one.  
+Several basic features are multitype features, that kind of feature enable the user to dynamically change its type, and thus change the way the feature is driven. You can change a Plane Equation into a Plane Offset without creating a new feature and replace the old one by the new one.
 There is a particular type shared by all multitype features that is explicit, this type is the equivalent of isolating a feature. The main advantage is to be able to change from explicit to a non-explicit (procedural) subtype, in order to link this feature back to other specifications.
 
 [Top]
@@ -190,7 +193,7 @@ Open Body group features, and the order in this Open Body is not significant (in
 
 An open body feature is like a bag whose responsibiliity is to aggregate other features, like other open bodies or shape design features (Wireframe, Skins and Transformations.) An open body has a structuring role that can be used to split the design of a complex part in several goup of connex design features. This enables any user to better understand the way a part has been designed.
 
- In CATIA V5 applications, the first open body feature is created under the part feature itself, either when the first shape design feature is created or when referencing external specifications (Multi-model link, V4 import capability, etc.)  
+ In CATIA V5 applications, the first open body feature is created under the part feature itself, either when the first shape design feature is created or when referencing external specifications (Multi-model link, V4 import capability, etc.)
 
 [Top]
 ### In Short
@@ -202,20 +205,20 @@ This article has demonstrated the difference between a Form feature and a Shape 
 * * *
 ### References
 
-[1] | [Creating an Open Body](CAAGsiCreateGSMTool.md)  
----|---  
-[2] | [Inserting a Shape Feature in an Open Body](CAAGsiInsertInProceduralView.md)  
-[3] | [Feature Modeler Overview](../CAAOsmTechArticles/CAAOsmOverview.md)  
-[4] | [Performing the Replace on a Mechanical Feature](../CAAMcaUseCases/CAAMcaReplace.md)  
-[5] | [Basic Topological Operators](../CAATopUseCases/CAATopOverview.md)  
-[Top]  
+[1] | [Creating an Open Body](CAAGsiCreateGSMTool.md)
+---|---
+[2] | [Inserting a Shape Feature in an Open Body](CAAGsiInsertInProceduralView.md)
+[3] | [Feature Modeler Overview](../CAAOsmTechArticles/CAAOsmOverview.md)
+[4] | [Performing the Replace on a Mechanical Feature](../CAAMcaUseCases/CAAMcaReplace.md)
+[5] | [Basic Topological Operators](../CAATopUseCases/CAATopOverview.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Apr 2000] | Document created  
----|---  
-[Top]  
+Version: **1** [Apr 2000] | Document created
+---|---
+[Top]
 
 * * *
 

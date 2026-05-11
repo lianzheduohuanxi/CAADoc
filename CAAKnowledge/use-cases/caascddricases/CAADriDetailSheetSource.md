@@ -15,25 +15,40 @@ converted: "2026-05-11T17:31:51.048875"
     Option Explicit
 
 ```vbscript
+```vbscript
+```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2001
     ' ***********************************************************************
     '   Purpose:      Creates constraints between assembly Parts using Publications
-    '   Assumptions:   Looks for CAADriDetailSheet.CATDrawing in the DocView   
-    '   Author: 
+    '   Assumptions:   Looks for CAADriDetailSheet.CATDrawing in the DocView
+    '   Author:
     '   Languages:    VBScript
-    '   Locales:      English 
-    '   CATIA Level:  V5R7 
+    '   Locales:      English
+    '   CATIA Level:  V5R7
     ' ***********************************************************************
 
 ```
 
-    Sub CATMain()
+```
+
+```
 
 ```vbscript
-        ' ----------------------------------------------------------- 
+    Sub CATMain()
+
+```
+
+```vbscript
+```vbscript
+```vbscript
+        ' -----------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
-        dim sDocPath As String 
+        dim sDocPath As String
         sDocPath=CATIA.SystemService.Environ("CATDocView")
+```
+
+```
+
 ```
 
 ```vbscript
@@ -42,57 +57,105 @@ converted: "2026-05-11T17:31:51.048875"
 
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
+```vbscript
         End If
 ```
 
+```
+
 ```vbscript
-        ' ----------------------------------------------------------- 
-        ' Open the Drawing document 
+```vbscript
+```vbscript
+        ' -----------------------------------------------------------
+        ' Open the Drawing document
         Dim oDoc As Document
         set oDoc = CATIA.Documents.Open(sDocPath & _
 ```
 
+```
+
+```
+
                      "\online\CAAScdDriUseCases\samples\CAADriDetailSheet.CATDrawing")
 
+```vbscript
+```vbscript
 ```vbscript
     ' ------------
     ' Get the sheets collection of the drawing
     ' ------------
 ```
 
+```
+
+```
+
 ```vbscript
     Dim oDrawingSheets As DrawingSheets
+```vbscript
     Set oDrawingSheets = oDoc.Sheets
 ```
 
+```
+
+```vbscript
+```vbscript
 ```vbscript
     ' ------------
     ' Add the detail sheet with a default name to the sheets collection of the drawing
     ' ------------
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' ------------
 ' Add the detail sheet with a default name to the sheets collection of the drawing
 ' ------------
-    MsgBox "Click OK to create the new sheet."
-    Dim oDrawingSheet As DrawingSheet
-    Set oDrawingSheet = oDrawingSheets.AddDetail("New Detail Sheet") 
 ```
 
+```
+
+    MsgBox "Click OK to create the new sheet."
+    Dim oDrawingSheet As DrawingSheet
+```vbscript
+    Set oDrawingSheet = oDrawingSheets.AddDetail("New Detail Sheet")
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
     ' ------------
     ' Activate the detail sheet
     ' ------------
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' ------------
 ' Activate the detail sheet
 ' ------------
-    MsgBox "Click OK to activate the new detail sheet."
-    oDrawingSheet.Activate 
+```
 
 ```
 
+    MsgBox "Click OK to activate the new detail sheet."
+    oDrawingSheet.Activate
+
+```
+
+```vbscript
     End Sub
+
+```

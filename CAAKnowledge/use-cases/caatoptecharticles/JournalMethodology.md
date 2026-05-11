@@ -11,15 +11,15 @@ converted: "2026-05-11T17:31:50.785311"
 ---
 # Geometric Modeler
 
-| 
+|
 ## Topology
 
-| 
+|
 ### Topological Journal Methodology
 
-_Tips and tricks to create a journal_  
----|---|---  
-Technical Article  
+_Tips and tricks to create a journal_
+---|---|---
+Technical Article
 
 * * *
 ### Abstract
@@ -57,17 +57,17 @@ This article is intended for those of you who have to create a topological journ
       * The Generated Files
       * The ERRORS and WARNINGS
 
----  
+---
 
 * * *
 ### Topology and Generic Naming
 
-In CATIA Version 5, a feature cannot refer directly to the topology that is used to specify it. The reason for this, is that the topology as well as the geometry can be deleted and rebuilt during the Update operation. Suppose you create a prism by extruding a simple spline. The spline is assigned a tag as well as the resulting cells of the prism. Modify the spline and update the prism, the tags will all be modified. To sort out this problem, a stable way to refer to parent objects was to be found. The generic naming is a description of the history of a cell that gets rid of tags and is stable when a feature is updated. 
+In CATIA Version 5, a feature cannot refer directly to the topology that is used to specify it. The reason for this, is that the topology as well as the geometry can be deleted and rebuilt during the Update operation. Suppose you create a prism by extruding a simple spline. The spline is assigned a tag as well as the resulting cells of the prism. Modify the spline and update the prism, the tags will all be modified. To sort out this problem, a stable way to refer to parent objects was to be found. The generic naming is a description of the history of a cell that gets rid of tags and is stable when a feature is updated.
 
 In CATIA Version 5, a feature cannot refer directly to the topology that is used to specify it. The reason for this, is that the topology as well as the geometry can be deleted and rebuilt during the Update operation. Suppose you create a prism by extruding a simple spline. The spline is assigned a tag as well as the resulting cells of the prism. Modify the spline and update the prism, the tags will all be modified. To sort out this problem, a stable way to refer to parent objects was to be found. The generic naming is a description of the history of a cell that gets rid of tags and is stable when a feature is updated.
 When you move the mouse cursor over a geometric object or select it interactively, CATIA creates a selection object (CATIBRepAccess). These CATIBRepAccess objects are not persistent, they are deleted whenever the document is updated. To keep trace of these objects, CATIA uses specific features called BRep features that store stable labels describing the topology. The generic name of a cell is constructed by reading the a "graph" that describes the Parent-Children links between the cells of different bodies. Building this graph requires information which is provided in the topological journal and is under the responsibility of CGM operators. For more information, take a look at the "Generic Naming Overview" article (Mechanical Modeler).
 
-In brief, a cell name looks something like this: "Cell dimension + Parent feature + Additional information". Keeping this in mind will help you understand the journal naming rules. 
+In brief, a cell name looks something like this: "Cell dimension + Parent feature + Additional information". Keeping this in mind will help you understand the journal naming rules.
 
 [Top]
 ### The CGM Journal Description
@@ -84,69 +84,69 @@ The only valid types of orders that can appear in a journal are the:
 
 ##### The Creation Order (CATCGMEvent::Creation)
 
-This order notifies that a new cell has been created. A new cell can be created from scratch or from one or several cells. An additional information intended to differentiate the cells can be added to a Creation order. In the example below, "info 0" is used to differentiate the side faces, "info 1" is used to specify a bottom face and "info 2" characterizes a top face. 
+This order notifies that a new cell has been created. A new cell can be created from scratch or from one or several cells. An additional information intended to differentiate the cells can be added to a Creation order. In the example below, "info 0" is used to differentiate the side faces, "info 1" is used to specify a bottom face and "info 2" characterizes a top face.
 
-**_Input body_** | **_Resulting body (After CATTopPrism)_**  
----|---  
+**_Input body_** | **_Resulting body (After CATTopPrism)_**
+---|---
 
-**_Report_**  
-`[Edge_1]->Creation[Face_C] info = 0  
-[Edge_2]->Creation[Face_D] info = 0  
-[Edge_3]->Creation[Face_E] info = 0  
-[Edge_4]->Creation[Face_F] info = 0  
-[Face_1]->Creation[Face_A] info = 1  
-[Face_1]->Creation[Face_B] info = 2`  
+**_Report_**
+`[Edge_1]->Creation[Face_C] info = 0
+[Edge_2]->Creation[Face_D] info = 0
+[Edge_3]->Creation[Face_E] info = 0
+[Edge_4]->Creation[Face_F] info = 0
+[Face_1]->Creation[Face_A] info = 1
+[Face_1]->Creation[Face_B] info = 2`
 ##### The Modification Order (CATCGMJournal::Modification)
 
 This order notifies that a given cell is the result of a modification of an input cell. The Modification order is to be used whenever the geometry is re-used with different limitations. Except in very few cases, a Modification order should have no additional information.
 
-**_Input Body_** | **_Resulting Body (After CATDynFillet)_**  
----|---  
+**_Input Body_** | **_Resulting Body (After CATDynFillet)_**
+---|---
 
-**_Report_**  
-`[Face_1]->Modification[Face_A]  
-[Face_1],[Face_2]->Creation[Face_C]  
-[Face_2]->Modification[Face_B]  
-[Face_3]->Modification[Face_D]  
-[Face_4]->Modification[Face_E]`  
+**_Report_**
+`[Face_1]->Modification[Face_A]
+[Face_1],[Face_2]->Creation[Face_C]
+[Face_2]->Modification[Face_B]
+[Face_3]->Modification[Face_D]
+[Face_4]->Modification[Face_E]`
 ##### The Deletion Order (CATCGMJournal::Deletion)
 
 This order notifies that a given cell belonging to an input body in Copy Mode is to be deleted in the result body.
 
-**_Input bodies_** | **_Resulting body (After CATHybSplit)_**  
----|---  
+**_Input bodies_** | **_Resulting body (After CATHybSplit)_**
+---|---
 
-**_Report_**  
-`[Face_1, Edge_1] -Creation -> [Vertex_A]  
-[Vertex_1] -Deletion  
-[Edge_1] -Modification -> [Edge_A]`  
+**_Report_**
+`[Face_1, Edge_1] -Creation -> [Vertex_A]
+[Vertex_1] -Deletion
+[Edge_1] -Modification -> [Edge_A]`
 ##### The Subdivision Order (CATCGMJournal::Subdivision)
 
 This order is a particular type of Modification that notifies that one cell of an input body in Copy Mode is modified into two or more cells into the resulting body.
 
-**_Input bodies_** | **_Resulting body (After CATHybSplit)_**  
----|---  
+**_Input bodies_** | **_Resulting body (After CATHybSplit)_**
+---|---
 
-**_Report_**  
-`[Edge_1, Edge_2] -Creation -> [Vertex_B]  
-[Edge_1, Edge_3] -Creation -> [Vertex_A]  
-[Edge_1] -Subdivision -> [Edge_A, Edge_B]`  
-##### 
+**_Report_**
+`[Edge_1, Edge_2] -Creation -> [Vertex_B]
+[Edge_1, Edge_3] -Creation -> [Vertex_A]
+[Edge_1] -Subdivision -> [Edge_A, Edge_B]`
+#####
 ##### The Absorption Order (CATCGMJournal::Absorption)
 
 This order is a particular type of Modification that notifies that two or more cells of an input body in Copy Mode are merged into one cell into the resulting body.
 
-**_Input bodies_** | **_Resulting body (After CATDynBoolean Add)_**  
----|---  
+**_Input bodies_** | **_Resulting body (After CATDynBoolean Add)_**
+---|---
 
-**_Report_**  
-`[Face_5] -Modification -> [Face_B]  
-[Face_6] -Deletion  
-[Face_8] -Modification -> [Face_F]  
-[Face_2] -Modification -> [Face_E]  
-[Face_3] -Modification -> [Face_D]  
-[Face_4] -Modification -> [Face_C]  
-[Face_1, Face_7] -Absorption -> [Face_A]`  
+**_Report_**
+`[Face_5] -Modification -> [Face_B]
+[Face_6] -Deletion
+[Face_8] -Modification -> [Face_F]
+[Face_2] -Modification -> [Face_E]
+[Face_3] -Modification -> [Face_D]
+[Face_4] -Modification -> [Face_C]
+[Face_1, Face_7] -Absorption -> [Face_A]`
 
 Note: In the figure above, Face_6 relies on Face_8. Face_8 is modified and becomes Face_F after the split operation while Face_6 is deleted.
 ##### The Keep Order (CATCGMJournal::Keep)
@@ -156,14 +156,14 @@ This order specifies that a cell belonging to an input body in No Copy mode is r
 
 In the example below, the CATHybBoundary operator generates a body that shares the bording edges with the input body which is in No Copy mode.
 
-**_Input Body_** | **_Resulting Body (After CATHybBoundary)_**  
----|---  
+**_Input Body_** | **_Resulting Body (After CATHybBoundary)_**
+---|---
 
-**_Report_**  
-`[Edge_1]->Keep  
-[Edge_2]->Keep  
-[Edge_3]->Keep  
-[Edge_4]->Keep`  
+**_Report_**
+`[Edge_1]->Keep
+[Edge_2]->Keep
+[Edge_3]->Keep
+[Edge_4]->Keep`
 #### The Cells Referred to in the Report
 ##### The Types of Cells
 
@@ -182,48 +182,48 @@ Only bording cells are backtracked in a journal. In summary:
 
 An information is a means to differentiate cells that have different dimensions and same parent features. A simple example is the circular cylinder. You cannot select the semi-cylindrical faces one-by-one because they carry the same name.
 
-**_Input body: two edges  
-_**![](images/sketchinit.jpg) 
----|---  
-![](images/cylinderFace1.jpg)  
-**_Sketch Report (closed conic) Both edges carry the same name_**  
----  
-`[] -Creation -> [Edge_1]  
-[] -Creation -> [Edge_2]`  
-**_Prism report - Face_C and Face_D cannot be differentiated_**  
-`[] -Creation -> [Face_B] Info=2  
-[] -Creation -> [Face_A] Info=1  
-[Edge_1] -Creation -> [Face_D] Info=0  
-[Edge_2] -Creation -> [Face_C] Info=0`  
+**_Input body: two edges
+_**![](images/sketchinit.jpg)
+---|---
+![](images/cylinderFace1.jpg)
+**_Sketch Report (closed conic) Both edges carry the same name_**
+---
+`[] -Creation -> [Edge_1]
+[] -Creation -> [Edge_2]`
+**_Prism report - Face_C and Face_D cannot be differentiated_**
+`[] -Creation -> [Face_B] Info=2
+[] -Creation -> [Face_A] Info=1
+[Edge_1] -Creation -> [Face_D] Info=0
+[Edge_2] -Creation -> [Face_C] Info=0`
 ##### Information in standard operators
 
 In standard operators, the value assigned to an "information" generally complies with the rule below:
 
-  * _**Info = 1**_  
+  * _**Info = 1**_
 In standard operators, the value assigned to an "information" generally complies with the rule below:
-Denotes a starting cell.  
-Examples:  
-      Starting/initial vertex of the helix created by CATCreateTopHelix.  
-      Starting edge of an extruded surface (CATTopExtrude).  
+Denotes a starting cell.
+Examples:
+      Starting/initial vertex of the helix created by CATCreateTopHelix.
+      Starting edge of an extruded surface (CATTopExtrude).
       Starting/Bottom face of a pad.
 
-  * **_Info = 2_**  
+  * **_Info = 2_**
 Starting/initial vertex of the helix created by CATCreateTopHelix.
 Starting edge of an extruded surface (CATTopExtrude).
 Starting/Bottom face of a pad.
-Denotes an ending cell.  
-Examples:  
-      Ending vertex of the helix created by CATCreateTopHelix.  
-      Ending edge of an extruded surface (CATTopExtrude).  
+Denotes an ending cell.
+Examples:
+      Ending vertex of the helix created by CATCreateTopHelix.
+      Ending edge of an extruded surface (CATTopExtrude).
       Top face of a pad.
 
-  * **_Info = 0_**  
+  * **_Info = 0_**
 Ending vertex of the helix created by CATCreateTopHelix.
 Ending edge of an extruded surface (CATTopExtrude).
 Top face of a pad.
-Denotes a lateral cell.  
-Examples:  
-       Lateral edges for a sweep.  
+Denotes a lateral cell.
+Examples:
+       Lateral edges for a sweep.
        Lateral faces for a pad.
 
 Rules related to additional information:
@@ -256,25 +256,25 @@ What are the specification criteria for the Copy/No Copy Mode?
 
 **_The CATTopCorner Example_**
 
-| **_Resulting Body_**  
----|---  
-**_Input bodies: two wires and a support  
+| **_Resulting Body_**
+---|---
+**_Input bodies: two wires and a support
 
-![](images/CornerTrimming.jpg)  
-**_Report without trimming  
-Support: No Copy - Wires: No Copy_**  
-`[Edge_1, Edge_2, Face_1] -Creation -> [Edge_A]  
-[] -Creation -> [Vertex_A] Info=1  
-[] -Creation -> [Vertex_B] Info=2`  
-**_Report with trimming  
-Support: No Copy - Wires: Copy_**  
-`[Vertex_2] -Deletion  
-[Vertex_3] -Deletion  
-[Edge_1, Edge_2, Face_1] -Creation -> [Edge_A]  
-[Edge_1] -Modification -> [Edge_B]  
-[Edge_2] -Modification -> [Edge_C]  
-[Vertex_1] -Modification -> [Vertex_D]  
-[Vertex_4] -Modification -> [Vertex_E]`  
+![](images/CornerTrimming.jpg)
+**_Report without trimming
+Support: No Copy - Wires: No Copy_**
+`[Edge_1, Edge_2, Face_1] -Creation -> [Edge_A]
+[] -Creation -> [Vertex_A] Info=1
+[] -Creation -> [Vertex_B] Info=2`
+**_Report with trimming
+Support: No Copy - Wires: Copy_**
+`[Vertex_2] -Deletion
+[Vertex_3] -Deletion
+[Edge_1, Edge_2, Face_1] -Creation -> [Edge_A]
+[Edge_1] -Modification -> [Edge_B]
+[Edge_2] -Modification -> [Edge_C]
+[Vertex_1] -Modification -> [Vertex_D]
+[Vertex_4] -Modification -> [Vertex_E]`
 
 [Top]
 ### An Example from the CAA Forum
@@ -287,20 +287,23 @@ Here above is a case that has been submitted through the CAA Forum by a develope
 
 #### The Default Journal for the Topological Operations after the Tass Call
 
+```vbscript
 If you dump the journal on the standard output, you obtain something like this:
 
-`[PLine_a, PLine_b, PLine_c, PLine_d] -Creation -> [Face_bottom] Info=1  
-[PLine_a, PLine_b, PLine_c, PLine_d] -Creation -> [Face_skin]  
-[PLine_d, PLine_c, PLine_b, PLine_a] -Creation -> [Face_top] Info=2  
-[PLine_a] -Creation -> [Edge1_skin]  
-[PLine_a] -Creation -> [Face1_lateral] Info=0  
-[PLine_b] -Creation -> [Edge2_skin]  
-[PLine_b] -Creation -> [Face2_lateral] Info=0  
-[PLine_c] -Creation -> [Edge3_skin]  
-[PLine_c] -Creation -> [Face3_lateral] Info=0  
-[PLine_d] -Creation -> [Edge4_skin]  
-[PLine_d] -Creation -> [Face4_lateral] Info=0`  
----  
+```
+
+`[PLine_a, PLine_b, PLine_c, PLine_d] -Creation -> [Face_bottom] Info=1
+[PLine_a, PLine_b, PLine_c, PLine_d] -Creation -> [Face_skin]
+[PLine_d, PLine_c, PLine_b, PLine_a] -Creation -> [Face_top] Info=2
+[PLine_a] -Creation -> [Edge1_skin]
+[PLine_a] -Creation -> [Face1_lateral] Info=0
+[PLine_b] -Creation -> [Edge2_skin]
+[PLine_b] -Creation -> [Face2_lateral] Info=0
+[PLine_c] -Creation -> [Edge3_skin]
+[PLine_c] -Creation -> [Face3_lateral] Info=0
+[PLine_d] -Creation -> [Edge4_skin]
+[PLine_d] -Creation -> [Face4_lateral] Info=0`
+---
 #### The Selectability Problems
 
 The customer complains because the faces of a prism generated from a sketch are not selectable one-by-one. Actually, the top and the bottom faces are selectable but not the lateral faces. Selecting one of the lateral faces highlights all the lateral faces.
@@ -317,13 +320,13 @@ All the report events are ignored by the naming mechanism because there are geom
 The journal checking results in a KO verdict. The warning file tells you there are cells of the resulting body that cannot be traced back.
 The remedy to this invalid default journal consists in creating a valid journal to be passed to CATIMfProcReport. In the journal below, you specify that the lateral faces of the prism are created from the sketch edges (the input specification). It is not mandatory to specify info=0 for the lateral faces but it is recommended as, further on in your application, you may need a key to distinguish the faces in the extrusion direction from the top/bottom ones. This journal is valid because all the cells of the resulting body can be traced back and they all have a different name.
 
-`[Edge1_sketch] -Creation -> [Face1_lateral] Info=0  
-[Edge2_sketch] -Creation -> [Face2_lateral] Info=0  
-[Edge3_sketch] -Creation -> [Face3_lateral] Info=0  
-[Edge4_sketch] -Creation -> [Face4_lateral] Info=0  
-[] -Creation -> [Face_top] Info=2  
-[] -Creation -> [Face_bottom] Info=1`  
----  
+`[Edge1_sketch] -Creation -> [Face1_lateral] Info=0
+[Edge2_sketch] -Creation -> [Face2_lateral] Info=0
+[Edge3_sketch] -Creation -> [Face3_lateral] Info=0
+[Edge4_sketch] -Creation -> [Face4_lateral] Info=0
+[] -Creation -> [Face_top] Info=2
+[] -Creation -> [Face_bottom] Info=1`
+---
 #### Tips to Create a New Journal
 
 Dump the default one (CAATopDumpJournal if you want to dump the journal on the standard output). Dumping the journal allows you retrieve all pieces of information to be re-injected in the journal to be created. Taking a look at the default journal above (the one invalid), the lateral faces appear in the journal and can be retrieved by scanning all the constructed objects with info=0.
@@ -349,46 +352,46 @@ Suppose you are chaining two operators, the first operator produces a journal wi
 
 _**Examples of rules (to name but a few)**_
 
-The initial set of events | is replaced with  
+The initial set of events | is replaced with
 
-`A-Modification->B  
+`A-Modification->B
 _**Examples of rules (to name but a few)**_
 The initial set of events | is replaced with
-C-Creation->B` | `C-Creation->B (`the creation order prevails`)`  
+C-Creation->B` | `C-Creation->B (`the creation order prevails`)`
 
-`A-Modification->B info 1  
+`A-Modification->B info 1
 The initial set of events | is replaced with
 C-Creation->B` | `C-Creation->B (`the creation order prevails`)`
-B-Modification->C info 2` | `A-Modification->C info 2`  
+B-Modification->C info 2` | `A-Modification->C info 2`
 
-`A-Modification->B  
+`A-Modification->B
 C-Creation->B` | `C-Creation->B (`the creation order prevails`)`
 B-Modification->C info 2` | `A-Modification->C info 2`
-B->Deletion` | `A->Deletion`  
+B->Deletion` | `A->Deletion`
 
-`A-Modification->B info1  
+`A-Modification->B info1
 B-Modification->C info 2` | `A-Modification->C info 2`
 B->Deletion` | `A->Deletion`
-C-Creation->D info2  
-B, D-Creation->E info3` | `A-Modification->B info1  
-C-Creation->D info2  
-A, C-Creation->E info1`  
-
-`A-Creation->A  
 C-Creation->D info2
 B, D-Creation->E info3` | `A-Modification->B info1
 C-Creation->D info2
 A, C-Creation->E info1`
-A-Modification->B` | `[A]-Modification->B`  
 
-`A-Creation->B info 1  
+`A-Creation->A
+C-Creation->D info2
+B, D-Creation->E info3` | `A-Modification->B info1
 C-Creation->D info2
 A, C-Creation->E info1`
 A-Modification->B` | `[A]-Modification->B`
-B-Modification->C info 2` | `A->Creation->C info 1 if info 1 not NULL  
-A->Creation->C info 2 if info 1 == NULL  
 
-`The info on the creation order prevails as long as it is not NULL.  
+`A-Creation->B info 1
+C-Creation->D info2
+A, C-Creation->E info1`
+A-Modification->B` | `[A]-Modification->B`
+B-Modification->C info 2` | `A->Creation->C info 1 if info 1 not NULL
+A->Creation->C info 2 if info 1 == NULL
+
+`The info on the creation order prevails as long as it is not NULL.
 
 [Top]
 ##### Dumping the journal
@@ -402,168 +405,168 @@ To check the journal, you must use the CAATopCheckForPart use case (CAATopologic
 To check the journal, you must use the CAATopCheckForPart use case (CAATopologicalOperators.edu).
 The CAATopCheckForPart use case generates two files:
 
-  1. the **_verdict_** file (argument four of the CAATopCheckForPart constructor) 
+  1. the **_verdict_** file (argument four of the CAATopCheckForPart constructor)
 
 This verdict file informs you about whether the journal to be checked is valid or invalid.
 
 A - If you ask for a detailed verdict file (argument six set to TRUE), the verdict is given for each category of rules to be checked. The verdict file looks something like this
 
-`Checking MyFeature  
+`Checking MyFeature
 
 A - If you ask for a detailed verdict file (argument six set to TRUE), the verdict is given for each category of rules to be checked. The verdict file looks something like this
-(1) - Mandatory  
-Checking that all cells in result body can be traced back  
-KO  
+(1) - Mandatory
+Checking that all cells in result body can be traced back
+KO
 
-(2)  
-Checking that all reported cells are of CATFace/CATEdge/CATVertex type  
-OK  
+(2)
+Checking that all reported cells are of CATFace/CATEdge/CATVertex type
+OK
 
-(3)  
-Checking that all reported cells are bording cells  
-OK  
+(3)
+Checking that all reported cells are bording cells
+OK
 
-(4)  
-Checking that cells with same parents & infos are not of different type  
-KO  
+(4)
+Checking that cells with same parents & infos are not of different type
+KO
 
-TOPOLOGICAL JOURNAL  
+TOPOLOGICAL JOURNAL
 
-[Edge_27]->Creation[Face_44] Info=1  
-[Edge_27]->Creation[Edge_53] Info=1  
-[Edge_27]->Creation[Edge_52] Info=2  
-[Vertex_25]->Creation[Edge_46] Info=4  
-[Vertex_26]->Creation[Edge_49] Info=3``  
+[Edge_27]->Creation[Face_44] Info=1
+[Edge_27]->Creation[Edge_53] Info=1
+[Edge_27]->Creation[Edge_52] Info=2
+[Vertex_25]->Creation[Edge_46] Info=4
+[Vertex_26]->Creation[Edge_49] Info=3``
 
-TOPOLOGICAL JOURNAL FOR FEATURE MyFeature KO`  
----  
+TOPOLOGICAL JOURNAL FOR FEATURE MyFeature KO`
+---
 
 TOPOLOGICAL JOURNAL FOR FEATURE MyFeature KO`
 The journal is displayed at the end of the verdict file only when the verdict is KO.
 
 B - If the argument six is set to FALSE, you will only get a restricted verdict file:
 
-`Checking MyFeature  
+`Checking MyFeature
 
-TOPOLOGICAL JOURNAL FOR FEATURE MyFeature KO`  
----  
+TOPOLOGICAL JOURNAL FOR FEATURE MyFeature KO`
+---
 
-  2. The detail file provides you with:  
+  2. The detail file provides you with:
 
      * more information on the ERRORS and possible WARNINGS.
      * the list of cells in the resulting body as well as in the operands.
 
 You get something like this:
 
-`Checking MyFeature  
+`Checking MyFeature
 
-DETAILED LIST OF ERRORS AND WARNINGS  
-
-*  
 DETAILED LIST OF ERRORS AND WARNINGS
-ERROR  
-In  
 
-[Edge_27]->Creation[Face_44] Info=1  
+*
+DETAILED LIST OF ERRORS AND WARNINGS
 ERROR
 In
-and  
 
-[Edge_27]->Creation[Edge_53] Info=1  
+[Edge_27]->Creation[Face_44] Info=1
 ERROR
 In
 and
-Cells with same parents and infos must not be of different type  
 
-*  
+[Edge_27]->Creation[Edge_53] Info=1
+ERROR
+In
+and
+Cells with same parents and infos must not be of different type
+
+*
 
 and
 Cells with same parents and infos must not be of different type
-ERROR  
-Cells in Copy mode not in the result body and not deleted  
-27 25 26  
+ERROR
+Cells in Copy mode not in the result body and not deleted
+27 25 26
 
-List of Bodies in Copy Mode  
-Body 28 - List of cells: 27 25 26  
+List of Bodies in Copy Mode
+Body 28 - List of cells: 27 25 26
 
-List of Bodies in No Copy Mode  
+List of Bodies in No Copy Mode
 
-Body Result  
-Body 29 - List of cells: 44 46 52 49 53  
+Body Result
+Body 29 - List of cells: 44 46 52 49 53
 
-TOPOLOGICAL JOURNAL FOR FEATURE MyFeature KO`  
+TOPOLOGICAL JOURNAL FOR FEATURE MyFeature KO`
 
----  
+---
 
 [Top]
 ##### The ERRORS and WARNINGS
 
-`WARNING  
-_Cell_x_ is not a bording cell - The order is ignored`  
----  
+`WARNING
 _Cell_x_ is not a bording cell - The order is ignored`
-This message is displayed along with the order which refers to the non bording cell and is issued whenever a reported cell is not a bording cell, no matter it is a parent cell or a created/modified cell. The order containing such a cell is simply ignored. Such a warning may or may not impede the journal validity. If there are other orders that allow a resulting cell to be backtracked, the journal can be valid. This warning is always associated with a KO result in the Step 3 ("`Checking that all reported cells are bording cells")`of the Verdict file.  
-
-`WARNING  
+---
 _Cell_x_ is not a bording cell - The order is ignored`
 This message is displayed along with the order which refers to the non bording cell and is issued whenever a reported cell is not a bording cell, no matter it is a parent cell or a created/modified cell. The order containing such a cell is simply ignored. Such a warning may or may not impede the journal validity. If there are other orders that allow a resulting cell to be backtracked, the journal can be valid. This warning is always associated with a KO result in the Step 3 ("`Checking that all reported cells are bording cells")`of the Verdict file.
-_Cell_x_ is not a CATFace, a CATEdge or a CATVertex - The order is ignored`  
-This message is displayed along with the order which refers to the invalid object and issued whenever a reported cell is not a CATFace, a CATEdge or a CATVertex, no matter it is a parent cell or a created/modified cell. The order containing such a cell is simply ignored. Such a warning may or may not impede the journal validity. If there are other orders that allow a resulting cell to be backtracked, the journal can be valid. This warning is always associated with a KO result in the Step 2 ("`Checking that all reported cells are of CATFace/CATEdge/CATVertex type")`of the Verdict file.  
 
-`WARNING  
+`WARNING
+_Cell_x_ is not a bording cell - The order is ignored`
 This message is displayed along with the order which refers to the non bording cell and is issued whenever a reported cell is not a bording cell, no matter it is a parent cell or a created/modified cell. The order containing such a cell is simply ignored. Such a warning may or may not impede the journal validity. If there are other orders that allow a resulting cell to be backtracked, the journal can be valid. This warning is always associated with a KO result in the Step 3 ("`Checking that all reported cells are bording cells")`of the Verdict file.
 _Cell_x_ is not a CATFace, a CATEdge or a CATVertex - The order is ignored`
 This message is displayed along with the order which refers to the invalid object and issued whenever a reported cell is not a CATFace, a CATEdge or a CATVertex, no matter it is a parent cell or a created/modified cell. The order containing such a cell is simply ignored. Such a warning may or may not impede the journal validity. If there are other orders that allow a resulting cell to be backtracked, the journal can be valid. This warning is always associated with a KO result in the Step 2 ("`Checking that all reported cells are of CATFace/CATEdge/CATVertex type")`of the Verdict file.
-The following cells are not bording cells`  
-Provides you with the **list** of cells that are not bording cells. Orders referring to such objects can potentially be the cause of an invalid journal. Either the order is useless and it is better to remove it from the journal, or it impedes the backtracking of a cell belonging to the resulting body.  
 
-`WARNING  
+`WARNING
+This message is displayed along with the order which refers to the non bording cell and is issued whenever a reported cell is not a bording cell, no matter it is a parent cell or a created/modified cell. The order containing such a cell is simply ignored. Such a warning may or may not impede the journal validity. If there are other orders that allow a resulting cell to be backtracked, the journal can be valid. This warning is always associated with a KO result in the Step 3 ("`Checking that all reported cells are bording cells")`of the Verdict file.
+_Cell_x_ is not a CATFace, a CATEdge or a CATVertex - The order is ignored`
 This message is displayed along with the order which refers to the invalid object and issued whenever a reported cell is not a CATFace, a CATEdge or a CATVertex, no matter it is a parent cell or a created/modified cell. The order containing such a cell is simply ignored. Such a warning may or may not impede the journal validity. If there are other orders that allow a resulting cell to be backtracked, the journal can be valid. This warning is always associated with a KO result in the Step 2 ("`Checking that all reported cells are of CATFace/CATEdge/CATVertex type")`of the Verdict file.
 The following cells are not bording cells`
 Provides you with the **list** of cells that are not bording cells. Orders referring to such objects can potentially be the cause of an invalid journal. Either the order is useless and it is better to remove it from the journal, or it impedes the backtracking of a cell belonging to the resulting body.
-The following objects are not of CATFace/CATEdge/CATVertex type.`  
-Provides you with a **list** of objects that are geometry or not appropriate topological objects. Orders referring to such objects can potentially be the cause of an invalid journal. Either the order is useless and it is better to remove it from the journal, or it impedes the backtracking of a cell belonging to the resulting body.  
 
-`WARNING  
+`WARNING
+This message is displayed along with the order which refers to the invalid object and issued whenever a reported cell is not a CATFace, a CATEdge or a CATVertex, no matter it is a parent cell or a created/modified cell. The order containing such a cell is simply ignored. Such a warning may or may not impede the journal validity. If there are other orders that allow a resulting cell to be backtracked, the journal can be valid. This warning is always associated with a KO result in the Step 2 ("`Checking that all reported cells are of CATFace/CATEdge/CATVertex type")`of the Verdict file.
+The following cells are not bording cells`
 Provides you with the **list** of cells that are not bording cells. Orders referring to such objects can potentially be the cause of an invalid journal. Either the order is useless and it is better to remove it from the journal, or it impedes the backtracking of a cell belonging to the resulting body.
 The following objects are not of CATFace/CATEdge/CATVertex type.`
 Provides you with a **list** of objects that are geometry or not appropriate topological objects. Orders referring to such objects can potentially be the cause of an invalid journal. Either the order is useless and it is better to remove it from the journal, or it impedes the backtracking of a cell belonging to the resulting body.
-_Cell_x_ does not belong to any input body in No Copy mode`  
-This warning applies to Keep orders. This message is displayed along with the order which refers to the kept cell. A cell is to be specified as kept when it is intended to be found in the resulting body while it belongs originally to a body in No Copy mode. If a cell is stated as kept while it does not belong to a body in No Copy mode, the order is meaningless and it is ignored.  
 
-`ERROR  
+`WARNING
+Provides you with the **list** of cells that are not bording cells. Orders referring to such objects can potentially be the cause of an invalid journal. Either the order is useless and it is better to remove it from the journal, or it impedes the backtracking of a cell belonging to the resulting body.
+The following objects are not of CATFace/CATEdge/CATVertex type.`
 Provides you with a **list** of objects that are geometry or not appropriate topological objects. Orders referring to such objects can potentially be the cause of an invalid journal. Either the order is useless and it is better to remove it from the journal, or it impedes the backtracking of a cell belonging to the resulting body.
 _Cell_x_ does not belong to any input body in No Copy mode`
 This warning applies to Keep orders. This message is displayed along with the order which refers to the kept cell. A cell is to be specified as kept when it is intended to be found in the resulting body while it belongs originally to a body in No Copy mode. If a cell is stated as kept while it does not belong to a body in No Copy mode, the order is meaningless and it is ignored.
-In  
 
-[Edge_27]->Creation[Face_44] Info=1  
+`ERROR
+Provides you with a **list** of objects that are geometry or not appropriate topological objects. Orders referring to such objects can potentially be the cause of an invalid journal. Either the order is useless and it is better to remove it from the journal, or it impedes the backtracking of a cell belonging to the resulting body.
 _Cell_x_ does not belong to any input body in No Copy mode`
 This warning applies to Keep orders. This message is displayed along with the order which refers to the kept cell. A cell is to be specified as kept when it is intended to be found in the resulting body while it belongs originally to a body in No Copy mode. If a cell is stated as kept while it does not belong to a body in No Copy mode, the order is meaningless and it is ignored.
 In
-and  
 
-[Edge_27]->Creation[Edge_53] Info=1  
+[Edge_27]->Creation[Face_44] Info=1
+_Cell_x_ does not belong to any input body in No Copy mode`
+This warning applies to Keep orders. This message is displayed along with the order which refers to the kept cell. A cell is to be specified as kept when it is intended to be found in the resulting body while it belongs originally to a body in No Copy mode. If a cell is stated as kept while it does not belong to a body in No Copy mode, the order is meaningless and it is ignored.
 In
 and
-Cells with same parents and infos must not be of different type`  
-The error above will not result in an invalid journal (in other words, if there are no other errors, the return value of the CAACheck method will be 0). Nevertheless, you must do your best to avoid such a message. This message is only displayed when related orders are not ignored . For more information, see the CAATopCheckGnKO.m and CAATopCheckGnOK.m use cases (CAATopologicalOperators.edu). They both illustrate how to create a journal in which naming rules are or are not satisfied.  
 
-`ERROR`  
-`Cells of the result body that cannot be traced back`  
-`48  
+[Edge_27]->Creation[Edge_53] Info=1
+In
+and
 Cells with same parents and infos must not be of different type`
 The error above will not result in an invalid journal (in other words, if there are no other errors, the return value of the CAACheck method will be 0). Nevertheless, you must do your best to avoid such a message. This message is only displayed when related orders are not ignored . For more information, see the CAATopCheckGnKO.m and CAATopCheckGnOK.m use cases (CAATopologicalOperators.edu). They both illustrate how to create a journal in which naming rules are or are not satisfied.
-52`  
-Provides you with the list of all the cells that cannot be traced back. This message is associated with KO in Step1 of the verdict file.  
 
-`ERROR`  
-`Cells in Copy mode not in the result body and not deleted.`  
+`ERROR`
+`Cells of the result body that cannot be traced back`
+`48
+Cells with same parents and infos must not be of different type`
+The error above will not result in an invalid journal (in other words, if there are no other errors, the return value of the CAACheck method will be 0). Nevertheless, you must do your best to avoid such a message. This message is only displayed when related orders are not ignored . For more information, see the CAATopCheckGnKO.m and CAATopCheckGnOK.m use cases (CAATopologicalOperators.edu). They both illustrate how to create a journal in which naming rules are or are not satisfied.
 52`
 Provides you with the list of all the cells that cannot be traced back. This message is associated with KO in Step1 of the verdict file.
-Provides you with the list of all the cells that are in Copy mode but not in the resulting body and not deleted OR not modified. Is associated with KO in Step1 of the verdict file.  
 
-[Top]  
+`ERROR`
+`Cells in Copy mode not in the result body and not deleted.`
+52`
+Provides you with the list of all the cells that cannot be traced back. This message is associated with KO in Step1 of the verdict file.
+Provides you with the list of all the cells that are in Copy mode but not in the resulting body and not deleted OR not modified. Is associated with KO in Step1 of the verdict file.
+
+[Top]
 
 ##### The rules to be Checked
 
@@ -574,7 +577,10 @@ The rules to be checked are divided into four categories which are summarized be
 
 A cell is backtracked if its parents belong to the input bodies specified as the operator inputs. The check result depends on the Copy/NoCopy mode of the operands. This Copy/NoCopy mode must be specified prior to running the Check operation. For example: if a cell belonging to the resulting body does not appear as created/modified in the journal, it is expected to belong to an input body in Copy mode, otherwise, it is not backtracked and the resulting journal is invalid. If a cell belonging to an input body in Copy mode is not in the result it must be explicitly deleted in the journal.
 
+```vbscript
 If this criteria is not fulfilled, the journal is invalid.
+
+```
 
 2 - Checking that all the reported cells are of CATFace/CATEdge/CATVertex type
 
@@ -592,7 +598,7 @@ Normally, all the cells appearing either as parents or created/constructed objec
 
 The couple of orders below (not ignored):
 
-`[]->Creation [Edge_1] info=1  
+`[]->Creation [Edge_1] info=1
 []->Creation [Face_1] info=1`
 
 The couple of orders below (not ignored):
@@ -600,7 +606,7 @@ will result into an error because the naming mechanism will not be able to diffe
 
 The couple of orders below is fine with respect to the Check operation because the naming mechanism manages to detect adjacent faces and makes possible the differentiation of the adjacent cells at selection.
 
-`[]->Creation [Face_1] info=1  
+`[]->Creation [Face_1] info=1
 []->Creation [Face_2] info=1`
 
 [Top]
@@ -615,19 +621,19 @@ The topological journal is used by the generic naming mechanism. Whenever you cr
 * * *
 ### References
 
-[1] | [Topology Concepts](../CAATobTechArticles/TopoConcepts.md)  
----|---  
-[2] | [The CGM Topological Model](../CAATobTechArticles/TopoModel.md)  
-[3] | [The CGM Journal](TopoJournal.md)  
-[4] | [The CAATopJournal Use Case](../CAATopUseCases/CAATopJournal.md)  
-[Top]  
+[1] | [Topology Concepts](../CAATobTechArticles/TopoConcepts.md)
+---|---
+[2] | [The CGM Topological Model](../CAATobTechArticles/TopoModel.md)
+[3] | [The CGM Journal](TopoJournal.md)
+[4] | [The CAATopJournal Use Case](../CAATopUseCases/CAATopJournal.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Mar 2000] | Document created  
----|---  
-[Top]  
+Version: **1** [Mar 2000] | Document created
+---|---
+[Top]
 
 * * *
 

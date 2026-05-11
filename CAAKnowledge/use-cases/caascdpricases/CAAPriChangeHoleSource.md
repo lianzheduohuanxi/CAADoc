@@ -15,21 +15,32 @@ converted: "2026-05-11T17:31:51.200028"
     Option Explicit
 
 ```vbscript
+```vbscript
+```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2004
     ' ***********************************************************************
     '   Purpose:      Changes hole description
-    '   Assumptions:   Looks for CAAPriChangeHole.CATPart in the DocView   
-    '   Author: 
+    '   Assumptions:   Looks for CAAPriChangeHole.CATPart in the DocView
+    '   Author:
     '   Languages:    VBScript
-    '   Locales:      English 
-    '   CATIA Level:  V5R13 
+    '   Locales:      English
+    '   CATIA Level:  V5R13
     ' ***********************************************************************
 ```
 
+```
+
+```
+
+```vbscript
     Sub CATMain()
+
+```
 
 ```vbscript
     Dim oPartDocument As PartDocument
+```vbscript
+```vbscript
     Dim oCATIAFileSys
     Dim oFile As File
     Dim oTextSteam As TextStream
@@ -48,25 +59,49 @@ converted: "2026-05-11T17:31:51.200028"
 
 ```
 
+```
+
+```
+
 ```vbscript
-    ' ----------------------------------------------------------- 
+```vbscript
+```vbscript
+    ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
-    dim sDocPath As String 
+    dim sDocPath As String
     sDocPath=CATIA.SystemService.Environ("CATDocView")
+```
+
+```
+
 ```
 
 ```vbscript
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+```vbscript
+```vbscript
       Err.Raise 9999,,"No Doc Path Defined"
     End If
 ```
 
+```
+
+```
+
 ```vbscript
-    ' ----------------------------------------------------------- 
+```vbscript
+```vbscript
+    ' -----------------------------------------------------------
     ' ------------
     ' The string as delimiter between input in the text file
     ' ------------
+```
+
+```
+
     iDelimiter = "\\"
+```vbscript
+```vbscript
     ' ------------
     ' Get the CATIA file system
     ' ------------
@@ -92,28 +127,50 @@ converted: "2026-05-11T17:31:51.200028"
         ' ------------
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' ------------
 ' The selection content is empty, the macro ends
 ' ------------
+```
+
+```
+
         MsgBox "Please select the holes you wish to transform before running the macro.", vbOKOnly, "Warning"
     Else
 ```
 
 ```vbscript
+```vbscript
+```vbscript
         ' ------------
         ' The selection content is not empty
         ' Read the text file data unit
         ' ------------
+```
+
+```
+
         oLine = oTextSteam.ReadLine
         Select Case oLine
 ```
 
 ```vbscript
+```vbscript
 ' ------------
+```
+
 oLine = oTextSteam.ReadLine
+```vbscript
 Select Case oLine
             Case "Millimeter"
+```
+
                 oUnit = 1
             Case "Inch"
                 oUnit = 25.4
@@ -122,51 +179,93 @@ Select Case oLine
 ```
 
 ```vbscript
+```vbscript
+```vbscript
         ' ------------
         ' Read the hole parameters
         ' ------------
         Do While oTextSteam.AtEndOfStream = False
+```
+
+```
+
             oLine = oTextSteam.ReadLine
             For i = 0 To 12
+```vbscript
                 If InStr(oLine, iDelimiter) > 0 Then
+```
+
 ```
 
 ```vbscript
 oLine = oTextSteam.ReadLine
 For i = 0 To 12
+```
+
 If InStr(oLine, iDelimiter) > 0 Then
+```vbscript
                     iArray(oRow, i) = Left(oLine, InStr(oLine, iDelimiter) - 1)
                     oLine = Mid(oLine, InStr(oLine, iDelimiter) + 2)
+```
+
                 Else
                     iArray(oRow, i) = oLine
+```vbscript
                 End If
+```vbscript
+```vbscript
             Next
             iMessage = iMessage & Chr(10) & iArray(oRow, 0) & " " & iArray(oRow, 1)
+```
+
+```
+
             oRow = oRow + 1
         Loop
         oTextSteam.Close
 ```
 
 ```vbscript
+```vbscript
+```vbscript
         ' ------------
         ' Get the description you wish, by default pre-select the first description
         ' ------------
+```
+
+```
+
         iMessage = "Please select the hole decription you wish to apply:" & iMessage
         oReturn = InputBox(iMessage, "Hole Description", iArray(1, 0))
+```vbscript
+```vbscript
         If oReturn = "" Then
             ' ------------
             ' No selection, the macro ends
             ' ------------
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' ------------
 ' No selection, the macro ends
 ' ------------
+```
+
+```
+
             Exit Sub
         Else
+```vbscript
             Select Case oReturn
                 Case "A"
+```
+
                     iRow = 1
                 Case "B"
                     iRow = 2
@@ -177,26 +276,46 @@ If InStr(oLine, iDelimiter) > 0 Then
 ```
 
 ```vbscript
+```vbscript
+```vbscript
                 ' ------------
                 ' Invalid selection, the macro ends
                 ' ------------
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' ------------
 ' Invalid selection, the macro ends
 ' ------------
+```
+
+```
+
                 Case Else
                     Exit Sub
             End Select
 ```
 
 ```vbscript
+```vbscript
+```vbscript
             ' ------------
             ' Loop on the selection content, we expect to find a hole
             ' ------------
+```
+
+```
+
             iHoleInSelection = True
             Do While iHoleInSelection = True
+```vbscript
+```vbscript
                 iHoleInSelection = CatObjectExistsInSelection(oPartDocument.Selection, "CATIAHole", oHole)
                 If iHoleInSelection = True Then
                     ' ------------
@@ -204,27 +323,52 @@ If InStr(oLine, iDelimiter) > 0 Then
                     ' ------------
                     ' Get the hole limit
                     ' ------------
+```
+
+```
+
                     Select Case iArray(iRow, 5)
 ```
 
 ```vbscript
+```vbscript
+```vbscript
 ' Get the hole limit
 ' ------------
+```
+
+```
+
+```vbscript
 Select Case iArray(iRow, 5)
                         Case "UpToNext"
+```
+
                             oHole.BottomLimit.LimitMode = catUpThruNextLimit
 ```
 
+```vbscript
+```vbscript
 ```vbscript
                             ' ------------
                             ' Update the part when set the hole limit to "UpToNext"
                             ' ------------
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' ------------
 ' Update the part when set the hole limit to "UpToNext"
 ' ------------
+```
+
+```
+
                             oPartDocument.Part.Update
                         Case Else
                             oHole.BottomLimit.LimitMode = catOffsetLimit
@@ -233,15 +377,27 @@ Select Case iArray(iRow, 5)
 ```
 
 ```vbscript
+```vbscript
+```vbscript
                     ' ------------
                     ' Get the hole diameter and its tolerances
                     ' ------------
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' ------------
 ' Get the hole diameter and its tolerances
 ' ------------
+```
+
+```
+
                     oHole.Diameter.Value = CDbl(iArray(iRow, 2))
                     oHole.Diameter.MaximumTolerance = (CDbl(iArray(iRow, 3)) - CDbl(iArray(iRow, 2))) * oUnit
                     oHole.Diameter.MinimumTolerance = (CDbl(iArray(iRow, 4)) - CDbl(iArray(iRow, 2))) * oUnit
@@ -249,16 +405,28 @@ Select Case iArray(iRow, 5)
 ```
 
 ```vbscript
+```vbscript
+```vbscript
                     ' ------------
                     ' Set the hole description parameter
                     ' ------------
                     If ParameterExists("Hole_Description", oParameters) = True Then
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' Set the hole description parameter
 ' ------------
 If ParameterExists("Hole_Description", oParameters) = True Then
+```
+
+```
+
                         oParameters.Item("Hole_Description").ValuateFromString (iArray(iRow, 0))
                     Else
                         oParameters.CreateString "Hole_Description", iArray(iRow, 0)
@@ -266,20 +434,35 @@ If ParameterExists("Hole_Description", oParameters) = True Then
 ```
 
 ```vbscript
+```vbscript
+```vbscript
                     ' ------------
                     ' Get the hole type
                     ' ------------
+```
+
+```
+
                     Select Case iArray(iRow, 1)
 ```
 
 ```vbscript
+```vbscript
+```vbscript
 ' Get the hole type
 ' ------------
+```
+
+```
+
+```vbscript
 Select Case iArray(iRow, 1)
                         Case "Simple"
                             oHole.Type = catSimpleHole
                         Case "Counterbored"
                             oHole.Type = catCounterboredHole
+```
+
                             oHole.HeadDiameter.Value = CDbl(iArray(iRow, 9)) * oUnit
                             oHole.HeadDepth.Value = CDbl(iArray(iRow, 12)) * oUnit
                             oHole.HeadDiameter.MaximumTolerance = (CDbl(iArray(iRow, 10)) - CDbl(iArray(iRow, 9))) * oUnit
@@ -288,102 +471,192 @@ Select Case iArray(iRow, 1)
 ```
 
 ```vbscript
+```vbscript
+```vbscript
                     ' ------------
                     ' Get the hole thread definition
                     ' ------------
+```
+
+```
+
                     Select Case iArray(iRow, 6)
 ```
 
 ```vbscript
+```vbscript
+```vbscript
 ' Get the hole thread definition
 ' ------------
+```
+
+```
+
+```vbscript
 Select Case iArray(iRow, 6)
                         Case "Yes"
                             If oHole.Diameter.Value < oHole.ThreadDiameter.Value And oHole.BottomLimit.Dimension.Value > oHole.ThreadDepth.Value Then
 ```
 
+```
+
+```vbscript
+```vbscript
 ```vbscript
                                 ' ------------
-                                ' Update the part when hole diameter is smaller than tread diameter 
-                                ' and hole limit is greater than thread depth, before apply new values 
+                                ' Update the part when hole diameter is smaller than tread diameter
+                                ' and hole limit is greater than thread depth, before apply new values
                                 ' ------------
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' Update the part when hole diameter is smaller than tread diameter
 ' and hole limit is greater than thread depth, before apply new values
 ' ------------
+```
+
+```
+
                                 oPartDocument.Part.Update
                             End If
+```vbscript
                             oHole.ThreadingMode = catThreadedHoleThreading
+```
+
                             oHole.ThreadDiameter.Value = CDbl(iArray(iRow, 7)) * oUnit
                             oHole.ThreadDepth.Value = CDbl(iArray(iRow, 8)) * oUnit
+```vbscript
                         Case "No"
                             oHole.ThreadingMode = catSmoothHoleThreading
                     End Select
 ```
 
+```
+
+```vbscript
+```vbscript
 ```vbscript
                     ' ------------
                     ' Update the part
                     ' ------------
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' ------------
 ' Update the part
 ' ------------
+```
+
+```
+
                     oPartDocument.Part.Update
                 End If
             Loop
         End If
+```vbscript
+```vbscript
     End If
 
 ```
 
+```
+
+```
+
+```vbscript
     End Sub
 
 End Sub
     Private Function CatObjectExistsInSelection(CatSelection As Selection, CatObjectName As String, CatObject As Object) As Boolean
 
+```
+
+```vbscript
+```vbscript
 ```vbscript
     ' ------------
     ' Define wether an specific object exists in the selection or not
     ' ------------
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' ------------
 ' Define wether an specific object exists in the selection or not
 ' ------------
+```
+
+```
+
     On Error Resume Next
 ```
 
 ```vbscript
     Set CatObject = CatSelection.FindObject(CatObjectName)
+```vbscript
+```vbscript
     CatObjectExistsInSelection = (Err.Number = 0)
     Err.Clear
 
 ```
 
+```
+
+```
+
+```vbscript
     End Function
 
 End Function
     Private Function ParameterExists(ItemIndex As String, ItemCollection As Object) As Boolean
 
+```
+
+```vbscript
+```vbscript
 ```vbscript
     ' ------------
     ' Define wether an parameter exists in a collection or not
     ' ------------
 ```
 
+```
+
+```
+
 ```vbscript
     Dim TmpItem As Variant
     On Error Resume Next
     Set TmpItem = ItemCollection.Item(ItemIndex)
+```vbscript
+```vbscript
     ParameterExists = (Err.Number = 0)
     Err.Clear
 
 ```
 
+```
+
+```
+
+```vbscript
     End Function
+
+```

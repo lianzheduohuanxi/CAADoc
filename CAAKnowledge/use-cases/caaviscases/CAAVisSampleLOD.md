@@ -11,20 +11,20 @@ converted: "2026-05-11T17:31:52.141771"
 ---
 # 3D PLM Enterprise Architecture
 
-| 
+|
 ## 3D Visualization
 
-| 
+|
 ### Creating Levels of Details
 
-_Enabling for multiple tessellations of the same object_  
----|---|---  
-Use Case  
+_Enabling for multiple tessellations of the same object_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
 
-This article shows how to create levels of details. 
+This article shows how to create levels of details.
 
   * **What Will You Learn in this Use Case**
   * **The CAAVisBasics Use Case**
@@ -35,7 +35,7 @@ This article shows how to create levels of details.
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
@@ -53,7 +53,7 @@ CAAVisBasics is a set of use cases of the CAAVisualization.edu framework that il
 CAAVisBasics is a set of use cases of the CAAVisualization.edu framework that illustrates CATIA Vizualization framework capabilities.
 CAAVisBasics includes a MDI interactive application that displays viewers in its document windows. One of these viewers is displayed when the application is launched and contains the representation of a torus. This article focuses on how to create levels of details for this torus, that is several tessellations, each corresponding to a given sag value, in order to the render to select the most appropriate one depending on the viewpoint characteristics and on the object size.
 
-The torus is displayed in a 3D navigation viewer as soon as the application is launched. It is displayed brighter blue with a representation that is computed with a sag of 1/8. When zooming in, the viewpoint characteristics change, and three other representations are successively displayed: a green one with a sag of 1/6, a blue one with a sag of 1/4, and a red one with a sag of 1/2. 
+The torus is displayed in a 3D navigation viewer as soon as the application is launched. It is displayed brighter blue with a representation that is computed with a sag of 1/8. When zooming in, the viewpoint characteristics change, and three other representations are successively displayed: a green one with a sag of 1/6, a blue one with a sag of 1/4, and a red one with a sag of 1/2.
 
 ![](images/CAAVisSampleTorusLOD1.jpg)
 
@@ -76,34 +76,34 @@ The torus is displayed in a 3D navigation viewer as soon as the application is l
 The torus is displayed in a 3D navigation viewer as soon as the application is launched. Zoom in and out to show the different levels of details and their associated colors.
 The CAAVisBasics use case is made of several classes located in the CAAVisBasics.m module of the CAAVisualization.edu framework:
 
-Windows | `InstallRootDirectory\CAAVisualization.edu\CAAVisBasics.m\`  
+Windows | `InstallRootDirectory\CAAVisualization.edu\CAAVisBasics.m\`
 
 The CAAVisBasics use case is made of several classes located in the CAAVisBasics.m module of the CAAVisualization.edu framework:
 Windows | `InstallRootDirectory\CAAVisualization.edu\CAAVisBasics.m\`
-Unix | `InstallRootDirectory/CAAVisualization.edu/CAAVisBasics.m/`  
+Unix | `InstallRootDirectory/CAAVisualization.edu/CAAVisBasics.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 This use case deals with the following classes:
 
-_CAAVisBaseApplication_ | Class for the interactive application that hosts the viewer  
+_CAAVisBaseApplication_ | Class for the interactive application that hosts the viewer
 
 This use case deals with the following classes:
 _CAAVisBaseApplication_ | Class for the interactive application that hosts the viewer
-_CAAVisBaseDocument_ | Class for the document base class  
-_CAAVisBaseDefaultDocument_ | Class for the document that creates a representation and four level of details for a torus model  
-_CAAVisBaseView_ | Class for the document window containing a viewer to display the document  
+_CAAVisBaseDocument_ | Class for the document base class
+_CAAVisBaseDefaultDocument_ | Class for the document that creates a representation and four level of details for a torus model
+_CAAVisBaseView_ | Class for the document window containing a viewer to display the document
 
 [Top]
 ### Step-by-Step
 
 To create levels of details, there are three main steps:
-# | Step | Where  
----|---|---  
+# | Step | Where
+---|---|---
 To create levels of details, there are three main steps:
-1 | Create a _CAT3DLodRep_ | `CreateModel` method of _CAAVisBaseDefaultDocument_  
-2 | Loop for each sag value onto the _CAT3DFaceGP_ creation | `CreateModel` method of _CAAVisBaseDefaultDocument_  
-3 | Create the bounding sphere for each level of details | `AddLOD` method of _CAAVisBaseDefaultDocument_  
+1 | Create a _CAT3DLodRep_ | `CreateModel` method of _CAAVisBaseDefaultDocument_
+2 | Loop for each sag value onto the _CAT3DFaceGP_ creation | `CreateModel` method of _CAAVisBaseDefaultDocument_
+3 | Create the bounding sphere for each level of details | `AddLOD` method of _CAAVisBaseDefaultDocument_
 
 The torus is displayed when the CAAVisBase application is launched. The torus levels of details creation and display is performed in the _CAAVisBaseDefaultDocument_ constructor that creates a _CAT3DLodRep_ instance and that loops on calling the `CreateRep` method that creates a _CAT3DFaceGP_ instance with the passed sag, and that adds it to the _CAT3DLodRep_ instance. The representation is displayed thanks to calling the `AddRepToViewer` method. Only the constructor and the part of `CreateRep` that deals with the _CAT3DLodRep_ management are described below. The remaining parts, namely the torus tessellation and the creation of _CAT3DLodRep_ instance are already dealt with in [2].
 
@@ -131,9 +131,9 @@ float sag = 0.125f;
 
       AddRepToViewer();
 
-    }  
+    }
 
----  
+---
 
 This 3D representation to accommodate the different tessellations of the torus is a _CAT3DLodRep_ instance. This representation is dedicated to contain several representations of the same object, each being associated with the sag value used to create it.
 
@@ -155,16 +155,19 @@ int color[3] = {255, 255, 255}; //White color
 0,   0,   255, //blue
 0,   200, 0};  //green
 for(int i=NLOD; i>0; i--)
+```vbscript
         sag = float(MAX_SAG)/(float)(2*i);
+```
+
         color[0] = colors[3*(i%NLOD)];
         color[1] = colors[3*(i%NLOD)+1];
         color[2] = colors[3*(i%NLOD)+2];
         AddLOD(sag, color);
 
       }
-    ...    
+    ...
 
----  
+---
 
 The sag values are computed and passed to the `AddLOD` method as well as the associated color.
 
@@ -195,11 +198,11 @@ void CAAVisBaseDefaultDocument::AddLOD(float sag, int *iColor)
 
 theta = 2*PI/nVertexPerCircle;
 phi   = 2*PI/nCircles;
-      _pTorusLodRep->AddLod(_pTorusCustomRep, sag); 
+      _pTorusLodRep->AddLod(_pTorusCustomRep, sag);
 
-    }  
+    }
 
----  
+---
 
 The angles theta and phi are computed using the sag value and the rotating circle radius and the torus radius respectively. **sag/R to be explained**. The number of vertices per circle and the number of circles are deduced from the angle values. Then, these angle values are adjusted to partition the circles. The 3D graphic primitive and the 3D custom representation are created  as described in [2]. `_pTorusCustomRep` is the pointer to the 3D custom representation. It is added to the 3D Lod representation along with the associated sag value
 
@@ -215,17 +218,17 @@ This use case shows the objects involved when creating several representations f
 * * *
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-[2] | [Tessallating a Torus](CAAVisSampleCAT3DFaceGP.md)  
-[Top]  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)
+---|---
+[2] | [Tessallating a Torus](CAAVisSampleCAT3DFaceGP.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Feb 2000] | Document created  
----|---  
-[Top]  
+Version: **1** [Feb 2000] | Document created
+---|---
+[Top]
 
 * * *
 

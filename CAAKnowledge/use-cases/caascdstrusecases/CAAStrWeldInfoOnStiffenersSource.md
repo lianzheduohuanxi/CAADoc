@@ -2,187 +2,170 @@
 title: "Untitled"
 category: "use-case"
 module: "CAAScdStrUseCases"
-tags: ["CAAScrBase", "CAAStrWeldInfoOnStiffener", "CATIASfmStiffener", "CATIA"]
+tags: ["CAAScrBase", "CATIA", "CATIASfmStiffener", "CAAStrWeldInfoOnStiffener"]
 source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnStiffenersSource.htm"
-converted: "2026-05-11T11:06:32.534826"
+converted: "2026-05-11T11:27:02.597911"
 ---
 
-```
 '//============================================================================
-
 '// COPYRIGHT DASSAULT SYSTEMES 2013
-
 '//============================================================================
-
 '// Language="VBSCRIPT"
-
 '// Sample of macro for getting weld information on SDD Stiffeners.
-
+'//============================================================================
+'// Mar  Creation                                               Bhupendra Mithe
 '//============================================================================
 
-'// Mar Creation Bhupendra Mithe
+Sub CATMain()
 
-'//============================================================================
-
-Sub 
-CATMain()
-
-Dim 
-ObjPart
- As 
-Part
-
-Set 
-ObjPart = CATIA.ActiveDocument.Part
- 
-
-Dim 
-FactoryObj
- As 
-SfmFactory
-
-Set 
-FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
- 
-
-Dim 
-ManagerObj
- As 
-SfmManager
-
-Set 
-ManagerObj = FactoryObj.GetManager
+Dim ObjPart As Part
+Set ObjPart = CATIA.ActiveDocument.Part
+   
+Dim FactoryObj As SfmFactory
+Set FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
+  
+Dim ManagerObj As SfmManager
+Set ManagerObj = FactoryObj.GetManager
 
 'RETRIEVING THE SUPERSTIFFENERS
+Dim SuperStiffeners As References
+Set SuperStiffeners = ManagerObj.GetSuperStiffeners
 
-Dim 
-SuperStiffeners
- As 
-References
-
-Set 
-SuperStiffeners = ManagerObj.GetSuperStiffeners
-
-Dim 
-SuperStiffener1
- As 
-SfmStiffener
-
-Set 
-SuperStiffener1 = SuperStiffeners.Item(1)
+Dim SuperStiffener1 As SfmStiffener
+Set SuperStiffener1 = SuperStiffeners.Item(1)
 
 'Retrieving The Seamed Stiffeners on Deck
+Dim SplitStiffeners As References
+Set SplitStiffeners = SuperStiffener1.SplitProfiles
 
-Dim 
-SplitStiffeners
- As 
-References
+Dim SplitStiffener1 As Reference
+Set SplitStiffener1 = SplitStiffeners.Item(1)
 
-Set 
-SplitStiffeners = SuperStiffener1.SplitProfiles
-
-Dim 
-SplitStiffener1
- As 
-Reference
-
-Set 
-SplitStiffener1 = SplitStiffeners.Item(1)
-
-Set 
-SelctionObj = CATIA.ActiveDocument.Selection
-
+Set SelctionObj = CATIA.ActiveDocument.Selection
 'DECK STIFFENER
-
 SelctionObj.Add SplitStiffener1
-
-Dim 
-DeckStiffener1
- As 
-SfmStiffener
-
-Set 
-DeckStiffener1 = SelctionObj.FindObject("CATIASfmStiffener")
+Dim DeckStiffener1 As SfmStiffener
+Set DeckStiffener1 = SelctionObj.FindObject("CATIASfmStiffener")
 
 'Retrieving Super Plates
-
-Dim 
-SuperPlates
- As 
-References
-
-Set 
-SuperPlates = ManagerObj.GetSuperPlates
+Dim SuperPlates As References
+Set SuperPlates = ManagerObj.GetSuperPlates
 
 'Retrieving Operating Super Plate
-
-Dim 
-SuperPlate1
- As 
-SfmSuperPlate
-
-Set 
-SuperPlate1 = SuperPlates.Item(1)
+Dim SuperPlate1 As SfmSuperPlate
+Set SuperPlate1 = SuperPlates.Item(1)
 
 'Retrieving the SplitPlates of SuperPlate1
+Dim OperatingSplitPlateRefs As References
+Set OperatingSplitPlateRefs = SuperPlate1.SplitPlates
 
-Dim 
-OperatingSplitPlateRefs
- As 
-References
+Dim OperatingSplitPlate As Reference
+Set OperatingSplitPlate = OperatingSplitPlateRefs.Item(1)
 
-Set 
-OperatingSplitPlateRefs = SuperPlate1.SplitPlates
+Dim WeldsUC1 As SfmWelds
+Set WeldsUC1 = DeckStiffener1.GetWelds(OperatingSplitPlate)
 
-Dim 
-OperatingSplitPlate
- As 
-Reference
-
-Set 
-OperatingSplitPlate = OperatingSplitPlateRefs.Item(1)
-
-Dim 
-WeldsUC1
- As 
-SfmWelds
-
-Set 
-WeldsUC1 = DeckStiffener1.GetWelds(OperatingSplitPlate)
-
-Dim 
-WeldUC1
- As 
-SfmWeld
-
-Set 
-WeldUC1 = WeldsUC1.Item(1)
+Dim WeldUC1 As SfmWeld
+Set WeldUC1 = WeldsUC1.Item(1)
 
 ustrWeldTypeUC1 = WeldUC1.WeldType
 ustrAddedMaterialUC1 = WeldUC1.AddedMaterial
 ustrFitUpUC1 = WeldUC1.FitUp
 ustrEdgePrepUC1 = WeldUC1.EdgePreparation
 
-Dim 
-WeldsUC2
- As 
-SfmWelds
+Dim WeldsUC2 As SfmWelds
+Set WeldsUC2 = DeckStiffener1.GetWelds(Nothing)
 
-Set 
-WeldsUC2 = DeckStiffener1.GetWelds(Nothing)
-
-Dim 
-WeldUC2
- As 
-SfmWeld
-
-Set 
-WeldUC2 = WeldsUC2.Item(1)
+Dim WeldUC2 As SfmWeld
+Set WeldUC2 = WeldsUC2.Item(1)
 
 ustrWeldTypeUC2 = WeldUC2.WeldType
 ustrAddedMaterialUC2 = WeldUC2.AddedMaterial
 ustrFitUpUC2 = WeldUC2.FitUp
 ustrEdgePrepUC2 = WeldUC2.EdgePreparation
+
+End Sub
+
+
+
+```vbscript
+'//============================================================================
+'// COPYRIGHT DASSAULT SYSTEMES 2013
+'//============================================================================
+'// Language="VBSCRIPT"
+'// Sample of macro for getting weld information on SDD Stiffeners.
+'//============================================================================
+'// Mar  Creation                                               Bhupendra Mithe
+'//============================================================================
+
+Sub CATMain()
+
+Dim ObjPart As Part
+Set ObjPart = CATIA.ActiveDocument.Part
+   
+Dim FactoryObj As SfmFactory
+Set FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
+  
+Dim ManagerObj As SfmManager
+Set ManagerObj = FactoryObj.GetManager
+
+'RETRIEVING THE SUPERSTIFFENERS
+Dim SuperStiffeners As References
+Set SuperStiffeners = ManagerObj.GetSuperStiffeners
+
+Dim SuperStiffener1 As SfmStiffener
+Set SuperStiffener1 = SuperStiffeners.Item(1)
+
+'Retrieving The Seamed Stiffeners on Deck
+Dim SplitStiffeners As References
+Set SplitStiffeners = SuperStiffener1.SplitProfiles
+
+Dim SplitStiffener1 As Reference
+Set SplitStiffener1 = SplitStiffeners.Item(1)
+
+Set SelctionObj = CATIA.ActiveDocument.Selection
+'DECK STIFFENER
+SelctionObj.Add SplitStiffener1
+Dim DeckStiffener1 As SfmStiffener
+Set DeckStiffener1 = SelctionObj.FindObject("CATIASfmStiffener")
+
+'Retrieving Super Plates
+Dim SuperPlates As References
+Set SuperPlates = ManagerObj.GetSuperPlates
+
+'Retrieving Operating Super Plate
+Dim SuperPlate1 As SfmSuperPlate
+Set SuperPlate1 = SuperPlates.Item(1)
+
+'Retrieving the SplitPlates of SuperPlate1
+Dim OperatingSplitPlateRefs As References
+Set OperatingSplitPlateRefs = SuperPlate1.SplitPlates
+
+Dim OperatingSplitPlate As Reference
+Set OperatingSplitPlate = OperatingSplitPlateRefs.Item(1)
+
+Dim WeldsUC1 As SfmWelds
+Set WeldsUC1 = DeckStiffener1.GetWelds(OperatingSplitPlate)
+
+Dim WeldUC1 As SfmWeld
+Set WeldUC1 = WeldsUC1.Item(1)
+
+ustrWeldTypeUC1 = WeldUC1.WeldType
+ustrAddedMaterialUC1 = WeldUC1.AddedMaterial
+ustrFitUpUC1 = WeldUC1.FitUp
+ustrEdgePrepUC1 = WeldUC1.EdgePreparation
+
+Dim WeldsUC2 As SfmWelds
+Set WeldsUC2 = DeckStiffener1.GetWelds(Nothing)
+
+Dim WeldUC2 As SfmWeld
+Set WeldUC2 = WeldsUC2.Item(1)
+
+ustrWeldTypeUC2 = WeldUC2.WeldType
+ustrAddedMaterialUC2 = WeldUC2.AddedMaterial
+ustrFitUpUC2 = WeldUC2.FitUp
+ustrEdgePrepUC2 = WeldUC2.EdgePreparation
+
 
 End Sub
 ```

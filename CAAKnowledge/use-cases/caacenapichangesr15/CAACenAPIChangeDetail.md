@@ -10,59 +10,59 @@ converted: "2026-05-11T17:33:51.027962"
 ```
 
 ---
-|  |  |  Detail Of V5R15 C++ API Changes _What changes in the API compared with CAA V5R14_  
----|---|---  
-Technical Article  
+|  |  |  Detail Of V5R15 C++ API Changes _What changes in the API compared with CAA V5R14_
+---|---|---
+Technical Article
 
 * * *
 
-Abstract This article presents by frameworks the detail of CAA C++ resources modified in V5R15 and how to modify your code accordingly. Each modification is listed for a resource (file, class, method) with a classification. They will generally be detected by a recompilation of the code. Most of the time, signature modifications are obvious. Check in the framework detail how to replace deleted entities. Possibly impacting modifications are highlighted in red.  
-| Classification | Meaning  
----|---  
 Abstract This article presents by frameworks the detail of CAA C++ resources modified in V5R15 and how to modify your code accordingly. Each modification is listed for a resource (file, class, method) with a classification. They will generally be detected by a recompilation of the code. Most of the time, signature modifications are obvious. Check in the framework detail how to replace deleted entities. Possibly impacting modifications are highlighted in red.
-LHC | @CAA2Level Has Changed: a L1 file is no more L1.  
-UHC | @CAA2Usage Has Changed: usage has changed for a more restricted usage. For example a class tagged as derivable is not derivable anymore.  
-CHBD | Class Has Been Deleted  
-FHBD | File Has Been Deleted  
-ADVHC | Argument Default Value Has Changed  
-MHBDM | Method Has Been Deleted or Modified  
-MRTHC | Method Returned Type Has Changed  
-NPVM | New Pure Virtual Method. A new pure virtual method has been added on a derivable class or on an interface to be implemented without an adapter.   
-INDM | Method is no more documented. It does not break your code in any way but means that you are not supposed to use it anymore. Check that you don't use it or look for replacement informations.    
-MINMV | Method is no more virtual. If occurs on a U1 class, may require modifications in Imakefile.mk of client code. If occurs on a U2 class, see details on the documentation of the concerned resource modification.  
+| Classification | Meaning
+---|---
+Abstract This article presents by frameworks the detail of CAA C++ resources modified in V5R15 and how to modify your code accordingly. Each modification is listed for a resource (file, class, method) with a classification. They will generally be detected by a recompilation of the code. Most of the time, signature modifications are obvious. Check in the framework detail how to replace deleted entities. Possibly impacting modifications are highlighted in red.
+LHC | @CAA2Level Has Changed: a L1 file is no more L1.
+UHC | @CAA2Usage Has Changed: usage has changed for a more restricted usage. For example a class tagged as derivable is not derivable anymore.
+CHBD | Class Has Been Deleted
+FHBD | File Has Been Deleted
+ADVHC | Argument Default Value Has Changed
+MHBDM | Method Has Been Deleted or Modified
+MRTHC | Method Returned Type Has Changed
+NPVM | New Pure Virtual Method. A new pure virtual method has been added on a derivable class or on an interface to be implemented without an adapter.
+INDM | Method is no more documented. It does not break your code in any way but means that you are not supposed to use it anymore. Check that you don't use it or look for replacement informations.
+MINMV | Method is no more virtual. If occurs on a U1 class, may require modifications in Imakefile.mk of client code. If occurs on a U2 class, see details on the documentation of the concerned resource modification.
 
 * * *
 
-[AdvancedTopologicalOpe](AdvancedTopologicalOpe.md) | R15GA vs R14GA  
----|---  
-[CAACenAPIChangeDetail](CAACenAPIChangeDetail.md) | R15GA vs R14GA  
-[CATAnalysisBase](CATAnalysisBase.md) | R15GA vs R14GA](CAACgmUcSplitShell.md)  
-[CATAnalysisInterfaces](CATAnalysisInterfaces.md) | R15GA vs R14GA  
-[CATAnalysisResources](CATAnalysisResources.md) | R15GA vs R14GA  
-[CATIAV4Interfaces](CATIAV4Interfaces.md) | R15GA vs R14GA](CAACgmUcMultiProc.md)  
-[CATSchPlatformInterfaces](CATSchPlatformInterfaces.md) | R15GA vs R14GA](CAACgmUcMultiProc.md)  
-[DMAPSInterfaces](DMAPSInterfaces.md) | R15GA vs R14GA  
-[ENOVInterfaces](ENOVInterfaces.md) | R15GA vs R14GA  
-[GeometricObjects](GeometricObjects.md) | R15GA vs R14GA  
-[MechanicalModeler](MechanicalModeler.md) | R15GA vs R14GA  
-[NewTopologicalObjects](NewTopologicalObjects.md) | R15GA vs R14GA  
-[TopologicalOperators](TopologicalOperators.md) | R15GA vs R14GA  
+[AdvancedTopologicalOpe](AdvancedTopologicalOpe.md) | R15GA vs R14GA
+---|---
+[CAACenAPIChangeDetail](CAACenAPIChangeDetail.md) | R15GA vs R14GA
+[CATAnalysisBase](CATAnalysisBase.md) | R15GA vs R14GA](CAACgmUcSplitShell.md)
+[CATAnalysisInterfaces](CATAnalysisInterfaces.md) | R15GA vs R14GA
+[CATAnalysisResources](CATAnalysisResources.md) | R15GA vs R14GA
+[CATIAV4Interfaces](CATIAV4Interfaces.md) | R15GA vs R14GA](CAACgmUcMultiProc.md)
+[CATSchPlatformInterfaces](CATSchPlatformInterfaces.md) | R15GA vs R14GA](CAACgmUcMultiProc.md)
+[DMAPSInterfaces](DMAPSInterfaces.md) | R15GA vs R14GA
+[ENOVInterfaces](ENOVInterfaces.md) | R15GA vs R14GA
+[GeometricObjects](GeometricObjects.md) | R15GA vs R14GA
+[MechanicalModeler](MechanicalModeler.md) | R15GA vs R14GA
+[NewTopologicalObjects](NewTopologicalObjects.md) | R15GA vs R14GA
+[TopologicalOperators](TopologicalOperators.md) | R15GA vs R14GA
 
 * * *
 ### References
 
-[1] | [Migration to CATBoolean](../CAACenQuickRefs/CAACenWhatsNew.htm#CATBoolean)  
----|---  
-[2] | [Details Of V5R14 API Changes](../CAACenAPIChangesR14/CAACenAPIChangeDetail.md)  
-  |    
-[Top]  
+[1] | [Migration to CATBoolean](../CAACenQuickRefs/CAACenWhatsNew.htm#CATBoolean)
+---|---
+[2] | [Details Of V5R14 API Changes](../CAACenAPIChangesR14/CAACenAPIChangeDetail.md)
+  |
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Mar 2002] | Document created  
----|---  
-[Top]  
+Version: **1** [Mar 2002] | Document created
+---|---
+[Top]
 
 * * *
 

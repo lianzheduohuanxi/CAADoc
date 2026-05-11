@@ -11,15 +11,15 @@ converted: "2026-05-11T17:31:52.066701"
 ---
 # 3D PLM Enterprise Architecture
 
-| 
+|
 ## 3D Visualization
 
-| 
+|
 ### Making a Component Displayable With CATI3DGeoVisu
 
-_Implementing CATI3DGeoVisu and CATIModelEvents to enable a geometric component to be displayed in a viewer_  
----|---|---  
-Use Case  
+_Implementing CATI3DGeoVisu and CATIModelEvents to enable a geometric component to be displayed in a viewer_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
@@ -35,7 +35,7 @@ This article discusses the CAAVisGeoModel use case. This use case explains how g
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
@@ -74,27 +74,27 @@ Launch CATIA. When the application is ready, follow scenarios described below:
 CAAVisGeoModel code is located in the CAAVisGeoModel.m use case module of the CAAVisualization.edu framework:
 
 CAAVisGeoModel code is located in the CAAVisGeoModel.m use case module of the CAAVisualization.edu framework:
-Windows | `InstallRootDirectory\CAAVisualization.edu\CAAVisGeoModel.m`  
+Windows | `InstallRootDirectory\CAAVisualization.edu\CAAVisGeoModel.m`
 
 CAAVisGeoModel code is located in the CAAVisGeoModel.m use case module of the CAAVisualization.edu framework:
 Windows | `InstallRootDirectory\CAAVisualization.edu\CAAVisGeoModel.m`
-Unix | `InstallRootDirectory/CAAVisualization.edu/CAAVisGeoModel.m`  
+Unix | `InstallRootDirectory/CAAVisualization.edu/CAAVisGeoModel.m`
 
-where `InstallRootDirectory` is the root directory of your CAA V5 installation. 
+where `InstallRootDirectory` is the root directory of your CAA V5 installation.
 
 CAAVisGeoModel includes the following files for the circle component:
 
-**LocalInterfaces directory**  
----  
+**LocalInterfaces directory**
+---
 CAAVisGeoModel includes the following files for the circle component:
-CAAEVisVisuCircle.h | Header file for the circle component extension class that implements _CATI3DGeoVisu_  
-CAAEVisModelEvents.h | Header file for the common component extension class that implements _CATIModelEvents_  
-
-**src directory**  
 CAAEVisVisuCircle.h | Header file for the circle component extension class that implements _CATI3DGeoVisu_
 CAAEVisModelEvents.h | Header file for the common component extension class that implements _CATIModelEvents_
-CAAEVisVisuCircle.cpp | Source file for the circle component extension class that implements _CATI3DGeoVisu_  
-CAAEVisModelEvents.cpp | Source file for the common component extension class that implements _CATIModelEvents_  
+
+**src directory**
+CAAEVisVisuCircle.h | Header file for the circle component extension class that implements _CATI3DGeoVisu_
+CAAEVisModelEvents.h | Header file for the common component extension class that implements _CATIModelEvents_
+CAAEVisVisuCircle.cpp | Source file for the circle component extension class that implements _CATI3DGeoVisu_
+CAAEVisModelEvents.cpp | Source file for the common component extension class that implements _CATIModelEvents_
 
 [Top]
 ### Step-by-Step
@@ -110,7 +110,7 @@ To implement _CATI3DGeoVisu_ and _CATIModelEvents_ , there are four main steps:
 [Top]
 #### Creating the Header File of CAAEVisVisuCircle
 
-The _CAAEVisVisuCircle_ header file is as follows. 
+The _CAAEVisVisuCircle_ header file is as follows.
 
     #include "CATExtIVisu.h"
 
@@ -129,9 +129,9 @@ virtual ~CAAEVisVisuCircle();
       private :
       CAAEVisVisuCircle(const CAAEVisVisuCircle &iObjectToCopy);
 
-    };  
+    };
 
----  
+---
 
 _CAAEVisVisuCircle_ derives from the CATExtIVisu adapter that provides code for the _CATI3DGeoVisu_ interface methods. As any class that makes up a component, its header file includes the `CATDeclareClass` macro. The `BuildRep` method is the only one to redefine. Note that the copy constructor is declared as private, and is not implemented. This prevents the compiler from creating a public one without you know. This is to prevent clients from creating instances from an existing one, that they normally should not handle, except using interface pointers.
 
@@ -156,9 +156,9 @@ The _CAAEVisVisuCircle_ source file is as follows.
     **CATRep *** CAAEVisVisuCircle::**BuildRep**()
     {
       ...
-    }   
+    }
 
----  
+---
 
 The main points of this source file are:
 
@@ -172,26 +172,29 @@ The main points of this source file are:
 There are two possibilities for creating the representation of a circle, that is, using the _CAT3DArcCircleRep_ class, or using a custom representation. This latter is detailed here.
 
 There are two possibilities for creating the representation of a circle, that is, using the _CAT3DArcCircleRep_ class, or using a custom representation. This latter is detailed here.
-  1. Declaring the representation to return 
+  1. Declaring the representation to return
 
          CATRep * CAAEVisVisuCircle::**BuildRep**()
 
          {
            **CAT3DCustomRep** *pCircleRep = NULL;
-           ...  
+           ...
 
----  
+---
 
 The _CAT3DCustomRep_ class can accommodate any kind of representation(s).
 
-  2. Retrieving the circle parameters 
+  2. Retrieving the circle parameters
 
          ...
 The _CAT3DCustomRep_ class can accommodate any kind of representation(s).
 2. Retrieving the circle parameters
-           CAAISysCircle * piSysCircle = NULL;                
+           CAAISysCircle * piSysCircle = NULL;
            HRESULT rc = **QueryInterface**(IID_CAAISysCircle, (void**)&piSysCircle);
+```vbscript
            if (SUCCEEDED(rc))
+
+```
 
            {
 CAAISysCircle * piSysCircle = NULL;
@@ -207,65 +210,68 @@ if (SUCCEEDED(rc))
 
              piSysCircle->**Release**();
 
-             ...  
+             ...
 
----  
+---
 
- The circle component implements the _CAAISysCircle_ interface [1]. This is a type interface that enables to set and retrieve the parameters that make this component a circle: its center and radius, and the normal and axis vectors of the plane in which it lies. Once the pointer to _CAAISysCircle_ is not any longer needed, it is released.  
----|---  
-  3. Creating the graphic primitive for the circle 
+ The circle component implements the _CAAISysCircle_ interface [1]. This is a type interface that enables to set and retrieve the parameters that make this component a circle: its center and radius, and the normal and axis vectors of the plane in which it lies. Once the pointer to _CAAISysCircle_ is not any longer needed, it is released.
+---|---
+  3. Creating the graphic primitive for the circle
 
          ...
 The circle component implements the _CAAISysCircle_ interface [1]. This is a type interface that enables to set and retrieve the parameters that make this component a circle: its center and radius, and the normal and axis vectors of the plane in which it lies. Once the pointer to _CAAISysCircle_ is not any longer needed, it is released.
 3. Creating the graphic primitive for the circle
              CAT3DArcCircleGP * pCircleGp = new **CAT3DArcCircleGP**(center, normal, radius, axis);
 
-             ...   
+             ...
 
----  
+---
 
 CAT3DArcCircleGP * pCircleGp = new **CAT3DArcCircleGP**(center, normal, radius, axis);
 The circle graphic primitive is an instance of _CAT3DArcCircleGP_. Its constructor needs the four parameters retrieved from the circle component.
 
-  4. Creating and filling in the representation 
+  4. Creating and filling in the representation
 
          ...
 The circle graphic primitive is an instance of _CAT3DArcCircleGP_. Its constructor needs the four parameters retrieved from the circle component.
 4. Creating and filling in the representation
+```vbscript
              pCircleRep = new **CAT3DCustomRep**();
+
+```
 
              **CATGraphicAttributeSet** circleGa;
 4. Creating and filling in the representation
 pCircleRep = new **CAT3DCustomRep**();
              pCircleRep->**AddGP**(pCircleGp,circleGa);
 
-             ...   
+             ...
 
----  
+---
 
 pCircleRep->**AddGP**(pCircleGp,circleGa);
 The circle representation is created as a _CAT3DCustomRep_ instance. Is is filled in thanks to the `AddRep` method with the graphical primitive and a set of graphic attributes featuring their default values.
 
-  5. Creating the circle bounding element and assigning it to the representation 
+  5. Creating the circle bounding element and assigning it to the representation
 
          ...
              **CAT3DBoundingSphere** circleBe(center,radius);
              pCircleRep->**SetBoundingElement**(circleBe);
-             ...  
+             ...
 
----  
+---
 
 pCircleRep->**SetBoundingElement**(circleBe);
 In order to increase display performance, any representation should have a bounding element that is first asked to determine whether the associated representation should be displayed in the current view port. This bounding element is chosen as a _CAT3DBoundingSphere_ instance defined using the circle center and radius. The `SetBoundingElement` method assigns it to the circle representation.
 
-  6. Returning the created representation 
+  6. Returning the created representation
 
-         ... 
+         ...
            }
            return pCircleRep;
-         }   
+         }
 
----  
+---
 
 The circle is now ready for display.
 
@@ -275,7 +281,7 @@ The circle is now ready for display.
 The circle is now ready for display.
 _CAAVisModelEvents_ implements the _CATIModelEvents_ interface by deriving from the _CATExtIModelEvents_ adapter.
 
-  1. Creating the header file. 
+  1. Creating the header file.
 
          #include "CATExtIModelEvents.h"
 
@@ -292,15 +298,15 @@ class CAAEVisModelEvents : public **CATExtIModelEvents**
            private :
            CAAEVisModelEvents(const CAAEVisModelEvents &iObjectToCopy);
 
-         };  
+         };
 
----  
+---
 
 ```vbscript
 CAAEVisModelEvents(const CAAEVisModelEvents &iObjectToCopy);
 As any class that makes up a component [2], its header file includes the `CATDeclareClass` macro. None of the _CATIModelEvents_ methods needs to be redefined. Note that the copy constructor is declared as private, and is not implemented. This prevents the compiler from creating a public one without you know. This is to prevent clients from creating instances from an existing one, that they normally should not handle, except using interface pointers.
 
-  2. Creating the source file. 
+  2. Creating the source file.
 ```
 
          #include "CAAEVisModelEvents.h"
@@ -310,38 +316,47 @@ As any class that makes up a component [2], its header file includes the `CATDec
          **CATBeginImplementClass**(CAAEVisModelEvents, DataExtension, CATBaseUnknown, CAASysPoint);
 ```vbscript
          CATAddClassExtension(CAASysSampRootObj);
+```vbscript
          CATAddClassExtension(CAASysGeomRootObj);
          CATAddClassExtension(CAASysLine);
          CATAddClassExtension(CAASysEllipse);
          CATAddClassExtension(CAASysPlane);
 ```
 
+```
+
          **CATAddClassExtension**(CAASysCircle);
 ```vbscript
 CATAddClassExtension(CAASysGeomRootObj);
+```vbscript
 CATAddClassExtension(CAASysLine);
 CATAddClassExtension(CAASysEllipse);
 CATAddClassExtension(CAASysPlane);
          CATAddClassExtension(CAASysPolyline);
 ```
 
-         **CATEndImplementClass**(CAAEVisModelEvents); 
+```
+
+         **CATEndImplementClass**(CAAEVisModelEvents);
 
 ```vbscript
 CATAddClassExtension(CAASysPlane);
+```vbscript
 CATAddClassExtension(CAASysPolyline);
+```
+
          CAAEVisModelEvents::CAAEVisModelEvents() {}
 
-         CAAEVisModelEvents::~CAAEVisModelEvents() {}  
+         CAAEVisModelEvents::~CAAEVisModelEvents() {}
 
 ```
 
----  
+---
 
 The main points of this source file are:
 
      * _CAAEVisModelEvents_ implements the _CATIModelEvents_ interface: this is expressed thanks to the `TIE_CATIModelEvents` macro
-     * _CAAEVisModelEvents_ implements the _CATIModelEvents_ interface for several components, among which the _CAASysCircle_ component, as a data extension. Compared to the declaration of a single component extension using `CATImplementClass`, this is expressed using three macros: 
+     * _CAAEVisModelEvents_ implements the _CATIModelEvents_ interface for several components, among which the _CAASysCircle_ component, as a data extension. Compared to the declaration of a single component extension using `CATImplementClass`, this is expressed using three macros:
        * `CATBeginImplementClass`, that has the same signature than `CATImplementClass`, and that namely declares that _CAAEVisModelEvents_ is a data extension of the _CAASysPoint_ component, and that OM-derives from _CATBaseUnknown_
        * `CATAddClassExtension` to declare each additional extended component, such as _CAASysCircle_
        * `CATEndImplementClass` to close the extended component declaration
@@ -361,17 +376,17 @@ To enable the representation of the geometric component to be refreshed when the
 * * *
 ### References
 
-[1] | [Creating Interfaces](../CAASysUseCases/CAASysSampleOMCreatingInt.md)  
----|---  
-[2] | [Creating Components](../CAASysUseCases/CAASysSampleOMCreatingCmp.md)  
-[Top]  
+[1] | [Creating Interfaces](../CAASysUseCases/CAASysSampleOMCreatingInt.md)
+---|---
+[2] | [Creating Components](../CAASysUseCases/CAASysSampleOMCreatingCmp.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Feb 2000] | Document created  
----|---  
-[Top]  
+Version: **1** [Feb 2000] | Document created
+---|---
+[Top]
 
 * * *
 

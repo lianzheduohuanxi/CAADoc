@@ -11,15 +11,15 @@ converted: "2026-05-11T17:33:45.712135"
 ---
 # 3D PLM Enterprise Architecture
 
-| 
+|
 ## Middleware Abstraction
 
-| 
+|
 ### Using XML in V5
 
-_Description of the XML infrastructure available in V5_  
----|---|---  
-Technical Article  
+_Description of the XML infrastructure available in V5_
+---|---|---
+Technical Article
 
 * * *
 ### Abstract
@@ -36,7 +36,7 @@ This article explains what is an XML parser. It describes the parsers available 
     * UTF-8
     * Other Supported Encodings
 
----  
+---
 
 * * *
 ### V5 XML Parser Components
@@ -63,9 +63,9 @@ The following sample shows how to instantiate a DOM parser backed by the XML4C5 
 
 The following sample shows how to instantiate a DOM parser backed by the XML4C5 parser component:
     CATIXMLDOMDocumentBuilder_var builder;
-    HRESULT hr = CreateCATIXMLDOMDocumentBuilder(builder, CLSID_XML4C5_DOM);  
+    HRESULT hr = CreateCATIXMLDOMDocumentBuilder(builder, CLSID_XML4C5_DOM);
 
----  
+---
 
 CATIXMLDOMDocumentBuilder_var builder;
 HRESULT hr = CreateCATIXMLDOMDocumentBuilder(builder, CLSID_XML4C5_DOM);
@@ -75,9 +75,9 @@ The following sample shows how to instantiate a SAX parser backed by the XML4C5 
 
 The following sample shows how to instantiate a SAX parser backed by the XML4C5 parser component:
     CATIXMLSAXFactory_var factory;
-    HRESULT hr = CreateCATIXMLSAXFactory(factory, CLSID_XML4C5_SAX);  
+    HRESULT hr = CreateCATIXMLSAXFactory(factory, CLSID_XML4C5_SAX);
 
----  
+---
 
 CATIXMLSAXFactory_var factory;
 HRESULT hr = CreateCATIXMLSAXFactory(factory, CLSID_XML4C5_SAX);
@@ -92,17 +92,17 @@ _Compatibility between parsers_
 
 The following table gives an overview of the features supported by each parser.
 
-  | X4C3 | X4C5 | MSXML3 | MSXML4 | MSXML5  
----|---|---|---|---|---  
+  | X4C3 | X4C5 | MSXML3 | MSXML4 | MSXML5
+---|---|---|---|---|---
 The following table gives an overview of the features supported by each parser.
-DOM level 1 and 2 | Yes | Yes | Yes (1) | Yes (1) | Yes (1)  
-DOM traversal | Yes | Yes | Yes (2) | Yes (2) | Yes (2)  
-SAX 1 | Yes | Yes | Yes (3)(2) | Yes (4)(2) | Yes (4)(2)  
-SAX 2 | Yes (5) | Yes | Yes (5) | Yes (6) | Yes (6)  
-DTD validation | Yes | Yes | Yes (7) | Yes (7) | Yes (7)  
-XSD schema validation | No | Yes | No | Yes | Yes  
-Unix availability | Yes | Yes | No | No | No  
-Windows availability | Yes | Yes | Yes | Yes | Yes  
+DOM level 1 and 2 | Yes | Yes | Yes (1) | Yes (1) | Yes (1)
+DOM traversal | Yes | Yes | Yes (2) | Yes (2) | Yes (2)
+SAX 1 | Yes | Yes | Yes (3)(2) | Yes (4)(2) | Yes (4)(2)
+SAX 2 | Yes (5) | Yes | Yes (5) | Yes (6) | Yes (6)
+DTD validation | Yes | Yes | Yes (7) | Yes (7) | Yes (7)
+XSD schema validation | No | Yes | No | Yes | Yes
+Unix availability | Yes | Yes | No | No | No
+Windows availability | Yes | Yes | Yes | Yes | Yes
 
   1. Some functions are emulated in the V5 adapter
   2. Emulated in the V5 adapter
@@ -124,7 +124,7 @@ In summary, you can use the following rules to choose the parser, which best sui
 The XMLParser framework defines two classes of XML APIs: standard APIs and additional APIs created by Dassault Systèmes.
 
   * The standard APIs are the exact image of the W3C DOM specification or the SAX specification. Nothing has been added to or removed from the specification. Therefore, the information you can find on DOM or SAX in books, magazine or on-line tutorials can directly be put in practice in a V5 context using these APIs. To recognize these APIs more easily, the following naming patterns are used: DOM interfaces use the prefix **CATIDOM** ; DOM classes use the prefix **CATDOM** ; SAX interfaces use the prefix **CATISAX** ; SAX classes use the prefix **CATSAX**.
-  * Additional APIs were created by Dassault Systèmes to fulfil two needs. First, fill the gaps of the DOM and SAX standards, which do not define the mechanisms to create a DOM or a SAX parsers or to configure them. Second, add useful functionalities, which were missing from the standard, for instance the capabilty to create an XML document from a DOM tree. To recognize these APIs more easily, the following naming pattern is used: additional XML interfaces use the prefix **CATIXML**. 
+  * Additional APIs were created by Dassault Systèmes to fulfil two needs. First, fill the gaps of the DOM and SAX standards, which do not define the mechanisms to create a DOM or a SAX parsers or to configure them. Second, add useful functionalities, which were missing from the standard, for instance the capabilty to create an XML document from a DOM tree. To recognize these APIs more easily, the following naming pattern is used: additional XML interfaces use the prefix **CATIXML**.
 
 The following two sections give you more information as to how XML standard specifications have been adapted for V5.
 
@@ -134,22 +134,22 @@ The following two sections give you more information as to how XML standard spec
 The following two sections give you more information as to how XML standard specifications have been adapted for V5.
 The DOM specification uses OMG IDL to define its APIs in an abstract, platform-neutral way. It is then up to each platform to define a binding, that is a concrete version of the APIs using the language and data types native to the platform. The following table explains how this is done for V5 in C++.
 
-OMG IDL | V5 C++ | Comment  
+OMG IDL | V5 C++ | Comment
 
 The DOM specification uses OMG IDL to define its APIs in an abstract, platform-neutral way. It is then up to each platform to define a binding, that is a concrete version of the APIs using the language and data types native to the platform. The following table explains how this is done for V5 in C++.
 OMG IDL | V5 C++ | Comment
-DOMString | CATUnicodeString | All the strings obtained from parsing an XML document are represented as _CATUnicodeStrings_ : element names, attribute values, characters, entity names, etc.  
-DOM exception | HRESULT + CATError | The usage for V5 code is to signal errors using _HRESULTs_. Additional information about the error can be obtained using the CATError mechanism. See [1] for more information.  
-interface XXX | V5 interface handler CATIDOMXXX_var | All DOM interfaces are represented by V5 interface handlers. The V5 naming conventions are respected by prepending the "CATIDOM" prefix to the original DOM name (Thus, the _Node_ interface from the specification is mapped to _CATIDOMNode_var_ interface handler in V5 C++, the _Element_ interface is mapped to the _CATIDOMElement_var_ interface handler and so on).  
-rettype method(arg1, arg2, ..., argN) raises DOMException | HRESULT Method(arg1, arg2, ..., argN, rettype) | Methods bear the same name in V5 as in the specification, with the first letter in capital to obey the V5 naming convention. If the specification indicates a return value for the method, the corresponding V5 method will have an additional out parameter to return this argument. The exceptions declared by the method are replaced by a _HRESULT_.  
-boolean | CATBoolean |   
-unsigned long | unsigned int |   
+DOMString | CATUnicodeString | All the strings obtained from parsing an XML document are represented as _CATUnicodeStrings_ : element names, attribute values, characters, entity names, etc.
+DOM exception | HRESULT + CATError | The usage for V5 code is to signal errors using _HRESULTs_. Additional information about the error can be obtained using the CATError mechanism. See [1] for more information.
+interface XXX | V5 interface handler CATIDOMXXX_var | All DOM interfaces are represented by V5 interface handlers. The V5 naming conventions are respected by prepending the "CATIDOM" prefix to the original DOM name (Thus, the _Node_ interface from the specification is mapped to _CATIDOMNode_var_ interface handler in V5 C++, the _Element_ interface is mapped to the _CATIDOMElement_var_ interface handler and so on).
+rettype method(arg1, arg2, ..., argN) raises DOMException | HRESULT Method(arg1, arg2, ..., argN, rettype) | Methods bear the same name in V5 as in the specification, with the first letter in capital to obey the V5 naming convention. If the specification indicates a return value for the method, the corresponding V5 method will have an additional out parameter to return this argument. The exceptions declared by the method are replaced by a _HRESULT_.
+boolean | CATBoolean |
+unsigned long | unsigned int |
 
 As a concrete example of how the binding works, please consider the abstract definition of the DOMImplementation extracted from DOM specification.
 
     interface DOMImplementation {
      boolean hasFeature(
-               in DOMString feature, 
+               in DOMString feature,
                in DOMString version);
 
      // Introduced in DOM Level 2:
@@ -158,8 +158,8 @@ boolean hasFeature(
 in DOMString feature,
 in DOMString version);
      DocumentType createDocumentType(
-                    in DOMString qualifiedName, 
-                    in DOMString publicId, 
+                    in DOMString qualifiedName,
+                    in DOMString publicId,
                     in DOMString systemId) raises(DOMException);
 
      // Introduced in DOM Level 2:
@@ -168,13 +168,13 @@ in DOMString qualifiedName,
 in DOMString publicId,
 in DOMString systemId) raises(DOMException);
      Document createDocument(
-                 in DOMString namespaceURI, 
-                 in DOMString qualifiedName, 
+                 in DOMString namespaceURI,
+                 in DOMString qualifiedName,
                  in DocumentType doctype) raises(DOMException);
 
     };
 
----  
+---
 
 In V5, you will manipulate the following V5 interface
 
@@ -182,7 +182,7 @@ In V5, you will manipulate the following V5 interface
     class CATIDOMImplementation : public CATBaseUnknown {
      virtual HRESULT HasFeature(
                        const CATUnicodeString& iFeature,
-                       const CATUnicodeString& iVersion, 
+                       const CATUnicodeString& iVersion,
                        CATBoolean& oResult) = 0;
 
      // Introduced in DOM Level 2:
@@ -191,9 +191,9 @@ const CATUnicodeString& iFeature,
 const CATUnicodeString& iVersion,
 CATBoolean& oResult) = 0;
      virtual HRESULT CreateDocumentType(
-                      const CATUnicodeString& iQualifiedName, 
-                      const CATUnicodeString& iPublicId, 
-                      const CATUnicodeString& iSystemId, 
+                      const CATUnicodeString& iQualifiedName,
+                      const CATUnicodeString& iPublicId,
+                      const CATUnicodeString& iSystemId,
                       CATIDOMDocumentType_var& oDocumentType) = 0;
 
      // Introduced in DOM Level 2:
@@ -202,14 +202,14 @@ const CATUnicodeString& iPublicId,
 const CATUnicodeString& iSystemId,
 CATIDOMDocumentType_var& oDocumentType) = 0;
      virtual HRESULT CreateDocument(
-                      const CATUnicodeString& iNamespaceURI, 
-                      const CATUnicodeString& iQualifiedName, 
-                      const CATIDOMDocumentType_var& iDocumentType, 
+                      const CATUnicodeString& iNamespaceURI,
+                      const CATUnicodeString& iQualifiedName,
+                      const CATIDOMDocumentType_var& iDocumentType,
                       CATIDOMDocument_var& oDocument) = 0;
 
     };
 
----  
+---
 
 [Top]
 #### V5 C++ Bindings for SAX
@@ -217,22 +217,22 @@ CATIDOMDocumentType_var& oDocumentType) = 0;
 The SAX specification uses Java to define its APIs. Platforms, which do not use Java as their programming language define a binding for their language, that is a version of the APIs using the language and data types native to the platform. The following table explains how this is done for V5 in C++.
 
 The SAX specification uses Java to define its APIs. Platforms, which do not use Java as their programming language define a binding for their language, that is a version of the APIs using the language and data types native to the platform. The following table explains how this is done for V5 in C++.
-Java SAX definition | V5 C++ | Comment  
+Java SAX definition | V5 C++ | Comment
 
 The SAX specification uses Java to define its APIs. Platforms, which do not use Java as their programming language define a binding for their language, that is a version of the APIs using the language and data types native to the platform. The following table explains how this is done for V5 in C++.
 Java SAX definition | V5 C++ | Comment
-java.lang.String | CATUnicodeString | All the strings obtained from parsing an XML document are represented as _CATUnicodeStrings_ : element names, attribute values, characters, entity names, etc.  
-java.io.Exception  
-org.xml.sax.SAXException | HRESULT + CATError | The usage for V5 code is to signal errors using _HRESULTs_. Additional information about the error can be obtained using the CATError mechanism. See [1] for more information.  
-interface YYY | V5 interface handler CATISAXYYY_var | All SAX interfaces are represented by V5 interface handlers. The V5 naming conventions are respected by prepending the "CATISAX" prefix to the original SAX name (Thus, the _ErrorHandler_ interface from the specification is mapped to _CATISAXErrorHandler_var_ interface handler in V5 C++, the _AttributeList_ interface is mapped to the _CATISAXAttributeList_var_ interface handler and so on).  
-rettype method(arg1, arg2, ..., argN) throws SAXException | HRESULT Method(arg1, arg2, ..., argN, rettype) | Methods bear the same name in V5 as in the specification, with the first letter in capital to obey the V5 naming convention. If the specification indicates a return value for the method, the corresponding V5 method will have an additional out parameter to return this argument. The exceptions declared by the method are replaced by a _HRESULT_.  
-org.xml.sax.HandlerBase  
-org.xml.sax.DefaultHandler  
-org.xml.sax.DefaultXMLFilter | CATSAXHandlerBase  
-CATSAXDefaultHandler  
-CATSAXDefaultXMLFilter | Classes providing a default implementation for SAX interfaces are represented in V5 by a V5 component providing a default implementation for the same SAX interface. The V5 naming conventions are respected by prepending the "CATSAX" prefix to the original SAX name. Thus, the _HandlerBase_ Java class, which implements the _DocumentHandler_ , _DTDHandler_ , _EntityResolver_ and _ErrorHandler_ Java SAX interfaces is mapped to the _CATSAXHandlerBase_ V5 component, which implements the _CATISAXDocumentHandler_ , _CATISAXDTDHandler_ , _CATISAXEntityResolver_ and _CATISAXErrorHandler_ V5 interfaces  
-boolean | CATBoolean |   
-int | unsigned int |   
+java.lang.String | CATUnicodeString | All the strings obtained from parsing an XML document are represented as _CATUnicodeStrings_ : element names, attribute values, characters, entity names, etc.
+java.io.Exception
+org.xml.sax.SAXException | HRESULT + CATError | The usage for V5 code is to signal errors using _HRESULTs_. Additional information about the error can be obtained using the CATError mechanism. See [1] for more information.
+interface YYY | V5 interface handler CATISAXYYY_var | All SAX interfaces are represented by V5 interface handlers. The V5 naming conventions are respected by prepending the "CATISAX" prefix to the original SAX name (Thus, the _ErrorHandler_ interface from the specification is mapped to _CATISAXErrorHandler_var_ interface handler in V5 C++, the _AttributeList_ interface is mapped to the _CATISAXAttributeList_var_ interface handler and so on).
+rettype method(arg1, arg2, ..., argN) throws SAXException | HRESULT Method(arg1, arg2, ..., argN, rettype) | Methods bear the same name in V5 as in the specification, with the first letter in capital to obey the V5 naming convention. If the specification indicates a return value for the method, the corresponding V5 method will have an additional out parameter to return this argument. The exceptions declared by the method are replaced by a _HRESULT_.
+org.xml.sax.HandlerBase
+org.xml.sax.DefaultHandler
+org.xml.sax.DefaultXMLFilter | CATSAXHandlerBase
+CATSAXDefaultHandler
+CATSAXDefaultXMLFilter | Classes providing a default implementation for SAX interfaces are represented in V5 by a V5 component providing a default implementation for the same SAX interface. The V5 naming conventions are respected by prepending the "CATSAX" prefix to the original SAX name. Thus, the _HandlerBase_ Java class, which implements the _DocumentHandler_ , _DTDHandler_ , _EntityResolver_ and _ErrorHandler_ Java SAX interfaces is mapped to the _CATSAXHandlerBase_ V5 component, which implements the _CATISAXDocumentHandler_ , _CATISAXDTDHandler_ , _CATISAXEntityResolver_ and _CATISAXErrorHandler_ V5 interfaces
+boolean | CATBoolean |
+int | unsigned int |
 
 As a concrete example of how the binding works, please consider the Java definition of the EntityResolver extracted from SAX specification.
 
@@ -244,20 +244,20 @@ As a concrete example of how the binding works, please consider the Java definit
 
     }
 
----  
+---
 
 In V5, you will manipulate the following V5 interface
 
 In V5, you will manipulate the following V5 interface
     class CATISAXEntityResolver: public CATBaseUnknown {
      virtual HRESULT ResolveEntity(
-                       const CATUnicodeString & iPublicId, 
-                       const CATUnicodeString & iSystemId, 
+                       const CATUnicodeString & iPublicId,
+                       const CATUnicodeString & iSystemId,
                        CATISAXInputSource_var & oInputSource) = 0;
 
     };
 
----  
+---
 
 [Top]
 ### Supported XML Encodings
@@ -271,7 +271,7 @@ The XML specification defines the XML syntax using the character model defined b
     <?xml version='1.0' encoding='UTF-8'?>
     ... content encoded in UTF-8 ...
 
----  
+---
 
 [Top]
 #### UTF-8
@@ -283,7 +283,7 @@ The XML specification mandates that XML parsers support UTF-8. Therefore, this e
 [Top]
 #### Other Supported Encodings
 
-A few other encodings are also supported by the XMLParser framework. 
+A few other encodings are also supported by the XMLParser framework.
 
 A few other encodings are also supported by the XMLParser framework.
 UTF-16
@@ -305,15 +305,15 @@ The XMLParser framework provides several parsers. All these parsers are accessib
 * * *
 ### References
 
-[1] | [ Managing Errors Using HRESULT](../CAASysTechArticles/CAASysErrors.md)  
----|---  
+[1] | [ Managing Errors Using HRESULT](../CAASysTechArticles/CAASysErrors.md)
+---|---
 
 * * *
 ### History
 
-Version: **1** [Apr 2005] | Document created  
----|---  
-[Top]  
+Version: **1** [Apr 2005] | Document created
+---|---
+[Top]
 
 * * *
 

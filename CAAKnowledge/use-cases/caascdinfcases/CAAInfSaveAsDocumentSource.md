@@ -15,32 +15,52 @@ converted: "2026-05-11T17:31:52.390982"
 Option Explicit
 
 ```vbscript
+```vbscript
+```vbscript
      ' COPYRIGHT DASSAULT SYSTEMES 2001
      ' *****************************************************************************
      '   Purpose:       Save a New Document.
      '   Assumtions:   None
-     '   Author: 
+     '   Author:
      '   Languages:   VBScript
-     '   Locales:        English 
-     '   CATIA Level:  V5R7 
+     '   Locales:        English
+     '   CATIA Level:  V5R7
      ' *****************************************************************************
 
 ```
 
+```
+
+```
+
      Sub CATMain()
+```vbscript
+```vbscript
          ' -----------------------------------------------------------------------------------------------
          ' Optional: allows to find the sample wherever it may be installed
 
+```
+
+```
+
 ```vbscript
          Dim sDocPath As String
+```vbscript
+```vbscript
          sDocPath=CATIA.SystemService.Environ("CATDocView")
          If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
            Err.Raise 9999,,"No Doc Path Defined"
          End If
 ```
 
+```
+
+```
+
 ```vbscript
-         ' ------------------------------------------------------------------------------------------------ 
+```vbscript
+```vbscript
+         ' ------------------------------------------------------------------------------------------------
          ' -----------------------------------------------------------------------------------------------
          ' Optional: allows to specify where document should be saved
          Dim sTmpPath As String
@@ -48,7 +68,7 @@ Option Explicit
          If (Not CATIA.FileSystem.FolderExists(sTmpPath)) Then
            Err.Raise 9999,,"No Tmp Path Defined"
          End If
-         ' ------------------------------------------------------------------------------------------------ 
+         ' ------------------------------------------------------------------------------------------------
          'Create a new part document.
          'Add the new document to the end of the collection of documents.
          'Create and display a new window for the new document.
@@ -61,13 +81,25 @@ Option Explicit
          sFilePath = CATIA.FileSystem.ConcatenatePaths(sTmpPath, _
 ```
 
+```
+
+```
+
             "CAAInfWriteDocument1.CATPart")
 ```vbscript
 Dim sFilePath
+```vbscript
+```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sTmpPath, _
           CATIA.ActiveDocument.SaveAs(sFilePath)
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
          'Create a second new part document.
           Dim oSecondNewPartDoc As Document
@@ -76,27 +108,60 @@ sFilePath = CATIA.FileSystem.ConcatenatePaths(sTmpPath, _
          sFilePath = CATIA.FileSystem.ConcatenatePaths(sTmpPath, _
 ```
 
+```
+
+```
+
             "CAAInfWriteDocument2.CATPart")
+```vbscript
+```vbscript
 ```vbscript
 'Save the new document using the variable name defined for it.
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sTmpPath, _
+```
+
+```
+
           oSecondNewPartDoc.SaveAs(sFilePath)
+```vbscript
+```vbscript
          'Open an existing document.
          sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
 ```
 
+```
+
+```
+
             "online\CAAScdInfUseCases\samples\CAAInfReadDocument.CATPart")
 oSecondNewPartDoc.SaveAs(sFilePath)
+```vbscript
+```vbscript
 'Open an existing document.
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+```
+
+```
+
+```vbscript
           Dim iThirdPartDoc As Document
+```vbscript
+```vbscript
           Set iThirdPartDoc = CATIA.Documents.Open(sFilePath)
          'Save the new document by specifying its name.
          sFilePath = CATIA.FileSystem.ConcatenatePaths(sTmpPath, _
 
+```
+
+```
+
+```
+
               "CAAInfWriteDocument3.CATPart")
 ```vbscript
 Dim iThirdPartDoc As Document
+```vbscript
+```vbscript
 Set iThirdPartDoc = CATIA.Documents.Open(sFilePath)
 'Save the new document by specifying its name.
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sTmpPath, _
@@ -104,4 +169,11 @@ sFilePath = CATIA.FileSystem.ConcatenatePaths(sTmpPath, _
 
 ```
 
+```
+
+```
+
+```vbscript
      End Sub
+
+```

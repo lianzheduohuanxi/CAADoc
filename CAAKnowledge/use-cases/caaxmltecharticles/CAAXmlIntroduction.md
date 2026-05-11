@@ -11,15 +11,15 @@ converted: "2026-05-11T17:33:45.680797"
 ---
 # 3D PLM Enterprise Architecture
 
-| 
+|
 ## Middleware Abstraction
 
-| 
+|
 ### Introduction to XML
 
-_Quick overview of XML fundamentals_  
----|---|---  
-Technical Article  
+_Quick overview of XML fundamentals_
+---|---|---
+Technical Article
 
 * * *
 ### Abstract
@@ -39,12 +39,12 @@ This article explains what XML is. It gives an overview of the standards governi
     * DOM Versus SAX
     * DTDs Versus Schemas
 
----  
+---
 
 * * *
 ### What Is XML ?
 
-XML (Extensible Markup Language) is a data description language. XML has many strengths, which account for its great popularity and large availability:  
+XML (Extensible Markup Language) is a data description language. XML has many strengths, which account for its great popularity and large availability:
 
   * It has a simple text syntax based on elements identified by start and end tags. One can read or create XML easily with just a simple text editor.
   * It supports pluggable grammars (called DTDs or XSD schemas), which enable the creation of tag vocabularies for any domain.
@@ -89,7 +89,7 @@ XML files follow syntactic rules, some of which were just described in the previ
                                     |
        Not well-formed XML: the tags are not properly nested.
 
----  
+---
 
 The elements, which are allowed to appear in an XML documents and the order in which these elements are allowed to appear is described by a grammar file, called a DTD or an XSD schema. An XML document, which obeys all the rules specified by its associated grammar file is said to be **valid**.
 
@@ -102,7 +102,7 @@ The elements, which are allowed to appear in an XML documents and the order in w
                |
      Well-formed but invalid XML: aeroplane is not defined in the automotive DTD.
 
----  
+---
 
 [Top]
 ### Presentation of the Core XML Standards
@@ -151,9 +151,9 @@ The DOM API views XML documents as a tree of XML nodes. The root element of the 
      <part name="wheel" quantity="4"/>
      <part name="engine" quantity="1">low consumption engine</part>
      <part name="body" quantity="1">weight must be &lt; 1200 kg</part>
-    </car>  
+    </car>
 
----  
+---
 
 ![dominstance.png \(7116 bytes\)](images/dominstance.png)
 
@@ -172,9 +172,9 @@ The SAX API uses an event-oriented API to process XML documents. The XML SAX par
      <part name="wheel" quantity="4"/>
      <part name="engine" quantity="1">low consumption engine</part>
      <part name="body" quantity="1">weight must be &lt; 1200 kg</part>
-    </car>  
+    </car>
 
----  
+---
 
     1. Start document
     2. Start element "car"
@@ -191,7 +191,7 @@ The SAX API uses an event-oriented API to process XML documents. The XML SAX par
     13. End element "car"
     14. End document
 
----  
+---
 
 [Top]
 ### Choosing the Right API
@@ -234,17 +234,17 @@ DTD and schemas address the same problem: defining tag vocabularies (grammars) f
     <!ELEMENT car (part)+>
     <!ELEMENT part (#PCDATA)>
     <!ATTLIST part name ID #REQUIRED
-              quantity CDATA #IMPLIED>  
+              quantity CDATA #IMPLIED>
 
----  
+---
 
 Here is an equivalent grammar defined as an XSD schema:
 
     <?xml version="1.0" encoding="UTF-8"?>
-    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 Here is an equivalent grammar defined as an XSD schema:
-     elementFormDefault="qualified" 
-     targetNamespace="urn:com:dassault_systemes:automotive" 
+     elementFormDefault="qualified"
+     targetNamespace="urn:com:dassault_systemes:automotive"
      xmlns:tns="urn:com:dassault_systemes:automotive">
 
      <xsd:element name="car">
@@ -262,9 +262,9 @@ Here is an equivalent grammar defined as an XSD schema:
        </xsd:extension>
       </xsd:simpleContent>
      </xsd:complexType>
-    </xsd:schema>  
+    </xsd:schema>
 
----  
+---
 
 The main advantages of DTDs are:
 
@@ -300,21 +300,21 @@ XML is a data description language. Its simplicity, strict standardization, broa
 * * *
 ### References
 
-[1] | Extensible Markup Language (XML) 1.0 (Third Edition) - W3C Recommendation 04 February 2004  
----|---  
-[2] | Namespaces in XML  
-[3] | XML Schema - W3C schema home page February 2004  
-[4] |  Document Object Model (DOM) Technical Reports - W3C DOM home page  
-[5] |  XML Schema Part 0: Primer Second Edition  
-[6] |  XML SAX (Simple API for XML)  
-[Top]  
+[1] | Extensible Markup Language (XML) 1.0 (Third Edition) - W3C Recommendation 04 February 2004
+---|---
+[2] | Namespaces in XML
+[3] | XML Schema - W3C schema home page February 2004
+[4] |  Document Object Model (DOM) Technical Reports - W3C DOM home page
+[5] |  XML Schema Part 0: Primer Second Edition
+[6] |  XML SAX (Simple API for XML)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Apr 2005] | Document created  
----|---  
-[Top]  
+Version: **1** [Apr 2005] | Document created
+---|---
+[Top]
 
 * * *
 

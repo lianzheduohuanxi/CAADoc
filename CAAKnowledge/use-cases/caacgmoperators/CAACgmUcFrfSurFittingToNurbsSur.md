@@ -12,12 +12,12 @@ converted: "2026-05-11T17:33:48.947040"
 tags: ["CAAGMOperatorsSurFittingToNurbsSur", "CAAGMOperatorsInterfaces", "CAADoc", "CATICGMSurFittingToNurbsSur", "CATICGMObject", "CAAGMModelGemBrowser", "CAASurFittingToNurbsSur", "CATIA", "CAAGMOperatorInterfaces"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcFrfSurFittingToNurbsSur.htm"
 converted: "2026-05-11T17:33:48.947040"
-Converting Surfaces into NURBS  
+Converting Surfaces into NURBS
 
----  
+---
 converted: "2026-05-11T17:33:48.947040"
 Converting Surfaces into NURBS
-Use Case  
+Use Case
 Abstract You can convert surfaces into NURBS by using the CATICGMSurFittingToNurbsSur operator. These operator allows you to specify the characteristics of the resulting NURBS as well as a maximum deviation you would like to obtain with respect to the initial surface.
 
     * What You Will Learn With This Use Case
@@ -28,8 +28,8 @@ Abstract You can convert surfaces into NURBS by using the CATICGMSurFittingToNur
       * Where to Find the CAAGMOperatorsSurFittingToNurbsSur Code
     * Step-by-Step
     * In Short
-    * References  
----  
+    * References
+---
 What You Will Learn With This Use Case This use case is intended to help you use the free form operators. It particularly illustrates how to convert a curve/surface into a NURBS curve/surface. The CATICGMSurFittingToNurbsSur Operator The CATICGMSurFittingToNurbsSur operator is to be used according to the general scheme of operators:
     1. Creation of an operator instance from a global function. Two modes BASIC or ADVANCED are proposed.
     2. If the ADVANCED mode is chosen, tuning of the parameters by using the Setxxx methods then run of the operator.
@@ -58,13 +58,16 @@ How to Launch CAAGMOperatorsSurFittingToNurbsSur To launch CAAGMOperatorsSurFitt
 Creating the Geometry Factory The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject (and the curves and surfaces in particular) [1]. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
     CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**() ;
+```vbscript
     if (NULL==piGeomFactory) return (1);
+
+```
 
 Creating the Surface to Be Converted into a NURBS The surface to be converted is a revolution surface created from a spline curve. Both the spline and the revolution surface are geometric objects created from the geometry factory. Converting the Created Surface into a NURBS without Specifying any Constraints This first operator is intended to create an operator instance with the following parameters:
     1. A 0.001 maximum deviation. It is important to note that this value is the CATIA resolution and it would not be meaningful to specify a maximum deviation less than this resolution.
     2. The rational factor is 1 - meaning that resulting curve is to be rational (different weights can be assigned to control points.
 
-    CATICGMSurFittingToNurbsSur * pSurFitting1 = 
+    CATICGMSurFittingToNurbsSur * pSurFitting1 =
 
     		::CATCGMCreateSurFittingToNurbsSur(piGeomFactory,
 1. A 0.001 maximum deviation. It is important to note that this value is the CATIA resolution and it would not be meaningful to specify a maximum deviation less than this resolution.
@@ -84,18 +87,24 @@ At this stage, you have just created an instance of operator, if you want to get
 
 The transformation of the surface into NURBS is exact. To check this, you can use the IsExactTransformation method or retrieve the maximum deviation (0 is returned in the present use case).
 
-    // (g) --- Determine whether the transformation is exact 
+    // (g) --- Determine whether the transformation is exact
     // "Transformation exact" expected as the surface
     // has been specified rational
     //
     IsExact = pSurFitting1->IsExactTransformation();
+```vbscript
     if (IsExact == 0) cout << "Transformation not exact" << endl;
+```
+
     else {cout << "Exact transformation" << endl;}
 
     // (h) --- Display the maximum deviation on the standard output
     //
 IsExact = pSurFitting1->IsExactTransformation();
+```vbscript
 if (IsExact == 0) cout << "Transformation not exact" << endl;
+```
+
 else {cout << "Exact transformation" << endl;}
     maxDeviat = pSurFitting1->GetMaxDeviation();
     cout << "Maximum deviation of surface 1 " <<  maxDeviat << endl;
@@ -121,17 +130,17 @@ ofstream filetowrite(pfileName, ios::binary ) ;
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
        filetowrite.close();
-     }	
+     }
 
      //
      // Closes the container
-     //	
+     //
      **::CATCloseCGMContainer**(piGeomFactory);
 
-In Short The CATICGMSurFittingToNurbsSur operators allows you to convert a surface into a NURBS surface. Apart from the usual parameters, this operator requires you specify the maximum deviation you would like to obtain from the initial surface as well as the rationality. Constraints on the resulting surface can be specified by using Setxxx methods. References [1] |  [ About NURBS](../CAACgmModel/CAACgmTaGobAboutNurbs.md)  
----|---  
-[2] |  [ The Objects of CATIA Geometric Modeler](../CAACgmModel/CAACgmTaGobGeoObjects.md)  
-[3] |  [ The Curves of CATIA Geometric Modeler](../CAACgmModel/CAACgmTaGobCurves.md)  
-[4] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
-History Version: **1** [Feb 2000] | Document created  
+In Short The CATICGMSurFittingToNurbsSur operators allows you to convert a surface into a NURBS surface. Apart from the usual parameters, this operator requires you specify the maximum deviation you would like to obtain from the initial surface as well as the rationality. Constraints on the resulting surface can be specified by using Setxxx methods. References [1] |  [ About NURBS](../CAACgmModel/CAACgmTaGobAboutNurbs.md)
+---|---
+[2] |  [ The Objects of CATIA Geometric Modeler](../CAACgmModel/CAACgmTaGobGeoObjects.md)
+[3] |  [ The Curves of CATIA Geometric Modeler](../CAACgmModel/CAACgmTaGobCurves.md)
+[4] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
+History Version: **1** [Feb 2000] | Document created
 ---|---

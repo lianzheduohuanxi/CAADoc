@@ -10,6 +10,8 @@ converted: "2026-05-11T17:31:51.598559"
 
 ---
 ```vbscript
+```vbscript
+```vbscript
     'COPYRIGHT DASSAULT SYSTEMES 2000
     '***********************************************************************
     '  Purpose:  	Create User Material
@@ -18,43 +20,74 @@ converted: "2026-05-11T17:31:51.598559"
     '  Assumptions:  The material catalog is not empty
     '  Author:       bmw
     '  Languages:    CATScript
-    '  Locales:      English 
+    '  Locales:      English
     '  CATIA Level:  V5R18
     '***********************************************************************
 
 ```
 
-    Sub CATMain()
+```
+
+```
 
 ```vbscript
-    '----------------------------------------------------------- 
+    Sub CATMain()
+
+```
+
+```vbscript
+```vbscript
+```vbscript
+    '-----------------------------------------------------------
     'Optional: allows to find the sample wherever it's installed
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 
+```
+
+```
+
 ```vbscript
     Err.Raise 9999,,"No Doc Path Defined"
+```vbscript
+```vbscript
     End If
-    '----------------------------------------------------------- 
+    '-----------------------------------------------------------
+
+```
+
+```
 
 ```
 
 ```vbscript
 End If
+```vbscript
+```vbscript
 '-----------------------------------------------------------
     'Open the CATAnalysis Document
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Beam.CATAnalysis")
 ```
 
+```
+
+```
+
+```vbscript
 ```vbscript
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```
 
+```
+
 ```vbscript
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+```vbscript
     'Retrieve the Analysis Managar and Analysis Model
+```
+
 ```
 
 ```vbscript
@@ -62,29 +95,55 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 ```
 
 ```vbscript
+```vbscript
+```vbscript
     'Retrieve the analysis model from list of models
     Set oAnalysisModels = oAnalysisManager.AnalysisModels
     Set oAnalysisModel = oAnalysisModels.Item(1)
 ```
 
-    'Retrieve the material set from list of analysis sets
+```
+
+```
+
 ```vbscript
-    Set oAnalysisSets = oAnalysisModel.AnalysisSets 
+    'Retrieve the material set from list of analysis sets
+```
+
+```vbscript
+    Set oAnalysisSets = oAnalysisModel.AnalysisSets
+```vbscript
+```vbscript
     Set oAnalysisSet = oAnalysisSets.ItemByType("MaterialSet")
+
+```
+
+```
 
 ```
 
 ```vbscript
 Set oAnalysisSets = oAnalysisModel.AnalysisSets
+```vbscript
+```vbscript
 Set oAnalysisSet = oAnalysisSets.ItemByType("MaterialSet")
     'Add an new user material
 ```
 
+```
+
+```
+
 ```vbscript
     Set oAnalysisEntities = oAnalysisSet.AnalysisEntities
+```vbscript
     Set oAnalysisEntity1 = oAnalysisEntities.Add("SAMUserMaterial")
 ```
 
+```
+
+```vbscript
+```vbscript
 ```vbscript
     'Load the catalog of materials
     MaterialFile = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\CatalogForAutomation.CATMaterial")
@@ -93,19 +152,35 @@ Set oAnalysisSet = oAnalysisSets.ItemByType("MaterialSet")
     Set cFamilies_list = oMaterial_document.Families
     'Retrieve the first family of the library
     Dim ifamily_no As Integer
+```
+
+```
+
     ifamily_no = 1
     Set oFirst_family = cFamilies_list.Item(iFamily_no)
+```vbscript
+```vbscript
     'Retrieve the list of materials from the family
     Set cMaterials_list = oFirst_family.Materials
 
     Dim imaterial_no As Integer
+```
+
+```
+
     imaterial_no = 1
 
     Set oMaterial1 = cMaterials_list.Item(imaterial_no)
-    'Retrieve a material from the list and create analysis material 
+```vbscript
+    'Retrieve a material from the list and create analysis material
+```
+
     imaterial_no = 1
     Set oMaterial1 = cMaterials_list.Item(imaterial_no)
+```vbscript
     Set anlysisMaterial = oMaterial1.CreateAnalysisData("SAMAnisotropicMaterial")
+```
+
 ```
 
     anlysisMaterial.PutValue "SAMShearModulus_11", "1e+10"
@@ -121,13 +196,19 @@ Set oAnalysisSet = oAnalysisSets.ItemByType("MaterialSet")
     anlysisMaterial.PutValue "SAMTensileStressLimit", "1e+11"
     anlysisMaterial.PutValue "SAMCompressiveStressLimit", "2e+11"
     anlysisMaterial.PutValue "SAMShearStressLimit", "1e+10"
+```vbscript
     'Apply the material on the User Material
+```
+
     linkMode = 0
 
 ```vbscript
     Set oManager = oAnalysisManager.GetItem("CATMatManagerVBExt")
-    oManager.ApplyMaterialOnUserMaterial oAnalysisEntity1, oMaterial1, linkMode 
+    oManager.ApplyMaterialOnUserMaterial oAnalysisEntity1, oMaterial1, linkMode
 
 ```
 
+```vbscript
     End Sub
+
+```

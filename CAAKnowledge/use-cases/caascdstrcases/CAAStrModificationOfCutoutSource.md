@@ -9,10 +9,15 @@ converted: "2026-05-11T17:31:50.897562"
 ```
 
 ---
-    Sub CATMain()
+```vbscript
+Sub CATMain()
+
+```
 
 ```vbscript
     Dim StrWorkbench As StrWorkbench
+```vbscript
+```vbscript
     Dim strFactory As StrObjectFactory
 
     Set doc = CATIA.ActiveDocument
@@ -29,22 +34,40 @@ converted: "2026-05-11T17:31:50.897562"
 
 ```
 
+```
+
+```
+
 ```vbscript
 Dim selection1 As Selection
+```vbscript
 Set selection1 = doc.Selection
+```
+
     selection1.Search "Name='StrCutout.1',all"
 
 ```
 
 ```vbscript
     Dim CutoutToEdit As StrCutoutFeature
+```vbscript
     Set CutoutToEdit = selection1.Item(1).Value
 ```
 
+```
+
+```vbscript
+```vbscript
 ```vbscript
     'Get the Cutout Type
     Dim FormingMode As String
+```
+
+```
+
     FromingMode = CutoutToEdit.CutoutType
+```vbscript
+```vbscript
     'Get the Current Contour
     Dim CurrentContour As Reference
     Set CurrentContour = CutoutToEdit.Contour
@@ -60,18 +83,36 @@ Set selection1 = doc.Selection
     Set NewDirElement = part1.CreateReferenceFromObject(Newdir)
 ```
 
+```
+
+```
+
 ```vbscript
 Set Newdir = part1.FindObjectByName("Sketch.4")
+```vbscript
+```vbscript
 Set NewDirElement = part1.CreateReferenceFromObject(Newdir)
     CutoutToEdit.DirectionElement = NewDirElement
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
     'Set the New Contour
     Dim NewContour As Reference
     Set NewContour = rootProduct.CreateReferenceFromName("Product1/Grid/!Sketch.2")
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 'Set the New Contour
 Dim NewContour As Reference
@@ -80,4 +121,11 @@ Set NewContour = rootProduct.CreateReferenceFromName("Product1/Grid/!Sketch.2")
 
 ```
 
+```
+
+```
+
+```vbscript
     End Sub
+
+```

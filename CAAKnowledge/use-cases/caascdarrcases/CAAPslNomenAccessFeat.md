@@ -10,17 +10,17 @@ converted: "2026-05-11T17:31:51.577544"
 ```
 
 ---
-## Arrangement  
+## Arrangement
 
-| 
-## CATIArrNomenclature, CATIArrNomenclatures, CATIArrNomenclatureTrees Interfaces Use Case  
+|
+## CATIArrNomenclature, CATIArrNomenclatures, CATIArrNomenclatureTrees Interfaces Use Case
 
 * * *
 
- This example shows how to extract Bendable Data from BendableString objects (Pipe with bends, Tube with bends). Help is taken of a macro. This macro has a reference to CATIArrNomenclature , CATIArrNomenclatures and CATIAArrNomenclatureTrees Interfaces (referred to as ArrNomenclature, ArrNomenclatures and ArrNomenclatureTree in reference Visual Basic document).This macro opens an existing Product document and retrieves the BaseNomenclatures from ArrNomenclatureTree. Then it obtains the ArrNomanclatures and ArrNomenclature recursively.  
----|---  
+ This example shows how to extract Bendable Data from BendableString objects (Pipe with bends, Tube with bends). Help is taken of a macro. This macro has a reference to CATIArrNomenclature , CATIArrNomenclatures and CATIAArrNomenclatureTrees Interfaces (referred to as ArrNomenclature, ArrNomenclatures and ArrNomenclatureTree in reference Visual Basic document).This macro opens an existing Product document and retrieves the BaseNomenclatures from ArrNomenclatureTree. Then it obtains the ArrNomanclatures and ArrNomenclature recursively.
+---|---
 This example shows how to extract Bendable Data from BendableString objects (Pipe with bends, Tube with bends). Help is taken of a macro. This macro has a reference to CATIArrNomenclature , CATIArrNomenclatures and CATIAArrNomenclatureTrees Interfaces (referred to as ArrNomenclature, ArrNomenclatures and ArrNomenclatureTree in reference Visual Basic document).This macro opens an existing Product document and retrieves the BaseNomenclatures from ArrNomenclatureTree. Then it obtains the ArrNomanclatures and ArrNomenclature recursively.
- PSLNomenAccessFeat is launched after CATIA is up and the reference document is opened.PslNomenFeatAccess.CATScript is located in the runtime directory Operating System (say intel_a)\code\command  
+ PSLNomenAccessFeat is launched after CATIA is up and the reference document is opened.PslNomenFeatAccess.CATScript is located in the runtime directory Operating System (say intel_a)\code\command
  CAAPslNomenAccessFeat includes the following steps:
 
   1. Prolog
@@ -30,78 +30,126 @@ This example shows how to extract Bendable Data from BendableString objects (Pip
 
 #### Prolog
 
-| 
+|
 
       ...
       a) Open the Input Document
       b) Run the macro
-      ...  
+      ...
 
----  
+---
 
 Once the Product has been loaded, the macro is designed to read the relevant objects from the model.
 #### Obtain the ArrNomenclatures object
 
     ...
 Once the Product has been loaded, the macro is designed to read the relevant objects from the model.
+```vbscript
+```vbscript
        '//---------- Get Arrworkbench from current document
+
+```
+
+```
 
 ```vbscript
        Dim objDocument0 As Object
-       Set objDocument0 = CATIA.ActiveDocument  
+```vbscript
+```vbscript
+       Set objDocument0 = CATIA.ActiveDocument
        Dim objArrWorkbench1 As Workbench
        Set objArrWorkbench1 = objDocument0.GetWorkbench  ( "ArrWorkbench" )
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
        '//---------- Get ArrNomenclatureTree from ArrWorkbench
        Dim objArrNomTree1 As ArrNomenclatureTree
        Set objArrNomTree1 = objArrWorkbench1.ArrNomenclatureTree
-'//---------- Get ArrNomenclatures from ArrNomenclatureTree and get a count of the Nomenclatures Dim objArrNomTopNode As ArrNomenclatures Set objArrNomTopNode = objArrNomTree1.BaseNomenclatures Dim intNBOfNom intNBOfNom = objArrNomTopNode.Count ...  
+'//---------- Get ArrNomenclatures from ArrNomenclatureTree and get a count of the Nomenclatures Dim objArrNomTopNode As ArrNomenclatures Set objArrNomTopNode = objArrNomTree1.BaseNomenclatures Dim intNBOfNom intNBOfNom = objArrNomTopNode.Count ...
 ```
 
----  
+```
+
+```
+
+---
 #### Start to get the information about ArrNomenclature object from ArrNomenclatures object recursively
 
     ...
 ```vbscript
        Dim intK
+```vbscript
+```vbscript
        Dim objKArrNom As ArrNomenclature
        Dim strIntSysClassName
        Dim strNLSInstanceName
        Dim strIconName
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
       '// -------- Recursively loop Through each Nomenclature and do the following
        Set objKArrNom = objArrNomTopNode.Item(intK)
+```
+
+```
+
        strIntSysClassName = objKArrNom.IntSysClassName
        strNLSInstanceName = objKArrNom.NLSInstanceName
        strIconName = objKArrNom.IconName
+```vbscript
+```vbscript
        '// ArrNomenclature can contain various subtypes
        Dim objArrSubTypes As ArrNomenclatures
        Set objArrSubTypes = iobjArrNomen.SubTypes
+```
+
+```
+
        intNBOfNom = objArrSubtypes.Count
        Dim objJArrNom As ArrNomenclature
-       For intJ=1 to intNBOfNom  
-       Set objJArrNom = objArrSubTypes.Item(intJ) 
+```vbscript
+```vbscript
+       For intJ=1 to intNBOfNom
+       Set objJArrNom = objArrSubTypes.Item(intJ)
+```
+
+```
+
        strNLSInstanceName = objJArrNom.NLSInstanceName
        strIntSysClassName = objJArrNom.IntSysClassName
        strIconName = objJArrNom.IconName
+```vbscript
        ' Call recursive function again on objJArrNom
 ```
 
-      ...  
+```
 
----  
+      ...
+
+---
 #### Epilog
 
 Thus we saw how to read a CATProduct document, retrieve the objects we are interested in and get more information about the objects
 
     ...
-    End Sub  
+```vbscript
+    End Sub
 
----  
+```
+
+---
 
 ![](../CAAScrBase/images/aendtask.gif)
 
@@ -117,9 +165,9 @@ Thus we saw how to read a CATProduct document, retrieve the objects we are inter
 * * *
 #### References
 
-[1] | Replaying a macro  
----|---  
-[Top]  
+[1] | Replaying a macro
+---|---
+[Top]
 
 * * *
 

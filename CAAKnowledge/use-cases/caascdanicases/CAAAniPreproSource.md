@@ -15,28 +15,43 @@ converted: "2026-05-11T17:31:51.851825"
     Option Explicit
 
 ```vbscript
+```vbscript
+```vbscript
     ' COPYRIGTH DASSAULT SYSTEMES 2000
     ' ***********************************************************************
     '   Purpose:      Read an Analysis document already linked to a CATPart Document
     '                 Define boundaries and loading condition on the Part and launch the
     '                 Computation
     '   Assumptions:   Looks for AnalysisCrank.CATAnalysis linked to Crankshaft.CATPart
-    '                 stored in the DocView   
-    '   Author: 
+    '                 stored in the DocView
+    '   Author:
     '   Languages:    VBScript
-    '   Locales:      English 
-    '   CATIA Level:  V5R6 
+    '   Locales:      English
+    '   CATIA Level:  V5R6
     ' ***********************************************************************
 
 ```
 
-    Sub CATMain()
+```
+
+```
 
 ```vbscript
-        ' ----------------------------------------------------------- 
+    Sub CATMain()
+
+```
+
+```vbscript
+```vbscript
+```vbscript
+        ' -----------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
-        dim sDocPath As String 
+        dim sDocPath As String
         sDocPath=CATIA.SystemService.Environ("CATDocView")
+```
+
+```
+
 ```
 
 ```vbscript
@@ -45,11 +60,16 @@ converted: "2026-05-11T17:31:51.851825"
 
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
+```vbscript
         End If
 ```
 
+```
+
 ```vbscript
-        ' ----------------------------------------------------------- 
+```vbscript
+```vbscript
+        ' -----------------------------------------------------------
         ' Get the collection of documents in session
         Dim documents1 As Documents
         Set documents1 = CATIA.Documents
@@ -102,13 +122,25 @@ converted: "2026-05-11T17:31:51.851825"
         Set analysisEntity = anEntities.Add("SAMClamp")
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' Define an Analysis Entity on the set in order to Fix the referencebound of the Part
 Dim analysisEntity As AnalysisEntity
 Set analysisEntity = anEntities.Add("SAMClamp")
+```
+
+```
+
         analysisEntity.AddSupportFromProduct product1, referenceBound
 ```
 
+```vbscript
+```vbscript
 ```vbscript
         '_____________________________________________________________________________________
         ' To work with the AnalysisSet of the collection that is typed for Load condition
@@ -120,10 +152,20 @@ Set analysisEntity = anEntities.Add("SAMClamp")
        ' Valuate the momentum value and assign it to the reference
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' Define an Analysis Entity on the set in order to assign a pressure the referenceLoad of the Part
 Set analysisEntity = anEntities.Add("SAMMoment")
 ' Valuate the momentum value and assign it to the reference
+```
+
+```
+
         analysisEntity.SetValue "SAMMomentVector","", 1, 1, 1, 100000.
         analysisEntity.SetValue "SAMMomentVector","", 2, 1, 1, 0.
         analysisEntity.SetValue "SAMMomentVector","", 3, 1, 1, 0.
@@ -133,8 +175,17 @@ Set analysisEntity = anEntities.Add("SAMMoment")
 analysisEntity.SetValue "SAMMomentVector","", 2, 1, 1, 0.
 analysisEntity.SetValue "SAMMomentVector","", 3, 1, 1, 0.
         analysisEntity.AddSupportFromProduct product1, referenceLoad
+```vbscript
+```vbscript
         '_____________________________________________________________________________________
         ' Launch the computation of the Case
+```
+
+```
+
         MyCase.Compute
 
+```vbscript
     End Sub
+
+```

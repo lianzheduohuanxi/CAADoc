@@ -12,11 +12,11 @@ converted: "2026-05-11T17:33:46.071110"
 tags: []
 source_file: "Doc/online/CAABtlTechArticles/CAABtlMANIdCardXMLV5Mig.htm"
 converted: "2026-05-11T17:33:46.071110"
-RADE |  Multi-Workspace Application Builder |  Migrating Your Identity Cards to XML _From .h to .xml_  
+RADE |  Multi-Workspace Application Builder |  Migrating Your Identity Cards to XML _From .h to .xml_
 
 converted: "2026-05-11T17:33:46.071110"
 RADE |  Multi-Workspace Application Builder |  Migrating Your Identity Cards to XML _From .h to .xml_
-Technical Article  
+Technical Article
 
 * * *
 
@@ -26,7 +26,7 @@ Abstract The **IdentityCard** file is encoded in XML starting with V6R2012x. The
   * Using mkIc2Xml
   * References
 
----  
+---
 Using mkICE
 
 Using mkICE
@@ -60,10 +60,10 @@ A.tst Done [3/3]
 
   2. Delete the IdentityCard.h files of you frameworks.
 
-[Top] References [1] |  Framework Architecture Rules  
----|---  
-[2] | [mkICE](../CAABtlQuickRefs/CAABtlMkICEV5.md)  
-[3] | [mkIc2Xml](../CAABtlQuickRefs/CAABtlMkIc2XmlV5.md)  
-History Version: **1** [Jun 2011] | Document created  
----|---  
+[Top] References [1] |  Framework Architecture Rules
+---|---
+[2] | [mkICE](../CAABtlQuickRefs/CAABtlMkICEV5.md)
+[3] | [mkIc2Xml](../CAABtlQuickRefs/CAABtlMkIc2XmlV5.md)
+History Version: **1** [Jun 2011] | Document created
+---|---
 [Top] _Copyright 2013, Dassault Systmes. All rights reserved._

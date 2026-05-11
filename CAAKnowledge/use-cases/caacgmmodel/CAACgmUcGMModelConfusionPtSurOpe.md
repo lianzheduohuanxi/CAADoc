@@ -9,10 +9,10 @@ converted: "2026-05-11T17:33:48.280142"
 ```
 
 ---
-# Checking the Confusion of Points on a Surface  
+# Checking the Confusion of Points on a Surface
 
----  
-Use Case  
+---
+Use Case
 ## Abstract
 
 The CAAGMModelConfusionOpe use case illustrates how to detect whether two points located on a surface are overlapping by using the _CATICGMConfusionPtOnSurPtOnSur_ operator.
@@ -23,8 +23,8 @@ The CAAGMModelConfusionOpe use case illustrates how to detect whether two points
       * Where to Find the CAAGMModelConfusionOpe Code
     * Step-by-Step
     * In Short
-    * References  
----  
+    * References
+---
 ## What You Will Learn With This Use Case
 
 This use case [1] is intended to help you to use the _CATICGMConfusionPtOnSurPtOnSur_ operator. See [2] for an overview of this type of operators.
@@ -36,14 +36,17 @@ CAAGMModelConfusionOpe is a use case of the CAAGMModelInterfaces.edu framework. 
  This use case creates the input data to be passed to the _CATICGMConfusionPtOnSurPtOnSur_ operator:
     * A cylinder.
     * The two points to be compared.
-It creates the operator and performs the geometric tests. The result can be optionally saved into an NCGM container and displayed using the CAAGMModelGemBrowser use case [3]. However, if you want to display the circle on which the two points are created, the object which is highlighted on the figure, you must adjust the use case and convert the CATCylinder into a CATICGMTopSkin.  
----|---  
-### How to Launch CAAGMModelConfusionOpe 
+It creates the operator and performs the geometric tests. The result can be optionally saved into an NCGM container and displayed using the CAAGMModelGemBrowser use case [3]. However, if you want to display the circle on which the two points are created, the object which is highlighted on the figure, you must adjust the use case and convert the CATCylinder into a CATICGMTopSkin.
+---|---
+### How to Launch CAAGMModelConfusionOpe
 
 It creates the operator and performs the geometric tests. The result can be optionally saved into an NCGM container and displayed using the CAAGMModelGemBrowser use case [3]. However, if you want to display the circle on which the two points are created, the object which is highlighted on the figure, you must adjust the use case and convert the CATCylinder into a CATICGMTopSkin.
 To launch CAAGMModelConfusionOpe, you will need to set up the build time environment, then compile CAAGMModelConfusionOpe.m along with its prerequisites, set up the run time environment, and then execute the use case [4].
 
+```vbscript
 If you simply type CAAGMModelConfusionOpe with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example:
+
+```
 
 CAAGMModelConfusionOpe `e/confusion.NCGM`
 
@@ -92,7 +95,7 @@ const double alpha = 0.37;
 double vparam = 0.5;
 CATSurParam param3(alpha, vparam, limits2);
 CATPointOnSurface * Pt3 = piGeomFactory->CreatePointOnSurface(param3, pSurf);
-    double uparam = 0.3705; 
+    double uparam = 0.3705;
     CATSurParam param4(uparam, vparam, limits2);
     CATPointOnSurface * Pt4 = piGeomFactory->CreatePointOnSurface(param4, pSurf);
 
@@ -137,12 +140,12 @@ CATICGMConfusionPtOnSurPtOnSur is a geometric operator which follows the same sc
 
 ## References
 
-[1] | [An Introduction to Geometric Modeler Use Cases](CAACgmUcGMModelUseCaseOverw.md)  
----|---  
-[2] | [How to Use Geometric Operators](CAACgmUcGMModelOpeOverw.md)  
-[3] | [Browsing the Geometric Container](CAACgmUcGemBrowser.md)  
-[4] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[1] | [An Introduction to Geometric Modeler Use Cases](CAACgmUcGMModelUseCaseOverw.md)
+---|---
+[2] | [How to Use Geometric Operators](CAACgmUcGMModelOpeOverw.md)
+[3] | [Browsing the Geometric Container](CAACgmUcGemBrowser.md)
+[4] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
 ## History
 
-Version: **1** [Jan 2007] | Document created  
+Version: **1** [Jan 2007] | Document created
 ---|---

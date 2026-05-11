@@ -11,20 +11,20 @@ converted: "2026-05-11T17:31:52.051717"
 ---
 # 3D PLM Enterprise Architecture
 
-| 
+|
 ## 3D Visualization
 
-| 
+|
 ### Catching the Visualization Notifications
 
-_Redefining the AnalyseNotification method of a document editor selector_  
----|---|---  
-Use Case  
+_Redefining the AnalyseNotification method of a document editor selector_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
 
-This article discusses the CAAVisManager use case. This use case explains how to create and implement a specific visualization interface for geometric components, how to make the visualization manager aware of this interface to display these components, and how to catch the visualization notifications to manage the PSO and HSO contents. This article focuses on catching the visualization notifications. 
+This article discusses the CAAVisManager use case. This use case explains how to create and implement a specific visualization interface for geometric components, how to make the visualization manager aware of this interface to display these components, and how to catch the visualization notifications to manage the PSO and HSO contents. This article focuses on catching the visualization notifications.
 
   * **What You Will Learn With This Use Case**
   * **The CAAVisManager Use Case**
@@ -35,7 +35,7 @@ This article discusses the CAAVisManager use case. This use case explains how to
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
@@ -63,23 +63,23 @@ To launch CAAVisManager, you will need to set up the build time environment, the
 To launch CAAVisManager, you will need to set up the build time environment, then compile the four CAAVisManager modules along with their prerequisites, set up the run time environment, and then execute the use case [5]. You cannot launch CAAVisManager itself. CAAVisManager is simply used by the CAAVisManagerAppli use case. Type CAAVisManagerAppli instead of CAAVisManager to display the interactive application along with a viewer that displays the CAAVisManagerDefaultDocument.
 CAAVisManager code is located in the CAAVisualization.edu framework:
 
-Windows | `InstallRootDirectory\CAAVisualization.edu\`  
+Windows | `InstallRootDirectory\CAAVisualization.edu\`
 
 CAAVisManager code is located in the CAAVisualization.edu framework:
 Windows | `InstallRootDirectory\CAAVisualization.edu\`
-Unix | `InstallRootDirectory/CAAVisualization.edu/`  
+Unix | `InstallRootDirectory/CAAVisualization.edu/`
 
-where `InstallRootDirectory` is the root directory of your CAA V5 installation. 
+where `InstallRootDirectory` is the root directory of your CAA V5 installation.
 
 CAAVisManager includes the following modules:
 
-CAAVisManagerAppli.m | Contains the interactive application, the windows and the documents  
+CAAVisManagerAppli.m | Contains the interactive application, the windows and the documents
 
 CAAVisManager includes the following modules:
 CAAVisManagerAppli.m | Contains the interactive application, the windows and the documents
-CAAVisManagerComp.m | Contains the geometric components to display  
-CAAVisManagerImp.m | Contains the extension classes required to make the geometric components displayable  
-CAAVisManagerInt.m | Contains the interfaces implemented by the geometric components, especially the visualization interface. Their header files are located in the PrivateInterfaces directory  
+CAAVisManagerComp.m | Contains the geometric components to display
+CAAVisManagerImp.m | Contains the extension classes required to make the geometric components displayable
+CAAVisManagerInt.m | Contains the interfaces implemented by the geometric components, especially the visualization interface. Their header files are located in the PrivateInterfaces directory
 
 This use case details the `AnalyseNotification` method of the _CAAVisManagerCmdSelector_ class in the CAAVisManagerAppli.m module.
 
@@ -112,7 +112,10 @@ CATCommand * iFromClient,
 CATNotification * iNotification)
       CATNotifPropagationMode propMode = **CATNotifTransmitToFather** ;
 
+```vbscript
       if ( iNotification->IsAKindOf(**CATManipulatorNotification::ClassName**()) )
+
+```
 
       {
         ...  // see coming steps
@@ -133,7 +136,10 @@ else  if ( iNotification->IsAKindOf(**CATMultiSel::ClassName**()) )
         propMode = **CATNotifDontTransmitToFather** ;
         CATSO * pSetOfObjects = (CATSO *) iFromClient->**SendCommandSpecificObject**(
                                              CATPathElement::ClassName(), iNotification);
+```vbscript
         if  (NULL != pSetOfObjects)
+
+```
 
         {
 propMode = **CATNotifDontTransmitToFather** ;
@@ -141,7 +147,10 @@ CATSO * pSetOfObjects = (CATSO *) iFromClient->**SendCommandSpecificObject**(
 CATPathElement::ClassName(), iNotification);
 if  (NULL != pSetOfObjects)
           CATBaseUnknown *pComp = NULL;
+```vbscript
           for (int ii=0; pComp=(*pSetOfObjects)[ii]; ii++)
+
+```
 
           {
 ```vbscript
@@ -169,9 +178,9 @@ pSetOfObjects->Release();
 pSetOfObjects = NULL;
       return propMode;
 
-    }  
+    }
 
----  
+---
 
 return propMode;
 _CAAIVisManagerCmdSelector_ derives from the _CATCommand_ class and redefines the `AnalyseNotification` method. Any received notification is analyzed and, if the notification is an instance of a class that is, or derives from, _CATManipulatorNotification_ or _CATMultiSel_ notification classes, the notification is caught and processed, appropriate actions are undertaken, and the notification propagation is stopped because `AnalyseNotification` returns `CATNotifDontTransmitToFather`. Otherwise, the notification goes on up the command tree structure since `AnalyseNotification` returns `CATNotifTransmitToFather`. The case of _CATManipulatorNotification_ is detailed in the coming steps. Let see what's happen if a _CATMultiSel_ notification class instance is received.
@@ -203,9 +212,9 @@ if ( NULL != pPath )
 
           }
         }
-        ...  
+        ...
 
----  
+---
 
 A _CATPreactivate_ notification is sent whenever the mouse moves above a representation with no button pressed. In this case, the `SendCommandSpecificObject` method of the sending command, that is, the child _CATSelector_ instance associated with the current selector, retrieves the path element of the representation under the mouse, and if a valid path is retrieved, adds it to the PSO to prehighlight the associated representation.
 
@@ -220,7 +229,10 @@ else if ( iNotification->IsAKindOf(CATManipulator::GetCATEndPreactivate()) )
            (CATPathElement *)iFromClient->**SendCommandSpecificObject**(
                                               CATPathElement::ClassName(),
                                               iNotification);
+```vbscript
           if ( NULL != pPath )
+
+```
 
           {
 (CATPathElement *)iFromClient->**SendCommandSpecificObject**(
@@ -232,9 +244,9 @@ if ( NULL != pPath )
 
           }
         }
-        ...  
+        ...
 
----  
+---
 
 A _CATEndPreactivate_ notification is sent whenever the mouse leaves a representation with no button pressed. In this case, the `SendCommandSpecificObject` method of the sending command, that is, the child _CATSelector_ instance associated with the current selector, retrieves the path element of the representation leaved by the mouse, and if a valid path is retrieved, removes it from the PSO to dehighlight the associated representation.
 
@@ -251,7 +263,10 @@ else if ( iNotification->IsAKindOf(CATManipulator::**GetCATActivate**()) )
                                               iNotification);
           _Hso.**Empty**();
 
+```vbscript
           if ( NULL != pPath )
+
+```
 
           {
 iNotification);
@@ -276,9 +291,9 @@ else
 
           }
         }
-        ...  
+        ...
 
----  
+---
 
 A _CATActivate_ notification is sent whenever the mouse left button is pressed above a representation. In this case, the `SendCommandSpecificObject` method of the sending command, that is, the child _CATSelector_ instance associated with the current selector, retrieves the path element of the representation under the mouse, empties the HSO to leave it for the newly activated representation, and if a valid path is retrieved, adds it to the HSO to highlight the associated representation. If no valid path is retrieved, the PSO is also emptied because it could contain the path element of the activated component, added when it was preactivated. This path could have become invalid between the preactivation and the activation.
 
@@ -294,7 +309,10 @@ else if ( iNotification->IsAKindOf(CATManipulator::**GetCATEndActivate**()) )
                                               CATPathElement::ClassName(),
                                               iNotification);
 
+```vbscript
           if ( NULL != pPath )
+
+```
 
           {
 CATPathElement::ClassName(),
@@ -305,9 +323,9 @@ if ( NULL != pPath )
 
           }
         }
-        ...  
+        ...
 
----  
+---
 
 A _CATEndActivate_ notification is sent whenever the mouse left button is pressed above another representation not controlled by the manipulator or above the background. In this case, the `SendCommandSpecificObject` method of the sending command, that is, the child _CATSelector_ instance associated with the current selector, retrieves the path element of the representation that was activated and removes it from the HSO.
 
@@ -323,7 +341,10 @@ else if ( iNotification->IsAKindOf(CATManipulator::**GetCATMove**()) )
            (CATPathElement *)iFromClient->**SendCommandSpecificObject**(
                                               CATPathElement::ClassName(),
                                               iNotification);
+```vbscript
           if ( NULL != pPath )
+
+```
 
           {
 (CATPathElement *)iFromClient->**SendCommandSpecificObject**(
@@ -335,9 +356,9 @@ if ( NULL != pPath )
 
           }
         }
-        ...  
+        ...
 
----  
+---
 
 A _CATMove_ notification is sent whenever the mouse moves above a representation. In this case, the PSO is emptied, the `SendCommandSpecificObject` method of the sending command, that is, the child _CATSelector_ instance associated with the current selector, retrieves the path element of the representation above which the mouse moves, and adds it to the PSO to prehighlight the associated representation.
 
@@ -356,9 +377,9 @@ else if ( iNotification->IsAKindOf(CATManipulator::**GetCATManipulate**()) )
         else if ( iNotification->IsAKindOf(CATManipulator::**GetCATEndManipulate**()) )
 
         {}
-        ...  
+        ...
 
----  
+---
 
 A _CATBeginManipulate_ notification is sent whenever the mouse begins to move above an activated representation, that is with the mouse left button pressed. If the mouse goes on moving with the mouse left button pressed, _CATManipulate_ notifications are sent as long as the mouse moves. When the left button is released, A _CATEndManipulate_ notification is sent. These notifications are simply caught with no associated action.
 
@@ -369,23 +390,29 @@ A _CATBeginManipulate_ notification is sent whenever the mouse begins to move ab
         else if ( iNotification->IsAKindOf(CATManipulator::**GetCATContext**()) )
         {
 else if ( iNotification->IsAKindOf(CATManipulator::**GetCATContext**()) )
-          CATPathElement *pPath = (CATPathElement *) 
+          CATPathElement *pPath = (CATPathElement *)
             iFromClient->**SendCommandSpecificObject**(CATPathElement::ClassName(),iNotification);
-          if (NULL != pPath) 
+```vbscript
+          if (NULL != pPath)
 
-          {		
+```
+
+          {
 CATPathElement *pPath = (CATPathElement *)
 iFromClient->**SendCommandSpecificObject**(CATPathElement::ClassName(),iNotification);
 if (NULL != pPath)
             CATBaseUnknown *lastobj_of_path = (*pPath)[pPath->GetSize()-1];
+```vbscript
             if (NULL != lastobj_of_path)
+
+```
 
             {
 ```vbscript
 if (NULL != pPath)
 CATBaseUnknown *lastobj_of_path = (*pPath)[pPath->GetSize()-1];
 if (NULL != lastobj_of_path)
-              CATViewer * pViewer = (CATViewer *) 
+              CATViewer * pViewer = (CATViewer *)
                      iFromClient->**SendCommandSpecificObject**(CATViewer::ClassName(),
                                                             iNotification);
               if ( NULL != pViewer)
@@ -424,9 +451,9 @@ propMode = **CATNotifTransmitToFather** ;
 
           }
         }
-        ...  
+        ...
 
----  
+---
 
 A _CATContext_ notification is sent whenever the mouse right button is pressed above a representation. In this case, the `SendCommandSpecificObject` method of the sending command, that is, the child _CATSelector_ instance associated with the current selector, retrieves the path element of the representation under the mouse. The viewer is also retrieved thanks to the `SendCommandSpecificObject` method. If a valid path and a valid viewer are retrieved, the PSO and the HSO are emptied, the retrieved path is added to the HSO to highlight the associated representation, and a contextual menu is created.
 
@@ -437,7 +464,10 @@ A _CATContext_ notification is sent whenever the mouse right button is pressed a
         else if ( iNotification->IsAKindOf(CATManipulator::**GetCATEndContext**()) )
         {
 else if ( iNotification->IsAKindOf(CATManipulator::**GetCATEndContext**()) )
+```vbscript
           if ( NULL != _pCxtMenu )
+
+```
 
           {
 else if ( iNotification->IsAKindOf(CATManipulator::**GetCATEndContext**()) )
@@ -448,9 +478,9 @@ if ( NULL != _pCxtMenu )
 
           }
         }
-        ...  
+        ...
 
----  
+---
 
 A _CATEndContext_ notification is sent whenever the mouse right button is released. In this case, the HSO is emptied and the contextual menu is deleted.
 
@@ -466,20 +496,20 @@ This use case shows how to catch the visualization notifications by redefining t
 * * *
 ### References
 
-[1] | [Conveying End User Intent from Mouse to Controller](../CAAVisTechArticles/CAAVisViewerProtocol.md)  
----|---  
-[2] | [Making a Component Displayable With CATI3DGeoVisu](CAAVisSampleCATIVisu.md)  
-[3] | [Using the Visualization Manager](CAAVisSampleVisManager.md)  
-[4] | [The Send/Receive Communication Protocol](../CAASysTechArticles/CAASysSendReceive.md)  
-[5] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
-[Top]  
+[1] | [Conveying End User Intent from Mouse to Controller](../CAAVisTechArticles/CAAVisViewerProtocol.md)
+---|---
+[2] | [Making a Component Displayable With CATI3DGeoVisu](CAAVisSampleCATIVisu.md)
+[3] | [Using the Visualization Manager](CAAVisSampleVisManager.md)
+[4] | [The Send/Receive Communication Protocol](../CAASysTechArticles/CAASysSendReceive.md)
+[5] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [May 2000] | Document created  
----|---  
-[Top]  
+Version: **1** [May 2000] | Document created
+---|---
+[Top]
 
 * * *
 

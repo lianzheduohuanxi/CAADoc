@@ -12,8 +12,8 @@ converted: "2026-05-11T17:33:51.259050"
 ---
 # CAA C++ API Modifications
 
-| 
-##  CATAnalysisBase Framework Modifications in V5R17 
+|
+##  CATAnalysisBase Framework Modifications in V5R17
 
 * * *
 

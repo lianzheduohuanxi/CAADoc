@@ -10,13 +10,13 @@ converted: "2026-05-11T17:33:51.458720"
 ```
 
 ---
-# CAA C++ API Modifications  
+# CAA C++ API Modifications
 
-| 
-##  DialogEngine Framework Modifications in V5R18 
+|
+##  DialogEngine Framework Modifications in V5R18
 
 * * *
 
-**Entity|  SP| Modification| To Do** | DialogEngine/Public/CATFeatureAgent.h| GA| [FHBD ](CAACenAPIChangeDetail.htm#Abstract)| Moved into MechanicalModelerUI, update your client framework IdentityCard.h and Imakfile.mk accordingly.  
----|---|---|---  
+**Entity|  SP| Modification| To Do** | DialogEngine/Public/CATFeatureAgent.h| GA| [FHBD ](CAACenAPIChangeDetail.htm#Abstract)| Moved into MechanicalModelerUI, update your client framework IdentityCard.h and Imakfile.mk accordingly.
+---|---|---|---
 DialogEngine/Public/CATFeatureImportAgent.h| GA| [FHBD ](CAACenAPIChangeDetail.htm#Abstract)| Moved into MechanicalModelerUI, update your client framework IdentityCard.h and Imakfile.mk accordingly.

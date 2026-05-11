@@ -11,15 +11,15 @@ converted: "2026-05-11T17:33:45.649159"
 ---
 # 3D PLM Enterprise Architecture
 
-| 
+|
 ## Middleware Abstraction
 
-| 
+|
 ### Parsing XML Documents with SAX
 
-_Using a SAX parser to read XML documents, with or without validation_  
----|---|---  
-Use Case  
+_Using a SAX parser to read XML documents, with or without validation_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
@@ -35,7 +35,7 @@ This article shows how to create a SAX parser. It explains how to create your ow
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
@@ -59,7 +59,7 @@ This use case parses an existing XML file and collects statistics about its cont
     Ignorable white space count = 0
     Processing instruction count = 0
 
----  
+---
 
 [Top]
 #### How to Launch CAAXMLSAXCount
@@ -76,16 +76,16 @@ where `<filepath>` is the path of the XML file, which will be parsed.
 
 A sample XML file is provided with the use case. To use it, launch the following command from the command line:
 
-Windows | `CAAXMLSAXCount InstallRoot\OS\resources\xml\CAAXMLSAXCount\CAAXMLSAXCount.xml`  
+Windows | `CAAXMLSAXCount InstallRoot\OS\resources\xml\CAAXMLSAXCount\CAAXMLSAXCount.xml`
 
 A sample XML file is provided with the use case. To use it, launch the following command from the command line:
 Windows | `CAAXMLSAXCount InstallRoot\OS\resources\xml\CAAXMLSAXCount\CAAXMLSAXCount.xml`
-Unix | `CAAXMLSAXCount InstallRoot/OS/resources/xml/CAAXMLSAXCount/CAAXMLSAXCount.xml`  
+Unix | `CAAXMLSAXCount InstallRoot/OS/resources/xml/CAAXMLSAXCount/CAAXMLSAXCount.xml`
 
 where:
 
   * `InstallRoot` is the directory in which you have installed the run time part or the product line
-  * `OS` is the directory containing the installed code 
+  * `OS` is the directory containing the installed code
     * `aix_a` for 32-bit AIX
     * `hpux_b` for HP-UX
     * `solaris_a` for Solaris
@@ -98,11 +98,11 @@ where:
 The CAAXMLSAXCount use case is made of several classes located in the CAAXMLSAXCount.m module of the CAAXMLParser.edu framework:
 
 The CAAXMLSAXCount use case is made of several classes located in the CAAXMLSAXCount.m module of the CAAXMLParser.edu framework:
-Windows | `InstallRootDirectory\CAAXMLParser.edu\CAAXMLSAXCount.m\`  
+Windows | `InstallRootDirectory\CAAXMLParser.edu\CAAXMLSAXCount.m\`
 
 The CAAXMLSAXCount use case is made of several classes located in the CAAXMLSAXCount.m module of the CAAXMLParser.edu framework:
 Windows | `InstallRootDirectory\CAAXMLParser.edu\CAAXMLSAXCount.m\`
-Unix | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLSAXCount.m/`  
+Unix | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLSAXCount.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
@@ -110,16 +110,16 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 ### Step-by-Step
 
 To create a SAX parser, implement and register event handlers with this parser, and parse a file, there are seven main steps:
-# |  Step  
----|---  
+# |  Step
+---|---
 To create a SAX parser, implement and register event handlers with this parser, and parse a file, there are seven main steps:
-1 | Implement a V5 Document Handler Component  
-2 | Implement a V5 Error Handler Component  
-3 | Create a V5 SAX Component  
-4 | Create and Configure a V5 SAX Parser  
-5 | Instantiate the Document Handler and Error Handler Components and Register Them With the Parser  
-6 | Parse the XML File  
-7 | Manage Errors  
+1 | Implement a V5 Document Handler Component
+2 | Implement a V5 Error Handler Component
+3 | Create a V5 SAX Component
+4 | Create and Configure a V5 SAX Parser
+5 | Instantiate the Document Handler and Error Handler Components and Register Them With the Parser
+6 | Parse the XML File
+7 | Manage Errors
 
 [Top]
 #### Implement a V5 Document Handler Component
@@ -147,7 +147,7 @@ public:
             ...
     };
 
----  
+---
 
     // CAAXMLSAXCountDocHandler.cpp
     #include "CAAXMLSAXCountDocHandler.h"
@@ -159,7 +159,7 @@ public:
     **#include "TIE_CATISAXDocumentHandler.h"
     TIE_CATISAXDocumentHandler(CAAXMLSAXCountDocHandler);**
 
----  
+---
 
 The next step is to provide an implementation for each of the SAX events you want to catch. The following code shows how the `Characters` event callback function is implemented.
 
@@ -176,9 +176,9 @@ const CATUnicodeString & iCharacters) {
 
     }
 
----  
+---
 
-This method counts the number of characters in the text nodes of the XML document. The method receives the text node in its `iCharacters` argument, of type _CATUnicodeString_. The size of the _CATUnicodeString_ is computed with `GetLengthInChar` and added to the `_characterCount` instance variable. 
+This method counts the number of characters in the text nodes of the XML document. The method receives the text node in its `iCharacters` argument, of type _CATUnicodeString_. The size of the _CATUnicodeString_ is computed with `GetLengthInChar` and added to the `_characterCount` instance variable.
 
 [Top]
 #### Implement a V5 Error Handler Component
@@ -199,7 +199,7 @@ The next step is to provide an implementation for each of the SAX events you wan
 
     // CAAXMLSAXCountErrHandler.cpp
 The next step is to provide an implementation for each of the SAX events you want to catch. To ask the parser to ignore a recoverable error and proceed, the implementation must return `S_OK`. To ask the parser to abort, the parser must return `E_FAIL`.
-    HRESULT CAAXMLSAXCountErrHandler::**Error** ( 
+    HRESULT CAAXMLSAXCountErrHandler::**Error** (
         CATSAXParseException* iException) {
 
     	...
@@ -207,7 +207,7 @@ The next step is to provide an implementation for each of the SAX events you wan
         **return S_OK** ;
     }
 
-    HRESULT CAAXMLSAXCountErrHandler::**FatalError** ( 
+    HRESULT CAAXMLSAXCountErrHandler::**FatalError** (
         CATSAXParseException* iException) {
 
     	...
@@ -215,7 +215,7 @@ The next step is to provide an implementation for each of the SAX events you wan
         **return E_FAIL** ;
     }
 
----  
+---
 
 [Top]
 #### Create a V5 SAX Component
@@ -224,9 +224,9 @@ The next step is to provide an implementation for each of the SAX events you wan
     // CAAXMLSAXCountMain.cpp
     CATIXMLSAXFactory_var factory;
     HRESULT hr = **::CreateCATIXMLSAXFactory**(factory);
-    ...  
+    ...
 
----  
+---
 
 To work with SAX, you need to instantiate the V5 SAX component. The V5 SAX component can be created by calling the `CreateCATIXMLSAXFactory` global function. This function returns a V5 handler on the _CATIXMLSAXFactory_ interface, which is the main interface for the V5 SAX component. Using this interface you will be able to create SAX1 and SAX2 parsers and to create input source to feed XML to the parser. Note that the code above does not specify the CLSID of the component to use, so the default SAX component (XML4C3) will be used. See [3] and [4] if you want to use another V5 SAX component.
 
@@ -256,9 +256,9 @@ optionValues.Append("false");
     hr = factory->**CreateParser**(parser, options, optionValues);
 ```
 
-    ...  
+    ...
 
----  
+---
 
 To create a SAX1 parser, one simply invokes the `CreateParser` on the _CATIXMLSAXFactory_ object. There are two kinds of SAX1 parsers: non-validating SAX1 parsers and validating SAX1 parsers. You need to decide at creation time what kind of parser you want to create using the `"CATDoValidation"` option. Options are passed to the parser using two _CATListOfCATUnicodeStrings_. The first one contains the option names, the second one contains the option values. See [3] and [4] for information about validating versus non-validating parser.
 
@@ -279,21 +279,24 @@ The SAX1 parser created in the previous section is not yet usable as it does not
     errHandlerImpl->Release();
     errHandlerImpl = NULL;
 
-    ...  
+    ...
 
----  
+---
 
 To instantiate the document handler and the error handler you have defined in the previous section, simply do a `new` of the main implementation class, then get an interface handle of the right type on the component.
 
     ...
 To instantiate the document handler and the error handler you have defined in the previous section, simply do a `new` of the main implementation class, then get an interface handle of the right type on the component.
+```vbscript
     hr = parser->**SetDocumentHandler**(docHandler);
+
+```
 
     ...
     hr = parser->**SetErrorHandler**(errHandler);
-    ...  
+    ...
 
----  
+---
 
 To register your document handler, call the `SetDocumentHandler` method of the _CATISAXParser_ interface. To register your error handler, call the `SetErrorHandler` method of the _CATISAXParser_ interface. Passing `NULL_var` to these methods unregisters the previously registered handlers.
 
@@ -301,9 +304,9 @@ To register your document handler, call the `SetDocumentHandler` method of the _
 #### Parse the XML File
 
     hr = parser->**Parse**(filePath);
-    ...  
+    ...
 
----  
+---
 
 To parse the XML file, call the `Parse` method of the _CATISAXParser_ interface. Pass the path of the file to read as a parameter. The method will read the file from top to bottom and generate the corresponding events, calling your event handlers for all the events you want to manage.
 
@@ -322,19 +325,19 @@ This use case shows you how to parse XML documents using the SAX API.
 * * *
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-[2] | [ Managing Errors Using HRESULT](../CAASysTechArticles/CAASysErrors.md)  
-[3] | [ Using XML in V5](../CAAXmlTechArticles/CAAXmlV5Overview.md)  
-[4] | [XML Tips and Tricks](../CAAXmlTechArticles/CAAXmlTipsAndTricks.md)  
-[Top]  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)
+---|---
+[2] | [ Managing Errors Using HRESULT](../CAASysTechArticles/CAASysErrors.md)
+[3] | [ Using XML in V5](../CAAXmlTechArticles/CAAXmlV5Overview.md)
+[4] | [XML Tips and Tricks](../CAAXmlTechArticles/CAAXmlTipsAndTricks.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [May 2005] | Document created  
----|---  
-[Top]  
+Version: **1** [May 2005] | Document created
+---|---
+[Top]
 
 * * *
 

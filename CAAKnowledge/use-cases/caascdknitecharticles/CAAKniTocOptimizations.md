@@ -11,27 +11,27 @@ converted: "2026-05-11T17:31:52.003484"
 ---
 # Optimizations Automation Objects
 
-![](../CAAScrAutomationImages/images/relatns.gif)  
-![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/kwoptims.gif)[![Relation Object Diagram](../CAAScrAutomationImages/images/uparrow.gif)](CAAKniTocRelation.md)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/kwoptim.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/kwoptics.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/kwoptic.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)DistanceToSatisfaction![](../CAAScrAutomationImages/images/parline.gif)![](../CAAScrAutomationImages/images/param.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)InParameters![](../CAAScrAutomationImages/images/parline.gif)![](../CAAScrAutomationImages/images/parline.gif)![](../CAAScrAutomationImages/images/parline.gif)![](../CAAScrAutomationImages/images/parline.gif)![](../CAAScrAutomationImages/images/parline.gif)![](../CAAScrAutomationImages/images/parlina.gif)![](../CAAScrAutomationImages/images/param.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)OutParameters![](../CAAScrAutomationImages/images/parline.gif)![](../CAAScrAutomationImages/images/parline.gif)![](../CAAScrAutomationImages/images/parline.gif)![](../CAAScrAutomationImages/images/parline.gif)![](../CAAScrAutomationImages/images/parlina.gif)![](../CAAScrAutomationImages/images/param.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/kwofpars.gif)  
-![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/kwofpar.gif)  
-![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchila.gif)![](../CAAScrAutomationImages/images/param.gif)[![Parameter Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)  
-](CAAKniTocParameter.md)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)ObjectiveParameter![](../CAAScrAutomationImages/images/parlina.gif)![](../CAAScrAutomationImages/images/param.gif)  
----  
+![](../CAAScrAutomationImages/images/relatns.gif)
+![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/kwoptims.gif)[![Relation Object Diagram](../CAAScrAutomationImages/images/uparrow.gif)](CAAKniTocRelation.md)
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/kwoptim.gif)
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/kwoptics.gif)
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/kwoptic.gif)
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)DistanceToSatisfaction![](../CAAScrAutomationImages/images/parline.gif)![](../CAAScrAutomationImages/images/param.gif)
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)InParameters![](../CAAScrAutomationImages/images/parline.gif)![](../CAAScrAutomationImages/images/parline.gif)![](../CAAScrAutomationImages/images/parline.gif)![](../CAAScrAutomationImages/images/parline.gif)![](../CAAScrAutomationImages/images/parline.gif)![](../CAAScrAutomationImages/images/parlina.gif)![](../CAAScrAutomationImages/images/param.gif)
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)OutParameters![](../CAAScrAutomationImages/images/parline.gif)![](../CAAScrAutomationImages/images/parline.gif)![](../CAAScrAutomationImages/images/parline.gif)![](../CAAScrAutomationImages/images/parline.gif)![](../CAAScrAutomationImages/images/parlina.gif)![](../CAAScrAutomationImages/images/param.gif)
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/kwofpars.gif)
+![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/kwofpar.gif)
+![](../CAAScrAutomationImages/images/space2.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchila.gif)![](../CAAScrAutomationImages/images/param.gif)[![Parameter Object Diagram](../CAAScrAutomationImages/images/rtarrow.gif)
+](CAAKniTocParameter.md)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)ObjectiveParameter![](../CAAScrAutomationImages/images/parlina.gif)![](../CAAScrAutomationImages/images/param.gif)
+---
 
 **Legend**
 
-![](../CAAScrAutomationImages/images/yellbox.gif) Collection  
-![](../CAAScrAutomationImages/images/purpbox.gif) Abstract object  
+![](../CAAScrAutomationImages/images/yellbox.gif) Collection
+![](../CAAScrAutomationImages/images/purpbox.gif) Abstract object
 ![](../CAAScrAutomationImages/images/bluebox.gif) Object
 
-![right arrow](../CAAScrAutomationImages/images/rtarrow.gif) Click arrow to expand chart  
+![right arrow](../CAAScrAutomationImages/images/rtarrow.gif) Click arrow to expand chart
 ![](../CAAScrAutomationImages/images/uparrow.gif) Click arrow to return to previous chart
 
 The _Optimizations_ collection is aggregated by the _Relations_ collection. Each _Optimization_ object aims to minimize or maximize the value of an objective parameter by modifying the values other parameters, called _free parameters,_ with respect to constraints. A constraint is a relationship between parameters equivalent to one of the following expressions:

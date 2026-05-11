@@ -9,10 +9,15 @@ converted: "2026-05-11T17:31:50.893073"
 ```
 
 ---
-    Sub CATMain()
+```vbscript
+Sub CATMain()
+
+```
 
 ```vbscript
     Dim StrWorkbench As StrWorkbench
+```vbscript
+```vbscript
     Dim strFactory As StrObjectFactory
 
     Set doc = CATIA.ActiveDocument
@@ -32,27 +37,43 @@ converted: "2026-05-11T17:31:50.893073"
 
 ```
 
+```
+
+```
+
 ```vbscript
 Dim selection1 As Selection
+```vbscript
 Set selection1 = doc.Selection
+```
+
     selection1.Search "Name='Coping.1',all"
 
 ```
 
 ```vbscript
     Dim NibblingToEdit As StrNibblingFeature
+```vbscript
+```vbscript
     Set NibblingToEdit = selection1.Item(1).Value
 
     Dim SubTypeOFNibbling As String
+```
+
+```
+
     SubTypeOFNibbling = NibblingToEdit.SubType
 
 ```
 
 ```vbscript
 Dim SubTypeOFNibbling As String
-SubTypeOFNibbling = NibblingToEdit.SubType
-    NibblingToEdit.SubType = "CurrCurr"
-
 ```
 
+SubTypeOFNibbling = NibblingToEdit.SubType
+```vbscript
+    NibblingToEdit.SubType = "CurrCurr"
+
     End Sub
+
+```

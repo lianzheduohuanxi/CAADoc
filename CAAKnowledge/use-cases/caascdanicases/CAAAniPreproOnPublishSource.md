@@ -15,52 +15,84 @@ converted: "2026-05-11T17:31:51.829358"
     Language="VBSCRIPT"
 
 ```vbscript
+```vbscript
+```vbscript
     ' COPYRIGTH DASSAULT SYSTEMES 2000
     ' ***********************************************************************
     '   Purpose:      Create a New Analysis document.
-    '                 Import on a CATPart document with some publication defined 
+    '                 Import on a CATPart document with some publication defined
     '                 Define all pre-processing data based on publications
     '                 Launch the Computation.
     '                 Create a AnalysisSensor and display its values
     '                 Create an Image and export data, then deactivate and update it
-    '   Assumptions:   Looks for AnalysisMechfeat.CATPart stored in the DocView   
-    '   Author: 
+    '   Assumptions:   Looks for AnalysisMechfeat.CATPart stored in the DocView
+    '   Author:
     '   Languages:    VBScript
-    '   Locales:      English 
+    '   Locales:      English
     '   CATIA Level:  V5R10
     ' ***********************************************************************
 ```
 
-    Sub CATMain()
+```
+
+```
 
 ```vbscript
-    ' ----------------------------------------------------------- 
+    Sub CATMain()
+
+```
+
+```vbscript
+```vbscript
+```vbscript
+    ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
         sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' -----------------------------------------------------------
 ' Optional: allows to find the sample wherever it's installed
 sDocPath=CATIA.SystemService.Environ("CATDocView")
+```
+
         If(Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+```
+
 ```
 
 ```vbscript
         Err.Raise 9999,,"No Doc Path Defined"
+```vbscript
         End If
 ```
 
+```
+
 ```vbscript
-    ' ----------------------------------------------------------- 
+```vbscript
+```vbscript
+    ' -----------------------------------------------------------
     ' Get the collection of documents in session
         Set documents1 = CATIA.Documents
-    ' Create the CATAnalysis Document 
+    ' Create the CATAnalysis Document
         Set TheAnalysisDocument = documents1.Add("Analysis")
     ' Only one Analysis Document is required
     ' if WB name already is "GPSCfg", not to use StartWorkbench
+```
+
+```
+
         WBName = CATIA.GetWorkbenchId
         if (WBName <> "GPSCfg") Then
+```vbscript
+```vbscript
     	CATIA.StartWorkbench("GPSCfg")
         End If
     '_____________________________________________________________________________________
@@ -68,8 +100,15 @@ sDocPath=CATIA.SystemService.Environ("CATDocView")
     ' We call the Import on CATAnalysisImport which implements CATISamImportDefine
 ```
 
+```
+
+```
+
+```vbscript
 ```vbscript
         Set analysisManager1 = TheAnalysisDocument.Analysis
+
+```
 
 ```
 
@@ -80,18 +119,32 @@ sDocPath=CATIA.SystemService.Environ("CATDocView")
 ```
 
     				       "CATAnalysisImport", arrayOfVariantOfShort1
+```vbscript
     ' _____________________________________________________________________________________
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' _____________________________________________________________________________________
     ' Reframe All.
 ```
 
-```vbscript
-      Set specsAndGeomWindow1 = CATIA.ActiveWindow
-      Set viewer3D1 = specsAndGeomWindow1.ActiveViewer
-      viewer3D1.Reframe 
 ```
 
+```
+
+```vbscript
+      Set specsAndGeomWindow1 = CATIA.ActiveWindow
+```vbscript
+      Set viewer3D1 = specsAndGeomWindow1.ActiveViewer
+```
+
+      viewer3D1.Reframe
+```
+
+```vbscript
+```vbscript
 ```vbscript
     ' _____________________________________________________________________________________
     ' Scan the analysis document:  Retrieve the Pointed documents to extract the reference for pre-processing
@@ -99,12 +152,24 @@ sDocPath=CATIA.SystemService.Environ("CATDocView")
         CATIA.SystemService.Print analysisLinkedDocuments1.Name
 ```
 
+```
+
+```
+
 ```vbscript
        If (analysisLinkedDocuments1.Count <> 1 ) Then
+```vbscript
+```vbscript
           Err.Raise 9999,,"NbDoc Li NE 1"
        End If
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
     ' _____________________________________________________________________________________
     ' Retrieve the CATPart Document and associated publications for pre-processing.
@@ -135,27 +200,51 @@ sDocPath=CATIA.SystemService.Environ("CATDocView")
       Set analysisEntity1 = analysisEntities1.Add("SAMClamp")
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' Create clamp boundary.
 Set analysisEntities1 = analysisSet1.AnalysisEntities
 Set analysisEntity1 = analysisEntities1.Add("SAMClamp")
+```
+
+```
+
       analysisEntity1.AddSupportFromPublication product1, publication1
 ```
 
+```vbscript
+```vbscript
 ```vbscript
     ' _____________________________________________________________________________________
     ' Create Slider boundary.
       Set analysisEntity2 = analysisEntities1.Add("SAMSurfaceSlider")
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' _____________________________________________________________________________________
 ' Create Slider boundary.
 Set analysisEntity2 = analysisEntities1.Add("SAMSurfaceSlider")
+```
+
+```
+
       analysisEntity2.AddSupportFromPublication product1, publication2
       analysisEntity2.AddSupportFromPublication product1, publication3
 ```
 
+```vbscript
+```vbscript
 ```vbscript
     ' _____________________________________________________________________________________
     ' Create Pressure.
@@ -163,21 +252,39 @@ Set analysisEntity2 = analysisEntities1.Add("SAMSurfaceSlider")
       Set analysisEntity3 = analysisEntities2.Add("SAMPressure")
 ```
 
+```
+
+```
+
       analysisEntity3.AddSupportFromPublication product1, publication4
       analysisEntity3.SetValue "SAMPressureMag","", 0, 0, 0, 500.
+```vbscript
+```vbscript
     ' _____________________________________________________________________________________
     ' Define a global sensor measuring the maximum value of VonMises criterion.
 
+```
+
+```
+
 ```vbscript
       Set dimension1 = analysisManager1.Parameters.CreateDimension("Maximum value of VonMises criterion", "PRESSURE", 0.000000)
+```vbscript
+```vbscript
       Set formula1 = analysisManager1.Relations.CreateFormula("Maximum value of VonMises criterion","",dimension1,"misesmax(`Finite Element Model.1\Static Case Solution.1` ) ")
     ' _____________________________________________________________________________________
     ' Launch Computation.
+```
+
+```
+
       analysisCase1.Compute
 
       CATIA.SystemService.Print " Mises Max Computed " & dimension1.ValueAsString
 ```
 
+```vbscript
+```vbscript
 ```vbscript
     ' _____________________________________________________________________________________
     ' Create corresponding image.
@@ -188,26 +295,60 @@ Set analysisEntity2 = analysisEntities1.Add("SAMSurfaceSlider")
       outputPath=CATIA.SystemService.Environ("CATTemp")
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' _____________________________________________________________________________________
 ' Export data from image.
 outputPath=CATIA.SystemService.Environ("CATTemp")
+```
+
         If(Not CATIA.FileSystem.FolderExists(outputPath)) Then
+```vbscript
         Err.Raise 9999,,"No Output Path Defined"
         End If
       Set fileSystem1 = CATIA.FileSystem
       Set folder1 = fileSystem1.GetFolder(outputPath)
+```
+
+```
+
       analysisImage1.ExportData folder1, "VonMises", "txt"
+```vbscript
+```vbscript
     ' _____________________________________________________________________________________
     ' Reframe All.
-      viewer3D1.Reframe 
+```
+
+```
+
+      viewer3D1.Reframe
+```vbscript
+```vbscript
     ' _____________________________________________________________________________________
     ' Deactivate and Update image.
+```
+
+```
+
       analysisImage1.SetActivationStatus false
       analysisImage1.Update
+```vbscript
+```vbscript
     '------------------------------- END   END   END   ----------------------------
       CATIA.DisplayFileAlerts = False
 
 ```
 
+```
+
+```
+
+```vbscript
     End Sub
+
+```

@@ -13,14 +13,14 @@ converted: "2026-05-11T17:31:52.427065"
 
 source_file: "Doc/online/CAAScdInfTechArticles/CAAInfObjDocument.htm"
 converted: "2026-05-11T17:31:52.427065"
- See Also | Use Cases | Properties | Methods  
+ See Also | Use Cases | Properties | Methods
 
- [![](../CAAScrAutomationImages/images/applicat.gif)](CAAInfObjApplication.md)  
-![](../CAAScrAutomationImages/images/parchild.gif)[![](../CAAScrAutomationImages/images/docs.gif)](CAAInfObjDocument.md)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/doc.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/select.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/cameras.gif)  
- ---  
+ [![](../CAAScrAutomationImages/images/applicat.gif)](CAAInfObjApplication.md)
+![](../CAAScrAutomationImages/images/parchild.gif)[![](../CAAScrAutomationImages/images/docs.gif)](CAAInfObjDocument.md)
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/doc.gif)
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/select.gif)
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/cameras.gif)
+ ---
 
  _**A Collection of Document objects.**_
 

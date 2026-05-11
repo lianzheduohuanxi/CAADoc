@@ -13,7 +13,13 @@ tags: ["CAAKniFilterRightBelowRoot", "CATIA", "CAAKniClash", "CAAScdKniUseCases"
 source_file: "Doc/online/CAAScdKniUseCases/CAAKniFilterRightBelowRootSource.htm"
 converted: "2026-05-11T17:31:51.981824"
     Option Explicit
+```vbscript
+```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2001
+
+```
+
+```
 
 ```vbscript
     Dim Language as String
@@ -21,71 +27,94 @@ converted: "2026-05-11T17:31:51.981824"
 ```
 
 ```vbscript
+```vbscript
+```vbscript
     ' ***********************************************************************
     '   Purpose:      Given a CATProduct document,
-    '                 this macro filters the parameters right below the root 
+    '                 this macro filters the parameters right below the root
     '                 product.
-    '                 Note: You cannot retrieve the list of parameters 
-    '                 right below the root product by using the 
+    '                 Note: You cannot retrieve the list of parameters
+    '                 right below the root product by using the
     '                 Product.Parameters attribute of the active document
-    '                 because if you do this, you retrieve all the  
-    '                 parameters of the CATProduct document (parameters    
-    '                 right below the root product as well as parameters    
+    '                 because if you do this, you retrieve all the
+    '                 parameters of the CATProduct document (parameters
+    '                 right below the root product as well as parameters
     '                 below components.
     '                 The trick is to determine whether a parameter which belongs
-    '                 to the activedocument.Product.Parameters list belongs to 
+    '                 to the activedocument.Product.Parameters list belongs to
     '                 one of the sub-component parameter list.
     '
-    '   Assumptions:  This macro is intended to be run on  
+    '   Assumptions:  This macro is intended to be run on
     '                 any CATProduct with CATProduct documents as components
     '
     '
     '   Author:       Carole ROULLE , Pierre Grignon
     '   Languages:    VBScript
     '   Locales:      English (United States)
-    '   CATIA Level:  V5R6 
+    '   CATIA Level:  V5R6
     ' ***********************************************************************
 ```
 
-    Sub CATMain()
+```
+
+```
 
 ```vbscript
-        ' ----------------------------------------------------------- 
+    Sub CATMain()
+
+```
+
+```vbscript
+```vbscript
+```vbscript
+        ' -----------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
-        dim sDocPath As String 
+        dim sDocPath As String
         sDocPath=CATIA.SystemService.Environ("CATDocView")
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
           Err.Raise 9999,,"No Doc Path Defined"
         End If
-        ' ----------------------------------------------------------- 
-        ' Open the Part document 
+        ' -----------------------------------------------------------
+        ' Open the Part document
         Dim sFilePath
         sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+```
+
+```
+
 ```
 
     		"online\CAAScdKniUseCases\samples\CAAKniClash.CATProduct")
 ```vbscript
 Dim sFilePath
+```vbscript
+```vbscript
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         Dim oDoc As Document
         set oDoc = CATIA.Documents.Open(sFilePath)
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
      ' Set the CATIA popup file alerts to False
      ' It prevents to stop the macro at each alert during its execution
      CATIA.DisplayFileAlerts = False
-     ' Retrieve your active document - CATIA is your application 
+     ' Retrieve your active document - CATIA is your application
      ' You get the active document by using the ActiveDocument property
      ' on your application object
-     Dim oActiveDoc As Document 
-     Set oActiveDoc = CATIA.ActiveDocument 
+     Dim oActiveDoc As Document
+     Set oActiveDoc = CATIA.ActiveDocument
 
      Dim i,j,k As Integer
      Dim BelongToComp As Integer
      ' Check whether the document is a CATProduct
-     If (InStr(oActiveDoc.Name,".CATProduct")) <> 0  Then 
-        ' Scan the complete list of parameters                          
+     If (InStr(oActiveDoc.Name,".CATProduct")) <> 0  Then
+        ' Scan the complete list of parameters
         Dim oProductList As Products
         Set oProductList = oActiveDoc.Product.Products
         Dim S1 As String
@@ -93,43 +122,80 @@ sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
         S1 =  oActiveDoc.Product.Parameters.Item(i).Name
         ' Use the BelongToComp flag to set the parameter status
         ' Initial value = 0 (does not belong to a sub-component)
+```
+
+```
+
         BelongToComp = 0
+```vbscript
+```vbscript
            ' Scan each parameter list of a sub-component
            For j = 1 to oProductList.Count
               For k = 1 to oProductList.Item(j).Parameters.Count
               ' If the document parameter is the same as the sub-component
               ' parameter - Sets the flag to 1
-              if  S1 = oProductList.Item(j).Parameters.Item(k).name then 
+              if  S1 = oProductList.Item(j).Parameters.Item(k).name then
+```
+
+```
+
               BelongToComp = 1
-              end if 
+              end if
 ```
 
 ```vbscript
 if  S1 = oProductList.Item(j).Parameters.Item(k).name then
 BelongToComp = 1
 end if
+```vbscript
+```vbscript
               next
-           Next  
+           Next
+```
+
+```
+
 ```
 
 ```vbscript
+```vbscript
+```vbscript
             ' if the flag is set to 0 - the document parameter
-            ' does not belong to ant sub-component 
+            ' does not belong to ant sub-component
             ' Conclusion: it is right below the root
             if BelongToComp = 0 then
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' does not belong to ant sub-component
 ' Conclusion: it is right below the root
 if BelongToComp = 0 then
+```
+
+```
+
             msgbox S1
            end if
-        Next    
-     Else 
+```vbscript
+        Next
+```
+
+     Else
         MsgBox "The active document must be a CATProduct"
+```vbscript
     End If
 
 ```
 
+```
+
+```vbscript
     End Sub
+
+```

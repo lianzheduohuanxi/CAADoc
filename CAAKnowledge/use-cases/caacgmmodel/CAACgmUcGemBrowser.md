@@ -9,10 +9,10 @@ converted: "2026-05-11T17:33:48.225077"
 ```
 
 ---
-# Browsing the Geometric Container  
+# Browsing the Geometric Container
 
----  
-Use Case  
+---
+Use Case
 ## Abstract
 
 In all the CATIA Geometric Modeler use cases, a CATGeoFactory container, creating and containing the geometric objects, is created and can be stored in a .NCGM file. The purpose of the CAAGMModelGemBrowser use case is to create an application and a document allowing you to visualize the created objects of a CATGeoFactory container.
@@ -23,8 +23,8 @@ In all the CATIA Geometric Modeler use cases, a CATGeoFactory container, creatin
       * Where to Find the CAAGMModelGemBrowser Code
     * Step-by-Step
     * In Short
-    * References  
----  
+    * References
+---
 ## What You Will Learn With This Use Case
 
 This use case explains a means to visualize geometric objects:
@@ -68,7 +68,7 @@ This use case is an interactive application. To visualize a .NCGM document (for 
 
 To launch CAAGMModelGemBrowser, you will need to set up the build time environment, then compile CAAGMModelGemBrowser.m along with its prerequisites, set up the run time environment, and then execute the use case [1].
 This use case is an interactive application. To visualize a .NCGM document (for example, the model saved at the last step of the CAAGMOperatorsJournal, CAAGMOperatorsOverview, CAAGMModelCreation, CAAGMModelNurbs, CAAGMOperatorsTesBody, or CAAGMModelIntersect use cases ), click the File+Open menu and select the file you want to display.
-The CAAGMModelGemBrowser use case is made of three classes 
+The CAAGMModelGemBrowser use case is made of three classes
 
     * CAAGemBrowserApplication, defining the application.
     * CAAGemBrowserDocument, defining the window.
@@ -120,13 +120,19 @@ class CAAGemBrowserApplication : public CATInteractiveApplication
 
     private:
         CAAGemBrowserApplication();
-        CAAGemBrowserApplication(const CAAGemBrowserApplication &iObjectToCopy);   
+```vbscript
+        CAAGemBrowserApplication(const CAAGemBrowserApplication &iObjectToCopy);
+
+```
 
     };
 
 private:
 CAAGemBrowserApplication();
+```vbscript
 CAAGemBrowserApplication(const CAAGemBrowserApplication &iObjectToCopy);
+```
+
 In addition to the constructor and destructor, this interactive application class redefines two methods of CATInteractiveApplication:
 
     * `BeginApplication`, called by the system just after the application constructor. This method is dedicated to create the different objects managed by the application, namely here the document window.
@@ -144,11 +150,14 @@ void CAAGemBrowserApplication::BeginApplication()
       cout << "CAAGemBrowserApplication::BeginApplication" << endl;
 
       // This window is deleted when the application is deleted.
-      // The application is deleted by the Destroy Method called in the 
+      // The application is deleted by the Destroy Method called in the
       // CAAGemBrowserDocument::Exit method.
       //
       CAAGemBrowserDocument * pMainWindow =NULL;
+```vbscript
       pMainWindow = new **CAAGemBrowserDocument**(**this**);
+
+```
 
       // Constructs all Dialog objects of the window
 CAAGemBrowserDocument * pMainWindow =NULL;
@@ -163,7 +172,7 @@ pMainWindow->**Build**();
 pMainWindow->**SetVisibility**(CATDlgShow);
     int CAAGemBrowserApplication::EndApplication()
 
-    {              
+    {
 pMainWindow->**SetVisibility**(CATDlgShow);
 int CAAGemBrowserApplication::EndApplication()
       return 0;
@@ -196,7 +205,7 @@ The file CAAGemBrowserDocument.h contains the following:
 The file CAAGemBrowserDocument.h contains the following:
     class CATInteractiveApplication; // Application kept in data member
     class CATDlgFile;
-    class CAT3DBagRep ;              // Data member class forward declaration            
+    class CAT3DBagRep ;              // Data member class forward declaration
     class CATNavigation3DViewer;
     class CATGeoFactory;
 
@@ -222,7 +231,7 @@ private:
         // Creates the Menubar which is reduced to a File/Open-Close-Exit option
         void CreateMenuBar();
 
-        // Creates the Dialog object to see the model 
+        // Creates the Dialog object to see the model
         void CreateViewer();
 
         // Attaches the model representation in the 3D Viewer to see it and
@@ -236,7 +245,10 @@ private:
         // Copy constructor, not implemented
         // Set as private to prevent from compiler automatic creation as public.
 CAAGemBrowserDocument ();
+```vbscript
         CAAGemBrowserDocument(const CAAGemBrowserDocument &iObjectToCopy);
+
+```
 
       private:
 
@@ -252,15 +264,15 @@ private:
 CATInteractiveApplication * _pApplication;
         CAT3DBagRep               * _pTheModelToDisplay ;
 
-        // The Dialog object to display the model 
+        // The Dialog object to display the model
 CATInteractiveApplication * _pApplication;
 CAT3DBagRep               * _pTheModelToDisplay ;
-        CATNavigation3DViewer     * _p3DViewer ;    
+        CATNavigation3DViewer     * _p3DViewer ;
 
         // The  "file selection" window
 CAT3DBagRep               * _pTheModelToDisplay ;
 CATNavigation3DViewer     * _p3DViewer ;
-        CATDlgFile                * _pFileSelector;  
+        CATDlgFile                * _pFileSelector;
 
         //  The geometry factory that is visualized
 CATNavigation3DViewer     * _p3DViewer ;
@@ -268,7 +280,7 @@ CATDlgFile                * _pFileSelector;
         CATGeoFactory             * _piGeomFactory;
 
     };
-    #endif	
+    #endif
 
 CATGeoFactory             * _piGeomFactory;
 The `DeclareResource` macro enables the class and all its dialog objects to use the automatic resource assignment. The first parameter is the class name, and the resource files must use this class name as file name, such as CAAGemBrowserDocument.CATNls for the file containing the texts and messages.
@@ -280,40 +292,40 @@ The remaining part of this file deals with the callback method declaration.
     // Callback on the exit button item of the menubar
 The class has a constructor, a destructor, and a `Build` method. Additional private methods create the menu bar, the dialog object to see the model, the object containing all the representations and visualize the model. Pointers to the different dialog objects are then declared as data members.
 The remaining part of this file deals with the callback method declaration.
-        void Exit  (CATCommand           * iSendingCommand, 
-                    CATNotification      * iSentNotification, 
+        void Exit  (CATCommand           * iSendingCommand,
+                    CATNotification      * iSentNotification,
                     CATCommandClientData   iUsefulData);
 
         // Callback on the open button item of the menubar
 void Exit  (CATCommand           * iSendingCommand,
 CATNotification      * iSentNotification,
 CATCommandClientData   iUsefulData);
-        void Open  (CATCommand           * iSendingCommand, 
-                    CATNotification      * iSentNotification, 
+        void Open  (CATCommand           * iSendingCommand,
+                    CATNotification      * iSentNotification,
                     CATCommandClientData   iUsefulData);
 
         // Callback on the OK button item of the file window
 void Open  (CATCommand           * iSendingCommand,
 CATNotification      * iSentNotification,
 CATCommandClientData   iUsefulData);
-        void OpenOK  (CATCommand           * iSendingCommand, 
-                      CATNotification      * iSentNotification, 
+        void OpenOK  (CATCommand           * iSendingCommand,
+                      CATNotification      * iSentNotification,
                       CATCommandClientData   iUsefulData);
 
         // Callback on the cancel button item of the file window
 void OpenOK  (CATCommand           * iSendingCommand,
 CATNotification      * iSentNotification,
 CATCommandClientData   iUsefulData);
-        void Cancel  (CATCommand           * iSendingCommand, 
-                      CATNotification      * iSentNotification, 
+        void Cancel  (CATCommand           * iSendingCommand,
+                      CATNotification      * iSentNotification,
                       CATCommandClientData   iUsefulData);
 
         // Callback on the close button item of the menubar
 void Cancel  (CATCommand           * iSendingCommand,
 CATNotification      * iSentNotification,
 CATCommandClientData   iUsefulData);
-        void Close  (CATCommand           * iSendingCommand, 
-                     CATNotification      * iSentNotification, 
+        void Close  (CATCommand           * iSendingCommand,
+                     CATNotification      * iSentNotification,
                      CATCommandClientData   iUsefulData);
 
 #### Constructor and Build Methods
@@ -323,25 +335,31 @@ CATNotification      * iSentNotification,
 CATCommandClientData   iUsefulData);
 Let's have a look at the beginning of CAAGemBrowserDocument.cpp:
 
-    CAAGemBrowserDocument::CAAGemBrowserDocument(CATInteractiveApplication * iParentCommand) 
+    CAAGemBrowserDocument::CAAGemBrowserDocument(CATInteractiveApplication * iParentCommand)
 
                           : CATDlgDocument(iParentCommand, "CAAGemBrowserRepWindowId"),
 Let's have a look at the beginning of CAAGemBrowserDocument.cpp:
 CAAGemBrowserDocument::CAAGemBrowserDocument(CATInteractiveApplication * iParentCommand)
     	                _pApplication(iParentCommand),_pTheModelToDisplay(NULL),
+```vbscript
                             _p3DViewer(NULL),
                             _piGeomFactory(NULL),_pFileSelector(NULL)
+
+```
 
     {
 ```vbscript
 _pApplication(iParentCommand),_pTheModelToDisplay(NULL),
+```vbscript
 _p3DViewer(NULL),
 _piGeomFactory(NULL),_pFileSelector(NULL)
+```
+
       cout << "CAAGemBrowserDocument::CAAGemBrowserDocument" << endl;
 
 ```
 
-      // Do not construct any Dialog object child in the constructor 
+      // Do not construct any Dialog object child in the constructor
       // Use the Build Method to do this.
     }
 
@@ -351,13 +369,19 @@ void CAAGemBrowserDocument::**Build**()
       cout << "CAAGemBrowserDocument::Build" << endl;
 
       CreateMenuBar();
-      CreateViewer(); 
+```vbscript
+      CreateViewer();
+
+```
 
     }
 
 ```vbscript
 CreateMenuBar();
+```vbscript
 CreateViewer();
+```
+
 The constructor is empty, but calls the base class `CATDlgDocument` constructor, and sets the parent command of the window as the interactive application itself. The `Build` method calls for the creation of the menu bar and for the creation of the viewer that allows the user to do 3D manipulations.
 ```
 
@@ -370,49 +394,64 @@ The constructor is empty, but calls the base class `CATDlgDocument` constructor,
 The constructor is empty, but calls the base class `CATDlgDocument` constructor, and sets the parent command of the window as the interactive application itself. The `Build` method calls for the creation of the menu bar and for the creation of the viewer that allows the user to do 3D manipulations.
 void CAAGemBrowserDocument::**CreateMenuBar**()
        CATDlgBarMenu* pMainMenu = NULL;
+```vbscript
        pMainMenu = new CATDlgBarMenu(this,"MainMenu");
 
+```
+
        CATDlgSubMenu* pFileMenu = NULL;
+```vbscript
        pFileMenu = new CATDlgSubMenu(pMainMenu,"File");
 
+```
+
        CATDlgPushItem* pOpenItem = NULL;
+```vbscript
        pOpenItem = new CATDlgPushItem(pFileMenu,"Open");
+
+```
 
        **AddAnalyseNotificationCB**(pOpenItem,
 CATDlgPushItem* pOpenItem = NULL;
 pOpenItem = new CATDlgPushItem(pFileMenu,"Open");
-                                pOpenItem->GetMenuIActivateNotification(), 
-                                (CATCommandMethod)&CAAGemBrowserDocument::Open, 
-                                NULL); 
+                                pOpenItem->GetMenuIActivateNotification(),
+                                (CATCommandMethod)&CAAGemBrowserDocument::Open,
+                                NULL);
 
        CATDlgPushItem* pCloseItem=NULL;
+```vbscript
        pCloseItem = new CATDlgPushItem(pFileMenu,"Close");
+
+```
 
        **AddAnalyseNotificationCB**(pCloseItem,
 NULL);
 CATDlgPushItem* pCloseItem=NULL;
 pCloseItem = new CATDlgPushItem(pFileMenu,"Close");
-                                pCloseItem->GetMenuIActivateNotification(), 
-                                (CATCommandMethod)&CAAGemBrowserDocument::Close, 
+                                pCloseItem->GetMenuIActivateNotification(),
+                                (CATCommandMethod)&CAAGemBrowserDocument::Close,
                                 NULL);
 
-       CATDlgPushItem * pExitItem =NULL;  
+       CATDlgPushItem * pExitItem =NULL;
+```vbscript
        pExitItem = new CATDlgPushItem(pFileMenu,"Exit");
+
+```
 
        **AddAnalyseNotificationCB**(pExitItem,
 NULL);
 CATDlgPushItem * pExitItem =NULL;
 pExitItem = new CATDlgPushItem(pFileMenu,"Exit");
-                                pExitItem->GetMenuIActivateNotification(), 
-                                (CATCommandMethod)&CAAGemBrowserDocument::Exit, 
+                                pExitItem->GetMenuIActivateNotification(),
+                                (CATCommandMethod)&CAAGemBrowserDocument::Exit,
                                 NULL);
 
        **AddAnalyseNotificationCB**(this,
 pExitItem->GetMenuIActivateNotification(),
 (CATCommandMethod)&CAAGemBrowserDocument::Exit,
 NULL);
-                                GetWindCloseNotification(), 
-                                (CATCommandMethod)&CAAGemBrowserDocument::Exit, 
+                                GetWindCloseNotification(),
+                                (CATCommandMethod)&CAAGemBrowserDocument::Exit,
                                 NULL);
 
     }
@@ -436,10 +475,13 @@ The 3D navigation viewer is an instance of the CATNavigation3DViewer class. It i
 
     void CAAGemBrowserDocument::CreateViewer()
     {
-      // The window contains a 3DViewer which allows the user to do 3D Manipulations 
+      // The window contains a 3DViewer which allows the user to do 3D Manipulations
 The 3D navigation viewer is an instance of the CATNavigation3DViewer class. It is created in the `CreateViewer` method of the CAAGemBrowserDocument class that is called when the application is launched.
 void CAAGemBrowserDocument::CreateViewer()
+```vbscript
       _p3DViewer = new CATNavigation3DViewer( this, "3DViewerId",CATDlgFraNoTitle, 800, 450);
+
+```
 
       // Changes the color of the background
       _p3DViewer->SetBackgroundColor(0.2f,0.2f,0.6f);
@@ -454,8 +496,8 @@ The `_pViewer` pointer to the 3D navigation viewer is kept as a data member of t
 The `_pViewer` pointer to the 3D navigation viewer is kept as a data member of the CAAGemBrowserDocument class. The `Attach4Sides` method attaches the four sides of the viewer to those of the window. This makes the viewer occupy the whole window space.
 Once the user clicks on the File/Open item, the following callback is triggered:
 
-    void CAAGemBrowserDocument::Open  (CATCommand           * iSendingCommand, 
-                                       CATNotification      * iSentNotification, 
+    void CAAGemBrowserDocument::Open  (CATCommand           * iSendingCommand,
+                                       CATNotification      * iSentNotification,
                                        CATCommandClientData   iUsefulData)
 
     {
@@ -477,16 +519,16 @@ _pFileSelector->SetVisibility(CATDlgShow);
 CATUnicodeString nameExtension = CATUnicodeString("NCGM files");
 CATString filterExtension = CATString("*.NCGM");
 _pFileSelector->SetFilterStrings(&nameExtension, &filterExtension, 1);
-      AddAnalyseNotificationCB(_pFileSelector, 
-                               _pFileSelector->GetDiaCANCELNotification(), 
-                               (CATCommandMethod)&CAAGemBrowserDocument::Cancel, 
-                               NULL);  
+      AddAnalyseNotificationCB(_pFileSelector,
+                               _pFileSelector->GetDiaCANCELNotification(),
+                               (CATCommandMethod)&CAAGemBrowserDocument::Cancel,
+                               NULL);
       int iTypeOfInput = 0;
-      AddAnalyseNotificationCB(_pFileSelector, 
-                               _pFileSelector->GetDiaOKNotification(), 
-                               (CATCommandMethod)&CAAGemBrowserDocument::OpenOK, 
+      AddAnalyseNotificationCB(_pFileSelector,
+                               _pFileSelector->GetDiaOKNotification(),
+                               (CATCommandMethod)&CAAGemBrowserDocument::OpenOK,
 
-                               &iTypeOfInput);   
+                               &iTypeOfInput);
     }
 
 _pFileSelector->GetDiaOKNotification(),
@@ -502,8 +544,8 @@ The `OpenOK` callback:
     * Creates the representations: `CreateModelRepresentation`.
     * Draws the representations: `VisualizeModel`.
 
-    void CAAGemBrowserDocument::OpenOK(CATCommand           * iSendingCommand, 
-                                       CATNotification      * iSentNotification, 
+    void CAAGemBrowserDocument::OpenOK(CATCommand           * iSendingCommand,
+                                       CATNotification      * iSentNotification,
                                        CATCommandClientData   iUsefulData)
 
     {
@@ -513,7 +555,7 @@ CATNotification      * iSentNotification,
 CATCommandClientData   iUsefulData)
       CATUnicodeString fileName;
       _pFileSelector->**GetSelection**(fileName);
-      delete _pFileSelector; 
+      delete _pFileSelector;
       _pFileSelector=NULL;
 
       // Closes the precedeeding factory, if any
@@ -542,8 +584,8 @@ ifstream filetoread(fileName,ios::in,filebuf::openprot) ;
       **CreateModelRepresentation**();
 
       // Draws
-      **VisualizeModel**();  
-    } 			
+      **VisualizeModel**();
+    }
 
 The `CreateModelRepresentation` method begins by creating the representation bag to attach to the viewer.
 
@@ -552,15 +594,27 @@ The `CreateModelRepresentation` method begins by creating the representation bag
       // The Top of the  representation tree
 The `CreateModelRepresentation` method begins by creating the representation bag to attach to the viewer.
 void CAAGemBrowserDocument::**CreateModelRepresentation**()
+```vbscript
         _pTheModelToDisplay = new **CAT3DBagRep**();
+
+```
 
       // Scans the geometry factory to retrieve the objects to visualize
 _pTheModelToDisplay = new **CAT3DBagRep**();
-      if (NULL != _piGeomFactory) 
+```vbscript
+```vbscript
+      if (NULL != _piGeomFactory)
+
+```
+
+```
 
       {
 _pTheModelToDisplay = new **CAT3DBagRep**();
+```vbscript
 if (NULL != _piGeomFactory)
+```
+
         float sag = 0.1f;
 
         **CAAGemRep** browser(_piGeomFactory,**sag**);
@@ -571,13 +625,16 @@ float sag = 0.1f;
         while ( piCurrent = _piGeomFactory->**Next** ( piCurrent ) )
 ```
 
-        {  
+        {
 float sag = 0.1f;
 CATGeometry* piCurrent = NULL ;
 while ( piCurrent = _piGeomFactory->**Next** ( piCurrent ) )
           CAT3DRep * pRep =NULL;
           browser.**CreateRep**(piCurrent, pRep);
+```vbscript
           if ( NULL != pRep )
+
+```
 
           {
 CAT3DRep * pRep =NULL;
@@ -587,7 +644,7 @@ if ( NULL != pRep )
 
           }
         }
-      } 
+      }
     }
 
 Then, it defines the `CAAGemRep` object to compute the representations of the geometric objects. The `CATGeoFactory` is scanned by the ` Next` method in order to retrieve the objects to visualize. The representation of an object is created by the `CreateRep` method of `CATGemRep`, and added (`AddChild`) to the representation bag.
@@ -600,9 +657,12 @@ The visualization is done by the `VisualizeModel` method.
     {
 The visualization is done by the `VisualizeModel` method.
 void CAAGemBrowserDocument::VisualizeModel()
+```vbscript
        if ( (NULL != _p3DViewer) && ( NULL != _pTheModelToDisplay) )
 
-       {    
+```
+
+       {
           // Attaches the bag to the viewer
 void CAAGemBrowserDocument::VisualizeModel()
 if ( (NULL != _p3DViewer) && ( NULL != _pTheModelToDisplay) )
@@ -610,7 +670,7 @@ if ( (NULL != _p3DViewer) && ( NULL != _pTheModelToDisplay) )
 
           // Reframes on the current bounding sphere
 _p3DViewer->**AddRep**((CAT3DRep*)_pTheModelToDisplay);
-          const CAT3DBoundingSphere boundingSphere = _pTheModelToDisplay->GetBoundingElement(); 
+          const CAT3DBoundingSphere boundingSphere = _pTheModelToDisplay->GetBoundingElement();
           _p3DViewer->**ReframeOn**(boundingSphere);
 
           // Instruction to do at each  representation modification
@@ -635,7 +695,7 @@ CAAGemRep is the class dedicated to the creation of the representations.
     #include "CATBoolean.h"
 
 class CAT3DRep;
-    class CAAGemRep 
+    class CAAGemRep
 
     {
 class CAT3DRep;
@@ -651,13 +711,13 @@ CAAGemRep(CATGeoFactory * ipiGeomFactory, float iSag);
         void **CreateRep**(CATGeometry * ipiToView, CAT3DRep *& iopRep);
 
         //  Creates the  representation of a body
-        void **CreateBodyRep**(CATBody * ipiBody, CAT3DRep *& iopRep);  
+        void **CreateBodyRep**(CATBody * ipiBody, CAT3DRep *& iopRep);
 
         //  Creates the  representation of a face
         //  The arguments are the output of the tessellation cell or body operators
 void **CreateBodyRep**(CATBody * ipiBody, CAT3DRep *& iopRep);
         void **CreateSurfaceRep**(CATBoolean          iPlane,
-                              CATSide             iSide, 
+                              CATSide             iSide,
                               CATTessPointIter  * iPoints,
                               CATTessStripeIter * iStrips,
                               CATTessFanIter    * iFans,
@@ -674,9 +734,9 @@ CAT3DRep *& iopRep);
         //  Creates the  representation of an edge
         //  The arguments are the output of the tessellation cell or body operator
 void **CreatePlaneRep**(CATPlane *piPlane, CAT3DRep *& iopRep);
-        void **CreateEdgeRep**  (CATEdge * ipiEdge, 
+        void **CreateEdgeRep**  (CATEdge * ipiEdge,
                              long & ioNumOfPoints,
-                             float * oaPoints, 
+                             float * oaPoints,
                              CAT3DRep *& iopRep);
 
         //  Creates the  representation of a curve
@@ -684,7 +744,7 @@ void **CreatePlaneRep**(CATPlane *piPlane, CAT3DRep *& iopRep);
 float * oaPoints,
 CAT3DRep *& iopRep);
         void **CreateCurveRep** (long & ioNumOfPoints,
-                             float * oaPoints, 
+                             float * oaPoints,
                              CAT3DRep *& iopRep);
 
         //  Creates the  representation of a line
@@ -699,7 +759,10 @@ void **CreateLineRep**(CATLine *piLine, CAT3DRep *& iopRep);
 
       private:
         CAAGemRep ();
+```vbscript
         CAAGemRep(const CAAGemRep &iObjectToCopy);
+
+```
 
         CATGeoFactory * _piGeomFactory; // The geometry factory that is visualized
         float          _sag;           // The tessellation sag
@@ -727,19 +790,28 @@ The structure of the **CreateRep** method is as follows:
 
 The structure of the **CreateRep** method is as follows:
 void CAAGemRep::**CreateRep**(CATGeometry * ipiToView, CAT3DRep *& iopRep)
+```vbscript
       if (NULL!= ipiToView)
+
+```
 
       {
         // ------ Body visualization
 ```vbscript
 if (NULL!= ipiToView)
-        if (0!=ipiToView->**IsATypeOf**(**CATBodyType**)) 
+```vbscript
+        if (0!=ipiToView->**IsATypeOf**(**CATBodyType**))
 ```
 
-        { 
+```
+
+        {
 ```vbscript
 if (NULL!= ipiToView)
+```vbscript
 if (0!=ipiToView->**IsATypeOf**(**CATBodyType**))
+```
+
            CATBody * piBody=(CATBody * )ipiToView;
            CreateBodyRep(piBody,iopRep);
 ```
@@ -757,18 +829,27 @@ else if (0!=ipiToView->IsATypeOf(**CATCurveType**))
            if (0== ipiToView->**GetUseCount**())      // to only visualize alone curves
 ```
 
-           {       
+           {
              // ------ Line
 else if (0!=ipiToView->IsATypeOf(**CATCurveType**))
 if (0== ipiToView->**GetUseCount**())      // to only visualize alone curves
+```vbscript
+```vbscript
              if (0!=ipiToView->IsATypeOf(**CATLineType**))
+
+```
+
+```
 
              {
 ```vbscript
 if (0== ipiToView->**GetUseCount**())      // to only visualize alone curves
+```vbscript
 if (0!=ipiToView->IsATypeOf(**CATLineType**))
+```
+
                 CATLine * piLine=(CATLine*)ipiToView;
-                CreateLineRep(piLine,iopRep);               
+                CreateLineRep(piLine,iopRep);
 ```
 
              }
@@ -779,9 +860,9 @@ CreateLineRep(piLine,iopRep);
              else
 ```
 
-             // ------ other curves         
-             {   
-                ... --> use a CATCurveTessellator 
+             // ------ other curves
+             {
+                ... --> use a CATCurveTessellator
              }
            }
         }
@@ -791,18 +872,27 @@ CreateLineRep(piLine,iopRep);
 else if (0!=ipiToView->IsATypeOf(**CATSurfaceType**))
            CATSurface * piSurface = (CATSurface * )ipiToView;
 
+```vbscript
             if (0== ipiToView->**GetUseCount**()) // only visualizes surfaces that are not pointed to
 
-            {     
+```
+
+            {
              // ----- Plane
 CATSurface * piSurface = (CATSurface * )ipiToView;
 if (0== ipiToView->**GetUseCount**()) // only visualizes surfaces that are not pointed to
+```vbscript
              if(ipiToView->IsATypeOf(**CATPlaneType**))
+
+```
 
              {
 ```vbscript
 if (0== ipiToView->**GetUseCount**()) // only visualizes surfaces that are not pointed to
+```vbscript
 if(ipiToView->IsATypeOf(**CATPlaneType**))
+```
+
                 CATPlane * piPlane=(CATPlane*)ipiToView;
                 CreatePlaneRep(piPlane,iopRep);
 ```
@@ -818,14 +908,17 @@ CreatePlaneRep(piPlane,iopRep);
              // Other surfaces
              {
                ... --> use CATSurfaceTessellator
-             } 
+             }
            }
         }
         // Point
         else if (0!=ipiToView->IsATypeOf(**CATPointType**))
         {
 else if (0!=ipiToView->IsATypeOf(**CATPointType**))
+```vbscript
            if (0== ipiToView->GetUseCount())
+
+```
 
            {
 else if (0!=ipiToView->IsATypeOf(**CATPointType**))
@@ -837,7 +930,7 @@ if (0== ipiToView->GetUseCount())
 
            }
         }
-      }  
+      }
     }
 
 The creation of the representations is managed according to the type of the geometric object, retrieved with the `CATICGMContainer::IsATypeOf` method. In case of surfaces, curves, or points, the choice of the use case is to visualize only objects that are not pointed to by any other object. Hence the `CATICGMObject::GetUseCount` returns if an object is pointed to or not.
@@ -895,29 +988,44 @@ piLine->GetEndLimit(endParam);
       CATMathPoint endPoint =piLine->EvalPoint(endParam);
       CATMathPointf start, end;
       start.x = (float) startPoint.GetX();
+```vbscript
+```vbscript
       start.y = (float) startPoint.GetY();
       start.z = (float) startPoint.GetZ();
       end.x   = (float) endPoint.GetX();
       end.y   = (float) endPoint.GetY();
       end.z   = (float) endPoint.GetZ();
 
+```
+
+```
+
       // Is the line infinite?
 end.x   = (float) endPoint.GetX();
+```vbscript
+```vbscript
 end.y   = (float) endPoint.GetY();
 end.z   = (float) endPoint.GetZ();
+```
+
+```
+
       double infinity=piLine->GetContainer()->**GetModelSize**();
       CATMathBox boxInfinite(-infinity,infinity,-infinity,infinity,-infinity,infinity) ;
-      int isFinite = (boxInfinite.IsContaining(startPoint) 
+      int isFinite = (boxInfinite.IsContaining(startPoint)
 
                         && boxInfinite.IsContaining(endPoint) ) ? 1 : 0;
 
 double infinity=piLine->GetContainer()->**GetModelSize**();
 CATMathBox boxInfinite(-infinity,infinity,-infinity,infinity,-infinity,infinity) ;
 int isFinite = (boxInfinite.IsContaining(startPoint)
+```vbscript
       if ( isFinite )
 
+```
+
       {
-        // Creates the rep of the finite line 
+        // Creates the rep of the finite line
 ```vbscript
 if ( isFinite )
         CAT3DLineRep* pRepresentation = new **CAT3DLineRep**();
@@ -932,7 +1040,7 @@ pRep = pRepresentation;
       else
 
       {
-        // Creates a special rep: an arrow 
+        // Creates a special rep: an arrow
 pRep = pRepresentation;
 else
         CATMathLine line(startPoint,endPoint);
@@ -944,10 +1052,10 @@ else
         CATMathPointf  ptf((float)projpt.GetX(), (float)projpt.GetY(), (float)projpt.GetZ());
         CATMathVectorf tf(vect);
 
-        CAT3DCustomRep  * pBagGP = new CAT3DCustomRep();     
+        CAT3DCustomRep  * pBagGP = new CAT3DCustomRep();
         CAT3DFixedArrowGP* pArrow = new **CAT3DFixedArrowGP**(ptf,tf, 40, 2);
-        CATGraphicAttributeSet attribute;  
-        pBagGP->AddGP(pArrow,attribute);  
+        CATGraphicAttributeSet attribute;
+        pBagGP->AddGP(pArrow,attribute);
         pRep = pBagGP;
 
       }
@@ -991,13 +1099,19 @@ In case of a curve, the program first checks that the curve is not degenerated. 
 boundingBox.GetHigh(high);
 CATMathVector diagonal=high-low;
 double diagonalLength= diagonal.Norm();
+```vbscript
     if ( diagonalLength > _piGeomFactory->**GetResolution**() )
 
-    {     
+```
+
+    {
 double diagonalLength= diagonal.Norm();
 if ( diagonalLength > _piGeomFactory->**GetResolution**() )
       CATICGMCurveTessellator * pCurveTess = **CATCGMCreateCurveTessellator**(_sag);
+```vbscript
       if (NULL!=pCurveTess)
+
+```
 
       {
 
@@ -1020,7 +1134,7 @@ pCurveTess-> **GetCurve** (piCurve, numOfPoints, &aPoints);
         pCurveTess->Release();
         pCurveTess=NULL;
 
-      } 
+      }
     }
     // The curve is a point
 pCurveTess->Release();
@@ -1050,8 +1164,8 @@ To use the `CATICGMCurveTessellator` operator:
 The tessellation results are used by the method `CreateCurveRep` of `CAAGemRep` to create the representation as follows.
 
 The tessellation results are used by the method `CreateCurveRep` of `CAAGemRep` to create the representation as follows.
-    void CAAGemRep::CreateCurveRep  (long & ioNumOfPoints, 
-                                     float * oaPoints, 
+    void CAAGemRep::CreateCurveRep  (long & ioNumOfPoints,
+                                     float * oaPoints,
                                      CAT3DRep *& iopRep)
 
     {
@@ -1067,16 +1181,20 @@ CAT3DCurveRep*   pCurveRep = NULL;
       pCurveRep  = new CAT3DCurveRep();
       pCurveRep->**AddWireframeLOD**(0,polylineGP, _sag);
 
-      // Defines the bounding box 
+      // Defines the bounding box
 CAT3DPolylineGP* polylineGP = new **CAT3DPolylineGP**(oaPoints, ioNumOfPoints, 1);
 pCurveRep  = new CAT3DCurveRep();
 pCurveRep->**AddWireframeLOD**(0,polylineGP, _sag);
       float xmin=1.e+10,ymin=1.e+10,zmin=1.e+10,xmax=-1.e+10,ymax=-1.e+10,zmax=-1.e+10;
+```vbscript
       for (int j=0, curj=0; j<ioNumOfPoints; j++, curj+=3)
+
+```
 
       {
 float xmin=1.e+10,ymin=1.e+10,zmin=1.e+10,xmax=-1.e+10,ymax=-1.e+10,zmax=-1.e+10;
 for (int j=0, curj=0; j<ioNumOfPoints; j++, curj+=3)
+```vbscript
         if(oaPoints[curj+0] < xmin) xmin=oaPoints[curj+0];
         if(oaPoints[curj+1] < ymin) ymin=oaPoints[curj+1];
         if(oaPoints[curj+2] < zmin) zmin=oaPoints[curj+2];
@@ -1084,14 +1202,19 @@ for (int j=0, curj=0; j<ioNumOfPoints; j++, curj+=3)
         if(oaPoints[curj+1] > ymax) ymax=oaPoints[curj+1];
         if(oaPoints[curj+2] > zmax) zmax=oaPoints[curj+2];
 
+```
+
       }
 ```vbscript
 if(oaPoints[curj+2] < zmin) zmin=oaPoints[curj+2];
+```vbscript
 if(oaPoints[curj+0] > xmax) xmax=oaPoints[curj+0];
 if(oaPoints[curj+1] > ymax) ymax=oaPoints[curj+1];
 if(oaPoints[curj+2] > zmax) zmax=oaPoints[curj+2];
-      CATMathPointf center((float) (xmin+xmax)/2.f, 
-                           (float) (ymin+ymax)/2.f, 
+```
+
+      CATMathPointf center((float) (xmin+xmax)/2.f,
+                           (float) (ymin+ymax)/2.f,
                            (float) (zmin+zmax)/2.f);
       double radius= sqrt((xmax-xmin)*(xmax-xmin)+
                           (ymax-ymin)*(ymax-ymin)+
@@ -1128,14 +1251,14 @@ CATMathPlane plane;
       CATMathPoint      center = plane.GetOrigin();
       CATMathDirection  vAxis  = plane.GetSecondDirection();
       CATMathDirection  uAxis  = plane.GetFirstDirection();
-      CATMathPointf     origin((float) center.GetX(), 
-                               (float) center.GetY(), 
+      CATMathPointf     origin((float) center.GetX(),
+                               (float) center.GetY(),
                                (float) center.GetZ());
-      CATMathDirectionf u((float) uAxis.GetX(), 
-                          (float) uAxis.GetY(), 
+      CATMathDirectionf u((float) uAxis.GetX(),
+                          (float) uAxis.GetY(),
                           (float) uAxis.GetZ());
-      CATMathDirectionf v((float) vAxis.GetX(), 
-                          (float) vAxis.GetY(), 
+      CATMathDirectionf v((float) vAxis.GetX(),
+                          (float) vAxis.GetY(),
                           (float) vAxis.GetZ());
 
       float size = 20.f;
@@ -1171,7 +1294,10 @@ The surface is first tessellated with `CATSurfaceTessellator`.
     CATSurLimits limits;
     piSurface->GetLimits(limits);
     CATICGMSurfaceTessellator * pSurfTess = **CATCGMCreateSurfaceTessellator**(_sag);
+```vbscript
     if (NULL!=pSurfTess)
+
+```
 
     {
 CATSurLimits limits;
@@ -1227,31 +1353,42 @@ We now detail the use of the point iterator to retrieve the normals in case of a
     // allocation of the arrays
 We now detail the use of the point iterator to retrieve the normals in case of a non-planar surface.
       long numberOfPoints = ipPoints->**GetNbPoint**();
+```vbscript
       if (numberOfPoints == 0) return ;
+
+```
 
       long verticesArraySize = numberOfPoints*3 ;
       float * vertices = new float [verticesArraySize];
       long normalsArraySize = verticesArraySize ;
       float * normals = new float [normalsArraySize];
 
-    // iterator on the points 
+    // iterator on the points
     // ipPoints is the CATTessPointIterator retrieved from the tessellator
 long normalsArraySize = verticesArraySize ;
 float * normals = new float [normalsArraySize];
       i = 0 ;
-      double const  * ptd;   
-      while ( ipPoints->**IsExhausted**()==0 ) 
+      double const  * ptd;
+```vbscript
+      while ( ipPoints->**IsExhausted**()==0 )
+
+```
 
       {
 i = 0 ;
 double const  * ptd;
 while ( ipPoints->**IsExhausted**()==0 )
+```vbscript
         ptd = ipPoints->**GetPointXyz**();
+```
+
         vertices[i  ] = (float) ptd[0] ;
         vertices[i+1] = (float) ptd[1] ;
         vertices[i+2] = (float) ptd[2] ;
 
         if (xmin > vertices[i  ]) xmin=vertices[i  ];
+```vbscript
+```vbscript
         if (ymin > vertices[i+1]) ymin=vertices[i+1];
         if (zmin > vertices[i+2]) zmin=vertices[i+2];
         if (xmax < vertices[i  ]) xmax=vertices[i  ];
@@ -1259,21 +1396,34 @@ while ( ipPoints->**IsExhausted**()==0 )
         if (zmax < vertices[i+2]) zmax=vertices[i+2];
 
         if (!iPlane) { // the surface is not a plane
+```
+
+```
+
           CATBoolean b = ipPoints->**GetPointNor**(vector);
-          if ( b ) 
+```vbscript
+          if ( b )
+
+```
 
           {
 ```vbscript
 if (!iPlane) { // the surface is not a plane
 CATBoolean b = ipPoints->**GetPointNor**(vector);
 if ( b )
-            if (ori<0) 
+```vbscript
+            if (ori<0)
+```
+
 ```
 
             {// the normal must be inverted
 CATBoolean b = ipPoints->**GetPointNor**(vector);
 if ( b )
+```vbscript
 if (ori<0)
+```
+
               normals[i+0] = (float) -vector->GetX() ;
               normals[i+1] = (float) -vector->GetY() ;
               normals[i+2] = (float) -vector->GetZ() ;
@@ -1316,7 +1466,10 @@ Now, the isolated triangles are read with the `CATTessTrianIter` iterator create
 
 Now, the isolated triangles are read with the `CATTessTrianIter` iterator created by the tessellator. Its use is similar to the use of a `CATTessPointIter`.
     long  numberOfTriangles = ipTriangles->**GetNbTrian**();
-      if ( NULL!= numberOfTriangles ) 
+```vbscript
+      if ( NULL!= numberOfTriangles )
+
+```
 
       {
 Now, the isolated triangles are read with the `CATTessTrianIter` iterator created by the tessellator. Its use is similar to the use of a `CATTessPointIter`.
@@ -1327,7 +1480,10 @@ if ( NULL!= numberOfTriangles )
         while ( ipTriangles->**IsExhausted**()==0 ) {
           ipTriangles->**GetTrianNuPts**(NuPts);
 
+```vbscript
           if (ori <0) {
+
+```
 
             // triangles must be inverted
 while ( ipTriangles->**IsExhausted**()==0 ) {
@@ -1360,14 +1516,14 @@ ipTriangles->**GoToNext**();
 As this method is also used to create the representation of a face, the relative orientation of the face and the surface is taken into account here by the ` ori` value, initialized with the corresponding output of the tessellator. In the same way, the strips of triangles are retrieved.
 
     long TotalPointNb=0;
-      long numberOfStrips = ipStrips->**GetNbStri**(TotalPointNb) ; 
+      long numberOfStrips = ipStrips->**GetNbStri**(TotalPointNb) ;
       if ( numberOfStrips ) {
         nbVertexPerTriangleStrip = new int [numberOfStrips] ;
         triangleStripIndice = new int [TotalPointNb] ;
         i = 0 ;
         j = 0 ;
         while ( ipStrips->**IsExhausted**()==0 ) {
-          nbVertexPerTriangleStrip[i] = ipStrips->GetStriNbPts(); 
+          nbVertexPerTriangleStrip[i] = ipStrips->GetStriNbPts();
           ipStrips ->**GetStriNuPts**( &(triangleStripIndice[j]) ) ;
           for ( k=0 ; k < nbVertexPerTriangleStrip[i] ; k++ ) {
             triangleStripIndice[j+k] *= 3 ;
@@ -1377,7 +1533,10 @@ nbVertexPerTriangleStrip[i] = ipStrips->GetStriNbPts();
 ipStrips ->**GetStriNuPts**( &(triangleStripIndice[j]) ) ;
 for ( k=0 ; k < nbVertexPerTriangleStrip[i] ; k++ ) {
 triangleStripIndice[j+k] *= 3 ;
+```vbscript
           if (ori <0) {
+
+```
 
             // Inverts to strip: Swap 2 by 2
 ```vbscript
@@ -1402,7 +1561,7 @@ m +=2 ;
           ipStrips->**GoToNext**();
 
         }
-      } 
+      }
 
 i += 1;
 ipStrips->**GoToNext**();
@@ -1410,7 +1569,10 @@ Now, the representation can be created.
 
     CAT3DFaceGP * faceGP = NULL;
       if ( iPlane )
+```vbscript
         faceGP = new **CAT3DPlanarFaceGP**(vertices,verticesArraySize,
+```
+
                                        normals,
                                        triangleIndice,numberOfTriangles,
                                        triangleStripIndice, numberOfStrips, nbVertexPerTriangleStrip,
@@ -1420,17 +1582,23 @@ Now, the representation can be created.
 
         faceGP = new **CAT3DFaceGP**(vertices,verticesArraySize,
                                  normals,normalsArraySize,
-                                 triangleIndice,numberOfTriangles, 
+                                 triangleIndice,numberOfTriangles,
                                  triangleStripIndice, numberOfStrips, nbVertexPerTriangleStrip,
                                  triangleFanIndice,numberOfFans,nbVertexPerTriangleFan);
 
       if (NULL!=vertices)                 delete [] vertices;
+```vbscript
+```vbscript
       if (NULL!=normals)                  delete [] normals;
       if (NULL!=triangleIndice)           delete [] triangleIndice ;
       if (NULL!=triangleStripIndice)      delete [] triangleStripIndice ;
       if (NULL!=nbVertexPerTriangleStrip) delete [] nbVertexPerTriangleStrip ;
       if (NULL!=triangleFanIndice )       delete [] triangleFanIndice ;
       if (NULL!=nbVertexPerTriangleFan )  delete [] nbVertexPerTriangleFan ;
+
+```
+
+```
 
       CAT3DCustomRep * pSurfacicRep = new **CAT3DCustomRep**();
       CATGraphicAttributeSet ag ;
@@ -1443,12 +1611,15 @@ ag.SetType(2);
 pSurfacicRep->**AddGP**(faceGP,ag);
       CATMathPointf Center(float((xmin+xmax)/2.),
                            float((ymin+ymax)/2.),
+```vbscript
                            float((zmin+zmax)/2.));
+```
+
       double BoundingSphereRadius= sqrt((xmax-xmin)*(xmax-xmin)+
                                         (ymax-ymin)*(ymax-ymin)+
                                         (zmax-zmin)*(zmax-zmin))/2.;
       CAT3DBoundingSphere BoundingSphere( Center, float(BoundingSphereRadius));
-      pSurfacicRep->**SetBoundingElement**(BoundingSphere); 
+      pSurfacicRep->**SetBoundingElement**(BoundingSphere);
 
 The graphic primitive is first created: it is a CAT3DPlanarFaceGP for a planar surface or a CAT3DFaceGP for a non-planar surface. This primitive is added to a new CAT3DCustomRep. The computed bounding box is set with the `SetBoundingElement` method, thus ending the construction of the surface representation.
 
@@ -1458,7 +1629,7 @@ pSurfacicRep->**SetBoundingElement**(BoundingSphere);
 The graphic primitive is first created: it is a CAT3DPlanarFaceGP for a planar surface or a CAT3DFaceGP for a non-planar surface. This primitive is added to a new CAT3DCustomRep. The computed bounding box is set with the `SetBoundingElement` method, thus ending the construction of the surface representation.
 All the previous methods are used to create the representation of a body. `CATICGMCellTessellator` is used to create data needed by the `CreateSurfaceRep` and `CreateCurveRep` methods. The faces, edges of wire domains, and vertices in volume are tessellated. In particular, neither the edges of the face, nor the vertices of the edges are represented.
 
-    void CAAGemRep::CreateBodyRep(CATBody * ipiBody, CAT3DRep *& iopRep)  
+    void CAAGemRep::CreateBodyRep(CATBody * ipiBody, CAT3DRep *& iopRep)
 
     {
      ...
@@ -1466,19 +1637,25 @@ All the previous methods are used to create the representation of a body. `CATIC
 void CAAGemRep::CreateBodyRep(CATBody * ipiBody, CAT3DRep *& iopRep)
      iopRep=NULL;
      CAT3DBagRep* pBagRep = NULL;
+```vbscript
      pBagRep = new CAT3DBagRep();
+
+```
 
      CATICGMCellTessellator * pTessellator = **CATCGMCreateCellTessellator**(_sag);
 
-     //-------------------------------------------------- 
+     //--------------------------------------------------
      // Tessellates the faces
-     //-------------------------------------------------- 
+     //--------------------------------------------------
      if (NULL!=pTessellator)
      {
        // Retrieves all the faces
 ```vbscript
 if (NULL!=pTessellator)
+```vbscript
        CATLISTP(CATCell) cells;
+```
+
        ipiBody->GetAllCells( cells,2);   // 2 for retrieving the faces
        int numberOfCells = cells.Size();
 
@@ -1502,10 +1679,13 @@ pTessellator->**AddFace**((CATFace *)(cells[ifa]));
        // for each face, retrieve the tessellation results
 
 pTessellator -> **Run**();
+```vbscript
        for (ifa=1 ; ifa<=numberOfCells ; ifa++)
 
-       {   
-         CATFace * piFace = (CATFace*) cells[ifa]; 
+```
+
+       {
+         CATFace * piFace = (CATFace*) cells[ifa];
 
          // a special visualization for infinite face
 ```vbscript
@@ -1519,13 +1699,16 @@ CATFace * piFace = (CATFace*) cells[ifa];
 if (TRUE== piFace->**GetInfinite**())
            CATOrientation ori;
            CATGeometry*    piGeom= piFace->GetGeometry(&ori);
+```vbscript
            if (NULL!= piGeom && piGeom->IsATypeOf(CATPlaneType) )
+
+```
 
            {
 CATOrientation ori;
 CATGeometry*    piGeom= piFace->GetGeometry(&ori);
 if (NULL!= piGeom && piGeom->IsATypeOf(CATPlaneType) )
-              CATPlane * piPlane = (CATPlane *)piGeom;      
+              CATPlane * piPlane = (CATPlane *)piGeom;
               CAT3DRep* pRep=NULL;
 
               **CreatePlaneRep**(piPlane,pRep);
@@ -1540,7 +1723,10 @@ CAT3DRep* pRep=NULL;
 CATPlane * piPlane = (CATPlane *)piGeom;
 CAT3DRep* pRep=NULL;
 if (NULL!=pRep)
+```vbscript
               if (NULL== pBagRep) pBagRep = new CAT3DBagRep();
+```
+
               pBagRep->AddChild(*pRep);
 
              }
@@ -1569,13 +1755,19 @@ else
 short side;
 pTessellator -> **GetFace**(piFace,isPlanar,&pPoints,&pStrips,&pFans,&pPolygons,&pTriangles,&side);
 CAT3DRep * pRep=NULL;
+```vbscript
            if (NULL!=pRep)
+
+```
 
            {
 pTessellator -> **GetFace**(piFace,isPlanar,&pPoints,&pStrips,&pFans,&pPolygons,&pTriangles,&side);
 CAT3DRep * pRep=NULL;
 if (NULL!=pRep)
+```vbscript
               if (NULL== pBagRep) pBagRep = new CAT3DBagRep();
+```
+
               pBagRep->AddChild(*pRep);
 
            }
@@ -1590,9 +1782,9 @@ pBagRep->AddChild(*pRep);
 
      }
 
-     //-------------------------------------------------- 
+     //--------------------------------------------------
      // Now tessellate the wire domains (not the edges of faces)
-     //-------------------------------------------------- 
+     //--------------------------------------------------
      // ......
 
      // Returns the rep
@@ -1616,7 +1808,10 @@ The way to create the representation of the vertices in volume and the edges of 
      CATLISTP(CATCell)  cells;
      int numberOfCells =0;
 
+```vbscript
      for (int dom = 1;dom<=nbDomains;dom++)
+
+```
 
      {
 ```vbscript
@@ -1638,28 +1833,49 @@ CATDomain * piDomain = ipiBody->**GetDomain**( dom );
          // Creates a cell tessellator
 ```vbscript
 if (NULL!=piDomain && 1==(piDomain->IsATypeOf(**CATWireType**)) )
-         pTessellator = CATCGMCreateCellTessellator(_sag); 
+```vbscript
+```vbscript
+         pTessellator = CATCGMCreateCellTessellator(_sag);
          if (pTessellator!=NULL)
+```
+
+```
+
 ```
 
          {
            // Retrieves the number of edges of the wire
 pTessellator = CATCGMCreateCellTessellator(_sag);
+```vbscript
 if (pTessellator!=NULL)
+```
+
            cells.RemoveAll();
            piDomain->**GetAllCells**(cells,1);
+```vbscript
            numberOfCells = cells.Size();
+
+```
 
            // Adds the edges to tessellate
 cells.RemoveAll();
 piDomain->**GetAllCells**(cells,1);
 numberOfCells = cells.Size();
+```vbscript
+```vbscript
            for  (int i=1 ; i<=numberOfCells ; i++)
 
-           { 
+```
+
+```
+
+           {
 ```vbscript
 numberOfCells = cells.Size();
+```vbscript
 for  (int i=1 ; i<=numberOfCells ; i++)
+```
+
              CATEdge * piEdge = (CATEdge*) cells[i];
              pTessellator -> **AddEdge**(piEdge);
 ```
@@ -1671,11 +1887,14 @@ CATEdge * piEdge = (CATEdge*) cells[i];
 pTessellator -> **AddEdge**(piEdge);
            pTessellator->**Run**();
 
-           // for each each edge 
+           // for each each edge
 pTessellator->**Run**();
+```vbscript
            for  ( i=1 ; i<=numberOfCells ; i++)
 
-           { 
+```
+
+           {
 pTessellator->**Run**();
 for  ( i=1 ; i<=numberOfCells ; i++)
              CATEdge * piEdge = (CATEdge*) cells[i];
@@ -1693,12 +1912,18 @@ float   * aPoints= NULL;
              // Creates the rep
              **CreateEdgeRep** (piEdge, numOfPoints,aPoints,pRep);
 CAT3DRep * pRep=NULL;
+```vbscript
              if (NULL!=pRep)
+
+```
 
              {
 ```vbscript
 if (NULL!=pRep)
+```vbscript
               if (NULL== pBagRep) pBagRep = new CAT3DBagRep();
+```
+
               pBagRep->AddChild(*pRep);
 ```
 
@@ -1720,7 +1945,10 @@ pBagRep->AddChild(*pRep);
 
 else if(NULL!=piDomain && 1==(piDomain->IsATypeOf(**CATVertexInVolumeType**)))
          CATCell * piCell = piDomain->**GetCell**(1);
-         if (NULL!=piCell) 
+```vbscript
+         if (NULL!=piCell)
+
+```
 
          {
 CATCell * piCell = piDomain->**GetCell**(1);
@@ -1745,31 +1973,37 @@ CATPoint * piPoint = piVertex->GetPoint();
 CAT3DRep * pRep=NULL;
 CATMathPoint point;
 piPoint->GetMathPoint(point);
+```vbscript
            if (NULL!=pRep)
+
+```
 
            {
 CATMathPoint point;
 piPoint->GetMathPoint(point);
 if (NULL!=pRep)
+```vbscript
               if (NULL== pBagRep) pBagRep = new CAT3DBagRep();
+```
+
               pBagRep->AddChild(*pRep);
 
            }
 
-         }	
+         }
        }
      }
 
 We first loop on all the domains of the body. `GetDomain` returns the pointer to the i-th domain.
 
-    * If the domain is a wire: 
+    * If the domain is a wire:
       * All the edges of this wire are retrieved: `GetAllCells` is called with 1.
       * They are `Add`ed to the created `CATICGMCellTessellator`.
       * The tessellator is `Run`.
       * For each edge, the tessellation results are retrieved: `GetEdge`.
       * These results are passed to `CreateEdgeRep` that created the representation.
       * The tessellator is released after use.
-    * If the domain is a vertex in volume: 
+    * If the domain is a vertex in volume:
       * The unique cell of this domain is retrieved.
       * The representation of the corresponding point is created.
 #### Representation of an Edge
@@ -1777,9 +2011,9 @@ We first loop on all the domains of the body. `GetDomain` returns the pointer to
 The representation is created in a very similar way as in the curve case. They only differ by the process of the degenerated elements
 
 The representation is created in a very similar way as in the curve case. They only differ by the process of the degenerated elements
-    void CAAGemRep::CreateEdgeRep  (CATEdge * ipiEdge, 
-                                    long & ioNumOfPoints, 
-                                    float * oaPoints, 
+    void CAAGemRep::CreateEdgeRep  (CATEdge * ipiEdge,
+                                    long & ioNumOfPoints,
+                                    float * oaPoints,
                                     CAT3DRep *& iopRep)
 
     {
@@ -1798,9 +2032,12 @@ CAT3DRep *& iopRep)
       CATMathVector diagonal=high-low;
       double diagonalLength= diagonal.Norm();
 
+```vbscript
       if ( diagonalLength > _piGeomFactory->**GetResolution**() )
 
-      {		     		
+```
+
+      {
          **CreateCurveRep** (ioNumOfPoints,oaPoints,pRep);
       }
       // The edge is a point
@@ -1821,7 +2058,10 @@ else
     }
 
 iopRep = pRep;
+```vbscript
 If the edge has a length greater than the factory resolution, the representation of a curve is created.
+
+```
 
 Otherwise, one point of the edge is recovered, and a representation of this point is created. Notice that to get the points extremities of an edge, the `CATEdge::GetVerticesPointsOnEdgeCurve` method can be used.
 
@@ -1835,11 +2075,11 @@ This use case offers the programmer a way to visualize the geometry and topology
 
 ## References
 
-[1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-[2] | [Using a Tessellation Operator](CAACgmUcTesBody.md)  
+[1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
+---|---
+[2] | [Using a Tessellation Operator](CAACgmUcTesBody.md)
 ## History
 
-Version: **1.1** [Nov 2000] | Use of CAT3DCustomRep for the graphic representation of a surface representation.  
----|---  
+Version: **1.1** [Nov 2000] | Use of CAT3DCustomRep for the graphic representation of a surface representation.
+---|---
 Version: **1** [Jun 2000] | Document created

@@ -10,10 +10,10 @@ converted: "2026-05-11T17:33:51.325267"
 ```
 
 ---
-# CAA C++ API Modifications  
+# CAA C++ API Modifications
 
-| 
-##  DraftingInterfaces Framework Modifications in V5R17 
+|
+##  DraftingInterfaces Framework Modifications in V5R17
 
 * * *
 

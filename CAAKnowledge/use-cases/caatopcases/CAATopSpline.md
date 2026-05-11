@@ -11,20 +11,20 @@ converted: "2026-05-11T17:31:50.766842"
 ---
 # Geometric Modeler
 
-| 
+|
 ## Topology
 
-| 
+|
 ### Basic Topological Operators
 
-_How to create vertex bodies or simple wire bodies_  
----|---|---  
-Use Case  
+_How to create vertex bodies or simple wire bodies_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
 
-Basic topological operators are transient objects for the creation of basic topological bodies such as point, line or spline bodies. These operators are based on the same scheme, which is described. The use of each provided basic topological operator is presented in the `CAABopSpine.cpp` sample. 
+Basic topological operators are transient objects for the creation of basic topological bodies such as point, line or spline bodies. These operators are based on the same scheme, which is described. The use of each provided basic topological operator is presented in the `CAABopSpine.cpp` sample.
 
   * **What You Will Learn With This Use Case**
   * **The Basic Topological Operators**
@@ -37,7 +37,7 @@ Basic topological operators are transient objects for the creation of basic topo
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
@@ -52,7 +52,7 @@ Using basic topological operators is an easy way to create point, line, or splin
 
 These operators are called with parameters such as coordinates (to define a point), vectors (to define tangents), or other basic bodies. They work inside one geometric container: the input and output objects must belong to the same geometric container.
 
-The basic topological operators create: 
+The basic topological operators create:
 
   * Point body: `CATTopPointOperator`
   * Line body: `CATTopLineOperator`
@@ -63,9 +63,9 @@ An additional operator, the `CATLengthFromBodyOnWire` operator, analyzes the len
 [Top]
 ### How to Use a Basic Topological Operator
 
-There are two ways to create basic bodies. 
+There are two ways to create basic bodies.
 
-  * One way is to use the corresponding basic topological operator, based on the general scheme of the CGM operators, that: 
+  * One way is to use the corresponding basic topological operator, based on the general scheme of the CGM operators, that:
     * Creates the operator with a global function: `::CATCreateTopxxxOperator` (where `xxx` stands for the type of the created geometry of the body). The created operator is transient (that is to say, it is not streamed when streaming the geometric factory).
     * Possibly sets parameters
     * Runs the operation
@@ -83,13 +83,13 @@ CAATopSpline is a use case of the CAATopologicalOperators.edu framework that ill
 [Top]
 #### What Does CAATopSpline Do
 
-Fig. 1: The created objects of the CAATopSpline use case ![Spline1.gif \(29988 bytes\)](images/Spline1.gif) | This use case details the two ways of creation of basic bodies. 
+Fig. 1: The created objects of the CAATopSpline use case ![Spline1.gif \(29988 bytes\)](images/Spline1.gif) | This use case details the two ways of creation of basic bodies.
 
   * `SplineBody` is directly created with a global function
   * `SplineBody2` is created by an operator. Tangency constraints are imposed on the extremities. The operator also returns the tangents to all the passing points, that are used to create lines.
 
-Moreover, the use case shows an example of the curve length computation.  
----|---  
+Moreover, the use case shows an example of the curve length computation.
+---|---
 
 [Top]
 #### How to Launch CAATopSpline
@@ -97,7 +97,10 @@ Moreover, the use case shows an example of the curve length computation.
 To launch CAATopSpline, you will need to set up the build time environment, then compile CAATopSpline.m along with its prerequisites, set up the run time environment, and then execute the use case [1].
 
 To launch CAATopSpline, you will need to set up the build time environment, then compile CAATopSpline.m along with its prerequisites, set up the run time environment, and then execute the use case [1].
+```vbscript
 If you simply type CAATopSpline with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example:
+
+```
 
 With Windows `CAATopSpline e/SplineCreation.NCGM`
 
@@ -111,11 +114,11 @@ This NCGM file can be displayed using the CAAGemBrowser use case.
 This NCGM file can be displayed using the CAAGemBrowser use case.
 The CAATopSpline use case is made of a main named CAATopSpline.cpp located in the CAATopSpline.m module of the CAATopologicalOperators.edu framework:
 
-Windows | `InstallRootDirectory\CAATopologicalOperators.edu\CAATopSpline.m\`  
+Windows | `InstallRootDirectory\CAATopologicalOperators.edu\CAATopSpline.m\`
 
 The CAATopSpline use case is made of a main named CAATopSpline.cpp located in the CAATopSpline.m module of the CAATopologicalOperators.edu framework:
 Windows | `InstallRootDirectory\CAATopologicalOperators.edu\CAATopSpline.m\`
-Unix | `InstallRootDirectory/CAATopologicalOperators.edu/CAATopSpline.m/`  
+Unix | `InstallRootDirectory/CAATopologicalOperators.edu/CAATopSpline.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
@@ -123,11 +126,11 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 ### Step-by-Step
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
-There are six steps in CAATopSpline.cpp: 
+There are six steps in CAATopSpline.cpp:
 
   1. Creating the Geometry Factory
   2. Directly Creating Point Bodies and a Spline Body (first way)
-  3. Using a Basic Topological Operator to Create Another Spline Body (second way.) This includes: 
+  3. Using a Basic Topological Operator to Create Another Spline Body (second way.) This includes:
 
      * Creating the operator
      * Running it
@@ -145,9 +148,12 @@ The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. 
 
 The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
     CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**() ;
-    if (NULL==piGeomFactory) return (1);  
+```vbscript
+    if (NULL==piGeomFactory) return (1);
 
----  
+```
+
+---
 
 [Top]
 #### Directly Creating Point Bodies and a Spline Body
@@ -161,7 +167,7 @@ The non detailed steps created or loaded the geometric factory (`piGeomFactory`)
 
     _//
 
-    // 2-Direct creation of point bodies 
+    // 2-Direct creation of point bodies
     //_
 _//
     const int nbpts = 4;
@@ -179,7 +185,7 @@ _//
 
     _//
 
-    // 3-Direct creation of a spline body without any tangent 
+    // 3-Direct creation of a spline body without any tangent
     // or curvature imposition.
     /_ /
 _//
@@ -190,7 +196,7 @@ CATBody * piSplineBody = **::CATCreateTopSpline**(piGeomFactory,
                                                   nbpts,
                                                   aPoints);
 
----  
+---
 
 The operator configuration is the level of software you want to use to run this operator. By default, define an open configuration as in this use case to run with the current level. Moreover here, the pointer to the journal is set to `NULL` in the operator data. So that the journal is not filled.
 
@@ -198,11 +204,11 @@ The operator configuration is the level of software you want to use to run this 
 #### Using a Basic Topological Operator to Create Another Spline Body
 
 The operator configuration is the level of software you want to use to run this operator. By default, define an open configuration as in this use case to run with the current level. Moreover here, the pointer to the journal is set to `NULL` in the operator data. So that the journal is not filled.
-To operate in this mode, the sample proceeds with the following steps that: 
+To operate in this mode, the sample proceeds with the following steps that:
 
   1. Create the operator with the appropriate global function (`CATCreateTopSplineOperator`). Here, tangents to the start and end points are imposed
   2. Execute the operation: `Run` method
-  3. Get the results: 
+  3. Get the results:
 
      * The created body
      * The computed tangents at all the passing points. These vectors are used to create line bodies (`CATCreateTopLineFromDirection`)
@@ -237,7 +243,7 @@ _// no imposition for the intermediate points:
     aTangent[3].SetCoord(5.,5.,0.);
 
     _// a- creation_
-    CATTopSplineOperator *pSplineOp = 
+    CATTopSplineOperator *pSplineOp =
 
     **::CATCreateTopSplineOperator**(piGeomFactory,
                                          &topdata,
@@ -246,30 +252,39 @@ CATTopSplineOperator *pSplineOp =
                                          nbpts,
                                          aPoints,
                                          aTangent,
-                                         NULL,   _// no curvature imposition_ 
+                                         NULL,   _// no curvature imposition_
                                          aImposition);
 
+```vbscript
     if (NULL==pSplineOp)  _// in case of problem_
+
+```
 
     {
 NULL,   _// no curvature imposition_
 aImposition);
 if (NULL==pSplineOp)  _// in case of problem_
+```vbscript
       CATCloseCGMContainer(piGeomFactory);  _// close the factory_ _and return_
-      return(2);                             
+      return(2);
+
+```
 
     }_// b- run the operator_
 ```vbscript
 if (NULL==pSplineOp)  _// in case of problem_
+```vbscript
 CATCloseCGMContainer(piGeomFactory);  _// close the factory_ _and return_
 return(2);
+```
+
     pSplineOp->**Run**();
 
     _// c- get the result_
     CATBody * piSplineBody2 = pSplineOp->**GetResult**();
 
     _// also get the computed tangents ._
-    const CATMathVector *  pComputedTangents=NULL; 
+    const CATMathVector *  pComputedTangents=NULL;
     pSplineOp->**GetComputedTangents**(pComputedTangents);
 
     _//Create topological lines representing the tangents_
@@ -304,9 +319,12 @@ length);
     **delete pSplineOp;
 length);
 _// d- delete the operator_
-    pSplineOp=NULL;**_// Releases the configuration_**pConfig- >Release();**  
+```vbscript
+    pSplineOp=NULL;**_// Releases the configuration_**pConfig- >Release();**
 
----  
+```
+
+---
 
 [Top]
 #### Computing the Length
@@ -323,25 +341,37 @@ The `l1` and `l2` computed lengths are different, even though they are computed 
     //
     // between two points on the first spline_
 _//
-    CATLengthFromBodyOnWire* pLengthOp= 
+    CATLengthFromBodyOnWire* pLengthOp=
     		new **CATLengthFromBodyOnWire**(piGeomFactory,
                                                 aPoints[1],
                                                 aPoints[2],
                                                 piSplineBody );
     double l1=0.;
+```vbscript
     if (NULL != pLengthOp)
+
+```
 
     {
 aPoints[2],
 piSplineBody );
 double l1=0.;
 if (NULL != pLengthOp)
+```vbscript
+```vbscript
      l1=pLengthOp->**GetDistance**();
+
+```
+
+```
 
      **delete pLengthOp;
 double l1=0.;
 if (NULL != pLengthOp)
+```vbscript
 l1=pLengthOp->**GetDistance**();
+```
+
      pLengthOp = NULL;**
 
     }
@@ -350,26 +380,38 @@ l1=pLengthOp->**GetDistance**();
 pLengthOp = NULL;**
     _// between the same points on the second spline_
     pLengthOp =new CATLengthFromBodyOnWire(piGeomFactory,
-                                           aPoints[1], 
+                                           aPoints[1],
     				       aPoints[2],
-    				       piSplineBody2 );	
+    				       piSplineBody2 );
 
-    _// P2 will contain the 3D mathematical coordinates of the second point_ 
+    _// P2 will contain the 3D mathematical coordinates of the second point_
     CATMathPoint P2;
     double l2=0.;
+```vbscript
     if (NULL != pLengthOp)
+
+```
 
     {
 _// P2 will contain the 3D mathematical coordinates of the second point_
 CATMathPoint P2;
 double l2=0.;
 if (NULL != pLengthOp)
+```vbscript
+```vbscript
      l2=pLengthOp->GetDistance(NULL, _// the coordinates of the first point are not asked_
+
+```
+
+```
 
     			   &P2); _// the coordinates of the second point_
 double l2=0.;
 if (NULL != pLengthOp)
+```vbscript
 l2=pLengthOp->GetDistance(NULL, _// the coordinates of the first point are not asked_
+```
+
      delete pLengthOp;
      pLengthOp = NULL;
 
@@ -377,9 +419,9 @@ l2=pLengthOp->GetDistance(NULL, _// the coordinates of the first point are not a
 l2=pLengthOp->GetDistance(NULL, _// the coordinates of the first point are not asked_
 delete pLengthOp;
 pLengthOp = NULL;
-    cout << "length 1 = " << l1 <<" , length2  "<< l2 << endl;  
+    cout << "length 1 = " << l1 <<" , length2  "<< l2 << endl;
 
----  
+---
 
 [Top]
 #### Removing the Unused Bodies
@@ -393,7 +435,10 @@ The point bodies have only been constructed to be used in the definition of the 
     //_
 
 _//
+```vbscript
     for (i=0;i <nbpts; i++)
+
+```
 
     {
       piGeomFactory->**Remove**(aPoints[i],CATICGMContainer::RemoveDependancies);
@@ -403,11 +448,11 @@ _//
 for (i=0;i <nbpts; i++)
 piGeomFactory->**Remove**(aPoints[i],CATICGMContainer::RemoveDependancies);
     delete [] aPoints;
-    aPoints = NULL;  
+    aPoints = NULL;
 
 ```
 
----  
+---
 
 [Top]
 #### Writing the Model and Closing the Factory
@@ -438,14 +483,14 @@ ofstream filetowrite(pfileName, ios::binary ) ;
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
        filetowrite.close();
-     }	
+     }
 
      _//
      // Closes the container
-     //_	
-     **::CATCloseCGMContainer**(piGeomFactory);  
+     //_
+     **::CATCloseCGMContainer**(piGeomFactory);
 
----  
+---
 
 [Top]
 
@@ -461,16 +506,16 @@ ofstream filetowrite(pfileName, ios::binary ) ;
 * * *
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-[Top]  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)
+---|---
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Feb 2000] | Document created  
----|---  
-[Top]  
+Version: **1** [Feb 2000] | Document created
+---|---
+[Top]
 
 * * *
 

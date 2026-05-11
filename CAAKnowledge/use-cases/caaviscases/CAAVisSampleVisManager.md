@@ -11,15 +11,15 @@ converted: "2026-05-11T17:31:52.224318"
 ---
 # 3D PLM Enterprise Architecture
 
-| 
+|
 ## 3D Visualization
 
-| 
+|
 ### Using the Visualization Manager
 
-_Attaching the visualization manager to and detaching it from documents and viewpoints_  
----|---|---  
-Use Case  
+_Attaching the visualization manager to and detaching it from documents and viewpoints_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
@@ -35,7 +35,7 @@ This article discusses the CAAVisManager use case. This use case explains how to
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
@@ -78,37 +78,37 @@ To launch CAAVisManager, you will need to set up the build time environment, the
 To launch CAAVisManager, you will need to set up the build time environment, then compile the four CAAVisManager modules along with their prerequisites, set up the run time environment, and then execute the use case [5]. You cannot launch CAAVisManager itself. CAAVisManager is simply used by the CAAVisManagerAppli use case. Type CAAVisManagerAppli instead of CAAVisManager to display the interactive application along with a viewer that displays the CAAVisManagerDefaultDocument.
 CAAVisManager code is located in the CAAVisualization.edu framework:
 
-Windows | `InstallRootDirectory\CAAVisualization.edu\`  
+Windows | `InstallRootDirectory\CAAVisualization.edu\`
 
 CAAVisManager code is located in the CAAVisualization.edu framework:
 Windows | `InstallRootDirectory\CAAVisualization.edu\`
-Unix | `InstallRootDirectory/CAAVisualization.edu/`  
+Unix | `InstallRootDirectory/CAAVisualization.edu/`
 
-where `InstallRootDirectory` is the root directory of your CAA V5 installation. 
+where `InstallRootDirectory` is the root directory of your CAA V5 installation.
 
 CAAVisManager includes the following modules:
 
-CAAVisManagerAppli.m | Contains the interactive application, the windows and the documents  
+CAAVisManagerAppli.m | Contains the interactive application, the windows and the documents
 
 CAAVisManager includes the following modules:
 CAAVisManagerAppli.m | Contains the interactive application, the windows and the documents
-CAAVisManagerComp.m | Contains the geometric components to display  
-CAAVisManagerImp.m | Contains the extension classes required to make the geometric components displayable  
-CAAVisManagerInt.m | Contains the interfaces implemented by the geometric components, especially the visualization interface. Their header files are located in the PrivateInterfaces directory  
+CAAVisManagerComp.m | Contains the geometric components to display
+CAAVisManagerImp.m | Contains the extension classes required to make the geometric components displayable
+CAAVisManagerInt.m | Contains the interfaces implemented by the geometric components, especially the visualization interface. Their header files are located in the PrivateInterfaces directory
 
 CAAVisManagerAppli.m includes the following classes:
 
-CAAVisManagerApplication | Interactive application  
+CAAVisManagerApplication | Interactive application
 
 CAAVisManagerAppli.m includes the following classes:
 CAAVisManagerApplication | Interactive application
-CAAVisManagerApplicationFrame | Application frame window that hosts the application  
-CAAVisManagerDocument | Base document  
-CAAVisManagerDefaultDocument | Document displayed when launching the use case  
-CAAVisManagerCGRDocument | CGR document  
-CAAVisManagerWindow | Document window  
-CAAVisManagerEditor | Document editor  
-CAAVisManagerCmdSelector | Selector  
+CAAVisManagerApplicationFrame | Application frame window that hosts the application
+CAAVisManagerDocument | Base document
+CAAVisManagerDefaultDocument | Document displayed when launching the use case
+CAAVisManagerCGRDocument | CGR document
+CAAVisManagerWindow | Document window
+CAAVisManagerEditor | Document editor
+CAAVisManagerCmdSelector | Selector
 
 [Top]
 ### Step-by-Step
@@ -127,9 +127,9 @@ To use the visualization manager, there are four main steps:
     void CAAVisManagerWindow::Attach()
     {
       CATVisManager            *pVisuMgr  = **CATVisManager::GetVisManager()** ;
-      ...  
+      ...
 
----  
+---
 
 The `CATVisManager::GetVisManager` static method retrieves a pointer to the visualization manager.
 
@@ -141,24 +141,39 @@ The `CATVisManager::GetVisManager` static method retrieves a pointer to the visu
 CAAVisManagerDocument    *pDocument = _pEditor->GetDocument();
       CAAVisManagerCmdSelector *pSelector = _pEditor->GetSelector();
 
+```vbscript
       if ( (NULL != pDocument) && (NULL != pDocument->GetRootContainer()) )
+
+```
 
       {
 CAAVisManagerDocument    *pDocument = _pEditor->GetDocument();
 CAAVisManagerCmdSelector *pSelector = _pEditor->GetSelector();
 if ( (NULL != pDocument) && (NULL != pDocument->GetRootContainer()) )
         CATBaseUnknown * pRootObject = pDocument->GetRootContainer();
+```vbscript
         _pRootObjectPath = new CATPathElement(pRootObject);
+
+```
 
       }
 
 CATBaseUnknown * pRootObject = pDocument->GetRootContainer();
 _pRootObjectPath = new CATPathElement(pRootObject);
+```vbscript
+```vbscript
       if ( (NULL != _pViewer) && ( NULL!= _pRootObjectPath) )
+
+```
+
+```
 
       {
 _pRootObjectPath = new CATPathElement(pRootObject);
+```vbscript
 if ( (NULL != _pViewer) && ( NULL!= _pRootObjectPath) )
+```
+
         CAT3DViewpoint * pMain3DViewpoint = &(_pViewer->**GetMain3DViewpoint**());
 
         list<IID> liste_iid_3D;
@@ -171,9 +186,9 @@ if ( (NULL != _pViewer) && ( NULL!= _pRootObjectPath) )
         pVisuMgr->**AttachPSOTo**(_pEditor->GetPSO(), pMain3DViewpoint);
         delete liste_iid_3D[0];
 
-        ...  
+        ...
 
----  
+---
 
 The document and the selector associated with the document editor are both retrieved from the editor, and the document root object is retrieved as a CATPathElement instance. Then the main 3D viewpoint of the 3D viewer is retrieved using the `GetMain3DViewPoint` method. A list of 3D visualization interface IIDs is created and the _CATI3DGeoVisu_ interface IID is added to the list. Then the visualization manager can be attached to the document thanks to the `AttachTo` method:
 
@@ -203,9 +218,9 @@ CAT2DViewpoint * pMain2DViewpoint = &(_pViewer->GetMain2DViewpoint());
 
         ...
       }
-    }  
+    }
 
----  
+---
 
 The main 2D viewpoint of the 3D viewer is retrieved using the `GetMain2DViewPoint` method. A list of 2D visualization interface IIDs is created and the _CAAIVis2DGraphVisu_ interface IID is added to the list. Then the visualization manager can be attached to the document thanks to the `AttachTo` method:
 
@@ -226,7 +241,10 @@ The main 2D viewpoint zoom and origin are reset.
 void CAAVisManagerWindow::Detach()
       CATVisManager * pVisuManager = **CATVisManager::GetVisManager**();
 
+```vbscript
       if ( (NULL != _pViewer) && (NULL != _pRootObjectPath) )
+
+```
 
       {
 CATVisManager * pVisuManager = **CATVisManager::GetVisManager**();
@@ -244,9 +262,9 @@ if ( (NULL != _pViewer) && (NULL != _pRootObjectPath) )
         pVisuManager->DetachFrom(_pRootObjectPath, pMain2DViewpoint);
 
       }
-    }  
+    }
 
----  
+---
 
 The `CATVisManager::GetVisManager` static method retrieves a pointer to the visualization manager. Then the visualization manager is detached from the document and from the viewer's main 3D viewpoint using the `DetachFrom` method. Then the visualization manager is detached for highlighted and prehighlighted components from the viewer's main 3D viewpoint using the `DetachHSOFrom` and `DetachPSOFrom` methods respectively. The same applies to the main 2D viewpoint.
 
@@ -262,20 +280,20 @@ This use case shows how to use the visualization manager to make it aware of the
 * * *
 ### References
 
-[1] | [Making a Component Displayable With CATI3DGeoVisu](CAAVisSampleCATIVisu.md)  
----|---  
-[2] | [Catching the Visualization Notifications](CAAVisSampleCatchNotifications.md)  
-[3] | [The Send/Receive Communication Protocol](../CAASysTechArticles/CAASysSendReceive.md)  
-[4] | [Conveying End User Intent from Mouse to Controller](../CAAVisTechArticles/CAAVisViewerProtocol.md)  
-[5] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
-[Top]  
+[1] | [Making a Component Displayable With CATI3DGeoVisu](CAAVisSampleCATIVisu.md)
+---|---
+[2] | [Catching the Visualization Notifications](CAAVisSampleCatchNotifications.md)
+[3] | [The Send/Receive Communication Protocol](../CAASysTechArticles/CAASysSendReceive.md)
+[4] | [Conveying End User Intent from Mouse to Controller](../CAAVisTechArticles/CAAVisViewerProtocol.md)
+[5] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [May 2000] | Document created  
----|---  
-[Top]  
+Version: **1** [May 2000] | Document created
+---|---
+[Top]
 
 * * *
 

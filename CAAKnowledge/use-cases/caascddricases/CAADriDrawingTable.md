@@ -9,18 +9,18 @@ converted: "2026-05-11T17:31:51.064833"
 ```
 
 ---
-| 
+|
 ## Interactive Drafting
 
-| 
-## Creating a Drawing Table  
+|
+## Creating a Drawing Table
 
 * * *
 
-  This macro shows you how to create a drawing table in Drawing document. This macro creates a new drawing document. In the active view of the document we create a drawing table and specify merged cells, row sizes then column size.  
----|---  
+  This macro shows you how to create a drawing table in Drawing document. This macro creates a new drawing document. In the active view of the document we create a drawing table and specify merged cells, row sizes then column size.
+---|---
 This macro shows you how to create a drawing table in Drawing document. This macro creates a new drawing document. In the active view of the document we create a drawing table and specify merged cells, row sizes then column size.
-  CAADriDrawingTable is launched in CATIA [1]. No open document is needed. [CAADriDrawingTable.CATScript](CAADriDrawingTableSource.md) is located in the CAADriUseCases module.  [Execute macro](macros/CAADriDrawingTable.CATScript) (Windows only).    
+  CAADriDrawingTable is launched in CATIA [1]. No open document is needed. [CAADriDrawingTable.CATScript](CAADriDrawingTableSource.md) is located in the CAADriUseCases module.  [Execute macro](macros/CAADriDrawingTable.CATScript) (Windows only).
   CAADriDrawingtable includes five steps:
 
   1. Prolog
@@ -33,57 +33,92 @@ This macro shows you how to create a drawing table in Drawing document. This mac
 
 #### Prolog
 
-| 
+|
 
       ...
+```vbscript
         ' Set the CATIA popup file alerts to False
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' Set the CATIA popup file alerts to False
         ' It prevents to stop the macro at each alert during its execution
+```
+
+```
+
 ```
 
 ```vbscript
         CATIA.DisplayFileAlerts = False
 ```
 
-      ...  
+      ...
 
----  
+---
 
 The CATIA prompts are disabled thanks to the `DisplayFileAlerts` property of the _Application_ object set to `False`.
 #### Creating and Specifying a New Drawing Document
 
       ...
 The CATIA prompts are disabled thanks to the `DisplayFileAlerts` property of the _Application_ object set to `False`.
+```vbscript
+```vbscript
         ' Create a new drawing document
+
+```
+
+```
 
 ```vbscript
         Set oDrwDocument = CATIA.Documents.Add("Drawing")
+```vbscript
+```vbscript
         ' Set the drawing document standard
         oDrwDocument.Standard = catISO
 ```
 
-      ...  
+```
 
----  
+```
+
+      ...
+
+---
 
 A new drawing document is created and its standard is set to ISO.
 #### Retrieving and Defining the Sheet
 
     ...
 A new drawing document is created and its standard is set to ISO.
+```vbscript
+```vbscript
         ' Retrieve the drawing document's sheets collection
+
+```
+
+```
 
 ```vbscript
         Set oDrwSheets = oDrwDocument.Sheets
 ```
 
 ```vbscript
+```vbscript
+```vbscript
         ' Retrieve the active sheet
         Set oDrwSheet = oDrwSheets.ActiveSheet
         ' Set the sheet properties
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' Retrieve the active sheet
 Set oDrwSheet = oDrwSheets.ActiveSheet
@@ -93,42 +128,66 @@ Set oDrwSheet = oDrwSheets.ActiveSheet
         oDrwSheet.Scale2 = 1
 ```
 
-      ...  
+```
 
----  
+```
 
-The sheets collection is retrieved from the `oDrwDocument` object using the `Sheets` method.  
-The sheet object is retrieved from the `oDrwSheets` collection using the `ActiveSheet` method.  
+      ...
+
+---
+
+The sheets collection is retrieved from the `oDrwDocument` object using the `Sheets` method.
+The sheet object is retrieved from the `oDrwSheets` collection using the `ActiveSheet` method.
 The `oDrwSheet` properties set are A4 format, landscape orientation and 1:1 scale.
 
 #### Retrieving and Defining the View
 
     ...
 The `oDrwSheet` properties set are A4 format, landscape orientation and 1:1 scale.
+```vbscript
+```vbscript
         ' Retrieve the active view of the sheet
+
+```
+
+```
 
 ```vbscript
         Set oDrwView = oDrwSheet.Views.ActiveView
 ```
 
-      ...  
+      ...
 
----  
+---
 
 The view object is retrieved from the `oDrwSheet` object using the `ActiveView` method.
 #### Creating the Drawing Table
 
       ...
 The view object is retrieved from the `oDrwSheet` object using the `ActiveView` method.
+```vbscript
+```vbscript
         ' Retrieve the view's tables collection
+
+```
+
+```
 
 ```vbscript
         Set oDrwTables = oDrwView.Tables
+```vbscript
+```vbscript
         ' Create a new drawing table
         Set oDrwTable = oDrwTables.Add(107, 70, 9, 9, 5, 20)
 
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' Create a new drawing table
 Set oDrwTable = oDrwTables.Add(107, 70, 9, 9, 5, 20)
@@ -136,11 +195,15 @@ Set oDrwTable = oDrwTables.Add(107, 70, 9, 9, 5, 20)
         oDrwTable.Name = "Title Block"
 ```
 
-      ...  
+```
 
----  
+```
 
-The tables collection is retrieved from the `oDrwView` object using the `Tables` method.  
+      ...
+
+---
+
+The tables collection is retrieved from the `oDrwView` object using the `Tables` method.
 The table object is created from the `oDrwTables` collection using the `Add` method:
 
   * At 107mm from the sheet origin along x.
@@ -153,18 +216,27 @@ The table object is created from the `oDrwTables` collection using the `Add` met
 #### Defining the Drawing Table Update
 
       ...
+```vbscript
+```vbscript
         ' Do not update drawing table modifications
         oDrwTable.ComputeMode = CatTableComputeOFF
-      ...  
+```
 
----  
+```
+
+      ...
+
+---
 
 The `CatTableComputeOFF` enumerate allows you to modify the drawing table without update visualization.
 #### Modifying the Drawing Table
 
       ...
 The `CatTableComputeOFF` enumerate allows you to modify the drawing table without update visualization.
+```vbscript
         ' Merge drawing table's cells
+```
+
         oDrwTable.MergeCells 1, 1, 2, 2
         oDrwTable.MergeCells 1, 3, 1, 7
         oDrwTable.MergeCells 2, 3, 2, 7
@@ -182,7 +254,10 @@ The `CatTableComputeOFF` enumerate allows you to modify the drawing table withou
         oDrwTable.MergeCells 8, 7, 2, 1
         oDrwTable.MergeCells 8, 8, 2, 1
         oDrwTable.MergeCells 8, 9, 2, 1
+```vbscript
         ' Set the drawing table's row sizes
+```
+
         oDrwTable.SetRowSize 1, 20
         oDrwTable.SetRowSize 2, 4
         oDrwTable.SetRowSize 3, 5
@@ -192,7 +267,10 @@ The `CatTableComputeOFF` enumerate allows you to modify the drawing table withou
         oDrwTable.SetRowSize 7, 2
         oDrwTable.SetRowSize 8, 3
         oDrwTable.SetRowSize 9, 7
+```vbscript
         ' Set the drawing table's column sizes
+```
+
         oDrwTable.SetColumnSize 1, 45
         oDrwTable.SetColumnSize 2, 20
         oDrwTable.SetColumnSize 3, 15
@@ -202,16 +280,22 @@ The `CatTableComputeOFF` enumerate allows you to modify the drawing table withou
         oDrwTable.SetColumnSize 7, 20
         oDrwTable.SetColumnSize 8, 15
         oDrwTable.SetColumnSize 9, 15
+```vbscript
+```vbscript
         ' Update drawing table modifications
         oDrwTable.ComputeMode = CatTableComputeON
 
-      ...  
+```
 
----  
+```
+
+      ...
+
+---
 
 oDrwTable.ComputeMode = CatTableComputeON
-The table's cells are merged using the `MergeCells` method.  
-Row and column sizes are modified using the `SetRowSize` and `SetColumnSize` methods.  
+The table's cells are merged using the `MergeCells` method.
+Row and column sizes are modified using the `SetRowSize` and `SetColumnSize` methods.
 The `CatTableComputeON` enumerate allows you to update drawing table visualization.
 
 ![](images/img008.gif)
@@ -228,7 +312,7 @@ The `CatTableComputeON` enumerate allows you to update drawing table visualizati
 
 ![](images/img011.gif)
 
-> End of the macro.  
+> End of the macro.
 
 ![](../CAAScrBase/images/aendtask.gif)
 
@@ -244,9 +328,9 @@ This use case has shown how to create a Drawing Table sheets using the _Add_ met
 * * *
 #### References
 
-[1] | [Replaying a Macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)  
----|---  
-[2] | _[DrawingDocument](../CAAScdDriTechArticles/CAADriObjDrawingDocument.md)_ , _[DrawingSheet](../CAAScdDriTechArticles/CAADriObjDrawingSheet.md),_ [_DrawingSheets_](../CAAScdDriTechArticles/CAADriObjDrawingSheets.md) _,_[_DrawingView_](../CAAScdDriTechArticles/CAADriObjDrawingView.md)  
+[1] | [Replaying a Macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)
+---|---
+[2] | _[DrawingDocument](../CAAScdDriTechArticles/CAADriObjDrawingDocument.md)_ , _[DrawingSheet](../CAAScdDriTechArticles/CAADriObjDrawingSheet.md),_ [_DrawingSheets_](../CAAScdDriTechArticles/CAADriObjDrawingSheets.md) _,_[_DrawingView_](../CAAScdDriTechArticles/CAADriObjDrawingView.md)
 [Top]
 
 * * *

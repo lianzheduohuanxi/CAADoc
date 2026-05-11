@@ -11,20 +11,20 @@ converted: "2026-05-11T17:31:51.211500"
 ---
 ## Part Design
 
-| 
-## Changing the Pattern Parameters  
+|
+## Changing the Pattern Parameters
 
 * * *
 
- This macro shows you how to change the description of a pattern to the unequal spacing angular mode.  
+ This macro shows you how to change the description of a pattern to the unequal spacing angular mode.
 This macro allows you to define:
 
   * A new instances number.
   * The unequal spacing angular mode.
   * The angular values between instances.
 
-It modifies the _ CircPattern_ object from its methods and properties, and update the part.  
----|---  
+It modifies the _ CircPattern_ object from its methods and properties, and update the part.
+---|---
 
   * Open the [CAAPriChangePattern.CATPart](samples/CAAPriChangePattern.CATPart) document.
   * Reference in the application the catscript file:  [CAAPriChangePattern.htm](CAAPriChangePatternSource.md).
@@ -42,13 +42,19 @@ CAAPriPatternDescription includes the following steps:
 
 2. Looking for the Circular Pattern Object in the Selection
 3. Applying the Circular Pattern Description
-Load the CAAPriPatternDescription.CATPart that contains two circular patterns. ![](images/CAAPriChangePattern01.gif) ![](images/CAAPriChangePattern03.gif) Run the macro. 
+Load the CAAPriPatternDescription.CATPart that contains two circular patterns. ![](images/CAAPriChangePattern01.gif) ![](images/CAAPriChangePattern03.gif) Run the macro.
 
       ...
+```vbscript
+```vbscript
 ```vbscript
     ' ------------
     ' Get the part document
     ' ------------
+```
+
+```
+
 ```
 
 ```vbscript
@@ -56,24 +62,36 @@ Load the CAAPriPatternDescription.CATPart that contains two circular patterns. !
 ```
 
 ```vbscript
+```vbscript
+```vbscript
     ' ------------
     ' Get the part
     ' ------------
     Set oPart = oPartDocument.Part
 ```
 
-       ...  
+```
 
----  
+```
+
+       ...
+
+---
 
 Once the macro has been started, the `oPartDocument `and ` oPart `variables are declared to receive the instance of the part document and the part.
 #### Looking for the Circular Pattern Object in the Selection
 
     ...
 ```vbscript
+```vbscript
+```vbscript
     ' ------------
     ' Get the selection
     ' ------------
+```
+
+```
+
 ```
 
 ```vbscript
@@ -81,18 +99,32 @@ Once the macro has been started, the `oPartDocument `and ` oPart `variables are 
 ```
 
 ```vbscript
+```vbscript
+```vbscript
     ' ------------
     ' Set the selection type
     ' ------------
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' ------------
 ' Set the selection type
 ' ------------
+```
+
     InputObjectType(0) = "CircPattern"
 ```
 
+```
+
+```vbscript
+```vbscript
 ```vbscript
     ' ------------
     ' Get the status
@@ -101,10 +133,14 @@ Once the macro has been started, the `oPartDocument `and ` oPart `variables are 
     ' ------------
     ' Get the object in the selection
     ' ------------
-    Set oCircularPattern = oSelection.Item(1).Value...  
+    Set oCircularPattern = oSelection.Item(1).Value...
 ```
 
----  
+```
+
+```
+
+---
 
 `oSelection `variable is declared to receive the instance of the part document selection, the string containing selection type name is defined in an array `InputObjectType`, the `SelectElement2` method is used to retrieve the selection:
 
@@ -118,56 +154,92 @@ Take care, this allows you to select one object only in both cases!
 
     ...
 ```vbscript
+```vbscript
+```vbscript
     ' ------------
     ' Set the circular pattern instance number
     ' ------------
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' ------------
 ' Set the circular pattern instance number
 ' ------------
+```
+
+```
+
     oCircularPattern.AngularRepartition.InstancesCount.Value = 6
 ```
 
-    ...  
+    ...
 
----  
+---
 
 The circular pattern number of instances is set to 6.
 
     ...
+```vbscript
+```vbscript
 ```vbscript
     ' ------------
     ' Set the circular pattern instance as Unequal Angular Spacing mode
     ' ------------
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' ------------
 ' Set the circular pattern instance as Unequal Angular Spacing mode
 ' ------------
     oCircularPattern.CircularPatternParameters = catUnequalAngularSpacing
+```
+
+```
+
     oCircularPattern.SetUnequalStep 6
 ```
 
-    ...  
+    ...
 
----  
+---
 
 The circular pattern parameter is set to Unequal Angular Spacing.
 
     ...
+```vbscript
+```vbscript
 ```vbscript
     ' ------------
     ' Set the circular pattern Unequal Angular Spacing
     ' ------------
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' ------------
 ' Set the circular pattern Unequal Angular Spacing
 ' ------------
+```
+
+```
+
     oCircularPattern.SetInstanceAngularSpacing 2, 30.000000
     oCircularPattern.SetInstanceAngularSpacing 3, 75.000000
     oCircularPattern.SetInstanceAngularSpacing 4, 75.000000
@@ -175,36 +247,51 @@ The circular pattern parameter is set to Unequal Angular Spacing.
     oCircularPattern.SetInstanceAngularSpacing 6, 75.000000
 ```
 
-    ...  
+    ...
 
----  
+---
 
+```vbscript
 ```vbscript
 For each circular pattern instances the angular spacing is modified.
 
 ```
 
+```
+
     ...
+```vbscript
+```vbscript
 ```vbscript
     ' ------------
     ' Update the part
     ' ------------
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' ------------
 ' Update the part
 ' ------------
-    oPart.Update 
 ```
 
-    ...  
+```
 
----  
+    oPart.Update
+```
+
+    ...
+
+---
 
 The part document is updated, the circular pattern is modified.
 
-![](images/CAAPriChangePattern02.gif)  
+![](images/CAAPriChangePattern02.gif)
 
 ![](../CAAScrBase/images/aendtask.gif)
 
@@ -220,9 +307,9 @@ This use case has shown how to modify specifications of an existing circular pat
 * * *
 #### References
 
-[1] | [Replaying a macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)  
----|---  
-[Top]  
+[1] | [Replaying a macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)
+---|---
+[Top]
 
 * * *
 

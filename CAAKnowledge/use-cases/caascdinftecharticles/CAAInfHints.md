@@ -11,8 +11,8 @@ converted: "2026-05-11T17:31:52.415555"
 ---
 ## Infrastructure
 
- | 
- ## About VB, VBA, Debug, and Portability  
+ |
+ ## About VB, VBA, Debug, and Portability
 
  * * *
  ## Tips about VB and VBA
@@ -20,21 +20,30 @@ converted: "2026-05-11T17:31:52.415555"
  Since V5R7 Dassault Systemes products based on the V5 Platform don't use anymore the Basic Script scripting engine on Unix platforms. The `CATScript` language has been kept for compatibility and is processed by a vbscript scripting engine after removal of the typing information.
 
 Since V5R7 Dassault Systemes products based on the V5 Platform don't use anymore the Basic Script scripting engine on Unix platforms. The `CATScript` language has been kept for compatibility and is processed by a vbscript scripting engine after removal of the typing information.
- This has no impact on macros but you may still experience the following problem when recording macros in `CATScript` language and copy/pasting the result in a VB/VBA project . 
+ This has no impact on macros but you may still experience the following problem when recording macros in `CATScript` language and copy/pasting the result in a VB/VBA project .
 
  The typing requirement are incompatible for Basic Script code and VB code. When a **method returns an abstract object** like the **ActiveDocument** method that returns a **Document** ,**** Basic Script expects the variable in which the return value will be stored to be of the type declared by the signature of the method:
 
 > Dim oDoc As Document
 ```vbscript
+```vbscript
     Set oDoc = CATIA.ActiveDocument ' returns a Document
 
 ```
 
+```
+
+```vbscript
  If this document is a **PartDocument** you can then use specific methods or properties like the Part property that does not exist on the general **Document** but only on the **PartDocument** :
+
+```
 
 > Dim oPart As Part
 ```vbscript
+```vbscript
     Set oPart = oDoc.Part
+
+```
 
 ```
 
@@ -42,15 +51,27 @@ Since V5R7 Dassault Systemes products based on the V5 Platform don't use anymore
 
 > Dim oDoc As **Part** Document
 ```vbscript
+```vbscript
     Set oDoc = CATIA.ActiveDocument ' returns a Document
 
     Dim oPart As Part
+```
+
+```vbscript
+```vbscript
     Set oPart = oDoc.Part
 
 ```
 
+```
+
+```
+
+```vbscript
 ```vbscript
  For documentation examples, we choose as much as possible a VBScript/Basic Script portable syntax. So, when copy/pasting samples from the documentation in a VB project, you will have to proceed to take care of virtual objects.
+
+```
 
 ```
 
@@ -58,23 +79,35 @@ Since V5R7 Dassault Systemes products based on the V5 Platform don't use anymore
 
 > Dim strParam1 As StrParam
 ```vbscript
+```vbscript
     Set strParam1 = parameters1.Item("STRING")
+
+```
 
 ```
 
 ```vbscript
 Set strParam1 = parameters1.Item("STRING")
+```vbscript
+```vbscript
     iSize = strParam1.GetEnumerateValuesSize()
+
+```
+
+```
+
+```
 
     Redim myArray(iSize-1)
     strParam.GetEnumerateValues myArray
 
-```
-
 ```vbscript
     For i = 0 To iSize-1
         msgbox myArray(i)
+```vbscript
     Next
+
+```
 
 ```
 
@@ -86,25 +119,37 @@ Next
 
  A simple workaround is to un-type the variable on which the method is applied.
 
-> Dim strParam1 ' **As StrParam** 
+> Dim strParam1 ' **As StrParam**
+```vbscript
 ```vbscript
     Set strParam1 = parameters1.Item("STRING")
 
 ```
 
+```
+
 ```vbscript
 Set strParam1 = parameters1.Item("STRING")
+```vbscript
+```vbscript
     iSize = strParam1.GetEnumerateValuesSize()
+
+```
+
+```
+
+```
 
     Redim myArray(iSize-1)
     strParam.GetEnumerateValues myArray
 
-```
-
 ```vbscript
     For i = 0 To iSize-1
         msgbox myArray(i)
+```vbscript
     Next
+
+```
 
 ```
 
@@ -114,13 +159,16 @@ Set strParam1 = parameters1.Item("STRING")
     strParam.GetEnumerateValues (myArray)
 
 ```vbscript
+```vbscript
  For methods that are not functions (meaning that they do not have a return value), this syntax requires to pass the argument by reference which may not work in some cases. The right syntax uses either no parenthesis:
+
+```
 
 ```
 
 > strParam.GetEnumerateValues myArray
 
- or the **call** keyword: 
+ or the **call** keyword:
 
 > call strParam.GetEnumerateValues (myArray)
 
@@ -132,7 +180,10 @@ Set strParam1 = parameters1.Item("STRING")
         **Stop**
 When developing in-process macros, you can use Microsoft (R) Script Debugger than you can download freely from Microsoft (R) web site. Once installed, an error or a **Stop** order in the script will give hand to the debugger:
         msgbox myArray(i)
+```vbscript
     Next
+
+```
 
  See the Script Debugger's documentation for more information on how to proceed.
 
@@ -153,7 +204,7 @@ See the Script Debugger's documentation for more information on how to proceed.
  ## Inter releases compatibility
  ### Virtual Function Tables compatibility
 
- The CAA V5 Automation Object Model evolves with each new release. The list of the methods of an object may change. Depending on the way VB or VBA calls those methods this may have an impact on your application even if a new method has been added. 
+ The CAA V5 Automation Object Model evolves with each new release. The list of the methods of an object may change. Depending on the way VB or VBA calls those methods this may have an impact on your application even if a new method has been added.
 
  The following code for example:
 
@@ -168,32 +219,32 @@ The following code for example:
     oObject.DoThat
 
 oObject.DoThat
- will perform an early binding call, meaning basically that a description of the virtual function table of _oObject_ will be re-created from the information available in the type library describing the _SpecificTypeOfObject_ type and the call will be made using a position in this table. 
+ will perform an early binding call, meaning basically that a description of the virtual function table of _oObject_ will be re-created from the information available in the type library describing the _SpecificTypeOfObject_ type and the call will be made using a position in this table.
 
- If, on a new release, the order of methods in this virtual function table changes, which may be the case when adding new methods, the application will call the wrong method leading to difficult-to-debug runtime problems. 
+ If, on a new release, the order of methods in this virtual function table changes, which may be the case when adding new methods, the application will call the wrong method leading to difficult-to-debug runtime problems.
 
  Moreover, the description extracted by VB/VBA from the type library doesn't seem to be always refreshed when the type library changes. Meaning that recompiling the project may not correct the problem. Here is a method that solves this problem:
 
-     * open you VB or VBA project 
-     * remove all references to V5 type libraries using the _Project/References_ or _Tools/References_ menu items. 
-     * save and close the project 
-     * re-open the project and add again the needed references. 
+     * open you VB or VBA project
+     * remove all references to V5 type libraries using the _Project/References_ or _Tools/References_ menu items.
+     * save and close the project
+     * re-open the project and add again the needed references.
  ### Obsolete Typelibs
 
  Some type libraries may become obsolete and disappear on a new V5 release. If an existing VBA project has references on a type library that doesn't exist anymore. If your access rights allow you to modify the Windows Registry, references to those libraries are automatically removed when opening the CATVBA file. If it's not the case, the following message may be experienced when launching a macro:
 
-> CNEXT CATScriptError Message Scripting ERR_1000   
+> CNEXT CATScriptError Message Scripting ERR_1000
 
 Some type libraries may become obsolete and disappear on a new V5 release. If an existing VBA project has references on a type library that doesn't exist anymore. If your access rights allow you to modify the Windows Registry, references to those libraries are automatically removed when opening the CATVBA file. If it's not the case, the following message may be experienced when launching a macro:
-          Execute the script "XXXXX" |XXXXX=  
+          Execute the script "XXXXX" |XXXXX=
 
-          The script entry point could not be found.  
+          The script entry point could not be found.
 
-          XXXXX  
+          XXXXX
 
-          Define a "CATMain" procedure which will be the entry point of the script.  
+          Define a "CATMain" procedure which will be the entry point of the script.
 
- To avoid this, launch VBA (Alt-F11) and use the _Tools/References_ menu item to launch the _References_ panel. In this panel, uncheck the reference to the concerned type library and click on OK. 
+ To avoid this, launch VBA (Alt-F11) and use the _Tools/References_ menu item to launch the _References_ panel. In this panel, uncheck the reference to the concerned type library and click on OK.
 
  This problem may also occur in VBA project of non V5 applications.
 
@@ -206,7 +257,7 @@ This problem may also occur in VBA project of non V5 applications.
  To switch running macros from one version to another one, say from V5R27 to **3D** EXPERIENCER2017x, do the following:
 
      * Close all CATIA or DELMIA windows.
-     * Unset the V5R27 scripting server: 
+     * Unset the V5R27 scripting server:
 To switch running macros from one version to another one, say from V5R27 to **3D** EXPERIENCER2017x, do the following:
        1. Open a prompt window in administrator mode.
        2. Change to the folder in which you installed CATIA or DELMIA.
@@ -218,13 +269,13 @@ To switch running macros from one version to another one, say from V5R27 to **3D
 By default, this folder is:
  Replace `win_b64` with `intel_a` if you run a 32 bit version.
 
-       3. Run the following command: 
+       3. Run the following command:
 
               catstart -run "V5RegServer -unset CATIA"
 
        4. This command is a silent command. Wait about for one minute to let it complete.
 
-     * Set the **3D** EXPERIENCER2017x scripting server: 
+     * Set the **3D** EXPERIENCER2017x scripting server:
 catstart -run "V5RegServer -unset CATIA"
 4. This command is a silent command. Wait about for one minute to let it complete.
        1. Open a prompt window in administrator mode.
@@ -251,14 +302,20 @@ By default, this folder is:
 
 To unset a V6/**3D** EXPERIENCE scripting server, use the -unset option of the DSYAdmRegSrv command. In the same way, to set a V5 scripting server, use the -set option of the V5RegServer command.
 In V5 many environment files can be created in any folders, so it is recommended to use the `-end` and the `-direnv` options. In V6/**3D** EXPERIENCE only one environment file is created at installation time and is located in the CATEnv folder of the installation folder, so those options can be omitted unless you are using Apps created with the CAA C++ API.
- There is a known limitation concerning the usage of the Boolean type in the V5 Automation methods invoked from VBA. In V5 applications, the Boolean type  
+ There is a known limitation concerning the usage of the Boolean type in the V5 Automation methods invoked from VBA. In V5 applications, the Boolean type
 is defined as an 'unsigned char' where the VBA definition is a short. When a V5 method returns True, the returned integer value is 1, though VBA is expecting -1. Because of this difference, the following VBA code will not work as expected (the method boolMethod returns True):
 
-> `If myObj.boolMethod() = True Then // This test will fail  
-...  
+> `If myObj.boolMethod() = True Then // This test will fail
+...
 There is a known limitation concerning the usage of the Boolean type in the V5 Automation methods invoked from VBA. In V5 applications, the Boolean type
 is defined as an 'unsigned char' where the VBA definition is a short. When a V5 method returns True, the returned integer value is 1, though VBA is expecting -1. Because of this difference, the following VBA code will not work as expected (the method boolMethod returns True):
+```vbscript
+```vbscript
 End If `
+
+```
+
+```
 
  to correct this limitation, you have to write some code like this :
 
@@ -266,46 +323,70 @@ End If `
 
  or
 
-> ` If myObj.boolMethod() != False Then   
-...  
+> ` If myObj.boolMethod() != False Then
+...
+```vbscript
+```vbscript
 End If `
 
+```
+
+```
+
+```vbscript
 ```vbscript
  For the same reason, the 'Not' operator cannot be applied directly on the returned value of such method:
 
 ```
 
+```
+
 > `Not(myObj.boolMethod())`
 
- will return True instead of returning False. To use correctly the 'Not' operator you have to use a variable to store the boolean value before applying the operator : 
+ will return True instead of returning False. To use correctly the 'Not' operator you have to use a variable to store the boolean value before applying the operator :
 
-> `Dim myBool  
+> `Dim myBool
 will return True instead of returning False. To use correctly the 'Not' operator you have to use a variable to store the boolean value before applying the operator :
-myBool = myObj.boolMethod()  
+myBool = myObj.boolMethod()
+```vbscript
 Not(myBool) `
 
- will correctly return False  
+```
+
+ will correctly return False
 
  Note that this limitation is specific to VBA and is not concerning VBScript.
 
  Another very specific problem may occur when using a VBA class featuring a function that returns a boolean. In the following example:
 
+```vbscript
      Sub CATMain()
+
+```
 
 ```vbscript
          Dim oClass1 As Class1
-         Set oCLass1 = New Class1    
+```vbscript
+```vbscript
+         Set oCLass1 = New Class1
          Dim bReture As Boolean
          bReture = oClass.IsRetureBooleanFunction()
 
          Dim RefreshDisp As Boolean
          CATIA.RefreshDisplay = False
+```
+
+```
+
          RefreshDisp = CATIA.RefreshDisplay
          Debug.Print " CASE FALSE : False expected=" & CInt(False) & " False returned=" & CInt(RefreshDisp)
          CATIA.RefreshDisplay = True
          RefreshDisp = CATIA.RefreshDisplay
          Debug.Print " CASE TRUE : True expected=" & CInt(True) & " True returned= " & CInt(RefreshDisp)
+```vbscript
      End Sub
+
+```
 
 ```
 
@@ -313,13 +394,19 @@ Not(myBool) `
 
      Function IsRetureBooleanFunction() As Boolean
          IsRetureBooleanFunction = True
+```vbscript
      End Function
+
+```
 
  The execution of `CATMain` shows that the value returned by `CATIA.RefreshDisplay` is always invalid. A simple workaround consists in declaring the `IsRetureBooleanFunction` function this way:
 
      Function IsRetureBooleanFunction() As **Variant**
          IsRetureBooleanFunction = True
+```vbscript
      End Function
+
+```
 
  ### Limitation for VBA in a 64 bit context when a macro program declares a function
 
@@ -327,7 +414,7 @@ Not(myBool) `
 
 > ` Private Declare Function MyFunctionNameInDll Lib "E/My.dll" (...) As ...`
 
- is not possible in a 64 bit context if the `My.dll` is a 64 bit dll. The V5 VBA integration for 64 bit applications is based on a separate 32 bit application dedicated to VBA. A DLL referenced by a VBA macro must so be a 32 bit one. Moreover, such a 32-bit dll cannot use the dlls from the V5 installation that are, in that case, 64 ones. 
+ is not possible in a 64 bit context if the `My.dll` is a 64 bit dll. The V5 VBA integration for 64 bit applications is based on a separate 32 bit application dedicated to VBA. A DLL referenced by a VBA macro must so be a 32 bit one. Moreover, such a 32-bit dll cannot use the dlls from the V5 installation that are, in that case, 64 ones.
  ### Usage if the VBA DoEvent function
 
 is not possible in a 64 bit context if the `My.dll` is a 64 bit dll. The V5 VBA integration for 64 bit applications is based on a separate 32 bit application dedicated to VBA. A DLL referenced by a VBA macro must so be a 32 bit one. Moreover, such a 32-bit dll cannot use the dlls from the V5 installation that are, in that case, 64 ones.

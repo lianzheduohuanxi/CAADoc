@@ -2,375 +2,61 @@
 title: "Untitled"
 category: "use-case"
 module: "CAAScdSchUseCases"
-tags: ["CAASchQueryConnectivitySource", "CAAScrBase", "CAADoc", "CAAScdSchUseCases", "CATIASchAppConnectable", "CAASchAppBase", "CAAInfLauchMacro", "CAASchQueryConnectivity_01", "CAASCHEDUApp", "CAAScdInfUseCases", "CAASchAppUtilities", "CAASchPlatformModeler", "CAASCH_CompRoute01", "CAASchQueryConnectivity", "CATIA", "CAAScrJavaScript"]
+tags: ["CAAScrBase", "CATIA", "CAAScrJavaScript", "CAAScdSchUseCases", "CAASchPlatformModeler", "CAAScdInfUseCases", "CAAInfLauchMacro", "CAASchQueryConnectivity_01", "CAASchQueryConnectivity", "CAASCHEDUApp", "CAASchQueryConnectivitySource", "CAASCH_CompRoute01", "CATIASchAppConnectable", "CAASchAppBase", "CAADoc", "CAASchAppUtilities"]
 source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryConnectivity.htm"
-converted: "2026-05-11T11:06:32.691593"
+converted: "2026-05-11T11:27:02.656223"
 ---
-
-## Schematics Platform Modeler
- 
- 
-## []Querying for a List of Connected Objects
- 
- 
- 
- 
 
 ---
 
  
  
- 
- ![](../CAAScrBase/images/atarget.gif)
- |[]This macro shows you how to find a list 
- of objects connected to a Schematic component instance or a Schematic route 
- instance.
-
-In this use case, the macro query for a list of Schematic 
- component instances and a list of Schematic route instance. For each member 
- in the two lists, the macro searches for all the objects connected to the 
- member.
- 
- 
- ![](../CAAScrBase/images/ainfo.gif)
- |[]CAASchQueryConnectivity is launched in 
- CATIA [[1]]. No open document is needed.
-
-Special 
-		environment must be available to successfully run this macro:
-		
-
-			
-- Prerequisites:
-		
-		
-> 
-			
-
-				
-- RADE must be installed.
-				
-- CAASchPlatformModeler.edu must exist in CAADoc folder.
-			
-		
-
-		
-
-			
-- Setup:
-		
-		
-> 
-			
-
-				
-- Build CAASchAppBase.m and CAASchAppUtilities.m, located in 
-				CAASchPlatformModeler.edu (RADE is required). 
-				
-- Copy generated DLLs, CAASchAppBase.dll and 
-				CAASchAppUtilities.m, respectively, to the run-time environment 
-				folder "intel_a\code\bin."
-				
-- Copy CAASCHEDUApp.CATfct, located CAASchPlatformModeler.edu\CNext\resources\graphic, 
-				to the run-time environment folder "intel_a\resources\graphic."
-				
-- Copy CAASchPlatformModeler.edu\CNext\code\dictionary\CAASchPlatformModeler.edu.dico 
-				to the run-time environment folder "intel_a\code\dictionary."
-			
-		
-
-		
-
- [
- CAASchQueryConnectivity.CATScript ]is located in the CAAScdSchUseCases 
- module. [Execute macro] 
- (Windows only).
- 
- 
- ![](../CAAScrBase/images/ascenari.gif)
- |[]CAASchQueryConnectivity includes the 
- following steps:
-
- 
-- [Prolog]
- 
-- [Get a list of Schematic 
- component instances and Schematic route instances in the document.]
- 
-- [Query for lists of 
- connected objects.]
- 
- 
-#### []Prolog
- 
-
-The macro first loads the document: CAASCH_CompRoute01.CATProduct. 
- 
- 
- |    ...
-
-   
- ' Open the schematic document 
-
-    Dim sFilePath
-
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
-
-            "online\CAAScdSchUseCases\samples\CAASCH_CompRoute01.CATProduct")
-
- 
-
-    Dim objSchDoc As Document
-
-    Set objSchDoc = CATIA.Documents.Open(sFilePath)
-
-   
- ...
- 
- 
- 
+     
 
 Next, the macro acquires the schematic root object from the document. 
- The schematic root is the top node of the object instance tree in a 
- schematic document.
- 
- 
- |    ...
+     The schematic root is the top node of the object instance tree in a 
+     schematic document.
+     
+     
 
-   
- ' Find the top node of the schematic object tree - schematic root.
+#### Get a list of Schematic 
+     component instances and Schematic route instances in the document
+     
+     
 
-    Dim objPrdRoot As Product
-
-    Dim objSchRoot As SchematicRoot
-
-    If ( Not ( objSchDoc Is Nothing ) ) Then
-
-      Set objPrdRoot = objSchDoc.Product
- 
-
-      If ( Not ( objPrdRoot Is Nothing ) ) Then
-
-        Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
-
-      End If
-
-    End If
-
-   
- ...
- 
- 
- 
-#### []Get a list of Schematic 
- component instances and Schematic route instances in the document
- 
- 
- |    ...
-
-   
- ' ------------------------------------------------------------------------- 
- 
-
-   
- ' |  Get a list of all component instances and
-
-   
- ' |  a list of all route instances in the model.
-
-   
- ' ------------------------------------------------------------------------- 
- 
-
-    If ( Not ( objSchRoot Is Nothing ) ) Then
-
-       Set objSchLComps = objSchRoot.GetComponents
-
-       Set objSchLRoutes = objSchRoot.GetRoutes
-
-    End If
-
-   
- ...
- 
- 
- 
-#### []Query for lists of 
- connected objects
- 
+#### Query for lists of 
+     connected objects
+     
 
 For each member in the output list of component instants, the macro uses 
- the AppListConnectables to find a list of Schematic component or route 
- instances that are connected to the component instance member.
- 
- 
- |    ...
-
-    If ( Not ( objSchLComps Is Nothing ) And _
-
-         Not ( objSchRoot Is Nothing ) ) Then
-
- 
-
-     
-
-  intNb = objSchLComps.Count
-
-   
- ...
-
-       If (intNb > 0) Then
-
-   
- ...
-
- 
-
-          For intIndex = 1 To intNb
-
-   
- ...
-
-            
-
- 
-            Set objAppCntbl = objSchRoot.GetInterface ("CATIASchAppConnectable",objPrd)
-
- 
-
-            If ( Not ( objAppCntbl Is Nothing ) ) Then
-
-              
- '---------------------------------------------------------------
-
-              
- '  AppListConnectables output 3 lists of objects.
-
-              
- '
-
-              
- '  If a component A is connected to another component B on 
- 
-
-              
- '  one side and to a route C on the other side, then the
-
-              
- '  output lists of objects will contain the following members.
-
-              
- '
-
-              
- '         objLCntblOther    objLCntrThis    objLCntrOther
-
-              
- '         --------------    --------------  ----------------
-
-              
- '           B               connector on A   connector on B
-
-              
- '           C               connector on A   connector on C
-
-              
- '---------------------------------------------------------------
-
- 
-
-               Set objLFilter = Nothing
-
- 
-
-               objAppCntbl.AppListConnectables objLFilter, objLCntblOther, _
-
-                 objLCntrThis, objLCntrOther
-
-   
- ...
- 
- 
- 
+     the AppListConnectables to find a list of Schematic component or route 
+     instances that are connected to the component instance member.
+     
+     
 
 For each member in the output list of route instants, the macro uses the 
- AppListConnectables to find a list of Schematic component or route 
- instances that are connected to the route instance member.
- 
- 
- |    '-------------------------------------------------------------------------
-
-   
- ' |  For each route instance in the list, find connected objects
-
-   
- '-------------------------------------------------------------------------
-
-    
-     If ( Not ( objSchLRoutes Is Nothing ) And _
-
-              Not ( objSchRoot Is Nothing ) ) Then
-
- 
-
-     
-
-      intNb = objSchLRoutes.Count
-
-   
- ...
-
-    
-       If (intNb > 0) Then
-
-   
- ...
-
-    
-         For intIndex = 1 To intNb
-
-   
- ...
-
-    
-           Set objAppCntbl = objSchRoot.GetInterface ("CATIASchAppConnectable",objPrd)
-
-    
-             If ( Not ( objAppCntbl Is Nothing ) ) Then
-
- 
-
-    
-
-                Set objLFilter = Nothing
-
-              
- 
-
-                    objAppCntbl.AppListConnectables objLFilter, objLCntblOther, _ 
- 
-
-                      objLCntrThis, objLCntrOther
- 
- 
- 
+     AppListConnectables to find a list of Schematic component or route 
+     instances that are connected to the route instance member.
+     
+     
 
 This macro provides the internal GenerateALine subroutine to report 
- connected objects. It uses the GetPosition method of the SchCntrLocation 
- interface to obtain the x-y coordinates of the connection points. 
- SchCntrLocation is found based on the output list of connectors from the 
- AppListConnectable method.
- 
+     connected objects. It uses the GetPosition method of the SchCntrLocation 
+     interface to obtain the x-y coordinates of the connection points. 
+     SchCntrLocation is found based on the output list of connectors from the 
+     AppListConnectable method.
+   
  
  
 
-[[Top]]
+[Top]
 
 ---
 
  
  
-#### []In Short
+
+#### In Short
  
 
 This use case shows how to query the connectivity of Schematic objects in a 
@@ -381,24 +67,14 @@ This use case shows how to query the connectivity of Schematic objects in a
  ![](images/CAASchQueryConnectivity_01.jpg)
  
 
-[[Top]]
+[Top]
 
 ---
 
  
  
-#### []References
- 
- 
- |[1]
- |[
- Replaying a Macro]
- 
- 
- 
- 
- |[[Top]]
- 
+
+#### References
  
  
 
@@ -407,4 +83,4 @@ This use case shows how to query the connectivity of Schematic objects in a
  
  
 
-*Copyright 2001, Dassault Systmes. All rights reserved.*
+*Copyright  2001, Dassault Systmes. All rights reserved.*

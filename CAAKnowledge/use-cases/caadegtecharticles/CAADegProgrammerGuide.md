@@ -12,22 +12,22 @@ converted: "2026-05-11T17:33:49.859894"
 tags: []
 source_file: "Doc/online/CAADegTechArticles/CAADegProgrammerGuide.htm"
 converted: "2026-05-11T17:33:49.859894"
-3D PLM Enterprise Architecture |  User Interface - Commands |  DialogEngine Programmer's Guide _Programming step-by-step_  
+3D PLM Enterprise Architecture |  User Interface - Commands |  DialogEngine Programmer's Guide _Programming step-by-step_
 
 converted: "2026-05-11T17:33:49.859894"
 3D PLM Enterprise Architecture |  User Interface - Commands |  DialogEngine Programmer's Guide _Programming step-by-step_
-Technical Article  
+Technical Article
 
 * * *
 
-Abstract This article is the state dialog command programmer's guide. Organized as a step-by-step, it deals with all you can do to program your state dialog command. 
+Abstract This article is the state dialog command programmer's guide. Organized as a step-by-step, it deals with all you can do to program your state dialog command.
     * **Creating a State Dialog Command**
-    * **In Short**.  
----  
+    * **In Short**.
+---
 
 * * *
 
-Creating a State Dialog Command Once you have designed your state dialog command and you have drawn its statechart diagram, you can go on with creating the command class. To do this, follow these steps: 
+Creating a State Dialog Command Once you have designed your state dialog command and you have drawn its statechart diagram, you can go on with creating the command class. To do this, follow these steps:
     * [Create the state dialog command class](CAADegCreatingCommand.md): This includes the declaration of the objects and methods needed by your command in the class header file
     * [Manage the command lifecycle](CAADegLifecycle.md): To decide what should happen when your command completes, or when another command is selected while your command is the current one, provide the body of the three methods `Activate`, `Desactivate`, and `Cancel`.
     * [Implement the statechart diagram](CAADegGraph.md): This is done in the overridden CATStateCommand `BuildGraph` method. You will create the states, the transitions, declare the conditions and actions, and create dialog agents to take care of the end user input
@@ -42,9 +42,9 @@ In Short A dialog state command is a dialog command designed as a state machine,
 
 * * *
 
-History Version: **1** [Jan 2000] | Document created  
----|---  
-[Top]  
+History Version: **1** [Jan 2000] | Document created
+---|---
+[Top]
 
 * * *
 

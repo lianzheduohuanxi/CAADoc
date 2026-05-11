@@ -11,20 +11,20 @@ converted: "2026-05-11T17:17:55.806965"
 ---
 # 3D PLM Enterprise Architecture
 
-| 
+|
 ## User Interface - Frame
 
-| 
+|
 ### Creating an Interruptible Task
 
-_Using CATIProgressTask, CATIProgressTaskUI,and CATTaskController_  
----|---|---  
-Use Case  
+_Using CATIProgressTask, CATIProgressTaskUI,and CATTaskController_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
 
-This article shows how to create an interruptible task with an indicator of progression. 
+This article shows how to create an interruptible task with an indicator of progression.
 
   * **What You Will Learn With This Use Case**
   * **The CAAAfrProgressTask Use Case**
@@ -49,26 +49,29 @@ Some processes can take so long that a user interface indicating the progression
 CAAAfrProgressTask is a use case of the CAAApplicationFrame.edu framework that illustrates ApplicationFrame framework capabilities. [Top]
 #### What Does CAAAfrProgressTask Do
 
-This use case simulates a long process . The task is composed of fifty steps, each step consisting in to execution of the following code: | 
+This use case simulates a long process . The task is composed of fifty steps, each step consisting in to execution of the following code: |
 
 This use case simulates a long process . The task is composed of fifty steps, each step consisting in to execution of the following code: |
+```vbscript
     for ( int j= 0 ; j<= 5000000 ; j++)
+
+```
 
     {
 This use case simulates a long process . The task is composed of fifty steps, each step consisting in to execution of the following code: |
 for ( int j= 0 ; j<= 5000000 ; j++)
        double k = 24.25 * (double) j ;
 
-    }  
+    }
 
----  
+---
 
 double k = 24.25 * (double) j ;
 The progression of the process is indicated by using a DS component which displays the following dialog box:
 
-_Fig.1: Interface User_ ![](images/CAAAfrProgressTaskDlgWithCancel.jpg)  
+_Fig.1: Interface User_ ![](images/CAAAfrProgressTaskDlgWithCancel.jpg)
 
----  
+---
 
 The progression of the process is indicated by using a DS component which displays the following dialog box:
 _Fig.1: Interface User_ ![](images/CAAAfrProgressTaskDlgWithCancel.jpg)
@@ -81,24 +84,24 @@ In this dialog box there are four parts (surrounded in red) that the programmer 
 
 The others parts are:
 
-  * Three ways of estimating the progress of the process 
+  * Three ways of estimating the progress of the process
     * A progress bar
     * The percentage of the task already executed
-    * An estimation of the remaining time 
+    * An estimation of the remaining time
   * A Cancel button used to stop the process ( this button is optional)
 
 This task is launched from an interactive command, that has been added to the  " CAA V5 Geometrical Analysis" workbench of the CAAGeometry document. This command, "Progress Task", has been defined in the "Analysis" menu and in the  "Mathematical Analysis"  toolbar:
 
-_Fig.2: The "_Mathematical Analysis" Toolbar ![](images/CAAAfrProgressTaskCommandHdr1.jpg)  
----  
+_Fig.2: The "_Mathematical Analysis" Toolbar ![](images/CAAAfrProgressTaskCommandHdr1.jpg)
+---
 
 This task is launched from an interactive command, that has been added to the  " CAA V5 Geometrical Analysis" workbench of the CAAGeometry document. This command, "Progress Task", has been defined in the "Analysis" menu and in the  "Mathematical Analysis"  toolbar:
 _Fig.2: The "_Mathematical Analysis" Toolbar ![](images/CAAAfrProgressTaskCommandHdr1.jpg)
 This command is a _CATDlgDialog_ having the following user interface:
 
-_Fig.3: The "_Progress Task" Command ![](images/CAAAfrProgressTaskCommandDlg.jpg)  
+_Fig.3: The "_Progress Task" Command ![](images/CAAAfrProgressTaskCommandDlg.jpg)
 
----  
+---
 
   * The "Interruptible Task" check button enables the display of the  "Cancel" button in the dialog box containing the progress bar [Fig.1].
   * If the end use clicks on the "Compute" button, the task is launched.
@@ -111,16 +114,16 @@ See the section entitled "How to Launch the CAAGeometry Use Case" in the "[The C
 Launch CATIA. When the application is ready:
 
   * On the **Start** menu, point to **Infrastructure** , and then click **CAA V5: Geometrical Analysis**
-  * Launch the **Progress Task** command to see the **Interruptible Task** dialog box: 
+  * Launch the **Progress Task** command to see the **Interruptible Task** dialog box:
     * In the **Mathematical Analysis** toolbar or
-    * In the**Analyse** menu, click **Progress Task**  
-  * Click **Compute**  
+    * In the**Analyse** menu, click **Progress Task**
+  * Click **Compute**
     * The **Computing** Dialog box appears without the **Cancel** button. Wait until the end of the process
   * Check  **Interruptible Task**  in the  **Interruptible Task** dialog box
-  * Click **Compute**  
-    * The **Computing** Dialog box appears with the **Cancel** button. 
+  * Click **Compute**
+    * The **Computing** Dialog box appears with the **Cancel** button.
     * Click **Cancel** before the end of the process.
-  * Click **Compute**  
+  * Click **Compute**
     * The **Computing** Dialog box appears with the **Cancel** button. Wait until the end of the process
   * Click **Close** in the **Interruptible Task** dialog box.
 
@@ -130,11 +133,11 @@ Launch CATIA. When the application is ready:
 The CAAAfrProgressTask use case is made of a single file located in the CAAAfrProgressTask.m module of the CAAApplicationFrame.edu framework:
 
 The CAAAfrProgressTask use case is made of a single file located in the CAAAfrProgressTask.m module of the CAAApplicationFrame.edu framework:
-Windows | `InstallRootDirectory\``CAAApplicationFrame.edu\CAAAfrProgressTask.m\`  
+Windows | `InstallRootDirectory\``CAAApplicationFrame.edu\CAAAfrProgressTask.m\`
 
 The CAAAfrProgressTask use case is made of a single file located in the CAAAfrProgressTask.m module of the CAAApplicationFrame.edu framework:
 Windows | `InstallRootDirectory\``CAAApplicationFrame.edu\CAAAfrProgressTask.m\`
-Unix | `InstallRootDirectory/``CAAApplicationFrame.edu/CAAAfrProgressTask.m/`  
+Unix | `InstallRootDirectory/``CAAApplicationFrame.edu/CAAAfrProgressTask.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
@@ -175,23 +178,29 @@ class CATDlgCheckButton;
       **DeclareResource**(CAAAfrProgressTaskSampleCmd, CATDlgDialog);
 
 class CAAAfrProgressTaskSampleCmd : public CATDlgDialog
+```vbscript
       public :
+
+```
 
         CAAAfrProgressTaskSampleCmd();
 
-        virtual ~CAAAfrProgressTaskSampleCmd();  
+        virtual ~CAAAfrProgressTaskSampleCmd();
 
         ...
 
 virtual ~CAAAfrProgressTaskSampleCmd();
-      private : 
+```vbscript
+      private :
 
-        void **ClickCompute**(CATCommand            *iPublishingCommand, 
-                        CATNotification         *iNotification, 
+```
+
+        void **ClickCompute**(CATCommand            *iPublishingCommand,
+                        CATNotification         *iNotification,
                         CATCommandClientData     iUsefulData);
 
-        void **ClickClose**(CATCommand              *iPublishingCommand, 
-                        CATNotification         *iNotification, 
+        void **ClickClose**(CATCommand              *iPublishingCommand,
+                        CATNotification         *iNotification,
                         CATCommandClientData     iUsefulData);
 
         void **EditorClose**  (CATCallbackEvent  iEvent,
@@ -204,23 +213,26 @@ virtual ~CAAAfrProgressTaskSampleCmd();
 
         CAAAfrProgressTaskSampleCmd & operator = (const CAAAfrProgressTaskSampleCmd &iObjectToCopy);
 
-      private : 
+```vbscript
+      private :
+
+```
 
         **CATDlgCheckButton** * _pInterruptTask  ;
         **CATFrmEditor**      * _pEditor ;
 
-    };  
+    };
 
----  
+---
 
-This header file contains the following declaration: 
+This header file contains the following declaration:
      * The class derives from _CATDlgDialog_
      * The `DeclareResource` macro states that the resources of the _CAAAfrProgressTaskSampleCmd_ command class are located in the CAAAfrProgressTaskSampleCmd.CATNls file. If  resources were assigned to the _CATDlgDialog_ class, they would be concatenated with those of _CAAAfrProgressTaskSampleCmd_
-     * As usual, the class has a constructor and a destructor 
-     * The copy constructor and the "=" operator are set as private to prevent the compiler from automatically creating them as public. 
-     * Two callback methods contain the code to be executed when the end user presses either Compute or Close 
-     * A callback method, `EditorClose` , to be prevent when an editor is closed. If this editor, referenced by `_pEditor`, is those which has launched the command,  the command kills it. 
-     * A  check button 
+     * As usual, the class has a constructor and a destructor
+     * The copy constructor and the "=" operator are set as private to prevent the compiler from automatically creating them as public.
+     * Two callback methods contain the code to be executed when the end user presses either Compute or Close
+     * A callback method, `EditorClose` , to be prevent when an editor is closed. If this editor, referenced by `_pEditor`, is those which has launched the command,  the command kills it.
+     * A  check button
 
   2. The source file
      * The necessary  header files:
@@ -244,25 +256,25 @@ This header file contains the following declaration:
 
     // C++ standard library
     #include "iostream.h"
-    ...  
+    ...
 
----  
+---
      * This command is launched from a header command:
 
     ...
     #include "**CATCreateExternalObject**.h"
     **CATCreateClass**(CAAAfrProgressTaskSampleCmd);
-    ...  
+    ...
 
----  
+---
 
-The `CATCreateClass` macro enables the instantiation of the command by its class name. 
+The `CATCreateClass` macro enables the instantiation of the command by its class name.
 
      * The constructor:
 
     ...
     CAAAfrProgressTaskSampleCmd::CAAAfrProgressTaskSampleCmd()
-              :**CATDlgDialog** ((CATApplicationFrame::GetFrame())->GetMainWindow(), 
+              :**CATDlgDialog** ((CATApplicationFrame::GetFrame())->GetMainWindow(),
                               "CAAAfrProgressTaskSampleId",
 CAAAfrProgressTaskSampleCmd::CAAAfrProgressTaskSampleCmd()
                               CATDlgGridLayout | CATDlgWndBtnClose )
@@ -271,11 +283,11 @@ CAAAfrProgressTaskSampleCmd::CAAAfrProgressTaskSampleCmd()
 CAAAfrProgressTaskSampleCmd::CAAAfrProgressTaskSampleCmd()
 CATDlgGridLayout | CATDlgWndBtnClose )
       _pInterruptTask = new **CATDlgCheckButton**(this, "InterruptId" );
-      _pInterruptTask->SetGridConstraints(0,0,1,1,CATGRID_CENTER);      
+      _pInterruptTask->SetGridConstraints(0,0,1,1,CATGRID_CENTER);
 
       CATDlgPushButton * pComputeButton   = NULL ;
       pComputeButton = new **CATDlgPushButton**(this, "ComputeButtonId" );
-      pComputeButton->SetGridConstraints(1,0,1,1,CATGRID_CENTER);      
+      pComputeButton->SetGridConstraints(1,0,1,1,CATGRID_CENTER);
 
       AddAnalyseNotificationCB(pComputeButton, pComputeButton->GetPushBActivateNotification(),
                     (CATCommandMethod)&CAAAfrProgressTaskSampleCmd::**ClickCompute** ,
@@ -312,9 +324,9 @@ if ( (NULL != _pEditor) && (NULL != CATFrmLayout::GetCurrentLayout()) )
     }
     ...
 
----  
+---
 
-The application main window is the parent of the dialog box. The style of this dialog box is `CATDlgGridLayout` to enhance the positioning of each included dialog object and  `CATDlgWndBtnClose` to display only one button, the `Close` button, at the bottom of the box. 
+The application main window is the parent of the dialog box. The style of this dialog box is `CATDlgGridLayout` to enhance the positioning of each included dialog object and  `CATDlgWndBtnClose` to display only one button, the `Close` button, at the bottom of the box.
 
 This dialog box has two included dialog objects:
 
@@ -326,22 +338,25 @@ The `ClickClose` callback method is called when the end user clicks:
        * on the Close Button: the `GetDiaCLOSENotification` notification is used
        * on the Close window (NT: the cross at upper right corner and UNIX the right mouse button on the banner): the `GetWindCloseNotification` notification is used
 
-Finally, we set a callback to be prevent when an editor is closed. This notification is sent by the current layout (a singleton during the session). 
+Finally, we set a callback to be prevent when an editor is closed. This notification is sent by the current layout (a singleton during the session).
 
      * The destructor:
 
-In the destructor code, it is not necessary to delete the dialog object created in this command, as it will be automatically deleted by the Dialog process, but it is strongly recommended to reset the data member to NULL. 
+In the destructor code, it is not necessary to delete the dialog object created in this command, as it will be automatically deleted by the Dialog process, but it is strongly recommended to reset the data member to NULL.
 
     ...
 In the destructor code, it is not necessary to delete the dialog object created in this command, as it will be automatically deleted by the Dialog process, but it is strongly recommended to reset the data member to NULL.
-    CAAAfrProgressTaskSampleCmd::~CAAAfrProgressTaskSampleCmd() 
+    CAAAfrProgressTaskSampleCmd::~CAAAfrProgressTaskSampleCmd()
 
     {
 In the destructor code, it is not necessary to delete the dialog object created in this command, as it will be automatically deleted by the Dialog process, but it is strongly recommended to reset the data member to NULL.
 CAAAfrProgressTaskSampleCmd::~CAAAfrProgressTaskSampleCmd()
        _pInterruptTask   = NULL ;
 
+```vbscript
        if ( (NULL != _pEditor) && ( NULL != CATFrmLayout::GetCurrentLayout()) )
+
+```
 
        {
           ::**RemoveSubscriberCallbacks**(this,CATFrmLayout::GetCurrentLayout());
@@ -349,11 +364,11 @@ CAAAfrProgressTaskSampleCmd::~CAAAfrProgressTaskSampleCmd()
 
        _pEditor = NULL ;
     }
-    ...  
+    ...
 
----  
+---
 
-The callback set in the constructor must be removed, unless if the destruction has been requested  from the `EditorClose` method where the remove has already be done. 
+The callback set in the constructor must be removed, unless if the destruction has been requested  from the `EditorClose` method where the remove has already be done.
 
      * The ClickCompute method:
 
@@ -370,17 +385,29 @@ The callback set in the constructor must be removed, unless if the destruction h
 CATCommandClientData  iUsefulData)
       HRESULT rc = QueryInterface(IID_CATIProgressTask,(void**)& pIProgressTask);
 
+```vbscript
       if ( SUCCEEDED(rc) && (NULL != _pInterruptTask ) )
+
+```
 
       {
 HRESULT rc = QueryInterface(IID_CATIProgressTask,(void**)& pIProgressTask);
 if ( SUCCEEDED(rc) && (NULL != _pInterruptTask ) )
+```vbscript
+```vbscript
           if ( CATDlgCheck == _pInterruptTask->GetState() )
+
+```
+
+```
 
           {
 ```vbscript
 if ( SUCCEEDED(rc) && (NULL != _pInterruptTask ) )
+```vbscript
 if ( CATDlgCheck == _pInterruptTask->GetState() )
+```
+
              Task.**Schedule**(pIProgressTask,**TRUE** ,NULL);
 ```
 
@@ -400,15 +427,15 @@ Task.**Schedule**(pIProgressTask,**FALSE** ,NULL);
 
       }
     }
-    ...  
+    ...
 
----  
+---
 
 The end user has clicked on the "Compute" button and the task must be launched. This is possible by using the _CATTaskControler_ (ApplicationFrame framework). The `Schedule` method will launch a command which contains the dialog box with the progress bar [Fig.1]. The arguments of this method are respectively :
 
        * The _CATIProgressTask_ interface pointer, referenced by `pIProgressTask`. In this case the command itself implements this interface, so it performs a `QueryInterface` on itself
        * A boolean to indicate if the Cancel button must be displayed. In this case, the `_pInterruptTask` check button contains the end user choice.
-       * A value (here NULL) used as input data of the `PerformTask` method. 
+       * A value (here NULL) used as input data of the `PerformTask` method.
 
      * The ClickClose method:
 
@@ -425,27 +452,30 @@ CATCommandClientData   iUsefulData)
 
       **RequestDelayedDestruction**();
     }
-    ...  
+    ...
 
----  
+---
 
-`RequestDelayedDestruction` enables to delete the command. 
+`RequestDelayedDestruction` enables to delete the command.
 
      * The EditorClose method:
 
     ...
-    void CAAAfrProgressTaskSampleCmd::EditorClose(CATCallbackEvent  iEvent, 
+    void CAAAfrProgressTaskSampleCmd::EditorClose(CATCallbackEvent  iEvent,
                                                   void            * iFrom,
                                                   CATNotification * iNotification,
                                                   CATSubscriberData iClientData,
-                                                  CATCallback       iCallBack ) 
+                                                  CATCallback       iCallBack )
 
     {
 void            * iFrom,
 CATNotification * iNotification,
 CATSubscriberData iClientData,
 CATCallback       iCallBack )
+```vbscript
       if ( **_pEditor == iFrom** )
+
+```
 
        {
 
@@ -456,63 +486,69 @@ CATCallback       iCallBack )
           // Suicide
           **RequestDelayedDestruction**();
 
-          _pEditor = NULL ; 
+          _pEditor = NULL ;
        }
     }
-    ...  
+    ...
 
----  
+---
 
-An editor is closed, i.e a document is closed. The layout sends a notification indicating that the publisher is the editor; The variable iFrom is the editor to be closed. If this editor is the same as the one that has launched the current command, it must be deleted. 
+An editor is closed, i.e a document is closed. The layout sends a notification indicating that the publisher is the editor; The variable iFrom is the editor to be closed. If this editor is the same as the one that has launched the current command, it must be deleted.
 
 An editor is closed, i.e a document is closed. The layout sends a notification indicating that the publisher is the editor; The variable iFrom is the editor to be closed. If this editor is the same as the one that has launched the current command, it must be deleted.
   3. The NLS resource file:
 
 The `CAAAfrProgressTaskSampleCmd``.CATNls `file is` `located in the `CAAApplicationFrame.edu/Cnext/resources/msgcatalog `directory. It contains:
 
-     * The title of the dialog box and titles of the included dialog objects: 
+     * The title of the dialog box and titles of the included dialog objects:
 
-           **Title**                ="Interruptible Task" 
+           **Title**                ="Interruptible Task"
 The `CAAAfrProgressTaskSampleCmd``.CATNls `file is` `located in the `CAAApplicationFrame.edu/Cnext/resources/msgcatalog `directory. It contains:
            ComputeButtonId.Title="Compute" ;
+```vbscript
+```vbscript
            InterruptId.Title    ="Interruptible Task" ;
 
-           ...  
+```
 
----  
-     * The help message displayed in the status bar when you pass over the dialog box: 
+```
+
+           ...
+
+---
+     * The help message displayed in the status bar when you pass over the dialog box:
 
            ...
            **Help** = "Dialog box which creates an interruptible task ";
-           ...  
+           ...
 
----  
-     * The long help message displayed in a balloon when you select a dialog object with the question mark: 
+---
+     * The long help message displayed in a balloon when you select a dialog object with the question mark:
 
            ...
            InterruptId.**LongHelp**     ="Check if the task is interruptible or not" ;
            ComputeButtonId.LongHelp ="Launch the task. It is interruptible if the previous
            button is checked" ;
 
-           ...  
+           ...
 
----  
-     * The short help message displayed in a balloon when you pass over a dialog object: 
+---
+     * The short help message displayed in a balloon when you pass over a dialog object:
 
            ...
            InterruptId.**ShortHelp**     ="Check if the task is interruptible or not" ;
            ComputeButtonId.ShortHelp ="Launch the task" ;
-           ...  
+           ...
 
----  
-     * The help message displayed in the status bar when you pass over a dialog object: 
+---
+     * The help message displayed in the status bar when you pass over a dialog object:
 
            ...
            InterruptId.**Help**     ="Check if the task is interruptible or not" ;
            ComputeButtonId.Help ="Launch the task" ;
-           ...  
+           ...
 
----  
+---
 
 [Top]
 #### Implementing the CATIProgressTask  Interface
@@ -526,7 +562,7 @@ The _CAAAfrProgressTaskSampleCmd_ class implements the _CATIProgressTask_ interf
   4. Coding the GetCatalogName method
   5. Coding the GetIcon method
   6. Modifying the CAAAfrProgressTaskSampleCmd.CATNls file
-  7. Declaring the command as a component 
+  7. Declaring the command as a component
 
   1. Declaring the methods of the _CATIProgressTask_ interface in the header file
 
@@ -535,8 +571,11 @@ The _CAAAfrProgressTaskSampleCmd_ class implements the _CATIProgressTask_ interf
 
     class CAAAfrProgressTaskSampleCmd : public CATDlgDialog
     {
-        ...      
+        ...
+```vbscript
      public :
+
+```
 
         ...
 public :
@@ -549,7 +588,7 @@ public :
         ...
     }
 
----  
+---
 
 These are the three methods of the _CATIProgressTask_ interface.
 
@@ -564,9 +603,9 @@ These are the three methods of the _CATIProgressTask_ interface.
     //Application Frame Framework
     ...
     #include "CATIProgressTaskUI.h"
-    ...  
+    ...
 
----  
+---
   3. Coding the PerformTask method
 
     ...
@@ -576,13 +615,19 @@ These are the three methods of the _CATIProgressTask_ interface.
     {
 3. Coding the PerformTask method
 HRESULT CAAAfrProgressTaskSampleCmd::PerformTask (CATIProgressTaskUI  * iUI, void * iUserData)
+```vbscript
         if ( NULL == iUI ) return E_FAIL ;
+
+```
 
         int min = 1 ;
         int max = 50 ;
         iUI->**SetRange**(min,max);
 
+```vbscript
         for ( int i= min ; i <= max ; i++)
+
+```
 
         {
 int max = 50 ;
@@ -597,16 +642,22 @@ for ( int i= min ; i <= max ; i++)
 
 CATUnicodeString usMessage ;
 CATUnicodeString usParam[1] ;
+```vbscript
             usMessage = CATMsgCatalog::**BuildMessage**("CAAAfrProgressTaskSampleCmd",
+
+```
 
                                             "ProgressTaskUI.**CommentRuntime** ",usParam,1,
                                             "Step ...");
 
             iUI->**SetComment**(usMessage);
 
-            // begin of the step'simulation 
+            // begin of the step'simulation
 iUI->**SetComment**(usMessage);
+```vbscript
             for ( int j= 0 ; j<= 5000000 ; j++)
+
+```
 
             {
 iUI->**SetComment**(usMessage);
@@ -614,11 +665,14 @@ for ( int j= 0 ; j<= 5000000 ; j++)
                 double k = 24.25 * (double) j ;
 
             }
-            // end of the step'simulation 
+            // end of the step'simulation
 
 double k = 24.25 * (double) j ;
             CATBoolean interrupt ;
+```vbscript
             if ( S_OK != iUI->**IsInterrupted**(&interrupt) || (TRUE == interrupt) )
+
+```
 
             {
 CATBoolean interrupt ;
@@ -630,24 +684,24 @@ if ( S_OK != iUI->**IsInterrupted**(&interrupt) || (TRUE == interrupt) )
 
         return S_OK ;
     }
-    ...       
+    ...
 
----  
+---
 
-This method consists in executing the task and giving information to the dialog box managed by the _CATIProgressTaskUI_   interface [Fig 1]. 
+This method consists in executing the task and giving information to the dialog box managed by the _CATIProgressTaskUI_   interface [Fig 1].
 
 This method consists in executing the task and giving information to the dialog box managed by the _CATIProgressTaskUI_   interface [Fig 1].
 At first, before beginning the task, it is necessary to define the range of the process by using the `SetRange `method.
 
 At each step, the dialog box is modified:
 
-     * The progress bar, the estimated time remaining and the percentage of the progression:  using the `SetProgress `method. 
+     * The progress bar, the estimated time remaining and the percentage of the progression:  using the `SetProgress `method.
      * The comment above the progress bar: using the `BuildMessage` to construct the NLS message and `SetComment` to modify the text
 
 At each step, the dialog box is modified:
 In this use case, the message is "Step i ..." where i is the number of the step.
 
-The task is stopped if the end user clicks on the Cancel button. The `IsInterrupted `method returns `FALSE` if the end user has clicked on the button or if the Cancel button does not exist. If the command has been interrupted, the method returns` E_FAIL`, and the dialog box will be closed. 
+The task is stopped if the end user clicks on the Cancel button. The `IsInterrupted `method returns `FALSE` if the end user has clicked on the button or if the Cancel button does not exist. If the command has been interrupted, the method returns` E_FAIL`, and the dialog box will be closed.
 
   4. Coding the GetCatalogName method
 
@@ -659,7 +713,10 @@ The task is stopped if the end user clicks on the Cancel button. The `IsInterrup
     {
 4. Coding the GetCatalogName method
 HRESULT CAAAfrProgressTaskSampleCmd::GetCatalogName (CATString * oCatalogName)
+```vbscript
         if ( NULL == oCatalogName ) return E_FAIL ;
+
+```
 
         *oCatalogName = CATString("CAAAfrProgressTaskSampleCmd");
 HRESULT CAAAfrProgressTaskSampleCmd::GetCatalogName (CATString * oCatalogName)
@@ -667,9 +724,9 @@ if ( NULL == oCatalogName ) return E_FAIL ;
         return S_OK ;
 
     }
-    ...       
+    ...
 
----  
+---
 
 This method returns the name of the NLS file which contains the title, the default name of the object concerned and the default comment. See the next section "Modifying the Nls file"
 
@@ -678,12 +735,15 @@ This method returns the name of the NLS file which contains the title, the defau
     ...
 This method returns the name of the NLS file which contains the title, the default name of the object concerned and the default comment. See the next section "Modifying the Nls file"
 5. Coding the GetIcon method
-    HRESULT CAAAfrProgressTaskSampleCmd::GetIcon(CATString  * oIcon) 
+    HRESULT CAAAfrProgressTaskSampleCmd::GetIcon(CATString  * oIcon)
 
     {
 5. Coding the GetIcon method
 HRESULT CAAAfrProgressTaskSampleCmd::GetIcon(CATString  * oIcon)
+```vbscript
         if ( NULL == oIcon ) return E_FAIL ;
+
+```
 
         *oIcon = CATString("I_CAAProgressClock");
 HRESULT CAAAfrProgressTaskSampleCmd::GetIcon(CATString  * oIcon)
@@ -691,9 +751,9 @@ if ( NULL == oIcon ) return E_FAIL ;
         return S_OK ;
 
     }
-    ...       
+    ...
 
----  
+---
 
 The  I_CAAProgressClock.bmp icon can be found in the CNext/resources/graphic/icons/normal of the CAAApplicationFrame.edu.
 
@@ -709,20 +769,23 @@ Each label of the dialog box is prefixed by the keyword `ProgressTaskUI:`
     ProgressTaskUI.**ObjectName** = "Model";
     ProgressTaskUI.**Comment** = "Step ..."; // Not used in the use case
 
-    ...   
+    ...
 
----  
+---
 
-In this use case, only the `Title` and the `ObjectName` are useful. For the comment, the message is changed at each step, so the default text "Step ..." is not used. At each step the message is constructed thanks to the `CommentRuntime` keyword. The parameter is the number of the step. 
+In this use case, only the `Title` and the `ObjectName` are useful. For the comment, the message is changed at each step, so the default text "Step ..." is not used. At each step the message is constructed thanks to the `CommentRuntime` keyword. The parameter is the number of the step.
 
     ...
-    ProgressTaskUI.CommentRuntime = "Step /p1 ...";   
+```vbscript
+    ProgressTaskUI.CommentRuntime = "Step /p1 ...";
 
----  
+```
+
+---
 ProgressTaskUI.CommentRuntime = "Step /p1 ...";
   7. Declaring the command as a component
 
-An object which implements an interface must be a component. 
+An object which implements an interface must be a component.
 
     ...
 7. Declaring the command as a component
@@ -731,31 +794,34 @@ An object which implements an interface must be a component.
 
     {
         **CATDeclareClass** ;
-        ...      
-     public :      
+        ...
+```vbscript
+     public :
 
-    ...  
+```
 
----  
-The `CATDeclareClass` macro declares that the class _CAAAfrProgressTaskSampleCmd_ belongs to a component. 
+    ...
+
+---
+The `CATDeclareClass` macro declares that the class _CAAAfrProgressTaskSampleCmd_ belongs to a component.
 
     ...
     **CATImplementClass**(CAAAfrProgressTaskSampleCmd, Implementation, **CATCommand** , CATNull);
-    ...  
+    ...
 
----  
+---
 
-The `CATImplementClass` macro declares that the _CAAAfrProgressTaskSampleCmd_ class is a component main class thanks the `Implementation` keyword, and OM-derives [1] from _CATCommand_. 
+The `CATImplementClass` macro declares that the _CAAAfrProgressTaskSampleCmd_ class is a component main class thanks the `Implementation` keyword, and OM-derives [1] from _CATCommand_.
 
     ...
-    #include <TIE_CATIProgressTask.h> 
+    #include <TIE_CATIProgressTask.h>
     TIE_CATIProgressTask(CAAAfrProgressTaskSampleCmd);
-    ...  
+    ...
 
----  
+---
 ```vbscript
 TIE_CATIProgressTask(CAAAfrProgressTaskSampleCmd);
-The _CAAAfrProgressTaskSampleCmd_ class states that it implements the _CATIProgressTask_ interface thanks to the `TIE_CATIProgressTask` macro. 
+The _CAAAfrProgressTaskSampleCmd_ class states that it implements the _CATIProgressTask_ interface thanks to the `TIE_CATIProgressTask` macro.
 
 The interface dictionary, the CAAApplicationFrame.edu.dico file, located in the CNext/code/dictionary of the CAAApplicationFrame.edu framework contains the following line:
 
@@ -766,9 +832,9 @@ The _CAAAfrProgressTaskSampleCmd_ class states that it implements the _CATIProgr
 The interface dictionary, the CAAApplicationFrame.edu.dico file, located in the CNext/code/dictionary of the CAAApplicationFrame.edu framework contains the following line:
     CAAAfrProgressTaskSampleCmd CATIProgressTask  libCAAAfrProgressTask
 
-    ...  
+    ...
 
----  
+---
 
 [Top]
 
@@ -782,16 +848,16 @@ _[_Top]
 * * *
 ### References
 
-[1] | [Object Modeler Component and Implementation Inheritance](../CAASysTechArticles/CAASysOMInheritance.md)  
----|---  
-[Top]  
+[1] | [Object Modeler Component and Implementation Inheritance](../CAASysTechArticles/CAASysOMInheritance.md)
+---|---
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Mar 2002] | Document created  
----|---  
-[Top]  
+Version: **1** [Mar 2002] | Document created
+---|---
+[Top]
 
 * * *
 

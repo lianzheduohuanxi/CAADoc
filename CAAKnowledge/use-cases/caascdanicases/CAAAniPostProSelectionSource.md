@@ -10,66 +10,110 @@ converted: "2026-05-11T17:31:51.768504"
 
 ---
 ```vbscript
+```vbscript
+```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2000
     ' ***********************************************************************
     '   Purpose:      Select groups and mesh part for visualization of image
     '   Assumptions:   Octree tetrahedron mesh part exists in the model
     '   Author:       bmw
     '   Languages:    VBScript
-    '   Locales:      English 
+    '   Locales:      English
     '   CATIA Level:  V5R16
     ' ***********************************************************************
 ```
 
-    Sub CATMain()
+```
+
+```
 
 ```vbscript
-    ' ----------------------------------------------------------- 
+    Sub CATMain()
+
+```
+
+```vbscript
+```vbscript
+```vbscript
+    ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 
+```
+
+```
+
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
+```vbscript
+```vbscript
         End If
-    ' ----------------------------------------------------------- 
+    ' -----------------------------------------------------------
+
+```
+
+```
 
 ```
 
 ```vbscript
 End If
+```vbscript
+```vbscript
 ' -----------------------------------------------------------
     ' Open the CATAnalysis Document
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis")
 ```
 
+```
+
+```
+
+```vbscript
 ```vbscript
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```
 
+```
+
 ```vbscript
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+```vbscript
     ' Retrieve the Analysis Manager
 ```
 
+```
+
+```vbscript
 ```vbscript
     Set oAnalysisManager = oAnalysisDocument.Analysis
 
 ```
 
+```
+
 ```vbscript
 Set oAnalysisManager = oAnalysisDocument.Analysis
+```vbscript
     ' Retrieve the analysis model from the list of models
+```
+
 ```
 
 ```vbscript
     Set oAnalysisModels = oAnalysisManager.AnalysisModels
+```vbscript
     Set oAnalysisModel = oAnalysisModels.Item(1)
 ```
 
+```
+
+```vbscript
+```vbscript
 ```vbscript
     ' Retrieve the analysis cases and the first analysis case
     Set oAnalysisCases = oAnalysisModel.AnalysisCases
@@ -90,14 +134,26 @@ Set oAnalysisManager = oAnalysisDocument.Analysis
     Set analysisImage1 = analysisImages1.Item("Von Mises Stress (nodal values).1")
 ```
 
-```vbscript
-Set analysisSet2 = oAnalysisSets.Item("Frequency Case Solution.1", catAnalysisSetSearchAll)
-Set analysisImages1 = analysisSet2.AnalysisImages
-Set analysisImage1 = analysisImages1.Item("Von Mises Stress (nodal values).1")
-    analysisImage1.SetSelection reference1, True
-    analysisImage1.Update 
 ```
 
+```
+
+```vbscript
+Set analysisSet2 = oAnalysisSets.Item("Frequency Case Solution.1", catAnalysisSetSearchAll)
+```vbscript
+```vbscript
+Set analysisImages1 = analysisSet2.AnalysisImages
+Set analysisImage1 = analysisImages1.Item("Von Mises Stress (nodal values).1")
+```
+
+```
+
+    analysisImage1.SetSelection reference1, True
+    analysisImage1.Update
+```
+
+```vbscript
+```vbscript
 ```vbscript
     'add selection (usergroups) SurfaceGroup.1 on Image Von Mises Stress (nodal values) (ReplaceMode=False)
     '=====================================================================
@@ -109,50 +165,87 @@ Set analysisImage1 = analysisImages1.Item("Von Mises Stress (nodal values).1")
     Set reference2 = oAnalysisManager.CreateReferenceFromObject(analysisEntity2)
 ```
 
-```vbscript
-    ' Set the created reference for Selection in Von Mises Stress Image
-    analysisImage1.SetSelection reference2, False
-    analysisImage1.Update 
 ```
 
+```
+
+```vbscript
+```vbscript
+    ' Set the created reference for Selection in Von Mises Stress Image
+```
+
+    analysisImage1.SetSelection reference2, False
+    analysisImage1.Update
+```
+
+```vbscript
+```vbscript
 ```vbscript
     'remove all selections on Image Von Mises Stress (nodal values)
     '======================================
     ' Remove all the selections and update
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 'remove all selections on Image Von Mises Stress (nodal values)
 '======================================
 ' Remove all the selections and update
-    analysisImage1.ResetSelection 
-    analysisImage1.Update 
 ```
 
+```
+
+    analysisImage1.ResetSelection
+    analysisImage1.Update
+```
+
+```vbscript
+```vbscript
 ```vbscript
     'add selection (meshparts) OctreeTetrahedronMesh.1:Part1 on Image Von Mises Stress (nodal values) (ReplaceMode=True)
     '==========================================================================
     ' Retrieve the mesh part OCTREE Tetrahedron Filler
 ```
 
+```
+
+```
+
 ```vbscript
     Set analysisSets3 = oAnalysisModel.AnalysisSets
+```vbscript
+```vbscript
     Set oAnalysisMeshManager = analysisSets3.ItemByType("MSHMeshSet")
     Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
     Set analysisMeshPart1 = oAnalysisMeshParts.Item("OCTREE Tetrahedron Mesh.1 : Part1")
 
 ```
 
+```
+
+```
+
 ```vbscript
 Set analysisMeshPart1 = oAnalysisMeshParts.Item("OCTREE Tetrahedron Mesh.1 : Part1")
+```vbscript
     'Create reference from the mesh part and set the selection
+```
+
 ```
 
 ```vbscript
     Set reference3 = oAnalysisManager.CreateReferenceFromObject(analysisMeshPart1)
     analysisImage1.SetSelection reference3, True
-    analysisImage1.Update 
+    analysisImage1.Update
 
 ```
 
+```vbscript
     End Sub
+
+```

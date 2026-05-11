@@ -10,8 +10,8 @@ converted: "2026-05-11T17:33:50.681421"
 ```
 
 ---
-| CAA C++ API Modifications|  DialogEngine  |   
----|---|---  
+| CAA C++ API Modifications|  DialogEngine  |
+---|---|---
 
 * * *
 

@@ -12,31 +12,31 @@ converted: "2026-05-11T17:33:47.574475"
 tags: ["CATIVpmAFLActionServices", "CATIUserExitLoginTracker", "CATIMfgElementaryMotion", "CAACompositesItf", "CATICGMRecognizeFeatures", "CATIDftDatumTarget", "CATICciCompositesParametersMSSImportExport", "CATIDftCoordDimension", "CATIA", "CATICGMTopSilhOperator"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R26GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.574475"
-CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5-6R2016 GA  
+CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5-6R2016 GA
 
 * * *
 
 The following are the new CAA V5-6R2016 GA C++ Authorized APIs, compared with CAA V5-6R2015 at GA level.
 
-  * CAACompositesItf framework 
+  * CAACompositesItf framework
     * Interface CATICciCompositesParametersMSSImportExport
-  * CATGSMUseItf framework 
+  * CATGSMUseItf framework
     * Enumeration CATGSMExtrapolationType
     * Enumeration CATGSMFillTolerantMode
-  * CATTTRSInterfaces framework 
+  * CATTTRSInterfaces framework
     * Macro or #define CATMmrTTRSTypePatternOfCones
     * Macro or #define CATMmrTTRSTypePatternOfTori
-  * CORBAServerInfra framework 
+  * CORBAServerInfra framework
     * Interface CATIUserExitLoginTracker
-  * DraftingInterfaces framework 
+  * DraftingInterfaces framework
     * Interface CATIDftCoordDimension
     * Interface CATIDftDatumTarget
-  * FreeFormOperators framework 
+  * FreeFormOperators framework
     * Global Function CATCreateCrvDegreeModification
     * Global Function CATCreateCrvDegreeModification
     * Global Function CATCreateSurDegreeModification
     * Global Function CATCreateSurDegreeModification
-  * GMModelCmpInterfaces framework 
+  * GMModelCmpInterfaces framework
     * Class CATFeatureBrowser
     * Class CATFeatureInfoFilletConstantRadius
     * Class CATFeatureInfoFilletJunction
@@ -58,9 +58,9 @@ The following are the new CAA V5-6R2016 GA C++ Authorized APIs, compared with CA
     * Enumeration HoleEndType
     * Global Function CATCGMCreateRecognizeFeatures
     * Interface CATICGMRecognizeFeatures
-  * GMModelInterfaces framework 
+  * GMModelInterfaces framework
     * Class CATCGMCheckAnomalyValueInfo
-  * GMOperatorsInterfaces framework 
+  * GMOperatorsInterfaces framework
     * Class CATLISTP(CATDynEdgeFilletRibbon)
     * Class CATLISTP(CATDynFaceFaceFilletRibbon)
     * Class CATLISTP(CATDynRemoveFaceFilletRibbon)
@@ -69,34 +69,34 @@ The following are the new CAA V5-6R2016 GA C++ Authorized APIs, compared with CA
     * Global Function CATCGMCreateSurDegreeModification
     * Global Function CATCGMCreateSurDegreeModification
     * Interface CATICGMTopSilhOperator
-  * GeometricObjects framework 
+  * GeometricObjects framework
     * Class CATLISTP(CATCGMJournalList)
-  * ManufacturingInterfaces framework 
+  * ManufacturingInterfaces framework
     * Interface CATIMfgElementaryMotion
-  * Mathematics framework 
+  * Mathematics framework
     * Class CATLISTV(CATMathTransformation)
-  * MecModInterfaces framework 
+  * MecModInterfaces framework
     * Macro or #define E_MISSING_PARENT
-  * ObjectModelerBase framework 
+  * ObjectModelerBase framework
     * Enumeration CATActivWIBWarnMode
-  * PartInterfaces framework 
+  * PartInterfaces framework
     * Enumeration CATPrtSewTolerantMode
-  * VPMDesktopObjects framework 
+  * VPMDesktopObjects framework
     * Class ENOVLoadFullObjects
-  * VPMInterfaces framework 
+  * VPMInterfaces framework
     * Interface CATIVpmAFLActionServices
-  * VisualizationBase framework 
+  * VisualizationBase framework
     * Typedef CATShader
 
 [Top]
 
 * * *
 
-History Version: **1** [Sep 2015] | Document created  
----|---  
-[Top]  
+History Version: **1** [Sep 2015] | Document created
+---|---
+[Top]
 
 * * *
 
-_Copyright © 1999-2014, Dassault Systèmes. All rights reserved._  
+_Copyright © 1999-2014, Dassault Systèmes. All rights reserved._
 Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)

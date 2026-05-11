@@ -9,17 +9,17 @@ converted: "2026-05-11T17:31:51.288324"
 ```
 
 ---
-# Machining 
+# Machining
 
-| 
+|
 ## 3 Axis Surface Machining
 
-| 
+|
 ### Computing a Tool Path with User Machining Features
 
-_Implement CATIMfgComputeToolPathCustom on a surface machining operation using machining features_  
----|---|---  
-Use Case  
+_Implement CATIMfgComputeToolPathCustom on a surface machining operation using machining features_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
@@ -35,7 +35,7 @@ This article discusses the CAASmiUserOperationWithUserMFToolPath use case. It ex
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
@@ -62,7 +62,7 @@ CAASmiUserOperationWithUserMFToolPath is a use case of the CAASurfaceMachiningIt
 CAASmiUserOperationWithUserMFToolPath is a use case of the CAASurfaceMachiningItf.edu framework that illustrates Surface Machining capabilities. It is a part of the sample described in the technical article [1].
 This use case computes a kind of "plunge roughing" tool path for **CAASmgOperation**.
 
-The tool path is created from the first guide of CAASmgGuide and the CAAStep, CAAToolAngle and CAAApproachDistance parameters ![](images/CAASmiOperationWithuserMFTP1.gif) 
+The tool path is created from the first guide of CAASmgGuide and the CAAStep, CAAToolAngle and CAAApproachDistance parameters ![](images/CAASmiOperationWithuserMFTP1.gif)
 
 [Top]
 #### How to Launch CAASmiUserOperationWithUserMFToolPath
@@ -72,11 +72,11 @@ This use case is a part of _Surface Machining Operation Sample_ [1]. You should 
 This use case is a part of _Surface Machining Operation Sample_ [1]. You should build all the modules of this sample at a time to be able to launch it [2].
 Don't forget to edit the interface dictionary located in:
 
-Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CNext\code\dictionary\`  
+Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CNext\code\dictionary\`
 
 Don't forget to edit the interface dictionary located in:
 Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CNext\code\dictionary\`
-Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`  
+Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed, and uncomment the appropriate lines by removing the '#' character.
 
@@ -86,11 +86,11 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed,
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed, and uncomment the appropriate lines by removing the '#' character.
 This use case is made of source files located in the CAASmiUserOperationToolPathReplay.m module of the CAASurfaceMachiningItf.edu framework:
 
-Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CAASmiUserOperationpToolPathReplay.m`  
+Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CAASmiUserOperationpToolPathReplay.m`
 
 This use case is made of source files located in the CAASmiUserOperationToolPathReplay.m module of the CAASurfaceMachiningItf.edu framework:
 Windows | `InstallRootDirectory\CAASurfaceMachiningItf.edu\CAASmiUserOperationpToolPathReplay.m`
-Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CAASmiUserOperationpToolPathReplay.m`  
+Unix | `InstallRootDirectory/CAASurfaceMachiningItf.edu/CAASmiUserOperationpToolPathReplay.m`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
@@ -116,9 +116,9 @@ To customize the _ComputeToolPath_ ****method**,** we should create an extension
     // Tie the implementation to its interface
     #include "TIE_CATIMfgComputeToolPathCustom.h"
     TIE_CATIMfgComputeToolPathCustom( CAAESmiUserOperationTPComputation);
-    ...  
+    ...
 
----  
+---
 
 [Top]
 #### Reading parameters
@@ -126,20 +126,29 @@ To customize the _ComputeToolPath_ ****method**,** we should create an extension
 To compute the tool path, we need the strategy and macros parameters of our operation. To retrieve them, we use the _CATIMfgActivityParameters_ interface.
 
       ...
-      // Reads Activity Parameters 	
+      // Reads Activity Parameters
 To compute the tool path, we need the strategy and macros parameters of our operation. To retrieve them, we use the _CATIMfgActivityParameters_ interface.
       double Step = 0.;
       double ToolAngle = 0.;
       double ApproachDistance = 0.;
       CATIMfgActivityParameters * pActivityParameters = NULL;
       RC = QueryInterface(IID_CATIMfgActivityParameters, (void**) &pActivityParameters);
+```vbscript
+```vbscript
       if (SUCCEEDED(RC))
+
+```
+
+```
 
       {
         // Step
 CATIMfgActivityParameters * pActivityParameters = NULL;
 RC = QueryInterface(IID_CATIMfgActivityParameters, (void**) &pActivityParameters);
+```vbscript
 if (SUCCEEDED(RC))
+```
+
         pActivityParameters->GetValue ("CAAStep", Step);
 
         // ToolAngle
@@ -153,9 +162,9 @@ pActivityParameters->GetValue ("CAAToolAngle", ToolAngle);
         pActivityParameters = NULL;
 
       }
-      ...  
+      ...
 
----  
+---
 
 [Top]
 #### Reading Geometry
@@ -171,23 +180,32 @@ CATBaseUnknown_var spBaseFeature = pActivity->GetFeature();
       CATLISTP(CATGeometry) ListOfGeometry;
       CAAISmiUserMachFeature * pUserMachFeature = NULL;
       RC = spBaseFeature->QueryInterface(IID_CAAISmiUserMachFeature, (void**) &pUserMachFeature);
+```vbscript
+```vbscript
       if (SUCCEEDED(RC))
+
+```
+
+```
 
       {
 ```vbscript
 CATLISTP(CATGeometry) ListOfGeometry;
 CAAISmiUserMachFeature * pUserMachFeature = NULL;
 RC = spBaseFeature->QueryInterface(IID_CAAISmiUserMachFeature, (void**) &pUserMachFeature);
+```vbscript
 if (SUCCEEDED(RC))
+```
+
         pUserMachFeature->GetGuides(ListOfGeometry);
         pUserMachFeature->Release();
         pUserMachFeature = NULL;
 ```
 
       }
-      ...  
+      ...
 
----  
+---
 
 A new interface _CAAISmiUserMachFeature_ is implemented by _CAAESmiUserMachFeature_ in CAASmiUserMachFeature.m module. This interface deals with the geometry attribute of CAASmgMachiningFeature.
 
@@ -198,33 +216,48 @@ In _GetGuides,_ we retrieve the CAASmgGuide attribute from GetNcGeometryParamete
 In _GetGuides,_ we retrieve the CAASmgGuide attribute from GetNcGeometryParameter of _CATISmgNcGeometryManager_ and we get geometries from GetGeometricElements of _CATISmgNcGeometryParameter_.
       CATBaseUnknown_var spParameter = NULL_var;
       RC = GetGuideParameter(spParameter);
+```vbscript
+```vbscript
       if (SUCCEEDED(RC))
+
+```
+
+```
 
       {
         **CATISmgNcGeometryParameter** * pSmgParameter = NULL;
 CATBaseUnknown_var spParameter = NULL_var;
 RC = GetGuideParameter(spParameter);
+```vbscript
+```vbscript
 if (SUCCEEDED(RC))
         RC = spParameter->QueryInterface(IID_CATISmgNcGeometryParameter, (void**) &pSmgParameter);
         if (SUCCEEDED(RC))
 
+```
+
+```
+
         {
 RC = spParameter->QueryInterface(IID_CATISmgNcGeometryParameter, (void**) &pSmgParameter);
+```vbscript
 if (SUCCEEDED(RC))
+```
+
           pSmgParameter->**GetGeometricElements**(oGeometries);
           pSmgParameter->Release();
           pSmgParameter = NULL;
 
         }
-      }			
+      }
 pSmgParameter->**GetGeometricElements**(oGeometries);
 pSmgParameter->Release();
 pSmgParameter = NULL;
       return RC;
 
-      ...  
+      ...
 
----  
+---
 
 [Top]
 #### Creating a Tool Path
@@ -253,22 +286,22 @@ Now, let's have a look at the second scenario [4] of the _Surface Machining Oper
 [Top]
 
 * * *
-### 
+###
 ### References
 
-[1] | [Surface Machining Operation Sample Overview](../CAASmiTechArticles/CAASmiOperationSampleOverview.md)  
----|---  
-[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
-[3] | [Customizing Tool Path Computation on Axial Operation](../CAAMaiUseCases/CAAMaiToolPathWithCycleCustomization.md)  
-[4] | [Managing Geometry with Machining Areas](CAASmiUserOperationWithMA.md)  
-[Top]  
+[1] | [Surface Machining Operation Sample Overview](../CAASmiTechArticles/CAASmiOperationSampleOverview.md)
+---|---
+[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)
+[3] | [Customizing Tool Path Computation on Axial Operation](../CAAMaiUseCases/CAAMaiToolPathWithCycleCustomization.md)
+[4] | [Managing Geometry with Machining Areas](CAASmiUserOperationWithMA.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Mar 2002] | Document created  
----|---  
-[Top]  
+Version: **1** [Mar 2002] | Document created
+---|---
+[Top]
 
 * * *
 

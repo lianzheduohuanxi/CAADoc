@@ -9,13 +9,13 @@ converted: "2026-05-11T17:33:48.395998"
 ```
 
 ---
-# Creating Explicit Objects  
+# Creating Explicit Objects
 
----  
-Use Case  
+---
+Use Case
 ## Abstract
 
-The use case illustrates how to create explicit objects and how they are managed by the CATIA Geometric Modeler in terms of life cycle. 
+The use case illustrates how to create explicit objects and how they are managed by the CATIA Geometric Modeler in terms of life cycle.
     * What You Will Learn With This Use Case
     * The CAAGMModelLifeCycleExplicit Use Case
       * What Does CAAGMModelLifeCycleExplicit Do
@@ -23,8 +23,8 @@ The use case illustrates how to create explicit objects and how they are managed
       * Where to Find the CAAGMModelLifeCycleExplicit Code
     * Step- by- Step
     * In Short
-    * References  
----  
+    * References
+---
 ## What You Will Learn With This Use Case
 
 The use case explains how to create explicit objects and illustrates how their life cycle is managed. **This use case has to be compared with CAAGMModelLifeCycleImplicit** for a good understanding of the behavior of implicit objects with respect to explicit objects.
@@ -39,7 +39,10 @@ With this use case, you create an explicit CATPlane on which an explicit CATPlin
 With this use case, you create an explicit CATPlane on which an explicit CATPline is created. Then this CATPLine is cloned. Because the CATCloneManager is created with the CatCGMSingleDuplicate option, the cloned CATPline points to the CATPlane. Then you remove the CATPline and make an attempt to re-use the initial CATPlane pointer.
 To launch CAAGMModelLifeCycleExplicit, you will need to set up the build time environment, then compile CAAGMModelLifeCycleExplicit.m along with its prerequisites, set up the run time environment, and then execute the use case [1].
 
+```vbscript
 If you simply type CAAGMModelLifeCycleExplicit with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example:
+
+```
 
 With Windows `CAAGMModelLifeCycleExplicit`` e/Obj.NCGM`
 
@@ -57,7 +60,7 @@ where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed.
 ## Step-by-Step
 
 where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed.
-The main program is divided into the following steps: 
+The main program is divided into the following steps:
 
     1. Creating the Standard Geometry Factory
     2. Creating the Implicit Geometry Factory
@@ -73,7 +76,10 @@ The main program is divided into the following steps:
 The geometry factory (`CATGeoFactory`) creates and manages all the CATICGMObject. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
     CATGeoFactory* piGeomFactory = ::CATCreateCGMContainer() ;
+```vbscript
     if (NULL == piGeomFactory) return (1);
+
+```
 
 ### Creating the Implicit Geometry Factory
 
@@ -82,7 +88,10 @@ if (NULL == piGeomFactory) return (1);
 The implicit factory is retrieved from the standard factory by using the CATGeoFactory::GetImplicitGeoFactory() method.
 
     CATGeoFactory * piImplicitFactory =piGeomFactory->GetImplicitGeoFactory( );
-    if (NULL == piImplicitFactory) return (1); 
+```vbscript
+    if (NULL == piImplicitFactory) return (1);
+
+```
 
 ### Creating the Explicit Objects: the CATPlane, the Initial CATPline and the Cloned CATPLine
 
@@ -99,17 +108,20 @@ There are two ways to create a cloned objects:
     ...
     CATPLine * pPline =  piGeomFactory->CreatePLine   (p1, p2, piPlane );
     **// ----- Clone pPline - Single duplication mode
-    //       The duplicated 
+    //       The duplicated
     //       PLine points to the already existing plane.**
 CATPLine * pPline =  piGeomFactory->CreatePLine   (p1, p2, piPlane );
-    CATCloneManager * pCloneManager= new CATCloneManager(piGeomFactory, CatCGMSingleDuplicate); 
+    CATCloneManager * pCloneManager= new CATCloneManager(piGeomFactory, CatCGMSingleDuplicate);
 
     ...
 CATCloneManager * pCloneManager= new CATCloneManager(piGeomFactory, CatCGMSingleDuplicate);
     pCloneManager->Add(pPline);
     pCloneManager->Run();
     CATICGMObject* piClonedPLine=NULL;
+```vbscript
     piClonedPLine = pCloneManager->ReadImage(pPline);
+
+```
 
 ### Removing the Two Plines with RemoveDependancies and Attempting to Create a New CATPline
 
@@ -148,20 +160,20 @@ ofstream filetowrite(pfileName, ios::binary ) ;
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
        filetowrite.close();
-     }	
+     }
 
      //
      // Closes the container
-     //	
+     //
      **::CATCloseCGMContainer**(piGeomFactory);
 ## In Short
 
 This use case to be compared with the `CAAGMModelLifeCycleImplit` use case, illustrates the behavior of explicit objects vs the behavior of implicit objects in terms of life cycle.
 ## References
 
-[1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
----|---  
+[1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
+---|---
 ## History
 
-Version: **1** [Dec 2006] | Document created  
+Version: **1** [Dec 2006] | Document created
 ---|---

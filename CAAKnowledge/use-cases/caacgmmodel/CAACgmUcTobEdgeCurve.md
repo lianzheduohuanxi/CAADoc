@@ -12,12 +12,12 @@ converted: "2026-05-11T17:33:48.549132"
 tags: ["CAATopEdgeCurve", "CATICGMContainer", "CAADoc", "CAAGMModelScanEdgeCurve", "CATICGMObject", "CAAGMModelInterfaces", "CAACGMModelScanEdgeCurve", "CATIntCurve", "CAAScanEdgeCurve"]
 source_file: "Doc/online/CAACgmModel/CAACgmUcTobEdgeCurve.htm"
 converted: "2026-05-11T17:33:48.549132"
-Scanning an Edge Curve  
+Scanning an Edge Curve
 
----  
+---
 converted: "2026-05-11T17:33:48.549132"
 Scanning an Edge Curve
-Use Case  
+Use Case
 Abstract Between the topology and the geometry, there are intermediate objects that are used by the geometric modeler to group objects with similar function. Such objects are created to join various pieces of geometry before covering them by topology. Given two faces with a common edge, the edge curve is the object which is built from the two Pcurves defining the common side. The CATEdge topological object is then created from this edge curve. In short, this is the way an edge (a topological object) is constructed from the geometry. In this use case, no edge and no topology is created, this is the opposite which is done. From the topology (an edge), the underlying geometry is retrieved and analyzed.
 
     * What You Will Learn With This Use Case
@@ -26,8 +26,8 @@ Abstract Between the topology and the geometry, there are intermediate objects t
       * How to Launch CAAGMModelScanEdgeCurve
       * Where to Find the CAAGMModelScanEdgeCurve Code
     * Step-by-Step
-    * References  
----  
+    * References
+---
 What You Will Learn With This Use Case This use case is intended to make you understand how an edge curve is constructed and how to use the _CATEdgeCurveIterator_ operator to scan an edge curve. About the Edge Curve ? An edge curve is an aggregation of several curves. The curves aggregated are the curves which define the boundaries of the adjacent faces. They can be of various type: CATPNurbs, CATLine or even CATEdgeCurve. Among the aggregated curves, there is one which is used as a reference to determine the orientation of the edge curve and if needed re-parameterize the other curve, this is the "ref curve". EDGE CURVE ORIENTATION / “REF CURVE” ORIENTATION = 1 The "ref curve" is:
     1. Either the first canonical curve (HasMathCurve returns non NULL).
     2. Or the first curve which is neither a CATPCurve nor a CATEdgeCurve.
@@ -38,7 +38,7 @@ There are three kinds of edge curve:
     3. The CATMergedCurve type which is created for curves which do not have a linear parameterization. By default, some operators create a CATMergedCurve even if the underlying curves have a linear parameterization. This is to adjust to any case of input geometry.
 To manipulate an edge curve, you must:
     1. Retrieve the edge curve from the corresponding edge by using CATEdge::GetCurve.
-    2. If need be, retrieve the “ref curve” from an edge curve by using CATEdgeCurve::GetRefCurve. 
+    2. If need be, retrieve the “ref curve” from an edge curve by using CATEdgeCurve::GetRefCurve.
     3. Retrieve the CATCurve making up the edge curve by using the CATEdgeCurveIterator operator.
 
 The CAACGMModelScanEdgeCurve Use Case CAACGMModelScanEdgeCurve is a use case of the CAAGMModelInterfaces.edu framework that illustrates how to use the CATEdgeCurveIterator which is delivered in GeometricObjects.  What Does CAACGMModelScanEdgeCurve Do? The CAACGMModelScanEdgeCurve use case:
@@ -47,7 +47,7 @@ The CAACGMModelScanEdgeCurve Use Case CAACGMModelScanEdgeCurve is a use case of 
     * Retrieves the edge curve from to edge to be analyzed and scans this edge curve.
     * Writes the model and closes the factory. Note that, in this use case the output model is the same as the input model.
 The CAACGMModelScanEdgeCurve Use Case CAACGMModelScanEdgeCurve is a use case of the CAAGMModelInterfaces.edu framework that illustrates how to use the CATEdgeCurveIterator which is delivered in GeometricObjects.  What Does CAACGMModelScanEdgeCurve Do? The CAACGMModelScanEdgeCurve use case:
-How to Launch CAACGMModelScanEdgeCurve  To launch CAACGMModelScanEdgeCurve, you will need to set up the build time environment, then compile CAACGMModelScanEdgeCurve .m along with its prerequisites, set up the run time environment, and then execute the use case [1]. CAACGMModelScanEdgeCurve `e:/edgeCurve1.NCGM" e:/output file.NCGM` where `edgeCurve1.NCGM` is an input file delivered in the CAAGMModelInterfaces.edu/FunctionTests/InputData file. Where to Find the CAACGMModelScanEdgeCurve Code The CAACGMModelScanEdgeCurve use case is made of a main named CAAScanEdgeCurve.cpp located in the CAACGMModelScanEdgeCurve .m module of the CAAGMModelInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMModelInterfaces.edu\CAACGMModelScanEdgeCurve.m\` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step There are three main steps in CAATopEdgeCurve.cpp: 
+How to Launch CAACGMModelScanEdgeCurve  To launch CAACGMModelScanEdgeCurve, you will need to set up the build time environment, then compile CAACGMModelScanEdgeCurve .m along with its prerequisites, set up the run time environment, and then execute the use case [1]. CAACGMModelScanEdgeCurve `e:/edgeCurve1.NCGM" e:/output file.NCGM` where `edgeCurve1.NCGM` is an input file delivered in the CAAGMModelInterfaces.edu/FunctionTests/InputData file. Where to Find the CAACGMModelScanEdgeCurve Code The CAACGMModelScanEdgeCurve use case is made of a main named CAAScanEdgeCurve.cpp located in the CAACGMModelScanEdgeCurve .m module of the CAAGMModelInterfaces.edu framework: `InstallRootFolder\CAADoc\CAAGMModelInterfaces.edu\CAACGMModelScanEdgeCurve.m\` where `InstallRootFolder` [1] is the folder where the API CD-ROM is installed. Step-by-Step There are three main steps in CAATopEdgeCurve.cpp:
     1. Loading the Container and Retrieving the Edge to Be Scanned
     2. Analyzing the Edge Contents
     3. Writing the Model and Closing the Factory
@@ -80,14 +80,14 @@ Here is the input model. The edge to be analyzed is highlighted. ![Edge Curve](i
     //
     // (c) - scans the edge curve
     //       In this particular case, the scanned edge curve embeddes
-    //       two edge curves. 
-    //               !----------- Simcurve 393 
+    //       two edge curves.
+    //               !----------- Simcurve 393
     //               !                    !--------- PLine 385
     //               !                    !--------- PLine 386
     //               !----------- Intcurve 1843
     //               !                    !--------- PLine 1841
     //               !                    !--------- PLine 1842
-    //       SetLeafScan(1) returns the four PLines. 
+    //       SetLeafScan(1) returns the four PLines.
     //                                               385
     //                                               386
     //                                              1841
@@ -102,7 +102,7 @@ Here is the input model. The edge to be analyzed is highlighted. ![Edge Curve](i
     //                                              1842
     ...
     CATEdgeCurveIterator Iterator(pEdgeCurve);   // create the iterator
-    Iterator.SetLeafScan(0);                     
+    Iterator.SetLeafScan(0);
     Iterator.SetRepetitions(0);
 
     ...
@@ -131,14 +131,14 @@ ofstream filetowrite(pfileName, ios::binary ) ;
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
        filetowrite.close();
-     }	
+     }
 
     //
     // Close the container
     //
     **::CATCloseCGMContainer**(piGeomFactory);
 
-References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-History Version: **1** [Jan 2009] | Document created  
+References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
+---|---
+History Version: **1** [Jan 2009] | Document created
 ---|---

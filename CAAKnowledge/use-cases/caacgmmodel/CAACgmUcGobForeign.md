@@ -9,10 +9,10 @@ converted: "2026-05-11T17:33:48.383671"
 ```
 
 ---
-# Creating Foreign Surfaces  
+# Creating Foreign Surfaces
 
----  
-Use Case  
+---
+Use Case
 ## Abstract
 
 The GeometricObjects framework exposes the interfaces for the geometry: points, curves, surfaces, and some related classes (such as knot vector or surface and curve parameters for example). Moreover, it offers the programmer the capability to introduce its own definition of curve and surface. Such "foreign" definition is then taken into account as any CATIA curve and surface. The use cases illustrates the introduction of a new kind of surface. The way to use the geometry (and the foreign geometry in particular) is detailed in the CAAGMModelCreation use case. The same methodology can be used to introduce foreign curves, only differing by the parent class to derive.
@@ -23,8 +23,8 @@ The GeometricObjects framework exposes the interfaces for the geometry: points, 
       * Where to Find the CAAGMModelForeign Code
     * Step-by-Step
     * In Short
-    * References  
----  
+    * References
+---
 ## What You Will Learn With This Use Case
 
 This use case explains the introduction of a new kind of geometric surface by describing all the steps of its introduction on a concrete case. The mathematical definition of the new surface is given by the CAAAmtForeignFunctionXY class, already presented in the CAAAmtForeign use case [6] of the CAAAdvancedMathematics.edu framework.
@@ -34,9 +34,9 @@ CAAGMModelForeign is a use case of the CAAGMModelInterfaces.edu framework that i
 ### What Does CAAGMModelForeign Do
 
 CAAGMModelForeign is a use case of the CAAGMModelInterfaces.edu framework that illustrates the GMModelInterfaces framework capabilities.
-The use case creates a new type of surface, which mathematical definition uses the CAAAmtForeignFctXY mathematical function class. 
+The use case creates a new type of surface, which mathematical definition uses the CAAAmtForeignFctXY mathematical function class.
 
-The principle of the introduction of a new kind of surface is fully described in [1]. Once defined the mathematical definition ` CAAAmtForeignFctXY`, one must create a persistent attribute to be the data of `CATIForeignSurface`. For that: 
+The principle of the introduction of a new kind of surface is fully described in [1]. Once defined the mathematical definition ` CAAAmtForeignFctXY`, one must create a persistent attribute to be the data of `CATIForeignSurface`. For that:
 
     * Defines the class attribute deriving from CATForeignSurfaceData class: CAAGMModelForeignSurfaceData.
     * Defines the correspondence between the physical module name (CAAGMModelForeign) and a logical one (CAAGobFS).
@@ -84,15 +84,18 @@ Methods are overridden to declare the specific behavior of the new class (only s
     {
 Methods are overridden to declare the specific behavior of the new class (only some of them are displayed below).
 class **ExportedByCAAGMModelForeign** CAAGMModelForeignSurfaceData : public **CATForeignSurfaceData**
+```vbscript
       public :
+
+```
 
     // Mandatory macro for inheriting from CATCGMAttribute.
       **CATCGMDeclareAttribute** (CAAGMModelForeignSurfaceData,CATForeignSurfaceData);
 
     // Constructs the surface data.
-    // S(u,v) = iOrigin + u*iUDirection 
-    //                  + v*iVDirection 
-    //                  + iHeight*cos(u)*cos(v)*iUDirection^iVDirection, 
+    // S(u,v) = iOrigin + u*iUDirection
+    //                  + v*iVDirection
+    //                  + iHeight*cos(u)*cos(v)*iUDirection^iVDirection,
     // uMin<=u<=uMax, vMin<=v<=vMax. </pre>
 ```vbscript
       CAAGMModelForeignSurfaceData(const CATMathPoint  & iOrigin,
@@ -105,9 +108,9 @@ class **ExportedByCAAGMModelForeign** CAAGMModelForeignSurfaceData : public **CA
                                const double          iVMax       ) ;
 ```
 
-     //------------------------------------------------------------------------------ 
+     //------------------------------------------------------------------------------
      // Mandatory methods for CATCGMAttribute
-     //------------------------------------------------------------------------------ 
+     //------------------------------------------------------------------------------
     // Default constructor.
       CAAGMModelForeignSurfaceData();
 
@@ -117,9 +120,9 @@ class **ExportedByCAAGMModelForeign** CAAGMModelForeignSurfaceData : public **CA
     // Unstreams the data.
       void **UnStream**(CATCGMStream & iStr) ;
 
-     //------------------------------------------------------------------------------ 
+     //------------------------------------------------------------------------------
      // Mandatory methods for CATForeignGeometryData
-     //------------------------------------------------------------------------------ 
+     //------------------------------------------------------------------------------
     // Clones this CAAAForeignSurfaceSample.
       CATForeignGeometryData* **Clone**(CATCloneManager & iCloning) const ;
 
@@ -130,15 +133,18 @@ class **ExportedByCAAGMModelForeign** CAAGMModelForeignSurfaceData : public **CA
 
     // Retrieves the mathematical equation associated with a patch.
 void **Move3D**(CATTransfoManager & iTransfo) ;
-      void CreateLocalEquation(const long iPatchU, const long iPatchV, 
-                               const CATMathFunctionXY* & oFx, 
-                               const CATMathFunctionXY* & oFy, 
-                               const CATMathFunctionXY* & oFz) ; 
+      void CreateLocalEquation(const long iPatchU, const long iPatchV,
+                               const CATMathFunctionXY* & oFx,
+                               const CATMathFunctionXY* & oFy,
+                               const CATMathFunctionXY* & oFz) ;
 
+```vbscript
       private :
 
+```
+
       // Data
-      // S(u,v) = Origin + u*dU + v*dV + Height*cos(u)*cos(v)*dU^dV, 
+      // S(u,v) = Origin + u*dU + v*dV + Height*cos(u)*cos(v)*dU^dV,
       // uMin<=u<=uMax, vMin<=v<=vMax.
 private :
       double _uMin      ;
@@ -165,23 +171,23 @@ This section emphasizes on some methods of the .cpp:
     3. Cloning
     4. Applying a Geometric Transformation
     5. Creating the Corresponding Mathematical Equations
-    1. Declaring the Derivation between the CAAGMModelForeignSurfaceData Class and the CATForeignSurfaceData Base Class 
+    1. Declaring the Derivation between the CAAGMModelForeignSurfaceData Class and the CATForeignSurfaceData Base Class
 
 Once again, a macro must be declared: `CATCGMImplAttribute`.
 
            // CAAGobFS is the application name that you will find in the dictionary.
            // This application name is declared in the CAAGobApplicationName.cpp file.
            // 1 must not be changed.
-           **CATCGMImplAttribute**(CAAGMModelForeignSurfaceData, CATForeignSurfaceData, CAAGobFS, 1);			
+           **CATCGMImplAttribute**(CAAGMModelForeignSurfaceData, CATForeignSurfaceData, CAAGobFS, 1);
 
-    2. Streaming and Unstreaming 
+    2. Streaming and Unstreaming
 
 Stream and unstream methods are mandatory to allow your data to be saved and read. In this use case, the foreign surface is standalone: it does not point to any other CGM objects. If it were not, use the `CATCGMStreamAttribute::AddLink` method. In this case, the stream and unstream processes will automatically take the links into account, so that you do not worry about them.
 
            //-----------------------------------------------------------------------------------
 2. Streaming and Unstreaming
 Stream and unstream methods are mandatory to allow your data to be saved and read. In this use case, the foreign surface is standalone: it does not point to any other CGM objects. If it were not, use the `CATCGMStreamAttribute::AddLink` method. In this case, the stream and unstream processes will automatically take the links into account, so that you do not worry about them.
-           void CAAGMModelForeignSurfaceData::**Stream**(CATCGMStream & iStr) const 
+           void CAAGMModelForeignSurfaceData::**Stream**(CATCGMStream & iStr) const
 
            //-----------------------------------------------------------------------------------
            {
@@ -200,7 +206,7 @@ void CAAGMModelForeignSurfaceData::**Stream**(CATCGMStream & iStr) const
 iStr.WriteDouble( _Height    ) ;   // streams the other values
 iStr.WriteDouble( _dU    , 3 ) ;   // streams the first vector (array of 3 doubles)
 iStr.WriteDouble( _dV    , 3 ) ;   // streams the second vector (array of 3 doubles)
-           void CAAGMModelForeignSurfaceData::**UnStream**(CATCGMStream & iStr) 
+           void CAAGMModelForeignSurfaceData::**UnStream**(CATCGMStream & iStr)
 
            //-----------------------------------------------------------------------------------
            {
@@ -219,22 +225,25 @@ void CAAGMModelForeignSurfaceData::**UnStream**(CATCGMStream & iStr)
 iStr.ReadDouble( _Height   ) ;    // unstreams the other values
 iStr.ReadDouble( _dU    , 3 ) ;   // unstreams the first vector (array of 3 doubles)
 iStr.ReadDouble( _dV    , 3 ) ;   // unstreams the second vector (array of 3 doubles)
-    3. Cloning 
+    3. Cloning
 
 The clone process [2] is managed by the `CATCloneManager`, that duplicates the `CATIForeignSurface` instance. It remains to provide the clone of the attribute, as below:
 
            //---------------------------------------------------------------------------------------
 3. Cloning
 The clone process [2] is managed by the `CATCloneManager`, that duplicates the `CATIForeignSurface` instance. It remains to provide the clone of the attribute, as below:
-           CATForeignGeometryData* CAAGMModelForeignSurfaceData::**Clone**(**CATCloneManager** & iCloning) const 
+           CATForeignGeometryData* CAAGMModelForeignSurfaceData::**Clone**(**CATCloneManager** & iCloning) const
 
            //---------------------------------------------------------------------------------------
-           { // only duplicates the attribute. 
+           { // only duplicates the attribute.
              // The duplication of the CATIForeignSurface is made by the clone manager
 CATForeignGeometryData* CAAGMModelForeignSurfaceData::**Clone**(**CATCloneManager** & iCloning) const
-             return new CAAGMModelForeignSurfaceData(CATMathPoint(_Origin), 
+             return new CAAGMModelForeignSurfaceData(CATMathPoint(_Origin),
                                                  CATMathVector(_dU),
+```vbscript
                                                  CATMathVector(_dV),
+```
+
                                                  _Height,
                                                  _uMin,
                                                  _uMax,
@@ -246,23 +255,26 @@ CATForeignGeometryData* CAAGMModelForeignSurfaceData::**Clone**(**CATCloneManage
 _uMax,
 _vMin,
 _vMax) ;
-    4. Applying a Geometric Transformation 
+    4. Applying a Geometric Transformation
 
 The transformation process [2] is managed by the `CATTransfoManager,` that coaches the `CATIForeignSurface` instance. It remains to provide the transformation of the parameters, as below:
 
            //------------------------------------------------------------------------------------
 4. Applying a Geometric Transformation
 The transformation process [2] is managed by the `CATTransfoManager,` that coaches the `CATIForeignSurface` instance. It remains to provide the transformation of the parameters, as below:
-           void CAAGMModelForeignSurfaceData::**Move3D**(**CATTransfoManager** & iTransfo) 
+           void CAAGMModelForeignSurfaceData::**Move3D**(**CATTransfoManager** & iTransfo)
 
            //------------------------------------------------------------------------------------
-           { // manages the attribute values. 
+           { // manages the attribute values.
              // The duplication of the CATIForeignSurface is made by the clone manager
 
 void CAAGMModelForeignSurfaceData::**Move3D**(**CATTransfoManager** & iTransfo)
+```vbscript
              if ( FALSE == iTransfo.IsIdentity() )    // in case of a non-identity tranformation
 
-             { 
+```
+
+             {
 ```vbscript
 if ( FALSE == iTransfo.IsIdentity() )    // in case of a non-identity tranformation
                  CATMathTransformation* pMathTransfo = NULL;
@@ -276,7 +288,10 @@ if ( FALSE == iTransfo.IsIdentity() )    // in case of a non-identity tranformat
 iTransfo.GetMathTransformation( pMathTransfo ) ;
 if ( NULL != pMathTransfo )
                    double determinant = pMathTransfo->GetMatrix().Determinant() ;
+```vbscript
                    if (  determinant > 0. )           // only direct tranformations
+
+```
 
                    {
 
@@ -287,8 +302,11 @@ if (  determinant > 0. )           // only direct tranformations
            // Gets the value before the transformation
            //  --> reads the values of _dU and affects them to Vector
 CATMathVector Vector ;
-                     Vector.SetCoord(_dU) ;                
+                     Vector.SetCoord(_dU) ;
+```vbscript
                      Vector = (*pMathTransfo) * Vector ; // Uses the operator for the math. transf.
+
+```
 
            // Sets the value after the transformation
            //  --> reads the values of Vector and affects them to _dU
@@ -317,9 +335,9 @@ Point.GetCoord(_Origin) ;           // Sets the value after the transformation
               }
            }
 
-    5. Creating the Corresponding Mathematical Equations 
+    5. Creating the Corresponding Mathematical Equations
 
-The equations of a surface can be accessed thanks to the following ` CATSurface` methods, that must be called in this order: 
+The equations of a surface can be accessed thanks to the following ` CATSurface` methods, that must be called in this order:
 
        * `CATSurface::Lock`: locks the surface modifications during the edition of the equations.
        * `CATSurface::GetEquation`: retrieves the corresponding mathematical equations.
@@ -330,11 +348,11 @@ To perform the `GetEquation` step, the `CATIForeignSurface` needs to recover the
     //--------------------------------------------------------------------------------
 To perform the `GetEquation` step, the `CATIForeignSurface` needs to recover the mathematical equations of the foreign surface: this is the goal of the `CreateLocalEquation` method. The `CATIForeignSurface` deletes the allocated equations when unlock the surface.
     void CAAGMModelForeignSurfaceData::**CreateLocalEquation**(
-                              const long iPu,  // useless, only one patch 
+                              const long iPu,  // useless, only one patch
                               const long iPv,  // useless, only one patch
-                              const CATMathFunctionXY* & oFx, 
-                              const CATMathFunctionXY* & oFy, 
-                              const CATMathFunctionXY* & oFz)  
+                              const CATMathFunctionXY* & oFx,
+                              const CATMathFunctionXY* & oFy,
+                              const CATMathFunctionXY* & oFz)
 
     //---------------------------------------------------------------------------------
     { // Creates the mathematical equations relative to the egg box
@@ -372,15 +390,15 @@ The dictionary keeps track of the correspondence between the logical application
 This use case demonstrates a concrete case of introduction of a new type of foreign surfaces.
 ## References
 
-[1] | [The Management of Foreign Data](CAACgmTaGobAttribute.md)  
----|---  
-[2] | [The Clone and Transformation Managers](CAACgmTaGobClone.md)  
-[3] | [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.md)  
-[4] | [The Curves of CATIA Geometric Modeler](CAACgmTaGobCurves.md)  
-[5] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
-[6] | [Foreign Mathematical Functions](CAACgmUcAmtForeign.md)  
-[7] | [Creating and Transforming Geometry](CAACgmUcGobCreation.md)  
+[1] | [The Management of Foreign Data](CAACgmTaGobAttribute.md)
+---|---
+[2] | [The Clone and Transformation Managers](CAACgmTaGobClone.md)
+[3] | [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.md)
+[4] | [The Curves of CATIA Geometric Modeler](CAACgmTaGobCurves.md)
+[5] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
+[6] | [Foreign Mathematical Functions](CAACgmUcAmtForeign.md)
+[7] | [Creating and Transforming Geometry](CAACgmUcGobCreation.md)
 ## History
 
-Version: **1** [Apr 2000] | Document created  
+Version: **1** [Apr 2000] | Document created
 ---|---

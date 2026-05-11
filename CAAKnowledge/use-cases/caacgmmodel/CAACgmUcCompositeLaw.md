@@ -9,17 +9,17 @@ converted: "2026-05-11T17:33:48.173955"
 ```
 
 ---
-# Creating a Composite Law  
+# Creating a Composite Law
 
----  
-Use Case  
+---
+Use Case
 ## Abstract
 
 A composite law is made up of a set of C2 continuous laws but the connection between the pieces of the composite law is not necessarily continuous. Sub-laws can be of any type, they can be polynomial or user functions. Composite laws are used in various operations such as sweeps or variable fillets.
     * The API to be Used
     * Use Case Description
-    * References  
----  
+    * References
+---
 ## The API to be Used
 
 Use CATGeoFactory::CreateCompositeLaw in the GeometricObjects framework.
@@ -34,9 +34,9 @@ This use case constructs its input data. If you are not already familiar with ge
 
 The CAAGMModelMakeLaws.m module in CAAGMModelInterfaces.edu illustrates how to manipulate mathematical functions and polynomials (CATMathFunctionX and CATMathPolynomX) as well as laws.
 This use case constructs its input data. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.md).
-To define a composite law from two pieces 
+To define a composite law from two pieces
 
-    * f1(x) = 1 + 2x applied in the [ 0 , 0.5 ] range 
+    * f1(x) = 1 + 2x applied in the [ 0 , 0.5 ] range
     * and f2(x) = 1.25 + 1.5x applied in the [ 0.5 , 2 ] range
 
 To define a composite law from two pieces
@@ -54,7 +54,7 @@ define the two functions f1 and f2
 
     ...
 
-    ---  
+    ---
 
     then create the composite laws
 
@@ -62,47 +62,47 @@ define the two functions f1 and f2
     		(const CATMathFunctionX**)ListOfFunctions1);
     	...
 
-    ---  
+    ---
 
-    The CATCompositeLaw::Eval service computes the result for a given value. 
+    The CATCompositeLaw::Eval service computes the result for a given value.
 
     ### Case 2: User Functions
 
-    You can define a user function as a piece of a composite law. 
+    You can define a user function as a piece of a composite law.
 
 You can define a user function as a piece of a composite law.
-    To define a user function, you must create an object deriving from 
+    To define a user function, you must create an object deriving from
     CATMathFunctionX, and implement the services below:
 
             * a constructor
 
             * a destructor
 
-            * an eval method (here it depends on a trigonometric function but it could 
+            * an eval method (here it depends on a trigonometric function but it could
           	be any mathematical function)
 
             * the Duplicate and DeepDuplicate methods.
 
-    Using a user function in a composite law does not change the way you create 
+    Using a user function in a composite law does not change the way you create
     the composite law.
 
     ## References
 
     		[1]
-    		| 
+    		|
     		[
     		Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
 
     		[2]
-    		| 
+    		|
     		[About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.md)
 
     		[3]
-    		| 
+    		|
     		[How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.md)
 
     		[4]
-    		| 
+    		|
     		[How to Use Geometric Operators](CAACgmUcGMModelOpeOverw.md)
 
     ## History

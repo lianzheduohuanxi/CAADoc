@@ -11,20 +11,20 @@ converted: "2026-05-11T17:17:56.117863"
 ---
 # 3D PLM Enterprise Architecture
 
-| 
+|
 ## 3D Visualization - Print
 
-| 
+|
 ### Opening and Displaying an Image File
 
-_Reading a TIFF file to display it in a viewer_  
----|---|---  
-Use Case  
+_Reading a TIFF file to display it in a viewer_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
 
-This article discusses the CAAPrtApplication use case. This use case explains how to open an image file and display it in a viewer. 
+This article discusses the CAAPrtApplication use case. This use case explains how to open an image file and display it in a viewer.
 
   * **What You Will Learn With This Use Case**
   * **The CAAPrtApplication Use Case**
@@ -35,8 +35,8 @@ This article discusses the CAAPrtApplication use case. This use case explains ho
   * **In Short**
   * **References**
 
-****  
----  
+****
+---
 
 * * *
 ### What You Will Learn With This Use Case
@@ -54,23 +54,23 @@ CAAPrtApplication is a set of use cases of the CAAPrint.edu framework that illus
 CAAPrtApplication is a set of use cases of the CAAPrint.edu framework that illustrates Print framework capabilities.
 This use case shows several capabilities of the Print framework. Each command of CAAPrtApplication is described below.
 
-File | Open | Opening a TIFF file  
+File | Open | Opening a TIFF file
 
 This use case shows several capabilities of the Print framework. Each command of CAAPrtApplication is described below.
 File | Open | Opening a TIFF file
-Print | Printing the image displayed in the viewer  
-Capture | Making a screen shot of the image displayed in the viewer  
-Album | Managing the image album  
-Printer Setup | Managing printer setup parameters  
-Printable Objects | Display a test image | Displaying a supplied sample TIFF file  
-Print a test image | Printing a supplied sample JPEG file  
-Print a label | Typing a text in a window and printing it with a frame  
+Print | Printing the image displayed in the viewer
+Capture | Making a screen shot of the image displayed in the viewer
+Album | Managing the image album
+Printer Setup | Managing printer setup parameters
+Printable Objects | Display a test image | Displaying a supplied sample TIFF file
+Print a test image | Printing a supplied sample JPEG file
+Print a label | Typing a text in a window and printing it with a frame
 
 This article describes what happens when the application is launched with the pathname of a TIFF file as parameter, which is equivalent to File Open. It displays a file selection box to select the TIFF file, and selecting the file displays it in the application viewer.
 
-_Figure 1: The CAAPrtWheatField.tif File_ ![](images/CAASampleTIFFImage.gif)  
+_Figure 1: The CAAPrtWheatField.tif File_ ![](images/CAASampleTIFFImage.gif)
 
----  
+---
 
 [Top]
 #### How to Launch CAAPrtApplication
@@ -79,16 +79,16 @@ To launch CAAPrtApplication, you will need to set up the build time environment,
 
 You can launch CAAPrtApplication using a TIFF file as argument.
 
-  * With Windows 
+  * With Windows
 
-        E:>CAAPrtApplication InstallRootDirectory\CAAPrint.edu\CNext\resources\graphic\images\CAAPrtWheatField.tif  
+        E:>CAAPrtApplication InstallRootDirectory\CAAPrint.edu\CNext\resources\graphic\images\CAAPrtWheatField.tif
 
----  
-  * With UNIX 
+---
+  * With UNIX
 
-        $ CAAPrtApplication InstallRootDirectory/CAAPrint.edu/CNext/resources/graphic/images/CAAPrtWheatField.tif  
+        $ CAAPrtApplication InstallRootDirectory/CAAPrint.edu/CNext/resources/graphic/images/CAAPrtWheatField.tif
 
----  
+---
 
 where:
 
@@ -101,29 +101,29 @@ where:
 The CAAPrtApplication use case is made of an application class and of a window class whose header and source files are located in the CAAPrtApplication.m module of the CAAPrint.edu framework:
 
 The CAAPrtApplication use case is made of an application class and of a window class whose header and source files are located in the CAAPrtApplication.m module of the CAAPrint.edu framework:
-Windows | `InstallRootDirectory\CAAPrint.edu\CAAPrtApplication.m`  
+Windows | `InstallRootDirectory\CAAPrint.edu\CAAPrtApplication.m`
 
 The CAAPrtApplication use case is made of an application class and of a window class whose header and source files are located in the CAAPrtApplication.m module of the CAAPrint.edu framework:
 Windows | `InstallRootDirectory\CAAPrint.edu\CAAPrtApplication.m`
-Unix | `InstallRootDirectory/CAAPrint.edu/CAAPrtApplication.m`  
+Unix | `InstallRootDirectory/CAAPrint.edu/CAAPrtApplication.m`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 CAAPrtApplication includes the following files:
 
-**LocalInterfaces directory**  
----  
+**LocalInterfaces directory**
+---
 CAAPrtApplication includes the following files:
-CAAPrtApplication.h | Header file for the interactive application  
-CAAPrtDialog.h | Header file for the dialog window that hosts the viewer  
-
-**src directory**  
 CAAPrtApplication.h | Header file for the interactive application
 CAAPrtDialog.h | Header file for the dialog window that hosts the viewer
-CAAPrtApplication.cpp | Source file for the interactive application  
-CAAPrtDialog.cpp | Source file for the dialog window that hosts the viewer  
 
-This article explains the `DisplayImage` method located in the CAAPrtDialog.cpp file. 
+**src directory**
+CAAPrtApplication.h | Header file for the interactive application
+CAAPrtDialog.h | Header file for the dialog window that hosts the viewer
+CAAPrtApplication.cpp | Source file for the interactive application
+CAAPrtDialog.cpp | Source file for the dialog window that hosts the viewer
+
+This article explains the `DisplayImage` method located in the CAAPrtDialog.cpp file.
 
 [Top]
 ### Step-by-Step
@@ -146,9 +146,9 @@ The `DisplayImage` method reads the TIFF file, creates a 2D representation, and 
     void CAAPrtDialog::DisplayImage(const char* iPath)
     {
       CATPrintFileImage *pImage = new **CATPrintFileImage**(iPath, "TIFF");
-      ...  
+      ...
 
----  
+---
 
 This print file image is an instance of the _CATPrintFileImage_ class instantiated from the input file. The input file format is passed as the second argument, here TIFF. The print file image created holds the input file in memory and the TIFF interpreter to enable the file interpretation as soon as this will be asked.
 
@@ -159,9 +159,9 @@ A print parameter object should be defined to be associated with the print file 
 
       ...
       **CATPrintParameters** Parameters;
-      ...  
+      ...
 
----  
+---
 
 The print parameters are taken into account to create the printed output. No specific value is reset, so all the print parameters take their default values.
 
@@ -173,13 +173,16 @@ The file conversion to a 2D representation can now take place.
       ...
 The file conversion to a 2D representation can now take place.
       CAT2DRep * pRep = NULL;
+```vbscript
       pRep = new **CATPrint2DRep**(pImage, Parameters);
+
+```
 
       pImage->**Release**();
 
-      ...  
+      ...
 
----  
+---
 
 The _CATPrint2DRep_ is a specific 2D representation built from a print file image and a set of print parameters. The print file image is now useless and can be released.
 
@@ -191,13 +194,19 @@ The _CATPrint2DRep_ is a specific 2D representation built from a print file imag
       {
 ```vbscript
 if (pRep)
+```vbscript
         if (_pRep)                    _// If there is a previous representation displayed_
+```
+
 ```
 
         {
 ```vbscript
 if (pRep)
+```vbscript
 if (_pRep)                    _// If there is a previous representation displayed_
+```
+
           _pViewer->**RemoveRep**(_pRep); _// Removes it from the viewer_
           _pRep->**Destroy**();           _// Releases it_
 ```
@@ -209,14 +218,20 @@ _pRep->**Destroy**();           _// Releases it_
         _pViewer->**AddRep**(pRep);       _// Adds the representation to the viewer_
         _pViewer->**Reframe**();          _// Redraws the viewer contents_
 
+```vbscript
         _pRep = pRep;      _// Keeps the new representation for future use (printing, etc.)_
 
+```
+
       }
-    }  
+    }
 
----  
+---
 
+```vbscript
 If the 2D representation is successfully created, it can be displayed. The possible displayed representation is first removed from the viewer and released, and the new created representtaion is added to the viewer that is then asked to redraw itself. This representation is kept as a data member for a future use, such as printing, or capturing it in the album.
+
+```
 
 [Top]
 
@@ -232,16 +247,16 @@ First, a _CATPrintFileImage_ instance is created using the input file, and a _CA
 * * *
 ### References
 
-[1] | [Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-[Top]  
+[1] | [Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)
+---|---
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Jan 2000] | Document created  
----|---  
-[Top]  
+Version: **1** [Jan 2000] | Document created
+---|---
+[Top]
 
 * * *
 

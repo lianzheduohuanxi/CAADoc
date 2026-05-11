@@ -11,20 +11,20 @@ converted: "2026-05-11T17:17:56.038135"
 ---
 # 3D PLM Enterprise Architecture
 
-| 
+|
 ## User Interface - Dialogs
 
-| 
+|
 ### Arranging Dialog Objects Using a Grid
 
-_How to manage the dialog object with the grid layout_  
----|---|---  
-Technical Article  
+_How to manage the dialog object with the grid layout_
+---|---|---
+Technical Article
 
 * * *
 ### Abstract
 
-Arranging dialog objects in a dialog window, a dialog box, a frame or a tab page, that is a container, consists in positionning each object at a given place with respect to the others [1]. The container layout will then not changed when the dialog window is resized. The dialog objects can be precisely arranged in their respective containers using a grid attached to the container. 
+Arranging dialog objects in a dialog window, a dialog box, a frame or a tab page, that is a container, consists in positionning each object at a given place with respect to the others [1]. The container layout will then not changed when the dialog window is resized. The dialog objects can be precisely arranged in their respective containers using a grid attached to the container.
 
   * **What Is Dialog Object Grid Layout?**
   * **A Grid Layout Example**
@@ -33,7 +33,7 @@ Arranging dialog objects in a dialog window, a dialog box, a frame or a tab page
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What Is Dialog Object Grid Layout?
@@ -60,24 +60,24 @@ It contains a spinner and two check buttons aligned on the first row, then a com
     		           	     CATDlgStyle Style)
 
                      : CATDlgDialog(Parent, Name, Style)
-    {}  
+    {}
 
----  
+---
 
 And the object that instantiate it must use the CATDlgGridLayout style as follows:
 
     GridLayoutWindow * pWindow = new GridLayoutWindow (this,
                                                        "GridWind",
-                                                       **CATDlgGridLayout**);  
+                                                       **CATDlgGridLayout**);
 
----  
+---
 
 The grid to build is as follows:
 
 ![CATDlgGridLayout.gif \(25066 bytes\)](images/CATDlgGridLayout.gif)
 
 The grid to build is as follows:
-The grid could be built using the SetGridConstraints method. It is used on each control to associate with it the positioning parameters, as the five arguments of SetGridConstraints: 
+The grid could be built using the SetGridConstraints method. It is used on each control to associate with it the positioning parameters, as the five arguments of SetGridConstraints:
 
   1. The row number where the control top left corner is located in
   2. The column number where the control top left corner is located in
@@ -93,25 +93,25 @@ Rows and column numbers begin with 0. You can see that the combo top left corner
     Combo  ->SetGridConstraints(1,0,3,1,CATGRID_4SIDES);
     PB1    ->SetGridConstraints(2,0,1,1,CATGRID_LEFT);
     PB2    ->SetGridConstraints(2,1,1,1,CATGRID_LEFT);
-    PB3    ->SetGridConstraints(2,3,1,1,CATGRID_RIGHT);  
+    PB3    ->SetGridConstraints(2,3,1,1,CATGRID_RIGHT);
 
----  
+---
 
 PB2    ->SetGridConstraints(2,1,1,1,CATGRID_LEFT);
 PB3    ->SetGridConstraints(2,3,1,1,CATGRID_RIGHT);
 The same window is shown with three other attachment modes applied to the combo:
 
- `CATGRID_LEFT`: The combo is attached by its left side. Even if it doesn't seem to be spread on three cells, no other control can occupy this area.  
----|---  
- `CATGRID_CENTER`: The combo is attached at the center of its area.  
- `CATGRID_RIGHT`: The combo is attached by its right side. The space in front of it is empty, but if longer character strings were used for its lines, its size could grow to the left.  
+ `CATGRID_LEFT`: The combo is attached by its left side. Even if it doesn't seem to be spread on three cells, no other control can occupy this area.
+---|---
+ `CATGRID_CENTER`: The combo is attached at the center of its area.
+ `CATGRID_RIGHT`: The combo is attached by its right side. The space in front of it is empty, but if longer character strings were used for its lines, its size could grow to the left.
 
 Since the combo is allone on its row, its size determines the row height, and the two other attachment modes, that is  `CATGRID_TOP` and `CATGRID_BOTTOM`, would have the same effect than `CATGRID_LEFT`.
 
 [Top]
 ### The Grid Layout Toolbox
 
-To use the grid layout, you need to do the following: 
+To use the grid layout, you need to do the following:
 
   * Creating a CATDlgGridConstraints instance and assigning it to a dialog object
   * Understanding how to attach a dialog object with respect to the cell sides
@@ -120,11 +120,11 @@ To use the grid layout, you need to do the following:
 [Top]
 #### Creating a CATDlgGridConstraints Instance and Assigning it to Dialog Objects
 
-The grid is not an object itself. You only need to define how each object is located in the grid using one or several CATDlgGridConstraints instances, and the grid is interpreted from these instances. As we see in the example, you can use the SetGridConstraints method on each object you want to arrange, either when this object is a control, or when it is a container contained in another container, such as a frame contained in another frame. The grid you refer to is set to the containment parent [2] of the dialog object, and must be consistently reffered to for any object having this containment parent. SetGridConstraints assigns to the object it applies an instance of the CATDlgGridConstraints class that holds the positionning parameters. You could do this in two ways: 
+The grid is not an object itself. You only need to define how each object is located in the grid using one or several CATDlgGridConstraints instances, and the grid is interpreted from these instances. As we see in the example, you can use the SetGridConstraints method on each object you want to arrange, either when this object is a control, or when it is a container contained in another container, such as a frame contained in another frame. The grid you refer to is set to the containment parent [2] of the dialog object, and must be consistently reffered to for any object having this containment parent. SetGridConstraints assigns to the object it applies an instance of the CATDlgGridConstraints class that holds the positionning parameters. You could do this in two ways:
 
 The grid is not an object itself. You only need to define how each object is located in the grid using one or several CATDlgGridConstraints instances, and the grid is interpreted from these instances. As we see in the example, you can use the SetGridConstraints method on each object you want to arrange, either when this object is a control, or when it is a container contained in another container, such as a frame contained in another frame. The grid you refer to is set to the containment parent [2] of the dialog object, and must be consistently reffered to for any object having this containment parent. SetGridConstraints assigns to the object it applies an instance of the CATDlgGridConstraints class that holds the positionning parameters. You could do this in two ways:
   1. Use the SetGridConstraints methods with five arguments as shown in the example. This method creates the CATDlgGridConstraints class instance and assigns it to the container or control
-  2. Create a CATDlgGridConstraints class instance, set and modify its parameters before assigning it using SetGridConstraints to each control,  as follows: 
+  2. Create a CATDlgGridConstraints class instance, set and modify its parameters before assigning it using SetGridConstraints to each control,  as follows:
 
          CATDlgGridConstraints GridCst(0,0,1,1,CATGRID_LEFT);
          Spinner->SetGridConstraints(GridCst);
@@ -133,48 +133,66 @@ The grid is not an object itself. You only need to define how each object is loc
          GridCst.Column=2;
          CB2    ->SetGridConstraints(GridCst);
          GridCst.Row=1;
+```vbscript
+```vbscript
          GridCst.Column=0;
          GridCst.H_SPAN=3;
          GridCst.V_SPAN=1;
          GridCst.Justification=CATGRID_4SIDES;
+```
+
+```
+
          Combo  ->SetGridConstraints(GridCst);
          GridCst.Row=2;
+```vbscript
+```vbscript
          GridCst.Column=0;
          GridCst.H_SPAN=1;
          GridCst.V_SPAN=1;
          GridCst.Justification=CATGRID_LEFT;
+```
+
+```
+
          PB1    ->SetGridConstraints(GridCst);
          GridCst.Column=1;
+```vbscript
          GridCst.Justification=CATGRID_BOTTOM;
+```
+
          PB2    ->SetGridConstraints(GridCst);
          GridCst.Column=3;
+```vbscript
          GridCst.Justification=CATGRID_LEFT;
-         PB3    ->SetGridConstraints(GridCst);  
+```
 
----  
+         PB3    ->SetGridConstraints(GridCst);
+
+---
 
 [Top]
 #### Understanding How to Attach a Dialog Object with Respect to the Cell Sides
 
 Attaching a dialog object to its cell(s) sides determines the dialog window or container layout when the dialog winodw is first displayed with its original size, and has also an effect when the end user resizes it. The following attachment modes are available:
 
-Attachment Mode | Description  
----|---  
-`CATGRID_LEFT` | Attaches the object to the left side of the cell, or if the object spreads on several cells, to the left side of the left cell  
-`CATGRID_RIGHT` | Attaches the object to the right side of the cell, or if the object spreads on several cells, to the right side of the right cell  
-`CATGRID_TOP` | Attaches the object to the top side of the cell, or if the object spreads on several cells, to the top side of the top cell  
-`CATGRID_BOTTOM` | Attaches the object to the bottom side of the cell, or if the object spreads on several cells, to the bottom side of the bottom cell  
-`CATGRID_4SIDES` | Attaches the object to each of the four sides of the cell, or if the object spreads on several cells, to the left side of the left cell, to the right side of the right cell, to the top side of the top cell, and to the bottom side of the bottom cell. It is the concatenation of `CATGRID_LEFT`, `CATGRID_RIGHT`, `CATGRID_TOP`, and `CATGRID_BOTTOM`  
-`CATGRID_CST_WIDTH` | Keeps the object initial width when resizing  
-`CATGRID_CST_HEIGHT` | Keeps the object initial height when resizing  
-`CATGRID_CST_SIZE` | Keeps the object initial size, that is initial width and initial height, when resizing. It is the concatenation of `CATGRID_CST_WIDTH` and `CATGRID_CST_HEIGHT`  
-`CATGRID_CST_CENTER` | Attaches the object to each of the four sides of the cell, and keeps the object initial size, that is initial width and initial height, when resizing. It is the concatenation of `CATGRID_4SIDES` and `CATGRID_CST_SIZE`  
+Attachment Mode | Description
+---|---
+`CATGRID_LEFT` | Attaches the object to the left side of the cell, or if the object spreads on several cells, to the left side of the left cell
+`CATGRID_RIGHT` | Attaches the object to the right side of the cell, or if the object spreads on several cells, to the right side of the right cell
+`CATGRID_TOP` | Attaches the object to the top side of the cell, or if the object spreads on several cells, to the top side of the top cell
+`CATGRID_BOTTOM` | Attaches the object to the bottom side of the cell, or if the object spreads on several cells, to the bottom side of the bottom cell
+`CATGRID_4SIDES` | Attaches the object to each of the four sides of the cell, or if the object spreads on several cells, to the left side of the left cell, to the right side of the right cell, to the top side of the top cell, and to the bottom side of the bottom cell. It is the concatenation of `CATGRID_LEFT`, `CATGRID_RIGHT`, `CATGRID_TOP`, and `CATGRID_BOTTOM`
+`CATGRID_CST_WIDTH` | Keeps the object initial width when resizing
+`CATGRID_CST_HEIGHT` | Keeps the object initial height when resizing
+`CATGRID_CST_SIZE` | Keeps the object initial size, that is initial width and initial height, when resizing. It is the concatenation of `CATGRID_CST_WIDTH` and `CATGRID_CST_HEIGHT`
+`CATGRID_CST_CENTER` | Attaches the object to each of the four sides of the cell, and keeps the object initial size, that is initial width and initial height, when resizing. It is the concatenation of `CATGRID_4SIDES` and `CATGRID_CST_SIZE`
 
 They can be concatenated using the "|" character, as follows:
 
-    Combo->SetGridConstraints(1,0,3,1,CATGRID_LEFT**|** CATGRID_RIGHT);  
+    Combo->SetGridConstraints(1,0,3,1,CATGRID_LEFT**|** CATGRID_RIGHT);
 
----  
+---
 
 The default value is `CATGRID_LEFT`|`CATGRID_TOP`.
 
@@ -182,7 +200,7 @@ The default value is `CATGRID_LEFT`|`CATGRID_TOP`.
 #### Enabling Rows and Columns for Resize
 
 The default value is `CATGRID_LEFT`|`CATGRID_TOP`.
-You can also manage the ability of a given row or column to be resized when its container is itself resized. The grid rows and columns are by default non sensitive to resizing. Resizing occurs in two cases: 
+You can also manage the ability of a given row or column to be resized when its container is itself resized. The grid rows and columns are by default non sensitive to resizing. Resizing occurs in two cases:
 
   1. The end user resizes the whole dialog box or window. This is possible if the dialog box or window isn't set to CATDlgWndNoResize
   2. The dialog box or window is being constructed, and the different containers and controls must match their container size according to their attachment mode.
@@ -190,13 +208,19 @@ You can also manage the ability of a given row or column to be resized when its 
 The height of a resizable row is increased or decreased when its container is resized, while it is the width of a resizable column that changes. To set a row or a column resizable, use the methods SetGridRowResizable and SetGridColumnResizable.
 
     SetGridRowResizable(2,1);
-    SetGridColumnResizable(0,1);  
+```vbscript
+    SetGridColumnResizable(0,1);
 
----  
+```
+
+---
 
 ```vbscript
 SetGridRowResizable(2,1);
+```vbscript
 SetGridColumnResizable(0,1);
+```
+
 The first argument is the row or column number in the grid. The second can be set to 0 for a non resizable row or column, and to 1 for a resizable one. In the example above, the third row and the first column are set as resizable.
 
 When the containing window is resized, the controls or containers that are spread in cells belonging to resizable rows or columns are moved or resized according to their attachment mode. For example, the window of the example used in this article is streched as follows:
@@ -209,15 +233,21 @@ The third row is resizable, as well as the first three columns. This is coded as
 
 The third row is resizable, as well as the first three columns. This is coded as follows:
     SetGridRowResizable(2,1);
+```vbscript
     SetGridColumnResizable(0,1);
     SetGridColumnResizable(1,1);
-    SetGridColumnResizable(2,1);  
+    SetGridColumnResizable(2,1);
 
----  
+```
+
+---
 
 ```vbscript
 SetGridColumnResizable(1,1);
+```vbscript
 SetGridColumnResizable(2,1);
+```
+
 Note that the spinners and the check buttons were explicitly attached to their cell left side. Their cells are stretched, and empty space appears to their rights. The combo were attached to the four sides of the cells, and is stretched to occupy the full width of the three cells. These first two lines have kept their initial height, since they are not resizable. The third row is stretched. Its height increases. Apply and Restore have not moved vertically, because they are attached to their cell top side, but Undo, which is attached to its cell bottom side, has moved vertically. This shows the new row height. As for the first row, the first three columns are stretched, but the fourth, which contains Restore, is not resizable and its width  has not changed.
 
 ```
@@ -225,7 +255,7 @@ Note that the spinners and the check buttons were explicitly attached to their c
 [Top]
 ### The Object Container Grid Layout Specific ProgrammingTasks
 
-To manage the layout of a container using a grid, you can use the following methods. They apply to: 
+To manage the layout of a container using a grid, you can use the following methods. They apply to:
 
   * [Frames](../CAADlgQuickRefs/CAADlgCATDlgFrame.md), instances of the CATDlgFrame instances
   * [Tab pages](../CAADlgQuickRefs/CAADlgCATDlgTabPage.md) or property pages, instances of the CATDlgTabPage instances
@@ -234,7 +264,10 @@ To manage the layout of a container using a grid, you can use the following meth
 Layout using a grid is available only if the CATDlgGridLayout style is used in the object constructor. The available methods enable to set a row or a column of the grid as resizable, and to ask if a row or a column is resizable. The examples use a CATDlgFrame instance:
 
 ```vbscript
-Set 1st row as resizable | 
+```vbscript
+Set 1st row as resizable |
+
+```
 
 ```
 
@@ -242,12 +275,15 @@ Set 1st row as resizable |
 Set 1st row as resizable |
     int RowIndex = 0;        // First row
     int Resizability = 1;    // 0 means non resizable
-    pFrame->**SetGridRowResizable**(RowIndex, Resizability);  
+    pFrame->**SetGridRowResizable**(RowIndex, Resizability);
 
 ```
 
 ```vbscript
-Set 3rd column as resizable | 
+```vbscript
+Set 3rd column as resizable |
+
+```
 
 ```
 
@@ -255,40 +291,56 @@ Set 3rd column as resizable |
 Set 3rd column as resizable |
     int ColumnIndex = 2;     // Third column
     Resizability = 1;        // 0 means non resizable
-    pFrame->**SetGridColumnResizable**(ColumnIndex, Resizability);  
+    pFrame->**SetGridColumnResizable**(ColumnIndex, Resizability);
 
-Ask if 4th row is resizable | 
+```
+
+Ask if 4th row is resizable |
 
     RowIndex = 3;            // Fourth row
     Resizability = pFrame->**IsGridRowResizable**(RowIndex);
+```vbscript
+```vbscript
     if (Resizability == 1)
+
+```
+
 ```
 
       ... // Row is resizable
 RowIndex = 3;            // Fourth row
 Resizability = pFrame->**IsGridRowResizable**(RowIndex);
+```vbscript
 if (Resizability == 1)
+```
+
     else  // Resizability == 0
 
-      ... // Row is NOT resizable  
+      ... // Row is NOT resizable
 
 ```vbscript
 if (Resizability == 1)
 else  // Resizability == 0
-Ask if 6th column is resizable | 
+Ask if 6th column is resizable |
 
     ColumnIndex = 5;         // Sixth column
     Resizability = pFrame->**IsGridColumnResizable**(ColumnIndex);
+```vbscript
     if (Resizability == 1)
+```
+
 ```
 
       ... // Column is resizable
 ColumnIndex = 5;         // Sixth column
 Resizability = pFrame->**IsGridColumnResizable**(ColumnIndex);
+```vbscript
 if (Resizability == 1)
+```
+
     else  // Resizability == 0
 
-      ... // Column is NOT resizable  
+      ... // Column is NOT resizable
 
 [Top]
 
@@ -302,17 +354,17 @@ Dialog object container sizes are determined using their contents. Containers ca
 * * *
 ### References
 
-[1] | [Arranging Dialog Objects](CAADlgObjectLayout.md)  
+[1] | [Arranging Dialog Objects](CAADlgObjectLayout.md)
 
-[2] | [Creating Dialog Objects](CAADlgCreatingDialogs.md)  
-[Top]  
+[2] | [Creating Dialog Objects](CAADlgCreatingDialogs.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Jan 2000] | Document created  
----|---  
-[Top]  
+Version: **1** [Jan 2000] | Document created
+---|---
+[Top]
 
 * * *
 

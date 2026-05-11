@@ -11,15 +11,15 @@ converted: "2026-05-11T17:31:50.944012"
 ---
 # Mechanical Design
 
-| 
+|
 ## Drafting
 
-| 
+|
 ### Creating Annotations on View Components
 
-_How to retrieve view components_  
----|---|---  
-Use Case  
+_How to retrieve view components_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
@@ -35,7 +35,7 @@ This article discusses the CAADrwCoordinates use case. This use case explains ho
   * **In Short**
   * **References**
 
----  
+---
 ### What You Will Learn With This Use Case
 
 This use case is intended to retrieve the view components. These components can be :
@@ -52,23 +52,23 @@ CAADrwCoordinates is a use case of the CAADraftingInterfaces.edu framework that 
 [Top]
 #### What Does CAADrwCoordinates Do
 
-Fig. 1 The Document Before Running CAADrwCoordinates ![](images/CAADrwCoordinates1.jpg)  
----  
+Fig. 1 The Document Before Running CAADrwCoordinates ![](images/CAADrwCoordinates1.jpg)
+---
 
 Fig. 1 The Document Before Running CAADrwCoordinates ![](images/CAADrwCoordinates1.jpg)
 Fig. 1 represents a CATDrawing document containing 2D points.
 
-Fig. 2 The Document After Running CAADrwCoordinates ![](images/CAADrwCoordinates2.jpg)  
+Fig. 2 The Document After Running CAADrwCoordinates ![](images/CAADrwCoordinates2.jpg)
 
----  
+---
 
 Fig. 1 represents a CATDrawing document containing 2D points.
 Fig. 2 The Document After Running CAADrwCoordinates ![](images/CAADrwCoordinates2.jpg)
-Fig. 2 represents the previous CATDrawing after CAADrwCoordinates processing.  
+Fig. 2 represents the previous CATDrawing after CAADrwCoordinates processing.
 A text has been created near each point. This text is formatted like follows :
 
-_Point _point index_  
-_X = _the x point coordinate  
+_Point _point index_
+_X = _the x point coordinate
 _Y = _the y point coordinate_
 
 [Top]
@@ -77,20 +77,20 @@ _Y = _the y point coordinate_
 _Y = _the y point coordinate_
 To launch CAADrwCoordinates, you will need to set up the build time environment, then compile CAADrwCoordinates along with its prerequisites, set up the run time environment, and then execute the use case [1].
 
-The CATDrawing document Fig. 1 is saved in the Framework CAADraftingInterfaces.edu/Cnext/Resources/graphic/CAADrwCoordinates.CATDrawing. 
+The CATDrawing document Fig. 1 is saved in the Framework CAADraftingInterfaces.edu/Cnext/Resources/graphic/CAADrwCoordinates.CATDrawing.
 
-When you launch the use case, pass the full pathname of the file into which you you want to store the created document as argument: for example Result.CATDrawing. 
+When you launch the use case, pass the full pathname of the file into which you you want to store the created document as argument: for example Result.CATDrawing.
 
-  * With Windows 
+  * With Windows
 
-        e:> CAADrwCoordinates CAADrwCoordinates.CATDrawing Result.CATDrawing  
+        e:> CAADrwCoordinates CAADrwCoordinates.CATDrawing Result.CATDrawing
 
----  
-  * With UNIX 
+---
+  * With UNIX
 
-        $ CAADrwCoordinates /u/users/CAADrwCoordinates.CATDrawing Result.CATDrawing  
+        $ CAADrwCoordinates /u/users/CAADrwCoordinates.CATDrawing Result.CATDrawing
 
----  
+---
 
 [Top]
 #### Where to Find the CAADrwCoordinates Code
@@ -98,11 +98,11 @@ When you launch the use case, pass the full pathname of the file into which you 
 The CAADrwCoordinates use case is made of a single source file named CAADrwCoordinates.cpp located in the CAADrwCoordinates.m module of the CAADraftingInterfaces.edu framework:
 
 The CAADrwCoordinates use case is made of a single source file named CAADrwCoordinates.cpp located in the CAADrwCoordinates.m module of the CAADraftingInterfaces.edu framework:
-Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCoordinates.m\`  
+Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCoordinates.m\`
 
 The CAADrwCoordinates use case is made of a single source file named CAADrwCoordinates.cpp located in the CAADrwCoordinates.m module of the CAADraftingInterfaces.edu framework:
 Windows | `InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCoordinates.m\`
-Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCoordinates.m/`  
+Unix | `InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCoordinates.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
@@ -122,7 +122,7 @@ There are six steps in CAADRWCoordinates:
 [Top]
 #### Reading the Document
 
-    int main(int    iArgc,   // Number of arguments (1) 
+    int main(int    iArgc,   // Number of arguments (1)
              char** iArgv)   // Path to the *.CATDrawing document
     {
        // Check arguments
@@ -137,22 +137,31 @@ char** iArgv)   // Path to the *.CATDrawing document
        // creates a session
        **CATSession** *pSampleSession = NULL;
        HRESULT hr = **::Create_Session**("SampleSession",pSampleSession);
+```vbscript
        if (FAILED(hr)) return 1;
+
+```
 
        // read the document
        **CATDocument** * pDoc = NULL;
 HRESULT hr = **::Create_Session**("SampleSession",pSampleSession);
 if (FAILED(hr)) return 1;
+```vbscript
+```vbscript
        if (!SUCCEEDED(**CATDocumentServices::OpenDocument**(fileName, pDoc)))
+
+```
+
+```
 
        {
           // Ends session
           ::Delete_Session("SampleSession");
           return 2;
        }
-    ...  
+    ...
 
----  
+---
 
 This section represents the usual sequence for reading a CATIA document [2].
 
@@ -178,9 +187,9 @@ piDftDocServices->Release();
        if (NULL == piDrawing)
           return 3;
 
-    ...  
+    ...
 
----  
+---
 
 The root feature of a drawing document is the Drawing, that is, the feature that implements the _CATIDrawing_ interface. We can get a pointer to _CATIDrawing_ using the _CATIDftDocumentServices_ interface, which is implemented by the document. The `GetDrawing` method first argument is the _CATIDrawing_ interface IID.
 
@@ -195,9 +204,9 @@ The root feature of a drawing document is the Drawing, that is, the feature that
 
        // Memory cleaning
        piDrawing->Release();
-    ...  
+    ...
 
----  
+---
 
 A drawing may contain several sheets, but only one is the current one. The current sheet is the sheet containing the active view, that is the view currently edited. The methods of the _CATISheet_ and _CATIView_ interfaces do return handlers, so we do not need to care about releasing them. The drawing variable is a pointer to _CATIDrawing_ , so we have to release it when it is no longer used.
 
@@ -209,9 +218,9 @@ A drawing may contain several sheets, but only one is the current one. The curre
        **CATIDescendants** _var spDesc = spCurrentView;
        CATListValCATISpecObject_var pointList;
        spDesc->**GetDirectChildren** ("CATI2DPoint",pointList);
-    ...  
+    ...
 
----  
+---
 
 The view geometry can be retrieved using the _CATIDescendants_ interface. The first argument of the _GetDirectChildren_ method is a scan filter. In this example, we only get points.
 
@@ -256,7 +265,10 @@ textString.Append(coordText[1]);
        CATIDrwAnnotationFactory_var spAnnFactory = spCurrentView;
        CATIDftText *piDftText = NULL;
        const double txtpos[2] = {coord[0]+10.0,coord[1]+10.0};
+```vbscript
        if (SUCCEEDED(spAnnFactory->CreateDftText(txtpos, &piDftText)))
+
+```
 
        {
 CATIDrwAnnotationFactory_var spAnnFactory = spCurrentView;
@@ -267,9 +279,12 @@ if (SUCCEEDED(spAnnFactory->CreateDftText(txtpos, &piDftText)))
          textString.ConvertToWChar(ptxtChar);
          piDftText->SetString(ptxtChar);
          delete [] ptxtChar;
-         ptxtChar = NULL; 
+         ptxtChar = NULL;
          CATIDrwSubString *piDrwSubString = NULL;
+```vbscript
          if (SUCCEEDED(piDftText->QueryInterface(IID_CATIDrwSubString,(void **)&piDrwSubString)))
+
+```
 
          {
            // Select the sub string to modifiable.
@@ -281,7 +296,10 @@ if (SUCCEEDED(piDftText->QueryInterface(IID_CATIDrwSubString,(void **)&piDrwSubS
            // Modify the properties
 piDrwSubString->SetSelection(1,8);
            CATIDftTextProperties *piTextProp = NULL;
+```vbscript
            if (SUCCEEDED(piDftText->GetTextProperties(&piTextProp)))
+
+```
 
            {
 CATIDftTextProperties *piTextProp = NULL;
@@ -305,11 +323,11 @@ piDrwSubString->Release();piDrwSubString=NULL;
        }
       }
 
-    ...  
+    ...
 
----  
+---
 
-We loop on the points and get the coordinates using _CATI2DPoint::GetPointData_. The text string is computed using _CATUnicodeString_ operators.  
+We loop on the points and get the coordinates using _CATI2DPoint::GetPointData_. The text string is computed using _CATUnicodeString_ operators.
 The _CATIDrwAnnotationFactory_ annotation factory is implemented by the view and so the coordinates passed in `CreateDrwText` are view coordinates. The _CATIDrwTextProperties_ interface allows text property modifications, such as setting the text with a bold typeface using the `SetBold` method.
 
 [Top]
@@ -318,19 +336,28 @@ The _CATIDrwAnnotationFactory_ annotation factory is implemented by the view and
     ...
        // Save the result
        hr = CATDocumentServices::SaveAs(*pDoc, (char *)fileNameOut);
+```vbscript
+```vbscript
        if (FAILED(hr)) return 4;
 
-       // Ends session and drops document	
+```
+
+```
+
+       // Ends session and drops document
 hr = CATDocumentServices::SaveAs(*pDoc, (char *)fileNameOut);
+```vbscript
 if (FAILED(hr)) return 4;
+```
+
        CATDocumentServices::Remove (*pDoc);
 
        ::Delete_Session("SampleSession");
 
        return 0;
-    }  
+    }
 
----  
+---
 
 This section represents the usual sequence for saving a CATIA document [2].
 
@@ -342,7 +369,7 @@ This section represents the usual sequence for saving a CATIA document [2].
 This use case shows how to get the view components. The view implements the _CATIDescendants_ interface and the components can be retrieved by using the _GetDirectChildren_ method.
 
 This use case shows how to get the view components. The view implements the _CATIDescendants_ interface and the components can be retrieved by using the _GetDirectChildren_ method.
-This use case shows also how to open a CATDrawing document, get the root feature which implements the _CATIDrawing_ interface. A pointer to this interface is the key to enter and navigate inside the drawing structure, and can be retrieved using the `GetDrawing` method of the _CATIDftDocumentServices_ interface implemented by the document. Retrieving the active view is performed first by retrieving the current sheet thanks to the `GetCurrentSheet` method of the _CATIDrawing_ interface, and then asking the current sheet for the current view using the `GetCurrentView` of _CATISheet_. This current view is scanned using the _GetDirectChildren_ method of _CATIDescendants_.  
+This use case shows also how to open a CATDrawing document, get the root feature which implements the _CATIDrawing_ interface. A pointer to this interface is the key to enter and navigate inside the drawing structure, and can be retrieved using the `GetDrawing` method of the _CATIDftDocumentServices_ interface implemented by the document. Retrieving the active view is performed first by retrieving the current sheet thanks to the `GetCurrentSheet` method of the _CATIDrawing_ interface, and then asking the current sheet for the current view using the `GetCurrentView` of _CATISheet_. This current view is scanned using the _GetDirectChildren_ method of _CATIDescendants_.
 The view also implements the _CATIDrwAnnotationFactory_ interface and the texts are created using its `CreateDrwText` method, and set with a bold typeface using the `SetBold` method.
 
 [Top]
@@ -350,17 +377,17 @@ The view also implements the _CATIDrwAnnotationFactory_ interface and the texts 
 * * *
 ### References
 
-[1] | [Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-[2] | [Creating a New Document](../CAAOmbUseCases/CAAOmbNewDoc.md)  
-[Top]  
+[1] | [Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)
+---|---
+[2] | [Creating a New Document](../CAAOmbUseCases/CAAOmbNewDoc.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Jan 2000] | Document created  
----|---  
-[Top]  
+Version: **1** [Jan 2000] | Document created
+---|---
+[Top]
 
 * * *
 

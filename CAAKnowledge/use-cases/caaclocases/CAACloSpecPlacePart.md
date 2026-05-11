@@ -12,11 +12,11 @@ converted: "2026-05-11T17:33:49.530102"
 tags: ["CAACommonLayoutItf", "CATIPspDefinePhysicalPart", "CAACloSpecPlace", "CATIProduct", "CAACloPlacePart", "CAACloEduRuns", "CAACloSpecPlacePartMain", "CAAPspUtilities", "CATIPspPlacePartOnRun", "CAAPlantShipInterfaces", "CAAPspBaseEnvProtected", "CAACloSpecPlacePart", "CATIPspLogicalLine", "CATICloPartRules", "CATIA"]
 source_file: "Doc/online/CAACloUseCases/CAACloSpecPlacePart.htm"
 converted: "2026-05-11T17:33:49.530102"
-Equipment & Systems |  Distributive Systems |  Placing Spec Parts _How to place spec parts_  
+Equipment & Systems |  Distributive Systems |  Placing Spec Parts _How to place spec parts_
 
 converted: "2026-05-11T17:33:49.530102"
 Equipment & Systems |  Distributive Systems |  Placing Spec Parts _How to place spec parts_
-Use Case  
+Use Case
 
 * * *
 
@@ -31,8 +31,8 @@ Abstract This article discusses the CAACloSpecPlacePart use case.
       * Use Case Execution
       * Parts in Space
     * **In Short**
-    * **References**  
----  
+    * **References**
+---
 
 * * *
 
@@ -40,20 +40,20 @@ Overview CAACloSpecPlacePart is a use case of the CAACommonLayoutItf.edu framewo
     * CATIPspDefinePhysicalPart, CATIPspPlacePartOnRun and CATICloPartRules interfaces that are implemented by CATCommonLayout.
 [Top] What You Will Learn This use case is intended to show you how to:
     * Get the part number using the CATIPspDefinePhysicalPart interface.
-    * Get function type using the CATICloPartRules interface. 
+    * Get function type using the CATICloPartRules interface.
     * Place spec part using the CATIPspPlacePartOnRun interface.
 [Top] What CAACloSpecPlacePart Does CAACloSpecPlacePart places tubing part. It places a union in space. [Top] How to Launch CAACloSpecPlacePart To launch CAACloSpecPlacePart, you will need to set up the build time environment, then compile CAACloSpecPlacePart along with its prerequisites, set up the run time environment, and then execute the sample. This is fully described in the referenced article[1]. Launch the use case with the following command.
 
     CAACloSpecPlacePart  MyRootDirectory/CAACommonLayoutItf.edu/CNext/resources/graphic/CAACloEduRuns/CAACloEduRuns.CATProduct1
 
 CAACloSpecPlacePart  MyRootDirectory/CAACommonLayoutItf.edu/CNext/resources/graphic/CAACloEduRuns/CAACloEduRuns.CATProduct1
-where MyRootDirectory is the pathname of the root directory where you copied and built the use case. [Top] Where to Find CAACloSpecPlacePart Files The CAACloSpecPlacePart code consists of three files located in the CAACloSpecPlacePart.m use case module of the CAACommonLayoutItf.edu framework: 
+where MyRootDirectory is the pathname of the root directory where you copied and built the use case. [Top] Where to Find CAACloSpecPlacePart Files The CAACloSpecPlacePart code consists of three files located in the CAACloSpecPlacePart.m use case module of the CAACommonLayoutItf.edu framework:
 
     InstallRootDirectory/CAACommonLayoutItf.edu/CAACloSpecPlacePart.m/LocalInterfaces/CAACloSpecPlacePart.h
     InstallRootDirectory/CAACommonLayoutItf.edu/CAACloSpecPlacePart.m/src/CAACloSpecPlacePart.cpp
     InstallRootDirectory/CAACommonLayoutItf.edu/CAACloSpecPlacePart.m/src/CAACloSpecPlacePartMain.cpp
 
-where `InstallRootDirectory` is the root directory of your CAA V5 installation1. This sample uses two C++ source files: CAACloSpecPlacePartMain cpp and CAACloSpecPlacePart.cpp. CAACloSpecPlacePartMain.cpp holds the main method which initiates the sample code. CAACloSpecPlacePart.cpp defines the class that places parts. CAACloSpecPlacePart has a corresponding header (.h) file. The CAACloSpecPlacePart also uses three data files: 
+where `InstallRootDirectory` is the root directory of your CAA V5 installation1. This sample uses two C++ source files: CAACloSpecPlacePartMain cpp and CAACloSpecPlacePart.cpp. CAACloSpecPlacePartMain.cpp holds the main method which initiates the sample code. CAACloSpecPlacePart.cpp defines the class that places parts. CAACloSpecPlacePart has a corresponding header (.h) file. The CAACloSpecPlacePart also uses three data files:
 
     InstallRootDirectory/CAACommonLayoutItf.edu/CNext/resources/graphic/CAACloEduRuns/CAACloEduRuns.CATProduct
     InstallRootDirectory/CAACommonLayoutItf.edu/CNext/resources/graphic/CAACloEduRuns/CATTubTubingLine20010507183018970.CATProduct
@@ -74,16 +74,16 @@ CAACloEduRuns.CATProduct is the main data model for the use cases. It is the fil
     //  This sample illustrates how to use the CAA Plant Ship interfaces to place spec parts.
     //
     //
-    //  Prerequisite: 
+    //  Prerequisite:
     //  -------------------
     //  This sample uses the input drawing CAACloEduRuns.CATProduct.
     //
     //  Running the program:
     //  -------------------
     //  To run this program, you can use the command:
-    //  
+    //
     //        CAACloSpecPlacePart MyRootDirectory/CAAPlantShipInterfaces.edu/CNext/graphic/CAACloEduRuns/CAACloEduRuns.CATProduct
-    //  
+    //
     //  where MyRootDirectory is the pathname of the root directory where you copied and built the use case.
     //
     //=============================================================================
@@ -115,12 +115,15 @@ int main (int argc, char **argv)
 
       CAACloSpecPlacePart myObject;
 
-      CATTry 
+      CATTry
 
       {
 CAACloSpecPlacePart myObject;
 CATTry
+```vbscript
         if (argc > 1)
+
+```
 
         {
 
@@ -150,7 +153,10 @@ cout << "a CATProduct with Piping application objects " << endl;
 else
           cout << "FileToBeLoaded = " << FileToBeLoaded << endl;
 
+```vbscript
           rcError = myObject.DoSample(FileToBeLoaded);
+
+```
 
         }
       }
@@ -161,7 +167,10 @@ else
 CATCatch (CATError, pError)
         cout << "error in main " << endl;
 
+```vbscript
         rcError = CATReturnError(pError);
+
+```
 
     	} // end CATCatch
 
@@ -170,15 +179,21 @@ rcError = CATReturnError(pError);
 
       cout << "CAACloPlacePart rcError = " << rcError << endl;
 
+```vbscript
       if (FAILED(rcError))
 
-      { 
+```
+
+      {
 cout << "CAACloPlacePart rcError = " << rcError << endl;
 if (FAILED(rcError))
         rc = 999;
         CATError *pError = CATError::CATGetLastError(rcError);
 
+```vbscript
         if (pError)
+
+```
 
         {
 rc = 999;
@@ -226,7 +241,7 @@ HRESULT CAACloSpecPlacePart::DoSample(const CATUnicodeString &iuFileToBeLoaded)
 
       // Interface pointer variables used below in the try section.
 
-      CATTry 
+      CATTry
       {
 
         //  Load input document
@@ -271,7 +286,10 @@ CATCatch (CATError, pError)
         cout << "CAACloSpecPlacePart::DoSample *** Error Caught ***" << endl;
         cout << pError;
 
+```vbscript
         rc = CATReturnError(pError);
+
+```
 
     	} // end CATCatch
 
@@ -327,41 +345,62 @@ HRESULT rc = CATReturnFailure;
       CATMathDirection ctrAlign;
       CATMathDirection ctrUp;
 
-      CATTry 
+      CATTry
 
       {
         // Get application object.
 CATMathDirection ctrUp;
 CATTry
+```vbscript
         piAppObject = new CATObject("CATTubing");
+
+```
 
         cout << "piAppObject = " << piAppObject << endl;
 
+```vbscript
         if (piAppObject)
+
+```
 
         {
 
 cout << "piAppObject = " << piAppObject << endl;
 if (piAppObject)
+```vbscript
+```vbscript
           piParentProduct = (CATIProduct*)GetChildObject(IID_CATIProduct, "TubingWP.1");
+
+```
+
+```
 
           cout << "piParentProduct = " << piParentProduct << endl;
 
+```vbscript
           piLogicalLine = GetALogicalLine(piParentProduct);
+
+```
 
           cout << "piLogicalLine = " << piLogicalLine << endl;
 
           if (
-                SUCCEEDED(piAppObject->QueryInterface(IID_CATIPspDefinePhysicalPart,(void**)&piDefPhyPart))  && 
-                SUCCEEDED(piAppObject->QueryInterface(IID_CATIPspPlacePartOnRun,(void**)&piPlacePart))  && 
+```vbscript
+                SUCCEEDED(piAppObject->QueryInterface(IID_CATIPspDefinePhysicalPart,(void**)&piDefPhyPart))  &&
+                SUCCEEDED(piAppObject->QueryInterface(IID_CATIPspPlacePartOnRun,(void**)&piPlacePart))  &&
                 SUCCEEDED(piAppObject->QueryInterface(IID_CATICloPartRules,(void**)&piPartRules))
+
+```
 
               )
            {
 ```vbscript
 SUCCEEDED(piAppObject->QueryInterface(IID_CATIPspDefinePhysicalPart,(void**)&piDefPhyPart))  &&
+```vbscript
 SUCCEEDED(piAppObject->QueryInterface(IID_CATIPspPlacePartOnRun,(void**)&piPlacePart))  &&
 SUCCEEDED(piAppObject->QueryInterface(IID_CATICloPartRules,(void**)&piPartRules))
+```
+
     	cout << "piDefPhyPart = " << piDefPhyPart << endl;
     	cout << "piPlacePart = " << piPlacePart << endl;
     	cout << "piPartRules = " << piPartRules << endl;
@@ -373,10 +412,10 @@ cout << "piPlacePart = " << piPlacePart << endl;
 cout << "piPartRules = " << piPartRules << endl;
           CATUnicodeString oListPartNumbers;
 
-          piDefPhyPart->GetPartNumbers(uStandard, 
-                                       uPartType, 
-                                       uSpecName, 
-                                       piLogicalLine, 
+          piDefPhyPart->GetPartNumbers(uStandard,
+                                       uPartType,
+                                       uSpecName,
+                                       piLogicalLine,
                                        oListPartNumbers);
 
            uPartNumber = oListPartNumbers[1];
@@ -384,17 +423,17 @@ cout << "piPartRules = " << piPartRules << endl;
           // Get reference part
 oListPartNumbers);
 uPartNumber = oListPartNumbers[1];
-          rc = piPlacePart->GetReferencePartFromCatalog (uStandard, 
-                                                         uSpecName, 
-                                                         uPartType, 
-                                                         uPartNumber, 
-                                                         piParentProduct, 
+          rc = piPlacePart->GetReferencePartFromCatalog (uStandard,
+                                                         uSpecName,
+                                                         uPartType,
+                                                         uPartNumber,
+                                                         piParentProduct,
                                                          piReferencePart,
                                                          uCatalogPartName);
 
           cout << "piReferencePart = " << piReferencePart << "uCatalogPartName = " << uCatalogPartName.ConvertToChar() << endl;
 
-          if (SUCCEEDED(rc) && 
+          if (SUCCEEDED(rc) &&
               piReferencePart)
 
           {
@@ -408,10 +447,10 @@ piReferencePart)
            CATUnicodeString uNominalSize = "1/4in";
 
            piPartRules->GetPartFunctions(piReferencePart,
-           			             uStandard, 
-                                         uPartType, 
-                                         uSpecName, 
-                                         uNominalSize,	 
+           			             uStandard,
+                                         uPartType,
+                                         uSpecName,
+                                         uNominalSize,
                                          lFunctionTypes,
                                          lSectionTypes);
 
@@ -428,20 +467,23 @@ uFunctionType = lFunctionTypes[1];
             horizontalOrientation.SetCoord(0,1,0); // Align part parallel to y-axis.
             position.SetCoord(1000,2000,4000); // Position part at (1000, 2000, 4000) in mm.
 
-    	    rc = piPlacePart->PlacePartInSpace (uStandard, 
-                                                uFunctionType, 
-                                                piReferencePart, 
-                                                piParentProduct, 
-                                                piLogicalLine, 
-                                                uPlacedPartID, 
-                                                upDirection, 
-                                                horizontalOrientation, 
-                                                position, 
+    	    rc = piPlacePart->PlacePartInSpace (uStandard,
+                                                uFunctionType,
+                                                piReferencePart,
+                                                piParentProduct,
+                                                piLogicalLine,
+                                                uPlacedPartID,
+                                                upDirection,
+                                                horizontalOrientation,
+                                                position,
                                                 piInstancePart);
 
              cout << "piInstancePart = " << piInstancePart << endl;
 
+```vbscript
              if (piInstancePart)
+
+```
 
              {
               // Set catalog part name
@@ -449,14 +491,14 @@ cout << "piInstancePart = " << piInstancePart << endl;
 if (piInstancePart)
               piPlacePart->SetCatalogPartName(piInstancePart,uCatalogPartName);
 
-              // Set specification. 
+              // Set specification.
               piDefPhyPart->SetSpecification(piInstancePart,uSpecName);
 
-              // Verification 
+              // Verification
               // Specification set and Function type used, can be verified by saving the document and
-              // Launching the CATIA. (Go to properties of the placed part, by right clicking the mouse.)    
+              // Launching the CATIA. (Go to properties of the placed part, by right clicking the mouse.)
 
-             } 
+             }
              else
              {
               rc = CATReturnFailure;
@@ -464,7 +506,10 @@ if (piInstancePart)
            }//piReferencePart
 else
 rc = CATReturnFailure;
+```vbscript
            if (FAILED(rc))
+
+```
 
            {
 rc = CATReturnFailure;
@@ -484,7 +529,10 @@ CATCatch (CATError, pError)
 
         cout << pError;
 
+```vbscript
         rc = CATReturnError(pError);
+
+```
 
       } // end CATCatch
 
@@ -492,6 +540,8 @@ rc = CATReturnError(pError);
       CATEndTry;
 
       if (piAppObject) {piAppObject->Release(); piAppObject = NULL;}
+```vbscript
+```vbscript
       if (piDefPhyPart) {piDefPhyPart->Release(); piDefPhyPart = NULL;}
       if (piPlacePart) {piPlacePart->Release(); piPlacePart = NULL;}
       if (piPartRules) {piPartRules->Release(); piPartRules = NULL;}
@@ -500,6 +550,10 @@ rc = CATReturnError(pError);
       if (piLogicalLine) {piLogicalLine->Release(); piLogicalLine = NULL;}
       if (piInstancePart) {piInstancePart->Release(); piInstancePart = NULL;}
 
+```
+
+```
+
       cout << "CAACloSpecPlacePart::PlacePartSpecInSpace rc = " << rc << endl;
       return rc;
 
@@ -507,7 +561,7 @@ rc = CATReturnError(pError);
 
 cout << "CAACloSpecPlacePart::PlacePartSpecInSpace rc = " << rc << endl;
 return rc;
-In Short This use case has demonstrated how to use the CATIPspDefinePhysicalPart, CATIPspPlacePartOnRun and CATICloPartRules interfaces to place parts in space. Specifically, it has illustrated how to: 
+In Short This use case has demonstrated how to use the CATIPspDefinePhysicalPart, CATIPspPlacePartOnRun and CATICloPartRules interfaces to place parts in space. Specifically, it has illustrated how to:
 
     * Initialize the CATIA product environment and tubing application.
     * Place part in space.
@@ -515,19 +569,19 @@ In Short This use case has demonstrated how to use the CATIPspDefinePhysicalPart
 
 * * *
 
-References [1] |  [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
----|---  
+References [1] |  [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)
+---|---
 
 * * *
 
-Footnotes 1. This document uses Unix-style forward slash (/) to separate directory names. Windows users should use backslash (\) instead of forward slash (/).   
----  
+Footnotes 1. This document uses Unix-style forward slash (/) to separate directory names. Windows users should use backslash (\) instead of forward slash (/).
+---
 
 * * *
 
-History Version: **1** [January 2011] | Document created  
----|---  
-[Top]  
+History Version: **1** [January 2011] | Document created
+---|---
+[Top]
 
 * * *
 

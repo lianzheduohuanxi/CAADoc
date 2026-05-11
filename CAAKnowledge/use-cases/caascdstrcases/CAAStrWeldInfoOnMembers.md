@@ -9,16 +9,16 @@ converted: "2026-05-11T17:31:50.908610"
 ```
 
 ---
-| 
+|
 ## Structure Design
 
-| 
-## Retrieving Weld Information on Member Objects  
+|
+## Retrieving Weld Information on Member Objects
 
 * * *
 
-  This macro shows you how to retrieve Weld information already set on SDD Member Objects. ![Starting Part](images/CAAScdStrWeldInfo02.png)  
----|---  
+  This macro shows you how to retrieve Weld information already set on SDD Member Objects. ![Starting Part](images/CAAScdStrWeldInfo02.png)
+---|---
   CAAStrWeldInfoOnMembers is launched in CATIA [1]. Some documents are needed.
 
   * [ CAAStrWeldInfoOnMembers.CATScript](CAAStrWeldInfoOnMembersSource.md) is located in the CAAScdStrUseCases module. [Execute macro](macros/CAAStrWeldInfoOnMembers.CATScript) (Windows only).
@@ -45,11 +45,20 @@ CAAStrWeldInfoOnMembers includes the following steps:
 11. Retrieving Weld Attributes of Weld Use Case 2 Features
 Opens the CAAStrWeldInfoOnMembers.CATPart in CATIA.
 
+```vbscript
     Sub CATMain()
+
+```
 
 ```vbscript
     Dim ObjPart As Part
+```vbscript
+```vbscript
     Set ObjPart = CATIA.ActiveDocument.Part
+
+```
+
+```
 
 ```
 
@@ -57,14 +66,27 @@ Opens the CAAStrWeldInfoOnMembers.CATPart in CATIA.
 
 ```vbscript
 Set ObjPart = CATIA.ActiveDocument.Part
+```
+
 This Step describes how to get Structure Functional Modeler Factory .The Factory Object will be used for creating Structure Functional Modeler Objects.
 
+```vbscript
+```vbscript
     'Get the Factory Object
+
+```
+
 ```
 
 ```vbscript
     Dim FactoryObj As SfmFactory
+```vbscript
+```vbscript
     Set FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
+
+```
+
+```
 
 ```
 
@@ -72,14 +94,27 @@ This Step describes how to get Structure Functional Modeler Factory .The Factory
 
 ```vbscript
 Set FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
+```
+
 The Manager Object is obtained by GetManager.
 
+```vbscript
+```vbscript
     'Get the Manager Object
+
+```
+
 ```
 
 ```vbscript
     Dim ManagerObj As SfmManager
+```vbscript
+```vbscript
     Set ManagerObj = FactoryObj.GetManager
+
+```
+
+```
 
 ```
 
@@ -87,13 +122,22 @@ The Manager Object is obtained by GetManager.
 
 ```vbscript
 Set ManagerObj = FactoryObj.GetManager
+```
+
 This step describes how to get the collection of Super Members and how to get one specific element in it.
 
+```vbscript
+```vbscript
     'RETRIEVING THE SUPERMembers
+
+```
+
 ```
 
 ```vbscript
     Dim SuperMembers As References
+```vbscript
+```vbscript
     Set SuperMembers = ManagerObj.GetSuperMembers
 
     Dim SuperMember1 As SfmMember
@@ -101,21 +145,38 @@ This step describes how to get the collection of Super Members and how to get on
 
 ```
 
+```
+
+```
+
 #### Retrieving Split Members of Super Member
 
 ```vbscript
 Set SuperMember1 = SuperMembers.Item(1)
+```
+
 This step describes how to get the collection of Split Members and how to get one specific element in it.
 
+```vbscript
+```vbscript
     'Retrieving The Split Members
+
+```
+
 ```
 
 ```vbscript
     Dim SplitMembers As References
+```vbscript
+```vbscript
     Set SplitMembers = SuperMember1.SplitProfiles
 
     Dim SplitMember1 As Reference
     Set SplitMember1 = SplitMembers.Item(1)
+
+```
+
+```
 
 ```
 
@@ -125,10 +186,19 @@ This step describes how to get the SfmStiffener object from Reference of split s
 
 ```vbscript
      Set SelctionObj = CATIA.ActiveDocument.Selection
+```vbscript
     'DECK Member
+```
+
     SelctionObj.Add SplitMember1
     Dim DeckMember1 As SfmMember
+```vbscript
+```vbscript
     Set DeckMember1 = SelctionObj.FindObject("CATIASfmMember")
+
+```
+
+```
 
 ```
 
@@ -136,16 +206,28 @@ This step describes how to get the SfmStiffener object from Reference of split s
 
 ```vbscript
 Set DeckMember1 = SelctionObj.FindObject("CATIASfmMember")
+```
+
 This step describes how to get the Plate used as one of the limit for Member and accessing each element in it.
 
+```vbscript
+```vbscript
     'Retrieving Super Plates
+
+```
+
 ```
 
 ```vbscript
     Dim SuperPlates As References
+```vbscript
     Set SuperPlates = ManagerObj.GetSuperPlates
 ```
 
+```
+
+```vbscript
+```vbscript
 ```vbscript
     'Retrieving Operating Super Plate
     Dim SuperPlate1 As SfmSuperPlate
@@ -158,16 +240,26 @@ This step describes how to get the Plate used as one of the limit for Member and
     Set OperatingSplitPlate = OperatingSplitPlateRefs.Item(1)
 ```
 
+```
+
+```
+
 #### Retrieving Weld Features on the Member with Operating Element (Weld Use Case 1)
 
 This step describes how to get the collection of Weld features with operating element and how to get one specific element in it.
 
 ```vbscript
     Dim WeldsUC1 As SfmWelds
+```vbscript
+```vbscript
     Set WeldsUC1 = DeckMember1.GetWelds(OperatingSplitPlate)
 
     Dim WeldUC1 As SfmWeld
     Set WeldUC1 = WeldsUC1.Item(1)
+
+```
+
+```
 
 ```
 
@@ -193,10 +285,16 @@ This step describes how to get the collection of Weld features with no operating
 
 ```vbscript
     Dim WeldsUC2 As SfmWelds
+```vbscript
+```vbscript
     Set WeldsUC2 = DeckMember1.GetWelds(Nothing)
 
     Dim WeldUC2 As SfmWeld
     Set WeldUC2 = WeldsUC2.Item(1)
+
+```
+
+```
 
 ```
 
@@ -210,7 +308,10 @@ This step describes how to get the weld information set on the Operated split Me
     ustrFitUpUC2 = WeldUC2.FitUp
     ustrEdgePrepUC2 = WeldUC2.EdgePreparation
 
+```vbscript
     End Sub
+
+```
 
 ![End Task Icon](../CAAScrBase/images/aendtask.gif)
 
@@ -226,9 +327,9 @@ This use case has shown how to get weld information set on SDD Split Member.
 * * *
 #### References
 
-[1] | [Replaying a macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)  
+[1] | [Replaying a macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)
 
-[Top]  
+[Top]
 
 * * *
 

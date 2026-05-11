@@ -11,20 +11,20 @@ converted: "2026-05-11T17:31:50.666036"
 ---
 # Shape Design & Styling
 
-| 
+|
 ## Generative Shape Design
 
-| 
+|
 ### Inserting a Shape Design Feature in the Procedural View
 
-_Insert GSD feature in the procedural view: attach it to an Open Body in the graph_  
----|---|---  
-Technical Article  
+_Insert GSD feature in the procedural view: attach it to an Open Body in the graph_
+---|---|---
+Technical Article
 
 * * *
 ### Abstract
 
-This article discusses the CAAGsiUserTools Object. This use case explains how to insert a feature in an open body. 
+This article discusses the CAAGsiUserTools Object. This use case explains how to insert a feature in an open body.
 
   * **What means inserting in the procedural view**
   * **The CAAGsiUserTools Object - Inserting Wireframe and ShapeDesign Feature in procedural view**
@@ -34,7 +34,7 @@ This article discusses the CAAGsiUserTools Object. This use case explains how to
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What means inserting in the procedural view
@@ -54,9 +54,9 @@ CAAGsiUserTools is a usefull class in CAAGsiToolkit.m module of the CAAGSMInterf
 
 CAAGsiUserTools is a toolkit object that encapsulate three aspects of CAA development in Wireframe and Shape Design
 
-  * Creating an OpenBody 
-  * Inserting a Wireframe and Shape Design feature in an OpenBody 
-  * Creating Wireframe and shape Design feature using GSMInterface framework Interfaces 
+  * Creating an OpenBody
+  * Inserting a Wireframe and Shape Design feature in an OpenBody
+  * Creating Wireframe and shape Design feature using GSMInterface framework Interfaces
 
 Two first aspects are general behaviors to re-use to instanciate any GSD features of GSMInterfaces in CATIA V5 frame.
 
@@ -65,7 +65,7 @@ The second aspect is presented in this article
 [Top]
 #### What Does CAAGsiUserTools Do
 
-The goal of CAAGsiUserTools Object is to show how to insert a feature in an open body feature, which is a basic task when you create shape design features in a part document. CAAGsiUserTools illustrates some backbone concepts that are shared by all mechanical applications. 
+The goal of CAAGsiUserTools Object is to show how to insert a feature in an open body feature, which is a basic task when you create shape design features in a part document. CAAGsiUserTools illustrates some backbone concepts that are shared by all mechanical applications.
 
 [Top][Top]
 #### Where to Find the CAAGsiUserTools Code
@@ -73,11 +73,11 @@ The goal of CAAGsiUserTools Object is to show how to insert a feature in an open
 The goal of CAAGsiUserTools Object is to show how to insert a feature in an open body feature, which is a basic task when you create shape design features in a part document. CAAGsiUserTools illustrates some backbone concepts that are shared by all mechanical applications.
 The CAAGsiUserTools Object is made of a single class named CAAGsiUserTools located in the CAAGsiToolkit.m module of the CAAGSMInterfaces.edu framework:
 
-Windows | `InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiToolkit.m\`  
+Windows | `InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiToolkit.m\`
 
 The CAAGsiUserTools Object is made of a single class named CAAGsiUserTools located in the CAAGsiToolkit.m module of the CAAGSMInterfaces.edu framework:
 Windows | `InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiToolkit.m\`
-Unix | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiToolkit.m/`  
+Unix | `InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiToolkit.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
@@ -85,9 +85,9 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 ### Step-by-Step
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
-There are two logical steps in CAAGsiUserTools: 
+There are two logical steps in CAAGsiUserTools:
 
-Since release V5R12 
+Since release V5R12
 
   1. Use of CATIGSMInsertInProceduralView interface
 
@@ -99,36 +99,45 @@ Before release CATIA V5R12
 [Top]
 #### Use of CATIGSMInsertInProceduralView interface
 
-    **HRESULT 
+    **HRESULT
     CAAGsiUserTools::InsertInProceduralView**(const CATISpecObject_var& ispObjectToAppend,
                                             const CATISpecObject_var& ispInputParent)
     {
 
-        // V5R12 AND FOLLOWING VERSIONS: Tool to Insert into the procedural view 
+        // V5R12 AND FOLLOWING VERSIONS: Tool to Insert into the procedural view
         //   ----------------------------------------------------------------------------
 
-        HRESULT rc = E_FAIL; 
+        HRESULT rc = E_FAIL;
         CATIGSMProceduralView_var curobj = ispObjectToAppend;
         if (NULL_var != curobj ) {
+```vbscript
+```vbscript
             rc = curobj->InsertInProceduralView(ispInputParent);
+
+```
+
+```
 
         }
 HRESULT rc = E_FAIL;
 CATIGSMProceduralView_var curobj = ispObjectToAppend;
 if (NULL_var != curobj ) {
+```vbscript
 rc = curobj->InsertInProceduralView(ispInputParent);
+```
+
         return rc ;
 
-    }  
+    }
 
----  
+---
 
-The interface is implemented for all GSD feature and it allows to directly insert the current feature in the procedural view  
-It encapsulates the previous proposed methodology to insert a feature in an Open Body  
-If the input father feature is not set (NULL_var) then the current feature is used as reference for inserting.  
+The interface is implemented for all GSD feature and it allows to directly insert the current feature in the procedural view
+It encapsulates the previous proposed methodology to insert a feature in an Open Body
+If the input father feature is not set (NULL_var) then the current feature is used as reference for inserting.
 Note: If object is already inserted, nothing is done.
 
-Some additionnal arguments can be setted (which values are default defined) 
+Some additionnal arguments can be setted (which values are default defined)
 
   * bSetAsCurrent (TRUE by default) TRUE means that the object after insert becomes current
   * BeforeFeature (NULL_var by default), only to be used for inserting in a partbody, allow to specify where insert the feature in a PartBody
@@ -147,11 +156,17 @@ const CATISpecObject_var &ispInputParent)
       CATIGSMTool_var spTool = ispInputParent;
 
       if (NULL_var == spTool)
+```vbscript
+```vbscript
         spTool = **GetCurrentGSMTool**("",1);
 
-      ...  
+```
 
----  
+```
+
+      ...
+
+---
 
 spTool = **GetCurrentGSMTool**("",1);
 We first get a _CATIGSMTool_ smart pointer from the `ispInputParent` smart pointer. If the given _CATISpecObject_ Smart Pointer `ispInputParent` equals NULL_var then we call the `GetCurrentGSMTool` method to retrieve a GMTool. If we call `InsertInProceduralView` with a null `ispInputParent` then we will retrieve the GSMTool automatically.
@@ -173,15 +188,21 @@ int iSetAsCurrent)
       CATIPrtPart_var      spPart      = spPartCont -> GetPart();
 
       CATIGSMTool_var spTool = NULL_var;
+```vbscript
       if (NULL_var != spPart)
 
-      { 
+```
+
+      {
 CATIPrtPart_var      spPart      = spPartCont -> GetPart();
 CATIGSMTool_var spTool = NULL_var;
 if (NULL_var != spPart)
         CATIBasicTool_var spCurrentTool = spPart->**GetCurrentTool**();
         spTool = spCurrentTool;
+```vbscript
         if (NULL_var != spTool)
+
+```
 
         {
 CATIBasicTool_var spCurrentTool = spPart->**GetCurrentTool**();
@@ -195,27 +216,36 @@ if (NULL_var != spTool)
 CATISpecObject_var spExternalRef = spPart->**GetBodyForExternalReferences**();
 if (NULL_var != spExternalRef && spTool == spExternalRef)
 spTool = NULL_var;
+```vbscript
         if (**NULL_var == spTool**)
+
+```
 
         {
 ```vbscript
 if (NULL_var != spExternalRef && spTool == spExternalRef)
 spTool = NULL_var;
 if (**NULL_var == spTool**)
+```vbscript
           spTool = **CreateGSMTool**(iName);
+```
+
 ```
 
         }
       }
 ```vbscript
 if (**NULL_var == spTool**)
+```vbscript
 spTool = **CreateGSMTool**(iName);
+```
+
       return spTool;
 ```
 
-    }  
+    }
 
----  
+---
 
 return spTool;
 The smart pointer `spPart` to the _CATIPrtPart_ interface enables us to retrieve the active Tool (One always one.) Then, we try to get a _CATIGSMTool_ smart pointer on the `spCurrentTool` _CATIBasicTool_ smart pointer, if `spCurrentTool` is a GSMTool then `spTool` is not null.
@@ -237,7 +267,10 @@ Now that we have retrieved (or created) an open body, we can aggregate the shape
         **CATIDescendants** _var spParent = spTool;
 ```vbscript
 if ( NULL_var != ispObjectToAppend && NULL_var != spTool)
+```vbscript
         if ( NULL_var != spParent)
+```
+
           spParent->**Append ( ispObjectToAppend )** ;
         else
           return E_FAIL;
@@ -251,11 +284,11 @@ else
 return E_FAIL;
       else
         return E_FAIL;
-      return S_OK;  
+      return S_OK;
 
 ```
 
----  
+---
 
 return E_FAIL;
 return S_OK;
@@ -270,27 +303,27 @@ We call the `Append` method of spParent in order to add to its descendant the `i
 * * *
 ### In Short
 
-This use case has demonstrated the way to insert a shape design feature in procedural view. We illustrate the way we can automatically insert an open body in the procedural view if no active open body exists. We also show how to aggregate a feature in an open body using _CATIDescendants_ interface. 
+This use case has demonstrated the way to insert a shape design feature in procedural view. We illustrate the way we can automatically insert an open body in the procedural view if no active open body exists. We also show how to aggregate a feature in an open body using _CATIDescendants_ interface.
 
 [Top]
 
 * * *
 ### References
 
-[1] | [About Generative Shape Design Features](CAAGsiShapeDesignFeature.md)  
----|---  
-[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
-[3] | [Creating an Open Body](CAAGsiCreateGSMTool.md)  
-[4] | [CAAGsiNozzle Use case](../CAAGsiUseCases/CAAGsiNozzleSample.md)  
-[Top]  
+[1] | [About Generative Shape Design Features](CAAGsiShapeDesignFeature.md)
+---|---
+[2] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)
+[3] | [Creating an Open Body](CAAGsiCreateGSMTool.md)
+[4] | [CAAGsiNozzle Use case](../CAAGsiUseCases/CAAGsiNozzleSample.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Apr 2000] | Document created  
----|---  
-Version: **2** [Apr 2003] | Documentset as Technical Article  
-[Top]  
+Version: **1** [Apr 2000] | Document created
+---|---
+Version: **2** [Apr 2003] | Documentset as Technical Article
+[Top]
 
 * * *
 

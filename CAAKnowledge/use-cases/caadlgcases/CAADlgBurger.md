@@ -11,20 +11,20 @@ converted: "2026-05-11T17:17:55.961678"
 ---
 # 3D PLM Enterprise Architecture
 
-| 
+|
 ## User Interface - Dialogs
 
-| 
+|
 ### The Burger Order Dialog Box
 
-_A comprehensive dialog box sample_  
----|---|---  
-Use Case  
+_A comprehensive dialog box sample_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
 
-This article discusses the _CAADlgBurger.m_ module of the CAADialog.edu framework. It shows how to create a dialog box, and the interactive application needed to display and run it. It includes and explains most of the Dialog framework mechanisms. 
+This article discusses the _CAADlgBurger.m_ module of the CAADialog.edu framework. It shows how to create a dialog box, and the interactive application needed to display and run it. It includes and explains most of the Dialog framework mechanisms.
 
   * **What You Will Learn With This Use Case**
   * **The CAADlgBurger Use Case**
@@ -35,12 +35,12 @@ This article discusses the _CAADlgBurger.m_ module of the CAADialog.edu framewor
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
 
-This integration example is intended to cover the scope of programming tasks to create a dialog box. These tasks are: 
+This integration example is intended to cover the scope of programming tasks to create a dialog box. These tasks are:
 
   * Creating an interactive application to display the dialog box
   * Creating dialog objects and setting their behaviors and styles
@@ -82,23 +82,23 @@ To launch CAADlgBurger, you will need to set up the build time environment, then
 To launch CAADlgBurger, you will need to set up the build time environment, then compile CAADlgBurger along with its prerequisites, set up the run time environment, and then execute the use case [1].
 The CAADlgBurger use case is made of a several classes located in the CAADlgBurger.m module of the CAADialog.edu framework:
 
-Windows | `InstallRootDirectory\CAADialog.edu\CAADlgBurger.m\`  
+Windows | `InstallRootDirectory\CAADialog.edu\CAADlgBurger.m\`
 
 The CAADlgBurger use case is made of a several classes located in the CAADlgBurger.m module of the CAADialog.edu framework:
 Windows | `InstallRootDirectory\CAADialog.edu\CAADlgBurger.m\`
-Unix | `InstallRootDirectory/CAADialog.edu/CAADlgBurger.m/`  
+Unix | `InstallRootDirectory/CAADialog.edu/CAADlgBurger.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
 The CATDlgBurger.m module includes four files:
 
-_CAABurgerApplication.h_ | The interactive application header file  
+_CAABurgerApplication.h_ | The interactive application header file
 
 The CATDlgBurger.m module includes four files:
 _CAABurgerApplication.h_ | The interactive application header file
-_CAABurgerApplication.cpp_ | The interactive application source file  
-_CAABurgerDialogBox.h_ | The dialog box header file  
-_CAABurgerDialogBox.cpp_ | The dialog box source file  
+_CAABurgerApplication.cpp_ | The interactive application source file
+_CAABurgerDialogBox.h_ | The dialog box header file
+_CAABurgerDialogBox.cpp_ | The dialog box source file
 
 The resource file CAABurgerDialogBox.CATNls is located in the CNext\resources\msgcatalog directory.
 
@@ -133,16 +133,16 @@ class CAABurgerApplication : public CATInteractiveApplication
                      CAABurgerApplication(const CATString & iApplicationId);
         virtual     ~CAABurgerApplication();
         virtual void BeginApplication();
-        virtual int  EndApplication();  
+        virtual int  EndApplication();
       private:
         CAABurgerDialogBox * _pBurgerDialogBox; _// The dialog box_
 
     };
-    #endif  
+    #endif
 
----  
+---
 
-In addition to the constructor and destructor, this interactive application class redefines two methods of _CATInteractiveApplication_ : 
+In addition to the constructor and destructor, this interactive application class redefines two methods of _CATInteractiveApplication_ :
 
   * `BeginApplication`, called by CATIA just after the application constructor. This method is dedicated to create the different objects managed by the application, namely here the dialog box
   * `EndApplication`, called by CATIA when the application destruction is requested. This method is dedicated to deallocate objects or close files. Note that the application dialog windows and boxes declared as the application class data members are automatically deleted.
@@ -155,7 +155,10 @@ The dialog box is created in the `BeginApplication` method, and the `EndApplicat
 
     {
 void CAABurgerApplication::BeginApplication()
+```vbscript
       _pBurgerDialogBox = new CAABurgerDialogBox(this,              _// Parent_
+
+```
 
                                                  "BurgerId",        _// Identifier_
 void CAABurgerApplication::BeginApplication()
@@ -171,17 +174,17 @@ _pBurgerDialogBox->Build();
 _pBurgerDialogBox->SetVisibility(CATDlgShow);
     int CAABurgerApplication::EndApplication()
 
-    {              
+    {
 _pBurgerDialogBox->SetVisibility(CATDlgShow);
 int CAABurgerApplication::EndApplication()
       return 0;
 
     }
-    ...  
+    ...
 
----  
+---
 
-Note that the dialog box class is first instantiated, then initialized using its `Build` method, and finally set as visible. The constructor parameters are: 
+Note that the dialog box class is first instantiated, then initialized using its `Build` method, and finally set as visible. The constructor parameters are:
 
 Note that the dialog box class is first instantiated, then initialized using its `Build` method, and finally set as visible. The constructor parameters are:
   1. The dialog box parent in the command tree structure, set as the application itself
@@ -191,9 +194,9 @@ Note that the dialog box class is first instantiated, then initialized using its
 The application is simply instantiated as follows. CATIA creates the main program from this instance.
 
     ...
-    CAABurgerApplication ApplicationInstance("Burger");  
+    CAABurgerApplication ApplicationInstance("Burger");
 
----  
+---
 
 [Top]
 #### Creating Dialog Objects and Setting their Behaviors and Styles
@@ -247,9 +250,9 @@ CATDlgCheckButton     * _pKetchup, * _pMustard, * _pPickle,
 
     ...
     };
-    #endif  
+    #endif
 
----  
+---
 
 The `DeclareResource` macro enables the class and all its dialog objects to use the automatic resource assignment. The first parameter is the class name, and the resource files must use this class name as file name, such as CAADlgBurger.CATNls for the file containing the texts and messages.
 
@@ -292,11 +295,11 @@ CATCommandClientData   iUsefulData);
     _// The dialog box parent_
         CATInteractiveApplication * _pCAABurgerApplication;
 
-    };  
+    };
 
----  
+---
 
-All the methods are not listed here. The method to execute when a given control is activated has the following arguments: 
+All the methods are not listed here. The method to execute when a given control is activated has the following arguments:
 
   * the control
   * the notification sent by the control when it is activated
@@ -349,22 +352,31 @@ CATString BurgerMsgCatalogName("CAABurgerDialogBox");
 _pMsgCat = new CATMsgCatalog();
 int rc = _pMsgCat->LoadMsgCatalog(BurgerMsgCatalogName);
 if(!rc) cout << "The message catalog is not found" << endl;
+```vbscript
       _pHamburgerLabel = new CATDlgLabel(this, "HamburgerLabelId");
+```
+
       CATDlgGridConstraints GC1;
       GC1.Row = 0; GC1.Column = 0; GC1.H_Span = 1; GC1.V_Span = 1; GC1.Justification = CATGRID_CENTER;
       _pHamburgerLabel->SetGridConstraints(GC1);
 
       _pFriesLabel = new CATDlgLabel(this, "FriesLabelId");
+```vbscript
       GC1.Row = 0; GC1.Column = 2; GC1.H_Span = 1; GC1.V_Span = 1; GC1.Justification = CATGRID_CENTER;
+```
+
       _pFriesLabel->SetGridConstraints(GC1);
 
       _pDrinkLabel = new CATDlgLabel(this, "DrinkLabelId");
+```vbscript
       GC1.Row = 0; GC1.Column = 4; GC1.H_Span = 1; GC1.V_Span = 1; GC1.Justification = CATGRID_CENTER;
+```
+
       _pDrinkLabel->SetGridConstraints(GC1);
 
-    ...  
+    ...
 
----  
+---
 
 The constructor is empty, but calls the base class CATDlgDocument constructor,and sets the parent command of the window as the interactive appliction itself. The `Build` method begins with the message catalog creation from the file designated using the `DeclareResource` macro in the header file. This message catalog creation is required because some controls cannot have their resources automatically assigned. This is the case for the combo and editor lines. The labels, frames, and push buttons are then instantiated. Now we shall arrange these objets in the window in a grid as follows:
 
@@ -374,7 +386,10 @@ Three rows and five columns are necessary to accommodate the labels for the titl
 
     ...
 Three rows and five columns are necessary to accommodate the labels for the titles, the frames and separators, and the three push buttons. This is coded using instances of the _CATDlgGridConstraints_ class for the three frames and the two separators as follows:
+```vbscript
       _pHamburgerFrame = new CATDlgFrame(this, "HamburgerFrameId", CATDlgFraNoTitle | CATDlgGridLayout);
+
+```
 
       **CATDlgGridConstraints GCFH(1,0,1,1, CATGRID_TOP | CATGRID_BOTTOM);**
 _pHamburgerFrame = new CATDlgFrame(this, "HamburgerFrameId", CATDlgFraNoTitle | CATDlgGridLayout);
@@ -396,9 +411,9 @@ _pHamburgerFrame = new CATDlgFrame(this, "HamburgerFrameId", CATDlgFraNoTitle | 
       CATDlgGridConstraints GCFD(1,4,1,1, CATGRID_TOP | CATGRID_BOTTOM);
       _pDrinkFrame->SetGridConstraints(GCFD);
 
-    ...  
+    ...
 
----  
+---
 
 _pDrinkFrame->SetGridConstraints(GCFD);
 As an example, the first `SetGridConstraints` method call applies the `GCFH` _CATDlgConstraints_ instance that puts the Hamburger frame left corner in the cell located at the intersection of row 1 and column 0, and states that this frame extends on one cell in the row direction, and also on one cell in the colum direction. The `CATGRID_TOP` and `CATGRID_BOTTOM` attributes are concatenated and indicate that the Hamburger frame is attached to the top and bottom border of the cell [2].
@@ -414,7 +429,7 @@ _// Instantiate and arrange the cooking radio buttons
       _pRare       = new CATDlgRadioButton(_pHamburgerFrame, "RareId");
     _// Arrange in container parent_
       _pRare->SetGridConstraints(0,             _// Top left corner row_
-                                 0,             _// Top left corner column_ 
+                                 0,             _// Top left corner column_
                                  1,             _// Spans on 1 row_
                                  1,             _// Spans on 1 column_
                                  CATGRID_LEFT); _// Attached to container by left side_
@@ -442,7 +457,10 @@ _// Instantiate and arrange the cooking radio buttons
       _pMayonnaise->SetGridConstraints(4,1,1,1,CATGRID_LEFT);
 
     _// Instantiate and arrange the hamburger count slider_
+```vbscript
       _pHamburgerQuantity = new CATDlgSlider(_pHamburgerFrame,
+
+```
 
                                              "HamburgerQuantityId",
 _pMayonnaise->SetGridConstraints(4,1,1,1,CATGRID_LEFT);
@@ -453,19 +471,19 @@ _pHamburgerQuantity = new CATDlgSlider(_pHamburgerFrame,
       _pHamburgerQuantity->SetDecimalPoint(0);    // No decimal point
       _pHamburgerQuantity->SetGridConstraints(3,0,1,3,CATGRID_LEFT);
 
-    ...  
+    ...
 
----  
+---
 
 The labels, frames, and push buttons are then instantiated and arranged using a grid. This is described with the hamburger frame taken as an example:
 
 ![CAADlgBurgerFrame.jpg \(18368 bytes\)](images/CAADlgBurgerFrame.jpg)
 
-The controls of the Hamburger frame are instantiated by passing their father in the command tree structure, here the frame itself, and their identifier. They are arranged in the grid as they are created. For example, the Rare radio button is instantiated, and it location is declared using the `SetGridConstraints` method that creates a grid constraint object with the control with the following parameters 
+The controls of the Hamburger frame are instantiated by passing their father in the command tree structure, here the frame itself, and their identifier. They are arranged in the grid as they are created. For example, the Rare radio button is instantiated, and it location is declared using the `SetGridConstraints` method that creates a grid constraint object with the control with the following parameters
 
   * The control top left corner is placed in the grid cell located at the intersection of the row 0 with the column 0 using the first two parameters of  `SetGridConstraints`
   * It spans over one grid cell in the row 0, and one grid cell in the column 0\. This is declared using the third and fourth argument of `SetGridConstraints`
-  * It is attached the object to the left side of the cell thanks to the last argument. 
+  * It is attached the object to the left side of the cell thanks to the last argument.
 
 The other controls are instantiated and placed in the frame in the same way. The slider is set vertical and ranges from 0 to 10 with 10 steps and no decimal point. It thus takes the values 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, and 10.
 
@@ -483,12 +501,15 @@ We will now set the callbacks to trigger the appropriate method when a specific 
       AddAnalyseNotificationCB(_pRare, _pRare->GetRadBModifyNotification(),
                                (CATCommandMethod)&CAABurgerDialogBox::WellDone, NULL);
 
-    ...  
+    ...
 
----  
+---
 
 ```vbscript
+```vbscript
 For example, if the Rare radio button is clicked, or if another radio button is clicked while Rare was checked, Rare creates and sends a radio button modification notification that is an instance of the class CATDlgRadBModifyNotification. The `AddAnalyseNotificationCB` method sets a callback to enable a parent class of the radio button, that is in this case the dialog box itself, to be called to execute a method whenever the radio button is checked or unchecked. This callback associates the method `Rare` of the dialog box class with the Rare button sending a CATDlgRadBModifyNotification. `Rare` is triggered when the Rare button is clicked, that is when the `GetRadBModifyNotification` method returns a radio button modification notification. We now need to code `Rare`:
+
+```
 
 ```
 
@@ -512,9 +533,9 @@ CATCommandClientData   UsefulData)
       CATUnicodeString usMessage((*_pMsgCat).GetCatalogMsg("RadioButtonNotification").BuildMessage(usParam));
       cout << usMessage << endl;
 
-    }  
+    }
 
----  
+---
 
 This method simply writes a trace in the command window. It retrieves from the object that sends the notification, that is the rare radio button, its title and whether it is checked, and make two CATUnicodeString instances from this information, creates the output message by retrieving a standard message from the resource file and customizign it with the two parameters.
 
@@ -530,13 +551,25 @@ The file that contains texts and messages is named CAADlgBurger.CATNls and is st
 The file that contains texts and messages is named CAADlgBurger.CATNls and is stored in CNext\resources\msgcatalog directory.
 Title                     = "Burger Order-Entry Box";
     HamburgerLabelId.Title     = "Hamburgers";
+```vbscript
+```vbscript
     FriesLabelId.Title         = "Fries";
     DrinkLabelId.Title         = "Drinks";
 
+```
+
+```
+
     ...
 HamburgerLabelId.Title     = "Hamburgers";
+```vbscript
+```vbscript
 FriesLabelId.Title         = "Fries";
 DrinkLabelId.Title         = "Drinks";
+```
+
+```
+
     HamburgerFrameId.RareId.Title           = "Rare";
     HamburgerFrameId.MediumId.Title         = "Medium";
     HamburgerFrameId.WellDoneId.Title       = "Well Done";
@@ -547,14 +580,14 @@ HamburgerFrameId.MediumId.Title         = "Medium";
 HamburgerFrameId.WellDoneId.Title       = "Well Done";
     RadioButtonNotification  = "/p1 button sends a CATDlgRadBModifyNotification to state it is /p2";
 
-    ...  
+    ...
 
----  
+---
 
 RadioButtonNotification  = "/p1 button sends a CATDlgRadBModifyNotification to state it is /p2";
 Each resource that is automatically extracted and assigned is referred to using a key built thanks a concatenation of the identifiers set when instantiating the dialog objects, starting with the dialog box and covering the parent/child tree up to the involved control. For example, HamburgerFrameId.RareId.Title is the key to retrieved the title assigned to the Rare rodio button. It is located in the dialog box resource file, and is made of the hamburger frame identifier, concatenated to the radio button identifier using a dot as separator, itself concatenated to the Title keyword. The mechanism that automatically retrieves the resource value is implemented by the Dialog framework and you don't need to instantiate by yourself the message catalog to do this.
 
-The standard message for radio buttons is referred to using the `RadioButtonNotification` key. As with combo or editor lines, there is no automatic message retrieval, and you should for them instantiate the message catalog, and build a CATUnicodeString instance from the key and the possible parameters that customize the standard message. 
+The standard message for radio buttons is referred to using the `RadioButtonNotification` key. As with combo or editor lines, there is no automatic message retrieval, and you should for them instantiate the message catalog, and build a CATUnicodeString instance from the key and the possible parameters that customize the standard message.
 
 [Top]
 
@@ -566,17 +599,17 @@ The standard message for radio buttons is referred to using the `RadioButtonNoti
 * * *
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-[2] | [Arranging Dialog Objects Using Grid](../CAADlgTechArticles/CAADlgGridLayout.md)  
-[Top]  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)
+---|---
+[2] | [Arranging Dialog Objects Using Grid](../CAADlgTechArticles/CAADlgGridLayout.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Jan 2000] | Document created  
----|---  
-[Top]  
+Version: **1** [Jan 2000] | Document created
+---|---
+[Top]
 
 * * *
 

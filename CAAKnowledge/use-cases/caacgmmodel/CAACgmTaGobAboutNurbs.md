@@ -9,13 +9,13 @@ converted: "2026-05-11T17:33:47.874094"
 ```
 
 ---
-# About NURBS  
+# About NURBS
 
----  
-Technical Article  
+---
+Technical Article
 ## Abstract
 
-The NURBS model is now widely used in the CAD word to define curves and surfaces. It is the result of a continuous improvement of the curve and surface mathematical models. We first introduce the NURBS model and the objects it manages: knot vector, basis of functions, control points. Then, we describe how the Bzier points and Bernstein basis, uniform B-Splines, non-uniform B-Splines models can be seen as particular cases of the general NURBS model. We finally show how to use NURBS curves and surfaces in CGM. 
+The NURBS model is now widely used in the CAD word to define curves and surfaces. It is the result of a continuous improvement of the curve and surface mathematical models. We first introduce the NURBS model and the objects it manages: knot vector, basis of functions, control points. Then, we describe how the Bzier points and Bernstein basis, uniform B-Splines, non-uniform B-Splines models can be seen as particular cases of the general NURBS model. We finally show how to use NURBS curves and surfaces in CGM.
 
   * Introduction
   * The NURBS Model
@@ -34,7 +34,7 @@ The NURBS model is now widely used in the CAD word to define curves and surfaces
   * In Short
   * References
 
----  
+---
 ## Introduction
 
 The mathematical model of a curve is the description of the geometric form that the user wants to design in a way that can be handled by a CAD system. Ideally, a totally free curve in the 3D space has many infinitely degrees of freedom: it is the juxtaposition of an infinite number of points, and this is unusable for a CAD system. The mathematical model allows the CAD system to handle curves with a finite number of data. But it also put constraints on the objects it models: all the curves cannot be expressed with one model. We see here a key point of the mathematical model: it has to be judiciously chosen to be able to model as many types of curve representations as possible, with as less data as possible, in a as simple manner as possible.
@@ -76,11 +76,14 @@ with the following conventions:
 with the following conventions:
 The relation between the number of knots (_m+1_), the degree (_k_) of _Nik_ and the number of control points (_n+1_) is given as follows:
 
+```vbscript
 _m = (n+1) + k_
+
+```
 
 Knot values are non-decreasing, so a knot vector can have knots with the same value. In this case, the knot is called **multiple** , and its multiplicity is the number of repetitions of the same value. There are as many arcs as knots of different values plus one. If the increment is always 1, the knot vector is called **uniform**.
 
-The multiplicity is a way to specify the **continuity order** between the arcs. Hence, there is a relation between the multiplicity and this continuity order: 
+The multiplicity is a way to specify the **continuity order** between the arcs. Hence, there is a relation between the multiplicity and this continuity order:
 
   1. For an internal knot value (neither the first, nor the last), the continuity order is the degree minus the multiplicity. As a consequence, the multiplicity of a knots cannot be strictly greater then the degree.
   2. By convention, for a non periodic basis (open curve), each extreme knot value has a multiplicity equal to the degree plus one.
@@ -88,32 +91,32 @@ The multiplicity is a way to specify the **continuity order** between the arcs. 
 
 The following table summarizes these relations:
 
-| Multiplicity (`m`) | Continuity order  
----|---|---  
+| Multiplicity (`m`) | Continuity order
+---|---|---
 The following table summarizes these relations:
-internal knot values | `1 <= m <= degree` | `Degree-m`  
-extreme knot values for a non periodic basis | `degree+1 `(by convention) | `(-1)`  
-same first and last multiplicities for a periodic basis | `1 <= m <= degree` | `Degree-m`  
+internal knot values | `1 <= m <= degree` | `Degree-m`
+extreme knot values for a non periodic basis | `degree+1 `(by convention) | `(-1)`
+same first and last multiplicities for a periodic basis | `1 <= m <= degree` | `Degree-m`
 
 **Example 1** :
 
 extreme knot values for a non periodic basis | `degree+1 `(by convention) | `(-1)`
 same first and last multiplicities for a periodic basis | `1 <= m <= degree` | `Degree-m`
-Knot vector of one arc of degree 3: 0 0 0 0 1 1 1 1  
+Knot vector of one arc of degree 3: 0 0 0 0 1 1 1 1
 In this case, there are four control points
 
-Fig. 1: Illustration of Example 1 ![Nurbs](images/CAACgmGobNurbs2.gif) | The green curve has four control points (CP1 to CP4). If you move CP3 to CP3', the curve is attracted by this new points. Notice two important properties of this kind of NURBS, called Bezier arc: 
+Fig. 1: Illustration of Example 1 ![Nurbs](images/CAACgmGobNurbs2.gif) | The green curve has four control points (CP1 to CP4). If you move CP3 to CP3', the curve is attracted by this new points. Notice two important properties of this kind of NURBS, called Bezier arc:
 
   * The curve is inside the convex hull of the control points
   * The curve is tangent to the segment joigning the first and second control points at the beginning of the curve, and to the segment joining the last and next to last control points at its end.
 
 **Example 2** :
 
-Non uniform knot vector, 3 arcs of degree 3, C2 continuity: 0 0 0 0 2 8 9 9 9 9  
+Non uniform knot vector, 3 arcs of degree 3, C2 continuity: 0 0 0 0 2 8 9 9 9 9
 Non uniform knot vector, 3 arcs of degree 3, C2 continuity: 0 0 0 0 2 8 9 9 9 9
 In this case, there are six control points
 
-Fig. 2: Illustration of Example 2 ![Nurbs](images/CAACgmGobNurbs1.gif) | The green curve is an example of non uniform polynomial B-Spline curve, having the knot vector of the example 2. The weight of each control point is 1. If you assign (1,1,10,20,5,1) to the control points, it gives the red curve. This curve is attracted by the control points CP3 and CP4, that are more weighted than the others. These curves have three arcs: CP1-K1, K1-K2, K2-CP2.  
+Fig. 2: Illustration of Example 2 ![Nurbs](images/CAACgmGobNurbs1.gif) | The green curve is an example of non uniform polynomial B-Spline curve, having the knot vector of the example 2. The weight of each control point is 1. If you assign (1,1,10,20,5,1) to the control points, it gives the red curve. This curve is attracted by the control points CP3 and CP4, that are more weighted than the others. These curves have three arcs: CP1-K1, K1-K2, K2-CP2.
 
 In this case, there are six control points
 Fig. 2: Illustration of Example 2 ![Nurbs](images/CAACgmGobNurbs1.gif) | The green curve is an example of non uniform polynomial B-Spline curve, having the knot vector of the example 2. The weight of each control point is 1. If you assign (1,1,10,20,5,1) to the control points, it gives the red curve. This curve is attracted by the control points CP3 and CP4, that are more weighted than the others. These curves have three arcs: CP1-K1, K1-K2, K2-CP2.
@@ -121,7 +124,7 @@ According to the definition, it is possible to create NURBS curves that are only
 
 ### Properties
 
-  * The NURBS provides a unified mathematical model for representing 
+  * The NURBS provides a unified mathematical model for representing
     * analytic shapes (such as conics or quadric surfaces, that cannot be handled by the Bzier model, by uniform B-Splines or non uniform B-Splines)
     * free form entities, used to design car bodies for example.
   * Their model easily manages the continuity between the arcs, and their algorithm are fast and numerically stable.
@@ -147,7 +150,7 @@ A NUPBS curve is defined by **control points** _Pi, i=0..n_ , which influence is
 As for the NURBS, this gives a flexible way to define arcs and the continuity between them. But now, NUPBS cannot model the conics as for the NURBS.
 ### Uniform Polynomial B-Spline (UPBS)
 
-This is a particular case of NUPBS: 
+This is a particular case of NUPBS:
 
   * the internal knots multiplicity is 1
   * the extreme knots multiplicity is the degree plus 1
@@ -187,39 +190,39 @@ Two interfaces and a class manage the NURBS model in CGM: the CATNurbsCurve and 
 Note: Periodic NURBS are not supported.
 This class handles the knot vector definition. Instances of this class are transient, they cannot be directly stored. However, they are saved as private data of the curve and surface, of which they are the B-Spline basis definition. The knot vector is defined as compressed, that is to say that, for evident numerical reasons, all the knots have different values and their multiplicity is managed by a specific array. Hence, a CATKnotVector has the following definition:
 
-long | Degree | The degree of the B-Spline basis functions  
+long | Degree | The degree of the B-Spline basis functions
 
 This class handles the knot vector definition. Instances of this class are transient, they cannot be directly stored. However, they are saved as private data of the curve and surface, of which they are the B-Spline basis definition. The knot vector is defined as compressed, that is to say that, for evident numerical reasons, all the knots have different values and their multiplicity is managed by a specific array. Hence, a CATKnotVector has the following definition:
 long | Degree | The degree of the B-Spline basis functions
-CATBoolean | IsPeriodic | 1 for a periodic basis (not supported): the parameter domain is unlimited. If `Delta= LastKnotValue - FirstKnotValue`, the evaluations at `Parameter + Delta` and `Parameter` are the same.  
-0 otherwise  
-CATBoolean | IsUniform | 1 in case of equally spaced knot values.  
-0 otherwise.  
-long | NbOfKnots | The size of the compressed knot vector ( `=NbOfArcs + 1)`  
-long | Knots | The array of the knots  
-long | Multiplicities | The array of the multiplicity of a knot value  
+CATBoolean | IsPeriodic | 1 for a periodic basis (not supported): the parameter domain is unlimited. If `Delta= LastKnotValue - FirstKnotValue`, the evaluations at `Parameter + Delta` and `Parameter` are the same.
+0 otherwise
+CATBoolean | IsUniform | 1 in case of equally spaced knot values.
+0 otherwise.
+long | NbOfKnots | The size of the compressed knot vector ( `=NbOfArcs + 1)`
+long | Knots | The array of the knots
+long | Multiplicities | The array of the multiplicity of a knot value
 
 In the case of the two previous examples, this leads to:
 
-  * Example 1  
+  * Example 1
 long | Multiplicities | The array of the multiplicity of a knot value
 In the case of the two previous examples, this leads to:
-Knot vector of one arc of degree 3: 0 0 0 0 1 1 1 1  Degree | IsPeriodic | IsUniform | NbOfKnots | Knots | Multiplicities  
+Knot vector of one arc of degree 3: 0 0 0 0 1 1 1 1  Degree | IsPeriodic | IsUniform | NbOfKnots | Knots | Multiplicities
 
 In the case of the two previous examples, this leads to:
 Knot vector of one arc of degree 3: 0 0 0 0 1 1 1 1  Degree | IsPeriodic | IsUniform | NbOfKnots | Knots | Multiplicities
-3 | 0 | 1 | 2 | 0 1 | 4 4  
+3 | 0 | 1 | 2 | 0 1 | 4 4
 
-  * Example 2  
+  * Example 2
 Knot vector of one arc of degree 3: 0 0 0 0 1 1 1 1  Degree | IsPeriodic | IsUniform | NbOfKnots | Knots | Multiplicities
 3 | 0 | 1 | 2 | 0 1 | 4 4
-Non uniform knot vector, 3 arcs of degree 3, C2 continuity: 0 0 0 0 2 8 9 9 9 9  
-In this case, there are six control points  Degree | IsPeriodic | IsUniform | NbOfKnots | Knots | Multiplicities  
+Non uniform knot vector, 3 arcs of degree 3, C2 continuity: 0 0 0 0 2 8 9 9 9 9
+In this case, there are six control points  Degree | IsPeriodic | IsUniform | NbOfKnots | Knots | Multiplicities
 
 3 | 0 | 1 | 2 | 0 1 | 4 4
 Non uniform knot vector, 3 arcs of degree 3, C2 continuity: 0 0 0 0 2 8 9 9 9 9
 In this case, there are six control points  Degree | IsPeriodic | IsUniform | NbOfKnots | Knots | Multiplicities
-3 | 0 | 0 | 4 | 0 2 8 9 | 4 1 1 4  
+3 | 0 | 0 | 4 | 0 2 8 9 | 4 1 1 4
 
 ### CATNurbsCurve
 
@@ -228,13 +231,13 @@ Note: Periodic NURBS are not supported.
 
 This interface manages the NURBS curves in CGM. As a NURBS curve is a kind of curve, it inherits all the properties of the CGM curves (CATCurve, see [2]). It is defined as follows:
 
-CATKnotVector | `KnotVector` | The knot vector for the polynomial basis definition  
+CATKnotVector | `KnotVector` | The knot vector for the polynomial basis definition
 
 This interface manages the NURBS curves in CGM. As a NURBS curve is a kind of curve, it inherits all the properties of the CGM curves (CATCurve, see [2]). It is defined as follows:
 CATKnotVector | `KnotVector` | The knot vector for the polynomial basis definition
-CATMatSetOfPoints | `Vertices` | The set of control points  
-CATBoolean | `IsRational` | 1 if the NURBS is rational, else 0  
-double[] | `Weigths` | The weigths array if `IsRational`  
+CATMatSetOfPoints | `Vertices` | The set of control points
+CATBoolean | `IsRational` | 1 if the NURBS is rational, else 0
+double[] | `Weigths` | The weigths array if `IsRational`
 
 By default, the CATNurbsCurve constructor adapts the parametrization of the knots, according to the length of the curve. Hence, if you ask for the CATKnotVector of a NURBS curve you have just created, you find different data for the knots. If you want that your curve keeps the initial parameterization, set the `CATParameterizationOption` to `CatKeepParameterization` (optional argument).
 
@@ -248,14 +251,14 @@ Note: Periodic NURBS are not supported.
 
 This interface manages the NURBS surfaces in CGM. As a NURBS surface is a kind of surface, it inherits all the properties of the CGM surfaces (CATSurface, see [3]). It is defined as follows:
 
-CATKnotVector | `UKnotVector` | The knot vector for the polynomial basis definition on the surface first direction  
+CATKnotVector | `UKnotVector` | The knot vector for the polynomial basis definition on the surface first direction
 
 This interface manages the NURBS surfaces in CGM. As a NURBS surface is a kind of surface, it inherits all the properties of the CGM surfaces (CATSurface, see [3]). It is defined as follows:
 CATKnotVector | `UKnotVector` | The knot vector for the polynomial basis definition on the surface first direction
-CATKnotVector | `VKnotVector` | The knot vector for the polynomial basis definition on the surface second direction  
-CATMatSetOfPoints | `Vertices` | The set of control points  
-CATBoolean | `IsRational` | 1 if the NURBS is rational, else 0  
-double[] | `Weigths` | The weigths array if `IsRational`  
+CATKnotVector | `VKnotVector` | The knot vector for the polynomial basis definition on the surface second direction
+CATMatSetOfPoints | `Vertices` | The set of control points
+CATBoolean | `IsRational` | 1 if the NURBS is rational, else 0
+double[] | `Weigths` | The weigths array if `IsRational`
 
 ## In Short
 
@@ -265,11 +268,11 @@ double[] | `Weigths` | The weigths array if `IsRational`
 
 ## References
 
-[1] | The NURBS book- Les Piegl, Wayne Tiller- Springer 1995  
----|---  
-[2] | [The Curves of CATIA Geometric Modeler](CAACgmTaGobCurves.md)  
-[3] | [The Surfaces of CATIA Geometric Modeler](CAACgmTaGobSurfaces.md)  
+[1] | The NURBS book- Les Piegl, Wayne Tiller- Springer 1995
+---|---
+[2] | [The Curves of CATIA Geometric Modeler](CAACgmTaGobCurves.md)
+[3] | [The Surfaces of CATIA Geometric Modeler](CAACgmTaGobSurfaces.md)
 ## History
 
-Version: **1** [Mar 2000] | Document created  
+Version: **1** [Mar 2000] | Document created
 ---|---

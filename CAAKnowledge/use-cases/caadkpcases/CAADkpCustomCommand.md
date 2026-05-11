@@ -12,15 +12,15 @@ converted: "2026-05-11T17:33:46.012499"
 tags: ["CATIAVPMVDALock", "CAAVPMDesktopProduct", "CAADkpCustomCommand", "CATIAVPMVDACommand", "CATIAVPMVDACommandFactory_var", "CATIVpmFactoryObject"]
 source_file: "Doc/online/CAADkpUseCases/CAADkpCustomCommand.htm"
 converted: "2026-05-11T17:33:46.012499"
-Lifecycle Applications |  EBOM Part & Assembly Detailing |  Adding Business Rules to an Interactive Command _Customizing an interactive command with a pre- and a post-process_  
+Lifecycle Applications |  EBOM Part & Assembly Detailing |  Adding Business Rules to an Interactive Command _Customizing an interactive command with a pre- and a post-process_
 
 converted: "2026-05-11T17:33:46.012499"
 Lifecycle Applications |  EBOM Part & Assembly Detailing |  Adding Business Rules to an Interactive Command _Customizing an interactive command with a pre- and a post-process_
-Use Case  
+Use Case
 
 * * *
 
-Abstract This article shows how to implement the ENOVICustomCommand interface, to add business rules when a panel containing a list of attributes to fill is shown for creating or updating objects. 
+Abstract This article shows how to implement the ENOVICustomCommand interface, to add business rules when a panel containing a list of attributes to fill is shown for creating or updating objects.
 
   * **What You Will Learn With This Use Case**
   * **The CAADkpCustomCommand Use Case**
@@ -33,17 +33,17 @@ Abstract This article shows how to implement the ENOVICustomCommand interface, t
 
 * * *
 
-What You Will Learn With This Use Case This use case is intended to show you how to implement ENOVICustomCommand and what it does. Let's take an example : when creating an object interactively, a panel shows up with a list of attributes to fill. This user exit is called during this scenario, several times.  
-When the panel is constructed, the user exit is called through BeforeInit and AfterInit methods (there is no difference between them) in order to change the list of attributes : attributes can be added, removed, hidden, filled with calculated default values... An attribute can be made sensitive.  
-When filling the panel and when a sensitive attribute looses the focus, the user exit is called through BeforeCheck and AfterCheck methods (there is no difference between them) in order to perform some checks on the filled values, and compute other values.  
-When the user clics on the OK button, the user exit is called through BeforeExecute method with every attributes and their values. At this time the user exit can still send an error code to prevent the creation of the object.  
-The creation occurs, and when the server has done with it, the user exit is called a last time through AfterExecute method.   [Top] The CAADkpCustomCommand Use Case CAADkpCustomCommand is a use case of the CAAVPMDesktopProduct.edu framework that illustrates VPMDesktopProduct framework capabilities. [Top] What Does CAADkpCustomCommand Do CAADkpCustomCommand is showing how to hide an attribute, how to give a default value to another one, how to make sensitive another attribute, how to compute an attribute value from what has been filled, how to check the value of an attribute and send an error code if the value is not good, how to retrieve the created object and lock it.   [Top] How to Launch CAADkpCustomCommand To launch CAADkpCustomCommand , you will need to set up the build time environment, then compile CAADkpCustomCommand along with its prerequisites, set up the run time environment, and then execute the use case [1]. [Top] Where to Find the CAADkpCustomCommand Code The CAADkpCustomCommand use case is made of several classes/a single file located in the CAADkpCustomCommand.m module of the CAAVPMDesktopProduct.edu framework: | Windows | `InstallRootDirectory\CAAVPMDesktopProduct.edu\CAADkpCustomCommand.m\`  
+What You Will Learn With This Use Case This use case is intended to show you how to implement ENOVICustomCommand and what it does. Let's take an example : when creating an object interactively, a panel shows up with a list of attributes to fill. This user exit is called during this scenario, several times.
+When the panel is constructed, the user exit is called through BeforeInit and AfterInit methods (there is no difference between them) in order to change the list of attributes : attributes can be added, removed, hidden, filled with calculated default values... An attribute can be made sensitive.
+When filling the panel and when a sensitive attribute looses the focus, the user exit is called through BeforeCheck and AfterCheck methods (there is no difference between them) in order to perform some checks on the filled values, and compute other values.
+When the user clics on the OK button, the user exit is called through BeforeExecute method with every attributes and their values. At this time the user exit can still send an error code to prevent the creation of the object.
+The creation occurs, and when the server has done with it, the user exit is called a last time through AfterExecute method.   [Top] The CAADkpCustomCommand Use Case CAADkpCustomCommand is a use case of the CAAVPMDesktopProduct.edu framework that illustrates VPMDesktopProduct framework capabilities. [Top] What Does CAADkpCustomCommand Do CAADkpCustomCommand is showing how to hide an attribute, how to give a default value to another one, how to make sensitive another attribute, how to compute an attribute value from what has been filled, how to check the value of an attribute and send an error code if the value is not good, how to retrieve the created object and lock it.   [Top] How to Launch CAADkpCustomCommand To launch CAADkpCustomCommand , you will need to set up the build time environment, then compile CAADkpCustomCommand along with its prerequisites, set up the run time environment, and then execute the use case [1]. [Top] Where to Find the CAADkpCustomCommand Code The CAADkpCustomCommand use case is made of several classes/a single file located in the CAADkpCustomCommand.m module of the CAAVPMDesktopProduct.edu framework: | Windows | `InstallRootDirectory\CAAVPMDesktopProduct.edu\CAADkpCustomCommand.m\`
 
 When the panel is constructed, the user exit is called through BeforeInit and AfterInit methods (there is no difference between them) in order to change the list of attributes : attributes can be added, removed, hidden, filled with calculated default values... An attribute can be made sensitive.
 When filling the panel and when a sensitive attribute looses the focus, the user exit is called through BeforeCheck and AfterCheck methods (there is no difference between them) in order to perform some checks on the filled values, and compute other values.
 When the user clics on the OK button, the user exit is called through BeforeExecute method with every attributes and their values. At this time the user exit can still send an error code to prevent the creation of the object.
 The creation occurs, and when the server has done with it, the user exit is called a last time through AfterExecute method.   [Top] The CAADkpCustomCommand Use Case CAADkpCustomCommand is a use case of the CAAVPMDesktopProduct.edu framework that illustrates VPMDesktopProduct framework capabilities. [Top] What Does CAADkpCustomCommand Do CAADkpCustomCommand is showing how to hide an attribute, how to give a default value to another one, how to make sensitive another attribute, how to compute an attribute value from what has been filled, how to check the value of an attribute and send an error code if the value is not good, how to retrieve the created object and lock it.   [Top] How to Launch CAADkpCustomCommand To launch CAADkpCustomCommand , you will need to set up the build time environment, then compile CAADkpCustomCommand along with its prerequisites, set up the run time environment, and then execute the use case [1]. [Top] Where to Find the CAADkpCustomCommand Code The CAADkpCustomCommand use case is made of several classes/a single file located in the CAADkpCustomCommand.m module of the CAAVPMDesktopProduct.edu framework: | Windows | `InstallRootDirectory\CAAVPMDesktopProduct.edu\CAADkpCustomCommand.m\`
-Unix | `InstallRootDirectory/CAAVPMDesktopProduct.edu/CAADkpCustomCommand.m/`  
+Unix | `InstallRootDirectory/CAAVPMDesktopProduct.edu/CAADkpCustomCommand.m/`
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed. [Top] Step-by-Step There are five logical steps in CAADkpCustomCommand:
 
   1. Creating the CAADkpCustomCommand class
@@ -53,11 +53,11 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
   5. Implementing the AfterExecute method
   6. Updating the dictionary
 
-[Top] Creating the CAADkpCustomCommand class We have first to create two files, one for the definition of the class, the header file, and one for the implementation of the class.  
+[Top] Creating the CAADkpCustomCommand class We have first to create two files, one for the definition of the class, the header file, and one for the implementation of the class.
 4. Implementing the BeforeExecute method
 5. Implementing the AfterExecute method
 6. Updating the dictionary
-The header file is the following : 
+The header file is the following :
 
     /** Class to implement custom rules when creating a Part Reference.
       * The purpose of this implementation is to assist the creation of Part Reference by showing or
@@ -130,7 +130,10 @@ class ExportedByCAADkpCustomCommand ENOVECreateExtension : public CATBaseUnknown
 
             HRESULT AfterExecute();
 
+```vbscript
         private :
+
+```
 
             /** Copy constructor.
              */
@@ -138,8 +141,8 @@ class ExportedByCAADkpCustomCommand ENOVECreateExtension : public CATBaseUnknown
             ENOVECreateExtension( const ENOVECreateExtension & Extension );
     };
 
----  
-In the header file of the class, make it derive from CATBaseUnknown, and use the CATDeclareClass macro to define some methods used by QueryInterface. The implementation file is the following (empty so far): 
+---
+In the header file of the class, make it derive from CATBaseUnknown, and use the CATDeclareClass macro to define some methods used by QueryInterface. The implementation file is the following (empty so far):
 
     /** Class to implement custom rules when creating a Part Reference.
       * The purpose of this implementation is to assist the creation of Part Reference by showing or
@@ -248,14 +251,14 @@ HRESULT ENOVECreateExtension::AfterExecute()
 
     };
 
----  
+---
 return RC;
-In the implementation file, we have to put some code to help the QueryInterface giving the correct interfaces and implementations. This file is an implementation of ENOVICustomCommand, and is an extension of the Part Master Create command. To specify this :  
-Use the CATImplementClass macro.  
-ENOVECreateExtension is the name of the class implementing the interface ENOVICustomCommand.  
-DataExtension is the keyword to tell that this class is an extension.  
-CATBaseUnknown is the class from which this class derives.  
-PartMasterCATVpmVDACreate is the name of the extended class.  
+In the implementation file, we have to put some code to help the QueryInterface giving the correct interfaces and implementations. This file is an implementation of ENOVICustomCommand, and is an extension of the Part Master Create command. To specify this :
+Use the CATImplementClass macro.
+ENOVECreateExtension is the name of the class implementing the interface ENOVICustomCommand.
+DataExtension is the keyword to tell that this class is an extension.
+CATBaseUnknown is the class from which this class derives.
+PartMasterCATVpmVDACreate is the name of the extended class.
 Include the TIE header file for the definition of methods, the macro TIE_ENOVICustomCommand will implement them.   [Top] Implementing the BeforeInit method
 
         // Get a reference to the server object to have access to the attributes.
@@ -268,14 +271,20 @@ Include the TIE header file for the definition of methods, the macro TIE_ENOVICu
 
 ENOVIUEDesktopCommand_var spUECommand( this );
         VPMIQAttribute * pIDAttribute = NULL;
+```vbscript
         RC = spUECommand->get_Parameter( "ENOVIA_VPMPartMaster", "V_ID", pIDAttribute );
 
         if ( SUCCEEDED( RC ) && pIDAttribute )
 
+```
+
         {
     	// Give a default value.
 RC = spUECommand->get_Parameter( "ENOVIA_VPMPartMaster", "V_ID", pIDAttribute );
+```vbscript
 if ( SUCCEEDED( RC ) && pIDAttribute )
+```
+
     	pIDAttribute->SetDefaultValue( "Default Value for V_ID" );
 
     	// Inform the server object that the definition of the attribute has changed.
@@ -287,14 +296,20 @@ if ( SUCCEEDED( RC ) && pIDAttribute )
 
         VPMIQAttribute * pDescAttribute = NULL;
 VPMIQAttribute * pDescAttribute = NULL;
+```vbscript
         RC = spUECommand->get_Parameter( "ENOVIA_VPMPartMaster", "V_description", pDescAttribute );
 
         if ( SUCCEEDED( RC ) && pDescAttribute )
 
+```
+
         {
     	// Hide the attribute on the panel.
 RC = spUECommand->get_Parameter( "ENOVIA_VPMPartMaster", "V_description", pDescAttribute );
+```vbscript
 if ( SUCCEEDED( RC ) && pDescAttribute )
+```
+
     	pDescAttribute->SetVisibility( 0 );
 
     	// Inform the server object that the definition of the attribute has changed.
@@ -307,14 +322,20 @@ if ( SUCCEEDED( RC ) && pDescAttribute )
 
         VPMIQAttribute * pNameAttribute = NULL;
 VPMIQAttribute * pNameAttribute = NULL;
+```vbscript
         RC = spUECommand->get_Parameter( "ENOVIA_VPMPartMaster", "V_name", pNameAttribute );
 
         if ( SUCCEEDED( RC ) && pNameAttribute )
 
+```
+
         {
     	// Make the attribute sensitive.
 RC = spUECommand->get_Parameter( "ENOVIA_VPMPartMaster", "V_name", pNameAttribute );
+```vbscript
 if ( SUCCEEDED( RC ) && pNameAttribute )
+```
+
     	pNameAttribute->SetSensible( 1 );
 
     	//Set the additional icon to be displayed
@@ -333,7 +354,7 @@ pNameAttribute->SetIconsFacet( iconNum );
 
         }
 
----  
+---
 [Top] Implementing the BeforeCheck method
 
         // In this example, V_Name is sensitive and V_Description has been hidden. Suppose
@@ -345,23 +366,35 @@ pNameAttribute->SetIconsFacet( iconNum );
         // 1. Retrieve V_Name definition.
 ENOVIUEDesktopCommand_var spUECommand( this );
         VPMIQAttribute * pNameAttribute = NULL;
+```vbscript
         RC = spUECommand->get_Parameter( "ENOVIA_VPMPartMaster", "V_name", pNameAttribute );
 
         if ( SUCCEEDED( RC ) && pNameAttribute )
 
+```
+
         {
     	// 2. Retrieve V_Description definition.
 RC = spUECommand->get_Parameter( "ENOVIA_VPMPartMaster", "V_name", pNameAttribute );
+```vbscript
 if ( SUCCEEDED( RC ) && pNameAttribute )
+```
+
     	VPMIQAttribute * pDescAttribute = NULL;
+```vbscript
     	RC = spUECommand->get_Parameter( "ENOVIA_VPMPartMaster", "V_description", pDescAttribute );
 
     	if ( SUCCEEDED( RC ) && pDescAttribute )
 
+```
+
     	{
     	    // 3. Retrieve V_Name Value.
 RC = spUECommand->get_Parameter( "ENOVIA_VPMPartMaster", "V_description", pDescAttribute );
+```vbscript
 if ( SUCCEEDED( RC ) && pDescAttribute )
+```
+
     	    CORBAAny NameValue = pNameAttribute->GetValue();
 
     	    CATUnicodeString StringNameValue;
@@ -381,23 +414,29 @@ NameValue >> StringNameValue;
     	}
         }
 
----  
+---
 [Top] Implementing the BeforeExecute method
 
         // Get a reference to the server object to have access to the attributes.
         ENOVIUEDesktopCommand_var spUECommand( this );
 
-        // 1. Get the definition of V_ID.    
+        // 1. Get the definition of V_ID.
 ENOVIUEDesktopCommand_var spUECommand( this );
         VPMIQAttribute * pIDAttribute = NULL;
+```vbscript
         RC = spUECommand->get_Parameter( "ENOVIA_VPMPartMaster", "V_ID", pIDAttribute );
 
         if ( SUCCEEDED( RC ) && pIDAttribute )
 
+```
+
         {
     	// 2. Get the value of V_ID
 RC = spUECommand->get_Parameter( "ENOVIA_VPMPartMaster", "V_ID", pIDAttribute );
+```vbscript
 if ( SUCCEEDED( RC ) && pIDAttribute )
+```
+
     	CORBAAny IDValue = pIDAttribute->GetValue();
     	CATUnicodeString StringIDValue;
     	IDValue >> StringIDValue;
@@ -411,7 +450,7 @@ IDValue >> StringIDValue;
 
         }
 
----  
+---
 [Top] Implementing the AfterExecute method
 
         // Get a reference to the server object to have access to the attributes.
@@ -422,21 +461,39 @@ ENOVIUEDesktopCommand_var spUECommand( this );
         CATIVpmFactoryObject * piCreatedObject = NULL;
 
         RC = spUECommand->get_Source( piCreatedObject );
+```vbscript
+```vbscript
         if ( SUCCEEDED( RC ) && piCreatedObject )
+
+```
+
+```
 
         {
     	// In this example the created object will be locked.
 RC = spUECommand->get_Source( piCreatedObject );
+```vbscript
 if ( SUCCEEDED( RC ) && piCreatedObject )
+```
+
     	ENOVIABusinessObject * piCreatedBO = NULL;
     	RC = piCreatedObject->QueryInterface( IID_ENOVIABusinessObject, (void **) & piCreatedBO );
+```vbscript
+```vbscript
     	if ( SUCCEEDED( RC ) && piCreatedBO )
+
+```
+
+```
 
     	{
     	    // Get the command factory.
 ENOVIABusinessObject * piCreatedBO = NULL;
 RC = piCreatedObject->QueryInterface( IID_ENOVIABusinessObject, (void **) & piCreatedBO );
+```vbscript
 if ( SUCCEEDED( RC ) && piCreatedBO )
+```
+
     	    CATIAVPMVDACommandFactory_var spCommandFactory = GetCommandFactory();
     	    CATIAVPMVDACommand * piCommand = NULL;
 
@@ -445,12 +502,18 @@ if ( SUCCEEDED( RC ) && piCreatedBO )
     	    // Construct and get a Lock Command.
 CATIAVPMVDACommand * piCommand = NULL;
 CATUnicodeString LockString( "Lock" );
+```vbscript
     	    RC = spCommandFactory->Create( LockString, piCommand );
+
+```
 
     	    // Retrieves the interface of the Lock Command.
 RC = spCommandFactory->Create( LockString, piCommand );
     	    CATIAVPMVDALock * piLockCommand = NULL;
+```vbscript
     	    RC = piCommand->QueryInterface( IID_CATIAVPMVDALock, (void **) & piLockCommand );
+
+```
 
     	    // Execute the Lock Command on the object.
 CATIAVPMVDALock * piLockCommand = NULL;
@@ -463,16 +526,16 @@ RC = piCommand->QueryInterface( IID_CATIAVPMVDALock, (void **) & piLockCommand )
     	}
         }
 
----  
+---
 [Top] Updating the dictionary
 
     PartMasterCATVpmVDACreate   ENOVICustomCommand   libCAADkpCustomCommand
 
----  
+---
 PartMasterCATVpmVDACreate   ENOVICustomCommand   libCAADkpCustomCommand
-Update the dictionary giving QueryInterface the information needed (which type implements which interface in which library). In this case : PartMasterCATVpmVDACreate is the type (the fourth parameter of the CATImplementClass macro).  
-ENOVICustomCommand is the interface implemented by the extension class.  
-libCAADkpCustomCommand is the name of the library where the code is (lib followed by the name of the module).  
+Update the dictionary giving QueryInterface the information needed (which type implements which interface in which library). In this case : PartMasterCATVpmVDACreate is the type (the fourth parameter of the CATImplementClass macro).
+ENOVICustomCommand is the interface implemented by the extension class.
+libCAADkpCustomCommand is the name of the library where the code is (lib followed by the name of the module).
 The dictionary is located in the directory CNext/code/dictionary of the local framework.   [Top]
 
 * * *
@@ -483,15 +546,15 @@ In Short ENOVICustomCommand is an interface designed for implementing business r
 
 * * *
 
-References [1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-[Top]  
+References [1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)
+---|---
+[Top]
 
 * * *
 
-History Version: **1** [May 2001] | Version: **2** [October 2003] | Document created  
----|---|---  
-[Top]  
+History Version: **1** [May 2001] | Version: **2** [October 2003] | Document created
+---|---|---
+[Top]
 
 * * *
 

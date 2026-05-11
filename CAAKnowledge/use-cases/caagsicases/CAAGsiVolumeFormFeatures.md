@@ -11,20 +11,20 @@ converted: "2026-05-11T17:31:50.653046"
 ---
 # Shape Design & Styling
 
-| 
+|
 ## Generative Shape Design
 
-| 
+|
 ### Creating Volume Form Features
 
-_Using the Shape Design and the Part Design factories, create volume form features_  
----|---|---  
-Use Case  
+_Using the Shape Design and the Part Design factories, create volume form features_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
 
-This article discusses the CAAGsiVolumeFormFeatures use case. This use case explains how to create volume shape features. 
+This article discusses the CAAGsiVolumeFormFeatures use case. This use case explains how to create volume shape features.
 
   * **What You Will Learn With This Use Case**
   * **The CAAGsiVolumeFormFeatures Use Case**
@@ -35,68 +35,68 @@ This article discusses the CAAGsiVolumeFormFeatures use case. This use case expl
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will You Learn With This Use Case
 
-This use case shows how to use shape design and part design factories to create volumes. The volume features can be created in Shape Design factory or in Part Design factory.  
+This use case shows how to use shape design and part design factories to create volumes. The volume features can be created in Shape Design factory or in Part Design factory.
 **Note** : Creations of volumes feature are licensed by the GSO Product.
 
 >   * Shape Design Extrude, Revolve, MultiSections volumes, Sweep volumes.
 >   * Part Design Closed Volumes, Thick volumes, Draft, Draft Angle, Draft ReflectLine, Sew Volumes, and Shell.
-> 
+>
 
 ### The CAAGsiVolumeFormFeatures Use Case
 
-CAAGsiVolumeFormFeatures is a use case of the CAAGSMInterfaces.edu framework that illustrates creation of volumes using Shape Design and Part Design   
-(Extrude, Revol, Thick, Close, Multi-Sections Volume, and Sweep). 
+CAAGsiVolumeFormFeatures is a use case of the CAAGSMInterfaces.edu framework that illustrates creation of volumes using Shape Design and Part Design
+(Extrude, Revol, Thick, Close, Multi-Sections Volume, and Sweep).
 
 ![](images/CAAGsiVolumeForms.jpg)
 #### What Does CAAGsiVolumeFormFeatures Do
 
 (Extrude, Revol, Thick, Close, Multi-Sections Volume, and Sweep).
-The goal of CAAGsiVolumeFormFeatures is to illustrate how to create volume either using shape design factory or part design factory.   
-Volume features are surfacic features they answer to the TRUE to the IsAShape() method of CATMf3DBehavior, and also answer TRUE to the IsAVolume() method of CATIMf3DBehavior2   
-Volume features can only be inserted in the procedural view in Geometrical Set (GS) or Ordered Geometrical Set (OGS) 
+The goal of CAAGsiVolumeFormFeatures is to illustrate how to create volume either using shape design factory or part design factory.
+Volume features are surfacic features they answer to the TRUE to the IsAShape() method of CATMf3DBehavior, and also answer TRUE to the IsAVolume() method of CATIMf3DBehavior2
+Volume features can only be inserted in the procedural view in Geometrical Set (GS) or Ordered Geometrical Set (OGS)
 
-Volume created using shape design factory (CATIGSMFactory) 
+Volume created using shape design factory (CATIGSMFactory)
 
->   * Volume created from shape design factory are extension on the corresponding surface feature , the creation method are teh same the CAA user just have to use the SetContext methods of the corresponding interface feature to specify the type surfacic or volume result. 
->   * Volume case: The Input has to be a closed  wire(Ex: Profile to extrude)  or a surface (Ex: Shape to extrude  . eitherwise a error is returned when volume is  updated 
->   * Once created the volume have to be insert in the procedural view using the CATIGSMProceduralView Interfaces, if the current tool is a body, automatically an OGS will be create in the Body to insert the volume underneath 
-> 
+>   * Volume created from shape design factory are extension on the corresponding surface feature , the creation method are teh same the CAA user just have to use the SetContext methods of the corresponding interface feature to specify the type surfacic or volume result.
+>   * Volume case: The Input has to be a closed  wire(Ex: Profile to extrude)  or a surface (Ex: Shape to extrude  . eitherwise a error is returned when volume is  updated
+>   * Once created the volume have to be insert in the procedural view using the CATIGSMProceduralView Interfaces, if the current tool is a body, automatically an OGS will be create in the Body to insert the volume underneath
+>
 
-Volume created using part design factory (CATIPrtFactory or CATIPrtBooleanFactory) 
+Volume created using part design factory (CATIPrtFactory or CATIPrtBooleanFactory)
 
->   * Part Design factories  propose dedicated methods to create volume feature (ex: CreateVolumicCloseSurface.), 
->   * Part design factory volumes methods automatically insert resulting feature in the procedural view at creation , the feature just have then to be updated ,if the current tool is a body, automatically an OGS will be create in the Body to insert the volume underneath. The CAAGsiObjectUpdate service can be used 
-> 
+>   * Part Design factories  propose dedicated methods to create volume feature (ex: CreateVolumicCloseSurface.),
+>   * Part design factory volumes methods automatically insert resulting feature in the procedural view at creation , the feature just have then to be updated ,if the current tool is a body, automatically an OGS will be create in the Body to insert the volume underneath. The CAAGsiObjectUpdate service can be used
+>
 
 [Top]
 #### How to Launch CAAGsiVolumeFormFeatures
 
 To launch CAAGsiVolumeFormFeatures, you will need to set up the build time environment, then compile CAAGsiVolumeFormFeatures along with its prerequisites, and set up the run time environment, and then execute the use case [1].
 
-Launch the use case as follows: 
+Launch the use case as follows:
 
-  * With Windows 
+  * With Windows
 
-        e/CAAGsiVolumeFormFeatures InstallDir\CAAGSMInterfaces.edu\Data.d\CAAGsiStartVolume.CATPart outputDirectory\CAAGsiVolumeFormFeatures.CATPart  
+        e/CAAGsiVolumeFormFeatures InstallDir\CAAGSMInterfaces.edu\Data.d\CAAGsiStartVolume.CATPart outputDirectory\CAAGsiVolumeFormFeatures.CATPart
 
----  
-  * With UNIX 
+---
+  * With UNIX
 
-        \CAAGsiVolumeFormFeatures InstallDir\CAAGSMInterfaces.edu\Data.d\CAAGsiStartVolume.CATPart outputDirectory/CAAGsiVolumeFormFeatures.CATPart  
+        \CAAGsiVolumeFormFeatures InstallDir\CAAGSMInterfaces.edu\Data.d\CAAGsiStartVolume.CATPart outputDirectory/CAAGsiVolumeFormFeatures.CATPart
 
----  
+---
 
 where:
 
-`inputDirectory` | The directory into which `CAAGsiStartVolume.CATPart is found `  
----|---  
-`outputDirectory` | The directory into which `CAAGsiVolumeFormFeatures.CATPart is saved`  
-`CAAGsiVolumeFormFeatures.CATPart` | The file that contains the part created with the datum surface t  
+`inputDirectory` | The directory into which `CAAGsiStartVolume.CATPart is found `
+---|---
+`outputDirectory` | The directory into which `CAAGsiVolumeFormFeatures.CATPart is saved`
+`CAAGsiVolumeFormFeatures.CATPart` | The file that contains the part created with the datum surface t
 
 [Top]
 #### Where to Find the CAAGsiVolumeFormFeatures Code
@@ -104,19 +104,19 @@ where:
 The CAAGsiVolumeFormFeatures use case is made of main program located in the CAAGsiVolumeFormFeatures.m module of the CAAGSMInterfaces.edu framework:
 
 The CAAGsiVolumeFormFeatures use case is made of main program located in the CAAGsiVolumeFormFeatures.m module of the CAAGSMInterfaces.edu framework:
-Windows | ` InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiVolumeFormFeatures.m\`  
+Windows | ` InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiVolumeFormFeatures.m\`
 
 The CAAGsiVolumeFormFeatures use case is made of main program located in the CAAGsiVolumeFormFeatures.m module of the CAAGSMInterfaces.edu framework:
 Windows | ` InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiVolumeFormFeatures.m\`
-Unix | ` InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiVolumeFormFeatures.m/`  
+Unix | ` InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiVolumeFormFeatures.m/`
 
-The input CAAGsiStartVolume.CATPart is proposed in Data.d directory of CAAGSMInterfaces.edu 
+The input CAAGsiStartVolume.CATPart is proposed in Data.d directory of CAAGSMInterfaces.edu
 
-Windows | ` InstallRootDirectory\CAAGSMInterfaces.edu\Data.d\CAAGsiStartVolume.CATPart `  
+Windows | ` InstallRootDirectory\CAAGSMInterfaces.edu\Data.d\CAAGsiStartVolume.CATPart `
 
 The input CAAGsiStartVolume.CATPart is proposed in Data.d directory of CAAGSMInterfaces.edu
 Windows | ` InstallRootDirectory\CAAGSMInterfaces.edu\Data.d\CAAGsiStartVolume.CATPart `
-Unix | ` InstallRootDirectory/CAAGSMInterfaces.edu/Data.d/CAAGsiStartVolume.CATPart`  
+Unix | ` InstallRootDirectory/CAAGSMInterfaces.edu/Data.d/CAAGsiStartVolume.CATPart`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
@@ -124,7 +124,7 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 ### Step-by-Step
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
-There are eight logical step in CAAGsiVolumeFormFeatures: 
+There are eight logical step in CAAGsiVolumeFormFeatures:
 
   1. Prolog
   2. Create extrude volume feature
@@ -141,17 +141,20 @@ We will now comment each of those sections by looking at the code of the main me
 #### Prolog
 
 We will now comment each of those sections by looking at the code of the main method of file CAAGsiVolumeFormFeatures.
-CAAGsiVolumeFormFeatures sample first creates a session and opens the input CATPart. 
+CAAGsiVolumeFormFeatures sample first creates a session and opens the input CATPart.
 
-Note: The important feature of the following sequence of code consists in the required call to the GetPart() method of the CATPrtContainer interfaces. This method allow to load in session the different containers of the part 
+Note: The important feature of the following sequence of code consists in the required call to the GetPart() method of the CATPrtContainer interfaces. This method allow to load in session the different containers of the part
 
     ....
     // creates a session
 Note: The important feature of the following sequence of code consists in the required call to the GetPart() method of the CATPrtContainer interfaces. This method allow to load in session the different containers of the part
     char *pSessionName = "SampleSession";
-    CATSession *pSession = NULL; 
-    rc = Create_Session(pSessionName, pSession); 
+    CATSession *pSession = NULL;
+    rc = Create_Session(pSessionName, pSession);
+```vbscript
     if (NULL == pSession ) {
+```
+
        cout << "(CAAGsiVolumeFormFeatures) ERROR: Create_Session" << endl  ;
        TestCaseError = 1 ;
 
@@ -161,82 +164,103 @@ Note: The important feature of the following sequence of code consists in the re
 cout << "(CAAGsiVolumeFormFeatures) ERROR: Create_Session" << endl  ;
 TestCaseError = 1 ;
     cout << "The input document " << InputName << " is opened" << endl ;
-    CATDocument *pDoc = NULL; 
+    CATDocument *pDoc = NULL;
+```vbscript
     rc =CATDocumentServices::OpenDocument(InputName, pDoc) ;
 
     if (NULL == pDoc ) {
+```
+
        cout << "(CAAGsiVolumeFormFeatures) ERROR CATDocumentServices::OpenDocument" << endl  ;
        TestCaseError = 2 ;
 
     }
 
-    // Part Container 
+    // Part Container
 cout << "(CAAGsiVolumeFormFeatures) ERROR CATDocumentServices::OpenDocument" << endl  ;
 TestCaseError = 2 ;
-    CATIPrtContainer *piPartContainer = NULL ; 
-    CATIPrtPart_var spPrtPart; 
+    CATIPrtContainer *piPartContainer = NULL ;
+    CATIPrtPart_var spPrtPart;
 
-    if ( NULL != pDoc ) { 
+```vbscript
+    if ( NULL != pDoc ) {
+
+```
 
        // queries on the document to get the root container
 CATIPrtContainer *piPartContainer = NULL ;
 CATIPrtPart_var spPrtPart;
 if ( NULL != pDoc ) {
-       CATInit *pDocAsInit = NULL; 
-       pDoc->QueryInterface(IID_CATInit, (void**)&pDocAsInit) ; 
+       CATInit *pDocAsInit = NULL;
+       pDoc->QueryInterface(IID_CATInit, (void**)&pDocAsInit) ;
+```vbscript
        if ( NULL != pDocAsInit ) {
+
+```
 
         // Extracts from document a reference to its part in hPartAsRequest
 CATInit *pDocAsInit = NULL;
 pDoc->QueryInterface(IID_CATInit, (void**)&pDocAsInit) ;
 if ( NULL != pDocAsInit ) {
-       piPartContainer = 
+       piPartContainer =
           (CATIPrtContainer*)pDocAsInit->GetRootContainer("CATIPrtContainer");
        pDocAsInit->Release(); pDocAsInit = NULL ;
 
        if( NULL != piPartContainer ) {
-          CATISpecObject_var spPart = piPartContainer->GetPart() ; 
+          CATISpecObject_var spPart = piPartContainer->GetPart() ;
           spPrtPart = spPart ;
 
-       } 
-    } 
+       }
+    }
     ...
 
----  
+---
 
-Then in the initilization phasis the wireframe and shape design and Part Design factory are retrieved. . 
+Then in the initilization phasis the wireframe and shape design and Part Design factory are retrieved. .
 
     ....
-    // Retrieve the Generative Shape Design Factory Interface 
+    // Retrieve the Generative Shape Design Factory Interface
 Then in the initilization phasis the wireframe and shape design and Part Design factory are retrieved. .
-    CATIPrtFactory_var spPrtFact; 
-    CATIGSMFactory_var spGsmFact; 
-    if ( NULL !=piPartContainer ) { 
-       CATIGSMFactory * _pFact =NULL; 
+    CATIPrtFactory_var spPrtFact;
+    CATIGSMFactory_var spGsmFact;
+    if ( NULL !=piPartContainer ) {
+       CATIGSMFactory * _pFact =NULL;
        rc = piPartContainer -> QueryInterface(IID_CATIGSMFactory ,(void**)&_pFact);
+```vbscript
        if (SUCCEEDED(rc) ) {
+```
+
          spGsmFact = _pFact;
-         if (_pFact) _pFact -> Release(); _pFact = NULL; 
+```vbscript
+         if (_pFact) _pFact -> Release(); _pFact = NULL;
+
+```
 
       }
 
-      // Retrieve the Part Design factory Interface 
+      // Retrieve the Part Design factory Interface
 spGsmFact = _pFact;
 if (_pFact) _pFact -> Release(); _pFact = NULL;
        CATIPrtFactory * _pPrtFact =NULL;
-       rc = piPartContainer -> QueryInterface(IID_CATIPrtFactory ,(void**)&_pPrtFact); 
-       if (SUCCEEDED(rc) ) { 
+       rc = piPartContainer -> QueryInterface(IID_CATIPrtFactory ,(void**)&_pPrtFact);
+```vbscript
+       if (SUCCEEDED(rc) ) {
+```
+
             spPrtFact = _pPrtFact;
+```vbscript
            if (_pPrtFact) _pPrtFact ->Release(); _pPrtFact = NULL;
 
-         } 
+```
+
+         }
        }
     } ....
 
----  
+---
 
 [Top]
-#### Create extrude volume feature 
+#### Create extrude volume feature
 
 Create extrude volume using CreateExtrude method of CATIGSMFactory
 
@@ -250,25 +274,40 @@ CATISpecObject_var SpecSkethToExtrude = ...;
 
     CATICkeParm_var spCkeLgStart ;
     spCkeLgStart = spCkeFact -> CreateLength( "Start" ,0.0/1000.);
+```vbscript
     if (NULL_var == spCkeLgStart) {
+```
+
          cout << "ERROR in creating Cke length paramater" << endl;
 
     }
 CATICkeParm_var spCkeLgStart ;
 spCkeLgStart = spCkeFact -> CreateLength( "Start" ,0.0/1000.);
+```vbscript
 if (NULL_var == spCkeLgStart) {
+```
+
 cout << "ERROR in creating Cke length paramater" << endl;
     CATICkeParm_var spCkeLgEnd ;
     spCkeLgEnd = spCkeFact -> CreateLength( "End" ,100.0/1000.);
+```vbscript
     if (NULL_var == spCkeLgEnd) {
+```
+
        cout << " ERROR in creating Cke length paramater" << endl;
 
     }
 CATICkeParm_var spCkeLgEnd ;
 spCkeLgEnd = spCkeFact -> CreateLength( "End" ,100.0/1000.);
+```vbscript
 if (NULL_var == spCkeLgEnd) {
+```
+
 cout << " ERROR in creating Cke length paramater" << endl;
+```vbscript
     DirRef =spGsmFact -> CreateDirection ( SpecPlaneRef1);
+
+```
 
     // Create Extrude
 cout << " ERROR in creating Cke length paramater" << endl;
@@ -284,21 +323,30 @@ spExtrude1 -> SetContext(CATGSMVolumeCtxt) ;
     if (NULL_var != spSpecExtr1) {
        CATIGSMProceduralView_var ispProcView = spSpecExtr1;
        if (NULL_var != ispProcView ) {
+```vbscript
+```vbscript
           rc = ispProcView ->InsertInProceduralView();
+
+```
+
+```
 
        }
     }
 CATIGSMProceduralView_var ispProcView = spSpecExtr1;
 if (NULL_var != ispProcView ) {
+```vbscript
 rc = ispProcView ->InsertInProceduralView();
     CAAGsiObjectUpdate(spSpecExtr1) ;
 
+```
+
     ...
 
----  
+---
 
 [Top]
-#### Create revolve volume feature 
+#### Create revolve volume feature
 
 Create revolve volume using CreateRevol method of CATIGSMFactory
 
@@ -312,18 +360,27 @@ CATISpecObject_var SpecSkethToRevol = ...;
 
     CATICkeParm_var spCkeAngStart ;
     spCkeAngStart = spCkeFact -> CreateLength( "Ang1" ,(180.0/180.0)*CATPI);
+```vbscript
     if (NULL_var == spCkeAngStart) {
+```
+
            cout << "ERROR in creating Cke angle paramater"
 
     << endl ;
     }
 ```vbscript
 spCkeAngStart = spCkeFact -> CreateLength( "Ang1" ,(180.0/180.0)*CATPI);
+```vbscript
 if (NULL_var == spCkeAngStart) {
+```
+
 cout << "ERROR in creating Cke angle paramater"
     CATICkeParm_var spCkeAngEnd;
     spCkeAngEnd = spCkeFact -> CreateLength( "Ang2" ,(180.0/180.)*CATPI);
+```vbscript
     if (NULL_var == spCkeAngEnd) {
+```
+
            cout << "ERROR in creating Cke angle paramater"
 ```
 
@@ -349,21 +406,30 @@ spRevol1 -> SetContext(CATGSMVolumeCtxt) ;
     if (NULL_var != spSpecRevol1 ) {
        CATIGSMProceduralView_var ispProcView = spSpecRevol1 ;
        if (NULL_var != ispProcView ) {
+```vbscript
+```vbscript
           rc = ispProcView ->InsertInProceduralView();
+
+```
+
+```
 
         }
     }
 CATIGSMProceduralView_var ispProcView = spSpecRevol1 ;
 if (NULL_var != ispProcView ) {
+```vbscript
 rc = ispProcView ->InsertInProceduralView();
     CAAGsiObjectUpdate(spSpecRevol1 ) ;
 
+```
+
     ...
 
----  
+---
 
 [Top]
-#### Create multi-sections volume feature 
+#### Create multi-sections volume feature
 
 Create multi-sections volume using CreateLoft method of CATIGSMFactory
 
@@ -373,16 +439,28 @@ Create multi-sections volume using CreateLoft method of CATIGSMFactory
     // Create Multi Section volume
     CATISpecObject_var SpecSection;
     SpecSection = ... ;spListSections.Append(SpecSection);
+```vbscript
+```vbscript
     SpecSection = ... ;spListSections.Append(SpecSection);
     SpecSection = ... ;spListSections.Append(SpecSection);
     SpecSection = ... ;spListSections.Append(SpecSection);
 
+```
+
+```
+
     CATListValCATISpecObject_var	spListGuides;
     CATISpecObject_var SpecGuide;
     SpecGuide = ... ;spListGuides.Append(SpecGuide);
+```vbscript
+```vbscript
     SpecGuide = ... ;spListGuides.Append(SpecGuide);
     SpecGuide = ... ;spListGuides.Append(SpecGuide);
     SpecGuide = ... ;spListGuides.Append(SpecGuide);
+
+```
+
+```
 
     CATIGSMLoft_var spLoft1 =
     spGsmFact -> CreateLoft (spListSections,spListGuides);
@@ -398,21 +476,30 @@ spLoft1 -> SetContext(CATGSMVolumeCtxt) ;
     if (NULL_var != spSpecLoft1 ) {
        CATIGSMProceduralView_var ispProcView = spSpecLoft1 ;
        if (NULL_var != ispProcView ) {
+```vbscript
+```vbscript
           rc = ispProcView ->InsertInProceduralView();
+
+```
+
+```
 
        }
     }
 CATIGSMProceduralView_var ispProcView = spSpecLoft1 ;
 if (NULL_var != ispProcView ) {
+```vbscript
 rc = ispProcView ->InsertInProceduralView();
     CAAGsiObjectUpdate(spSpecLoft1 ) ;
 
+```
+
     ...
 
----  
+---
 
 [Top]
-#### Create volume sweep feature 
+#### Create volume sweep feature
 
 Create volume sweep using CreateSweep method of CATIGSMFactory
 
@@ -438,25 +525,34 @@ spExplSweep1 -> SetContext(CATGSMVolumeCtxt) ;
     if (NULL_var != spSpecSweep1 ) {
      CATIGSMProceduralView_var ispProcView = spSpecSweep1 ;
      if (NULL_var != ispProcView ) {
+```vbscript
+```vbscript
      rc = ispProcView ->InsertInProceduralView();
+
+```
+
+```
 
      }
     }
 CATIGSMProceduralView_var ispProcView = spSpecSweep1 ;
 if (NULL_var != ispProcView ) {
+```vbscript
 rc = ispProcView ->InsertInProceduralView();
     CAAGsiObjectUpdate(spSpecSweep1 ) ;
 
+```
+
     ...
 
----  
+---
 
 [Top]
-#### Create volume thick feature 
+#### Create volume thick feature
 
 Create volume thick using CreateVolumicOffset method of CATIPrtFactory
 
-Note: Insert in procedural view is done at creation under the current geometrical feature set 
+Note: Insert in procedural view is done at creation under the current geometrical feature set
 
     // Create and Insert in procedural view volume Thick
 Note: Insert in procedural view is done at creation under the current geometrical feature set
@@ -473,14 +569,14 @@ spPrtFact -> CreateVolumicOffset (SpecShape, iIsensOffset,0.00, 10.00);
 
     ...
 
----  
+---
 
 [Top]
-#### Create volume close feature 
+#### Create volume close feature
 
 Create volume close using CreateVolumicCloseSurface method of CATIPrtFactory
 
-Note: Insert in procedural view is done at creation under the current geometrical feature set 
+Note: Insert in procedural view is done at creation under the current geometrical feature set
 
     // Create and Insert in procedural view volume close
 Note: Insert in procedural view is done at creation under the current geometrical feature set
@@ -496,26 +592,38 @@ spPrtFact -> CreateVolumicCloseSurface (SpecShapeToClose);
 
     ...
 
----  
+---
 
 [Top]
-#### Save and close session 
+#### Save and close session
 
-Save part and close the session 
+Save part and close the session
 
     ...
     // save
 Save part and close the session
     if (NULL != OutputName ) {
+```vbscript
+```vbscript
        rc = CATDocumentServices::SaveAs (*pDoc, OutputName );
        if (SUCCEEDED(rc)) {
+```
+
+```
+
         cout << " (CAAGsiVolumeFormFeature) Document saved " << endl;
 
        }
 ```vbscript
 if (NULL != OutputName ) {
+```vbscript
+```vbscript
 rc = CATDocumentServices::SaveAs (*pDoc, OutputName );
 if (SUCCEEDED(rc)) {
+```
+
+```
+
 cout << " (CAAGsiVolumeFormFeature) Document saved " << endl;
        else {
           cout << " ERROR in saving document" << endl;
@@ -528,43 +636,43 @@ else {
 cout << " ERROR in saving document" << endl;
     CATDocumentServices::Remove(*pDoc);
 
-    // Ends session and drops document	
+    // Ends session and drops document
     Delete_Session("SampleSession");
     ...
 
----  
+---
 
 [Top]
 
 * * *
 ### In Short
 
-This use case has demonstrated the way to create a volume features thanks to shape design and part design. 
+This use case has demonstrated the way to create a volume features thanks to shape design and part design.
 
-We illustrate feature in this use case volume feature that do not have BRep feature as input . Creation of features that required BRep as input (Ex: Shell, volume sew ,Draft,.. -mainly in Part Design feature - ) the creation and access to parameters is similar as presented in the sample . 
+We illustrate feature in this use case volume feature that do not have BRep feature as input . Creation of features that required BRep as input (Ex: Shell, volume sew ,Draft,.. -mainly in Part Design feature - ) the creation and access to parameters is similar as presented in the sample .
 
 This use case has demonstrated the way to create a volume features thanks to shape design and part design.
 We illustrate feature in this use case volume feature that do not have BRep feature as input . Creation of features that required BRep as input (Ex: Shell, volume sew ,Draft,.. -mainly in Part Design feature - ) the creation and access to parameters is similar as presented in the sample .
-Note : The BRep features are retrieved in interactive commands through in selecting of sub-element and using Mechanical Modeler agent CATFeatureImportAgent 
+Note : The BRep features are retrieved in interactive commands through in selecting of sub-element and using Mechanical Modeler agent CATFeatureImportAgent
 
 [Top]
 
 * * *
 ### References
 
-[1] |  [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-[2] |  [ About Generative Shape Design Features](../CAAGsiTechArticles/CAAGsiShapeDesignFeature.md)  
-[3] |  [ Inserting a Shape Design Feature in the procedural view](../CAAGsiTechArticles/CAAGsiInsertInProceduralView.md)  
-[4] | [ Updating a shape Design feature ](../CAAGsiTechArticles/CAAGsiUpdateShapeDesign.md)  
-[Top]  
+[1] |  [ Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)
+---|---
+[2] |  [ About Generative Shape Design Features](../CAAGsiTechArticles/CAAGsiShapeDesignFeature.md)
+[3] |  [ Inserting a Shape Design Feature in the procedural view](../CAAGsiTechArticles/CAAGsiInsertInProceduralView.md)
+[4] | [ Updating a shape Design feature ](../CAAGsiTechArticles/CAAGsiUpdateShapeDesign.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [May 2004] | Document created  
----|---  
-[Top]  
+Version: **1** [May 2004] | Document created
+---|---
+[Top]
 
 * * *
 

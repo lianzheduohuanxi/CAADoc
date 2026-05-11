@@ -11,16 +11,16 @@ converted: "2026-05-11T17:31:52.432118"
 ---
 # Windows Object
 
- See Also | Use Cases | Properties | Methods  
- ---|---|---|---  
+ See Also | Use Cases | Properties | Methods
+ ---|---|---|---
 
- ![](../CAAScrAutomationImages/images/windows.gif)  
-![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/window.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parderiv.gif)![](../CAAScrAutomationImages/images/specwin.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/specview.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/viewers.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/pagestup.gif)  
- ---  
+ ![](../CAAScrAutomationImages/images/windows.gif)
+![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/window.gif)
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/parderiv.gif)![](../CAAScrAutomationImages/images/specwin.gif)
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parlower.gif)![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/specview.gif)
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/viewers.gif)
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/pagestup.gif)
+ ---
 
  **_A collection of all the Window objects currently managed by the application._**
 

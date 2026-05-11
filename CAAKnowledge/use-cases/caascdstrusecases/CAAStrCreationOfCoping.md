@@ -2,85 +2,36 @@
 title: "Untitled"
 category: "use-case"
 module: "CAAScdStrUseCases"
-tags: ["CAAScrBase", "CAAScdStrUseCases", "CAAStrCreateCoping", "CAAInfLauchMacro", "CAAScdInfUseCases", "CAAScdStrCoping01", "CATIAStrFeatureFactory", "CAAStrCreationOfCopingSource", "CATIA", "CAAScrJavaScript"]
+tags: ["CAAScrBase", "CATIA", "CAAScrJavaScript", "CAAScdInfUseCases", "CAAInfLauchMacro", "CAAStrCreateCoping", "CAAScdStrCoping01", "CAAScdStrUseCases", "CATIAStrFeatureFactory", "CAAStrCreationOfCopingSource"]
 source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfCoping.htm"
-converted: "2026-05-11T11:06:32.505645"
+converted: "2026-05-11T11:27:02.586422"
 ---
-
-## Structure Design
-		
-		
-## []Creating Copings
-		
-	
 
 ---
 
-	
-		![Target Icon](../CAAScrBase/images/atarget.gif)
-		
+![End Task Icon](../CAAScrBase/images/aendtask.gif)
 
-[]This macro shows you how to apply coping between structure objects. Here we will see three 
- Cases.
- 
+[Top]
 
- 
-- Creating Coping on Plate, when it is limited by another plate and surface.
- 
-- Creating Coping on Stiffener, when it is limited by stiffeners and Plate.
- 
-- Creating Coping on Stiffener, when it is limited by lateral face of a Plate.
- 
-		
+---
 
-		![Starting Product](images/CAAScdStrCoping01.png)
-		
-		
-		
-	
-	
-		![Information Icon](../CAAScrBase/images/ainfo.gif)
-		
+#### In Short
 
-[]CAAStrCreateCoping is launched in CATIA [[1]]. 
-		Some documents are needed.
-		
+This use case has shown how to create coping between structure objects.
 
-			
-- [CAAStrCreateCoping.CATScript] 
-			is located in the CAAScdStrUseCases module.
-			[Execute macro] (Windows 
-			only).
-			
-- The document Product1.CATProduct is located in the CAAScdStrUseCases module in the samples directory. Part1.CATPart is linked to the previous document and it contains the grid used by the macro.
-			
-- The CATPart containing the section is located in the samples directory.
-		
-		
-	
-	
-		![Scenario Icon](../CAAScrBase/images/ascenari.gif)
-		
+[Top]
 
-[]CAAStrCreateCoping includes five steps:
-		
+---
 
-			
-- [Prolog]
-			
-- [Retrieving the Factory from Object on which Coping Is to Be Done]
-			
-- [Defining the Limits]
-			
-- [Creating Coping]
-			
-- [Creating Coping for Case2 and Case3]
-		
-		
-		
-#### []Prolog
-		
-```
+#### References
+
+---
+
+*Copyright  1999-2010, Dassault Systmes. All rights reserved.*
+
+
+
+```vbscript
 Sub CATMain()
 Dim StrWorkbench As StrWorkbench
 Dim strFactory As StrObjectFactory
@@ -88,24 +39,17 @@ Dim strFactory As StrObjectFactory
 Set doc = CATIA.ActiveDocument
 Dim rootProduct As Product
 Set rootProduct = doc.Product
- 
+   
 Set StrWorkbench = doc.GetWorkbench("StrWorkbench")
- 
+    
 Dim strPlates As strPlates
 Set strPlates = rootProduct.GetTechnologicalObject("StructurePlates")
- 
+   
 Dim strMembers As strMembers
 Set strMembers = rootProduct.GetTechnologicalObject("StructureMembers")
 ```
 
-		
-		
-#### []Retrieving the Factory from Object on which Coping Is to Be Done
-		
-
-This step describes how to get Structure Feature Factory. The Factory object is retrieved by adding object to nibble to the selection list.
-		
-```
+```vbscript
 'Get The Factory from Selection Method
 Dim PlateToNibble As StrPlate
 Set PlateToNibble = strPlates.Item("Deck_014.2")
@@ -113,18 +57,12 @@ Set PlateToNibble = strPlates.Item("Deck_014.2")
 Dim PlateSelection As Selection
 Set PlateSelection = CATIA.ActiveDocument.Selection
 PlateSelection.Add PlateToNibble
- 
+  
 Dim FactoryForPlate As StrFeatureFactory
 Set FactoryForPlate = PlateSelection.FindObject("CATIAStrFeatureFactory")
 ```
 
-		
-		
-#### []Defining the Limits
-
-The limits are defined by adding them to list of variant which can contain only one element at a time.
-		
-```
+```vbscript
 'Define the Limits for PlateToNibble
 Dim Limitplate1 As StrPlate
 Set Limitplate1 = strPlates.Item("Shell_002.1")
@@ -139,13 +77,7 @@ Set Listoflimits1(0) = Limitplate1
 Set Listoflimits2(0) = LimitSurface1
 ```
 
-		
-		
-#### []Creating Coping
-
-Create Coping by passing list of limits containing one element and Type. Coping SubType can also be defined later.
-		
-```
+```vbscript
 'Create Nibbling by defining Type and SubType
 Dim NibblingFeature1, NibblingFeature2 As StrNibblingFeature
 
@@ -156,13 +88,7 @@ Set NibblingFeature2 = FactoryForPlate.AddNibbling(Listoflimits2, "Remove")
 NibblingFeature2.SubType = "CurrCurr"
 ```
 
-		
-		
-#### []Creating Coping for Case2 and Case3
-
-In Case2: we will apply coping on Member when it is limited by 2 Members and One Plate.
-		
-```
+```vbscript
 'Case2: When Member is limited by 2 Members and One Plate
 
 'Get the Factory from Selection Method
@@ -203,9 +129,7 @@ NibblingFeature4.Type = "ShortPoint"
 Set NibblingFeature5 = FactoryForMember.AddNibbling(Listoflimits5, "Remove")
 ```
 
-In case3 we will define the extrapolation offset for the lateral face of stiffener.
-
-```
+```vbscript
 'Case3: When Member is limited by Lateral Face of Plate
 
 'Get the Factory from Selection Method
@@ -231,36 +155,3 @@ Dim NibblingFeature6 As StrNibblingFeature
 Set NibblingFeature6 = FactoryForMember2.AddNibbling(ListofLimits6, "Remove")
 NibblingFeature6.GetOffsetForExtrapolate ("25mm")
 ```
-
-		
-		
-	
-
-![End Task Icon](../CAAScrBase/images/aendtask.gif)
-
-[[Top]]
-
----
-
-#### []In Short
-
-This use case has shown how to create coping between structure objects.
-
-[[Top]]
-
----
-
-#### []References
-
-	
-		|[1]
-		|[Replaying 
-		a macro]
-	
-	
-		|[[Top]]
-	
-
----
-
-*Copyright 1999-2010, Dassault Systmes. All rights reserved.*

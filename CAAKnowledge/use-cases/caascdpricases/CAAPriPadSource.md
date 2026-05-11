@@ -15,25 +15,40 @@ converted: "2026-05-11T17:31:51.226971"
     Option Explicit
 
 ```vbscript
+```vbscript
+```vbscript
     ' COPYRIGTH DASSAULT SYSTEMES 2001
     ' ***********************************************************************
     '   Purpose:      Creates constraints between assembly Parts using Publications
-    '   Assumtions:   Looks for CAAPriPad.CATPart in the DocView   
-    '   Author: 
+    '   Assumtions:   Looks for CAAPriPad.CATPart in the DocView
+    '   Author:
     '   Languages:    VBScript
-    '   Locales:      English 
-    '   CATIA Level:  V5R7 
+    '   Locales:      English
+    '   CATIA Level:  V5R7
     ' ***********************************************************************
 
 ```
 
-    Sub CATMain()
+```
+
+```
 
 ```vbscript
-        ' ----------------------------------------------------------- 
+    Sub CATMain()
+
+```
+
+```vbscript
+```vbscript
+```vbscript
+        ' -----------------------------------------------------------
         ' Optional: allows to find the sample wherever it's installed
-        dim sDocPath As String 
+        dim sDocPath As String
         sDocPath=CATIA.SystemService.Environ("CATDocView")
+```
+
+```
+
 ```
 
 ```vbscript
@@ -42,120 +57,216 @@ converted: "2026-05-11T17:31:51.226971"
 
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
+```vbscript
         End If
 ```
 
+```
+
 ```vbscript
-        ' ----------------------------------------------------------- 
-        ' Open the Part document 
+```vbscript
+```vbscript
+        ' -----------------------------------------------------------
+        ' Open the Part document
         Dim oDoc As Document
         set oDoc = CATIA.Documents.Open(sDocPath & _
 ```
 
+```
+
+```
+
                      "\online\CAAScdPriUseCases\samples\CAAPriPad.CATPart")
 
+```vbscript
+```vbscript
 ```vbscript
     ' ------------
     ' Get the part
     ' ------------
 ```
 
+```
+
+```
+
 ```vbscript
     Dim oPart As Part
+```vbscript
     Set oPart = oDoc.Part
 ```
 
+```
+
+```vbscript
+```vbscript
 ```vbscript
     ' ------------
     ' Get the part body in the part
     ' ------------
     Dim oBody As Body
-    Set oBody = oPart.Bodies.Item  ( "PartBody" ) 
+    Set oBody = oPart.Bodies.Item  ( "PartBody" )
     ' ------------
     ' Get the sketch in the body
     ' ------------
     Dim oSketch As Sketch
-    Set oSketch = oBody.Sketches.Item  ( "Sketch.1" ) 
+    Set oSketch = oBody.Sketches.Item  ( "Sketch.1" )
     ' ------------
     ' Create the pad with a default first limit
     ' ------------
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' ------------
 ' Create the pad with a default first limit
 ' ------------
-    MsgBox "Click OK to create the pad."
-    Dim oPad As Pad
-    Set oPad = oPart.ShapeFactory.AddNewPad  ( oSketch, 20.000000 ) 
 ```
 
+```
+
+    MsgBox "Click OK to create the pad."
+    Dim oPad As Pad
+```vbscript
+    Set oPad = oPart.ShapeFactory.AddNewPad  ( oSketch, 20.000000 )
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
     ' ------------
     ' Update the part
     ' ------------
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' ------------
 ' Update the part
 ' ------------
-    oPart.Update 
 ```
 
+```
+
+    oPart.Update
+```
+
+```vbscript
+```vbscript
 ```vbscript
     ' ------------
     ' Define the pad first limit
     ' ------------
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' ------------
 ' Define the pad first limit
 ' ------------
+```
+
+```
+
     MsgBox "Click OK to set the pad first limit to 40mm."
     oPad.FirstLimit.Dimension.Value = 40.000000
 ```
 
+```vbscript
+```vbscript
 ```vbscript
     ' ------------
     ' Update the part
     ' ------------
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' ------------
 ' Update the part
 ' ------------
-    oPart.Update 
 ```
 
+```
+
+    oPart.Update
+```
+
+```vbscript
+```vbscript
 ```vbscript
     ' ------------
     ' Define the pad to be symmetric relative to the sketch plane
     ' ------------
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' ------------
 ' Define the pad to be symmetric relative to the sketch plane
 ' ------------
+```
+
+```
+
     MsgBox "Click OK to mirror the extrusion offset."
     oPad.IsSymmetric = True
 ```
 
+```vbscript
+```vbscript
 ```vbscript
     ' ------------
     ' Update the part
     ' ------------
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' ------------
 ' Update the part
 ' ------------
-    oPart.Update 
+```
 
 ```
 
+    oPart.Update
+
+```
+
+```vbscript
     End Sub
+
+```

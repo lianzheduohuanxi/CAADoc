@@ -10,11 +10,11 @@ converted: "2026-05-11T17:33:51.447050"
 ```
 
 ---
-| 
+|
 # CAA C++ API Modifications
 
-| 
-##  CATTTRSInterfaces Framework Modifications in V5R18 
+|
+##  CATTTRSInterfaces Framework Modifications in V5R18
 
 * * *
 

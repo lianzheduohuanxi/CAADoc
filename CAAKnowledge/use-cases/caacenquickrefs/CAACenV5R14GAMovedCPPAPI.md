@@ -12,7 +12,7 @@ converted: "2026-05-11T17:33:47.155397"
 tags: []
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R14GAMovedCPPAPI.htm"
 converted: "2026-05-11T17:33:47.155397"
-CAA V5 Encyclopedia |  Moved C++ Authorized APIs in CAA V5R14 GA  
+CAA V5 Encyclopedia |  Moved C++ Authorized APIs in CAA V5R14 GA
 
 * * *
 
@@ -48,9 +48,9 @@ The following Authorized APIs are moved from VPMInterfaces to ENOVInterfaces in 
 
 * * *
 
-History Version: **1** [Jul 2004] | Document created  
----|---  
-[Top]  
+History Version: **1** [Jul 2004] | Document created
+---|---
+[Top]
 
 * * *
 

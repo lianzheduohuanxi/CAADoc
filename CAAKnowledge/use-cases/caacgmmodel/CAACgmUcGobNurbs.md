@@ -9,10 +9,10 @@ converted: "2026-05-11T17:33:48.422980"
 ```
 
 ---
-# Using NURBS  
+# Using NURBS
 
----  
-Use Case  
+---
+Use Case
 ## Abstract
 
 The use case illustrates how to use the CGM classes and interfaces to create the NURBS curves. The NURBS theory is described in a dedicated technical article [1].
@@ -24,8 +24,8 @@ The use case illustrates how to use the CGM classes and interfaces to create the
       * Where to Find the CAAGMModelNurbs Code
     * Step-by-Step
     * In Short
-    * References  
----  
+    * References
+---
 ## What You Will Learn With This Use Case
 
 The use case explains how to use the CATKnotVector class and the CATNurbsCurve interface to create NURBS curves. The way to use NURBS surface is similar.
@@ -61,7 +61,10 @@ With this use case, you create a Bzier arc, a Non Uniform Polynomial B-Spline an
 With this use case, you create a Bzier arc, a Non Uniform Polynomial B-Spline and a Non Uniform Rational B-Spline. Geometric points corresponding to the arc limits are also created.
 To launch CAAGMModelNurbs, you will need to set up the build time environment, then compile CAAGMModelNurbs.m along with its prerequisites, set up the run time environment, and then execute the use case [4].
 
+```vbscript
 If you simply type CAAGMModelNurbs with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example:
+
+```
 
 `CAAGMModelNurbs e/NurbsCreation.NCGM`
 
@@ -76,7 +79,7 @@ where `InstallRootFolder` [4] is the folder where the API CD-ROM is installed.
 ## Step-by-Step
 
 where `InstallRootFolder` [4] is the folder where the API CD-ROM is installed.
-The main program is divided into the following steps: 
+The main program is divided into the following steps:
 
     1. Creating the Geometry Factory
     2. Creating a Bzier Curve; also creating the geometric points corresponding to the control points to visualize them
@@ -94,7 +97,10 @@ The main program is divided into the following steps:
 The geometry factory (`CATGeoFactory`) creates and manages all the CATICGMObject (and the curves and surfaces in particular) [3]. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
     CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**() ;
+```vbscript
     if (NULL==piGeomFactory) return (1);
+
+```
 
 ### Creating a Bzier Curve
 
@@ -131,14 +137,20 @@ vertices.SetPoint(CATMathPoint(-10.,0.,0.),3);
                                   isRational,
                                   vertices,
                                   aWeights);   _// NULL (polynomial)_
+```vbscript
      if (NULL==piFirstCurve)
+
+```
 
      {
        ::CATCloseCGMContainer(piGeomFactory);
 vertices,
 aWeights);   _// NULL (polynomial)_
 if (NULL==piFirstCurve)
+```vbscript
        return (1);
+
+```
 
      }
 
@@ -152,14 +164,20 @@ return (1);
                                                  (CATMathPoint(-10.,5.,0.));
      CATCartesianPoint* piCP4= piGeomFactory->CreateCartesianPoint
                                                  (CATMathPoint(-10.,0.,0.));
+```vbscript
      if (NULL==piCP1 || NULL==piCP2 || NULL==piCP3 || NULL==piCP4)
+
+```
 
      {
        ::CATCloseCGMContainer(piGeomFactory);
 CATCartesianPoint* piCP4= piGeomFactory->CreateCartesianPoint
 (CATMathPoint(-10.,0.,0.));
+```vbscript
 if (NULL==piCP1 || NULL==piCP2 || NULL==piCP3 || NULL==piCP4)
        return (1);
+
+```
 
      }
 
@@ -168,7 +186,10 @@ The control points of the curves are given as mathematical points to the `Create
 
 To visualize the control points, the use case creates them as geometric points, but this is not required in the general use.
 
+```vbscript
 If an error occurs, the program closes the factory and returns an error code.
+
+```
 
 ### Creating Another Curve, Only Differing by a Control Point
 
@@ -179,8 +200,8 @@ To see the influence of the control points, another Bzier curve using the same k
 Fig. 1: Illustration of the Steps 2 And 3 ![Nurbs](images/CAACgmGobNurbs2.gif) | The green curve has four control points (CP1 to CP4). If you move CP3 to CP3', the curve is attracted by this new points. Notice two important properties of this kind of NURBS, called Bezier curve:
 
     * The curve is inside the convex hull of the control points.
-    * The curve is tangent to the segment joining the first and second control points at the beginning of the curve, and to the segment joining the last and next to last control points at its end.  
----|---  
+    * The curve is tangent to the segment joining the first and second control points at the beginning of the curve, and to the segment joining the last and next to last control points at its end.
+---|---
 
 Fig. 1: Illustration of the Steps 2 And 3 ![Nurbs](images/CAACgmGobNurbs2.gif) | The green curve has four control points (CP1 to CP4). If you move CP3 to CP3', the curve is attracted by this new points. Notice two important properties of this kind of NURBS, called Bezier curve:
 To change the control point, directly change the definition in the `CATMathSetOfPoint`: the position of the point in the `CATMathSetOfPoint` is an index (beginning at 0).
@@ -191,36 +212,54 @@ To change the control point, directly change the definition in the `CATMathSetOf
                              isRational,
                              vertices,
                              aWeights);     _// NULL (polynomial)_
+```vbscript
      if (NULL==piSecondCurve)
+
+```
 
      {
        ::CATCloseCGMContainer(piGeomFactory);
 vertices,
 aWeights);     _// NULL (polynomial)_
 if (NULL==piSecondCurve)
+```vbscript
        return (1);
+
+```
 
      }
 
 return (1);
      CATCartesianPoint* piCP3bis= piGeomFactory->CreateCartesianPoint
                                                  (CATMathPoint(-5.,15.,0.));
+```vbscript
+```vbscript
      if (NULL==piCP3bis)
+
+```
+
+```
 
      {
        ::CATCloseCGMContainer(piGeomFactory);
 CATCartesianPoint* piCP3bis= piGeomFactory->CreateCartesianPoint
 (CATMathPoint(-5.,15.,0.));
+```vbscript
 if (NULL==piCP3bis)
        return (1);
 
-     }	
+```
+
+     }
 ### Creating a Non Uniform Polynomial B-Spline
 
 return (1);
 We define here the green curve of Fig. 2. It is non periodic, non uniform, and C2 continuous, with three arcs of degree 3 (the knot vector has four distincts knots). In this case, there are six control points, according to the following relation [1] between the number of knots (_m+1_), the degree (_k_) of _Nik_ and the number of control points (_n+1_):
 
+```vbscript
 _m = (n+1) + k_
+
+```
 
     const long nbknots=4;
      double aKnots[nbknots];
@@ -255,13 +294,19 @@ CATNurbsCurve * piThirdCurve = piGeomFactory->CreateNurbsCurve(
 nonUniformKnot,
 isRational,
 otherVertices,
+```vbscript
      if (NULL==piThirdCurve)
+
+```
 
      {
        ::CATCloseCGMContainer(piGeomFactory);
 otherVertices,
 if (NULL==piThirdCurve)
+```vbscript
        return (1);
+
+```
 
      }
 
@@ -277,23 +322,32 @@ Hence, if you asked for the knot vector of `ThirdCurve` (`GetKnotVector`), that 
     CATCrvEvalLocal result;
     CATMathPoint mathPoint;
 
-    // new CATKnotVector 
+    // new CATKnotVector
 CATCrvParam param;
 CATCrvEvalLocal result;
 CATMathPoint mathPoint;
     const CATKnotVector * pNewKnotVector=piThirdCurve->**GetKnotVector**();
+```vbscript
     if (NULL==pNewKnotVector)
+
+```
 
     {
        ::CATCloseCGMContainer(piGeomFactory);
 const CATKnotVector * pNewKnotVector=piThirdCurve->**GetKnotVector**();
 if (NULL==pNewKnotVector)
+```vbscript
        return (1);
+
+```
 
     }
 ```vbscript
 if (NULL==pNewKnotVector)
+```vbscript
 return (1);
+```
+
     const double * aNewKnots=NULL;
     pNewKnotVector->**GetKnots**(aNewKnots);
     if (NULL==aNewKnots)
@@ -304,29 +358,38 @@ return (1);
 const double * aNewKnots=NULL;
 pNewKnotVector->**GetKnots**(aNewKnots);
 if (NULL==aNewKnots)
+```vbscript
        return (1);
+
+```
 
     }
 
-    // second knot value 
+    // second knot value
 return (1);
     piThirdCurve->CreateParam(aNewKnots[1] ,param);
     piThirdCurve->**Eval**(param,CATCrvEvalCommand::EvalPoint,result);
 
     result.**GetPoint**(mathPoint);
     CATCartesianPoint* piCPAL2= piGeomFactory->CreateCartesianPoint(mathPoint);
+```vbscript
     if (NULL==piCPAL2 )
+
+```
 
     {
        ::CATCloseCGMContainer(piGeomFactory);
 result.**GetPoint**(mathPoint);
 CATCartesianPoint* piCPAL2= piGeomFactory->CreateCartesianPoint(mathPoint);
 if (NULL==piCPAL2 )
+```vbscript
        return (1);
 
-    }     
+```
 
-To create the 3D geometric point, you have to recover its definition from the parameter (the knot): this is done by using the curve evaluator: 
+    }
+
+To create the 3D geometric point, you have to recover its definition from the parameter (the knot): this is done by using the curve evaluator:
 
     * The `Eval` method computes the evaluation: the type of evaluation is given by a `CATCrvEvalCommand`: here, only the point evaluation.
     * The `GetPoint` method returns the result as a mathematical point.
@@ -350,16 +413,22 @@ The non uniform vector of the step 5 is kept. The non rational is created by def
                        isRational,          _// Yes_
                        otherVertices,
                        aWeights);           _// Not NULL_
+```vbscript
      if (NULL==piFourthCurve)
+
+```
 
      {
        ::CATCloseCGMContainer(piGeomFactory);
 otherVertices,
 aWeights);           _// Not NULL_
 if (NULL==piFourthCurve)
+```vbscript
        return (1);
 
-     } 
+```
+
+     }
 
 return (1);
      delete [] aWeights;
@@ -367,7 +436,7 @@ return (1);
 
 Fig. 2 shows the influence of the weights.
 
-Fig. 2: Illustration of Non Uniform Polynomial and Rational B-Splines ![Nurbs](images/CAACgmGobNurbs1.gif) | The green curve is the non uniform polynomial B-Spline curve created at the step 4. The weight of each control point is 1. If you assign the (1,1,10,20,5,1) weights to the control points, it gives the red curve. This curve is attracted by the control points CP3 and CP4, that are more weighted than the others. These curves have three arcs: CP1-K1, K1-K2, K2-CP2.  
+Fig. 2: Illustration of Non Uniform Polynomial and Rational B-Splines ![Nurbs](images/CAACgmGobNurbs1.gif) | The green curve is the non uniform polynomial B-Spline curve created at the step 4. The weight of each control point is 1. If you assign the (1,1,10,20,5,1) weights to the control points, it gives the red curve. This curve is attracted by the control points CP3 and CP4, that are more weighted than the others. These curves have three arcs: CP1-K1, K1-K2, K2-CP2.
 
 ### Writing the Model and Closing the Container
 
@@ -395,7 +464,7 @@ ofstream filetowrite(pfileName, ios::binary ) ;
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
        filetowrite.close();
-     }	
+     }
 
      //
      // Closes the container
@@ -406,12 +475,12 @@ ofstream filetowrite(pfileName, ios::binary ) ;
 This use case describes how to use the NURBS curves in CGM, using the CATNurbsCurve interface and the CATKnotVector class. Bzier curve, non uniform polynomial curve and non uniform rational curve are then created.
 ## References
 
-[1] | [About NURBS](CAACgmTaGobAboutNurbs.md)  
----|---  
-[2] | [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.md)  
-[3] | [The Curves of CATIA Geometric Modeler](CAACgmTaGobCurves.md)  
-[4] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[1] | [About NURBS](CAACgmTaGobAboutNurbs.md)
+---|---
+[2] | [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.md)
+[3] | [The Curves of CATIA Geometric Modeler](CAACgmTaGobCurves.md)
+[4] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
 ## History
 
-Version: **1** [Apr 2000] | Document created  
+Version: **1** [Apr 2000] | Document created
 ---|---

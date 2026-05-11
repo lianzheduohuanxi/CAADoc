@@ -9,12 +9,20 @@ converted: "2026-05-11T17:31:50.874115"
 ```
 
 ---
-    Sub CATMain()
+```vbscript
+Sub CATMain()
 
+```
+
+```vbscript
 ```vbscript
     Dim doc As Document
 
       Dim StrWorkbench As StrWorkbench
+```
+
+```vbscript
+```vbscript
       Dim strFactory As StrObjectFactory
 
       Set doc = CATIA.ActiveDocument
@@ -34,9 +42,15 @@ converted: "2026-05-11T17:31:50.874115"
 
       Dim Selection1 As Selection
       Set Selection1 = CATIA.ActiveDocument.Selection
+```
+
+```
+
       Selection1.Add PlateToCut1
 
       Dim Factory1 As StrFeatureFactory
+```vbscript
+```vbscript
       Set Factory1 = Selection1.FindObject("CATIAStrFeatureFactory")
 
       Dim dir1 As Reference
@@ -50,9 +64,15 @@ converted: "2026-05-11T17:31:50.874115"
 
       Dim Selection2 As Selection
       Set Selection2 = CATIA.ActiveDocument.Selection
+```
+
+```
+
       Selection2.Add PlateToCut2
 
       Dim Factory2 As StrFeatureFactory
+```vbscript
+```vbscript
       Set Factory2 = Selection2.FindObject("CATIAStrFeatureFactory")
 
       Dim Sur1 As Reference
@@ -63,4 +83,11 @@ converted: "2026-05-11T17:31:50.874115"
 
 ```
 
+```
+
+```
+
+```vbscript
     End Sub
+
+```

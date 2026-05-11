@@ -11,23 +11,23 @@ converted: "2026-05-11T17:31:51.127693"
 ---
 # DrawingView Object
 
-See Also | UseCases | Properties | Methods  
----|---|---|---  
+See Also | UseCases | Properties | Methods
+---|---|---|---
 
-[![](../CAAScrAutomationImages/images/drviews.gif)](CAADriObjDrawingViews.md)  
-![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/dractview.gif)![](../CAAScrAutomationImages/images/drview.gif)  
-![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/drview.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/drrefview.gif)![](../CAAScrAutomationImages/images/drview.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/drviewgb.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/drtexts.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/fact2d.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/geoelts.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/drwelds.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/drviewgl.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/drcomps.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/drtables.gif)  
-![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/drthreads.gif)  
----  
+[![](../CAAScrAutomationImages/images/drviews.gif)](CAADriObjDrawingViews.md)
+![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/dractview.gif)![](../CAAScrAutomationImages/images/drview.gif)
+![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/drview.gif)
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/drrefview.gif)![](../CAAScrAutomationImages/images/drview.gif)
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/drviewgb.gif)
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/drtexts.gif)
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/fact2d.gif)
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/geoelts.gif)
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/drwelds.gif)
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/drviewgl.gif)
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/drcomps.gif)
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parmult.gif)![](../CAAScrAutomationImages/images/drtables.gif)
+![](../CAAScrAutomationImages/images/space.gif)![](../CAAScrAutomationImages/images/parchild.gif)![](../CAAScrAutomationImages/images/drthreads.gif)
+---
 
 Represents a drawing view of a drawing sheet in a drawing document.
 
@@ -55,16 +55,16 @@ The front view is also used as a reference by the left view for positioning. If 
 
 The following table summarizes the different view types along with their ability to have a parent view and if this parent view can also be a reference view.
 
-View Types | Parent View | Reference View | Creation Method  
+View Types | Parent View | Reference View | Creation Method
 
 The following table summarizes the different view types along with their ability to have a parent view and if this parent view can also be a reference view.
 View Types | Parent View | Reference View | Creation Method
-Front View | No | No | **DefineFrontView**  
-Isometric View | No | No | **DefineIsometricView**  
-Projection View | Yes | Yes | **DefineProjectionView**  
-Section View | Yes | Yes | **DefineSectionView**  
-Detail View | Yes | No | **DefineCircularDetailView**  
-Auxiliary View | Yes | Yes | **DefineAuxiliaryView**  
+Front View | No | No | **DefineFrontView**
+Isometric View | No | No | **DefineIsometricView**
+Projection View | Yes | Yes | **DefineProjectionView**
+Section View | Yes | Yes | **DefineSectionView**
+Detail View | Yes | No | **DefineCircularDetailView**
+Auxiliary View | Yes | Yes | **DefineAuxiliaryView**
 
 A front view or an isometric view are defined using the components of the two vectors defining its projection plane in the 3D space.
 
@@ -84,9 +84,15 @@ Use x and y properties to set or retrieve the x and y coordinates of the view co
 
 ```vbscript
     Dim myView As Object
+```vbscript
+```vbscript
     Set myView = CATIA.Documents(2).ActiveSheet.ActiveView
     myView.x = 260
     myView.y = 120
+
+```
+
+```
 
 ```
 

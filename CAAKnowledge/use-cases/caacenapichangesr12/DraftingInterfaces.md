@@ -10,8 +10,8 @@ converted: "2026-05-11T17:33:50.552888"
 ```
 
 ---
-| CAA C++ API Modifications|  DraftingInterfaces  |   
----|---|---  
+| CAA C++ API Modifications|  DraftingInterfaces  |
+---|---|---
 
 * * *
 

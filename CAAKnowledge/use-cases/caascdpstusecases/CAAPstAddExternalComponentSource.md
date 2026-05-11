@@ -2,119 +2,106 @@
 title: "Untitled"
 category: "use-case"
 module: "CAAScdPstUseCases"
-tags: ["CAAPstHull", "CAAScrBase", "CAAPstAddExternalComponent", "CATIA"]
+tags: ["CAAScrBase", "CAAPstAddExternalComponent", "CATIA", "CAAPstHull"]
 source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddExternalComponentSource.htm"
-converted: "2026-05-11T11:06:32.496226"
+converted: "2026-05-11T11:27:02.581589"
 ---
 
-```
 Option Explicit
-
 ' COPYRIGHT DASSAULT SYSTEMES 2000
 
 ' *****************************************************************************
-
-' Purpose: Create A Product Structure document containing
-
-' an external component.
-
-' Assumtions: Opens CAAPstHull.CATPart in the CATDocView 
-
-' Author: 
-
-' Languages: VBScript
-
-' Locales: English 
-
-' CATIA Level: V5R6 
-
+'   Purpose:       Create A Product Structure document containing
+'                        an external component.
+'   Assumtions:   Opens CAAPstHull.CATPart in the CATDocView   
+'   Author: 
+'   Languages:   VBScript
+'   Locales:        English 
+'   CATIA Level:  V5R6 
 ' *****************************************************************************
 
-Sub 
-CATMain()
+Sub CATMain()
 
- 
-' -----------------------------------------------------------------------------------------------
+    ' -----------------------------------------------------------------------------------------------
+    ' Optional: allows to find the sample wherever it's installed
+     Dim sDocPath As String
+     sDocPath=CATIA.SystemService.Environ("CATDocView")
+     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+       Err.Raise 9999,,"No Doc Path Defined"
+     End If
+    ' ------------------------------------------------------------------------------------------------ 
+   
+    'Create a new product document object by adding a document with the Product
+    'type to the document collection of the CATIA application. 
+    Dim oProductDoc As Document
+    Set oProductDoc = CATIA.Documents.Add("Product") 
 
- 
-' Optional: allows to find the sample wherever it's installed
+    'Retrieve the root product.
+    Dim oRoot As Product
+    Set oRoot = oProductDoc.Product
 
- Dim 
-sDocPath
- As 
-String
- sDocPath=CATIA.SystemService.Environ("CATDocView")
+    'Retrieve the root product collection of products.
+    Dim oRootCol As Products
+    Set oRootCol = oRoot.Products
 
- If 
-(Not CATIA.FileSystem.FolderExists(sDocPath))
- Then
+    'Open the Part Document
+    Dim oPartDoc As Document
+    Set oPartDoc = CATIA.Documents.Open(sDocPath & "CAAPstHull.CATPart")
 
- Err.Raise 9999,,"No Doc Path Defined"
+    'Add a new component from the already opened part document.
+    Dim oNewComponent As Product
+    Set oNewComponent = oRootCol.AddExternalComponent(oPartDoc)
+   
+End Sub
 
- End If
 
- 
-' ------------------------------------------------------------------------------------------------ 
 
- 
- 
-'Create a new product document object by adding a document with the Product
+```vbscript
+Option Explicit
+' COPYRIGHT DASSAULT SYSTEMES 2000
 
- 
-'type to the document collection of the CATIA application. 
+' *****************************************************************************
+'   Purpose:       Create A Product Structure document containing
+'                        an external component.
+'   Assumtions:   Opens CAAPstHull.CATPart in the CATDocView   
+'   Author: 
+'   Languages:   VBScript
+'   Locales:        English 
+'   CATIA Level:  V5R6 
+' *****************************************************************************
 
- Dim 
-oProductDoc
- As 
-Document
 
- Set 
-oProductDoc = CATIA.Documents.Add("Product") 
+Sub CATMain()
 
- 
-'Retrieve the root product.
+    ' -----------------------------------------------------------------------------------------------
+    ' Optional: allows to find the sample wherever it's installed
+     Dim sDocPath As String
+     sDocPath=CATIA.SystemService.Environ("CATDocView")
+     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+       Err.Raise 9999,,"No Doc Path Defined"
+     End If
+    ' ------------------------------------------------------------------------------------------------ 
+   
+    'Create a new product document object by adding a document with the Product
+    'type to the document collection of the CATIA application. 
+    Dim oProductDoc As Document
+    Set oProductDoc = CATIA.Documents.Add("Product") 
 
- Dim 
-oRoot
- As 
-Product
+    'Retrieve the root product.
+    Dim oRoot As Product
+    Set oRoot = oProductDoc.Product
 
- Set 
-oRoot = oProductDoc.Product
+    'Retrieve the root product collection of products.
+    Dim oRootCol As Products
+    Set oRootCol = oRoot.Products
 
- 
-'Retrieve the root product collection of products.
+    'Open the Part Document
+    Dim oPartDoc As Document
+    Set oPartDoc = CATIA.Documents.Open(sDocPath & "CAAPstHull.CATPart")
 
- Dim 
-oRootCol
- As 
-Products
-
- Set 
-oRootCol = oRoot.Products
-
- 
-'Open the Part Document
-
- Dim 
-oPartDoc
- As 
-Document
-
- Set 
-oPartDoc = CATIA.Documents.Open(sDocPath & "CAAPstHull.CATPart")
-
- 
-'Add a new component from the already opened part document.
-
- Dim 
-oNewComponent
- As 
-Product
-
- Set 
-oNewComponent = oRootCol.AddExternalComponent(oPartDoc)
- 
-
+    'Add a new component from the already opened part document.
+    Dim oNewComponent As Product
+    Set oNewComponent = oRootCol.AddExternalComponent(oPartDoc)
+   
 End Sub
 ```

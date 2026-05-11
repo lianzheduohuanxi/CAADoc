@@ -2,337 +2,79 @@
 title: "Untitled"
 category: "use-case"
 module: "CAAScdSchUseCases"
-tags: ["CAAScrBase", "CAASCH_Detail03", "CAASchCompRefGraphic", "CAAInfLauchMacro", "CAASchCompRefGraphic_02", "CAAScdInfUseCases", "CAASchCompRefGraphic_01", "CATIASchGRR", "CATIASchCompGraphic", "CAASchCompRefGraphicSource", "CAAScdSchUseCases", "CATIA", "CAAScrJavaScript"]
+tags: ["CAAScrBase", "CATIASchGRR", "CATIA", "CAASchCompRefGraphic_02", "CAAScrJavaScript", "CAASchCompRefGraphic", "CAAScdSchUseCases", "CAASchCompRefGraphic_01", "CAAScdInfUseCases", "CAASCH_Detail03", "CATIASchCompGraphic", "CAAInfLauchMacro", "CAASchCompRefGraphicSource"]
 source_file: "Doc/online/CAAScdSchUseCases/CAASchCompRefGraphic.htm"
-converted: "2026-05-11T11:06:32.666024"
+converted: "2026-05-11T11:27:02.648576"
 ---
-
-## Schematics Platform Modeler
- 
- 
-## []Managing the Graphical Representation of a Schematic 
- Reference Component
- 
- 
- 
- 
 
 ---
 
  
  
- 
- ![](../CAAScrBase/images/atarget.gif)
- |[]This macro shows you how to manage the 
- graphical representations (symbols) of a schematic reference component.
-
- This macro opens the document CAASCH_Detail03.CATProduct that contains 
- three component symbols. One of the symbols (the highlighted one) has been 
- associated with an existing schematic reference component. This macro shows 
- how to add the other two unassociated symbols to the same reference 
- component. It also illustrates how to remove one of the 3 symbols from the 
- reference component and how to query for a list of associated symbols.
- 
-
- ![](images/CAASchCompRefGraphic_01.jpg)
- 
- 
- ![](../CAAScrBase/images/ainfo.gif)
- |[]CAASchCompRefGraphic is launched in CATIA 
- [[1]]. No open document is needed.
-
- [CAASchCompRefGraphic.CATScript ]
- is located in the CAAScdSchUseCases module.
- [Execute macro] (Windows 
- only).
- 
- 
- ![](../CAAScrBase/images/ascenari.gif)
- |[]CAASchCompRefGraphic includes the 
- following steps:
-
- 
-- [Prolog]
- 
-- [Find a schematic reference 
- component in the model]
- 
-- [Add a graphical 
- representation to the schematic reference component]
- 
-- [Query for a list of 
- graphical representation of the schematic reference component]
- 
-- [Remove a graphical 
- representation from the schematic reference component]
- 
- 
-#### []Prolog
- 
-
-The macro first loads CAASCH_Detail03.CATProduct.
- 
- 
- |    ...
-
-    ' Open the schematic document 
- 
-
-    Dim sFilePath
-
-    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
-
-            "online\CAAScdSchUseCases\samples\CAASCH_Detail03.CATProduct")
-
- 
-
-    Dim objSchDoc As Document
-
-    Set objSchDoc = CATIA.Documents.Open(sFilePath)
-
-   
- ...
- 
- 
- 
+     
 
 Next, the macro acquires the schematic root object from the document. 
- The schematic root is the top node of the object instance tree in a 
- schematic document. 
- 
- 
- |    ...
+     The schematic root is the top node of the object instance tree in a 
+     schematic document. 
+     
+     
 
-   
- ' Find the top node of the schematic object tree - schematic root.
-
-    Dim objPrdRoot As Product
-
-    Dim objSchRoot As SchematicRoot
-
-    If ( Not ( objSchDoc Is Nothing ) ) Then
-
-      Set objPrdRoot = objSchDoc.Product
- 
-
-      If ( Not ( objPrdRoot Is Nothing ) ) Then
-
-        Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
-
-      End If
-
-    End If
-
-   
- ...
- 
- 
- 
-#### []Find a schematic reference 
- component in the model
- 
+#### Find a schematic reference 
+     component in the model
+     
 
 Using the GetRefComponents method, a list of existing schematic 
- reference component in the model can be obtained. Note that the output of 
- this method is a list of objects. The member of this list can be retrieved 
- using the Item method. The second argument of this method specifies a 
- particular interface to be returned on this member reference component. In 
- this case it is the SchCompGraphic interface.
- 
- 
- |    ...
+     reference component in the model can be obtained. Note that the output of 
+     this method is a list of objects. The member of this list can be retrieved 
+     using the Item method. The second argument of this method specifies a 
+     particular interface to be returned on this member reference component. In 
+     this case it is the SchCompGraphic interface.
+     
+     
 
-    Dim objLCompRefs As SchListOfObjects
-
-    Dim objCompRefGraphic As SchCompGraphic
-
- 
-
-    If ( Not ( objSchRoot Is Nothing ) ) Then
-
- 
-
-      
-
- '-----------------------------------------------------------------------
-
-      
- ' Find a list of reference component in the model
-
-      
- '-----------------------------------------------------------------------
-
-       Set objLCompRefs = objSchRoot.GetRefComponents
-
- 
-
-       If ( Not ( objLCompRefs Is Nothing ) ) Then
-
- 
-
-         
-
- '--------------------------------------------------------------------
-
-         
- ' Get a SchCompGraphic interface handle from a reference
-
-         
- ' component
-
-         
- '--------------------------------------------------------------------
-
-          Set objCompRefGraphic = objLCompRefs.Item (1,"CATIASchCompGraphic")
-
-   
- ...
- 
- 
- 
-#### []Add a graphical 
- representation to the schematic reference component
- 
+#### Add a graphical 
+     representation to the schematic reference component
+     
 
 The macro calls GetComponentSymbol to find a symbol that has not been 
- associated with any reference component. Using the symbol, it then calls 
- AddGraphicalRepresentation to add this symbol to the reference component. 
- This method is called a second time to add the third symbol. At this point, 
- the reference component has three graphical representations.
- 
- 
- |    ...
+     associated with any reference component. Using the symbol, it then calls 
+     AddGraphicalRepresentation to add this symbol to the reference component. 
+     This method is called a second time to add the third symbol. At this point, 
+     the reference component has three graphical representations.
+     
+     
 
-              Dim objUnassocSymbol As AnyObject
-
- 
-
-             
-
- '----------------------------------------------------------------
-
-             
- ' Find a symbol that is not associated with any reference in
-
-             
- ' the model
-
-             
- '----------------------------------------------------------------
-
-              Set objUnassocSymbol = GetComponentSymbol (objSchRoot)
-
- 
-
-              If ( Not ( objUnassocSymbol Is Nothing ) ) Then
-
- 
-
-               
-
- '--------------------------------------------------------------
-
-               
- '  Add the second graphical representation to the reference
-
-               
- '  component using the symbol just found
-
-               
- '--------------------------------------------------------------
-
-                objCompRefGraphic.AddGraphicalRepresentation objUnassocSymbol
-
- 
-
-   
-
- ...
- 
- 
- 
-#### []Query for a list of 
- graphical representation of the schematic reference component
- 
+#### Query for a list of 
+     graphical representation of the schematic reference component
+     
 
 ListGraphicalRepresentation returns a list of graphical representations. 
- This list should contains three members.
- 
- 
- |    ...
+     This list should contains three members.
+     
+     
 
-              Dim objLGraphic As SchListOfObjects
-
-              Set objLGraphic = objCompRefGraphic.ListGraphicalRepresentations
-
-   
- ...
- 
- 
- 
-#### []Remove a graphical 
- representation from the schematic reference component
- 
+#### Remove a graphical 
+     representation from the schematic reference component
+     
 
 The macro finds the first member of the list of graphical 
- representations obtained from previous step and call 
- RemoveGraphicalRepresentation to remove that symbol from the reference 
- component.
- 
- 
- |    ...
-
-                 Set objGRR = Nothing
-
-                 If (intNbGraphic > 1) Then
-
-                    Set objGRR = objLGraphic.Item(intNbGraphic,"CATIASchGRR")
-
-                    If ( Not (objGRR Is Nothing ) ) Then
-
-                       objCompRefGraphic.RemoveGraphicalRepresentation objGRR
-
-                       Set objLGraphic = objCompRefGraphic.ListGraphicalRepresentations
-
-                       If ( Not ( objLGraphic Is Nothing ) ) Then
-
-                        
-  intNbGraphic = objLGraphic.Count
-
-                          strMessage = strMessage & "Number of graphical representations"
-
-                          strMessage = strMessage & "after calling "
-
-                          strMessage = strMessage & " RemoveGraphicalRepresentation = " & intNbGraphic & vbCr
-
-                       End If 
- 
-
-                    End If
-
-                 End If ' --- If (intNbGraphic > 1)
-
-              End If '--- If ( Not ( objLGraphic Is Nothing ) ) Then
-
- 
-
-   
-
- ...
- 
- 
- 
- 
+     representations obtained from previous step and call 
+     RemoveGraphicalRepresentation to remove that symbol from the reference 
+     component.
+     
+     
+   
  
  
 
-[[Top]]
+[Top]
 
 ---
 
  
  
-#### []In Short
+
+#### In Short
  
 
 This use case shows how to add, remove and query for a list of graphical 
@@ -343,24 +85,14 @@ This use case shows how to add, remove and query for a list of graphical
  ![](images/CAASchCompRefGraphic_02.jpg)
  
 
-[[Top]]
+[Top]
 
 ---
 
  
  
-#### []References
- 
- 
- |[1]
- |[
- Replaying a Macro]
- 
- 
- 
- 
- |[[Top]]
- 
+
+#### References
  
  
 
@@ -369,4 +101,4 @@ This use case shows how to add, remove and query for a list of graphical
  
  
 
-*Copyright 2001, Dassault Systmes. All rights reserved.*
+*Copyright  2001, Dassault Systmes. All rights reserved.*

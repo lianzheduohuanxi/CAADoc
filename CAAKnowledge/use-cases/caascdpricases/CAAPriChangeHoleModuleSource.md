@@ -15,6 +15,8 @@ converted: "2026-05-11T17:31:51.194040"
     Option Explicit
 
 ```vbscript
+```vbscript
+```vbscript
     ' COPYRIGTH DASSAULT SYSTEMES 2004
     ' ***********************************************************************
     '   Purpose:      Changes hole description
@@ -24,13 +26,25 @@ converted: "2026-05-11T17:31:51.194040"
     '   Locales:      English
     '   CATIA Level:  V5R13
 
+```
+
+```
+
+```vbscript
     Public oPartDocument As PartDocument
     Public i As Long
     Public sDocPath As String
 ```
 
+```
+
+```vbscript
     Sub CATMain()
 
+```
+
+```vbscript
+```vbscript
 ```vbscript
     ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
@@ -38,11 +52,20 @@ converted: "2026-05-11T17:31:51.194040"
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 
+```
+
+```
+
 ```vbscript
       Err.Raise 9999, , "No Doc Path Defined"
+```vbscript
     End If
 ```
 
+```
+
+```vbscript
+```vbscript
 ```vbscript
     ' -----------------------------------------------------------
     ' ------------
@@ -58,14 +81,26 @@ converted: "2026-05-11T17:31:51.194040"
         ' ------------
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' ------------
 ' The selection content is empty, the macro ends
 ' ------------
+```
+
+```
+
         MsgBox "Select the holes you wish to transform before running the macro.", vbOKOnly, "Warning"
     Else
 ```
 
+```vbscript
+```vbscript
 ```vbscript
         ' ------------
         ' The selection content is not empty
@@ -73,40 +108,74 @@ converted: "2026-05-11T17:31:51.194040"
         ' ------------
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' The selection content is not empty
 ' Show the dialog box
 ' ------------
+```
+
+```
+
         CAAPriChangeHoleForm.Show
+```vbscript
     End If
 
 ```
 
+```
+
+```vbscript
     End Sub
 
 End Sub
     Public Function CatObjectExistsInSelection(CatSelection As Selection, CatObjectName As String, CatObject As Object) As Boolean
 
+```
+
     On Error Resume Next
 
 ```vbscript
     Set CatObject = CatSelection.FindObject(CatObjectName)
+```vbscript
+```vbscript
     CatObjectExistsInSelection = (Err.Number = 0)
     Err.Clear
 
 ```
 
+```
+
+```
+
+```vbscript
     End Function
 
     Public Function ParameterExists(ItemIndex As String, ItemCollection As Object) As Boolean
+
+```
 
 ```vbscript
     Dim TmpItem As Variant
     On Error Resume Next
     Set TmpItem = ItemCollection.Item(ItemIndex)
+```vbscript
+```vbscript
     ParameterExists = (Err.Number = 0)
     Err.Clear
 
 ```
 
+```
+
+```
+
+```vbscript
     End Function
+
+```

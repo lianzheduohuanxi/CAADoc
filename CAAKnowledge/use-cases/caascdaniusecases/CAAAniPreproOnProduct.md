@@ -2,155 +2,21 @@
 title: "Creating Connection Properties on a Product"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CAAAniPreproOnProduct", "CAAScrBase", "CAAInfLauchMacro", "CAAAniPreprocessingFeatures", "CAAScdInfUseCases", "CATIAParameter", "CATISamImportDefine", "CATIAConstraints", "CAAScdAniTechArticles", "CAAAniTocAnalysisDocument", "CAAAniPreproOnProductSource", "CAAScdAniUseCases", "CATIA", "CAAScrJavaScript"]
+tags: ["CAAScrBase", "CATIAParameter", "CATIA", "CAAScdAniUseCases", "CAAScrJavaScript", "CATIAConstraints", "CAAAniTocAnalysisDocument", "CAAScdInfUseCases", "CAAAniPreproOnProduct", "CAAScdAniTechArticles", "CAAAniPreprocessingFeatures", "CATISamImportDefine", "CAAInfLauchMacro", "CAAAniPreproOnProductSource"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnProduct.htm"
-converted: "2026-05-11T11:06:32.296440"
+converted: "2026-05-11T11:27:02.495592"
 ---
-
-## Analysis Modeler
-		
-		
-## []Creating Connection Properties on a Product
-		
-	
 
 ---
 
-	
-		![](../CAAScrBase/images/atarget.gif)
-		|[]This macro shows you how to create an 
-		Analysis document for a generative structural analysis. With this scenario, 
-		you will cover all the steps of a generative analysis application. This 
-		scenario will require a "CATIA - GENERATIVE ASSEMBLY STRUCTURAL ANALYSIS 
-		2 Product" license.
-		
-
-It creates an Analysis document, imports a Product document provided 
-		with the sample. An Analysis Case is created as for static linear analysis. 
-		Some preprocessing data are defined by using the publication defined on 
-		the product. We will focus on the creation of connection properties based 
-		on assembly constraints and creation of loading conditions based on rigid 
-		virtual part.
-		
-
-		![](images/PreproWithCts.jpg)
-		
-
- 
-		
-	
-	
-		![](../CAAScrBase/images/ainfo.gif)
-		|[]CAAAniPreproOnProduct is launched in CATIA 
-		[[1]]. No open document is needed.
-		
-
- [CAAAniPreproOnProduct.catvbs] 
-		is located in the CAAScdAniUseCases module.
-		[Execute macro] (Windows 
-		only).
-		
-	
-	
-		![](../CAAScrBase/images/ascenari.gif)
-		|[]CAAAniPreproOnProduct includes the following 
-		steps:
-		
-
-			
-- [Prolog]
-			
-- [Importing the Product Document and Extract 
-			the Publications and Constraints]
-			
-- [Creating a Virtual Part and a Property Connection]
-			
-- [Creating an Analysis Case for Static Analysis]
-			
-- [Defining the Boundaries]
-			
-- [Defining the Load]
-			
-- [Extracting Data from a Basic Component]
-			
-- [Computing the Case]
-			
-- [Epilog]
-		
-		
-#### []Prolog
-		
-			
-				
-```
-...
-```
-
-				
-```
-'_____________________________________________________________________________________
-
-' Optional: allows to find the sample wherever it's installed
-
- sDocPath=CATIA.SystemService.Environ("CATDocView")
- sSep=CATIA.SystemService.Environ("ADL_ODT_SLASH")
-
- If 
-(Not CATIA.FileSystem.FolderExists(sDocPath))
- Then
-
- Err.Raise 9999,,"No Doc Path Defined"
-
- End If
-
-'_____________________________________________________________________________________
-
-' Get the collection of documents in session
-
- Set 
-documents1 = CATIA.Documents
-
-' ----------------------------------------------------------- 
-
-' Get the collection of documents in session
- 
-
-' Create the CATAnalysis Document 
-
- 
-Set 
-TheAnalysisDocument = documents1.
-Add
-("Analysis") 
- 
-
-' if WB name already is "GPSCfg", not to use StartWorkbench
- 
- WBName = CATIA.GetWorkbenchId 
-if 
-(WBName <> "GPSCfg") 
-Then
- 
- CATIA.
-StartWorkbench
-("GPSCfg")
- 
- 
-End If
-
- ...
-```
-
-				
-			
-		
 		
 
 Create the Analysis document. The use of StartWorkbench will customize 
 		the analysis document as a generative one. This means that meshparts and 
 		properties will be automatically created as in the Generative workbench.
 		
-#### []Importing the Product Document and Extracting 
+
+#### Importing the Product Document and Extracting 
 		the Publications
 		
 
@@ -158,88 +24,7 @@ In order to import the document you have to give the path of this document,
 		the late type which implements CATISamImportDefine and an array of CATVariant 
 		if you want to customize the import.
 
- 
-		
-			
-				
-```
-...
-
-' Start to scan the existing structure of analysis document: Retrieve the AnalysisManager
-
- Set 
-analysisManager1 = TheAnalysisDoc.Analysis
-```
-
-				
-```
-Dim arrayOfVariantOfShort1(0)
- analysisManager1.
-ImportDefineFile
- (sDocPath & sSep & "online" & sSep & "CAAScdAniUseCases"
- & sSep & "samples" & sSep & "basic_assembly.CATProduct"),
-```
-
-				
-```
-"CATAnalysisImport", arrayOfVariantOfShort1
-
-' _____________________________________________________________________________________
-
-' Reframe All.
-
- Set 
-specsAndGeomWindow2 = CATIA.ActiveWindow
-
- Set 
-viewer3D1 = specsAndGeomWindow2.ActiveViewer
- viewer3D1.Reframe 
-
-' _____________________________________________________________________________________
-
-' Scan the analysis document: Retrieve the Pointed documents to extract the reference for preprocessing
-
- Set 
-analysisLinkedDocuments1 = analysisManager1.LinkedDocuments
- CATIA.SystemService.Print analysisLinkedDocuments1.Name
-
- If 
-(analysisLinkedDocuments1.Count <> 1 )
- Then
-
- Err.Raise 9999,,"NbDoc Li NE 1"
-
- End If
-
-' _____________________________________________________________________________________
-
-' Retrieve the CATProduct Document and associated publications and constraints collection.
-
- Set 
-productDocument1 = analysisLinkedDocuments1.Item(1)
-
- Set 
-product1 = productDocument1.Product
-
- Set 
-products1 = product1.
-Products
-
- Set 
-publications1 = product1.
-Publications
-
- Set 
-constraints1 = product1.
-Connections
-("
-CATIAConstraints
-")
-...
-```
-
-				
-			
+ 
 		
 		
 
@@ -254,9 +39,10 @@ The product document is fetched in the documentation installation path,
 		from the product the constraints collection.
 		
 
-[[Top]]
+[Top]
 		
-#### []Creating a Virtual Part and a Property Connection
+
+#### Creating a Virtual Part and a Property Connection
 		
 
 **Virtual Parts** are structures created without a geometric support. 
@@ -267,61 +53,6 @@ The product document is fetched in the documentation installation path,
 		is explicitly introduced by the means of a spring element. For each hole 
 		we will create a Rigid virtual part in order to distribute a global force 
 		to a linked face.
-		
-			
-				
-```
-...
-
-' _____________________________________________________________________________________
-
-' Create a Virtual Part in the analysis model to transmit the load.
-
-Set 
-analysisSets1 = analysisModel1.AnalysisSets
-
-Set 
-analysisSet1 = analysisSets1.
-ItemByType
-("PropertySet")
-
-Set 
-analysisEntities1 = analysisSet1.AnalysisEntities
-
-Set 
-analysisEntity1 = analysisEntities1.
-Add
-("SAMVirPartRigid")
-
-Set 
-publication1 = publications1.
-Item
-("FaceCylinderTop")
-analysisEntity1.
-AddSupportFromPublication
- product1, publication1
-
-Set 
-basicComponents1 = analysisEntity1.BasicComponents
-
-Set 
-basicComponent1 = basicComponents1.
-GetItem
-("SAMRigSlavePoint.1")
-
-Set 
-publication4 = publications1.
-Item
-("ForceHandler")
-basicComponent1.
-AddSupportFromPublication
- product1, publication4
-
-...
-```
-
-				
-			
 		
 		
 
@@ -337,96 +68,18 @@ AddSupportFromPublication
 		independently, the Fastened Connection is designed to handle incompatible 
 		meshes.
 		
-			
-				
-```
-...
-
-' _____________________________________________________________________________________
-
-' Create a Fastened connection in the analysis model to complete the constraints 
-
-' definition
-
-Set 
-analysisEntity2 = analysisEntities1.
-Add
-("SAMFaceFaceFastened")
-
-Set 
-constraint1 = constraints1.
-Item
-("Surface contact.2")
-analysisEntity2.
-AddSupportFromConstraint
- product1, constraint1
-
-...
-```
-
-				
-			
-		
 		
 
-[[Top]]
+[Top]
 		
-#### []Creating an Analysis Case for Static Analysis
-		
-			
-				
-```
-...
 
-' _____________________________________________________________________________________
- 
-
-' Create a Static Case in the current analysis model.
- 
- 
-Set 
-analysisModels1 = analysisManager1.AnalysisModels 
- 
-Set 
-analysisModel1 = analysisModels1.Item(1) 
- 
-Set 
-analysisCases1 = analysisModel1.AnalysisCases
- 
- 
-Set 
-analysisCase1 = analysisCases1.
-Add
-()
- 
-Set 
-analysisSets1 = analysisCase1.AnalysisSets
- 
-Set 
-analysisSet1 = analysisSets1.
-Add
-("RestraintSet", catAnalysisSetIn)
- 
-Set 
-analysisSet2 = analysisSets1.
-Add
-("LoadSet", catAnalysisSetIn)
- 
-Set 
-analysisSet3 = analysisCase1.
-AddSolution
-("StaticSet")
- ...
-```
-
-				
-			
+#### Creating an Analysis Case for Static Analysis
 		
 		
 
 According to the general
 		[
-		Analysis Document] structure, this macro uses some standard procedures 
+		Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm) structure, this macro uses some standard procedures 
 		to navigate or retrieve the required objects. First, from the **document**, 
 		we find the **Analysis manager Object**, the **Analysis models** and 
 		the **Analysis cases Objects**. From both last object (Analysis Model 
@@ -436,101 +89,23 @@ According to the general
 		set (StaticSet).
 		
 
-[[Top]]
+[Top]
 		
-#### []Defining the Boundaries
-		
-			
-				
-```
-...
 
-' _____________________________________________________________________________________
-
-' Create clamp boundary. Associated to a publication
-
-Set 
-analysisEntities2 = analysisSet2.AnalysisEntities
-
-Set 
-analysisEntity3 = analysisEntities2.
-Add("
-SAMClamp")
-
-Set 
-publication2 = publications1.
-Item
-("FaceToClamp")
-analysisEntity3.
-AddSupportFromPublication
- product1, publication2
-...
-```
-
-				
-			
+#### Defining the Boundaries
 		
 		
 
 From the restraint set defined on the analysis case, we retrieve the 
-		collection of  analysis entities. We add to this collection a fix (clamp) 
+		collection of  analysis entities. We add to this collection a fix (clamp) 
 		boundary condition and apply it on the geometry extracted from the Product 
 		document.
 		
 
-[[Top]]
+[Top]
 		
-#### []Defining the Loads
-		
-			
-				
-```
-...
 
-' _____________________________________________________________________________________
-
-' Create load boundary. Associated to the virtual part
-
-Set 
-analysisEntities3 = analysisSet3.AnalysisEntities
-
-Set 
-analysisEntity4 = analysisEntities3.
-Add
-("SAMDistributedForce")
-
-Set 
-reference2 = analysisManager1.
-CreateReferenceFromObject
-(analysisEntity1)
-analysisEntity4.
-AddSupportFromReference
- reference2, reference2
-
-Set 
-basicComponents2 = analysisEntity4.BasicComponents
-
-Set 
-basicComponent2 = basicComponents2.
-GetItem
-("SAMForceAxis.1")
-basicComponent2.
-SetValue
- "Values", 0, 0, 0, 1
-
-Set 
-basicComponent3 = basicComponents2.
-GetItem
-("SAMForceVector.1")
-basicComponent3.SetDimensions 3, 1, 1
-basicComponent3.SetValue "", 1, 1, 1, 100.000000
-basicComponent3.SetValue "", 2, 1, 1, 0.000000
-basicComponent3.SetValue "", 3, 1, 1, 0.000000
-...
-```
-
-				
-			
+#### Defining the Loads
 		
 		
 
@@ -539,92 +114,17 @@ The load is defined as the boundaries. In this case the support is the
 		that will transform the analysis entity into a reference.
 		
 
-[[Top]]
+[Top]
 		
-#### []Extracting Data from a Basic Component
-		
-			
-				
-```
-...
 
-' Some examples to read the data on the basic component
-
-'In this case, direct read 
-
-CATIA.SystemService.Print " ForceVector " & basicComponent3.
-GetValue
-("", 1, 1, 1) 
-CATIA.SystemService.Print " ForceVector " & basicComponent3.
-GetValue
-("", 2, 1, 1)
-CATIA.SystemService.Print " ForceVector " & basicComponent3.
-GetValue
-("", 3, 1, 1)
-
-CATIA.SystemService.Print " ForceVector Type " & basicComponent3.
-Type
- 
-CATIA.SystemService.Print " ForceVector Dimension " & basicComponent3.
-GetLinesNumber
- ("")
-CATIA.SystemService.Print " ForceVector Dimension " & basicComponent3.
-GetColumnsNumber
-("")
-CATIA.SystemService.Print " ForceVector Dimension " & basicComponent3.
-GetLayersNumber
- ("")
-
-'In this case, use the Kwe CATIAParameter interface.
-
-Set 
-ParametersList = analysisManager1.
-Parameters
-
-Set 
-SubList = ParametersList.
-SubList
-(basicComponent3,FALSE)
-
-For 
-i = 1
- to 
-SubList.Count
-	Set Parameter = SubList.
-Item
-(i)
-	CATIA.SystemService.Print Parameter.Name 
-	CATIA.SystemService.Print Parameter.
-ValueAsString
-
-Next
-
-...
-```
-
-				
-			
+#### Extracting Data from a Basic Component
 		
 		
 
-[[Top]]
+[Top]
 		
-#### []Computing the Case
-		
-			
-				
-```
-...
 
-' Launch the computation of the Case
- 
- MyCase.ComputeMeshOnly ...
- 
-...
-```
-
-				
-			
+#### Computing the Case
 		
 		
 
@@ -632,24 +132,10 @@ This method will launch the mesher, generate the finite element model
 		for preprocessing.
 		
 
-[[Top]]
+[Top]
 		
-#### []Epilog
-		
-			
-				
-```
-...
-```
 
-				End Sub
-				
-```
-...
-```
-
-				
-			
+#### Epilog
 		
 		
 
@@ -659,35 +145,216 @@ To run the macro interactively CATDocView and ADL_ODT_SLASH
 
 ![](../CAAScrBase/images/aendtask.gif)
 
-[[Top]]
+[Top]
 
 ---
 
-#### []In Short
+#### In Short
 
 This use case has shown how to produce in VB a complete analysis document with 
 a generative way.
 
-[[Top]]
+[Top]
 
 ---
 
-#### []References
-
-	
-		|[1]
-		|[Replaying 
-		a macro]
-	
-	
-		|[2]
-		[
-		The Physical Types for Structural Analysis]
-	
-	
-		|[[Top]]
-	
+#### References
 
 ---
 
-*Copyright 2001, Dassault Systmes. All rights reserved.*
+*Copyright  2001, Dassault Systmes. All rights reserved.*
+
+
+
+```vbscript
+...
+```
+
+```vbscript
+&#39;_____________________________________________________________________________________
+&#39; Optional: allows to find the sample wherever it&#39;s installed
+
+  sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+  sSep=CATIA.SystemService.Environ(&quot;ADL_ODT_SLASH&quot;)
+
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,,&quot;No Doc Path Defined&quot;
+    End If
+&#39;_____________________________________________________________________________________
+&#39; Get the collection of documents in session
+  Set documents1 = CATIA.Documents
+&#39; ----------------------------------------------------------- 
+&#39; Get the collection of documents in session 
+&#39; Create the CATAnalysis Document 
+   Set TheAnalysisDocument = documents1.Add(&quot;Analysis&quot;) 
+   
+&#39; if WB name already is &quot;GPSCfg&quot;, not to use StartWorkbench 
+   WBName = CATIA.GetWorkbenchId if (WBName &lt;&gt; &quot;GPSCfg&quot;) Then 
+      CATIA.StartWorkbench(&quot;GPSCfg&quot;)
+   End If
+ ...
+```
+
+```vbscript
+...
+&#39; Start to scan the existing structure of analysis document:  Retrieve the AnalysisManager
+  Set analysisManager1 = TheAnalysisDoc.Analysis
+```
+
+```vbscript
+Dim arrayOfVariantOfShort1(0)
+  analysisManager1.ImportDefineFile (sDocPath &amp; sSep  &amp; &quot;online&quot; &amp; sSep &amp; &quot;CAAScdAniUseCases&quot;
+                                     &amp; sSep &amp; &quot;samples&quot; &amp; sSep &amp; &quot;basic_assembly.CATProduct&quot;),
+```
+
+```vbscript
+&quot;CATAnalysisImport&quot;, arrayOfVariantOfShort1
+
+&#39; _____________________________________________________________________________________
+&#39; Reframe All.
+  Set specsAndGeomWindow2 = CATIA.ActiveWindow
+  Set viewer3D1 = specsAndGeomWindow2.ActiveViewer
+  viewer3D1.Reframe 
+
+
+&#39; _____________________________________________________________________________________
+&#39; Scan the analysis document:  Retrieve the Pointed documents to extract the reference for preprocessing
+  Set analysisLinkedDocuments1 = analysisManager1.LinkedDocuments
+  CATIA.SystemService.Print analysisLinkedDocuments1.Name
+  If (analysisLinkedDocuments1.Count &lt;&gt; 1 ) Then
+    Err.Raise 9999,,&quot;NbDoc Li NE 1&quot;
+  End If
+
+&#39; _____________________________________________________________________________________
+&#39; Retrieve the CATProduct Document and associated publications and constraints collection.
+
+  Set productDocument1 = analysisLinkedDocuments1.Item(1)
+
+  Set product1 = productDocument1.Product
+  Set products1 = product1.Products
+
+  Set publications1 = product1.Publications
+  Set constraints1 = product1.Connections(&quot;CATIAConstraints&quot;)
+...
+```
+
+```vbscript
+...
+&#39; _____________________________________________________________________________________
+&#39; Create a Virtual Part in the analysis model to transmit the load.
+Set analysisSets1 = analysisModel1.AnalysisSets
+Set analysisSet1 = analysisSets1.ItemByType(&quot;PropertySet&quot;)
+
+Set analysisEntities1 = analysisSet1.AnalysisEntities
+Set analysisEntity1 = analysisEntities1.Add(&quot;SAMVirPartRigid&quot;)
+Set publication1 = publications1.Item(&quot;FaceCylinderTop&quot;)
+analysisEntity1.AddSupportFromPublication product1, publication1
+Set basicComponents1 = analysisEntity1.BasicComponents
+Set basicComponent1 = basicComponents1.GetItem(&quot;SAMRigSlavePoint.1&quot;)
+Set publication4 = publications1.Item(&quot;ForceHandler&quot;)
+basicComponent1.AddSupportFromPublication product1, publication4
+
+...
+```
+
+```vbscript
+...
+&#39; _____________________________________________________________________________________
+&#39; Create a Fastened connection in the analysis model to complete the constraints 
+&#39; definition
+Set analysisEntity2 = analysisEntities1.Add(&quot;SAMFaceFaceFastened&quot;)
+Set constraint1 = constraints1.Item(&quot;Surface contact.2&quot;)
+analysisEntity2.AddSupportFromConstraint product1, constraint1
+
+...
+```
+
+```vbscript
+...
+&#39; _____________________________________________________________________________________ 
+&#39; Create a Static Case in the current analysis model. 
+   Set analysisModels1 = analysisManager1.AnalysisModels 
+   Set analysisModel1 = analysisModels1.Item(1) 
+   Set analysisCases1 = analysisModel1.AnalysisCases
+   
+   Set analysisCase1 = analysisCases1.Add()
+   Set analysisSets1 = analysisCase1.AnalysisSets
+   Set analysisSet1 = analysisSets1.Add(&quot;RestraintSet&quot;, catAnalysisSetIn)
+   Set analysisSet2 = analysisSets1.Add(&quot;LoadSet&quot;, catAnalysisSetIn)
+   Set analysisSet3 = analysisCase1.AddSolution(&quot;StaticSet&quot;)
+  ...
+```
+
+```vbscript
+...
+&#39; _____________________________________________________________________________________
+&#39; Create clamp boundary. Associated to a publication
+Set analysisEntities2 = analysisSet2.AnalysisEntities
+Set analysisEntity3 = analysisEntities2.Add(&quot;SAMClamp&quot;)
+Set publication2 = publications1.Item(&quot;FaceToClamp&quot;)
+analysisEntity3.AddSupportFromPublication product1, publication2
+...
+```
+
+```vbscript
+...
+&#39; _____________________________________________________________________________________
+&#39; Create load boundary. Associated to the virtual part
+Set analysisEntities3 = analysisSet3.AnalysisEntities
+
+Set analysisEntity4 = analysisEntities3.Add(&quot;SAMDistributedForce&quot;)
+Set reference2 = analysisManager1.CreateReferenceFromObject(analysisEntity1)
+analysisEntity4.AddSupportFromReference reference2, reference2
+
+Set basicComponents2 = analysisEntity4.BasicComponents
+Set basicComponent2 = basicComponents2.GetItem(&quot;SAMForceAxis.1&quot;)
+basicComponent2.SetValue &quot;Values&quot;, 0, 0, 0, 1
+Set basicComponent3 = basicComponents2.GetItem(&quot;SAMForceVector.1&quot;)
+basicComponent3.SetDimensions 3, 1, 1
+basicComponent3.SetValue &quot;&quot;, 1, 1, 1, 100.000000
+basicComponent3.SetValue &quot;&quot;, 2, 1, 1, 0.000000
+basicComponent3.SetValue &quot;&quot;, 3, 1, 1, 0.000000
+...
+```
+
+```vbscript
+...
+&#39; Some examples to read the data on the basic component
+&#39;In this case, direct read 
+CATIA.SystemService.Print &quot; ForceVector &quot; &amp; basicComponent3.GetValue(&quot;&quot;, 1, 1, 1) 
+CATIA.SystemService.Print &quot; ForceVector &quot; &amp; basicComponent3.GetValue(&quot;&quot;, 2, 1, 1)
+CATIA.SystemService.Print &quot; ForceVector &quot; &amp; basicComponent3.GetValue(&quot;&quot;, 3, 1, 1)
+
+CATIA.SystemService.Print &quot; ForceVector Type &quot; &amp; basicComponent3.Type  
+CATIA.SystemService.Print &quot; ForceVector Dimension &quot; &amp; basicComponent3.GetLinesNumber  (&quot;&quot;)
+CATIA.SystemService.Print &quot; ForceVector Dimension &quot; &amp; basicComponent3.GetColumnsNumber(&quot;&quot;)
+CATIA.SystemService.Print &quot; ForceVector Dimension &quot; &amp; basicComponent3.GetLayersNumber (&quot;&quot;)
+
+&#39;In this case, use the Kwe CATIAParameter interface.
+Set ParametersList = analysisManager1.Parameters
+Set SubList = ParametersList.SubList(basicComponent3,FALSE)
+
+For i = 1 to SubList.Count
+	Set Parameter = SubList.Item(i)
+	CATIA.SystemService.Print Parameter.Name  
+	CATIA.SystemService.Print Parameter.ValueAsString
+Next
+
+...
+```
+
+```vbscript
+...
+&#39; Launch the computation of the Case 
+   MyCase.ComputeMeshOnly ...
+  
+...
+```
+
+```vbscript
+...
+```
+
+```vbscript
+...
+```

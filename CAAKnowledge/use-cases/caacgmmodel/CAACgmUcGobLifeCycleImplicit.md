@@ -9,13 +9,13 @@ converted: "2026-05-11T17:33:48.407972"
 ```
 
 ---
-# Creating Implicit Objects  
+# Creating Implicit Objects
 
----  
-Use Case  
+---
+Use Case
 ## Abstract
 
-The use case illustrates how to create implicit objects and how they are managed by the CATIA Geometric Modeler in terms of life cycle.. 
+The use case illustrates how to create implicit objects and how they are managed by the CATIA Geometric Modeler in terms of life cycle..
     * What You Will Learn With This Use Case
     * About Implicit Objects
     * The CAAGMModelLifeCycleImplicit Use Case
@@ -24,8 +24,8 @@ The use case illustrates how to create implicit objects and how they are managed
       * Where to Find the CAAGMModelLifeCycleImplicit Code
     * Step- by- Step
     * In Short
-    * References  
----  
+    * References
+---
 ## What You Will Learn With This Use Case
 
 The use case explains how to create implicit objects and illustrates how their life cycle is managed.
@@ -43,7 +43,10 @@ With this use case, you create an implicit CATPlane on which an implicit CATPlin
 With this use case, you create an implicit CATPlane on which an implicit CATPline is created. Then this CATPLine is cloned. Because the CATCloneManager is created with the CatCGMFullDuplicate option, a duplicate plane is created.
 To launch CAAGMModelLifeCycleImplicit, you will need to set up the build time environment, then compile CAAGMModelLifeCycleImplicit.m along with its prerequisites, set up the run time environment, and then execute the use case [1].
 
+```vbscript
 If you simply type CAAGMModelLifeCycleImplicit with no argument, the use case executes, but doesn't save the result in an NCGM file. If you want to save this result, provide the full pathname of the NCGM file to create. For example:
+
+```
 
 `CAAGMModelLifeCycleImplicit`` e/ObjCreation.NCGM`
 
@@ -74,7 +77,10 @@ The main program is divided into the following steps:
 The geometry factory (`CATGeoFactory`) creates and manages all the CATICGMObject This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
     CATGeoFactory* piGeomFactory = ::CATCreateCGMContainer() ;
+```vbscript
     if (NULL == piGeomFactory) return (1);
+
+```
 
 ### Creating the Implicit Geometry Factory
 
@@ -83,7 +89,10 @@ if (NULL == piGeomFactory) return (1);
 The implicit factory is retrieved from the standard factory by using the `CATGeoFactory::GetImplicitGeoFactory` method.
 
     CATGeoFactory * piImplicitFactory =piGeomFactory->GetImplicitGeoFactory( );
-    if (NULL == piImplicitFactory) return (1); 
+```vbscript
+    if (NULL == piImplicitFactory) return (1);
+
+```
 
 ### Creating the Implicit Objects: the CATPlane, the Initial CATPline and the Cloned CATPLine
 
@@ -103,17 +112,20 @@ There are two ways to create a cloned objects:
     CATPLine * pPline =  piImplicitFactory->CreatePLine   (p1, p2, piPlane );
     **// ----- Clone pPline - Full duplication mode
     //       A duplicate plane is created because the CatCGMFullDuplicate
-    //       is specified - if the default option is used, the duplicated 
+    //       is specified - if the default option is used, the duplicated
     //       PLine points to the already existing plane.**
 CATPLine * pPline =  piImplicitFactory->CreatePLine   (p1, p2, piPlane );
-    CATCloneManager * pCloneManager= new CATCloneManager(piImplicitFactory, CatCGMFullDuplicate); 
+    CATCloneManager * pCloneManager= new CATCloneManager(piImplicitFactory, CatCGMFullDuplicate);
 
     ...
 CATCloneManager * pCloneManager= new CATCloneManager(piImplicitFactory, CatCGMFullDuplicate);
     pCloneManager->Add(pPline);
     pCloneManager->Run();
     CATICGMObject* piClonedPLine=NULL;
+```vbscript
     piClonedPLine = pCloneManager->ReadImage(pPline);
+
+```
 
 ### Removing the Two Plines with RemoveDependancies and Attempting to Create a New CATPline
 
@@ -124,13 +136,19 @@ The RemoveDependancies option only applies to implicit objects. By using it, you
 
     * Case 1: CATCloneManager in full duplication option
 
+```vbscript
 If you remove pPline with the RemoveDependancies options, piPlane being an implicit object, it is removed. Any attempt to re-use it to create another Pline will result in a throw. Removing the cloned CATPLine will not change anything.
 
-    * Case 2: CATCloneManager is single duplication option 
+```
+
+    * Case 2: CATCloneManager is single duplication option
 
 ```vbscript
 If you remove pPline with the RemoveDependancies options, piPlane being an implicit object, it is removed. Any attempt to re-use it to create another Pline will result in a throw. Removing the cloned CATPLine will not change anything.
-If you remove pPline with RemoveDependancies but not piClonedPLine, piPlane will not be removed because it is still pointed to by piClonedPLine and you will be able to re-use it to create a new PLine.  
+```vbscript
+If you remove pPline with RemoveDependancies but not piClonedPLine, piPlane will not be removed because it is still pointed to by piClonedPLine and you will be able to re-use it to create a new PLine.
+```
+
 but, if you remove pPline as well as piClonedPLine with the RemoveDependancies option, piPlane will be removed because it is no longer pointed to by other objects and you will not be able to re-use piPlane.
 
     piImplicitFactory->Remove(pPline,CATICGMContainer::RemoveDependancies);
@@ -164,20 +182,20 @@ ofstream filetowrite(pfileName, ios::binary ) ;
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
        filetowrite.close();
-     }	
+     }
 
      _//
      // Closes the container
-     //_	
+     //_
      **::CATCloseCGMContainer**(piGeomFactory);
 ## In Short
 
 This use case describes how to create implicit objects and illustrates how the RemoveDependancies option affects their life cycle.
 ## References
 
-[1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
----|---  
+[1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
+---|---
 ## History
 
-Version: **1** [Jun 2003] | Document created  
+Version: **1** [Jun 2003] | Document created
 ---|---

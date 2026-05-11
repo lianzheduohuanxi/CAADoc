@@ -11,15 +11,15 @@ converted: "2026-05-11T17:31:51.615517"
 ---
 ## Analysis Modeler
 
-| 
-## Creating Surface Mesh Parts  
+|
+## Creating Surface Mesh Parts
 
 * * *
 
-  This use case shows you how to create Octree triangle mesh part on an existing analysis document. This scenario requires "FEM Surface (FMS) product". The macro open an Analysis document. Mesh part surface mesh is created and global specifications associated with this mesh part are set. The local specification: _MSHLocalMeshSize_ is created, specifying the edge of the hole as support. Finally mesh part is updated to generate mesh. ![](images/BasicSurfMesh.gif)    
----|---  
+  This use case shows you how to create Octree triangle mesh part on an existing analysis document. This scenario requires "FEM Surface (FMS) product". The macro open an Analysis document. Mesh part surface mesh is created and global specifications associated with this mesh part are set. The local specification: _MSHLocalMeshSize_ is created, specifying the edge of the hole as support. Finally mesh part is updated to generate mesh. ![](images/BasicSurfMesh.gif)
+---|---
 This use case shows you how to create Octree triangle mesh part on an existing analysis document. This scenario requires "FEM Surface (FMS) product". The macro open an Analysis document. Mesh part surface mesh is created and global specifications associated with this mesh part are set. The local specification: _MSHLocalMeshSize_ is created, specifying the edge of the hole as support. Finally mesh part is updated to generate mesh. ![](images/BasicSurfMesh.gif)
-  CAAAniMeshBasicSurf is launched in CATIA [1]. No open document is needed. [CAAAniMeshBasicSurf.catvbs](CAAAniMeshBasicSurfSource.md) is located in the CAAScdAniUseCases module. [Execute macro](macros/CAAAniMeshBasicSurf.catvbs) (Windows only).  
+  CAAAniMeshBasicSurf is launched in CATIA [1]. No open document is needed. [CAAAniMeshBasicSurf.catvbs](CAAAniMeshBasicSurfSource.md) is located in the CAAScdAniUseCases module. [Execute macro](macros/CAAAniMeshBasicSurf.catvbs) (Windows only).
   CAAAniMeshBasicSurf includes the following steps:
 
   1. Prolog
@@ -29,14 +29,20 @@ This use case shows you how to create Octree triangle mesh part on an existing a
 
 #### Prolog
 
-| 
+|
 
     ...
 
 ```vbscript
-    '----------------------------------------------------------- 
+```vbscript
+```vbscript
+    '-----------------------------------------------------------
     'Optional: allows to find the sample wherever it's installed
       sDocPath=CATIA.SystemService.Environ("CATDocView")
+```
+
+```
+
 ```
 
 ```vbscript
@@ -45,105 +51,177 @@ This use case shows you how to create Octree triangle mesh part on an existing a
 
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
+```vbscript
+```vbscript
         End If
-    '----------------------------------------------------------- 
+    '-----------------------------------------------------------
+
+```
+
+```
 
 ```
 
 ```vbscript
 End If
+```vbscript
+```vbscript
 '-----------------------------------------------------------
-    'Open the Analysis document 
+    'Open the Analysis document
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Surface.CATAnalysis")
 ```
 
+```
+
+```
+
+```vbscript
 ```vbscript
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```
 
-    ...  
+```
 
----  
+    ...
+
+---
 
 Open the Analysis document. The Analysis document is retrieved in the documentation installation path, this path is already stored in the `sDocPath` variable. If this cariable is not valuated then error is raised. In the collection of documents, two documents can be retrieved; the Analysis document and the Part document.
 #### Extracting the List of Mesh Parts and Publications
 
     ...
 
+```vbscript
     'Retrieve the Analysis Manager and Analysis Model
+```
+
+```vbscript
 ```vbscript
     Set oAnalysisManager = oAnalysisDocument.Analysis
 
 ```
 
+```
+
 ```vbscript
 Set oAnalysisManager = oAnalysisDocument.Analysis
+```vbscript
     'Retreive the part document from Analysis manager
+```
+
 ```
 
 ```vbscript
     Set oAnalysisLinkedDocument = oAnalysisManager.LinkedDocuments
+```vbscript
+```vbscript
     Set partDocument = oAnalysisLinkedDocuments.Item(1)
     Set product = partDocument.Product
 
 ```
 
+```
+
+```
+
 ```vbscript
 Set product = partDocument.Product
+```vbscript
     'Retrieve the analysis model from the list of models
+```
+
 ```
 
 ```vbscript
     Set oAnalysisModels = oAnalysisManager.AnalysisModels
+```vbscript
+```vbscript
     Set oAnalysisModel = oAnalysisManager.Item(1)
+
+```
+
+```
 
 ```
 
 ```vbscript
 Set oAnalysisModels = oAnalysisManager.AnalysisModels
+```vbscript
+```vbscript
 Set oAnalysisModel = oAnalysisManager.Item(1)
-    'Retrieve mesh manager and mesh part 
+    'Retrieve mesh manager and mesh part
+```
+
+```
+
 ```
 
 ```vbscript
     Set oAnalysisMeshManager = oAnalysisModel.MeshManager
+```vbscript
+```vbscript
     Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+
+```
+
+```
 
 ```
 
 ```vbscript
 Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+```vbscript
     'Retrieve publications from product and retrieve the published surface and edge
+```
+
 ```
 
 ```vbscript
     Set publications1 = product.Publications
+```vbscript
     Set pubEdge = publications1.Item("Edge")
 ```
 
-    ...  
+```
 
----  
+    ...
+
+---
 
 According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done by using the Reference interface. This is equivalent to the selection of a B-Rep elements inside the interactive application. In this macro the reference is created from the published face.
 #### Creating the Mesh Part and Assigning Values to its Attributes.
 
     ...
 According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.md) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done by using the Reference interface. This is equivalent to the selection of a B-Rep elements inside the interactive application. In this macro the reference is created from the published face.
+```vbscript
+```vbscript
     'Add the new basic surface mesh part to the list of mesh parts
 
+```
+
+```
+
+```vbscript
 ```vbscript
     Set  surfPart = meshPart.Add ("MSHPartBasicSurf")
 
 ```
 
+```
+
 ```vbscript
 Set  surfPart = meshPart.Add ("MSHPartBasicSurf")
+```vbscript
     'Add support from the published surface
+```
+
     surfPart.AddSupportFromPublication product, pubSurf
 
+```vbscript
     'Set the global Specifications
+```
+
     surfPart.SetGlobalSpecification "GlobalMethod", 1
     surfPart.SetGlobalSpecification "QuadsOnly", 2
     surfPart.SetGlobalSpecification "ElementOrder", "Parabolic"
@@ -164,12 +242,18 @@ Set  surfPart = meshPart.Add ("MSHPartBasicSurf")
     surfPart.SetGlobalSpecification "MeshAbsSag", 1
     surfPart.SetGlobalSpecification "MeshAbsSaglValue", "1.1 mm"
 
+```vbscript
     'Create local specification
+```
+
 ```
 
 ```vbscript
     Set meshSpecs = surfPart.AnalysisMeshLocalSpecifications
+```vbscript
     Set spec = meshSpecs.Add("MSHTopProjectCurve")
+```
+
     spec.AddSupportFromPublication "ConnectorList", product1, pubCurve
     spec.SetAttribute "Tolerance", "500 mm"
 
@@ -184,23 +268,29 @@ Set  surfPart = meshPart.Add ("MSHPartBasicSurf")
 
 spec.AddSupportFromPublication "ConnectorList", product1, pubPoint
 spec.SetAttribute "Tolerance", "500 mm"
+```vbscript
+```vbscript
     'Update the mesh part
+
+```
+
+```
 
 surfPart.Update
 
-    ...  
+    ...
 
----  
+---
 #### Here parameters are set with their respective units, this helps in setting up of the parameters independent of the unit settings. Calling update on the mesh part computes the mesh.
 #### Epilog
 
     ...
      End Sub
-    ...  
+    ...
 
----  
+---
 
-To run the macro interactively CATDocView environment variables must be defined.  
+To run the macro interactively CATDocView environment variables must be defined.
 
 ![](../CAAScrBase/images/aendtask.gif)
 
@@ -216,9 +306,9 @@ This use case has shown how to create basic surface mesh parts and how to assign
 * * *
 #### References
 
-[1] |  [Replaying a Macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)  
----|---  
-[Top]  
+[1] |  [Replaying a Macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)
+---|---
+[Top]
 
 * * *
 

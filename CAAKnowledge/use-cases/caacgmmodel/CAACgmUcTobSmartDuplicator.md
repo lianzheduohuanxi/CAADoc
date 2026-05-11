@@ -12,22 +12,22 @@ converted: "2026-05-11T17:33:48.560636"
 tags: ["CATICGMContainer", "CAADoc", "CATICGMObject", "CATICGMSmartBodyDuplicator", "CAAGMModelInterfaces", "CAATopSmartDuplicator", "CAAGMModelSmartDuplicator"]
 source_file: "Doc/online/CAACgmModel/CAACgmUcTobSmartDuplicator.htm"
 converted: "2026-05-11T17:33:48.560636"
-Using the Smart Duplicator  
+Using the Smart Duplicator
 
----  
+---
 converted: "2026-05-11T17:33:48.560636"
 Using the Smart Duplicator
-Use Case  
-Abstract Right after its creation a topology is modifiable. But when the body which contains this topology is frozen, you can no longer modify this topology. With the smart duplicator, you can modify only a part of a body. The part to be modified has to be "touched". This results in a new body sharing the untouched topologies with the initial body. This use case illustrates the smart mechanism with a skin body which has a holed face. Touching the holed face allows you to remove the internal domain to fill in the hole. 
+Use Case
+Abstract Right after its creation a topology is modifiable. But when the body which contains this topology is frozen, you can no longer modify this topology. With the smart duplicator, you can modify only a part of a body. The part to be modified has to be "touched". This results in a new body sharing the untouched topologies with the initial body. This use case illustrates the smart mechanism with a skin body which has a holed face. Touching the holed face allows you to remove the internal domain to fill in the hole.
 
     * What You Will Learn With This Use Case
     * The CAAGMModelSmartDuplicator Use Case
       * What Does CAAGMModelSmartDuplicator Do?
-      * How to Launch CAAGMModelSmartDuplicator 
+      * How to Launch CAAGMModelSmartDuplicator
       * Where to Find the CAAGMModelSmartDuplicator Code
     * Step-by-Step
-    * References  
----  
+    * References
+---
 What You Will Learn With This Use Case This use case is intended to help you use the CATICGMSmartBodyDuplicator operator. The CAAGMModelSmartDuplicator Use Case CAAGMModelSmartDuplicator is a use case of the CAAGMModelInterfaces.edu framework that illustrates the GMModelInterfaces framework capabilities. What Does CAAGMModelSmartDuplicator Do? The CAAGMModelSmartDuplicator use case:
     * Loads the container and retrieves the skin body to be duplicated.
     * Retrieves the holed face and the inner loop of that face.
@@ -49,19 +49,25 @@ Loading the Container and Retrieving the Body to Be Checked The geometry factory
 6. Writing the Model and Closing the Factory
 Loading the Container and Retrieving the Body to Be Checked The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject (and the curves and surfaces in particular). In this use case, the factory is defined by reading a NCGM file that was previously stored, the global function `::CATLoadCGMContainer` must be used to retrieve the factory. The body is retrieved by using the CATICGMContainer::FindObjectFromTag method. There is only one body in the container which is loaded. 10990 is the body tag.
 CATGeoFactory* piGeomFactory = CATLoadCGMContainer(filetoread);
-    CATICGMObject * piCGMObj1 = piGeomFactory->FindObjectFromTag(10990 ); 
+    CATICGMObject * piCGMObj1 = piGeomFactory->FindObjectFromTag(10990 );
 
 The initial body looks something like this: ![](images/CAACgmTobsmartDup1.gif) Retrieving the Holed Face To retrieve the holed face, all the faces of the body are scanned and for each cell, the number of internal domains is computed. For the cells which have internal domains, the domains are scanned. The internal loop is detected by using CATDomain::GetLocation.
 
+```vbscript
     for (int k = 1; k < faceList.Size()+1; k++)
+
+```
 
     {
 The initial body looks something like this: ![](images/CAACgmTobsmartDup1.gif) Retrieving the Holed Face To retrieve the holed face, all the faces of the body are scanned and for each cell, the number of internal domains is computed. For the cells which have internal domains, the domains are scanned. The internal loop is detected by using CATDomain::GetLocation.
 for (int k = 1; k < faceList.Size()+1; k++)
       CATCell * pLocalCell = faceList[k];
+```vbscript
       if (pLocalCell && pLocalCell-gt;GetNbInternalDomains() > 0)
 
-      {       
+```
+
+      {
 ```vbscript
 for (int k = 1; k < faceList.Size()+1; k++)
 CATCell * pLocalCell = faceList[k];
@@ -84,9 +90,9 @@ for(int j=1;j<=NbDomains;j++)
 CATDomain *pDomain=pLocalCell->GetDomain(j);
 CATLocation Location=pDomain->GetLocation();
 if (Location==CATLocationInner)
-            pInnerLoop=pDomain;                    // the inner loop 
+            pInnerLoop=pDomain;                    // the inner loop
             holedFace = (CATFace *) faceList[k] ;  // the holed face
-            break; 
+            break;
 
           }
         }
@@ -101,9 +107,9 @@ Touching the Topology to Be Modified The CATTopology::Touch method is used to sp
 Creating a Smart Duplicated Body First, you must create an empty body from CATGeoFactory. The CATICGMSmartBodyDuplicator operator is created from this new body. It must be run.
 
     CATBody * copBody = piGeomFactory->CreateBody();
-    CATICGMSmartBodyDuplicator * smartDuplicator = 
+    CATICGMSmartBodyDuplicator * smartDuplicator =
       copBody->CreateISmartDuplicator(piBody, topdata);
-    if (smartDuplicator == NULL) return (1); 
+    if (smartDuplicator == NULL) return (1);
     smartDuplicator->Run();
     CATFace * duplicatedFace = (CATFace *)smartDuplicator->GetDuplicatedCell(holedFace);
 
@@ -151,14 +157,14 @@ ofstream filetowrite(pfileName, ios::binary ) ;
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
        filetowrite.close();
-     }	
+     }
 
      //
      // Closes the container
      //
      **::CATCloseCGMContainer**(piGeomFactory);
 
-The resulting body looks something like this: ![](images/CAACgmTobsmartDup2.gif) References [1] 
----|---  
-History Version: **1** [Jan 2009] | Document created  
+The resulting body looks something like this: ![](images/CAACgmTobsmartDup2.gif) References [1]
+---|---
+History Version: **1** [Jan 2009] | Document created
 ---|---

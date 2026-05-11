@@ -15,13 +15,15 @@ converted: "2026-05-11T17:31:51.565051"
     Option Explicit
 
 ```vbscript
+```vbscript
+```vbscript
     '// COPYRIGHT DASSAULT SYSTEMES  2000
     '******************************************************************************
     ' Purpose:       This CATScript demonstrates how to create an ArrangementPathway
     '                and change it's visualization to "Solid" mode, define a
     '                round section data and apply a constant bend radius of 10 mm.
     ' Assumptions:   This assumes that a macro is being executed interactively.
-    ' Author     :                              
+    ' Author     :
     ' Languages  :   VBScript
     ' CATIA Level:   V5R6
     ' Locale     :   English
@@ -29,21 +31,42 @@ converted: "2026-05-11T17:31:51.565051"
 
 ```
 
+```
+
+```
+
+```vbscript
     Sub CATMain()
 
+```
+
+```vbscript
+```vbscript
 ```vbscript
        ' On Error Resume Next
        '----------------------------------------------
        'Create a new product document
 ```
 
+```
+
+```
+
 ```vbscript
        Dim objProdDoc        As ProductDocument
+```vbscript
+```vbscript
        Dim objRootProd       As Product
        Set objProdDoc      = CATIA.Documents.Add("Product")
        Set objRootProd     = objProdDoc.Product
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
        '----------------------------------------------
        'Retrieving Root Product's Relative Axis and Position Information
@@ -55,27 +78,52 @@ converted: "2026-05-11T17:31:51.565051"
        Set objArrProd   = objRootProd.GetTechnologicalObject("ArrangementProduct")
 ```
 
+```
+
+```
+
+```vbscript
        '----------------------------------------------
+```
+
+```vbscript
+```vbscript
 ```vbscript
 '----------------------------------------------
        ' Create ArrangementPathway under the Root Product
 ```
 
+```
+
+```
+
 ```vbscript
        Dim dblPathwayPoints(75)      As Double
+```vbscript
+```vbscript
        Dim dblMathDirection(3)       As Double
        Dim objArrPathway             As ArrangementPathway
 
 ```
 
+```
+
+```
+
 ```vbscript
 Dim dblMathDirection(3)       As Double
+```vbscript
 Dim objArrPathway             As ArrangementPathway
        dblPathwayPoints(0)   =  300.0
        dblPathwayPoints(1)   =  100.0
        dblPathwayPoints(2)   =  0.0
 
+```
+
+```
+
        dblPathwayPoints(3)   =  441.42
+```vbscript
        dblPathwayPoints(4)   =  158.58
        dblPathwayPoints(5)   =  1.25
 
@@ -97,7 +145,7 @@ Dim objArrPathway             As ArrangementPathway
 
        dblPathwayPoints(18)  =  100.0
        dblPathwayPoints(19)  =  300.0
-       dblPathwayPoints(20)  =  7.5 
+       dblPathwayPoints(20)  =  7.5
 
        dblPathwayPoints(21)  =  158.58
        dblPathwayPoints(22)  =  158.58
@@ -129,7 +177,7 @@ Dim objArrPathway             As ArrangementPathway
 
        dblPathwayPoints(42)  =  100.0
        dblPathwayPoints(43)  =  300.0
-       dblPathwayPoints(44)  =  17.5  
+       dblPathwayPoints(44)  =  17.5
 
        dblPathwayPoints(45)  =  158.58
        dblPathwayPoints(46)  =  158.58
@@ -161,7 +209,7 @@ Dim objArrPathway             As ArrangementPathway
 
        dblPathwayPoints(66)  =  100.0
        dblPathwayPoints(67)  =  300.0
-       dblPathwayPoints(68)  =  27.5 
+       dblPathwayPoints(68)  =  27.5
 
        dblPathwayPoints(69)  =  158.58
        dblPathwayPoints(70)  =  158.58
@@ -179,6 +227,8 @@ Dim objArrPathway             As ArrangementPathway
 
 ```vbscript
        Set objArrPathway             = objArrProd.ArrangementPathways.AddPathway(objMove,dblPathwayPoints, dblMathDirection)
+```vbscript
+```vbscript
        '----------------------------------------------
        ' Change Properties of ArrangementPathway
        objArrPathway.SectionType     = CatArrangementRouteSectionRound
@@ -186,20 +236,39 @@ Dim objArrPathway             As ArrangementPathway
        objArrPathway.VisuMode        = CatArrangementRouteVisuModeSolid
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
        '----------------------------------------------
        ' Define Bend Radius of Nodes
-       Dim intK As Integer   
+       Dim intK As Integer
        For intK = 1 To objArrPathway.ArrangementNodes.Count
 ```
 
-```vbscript
-' Define Bend Radius of Nodes
-Dim intK As Integer
-For intK = 1 To objArrPathway.ArrangementNodes.Count
-         objArrPathway.ArrangementNodes.Item(intK).BendRadius = 10.0
-       Next
+```
 
 ```
 
-    End Sub 
+```vbscript
+```vbscript
+```vbscript
+' Define Bend Radius of Nodes
+Dim intK As Integer
+```
+
+```
+
+```
+
+For intK = 1 To objArrPathway.ArrangementNodes.Count
+         objArrPathway.ArrangementNodes.Item(intK).BendRadius = 10.0
+```vbscript
+       Next
+
+    End Sub
+
+```

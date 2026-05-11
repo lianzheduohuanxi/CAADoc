@@ -9,21 +9,21 @@ converted: "2026-05-11T17:31:52.379510"
 ```
 
 ---
-| 
+|
 ## Infrastructure
 
-| 
-## Launching a CAA V5 Automation Use Case  
+|
+## Launching a CAA V5 Automation Use Case
 
 * * *
 
 CAA V5 Automation Uses Cases are macros that may access existing files. To make replaying such macros as straightforward as possible, they  most of the time follows coding conventions that may require specific SetUp of the V5 session. This article explains:
 
 > where to find CAA V5 Automation Uses Cases macros,
-> 
+>
 > how to launch a macro,
-> 
-> which specific setup may be required. 
+>
+> which specific setup may be required.
 
 _Note:_ topics explained in this article, launching macros and retrieving existing files from the documentation installation, do not doesn't apply to documentation in HtmlHelp format or accessed through a http server.
 ### Where to find CAA V5 Automation Uses Cases macros
@@ -33,9 +33,9 @@ Samples come with a documentation that most of the time contains the name of the
 ![](images/CAALaunch7a.jpg)
 
 Samples come with a documentation that most of the time contains the name of the macro and the module it belongs to.
-A module is the folder, in the documentation installation, that contains the documentation of the sample along with the macros, located in the `macros` sub folder, and required documents in any, located in the `samples` sub folder. 
+A module is the folder, in the documentation installation, that contains the documentation of the sample along with the macros, located in the `macros` sub folder, and required documents in any, located in the `samples` sub folder.
 
-The URL pointed by the _Execute Macro_ text directly points on the macro and can be used, on Windows plaforms, to launch the replay of the macro. 
+The URL pointed by the _Execute Macro_ text directly points on the macro and can be used, on Windows plaforms, to launch the replay of the macro.
 
 ![](images/CAALaunch7b.jpg)
 
@@ -43,7 +43,7 @@ A few samples documentations only contain a html view of the content of the macr
 
 `    xxx/myModule/myMacroSource.htm`
 
-is the documentation view of the 
+is the documentation view of the
 
     `xxx/myModule/macros/myMacro.catvbs` or ` xxx/myModule/macros/myMacro.CATScript`
 
@@ -52,10 +52,10 @@ macro.
 
 Macros can also be launched from the V5 session.
 
-  This task explains how to launch a CAA V5 Automation Use case macro  
----|---  
+  This task explains how to launch a CAA V5 Automation Use case macro
+---|---
 
-  1. Select the **Tools- >Macro->Macros... **command to display the Macro dialog box, 
+  1. Select the **Tools- >Macro->Macros... **command to display the Macro dialog box,
 
 ![](images/CAALaunch1.jpg)
 
@@ -63,10 +63,13 @@ Macros can also be launched from the V5 session.
   2. Select the macro to be launched.
   3. Click the Run button.
 
-Please note that the Macro Library must be set to the folder containing the macro. 
+Please note that the Macro Library must be set to the folder containing the macro.
 
 ```vbscript
+```vbscript
 For more details, on how to run a macro, and set macro libraries, consult in the V5 documentation, _Infrastructure Solutions_ , _Infrastructure Users Guide_ , the _Recording, Running And Editing Macros_ topic.
+
+```
 
 ```
 
@@ -76,18 +79,21 @@ Unless explicitely specified, CAA Automation Use Cases macros that use documents
 
 ![](images/CAALaunch6.jpg)
 
+```vbscript
 If it is set to a place where documents cannot be retrieved, an error message _Cannot Load Document_ is displayed.
+
+```
 
   * If you access the CAA V5 Automation documentation in a _V5 product documentation installation_ linked to a V5 product installation, this variable is already set to
 
 > > `<DocInstallation>`
-> 
+>
 > To be able to replay macros directly from the documentation, use the _Environment Editor_ to create a _new User Environment_ and set the value to:
 >
 >> `<DocInstallation>/<Language>`
-> 
+>
 > Where <Language> is the language for which the documentation has been installed (for example `<DocInstallation>/English`).
-> 
+>
 > _Remark:_ you have to use the _Environment Editor_ for this purpose, you cannot use the _Tools Options_ commands.
 
   * If you access the CAA V5 Automation documentation in a _CAA installation_ , use the _Environment Editor_ to create a _new User Environment_ and set the value to:
@@ -95,7 +101,10 @@ If it is set to a place where documents cannot be retrieved, an error message _C
 > `<CAAInstallation>/CAADoc/Doc`
 
 ```vbscript
+```vbscript
 For more details, on how to create and modifiy _Environments_ , consult in the V5 documentation, _Infrastructure Solutions_ , _Installation And Deployment Guide_ , the _Managing Environments_ topic.
+
+```
 
 ```
 

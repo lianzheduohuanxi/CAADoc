@@ -11,15 +11,15 @@ converted: "2026-05-11T17:31:52.198094"
 ---
 # Portal
 
-| 
+|
 ## Visualization
 
-| 
+|
 ### Modifying Object Graphical Properties
 
-_Using the CATIVisProperties interface_  
----|---|---  
-Use Case  
+_Using the CATIVisProperties interface_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
@@ -35,7 +35,7 @@ This article shows how to use the _CATIVisProperties_ interface to modify the gr
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
@@ -78,40 +78,43 @@ CAAGviApplyProperties is a use case of the CAAGeometryVisualization.edu framewor
 CAAGviApplyProperties is a use case of the CAAGeometryVisualization.edu framework that illustrates Visualization and GeometryVisualization framework capabilities.
 The goal of this use case is to change the graphic properties of some GSM features.It is based on a delivered Part document called "CAAProperty" [Fig.1], located in the `CAAGeometryVisualization.edu/InputData `directory. This document contains the following elements:
 
-Point.1 | a green,full square point  
+Point.1 | a green,full square point
 
 The goal of this use case is to change the graphic properties of some GSM features.It is based on a delivered Part document called "CAAProperty" [Fig.1], located in the `CAAGeometryVisualization.edu/InputData `directory. This document contains the following elements:
 Point.1 | a green,full square point
-Line.1 | a solid, pickable line  
-Extrude.1 | a yellow surface  
-Sweep.2 | a surface with standard color  
-Extrude.2 | a hidden surface  
-_Fig.1: The CAAProperty Document_ ![](images/CAAVisSampleCAAPropertyWithComment.jpg)  
+Line.1 | a solid, pickable line
+Extrude.1 | a yellow surface
+Sweep.2 | a surface with standard color
+Extrude.2 | a hidden surface
+_Fig.1: The CAAProperty Document_ ![](images/CAAVisSampleCAAPropertyWithComment.jpg)
 
----  
+---
 
 Sweep.2 | a surface with standard color
 Extrude.2 | a hidden surface
 _Fig.1: The CAAProperty Document_ ![](images/CAAVisSampleCAAPropertyWithComment.jpg)
 By using the _CATIVisProperties_ interface, these elements become:
 
-Point.1 | a red, cross point  
+Point.1 | a red, cross point
 
 By using the _CATIVisProperties_ interface, these elements become:
 Point.1 | a red, cross point
-Line.1 | a dashed,no-pickable line  
-Extrude.1 | a surface with standard color  
-Sweep.2 | a transparent surface with red edges  
-Extrude.2 | a visible surface  
+Line.1 | a dashed,no-pickable line
+Extrude.1 | a surface with standard color
+Sweep.2 | a transparent surface with red edges
+Extrude.2 | a visible surface
 
 The modified document is saved in the "CAAPropertyWithNewProperties.CATPart`" `document.` `[Fig 2]
 
-_Fig.2: The CAAPropertyWithNewProperties Document_ ![](images/CAAVisSampleCAAPropertyMWithComment.jpg)  
+_Fig.2: The CAAPropertyWithNewProperties Document_ ![](images/CAAVisSampleCAAPropertyMWithComment.jpg)
 
----  
+---
 
 ```vbscript
+```vbscript
 For the Line.1feature, try going over on the line, it is not highlighted. For the Sweep.2 feature, turn the model, you can see through the surface because it is transparent.
+
+```
 
 ```
 
@@ -139,11 +142,11 @@ where:
 2. **OutputPath** : The path where the output file `CAAPropertyWithNewProperties.CATPart `will be stored. If this path is empty, the output file is created in the current directory.
 The CAAGviApplyProperties use case is made of a main program located in the CAAGviApplyProperties.m module of the CAAGeometryVisualization.edu framework:
 
-Windows | `InstallRootDirectory\CAAGeometryVisualization.edu\CAAGviApplyProperties.m\`  
+Windows | `InstallRootDirectory\CAAGeometryVisualization.edu\CAAGviApplyProperties.m\`
 
 The CAAGviApplyProperties use case is made of a main program located in the CAAGviApplyProperties.m module of the CAAGeometryVisualization.edu framework:
 Windows | `InstallRootDirectory\CAAGeometryVisualization.edu\CAAGviApplyProperties.m\`
-Unix | `InstallRootDirectory/CAAGeometryVisualization.edu/CAAGviApplyProperties.m/`  
+Unix | `InstallRootDirectory/CAAGeometryVisualization.edu/CAAGviApplyProperties.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
@@ -166,7 +169,7 @@ The main steps of CAAGviApplyProperties are:
 #### Prolog
 
 8. Epilog
-CAAGviApplyProperties begins by creating a session, and opening the "CAAProperty" Part document. Next, it retrieves the root container of this Part as a pointer to _CATIPrtContainer_ , `pIPrtCont.` This is the usual sequence for loading a Part document. 
+CAAGviApplyProperties begins by creating a session, and opening the "CAAProperty" Part document. Next, it retrieves the root container of this Part as a pointer to _CATIPrtContainer_ , `pIPrtCont.` This is the usual sequence for loading a Part document.
 
 Thanks to the `GetPart` method on the root container we retrieve the Mechanical Part feature handled by the smart pointer `spPart.`
 
@@ -176,24 +179,36 @@ Thanks to the `GetPart` method on the root container we retrieve the Mechanical 
 The five features are inside the same Open Body:
 
     ...
-      CATLISTV(CATBaseUnknown_var) surfBodies;  
+      CATLISTV(CATBaseUnknown_var) surfBodies;
 
       **CATIPartRequest** *pPartAsRequest = 0;
 ```vbscript
 CATLISTV(CATBaseUnknown_var) surfBodies;
+```vbscript
+```vbscript
       rc = spPart->**QueryInterface**(IID_CATIPartRequest, (void**)&pPartAsRequest) ;
 
       if ( SUCCEEDED(rc) )
 ```
 
+```
+
+```
+
       {
 rc = spPart->**QueryInterface**(IID_CATIPartRequest, (void**)&pPartAsRequest) ;
+```vbscript
 if ( SUCCEEDED(rc) )
-         const CATUnicodeString stdContext(" "); 
+```
+
+         const CATUnicodeString stdContext(" ");
 
          pPartAsRequest->**GetSurfBodies**(stdContext, surfBodies);
 
+```vbscript
          if ( (**1**!= surfBodies.Size()) && ( NULL_var != surfBodies[1]) )
+
+```
 
          {
             ...
@@ -208,9 +223,9 @@ return 1 ;
          pPartAsRequest = NULL ;
 
       }
-    ...  
+    ...
 
----  
+---
 
 The _CATIPartRequest_ interface pointer is retrieved on the Mechanical Part, pointed to by the `spPart` smart pointer, The `GetSurfBodies` method returns the list of the Open Bodies contained in the Part document, and in the case of the "CAAProperty" document, there is only one Open Body, so the size of the list is 1.
 
@@ -218,7 +233,10 @@ The features inside the Open Body, pointed to by `surfBodies[1]`, are retrieved 
 
     ...
       **CATIDescendants** * pIDescendantOnOpenBody1 = NULL ;
+```vbscript
       rc = surfBodies[1]->QueryInterface(IID_CATIDescendants, (void**)&pIDescendantOnOpenBody1) ;
+
+```
 
       ...
 rc = surfBodies[1]->QueryInterface(IID_CATIDescendants, (void**)&pIDescendantOnOpenBody1) ;
@@ -244,9 +262,9 @@ CATISpecObject_var **TheExtrude2Surface** = pIDescendantOnOpenBody1->GetChildAtP
       pIDescendantOnOpenBody1->Release();
       pIDescendantOnOpenBody1 = NULL ;
 
-    ...     
+    ...
 
----  
+---
 
 The position of each element has been determined in an interactive session.
 
@@ -271,7 +289,10 @@ rc = ThePoint->QueryInterface(IID_CATIVisProperties, (void**)&pIPropertiesOnPoin
       rc = pIPropertiesOnPoint->**GetPropertiesAtt**(MyPropertyOnPoint,
     	                                    PropTypeOnPoint,
                                                 GeomTypeOnPoint);
+```vbscript
       if ( rc == S_OK )
+
+```
 
       {
 rc = pIPropertiesOnPoint->**GetPropertiesAtt**(MyPropertyOnPoint,
@@ -279,11 +300,11 @@ PropTypeOnPoint,
 GeomTypeOnPoint);
 if ( rc == S_OK )
          unsigned int r,g,b ;
-         MyPropertyOnPoint.**GetColor**(r,g,b);                                          
+         MyPropertyOnPoint.**GetColor**(r,g,b);
 
-    ...  
+    ...
 
----  
+---
 
 We retrieve the _CATIVisProperties_ interface pointer, `pIPropertiesOnPoint, `on the point. Thanks to this pointer and the `GetPropertiesAtt`**** method we can retrieve the color of the point:
 
@@ -302,7 +323,10 @@ Is it a full square point ?
     	                                    PropTypeOnPoint,
                                                  GeomTypeOnPoint);
 
+```vbscript
       if ( rc == S_OK )
+
+```
 
       {
 PropTypeOnPoint,
@@ -310,14 +334,17 @@ GeomTypeOnPoint);
 if ( rc == S_OK )
          CATSymbolType symbol ;
          MyPropertyOnPoint.**GetSymbolType**(symbol);
+```vbscript
          if ( symbol == FULLSQUARE )
+
+```
 
          {
             ...
-         }                                        
-    ...  
+         }
+    ...
 
----  
+---
 
 This follows the same principle as the color property, changing only the property type in order to retrieve the point symbol`.`
 
@@ -335,11 +362,11 @@ Now,let's change the color of the point:
       MyPropertyOnPoint.**SetColor**(255,0,0);
       rc = pIPropertiesOnPoint->**SetPropertiesAtt**(MyPropertyOnPoint,
                                                     PropTypeOnPoint,
-                                                    GeomTypeOnPoint);              
+                                                    GeomTypeOnPoint);
 
-    ...  
+    ...
 
----  
+---
 
 GeomTypeOnPoint);
 The color is set on the _CATVisPropertiesValues_ instance, `MyPropertyOnPoint`, using the `SetColor` method. The color is defined by its three components red, green and blue.
@@ -354,9 +381,9 @@ Finally, the symbol of the point is changed as follows:
       MyPropertyOnPoint.**SetSymbolType**(CROSS);
       rc = pIPropertiesOnPoint->**SetPropertiesAtt**(MyPropertyOnPoint,
                                                  PropTypeOnPoint,
-                                                 GeomTypeOnPoint); 
+                                                 GeomTypeOnPoint);
 
-      ...                                           
+      ...
 MyPropertyOnPoint.**SetSymbolType**(CROSS);
 rc = pIPropertiesOnPoint->**SetPropertiesAtt**(MyPropertyOnPoint,
 PropTypeOnPoint,
@@ -364,9 +391,9 @@ GeomTypeOnPoint);
       pIPropertiesOnPoint->Release();
       pIPropertiesOnPoint = NULL;
 
-    ...  
+    ...
 
----  
+---
 
 The new symbol is set on the _CATVisPropertiesValues_ instance, `MyPropertyOnPoint`, using the `SetSymbolType` method.**** The list of supported symbols is defined by the _CATSymbolType_ enum. CROSS is one of them.
 
@@ -383,7 +410,10 @@ At first, it is interesting to check the type of geometry supported by a GSM Lin
     ...
 At first, it is interesting to check the type of geometry supported by a GSM Line feature:
       CATIVisProperties * pIPropertiesOnLine = NULL ;
+```vbscript
       rc = TheLine->QueryInterface(IID_CATIVisProperties, (void**)&pIPropertiesOnLine) ;
+
+```
 
       ...
 
@@ -393,7 +423,10 @@ rc = TheLine->QueryInterface(IID_CATIVisProperties, (void**)&pIPropertiesOnLine)
       CATVisGeomType TypeEdge = **CATVPEdge** ;
       HRESULT rc1 = pIPropertiesOnLine->**IsGeomTypeDefined**(TypeLine);
       HRESULT rc2 = pIPropertiesOnLine->**IsGeomTypeDefined**(TypeEdge);
+```vbscript
       if ( SUCCEEDED(rc1) and FAILED(rc2) )
+
+```
 
       {
 CATVisGeomType TypeEdge = **CATVPEdge** ;
@@ -404,9 +437,9 @@ if ( SUCCEEDED(rc1) and FAILED(rc2) )
 
       }
 
-    ...  
+    ...
 
----  
+---
 
 The `IsGeomTypeDefined `method enables querying the element about the geometry type it supports.
 
@@ -415,7 +448,7 @@ Now, let's change the type of the line from solid to dotted:
     ...
 Now, let's change the type of the line from solid to dotted:
       CATVisPropertiesValues MyPropertyOnLine ;
-      CATVisPropertyType PropTypeOnLine = **CATVPLineType** ;  
+      CATVisPropertyType PropTypeOnLine = **CATVPLineType** ;
       CATVisGeomType GeomTypeOnLine = **CATVPLine** ;
 
       ...
@@ -427,9 +460,9 @@ CATVisGeomType GeomTypeOnLine = **CATVPLine** ;
                                                 PropTypeOnLine,
                                                 GeomTypeOnLine);
 
-    ...  
+    ...
 
----  
+---
 
 GeomTypeOnLine);
 The `SetLineType` method modifies the type of the line on the _CATVisPropertiesValues_ instance. The argument of this method is an integer whose range is between 1 and 63 (*). The type of line, corresponding to each value is customizable through the Tools/Options/General/Display/Linetype page.(*) The first height values are statics.
@@ -448,17 +481,17 @@ Finally, we transform the line from a pickable state to a no-pickable state.
                                                 PropTypeOnLine,
                                                 GeomTypeOnLine);
 
-      ...                                            
+      ...
 PropTypeOnLine = **CATVPPick** ;
 rc = pIPropertiesOnLine->SetPropertiesAtt(MyPropertyOnLine,
 PropTypeOnLine,
 GeomTypeOnLine);
       pIPropertiesOnLine->Release();
-      pIPropertiesOnLine = NULL;                                          
+      pIPropertiesOnLine = NULL;
 
-    ...  
+    ...
 
----  
+---
 
 pIPropertiesOnLine = NULL;
 The `SetPickAttr` method modifies the pickable state of the _CATVisPropertiesValues_ instance. `CATNoPickAttr` is the no-pickable state, and `CATPickAttr` is the pickable state.
@@ -480,7 +513,10 @@ At first, all the geometry types supported by a GSM surface are tested:
 
     ...
       CATIVisProperties * pIPropertiesOnSurface2 = NULL ;
+```vbscript
       rc = TheSweep2Surface->QueryInterface(IID_CATIVisProperties, (void**)&pIPropertiesOnSurface2) ;
+
+```
 
       ...
 
@@ -496,9 +532,9 @@ rc = TheSweep2Surface->QueryInterface(IID_CATIVisProperties, (void**)&pIProperti
       HRESULT rc5 = pIPropertiesOnSurface2->IsGeomTypeDefined(TypeMesh);
       HRESULT rc6 = pIPropertiesOnSurface2->IsGeomTypeDefined(TypeGlobal);
 
-    ...  
+    ...
 
----  
+---
 
 Next, the color of the surface and the width of its edges are changed:
 
@@ -524,9 +560,9 @@ GeomTypeOnSurface2);
                                                     PropTypeOnSurface2,
                                                     GeomTypeOnSurface2);
 
-    ...  
+    ...
 
----  
+---
 
 To change the color and the width, the `SetPropertiesAtt` method can be called twice: once with the `CATVPColor` property type and once with `CATVPWidth`. In the two calls, the type of the geometry is always `CATVPEdge`. But the feature can also be modified with one call in using the `CATVPAllPropertyType` property type. In this case, all the properties set on the _CATVisPropertiesValues_ instance, `MyPropertyOnSurface2`, will be used by the `SetPropertiesAtt` method to modify the feature. So, it is really important to initialize `MyPropertyOnSurface2 `with the `GetPropertiesAtt` method, before modifying it.
 
@@ -556,9 +592,9 @@ GeomTypeOnSurface2);
       pIPropertiesOnSurface2->Release();
       pIPropertiesOnSurface2 = NULL;
 
-    ...  
+    ...
 
----  
+---
 
 The surfacic properties are represented by the `CATVPMesh` geometry type. As for the edge properties (see above) this can be done with one call to `SetPropertiesAtt` using the `CATVPAllPropertyType` property type, in order to change all the surfacic properties once.
 
@@ -571,7 +607,10 @@ The surface, Extrude.1, is represented by the `TheExtrude1Surface` smart pointer
 
     ...
       **CATIVisProperties** * pIPropertiesOnSurface1 = NULL ;
+```vbscript
       rc = TheExtrude1Surface->QueryInterface(IID_CATIVisProperties, (void**)&pIPropertiesOnSurface1) ;
+
+```
 
       ...
 
@@ -580,7 +619,10 @@ rc = TheExtrude1Surface->QueryInterface(IID_CATIVisProperties, (void**)&pIProper
 
       CATVisPropertyType PropTypeOnSurface1 = **CATVPAllPropertyType** ;
       CATVisGeomType GeomTypeOnSurface1     = **CATVPMesh** ;
+```vbscript
       rc = pIPropertiesOnSurface1->**ResetPropertiesAtt**(PropTypeOnSurface1,GeomTypeOnSurface1);
+
+```
 
       ...
 
@@ -590,9 +632,9 @@ rc = pIPropertiesOnSurface1->**ResetPropertiesAtt**(PropTypeOnSurface1,GeomTypeO
       pIPropertiesOnSurface1->Release();
       pIPropertiesOnSurface1 = NULL;
 
-    ...  
+    ...
 
----  
+---
 
 To reset a graphical property, two keys are necessary:
 
@@ -611,7 +653,10 @@ The surface, Extrude.2, is represented by the `TheExtrude2Surface` smart pointer
 
     ...
       **CATIVisProperties** * pIPropertiesOnSurface3 = NULL ;
+```vbscript
       rc = TheExtrude2Surface->QueryInterface(IID_CATIVisProperties, (void**)&pIPropertiesOnSurface3) ;
+
+```
 
       ...
 
@@ -633,9 +678,9 @@ GeomTypeOnSurface3);
       pIPropertiesOnSurface3->Release();
       pIPropertiesOnSurface3 = NULL;
 
-    }  
+    }
 
----  
+---
 
 The show/no show state is modifiable using the `CATVPGlobalType` geometry type and, of course, using the `CATVPShow `property type.
 
@@ -663,17 +708,17 @@ and how to reset graphic attributes.
 * * *
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
----|---  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)
+---|---
 
 [Top]
 
 * * *
 ### History
 
-Version: **1** [Apr 2002] | Document created  
----|---  
-[Top]  
+Version: **1** [Apr 2002] | Document created
+---|---
+[Top]
 
 * * *
 

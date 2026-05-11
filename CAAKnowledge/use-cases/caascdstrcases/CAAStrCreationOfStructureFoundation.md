@@ -11,13 +11,13 @@ converted: "2026-05-11T17:31:50.877607"
 ---
 ## Structure Design
 
-| 
-## Creating Structure Foundations  
+|
+## Creating Structure Foundations
 
 * * *
 
-  This macro shows you how to create structure foundation. It extends a root product in a product document    
----|---  
+  This macro shows you how to create structure foundation. It extends a root product in a product document
+---|---
   CAAStrCreationOfStructureFoundation is launched in CATIA [1]. Some documents are needed.
 
   * [CAAStrCreationOfStructureFoundation.CATScript](CAAStrCreationOfStructureFoundationSource.md) is located in the CAAScdStrUseCases module. [Execute macro](macros/CAAStrCreationOfStructureObjects.CATScript) (windows only).
@@ -30,16 +30,21 @@ CAAStrCreationOfStructureFoundation includes five steps:
   2. Creating Foundation
   3. Retreiving the created Foundation in the assembly
 
-####  
+####
 #### Prolog
 
-| 
+|
 
       ...
+```vbscript
 ```vbscript
         Dim doc As Document
 
         Dim StrWorkbench As StrWorkbench
+```
+
+```vbscript
+```vbscript
         Dim strFactory As StrObjectFactory
 
         Set doc = CATIA.ActiveDocument
@@ -56,22 +61,29 @@ CAAStrCreationOfStructureFoundation includes five steps:
 
 ```
 
-      ...  
+```
 
----  
+```
+
+      ...
+
+---
 
 This step describes how to get the structure object factory.
-#### Creating structure foundation 
+#### Creating structure foundation
 
       ...
 ```vbscript
-        Dim foundation As StrFoundation 
+        Dim foundation As StrFoundation
+```vbscript
         Set foundation = strFactory.ExtendProductAsFoundation("")
 ```
 
-      ...  
+```
 
----  
+      ...
+
+---
 
 The foundation is created by extending the product with structure data.
 
@@ -80,15 +92,21 @@ The foundation is created by extending the product with structure data.
       ...
 ```vbscript
         Dim foundations As StrFoundations
-        Set foundations = rootProduct.GetTechnologicalObject("StructureFoundations")		
+```vbscript
+```vbscript
+        Set foundations = rootProduct.GetTechnologicalObject("StructureFoundations")
 
         Set foundation = foundations.Item(1)
 
 ```
 
-      ...  
+```
 
----  
+```
+
+      ...
+
+---
 
 The foundation is retreived thanks to the collection of foundations.
 
@@ -106,8 +124,8 @@ This use case has shown how to create structure objects
 * * *
 #### References
 
-[1] | [Replaying a macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)  
----|---  
+[1] | [Replaying a macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)
+---|---
 [Top]
 
 * * *

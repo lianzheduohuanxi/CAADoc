@@ -10,10 +10,10 @@ converted: "2026-05-11T17:33:50.558334"
 ```
 
 ---
-| CAA C++ API Modifications|  ENOVInterfaces  |   
----|---|---  
+| CAA C++ API Modifications|  ENOVInterfaces  |
+---|---|---
 
 * * *
 
-**Entity|  SP| Modification| To Do** | ENOVInterfaces/Public/ENOVICWAffectedObjects.h/ENOVICWAffectedObjects/AddAffectedObject| GA| MHBDM|   
+**Entity|  SP| Modification| To Do** | ENOVInterfaces/Public/ENOVICWAffectedObjects.h/ENOVICWAffectedObjects/AddAffectedObject| GA| MHBDM|
 ---|---|---|---

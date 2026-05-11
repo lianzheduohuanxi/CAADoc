@@ -10,6 +10,8 @@ converted: "2026-05-11T17:31:50.924560"
 
 ---
 ```vbscript
+```vbscript
+```vbscript
     '//============================================================================
     '// COPYRIGHT DASSAULT SYSTEMES 2013
     '//============================================================================
@@ -20,10 +22,19 @@ converted: "2026-05-11T17:31:50.924560"
     '//============================================================================
 ```
 
+```
+
+```
+
+```vbscript
     Sub CATMain()
+
+```
 
 ```vbscript
     Dim ObjPart As Part
+```vbscript
+```vbscript
     Set ObjPart = CATIA.ActiveDocument.Part
 
     Dim FactoryObj As SfmFactory
@@ -33,6 +44,12 @@ converted: "2026-05-11T17:31:50.924560"
     Set ManagerObj = FactoryObj.GetManager
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
     'RETRIEVING THE SUPERSTIFFENERS
     Dim SuperStiffeners As References
@@ -51,14 +68,26 @@ converted: "2026-05-11T17:31:50.924560"
     'DECK STIFFENER
 ```
 
+```
+
+```
+
 ```vbscript
 Set SelctionObj = CATIA.ActiveDocument.Selection
+```vbscript
 'DECK STIFFENER
+```
+
     SelctionObj.Add SplitStiffener1
     Dim DeckStiffener1 As SfmStiffener
+```vbscript
     Set DeckStiffener1 = SelctionObj.FindObject("CATIASfmStiffener")
 ```
 
+```
+
+```vbscript
+```vbscript
 ```vbscript
     'Retrieving Super Plates
     Dim SuperPlates As References
@@ -80,6 +109,10 @@ Set SelctionObj = CATIA.ActiveDocument.Selection
     Set WeldUC1 = WeldsUC1.Item(1)
 ```
 
+```
+
+```
+
 ```vbscript
     ustrWeldTypeUC1 = WeldUC1.WeldType
     ustrAddedMaterialUC1 = WeldUC1.AddedMaterial
@@ -90,6 +123,8 @@ Set SelctionObj = CATIA.ActiveDocument.Selection
 
 ```vbscript
     Dim WeldsUC2 As SfmWelds
+```vbscript
+```vbscript
     Set WeldsUC2 = DeckStiffener1.GetWelds(Nothing)
 
     Dim WeldUC2 As SfmWeld
@@ -97,9 +132,16 @@ Set SelctionObj = CATIA.ActiveDocument.Selection
 
 ```
 
+```
+
+```
+
 ```vbscript
 Dim WeldUC2 As SfmWeld
+```vbscript
 Set WeldUC2 = WeldsUC2.Item(1)
+```
+
     ustrWeldTypeUC2 = WeldUC2.WeldType
     ustrAddedMaterialUC2 = WeldUC2.AddedMaterial
     ustrFitUpUC2 = WeldUC2.FitUp
@@ -107,4 +149,7 @@ Set WeldUC2 = WeldsUC2.Item(1)
 
 ```
 
+```vbscript
     End Sub
+
+```

@@ -2,183 +2,166 @@
 title: "Untitled"
 category: "use-case"
 module: "CAAScdDriUseCases"
-tags: ["CAAScdDriUseCases", "CAAScrBase", "CATIA", "CAADriUpdateSheets"]
+tags: ["CAADriUpdateSheets", "CAAScrBase", "CATIA", "CAAScdDriUseCases"]
 source_file: "Doc/online/CAAScdDriUseCases/CAADriUpdateSheetsSource.htm"
-converted: "2026-05-11T11:06:32.929888"
+converted: "2026-05-11T11:27:02.762075"
 ---
 
-```
 Option Explicit
-
 ' COPYRIGHT DASSAULT SYSTEMES 2000
-
-Dim 
-Language
- as 
-String
+Dim Language as String
 Language="VBScript"
 
 ' ***********************************************************************
-
-' Purpose: This macro allows you to update all the sheets contained
-
-' in all Drawing document of a specified folder
-
-' Assumptions: 
-
-' Author: 
-
-' Languages: VBScript
-
-' Locales: English (United States)
-
-' CATIA Level: V5R6 
-
+'   Purpose:      This macro allows you to update all the sheets contained
+'                 in all Drawing document of a specified folder
+'   Assumptions:      
+'   Author: 
+'   Languages:    VBScript
+'   Locales:      English (United States)
+'   CATIA Level:  V5R6 
 ' ***********************************************************************
 
-Sub 
-CATMain()
+Sub CATMain()
 
- 
-' Set the CATIA popup file alerts to False
+    ' Set the CATIA popup file alerts to False
+    ' It prevents to stop the macro at each alert during its execution
+    CATIA.DisplayFileAlerts = False
 
- 
-' It prevents to stop the macro at each alert during its execution
+    ' Set the file system object containig the folder
+    Dim oFileSys As FileSystem
+    Set oFileSys = CATIA.FileSystem 
 
- CATIA.DisplayFileAlerts = False
+    ' ----------------------------------------------------------- 
+    ' Optional: allows to find the sample wherever it's installed
+    Dim sDocPath As String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+'    If (Not oFileSys.FolderExists(sDocPath)) Then
+'      Err.Raise 9999,,"No Doc Path Defined"
+'    End If
+    ' ----------------------------------------------------------- 
 
- 
-' Set the file system object containig the folder
+    ' Define the path's folder where we are looking for Drawing documents
+    Dim sFolderPath As String
+    sFolderPath = InputBox( "Enter a folder path:", "Update All Sheets Of a Folder", _
+                            sDocPath & "\online\CAAScdDriUseCases\samples")
+    If (Not oFileSys.FolderExists(sFolderPath)) Then
+      Err.Raise 9999,,sFolderPath & ": This Folder does not exist"
+    End If
 
- Dim 
-oFileSys
- As 
-FileSystem
+    ' Set the folder object
+    Dim oFolder As Folder 
+    Set oFolder = oFileSys.GetFolder(sFolderPath) 
 
- Set 
-oFileSys = CATIA.FileSystem 
+    ' Loop on the files collection of the folder
+    ' For Each File In Folder.Files
+    Dim iI, iJ
+    For iI = 1 To oFolder.Files.Count
+        Dim oFile As Object
+        Set oFile = oFolder.Files.Item(iI)
+    
+        '  Retrieve in the files collection only the Drawing documents from its extension
+        If InStr(oFile.Name, ".CATDrawing") <> 0 Then
 
- 
-' ----------------------------------------------------------- 
+            ' Set and open a Drawing document
+            Dim oDoc As Document 
+            Set oDoc = CATIA.Documents.Open(oFile.Path)
+            MsgBox "Updating Document " & oFile.Path, 0  ' VBOKOnly
 
- 
-' Optional: allows to find the sample wherever it's installed
+            ' Loop on the sheets collection of the drawing document
+            ' For Each sheet In oDoc.Sheets 
+            For iJ = 1 To oDoc.Sheets.Count
+                ' Update the sheet even is not necessary
+                oDoc.Sheets.Item(iJ).ForceUpdate 
+            Next
 
- Dim 
-sDocPath
- As 
-String 
- sDocPath=CATIA.SystemService.Environ("CATDocView")
+            ' Save the Drawing document
+            ' oDoc.Save
+            ' Close the Drawing document
+            oDoc.Close
+        End If
 
-' If (Not oFileSys.FolderExists(sDocPath)) Then
+    Next
 
-' Err.Raise 9999,,"No Doc Path Defined"
+End Sub
 
-' End If
 
- 
-' ----------------------------------------------------------- 
+```vbscript
+Option Explicit
+' COPYRIGHT DASSAULT SYSTEMES 2000
+Dim Language as String
+Language=&quot;VBScript&quot;
 
- 
-' Define the path's folder where we are looking for Drawing documents
+' ***********************************************************************
+'   Purpose:      This macro allows you to update all the sheets contained
+'                 in all Drawing document of a specified folder
+'   Assumptions:      
+'   Author: 
+'   Languages:    VBScript
+'   Locales:      English (United States)
+'   CATIA Level:  V5R6 
+' ***********************************************************************
 
- Dim 
-sFolderPath
- As 
-String
- sFolderPath = InputBox( "Enter a folder path:", "Update All Sheets Of a Folder", _
- sDocPath & "\online\CAAScdDriUseCases\samples")
+Sub CATMain()
 
- If 
-(Not oFileSys.FolderExists(sFolderPath))
- Then
+    ' Set the CATIA popup file alerts to False
+    ' It prevents to stop the macro at each alert during its execution
+    CATIA.DisplayFileAlerts = False
 
- Err.Raise 9999,,sFolderPath & ": This Folder does not exist"
+    ' Set the file system object containig the folder
+    Dim oFileSys As FileSystem
+    Set oFileSys = CATIA.FileSystem 
 
- End If
+    ' ----------------------------------------------------------- 
+    ' Optional: allows to find the sample wherever it's installed
+    Dim sDocPath As String 
+    sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+'    If (Not oFileSys.FolderExists(sDocPath)) Then
+'      Err.Raise 9999,,&quot;No Doc Path Defined&quot;
+'    End If
+    ' ----------------------------------------------------------- 
 
- 
-' Set the folder object
+    ' Define the path's folder where we are looking for Drawing documents
+    Dim sFolderPath As String
+    sFolderPath = InputBox( &quot;Enter a folder path:&quot;, &quot;Update All Sheets Of a Folder&quot;, _
+                            sDocPath &amp; &quot;\online\CAAScdDriUseCases\samples&quot;)
+    If (Not oFileSys.FolderExists(sFolderPath)) Then
+      Err.Raise 9999,,sFolderPath &amp; &quot;: This Folder does not exist&quot;
+    End If
 
- Dim 
-oFolder
- As 
-Folder 
+    ' Set the folder object
+    Dim oFolder As Folder 
+    Set oFolder = oFileSys.GetFolder(sFolderPath) 
 
- Set 
-oFolder = oFileSys.GetFolder(sFolderPath) 
+    ' Loop on the files collection of the folder
+    ' For Each File In Folder.Files
+    Dim iI, iJ
+    For iI = 1 To oFolder.Files.Count
+        Dim oFile As Object
+        Set oFile = oFolder.Files.Item(iI)
+    
+        '  Retrieve in the files collection only the Drawing documents from its extension
+        If InStr(oFile.Name, &quot;.CATDrawing&quot;) &lt;&gt; 0 Then
 
- 
-' Loop on the files collection of the folder
+            ' Set and open a Drawing document
+            Dim oDoc As Document 
+            Set oDoc = CATIA.Documents.Open(oFile.Path)
+            MsgBox &quot;Updating Document &quot; &amp; oFile.Path, 0  ' VBOKOnly
 
- 
-' For Each File In Folder.Files
+            ' Loop on the sheets collection of the drawing document
+            ' For Each sheet In oDoc.Sheets 
+            For iJ = 1 To oDoc.Sheets.Count
+                ' Update the sheet even is not necessary
+                oDoc.Sheets.Item(iJ).ForceUpdate 
+            Next
 
- Dim 
-iI, iJ
+            ' Save the Drawing document
+            ' oDoc.Save
+            ' Close the Drawing document
+            oDoc.Close
+        End If
 
- For 
-iI = 1
- To 
-oFolder.Files.Count
-
- Dim 
-oFile
- As 
-Object
-
- Set 
-oFile = oFolder.Files.Item(iI)
- 
- 
-' Retrieve in the files collection only the Drawing documents from its extension
-
- If 
-InStr(oFile.Name, ".CATDrawing") <> 0 Then
-
- 
-' Set and open a Drawing document
-
- Dim 
-oDoc
- As 
-Document 
-
- Set 
-oDoc = CATIA.Documents.Open(oFile.Path)
- MsgBox "Updating Document " & oFile.Path, 0 ' VBOKOnly
-
- 
-' Loop on the sheets collection of the drawing document
-
- 
-' For Each sheet In oDoc.Sheets 
-
- For 
-iJ = 1
- To 
-oDoc.Sheets.Count
- 
-' Update the sheet even is not necessary
-
- oDoc.Sheets.Item(iJ).ForceUpdate 
-
- Next
-
- 
-' Save the Drawing document
-
- 
-' oDoc.Save
-
- 
-' Close the Drawing document
-
- oDoc.Close
-
- End If
-
- Next
+    Next
 
 End Sub
 ```

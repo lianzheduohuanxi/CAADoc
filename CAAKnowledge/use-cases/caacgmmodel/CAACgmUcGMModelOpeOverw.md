@@ -9,10 +9,10 @@ converted: "2026-05-11T17:33:48.309647"
 ```
 
 ---
-# How to Use Geometric Operators  
+# How to Use Geometric Operators
 
----  
-Technical Article  
+---
+Technical Article
 ## Abstract
 
 Geometric operators are transient objects that allow you to create new objects from existing ones or to analyze them. These operators all follow the same scheme which is described in this article.
@@ -22,8 +22,8 @@ Geometric operators are transient objects that allow you to create new objects f
       * The ADVANCED Mode
     * How to Delete a Geometric Operator
     * In Short
-    * References  
----  
+    * References
+---
 ## Introduction
 
 Using geometric operators is an easy way to create or analyze geometric objects. While the geometric objects provide basic services, that are easily computed by the objects themselves, the geometric operators do more complex operations using advanced mathematics tools. As an example, evaluations from parameters to Cartesian coordinates is offered by the geometric curve or surface, whereas the torsion or curvature are computed by a geometric operator.
@@ -35,11 +35,11 @@ The geometric operators work inside one geometric container: the input and outpu
 
 Here are some examples of operators creating geometric objects:
 
-    * Intersection between: 
+    * Intersection between:
       * Two curves (`CATICGMIntersectionCrvCrv`).
       * Two surfaces (`CATICGMIntersectionSurSur`).
       * A curve and a surface (`CATICGMIntersectionCrvSur`).
-    * Projection of: 
+    * Projection of:
       * A curve on a surface (`CATICGMProjectionCrvSur`).
       * A point on a curve (`CATICGMProjectionPtCrv`) or a surface (`CATICGMProjectionPtSur`).
     * Creation of reflect lines (`CATICGMReflectCurve`).
@@ -47,13 +47,13 @@ Here are some examples of operators creating geometric objects:
 
 Here are some examples of operators dedicated to geometric analysis:
 
-    * Confusion of: 
+    * Confusion of:
       * Two points of a curve (`CATICGMConfusionPtOnCrvPtOnCrv`).
       * Two points of a surface (`CATICGMConfusionPtOnSurPtOnSur`).
-    * Inclusion of: 
+    * Inclusion of:
       * A point on a curve (`CATICGMInclusionPtCrv`).
       * A point on a surface (`CATICGMInclusionPtSur`).
-    * Minimum distance between: 
+    * Minimum distance between:
       * Two curves (`CATICGMDistanceMinCrvCrv`).
       * A point and a curve (`CATICGMDistanceMinPtCrv`).
       * A point and a surface (`CATICGMDistanceMinPtSur`).
@@ -69,7 +69,7 @@ All the geometric operators are based on the same scheme. The geometric operator
 The geometric operators can be used in two modes, BASIC (the default mode) or ADVANCED.
 
     * In the BASIC mode, data given when creating the operator is sufficient to execute it, and the operation is automatically run.
-    * In the ADVANCED mode, the operator can be tuned after its creation with advanced options. You have then to explicitly ask for its execution. In any cases, the resulting objects are not created during the execution step. They are created when you ask for them, by calling the `GetXxx` methods. These methods are often presented as iterators and the following methods are provided: 
+    * In the ADVANCED mode, the operator can be tuned after its creation with advanced options. You have then to explicitly ask for its execution. In any cases, the resulting objects are not created during the execution step. They are created when you ask for them, by calling the `GetXxx` methods. These methods are often presented as iterators and the following methods are provided:
       * A method to retrieve the number of solutions.
       * An initialization of the iterator.
       * A method to increment the iterator.
@@ -88,7 +88,7 @@ To operate in this mode, you must:
 2. Get the result(s)
 3. Delete the operator instance (see How to Delete a Geometric Operator).
     CATICGMIntersectionCrvSur* pIntOp = **::CATCGMCreateIntersection**(
-                           piGeomFactory,   // geometric factory 
+                           piGeomFactory,   // geometric factory
                            piLine,          // geometric line
                            piCylinder,      // geometric cylinder
 
@@ -139,7 +139,7 @@ pIntOp->**Run**();
     pIntOp->**SetCurve**(piNewLine);    // piNewLine was previously created
     pIntOp->SetLimits(newCrvLimits); // newCrvLimits was previously defined
 
-    // run again 
+    // run again
 pIntOp->**SetCurve**(piNewLine);    // piNewLine was previously created
 pIntOp->SetLimits(newCrvLimits); // newCrvLimits was previously defined
     pIntOp->**Run**();
@@ -174,12 +174,12 @@ Geometric operators should be deleted by using the **Release** method.
     * All the geometric operators are based on the same scheme: creation, optionally set of advanced options, run, read of the results, deletion. They work inside one container.
 ## References
 
-[1] |  [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.md)  
----|---  
-[2] |  [The Curves of CATIA Geometric Modeler](CAACgmTaGobCurves.md)  
-[3] |  [The Surfaces of CATIA Geometric Modeler](CAACgmTaGobSurfaces.md)  
-[4] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
+[1] |  [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.md)
+---|---
+[2] |  [The Curves of CATIA Geometric Modeler](CAACgmTaGobCurves.md)
+[3] |  [The Surfaces of CATIA Geometric Modeler](CAACgmTaGobSurfaces.md)
+[4] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
 ## History
 
-Version: **1** [Jan 2007] | Document created  
+Version: **1** [Jan 2007] | Document created
 ---|---

@@ -12,12 +12,12 @@ converted: "2026-05-11T17:33:49.224912"
 tags: ["CAAGMOperatorsOverview", "CAAGMOperatorsInterfaces", "CAATopNurbsSurfMultiPatch", "CAADoc", "CATICGMObject", "CAAGMModelGemBrowser", "CAAGMOperatortsNurbsSurfMultiPatch", "CATICGMTopSkin", "CATIA", "CAAGMOperatorsNurbsSurfMultiPatch"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcTopNurbsSurfMultiPatch.htm"
 converted: "2026-05-11T17:33:49.224912"
-Creating a Multi Patch NURBS Surface  
+Creating a Multi Patch NURBS Surface
 
----  
+---
 converted: "2026-05-11T17:33:49.224912"
 Creating a Multi Patch NURBS Surface
-Use Case  
+Use Case
 Abstract A NURBS can be dressed by using the CATICGMTopSkin operator. You can do this operation either on a single patch or a multi patch NURBS. This article explains how to proceed for a multi patch NURBS.
 
     * What You Will Learn With This Use Case
@@ -27,8 +27,8 @@ Abstract A NURBS can be dressed by using the CATICGMTopSkin operator. You can do
       * Where to Find the CAAGMOperatorsNurbsSurfMultiPatch Code
     * Step-by-Step
     * In Short
-    * References  
----  
+    * References
+---
 What You Will Learn With This Use Case This use case is intended to help you create a multi patch NURBS surface, then transform one of its patches into a skin. The CAAGMOperatorsNurbsSurfMultiPatch Use Case CAAGMOperatorsNurbsSurfMultiPatch is a use case of the CAAGMOperatorsInterfaces.edu framework that illustrates the GMOperatorsInterfaces framework capabilities. What Does CAAGMOperatorsNurbsSurfMultiPatch Do? The CAAGMOperatorsNurbsSurfMultiPatch use case:
     * Creates the geometry factory.
     * Creates the knot vectors along U and V.
@@ -46,7 +46,10 @@ How to Launch CAAGMOperatorsNurbsSurfMultiPatch To launch CAAGMOperatortsNurbsSu
 Creating the Geometry Factory The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
     CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**() ;
+```vbscript
     if (NULL==piGeomFactory) return (1);
+
+```
 
 Creating the Knot Vector Note that CATIA Version 5 does not support periodic NURBS. You can create a periodic NURBS but the geometric modeler does not guarantee that the operations that can be applied to such NURBS surface later on will be performed properly.
 
@@ -77,27 +80,27 @@ Multiplicities1,IndexOffset);
     CATKnotVector NonUniformV(Degree,IsPeriodic,KnotsCount2,Knots2,
             Multiplicities2,IndexOffset);
 
-Creating the Grid of Poles Before going any further, do not skip the warning below: Warning: When creating a knot vector in CATIA, the number of knots to be specified in the CATKnotVector constructor is the number of knots **with different values**. The total number of nodes is deduced from the multiplicity array. Given this:  
+Creating the Grid of Poles Before going any further, do not skip the warning below: Warning: When creating a knot vector in CATIA, the number of knots to be specified in the CATKnotVector constructor is the number of knots **with different values**. The total number of nodes is deduced from the multiplicity array. Given this:
 
-`**Total** number of nodes (including nodes with same value) = number of poles + degree + 1`  
-`Number of poles = sum of multiplicities - last multiplicity`  
-`Number of poles = sum of multiplicities - (degree + 1)`  
----  
+`**Total** number of nodes (including nodes with same value) = number of poles + degree + 1`
+`Number of poles = sum of multiplicities - last multiplicity`
+`Number of poles = sum of multiplicities - (degree + 1)`
+---
 Creating the Grid of Poles Before going any further, do not skip the warning below: Warning: When creating a knot vector in CATIA, the number of knots to be specified in the CATKnotVector constructor is the number of knots **with different values**. The total number of nodes is deduced from the multiplicity array. Given this:
 In the CAAGMOperatorsNurbsSurfMultiPatch sample, a multi patch (4 nodes along U and 3 nodes along V) NURBS is to be created. The following sets of data is choosen for the NURBS vectors:
 
-    * along U:  
+    * along U:
 In the CAAGMOperatorsNurbsSurfMultiPatch sample, a multi patch (4 nodes along U and 3 nodes along V) NURBS is to be created. The following sets of data is choosen for the NURBS vectors:
-degree of the basis functions = 3  
-number of knots with different value = 4  giving three patches  
-array of multiplicities = {degree+1, 2, 1, degree+1} = {4, 2, 1, 4}
-
-    * along V:  
 degree of the basis functions = 3
 number of knots with different value = 4  giving three patches
 array of multiplicities = {degree+1, 2, 1, degree+1} = {4, 2, 1, 4}
-degree of the basis functions = 3  
-number of knots with different value = 3 giving two patches  
+
+    * along V:
+degree of the basis functions = 3
+number of knots with different value = 4  giving three patches
+array of multiplicities = {degree+1, 2, 1, degree+1} = {4, 2, 1, 4}
+degree of the basis functions = 3
+number of knots with different value = 3 giving two patches
 array of multiplicities = {degree+1, 2, degree+1} = {4, 2, 4}
 Therefore the number of poles to be specified along U is  7 while the number of poles along V is 6 and the total number of poles is nbPolesU* nbPolesV = 42.
 
@@ -114,18 +117,27 @@ Therefore the number of poles to be specified along U is  7 while the number of
     // Display the control points
     //
 gridOfPoints.SetPoint(CATMathPoint( 0., 0., 0.),0,0);
+```vbscript
     for (int i = 0; i < nbPoleU; i++)
+
+```
 
         {
 ```vbscript
 for (int i = 0; i < nbPoleU; i++)
+```vbscript
             for (int j = 0; j < nbPoleV; j++)
+```
+
 ```
 
             {
 ```vbscript
 for (int i = 0; i < nbPoleU; i++)
+```vbscript
 for (int j = 0; j < nbPoleV; j++)
+```
+
                 CATMathPoint ptToBeDisplayed = gridOfPoints.GetPoint(i,j);
                 CATCartesianPoint* piCartPt = piGeomFactory->CreateCartesianPoint(ptToBeDisplayed);
 ```
@@ -137,9 +149,12 @@ CATMathPoint ptToBeDisplayed = gridOfPoints.GetPoint(i,j);
 CATCartesianPoint* piCartPt = piGeomFactory->CreateCartesianPoint(ptToBeDisplayed);
 Displaying the control points allows you to check their position with respect to the NURBS. Creating the NURBS Surface Prior to creating the NURBS, the control point weights are initialized.
 
-    long isRational=1;    
+    long isRational=1;
     double * aWeights=new double[nbPoleU*nbPoleV];
-    for (i = 0; i < nbPoleU*nbPoleV; i++) 
+```vbscript
+    for (i = 0; i < nbPoleU*nbPoleV; i++)
+
+```
 
       {
 long isRational=1;
@@ -181,7 +196,7 @@ CATICGMTopSkin * pSkinOpe =::CATCGMCreateTopSkin(piGeomFactory,
             &surMaxLimits);
     ...
 
-The resulting skin looks something like this (the green bullets are the control points):  ![Resulting Skin](images/CAACgmTopmultipatch.gif) This is to be compared with the global surface (rational with a weight of 150 applied to pole [5,5] and [3,5])  
+The resulting skin looks something like this (the green bullets are the control points):  ![Resulting Skin](images/CAACgmTopmultipatch.gif) This is to be compared with the global surface (rational with a weight of 150 applied to pole [5,5] and [3,5])
 ![Global Surface](images/CAACgmTopmultirational.gif) For your information, this would be the corresponding rational surface: ![Ratioanl Surface](images/CAACgmTopmultinonrational.gif) Writing the Model and Closing the Container To save the model in a file, the `::CATSaveCGMContainer` global function is used. Notice that in the use case, the save is conditioned by an input parameter representing the file inside which the model must be saved. The use case ends with the closure of the geometry factory, done by the ` ::CATCloseCGMContainer` global function.
 
     if(1==toStore)
@@ -203,18 +218,18 @@ ofstream filetowrite(pfileName, ios::binary ) ;
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
        filetowrite.close();
-     }	
+     }
 
      //
      // Closes the container
      //
      **::CATCloseCGMContainer**(piGeomFactory);
 
-In Short Here are a few relations to remember when creating a NURBS `**Total** number of nodes = number of poles + degree + 1`  
-`Number of poles = sum of multiplicities - last multiplicity`  
-`Number of poles = sum of multiplicities - (degree + 1)` References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-[2] | [Overview of the Topological Operators](CAACgmUcTopOverview.md)  
-[3] |  [ About NURBS](../CAACgmModel/CAACgmTaGobAboutNurbs.md)  
-History Version: **1** [Feb 2000] | Document created  
+In Short Here are a few relations to remember when creating a NURBS `**Total** number of nodes = number of poles + degree + 1`
+`Number of poles = sum of multiplicities - last multiplicity`
+`Number of poles = sum of multiplicities - (degree + 1)` References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
+---|---
+[2] | [Overview of the Topological Operators](CAACgmUcTopOverview.md)
+[3] |  [ About NURBS](../CAACgmModel/CAACgmTaGobAboutNurbs.md)
+History Version: **1** [Feb 2000] | Document created
 ---|---

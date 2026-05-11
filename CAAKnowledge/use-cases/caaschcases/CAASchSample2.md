@@ -11,15 +11,15 @@ converted: "2026-05-11T17:31:51.518765"
 ---
 # Equipment & Systems
 
-| 
+|
 ## Schematics Platform Modeler
 
-| 
+|
 ### Creating Schematic Application Components
 
-_Working with Schematic Components_  
----|---|---  
-Use Case  
+_Working with Schematic Components_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
@@ -35,7 +35,7 @@ This article discusses the CAASchAppSample2 use case.
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
@@ -66,11 +66,11 @@ To launch CAASchAppSample2, you will need to set up the build time environment, 
 CAASchAppSample2 code is located in the CAASchAppSample2.m use case module of the CAASchPlatformModeler.edu framework:
 
 CAASchAppSample2 code is located in the CAASchAppSample2.m use case module of the CAASchPlatformModeler.edu framework:
-Windows | `InstallRootDirectory\CAASchPlatformModeler.edu\CAASchAppSample2.m`  
+Windows | `InstallRootDirectory\CAASchPlatformModeler.edu\CAASchAppSample2.m`
 
 CAASchAppSample2 code is located in the CAASchAppSample2.m use case module of the CAASchPlatformModeler.edu framework:
 Windows | `InstallRootDirectory\CAASchPlatformModeler.edu\CAASchAppSample2.m`
-Unix | `InstallRootDirectory/CAASchPlatformModeler.edu/CAASchAppSample2.m`  
+Unix | `InstallRootDirectory/CAASchPlatformModeler.edu/CAASchAppSample2.m`
 
 where `InstallRootDirectory` is the root directory of your CAA V5 installation. It is made of a two unique source files named CAASchAppSample2Main.cpp and CAASchAppSample2.cpp.
 
@@ -103,9 +103,9 @@ The CAASchAppSample2 code is derived from the CAASchAppBaseEnv base class. The b
 The CAASchAppSample2 code is derived from the CAASchAppBaseEnv base class. The base class contains functionality common to the other CAASchApp samples. Initializing the environment involves the following methods:
     CAASchAppSample2::InitEnvironment
     CAASchAppSample2::GetAppReference
-    CreateCATProductEnv::CreateCATProductEnv  
+    CreateCATProductEnv::CreateCATProductEnv
 
----  
+---
 
 CAASchAppSample2::GetAppReference
 CreateCATProductEnv::CreateCATProductEnv
@@ -128,10 +128,13 @@ Since the drawing was created by CAASchAppSample1, we know there is only one GRR
 
         //-------------------------------------------------------------------------
         //  Using the reference object, find CATISchCompGraphic interface.
-        //-------------------------------------------------------------------------    
+        //-------------------------------------------------------------------------
         HRESULT rc = _spAppRef->QueryInterface (IID_CATISchCompGraphic,(void **) &piCompGraphic);
 HRESULT rc = _spAppRef->QueryInterface (IID_CATISchCompGraphic,(void **) &piCompGraphic);
+```vbscript
         if (!SUCCEEDED(rc))
+
+```
 
         {
 HRESULT rc = _spAppRef->QueryInterface (IID_CATISchCompGraphic,(void **) &piCompGraphic);
@@ -143,20 +146,26 @@ if (!SUCCEEDED(rc))
 
         //-------------------------------------------------------------------------
         //  Use the CATISchCompGraphic's method, ListGraphicalRepresentations, to
-        //  find the current graphical representations for the object. 
+        //  find the current graphical representations for the object.
         //
         //  Since this object was created in sample1, we know it will only have
         //  one GRR.  Use this to find the detail sheet and view of the GRR.
         //-------------------------------------------------------------------------
         int NbGRR = 0;
 int NbGRR = 0;
+```vbscript
         if (SUCCEEDED (piCompGraphic->ListGraphicalRepresentations (&pLIGRRs)))
+
+```
 
         {
 int NbGRR = 0;
 if (SUCCEEDED (piCompGraphic->ListGraphicalRepresentations (&pLIGRRs)))
            unsigned int uSize = 0;
+```vbscript
            if (SUCCEEDED (pLIGRRs->Count(&uSize)))
+
+```
 
            {
 ```vbscript
@@ -173,28 +182,46 @@ cout << "Size of GRR List = " << uSize << endl;
 NbGRR = uSize;
 if (uSize)
                  IUnknown *piUK = NULL;
+```vbscript
                  if (SUCCEEDED (pLIGRRs->Item(0,&piUK)))
+
+```
 
                  {
 ```vbscript
 if (uSize)
 IUnknown *piUK = NULL;
 if (SUCCEEDED (pLIGRRs->Item(0,&piUK)))
+```vbscript
                     if ( SUCCEEDED (piUK->QueryInterface (IID_CATIView,(void **) &piViewGRR1)))
+```
+
 ```
 
                     {
 IUnknown *piUK = NULL;
 if (SUCCEEDED (pLIGRRs->Item(0,&piUK)))
+```vbscript
+```vbscript
 if ( SUCCEEDED (piUK->QueryInterface (IID_CATIView,(void **) &piViewGRR1)))
                        spDtlSheet = piViewGRR1->GetSheet();
                        if (!!spDtlSheet)
 
+```
+
+```
+
                        {
 ```vbscript
 if ( SUCCEEDED (piUK->QueryInterface (IID_CATIView,(void **) &piViewGRR1)))
+```vbscript
+```vbscript
 spDtlSheet = piViewGRR1->GetSheet();
 if (!!spDtlSheet)
+```
+
+```
+
                           cout << "Got detail sheet containing the GRR detail "
 ```
 
@@ -203,14 +230,17 @@ if (!!spDtlSheet)
                     }
 cout << "Got detail sheet containing the GRR detail "
                     rc = piUK->QueryInterface (IID_CATISchGRRComp,(void **) &piGRRComp1);
+```vbscript
                     CAASchAppDeleteBaseUnknown (piUK);
 
-                 }
-              } 
-           }
-        } 
+```
 
----  
+                 }
+              }
+           }
+        }
+
+---
 
 [Top]
 #### Adding Additional GRRs to the Component Reference Object
@@ -218,43 +248,70 @@ cout << "Got detail sheet containing the GRR detail "
 To add a GRR to a component reference we use the the _CATISchCompGraphic_ interface method `AddGraphicalRepresentation`. This method has one argument which is of type CATISchGRRComp*. The code loops through all the view in the detail sheet. When it finds a view, it checks to see if it matches the view of the original GRR. If not, it adds the GRR to the component. Since the _CATISchGRRComp_ interface is tied to the view object, we can obtain the CATISchGRRComp* for each view.
 
 To add a GRR to a component reference we use the the _CATISchCompGraphic_ interface method `AddGraphicalRepresentation`. This method has one argument which is of type CATISchGRRComp*. The code loops through all the view in the detail sheet. When it finds a view, it checks to see if it matches the view of the original GRR. If not, it adds the GRR to the component. Since the _CATISchGRRComp_ interface is tied to the view object, we can obtain the CATISchGRRComp* for each view.
-    	for (int iView = 3; iView <= SizeOfLView; iView++) 
+```vbscript
+    	for (int iView = 3; iView <= SizeOfLView; iView++)
+
+```
 
             {
 To add a GRR to a component reference we use the the _CATISchCompGraphic_ interface method `AddGraphicalRepresentation`. This method has one argument which is of type CATISchGRRComp*. The code loops through all the view in the detail sheet. When it finds a view, it checks to see if it matches the view of the original GRR. If not, it adds the GRR to the component. Since the _CATISchGRRComp_ interface is tied to the view object, we can obtain the CATISchGRRComp* for each view.
 for (int iView = 3; iView <= SizeOfLView; iView++)
+```vbscript
+```vbscript
               if (LView[iView] != spSpecView)
+
+```
+
+```
 
               {
 ```vbscript
 for (int iView = 3; iView <= SizeOfLView; iView++)
+```vbscript
+```vbscript
 if (LView[iView] != spSpecView)
                 if (SUCCEEDED ( (LView[iView])->QueryInterface (IID_CATISchGRRComp,(void **) &piGRRComp)))
+```
+
+```
+
 ```
 
                 {
 ```vbscript
 if (LView[iView] != spSpecView)
+```vbscript
+```vbscript
 if (SUCCEEDED ( (LView[iView])->QueryInterface (IID_CATISchGRRComp,(void **) &piGRRComp)))
                   if (SUCCEEDED (piCompGraphic->AddGraphicalRepresentation (piGRRComp)))
+```
+
+```
+
 ```
 
                   {
 ```vbscript
 if (SUCCEEDED ( (LView[iView])->QueryInterface (IID_CATISchGRRComp,(void **) &piGRRComp)))
+```vbscript
 if (SUCCEEDED (piCompGraphic->AddGraphicalRepresentation (piGRRComp)))
+```
+
                     cout << "successfully added GRR at position " << iView << endl;
                     NbGRR ++;
                     if ( NbGRR == 2 ) piGRRComp2 = piGRRComp;
+```vbscript
                     if ( NbGRR == 3 ) piGRRComp3 = piGRRComp;
+```
+
 ```
 
                   }
                 }
               }
-    	}  
+    	}
 
----  
+---
 
 [Top]
 #### Placing Another Instance of the Component on the Main Sheet
@@ -262,7 +319,10 @@ if (SUCCEEDED (piCompGraphic->AddGraphicalRepresentation (piGRRComp)))
 Placing an instance of the component reference is done using the PlaceInSpace method of the CATISchComponent interface. The coding is similar to that of CAASchAppSample1.
 
 Placing an instance of the component reference is done using the PlaceInSpace method of the CATISchComponent interface. The coding is similar to that of CAASchAppSample1.
+```vbscript
         if ( SUCCEEDED(_spAppRef->QueryInterface (IID_CATISchComponent,(void **) &piComponent)) )
+
+```
 
         {
 Placing an instance of the component reference is done using the PlaceInSpace method of the CATISchComponent interface. The coding is similar to that of CAASchAppSample1.
@@ -270,14 +330,26 @@ if ( SUCCEEDED(_spAppRef->QueryInterface (IID_CATISchComponent,(void **) &piComp
           double aDb6Axis[6] = {1.0,0.0, 0.0,1.0, 50.0,200.0};
 
           rc = piComponent->PlaceInSpace (NULL, aDb6Axis, &piSchComp);
+```vbscript
+```vbscript
           if (SUCCEEDED (rc))
+
+```
+
+```
 
           {
 
 rc = piComponent->PlaceInSpace (NULL, aDb6Axis, &piSchComp);
+```vbscript
 if (SUCCEEDED (rc))
+```
+
             CATISpecObject *piSchCompInst = NULL;
+```vbscript
             if (SUCCEEDED (piSchComp->QueryInterface (IID_CATISpecObject,(void **) &piSchCompInst)))
+
+```
 
             {
 CATISpecObject *piSchCompInst = NULL;
@@ -285,9 +357,9 @@ if (SUCCEEDED (piSchComp->QueryInterface (IID_CATISpecObject,(void **) &piSchCom
               piSchCompInst->SetName (SCHEDUPart_TestInst2);  // Name the instance
               CAASchAppDeleteBaseUnknown (piSchCompInst);
 
-            }  
+            }
 
----  
+---
 
 [Top]
 #### Activating a Second Occurrenc of the Instance using a Different GRR
@@ -297,32 +369,53 @@ A component may have more than one occurrence shown on the drawing. This is not 
 A component may have more than one occurrence shown on the drawing. This is not the same as instantiating the component reference another time. Rather, it is useful for allowing the representation of a component to be shown in different locations on a drawing with the same or a different GRR. Our component reference object now has three GRRs. The code below shows the activating of another occurrence of our component at a new location and using the second GRR. This is done using the _CATISchCompGraphic_ interface `Activate` method from our placed component.
             double Db2Loc[2] = {220.0,200.0};
             char *pGRRName = NULL;
+```vbscript
             if ( SUCCEEDED (piGRRComp2->QueryInterface(IID_CATISchGRR,(void**)&piSchGRR) ) )
+
+```
 
             {
 double Db2Loc[2] = {220.0,200.0};
 char *pGRRName = NULL;
 if ( SUCCEEDED (piGRRComp2->QueryInterface(IID_CATISchGRR,(void**)&piSchGRR) ) )
+```vbscript
+```vbscript
               if ( SUCCEEDED (piSchGRR->GetGRRName(&pGRRName)) )
+
+```
+
+```
 
               {
 char *pGRRName = NULL;
 if ( SUCCEEDED (piGRRComp2->QueryInterface(IID_CATISchGRR,(void**)&piSchGRR) ) )
+```vbscript
+```vbscript
 if ( SUCCEEDED (piSchGRR->GetGRRName(&pGRRName)) )
                 rc = piSchComp->QueryInterface (IID_CATISchCompGraphic,(void **) &piCompGraphic);
-                if ( SUCCEEDED(rc) ) 
+                if ( SUCCEEDED(rc) )
+
+```
+
+```
 
                 {
 ```vbscript
 if ( SUCCEEDED (piSchGRR->GetGRRName(&pGRRName)) )
+```vbscript
+```vbscript
 rc = piSchComp->QueryInterface (IID_CATISchCompGraphic,(void **) &piCompGraphic);
 if ( SUCCEEDED(rc) )
                   rc = piCompGraphic->Activate(pGRRName,Db2Loc,&piNewGRRComp);
 ```
 
-                }     
+```
 
----  
+```
+
+                }
+
+---
 
 [Top]
 #### Swap GRRs
@@ -330,7 +423,10 @@ if ( SUCCEEDED(rc) )
 The _CATISchCompGraphic_ interface also has methods to allow switching of the GRRs for a given occurrence or all occurrences of an object. The sample shows using the `SwitchAll` method to change all the occurrences of our new placed component to the second GRR.
 
 The _CATISchCompGraphic_ interface also has methods to allow switching of the GRRs for a given occurrence or all occurrences of an object. The sample shows using the `SwitchAll` method to change all the occurrences of our new placed component to the second GRR.
+```vbscript
        if ( SUCCEEDED(piCompGraphic->SwitchAll(pGRRName)) )
+
+```
 
        {
 The _CATISchCompGraphic_ interface also has methods to allow switching of the GRRs for a given occurrence or all occurrences of an object. The sample shows using the `SwitchAll` method to change all the occurrences of our new placed component to the second GRR.
@@ -341,11 +437,11 @@ if ( SUCCEEDED(piCompGraphic->SwitchAll(pGRRName)) )
 ```vbscript
 if ( SUCCEEDED(piCompGraphic->SwitchAll(pGRRName)) )
 cout << "Successfully switched all images" << endl;
-       else cout << "Failed to switch all images" << endl;  
+       else cout << "Failed to switch all images" << endl;
 
 ```
 
----  
+---
 
 [Top]
 
@@ -365,15 +461,15 @@ This use case has demonstrated how to get a component reference object from a dr
 * * *
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
----|---  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)
+---|---
 
 * * *
 ### History
 
-Version: **1** [April 2001] | Document created  
----|---  
-[Top]  
+Version: **1** [April 2001] | Document created
+---|---
+[Top]
 
 * * *
 

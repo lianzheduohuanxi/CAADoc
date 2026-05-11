@@ -10,6 +10,8 @@ converted: "2026-05-11T17:31:51.720607"
 
 ---
 ```vbscript
+```vbscript
+```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2000
     ' ***********************************************************************
     '   Purpose:      Open an analysis document
@@ -19,17 +21,30 @@ converted: "2026-05-11T17:31:51.720607"
     '   Assumptions:   Looks for surface.CATAnalysis in the directory and surface Analysis Connection
     '   Author:       bmw
     '   Languages:    VBScript
-    '   Locales:      English 
+    '   Locales:      English
     '   CATIA Level:  V5R16
     ' ***********************************************************************
 ```
 
-    Sub CATMain()
+```
+
+```
 
 ```vbscript
-    ' ----------------------------------------------------------- 
+    Sub CATMain()
+
+```
+
+```vbscript
+```vbscript
+```vbscript
+    ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
       sDocPath=CATIA.SystemService.Environ("CATDocView")
+```
+
+```
+
 ```
 
 ```vbscript
@@ -38,33 +53,56 @@ converted: "2026-05-11T17:31:51.720607"
 
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
+```vbscript
+```vbscript
         End If
-    ' ----------------------------------------------------------- 
+    ' -----------------------------------------------------------
+
+```
+
+```
 
 ```
 
 ```vbscript
 End If
+```vbscript
+```vbscript
 ' -----------------------------------------------------------
     ' Open the CATAnalysis Document
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Surface.CATAnalysis")
 ```
 
+```
+
+```
+
+```vbscript
 ```vbscript
     Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ```
 
+```
+
 ```vbscript
 Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
-    ' Retrieve the analysis Manager 
+```vbscript
+    ' Retrieve the analysis Manager
+```
+
 ```
 
 ```vbscript
     Set oAnalysisManagar = oAnalysisDocument.Analysis
+```vbscript
     Set oAnalysisSet = oAnalysisManagar.AnalysisSets
 ```
 
+```
+
+```vbscript
+```vbscript
 ```vbscript
     ' Retrieve the part document and product
     Set oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
@@ -78,7 +116,7 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
     Set oAnalysisModels = oAnalysisManagar.AnalysisModels
     Set oAnalysisModel = oAnalysisModels.Item(1)
     'Retrieve the mesh manager and list of mesh parts
-    Set oAnalysisMeshManager = oAnalysisModel.MeshManager 
+    Set oAnalysisMeshManager = oAnalysisModel.MeshManager
     Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
     Set surfMesh = oAnalysisMeshParts.Item("Surface Mesh.1")
     'Create the reference of the surface mesh
@@ -88,10 +126,20 @@ Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
     'Assign the reference to the mesh part
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 'Add the mesh part to list of mesh parts
 Set meshTrans = oAnalysisMeshParts.Add("MSHPartSymmetry")
 'Assign the reference to the mesh part
+```
+
+```
+
     meshTrans.AddSupportFromReference NOTHING, reference
 
 ```
@@ -100,9 +148,18 @@ meshTrans.AddSupportFromReference NOTHING, reference
     meshTrans.SetGlobalSpecification "Condensation", 0
     meshTrans.SetGlobalSpecification "Tolerance", "1.0 mm"
     meshTrans.SetGlobalSpecification "NbCopies", 2
+```vbscript
     'Set the specification; the plane of symmetry
+```
+
     meshTrans.SetSpecificationFromPublication "Direction", product, pubPlane, 0
+```vbscript
     'Update the mesh part
+```
+
     meshTrans.Update
 
+```vbscript
     End Sub
+
+```

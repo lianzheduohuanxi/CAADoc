@@ -15,28 +15,42 @@ converted: "2026-05-11T17:31:51.082294"
     Option Explicit
 
 ```vbscript
+```vbscript
+```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2003
     ' ***********************************************************************
-    '   Purpose:      This macro allows you to instantiate a ditto in 
+    '   Purpose:      This macro allows you to instantiate a ditto in
     '                      a view from a detail view
-    '   Author: 
+    '   Author:
     '   Languages:   VBScript
-    '   Locales:       English 
+    '   Locales:       English
     '   CATIA Level: V5R11
     ' ***********************************************************************
 ```
 
+```
+
+```
+
     Sub CATMain()
+```vbscript
+```vbscript
         ' Set the CATIA popup file alerts to False
         ' It prevents to stop the macro at each alert during its execution
+
+```
+
+```
 
 ```vbscript
         CATIA.DisplayFileAlerts = False
 ```
 
 ```vbscript
+```vbscript
+```vbscript
         ' Optional: allows to find the sample wherever it's installed
-        dim sDocPath As String 
+        dim sDocPath As String
         sDocPath=CATIA.SystemService.Environ("CATDocView")
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
           Err.Raise 9999,,"No Doc Path Defined"
@@ -46,7 +60,13 @@ converted: "2026-05-11T17:31:51.082294"
         Set oDrawing = CATIA.Documents.Open(sDocPath & _
 ```
 
+```
+
+```
+
                  "\online\CAAScdDriUseCases\samples\CAADriInstantiateDittoSource.CATDrawing")
+```vbscript
+```vbscript
 ```vbscript
         ' Retrieve the sheets collection of the drawing document
         Dim oSheets As DrawingSheets
@@ -59,13 +79,25 @@ converted: "2026-05-11T17:31:51.082294"
         Set oView = oSheet.Views.Item("View.3")
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' Retrieve the view where the detail view will be instantiated
 Dim oView As DrawingView
 Set oView = oSheet.Views.Item("View.3")
+```
+
+```
+
         oView.Activate
 ```
 
+```vbscript
+```vbscript
 ```vbscript
         ' Retrieve the detail sheet containing the detail view to be instantiated
         Dim oDetailSheet As DrawingSheet
@@ -93,13 +125,32 @@ Set oView = oSheet.Views.Item("View.3")
         ReturnValue = InputBox( "Enter a value", "", "New Value For Text" )
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' Modify the modifiable text value
 Dim ReturnValue As String
-ReturnValue = InputBox( "Enter a value", "", "New Value For Text" )
-        oText.Text = ReturnValue
 ```
 
+```
+
+```
+
+ReturnValue = InputBox( "Enter a value", "", "New Value For Text" )
+```vbscript
+```vbscript
+        oText.Text = ReturnValue
+
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
         ' Clear the variables
         Set oText = Nothing
@@ -114,4 +165,11 @@ ReturnValue = InputBox( "Enter a value", "", "New Value For Text" )
         Set oDrawing = Nothing
 ```
 
+```
+
+```
+
+```vbscript
     End Sub
+
+```

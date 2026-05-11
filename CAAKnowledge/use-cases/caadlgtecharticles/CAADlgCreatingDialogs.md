@@ -11,20 +11,20 @@ converted: "2026-05-11T17:17:56.030157"
 ---
 # 3D PLM Enterprise Architecture
 
-| 
+|
 ## User Interface - Dialogs
 
-| 
+|
 ### Creating Dialog Objects
 
-_How to create and manage dialog objects_  
----|---|---  
-Technical Article  
+_How to create and manage dialog objects_
+---|---|---
+Technical Article
 
 * * *
 ### Abstract
 
-All the Dialog framework classes share the way to get their behavior, and attributes. The behavior is set in the object constructor using by assigning a parent object and a style. Attributes are the visibility, and the sensitivity to the end user interactions. Dialog windows and objects can be dynamically created and modified with respect to their changing environment, and dialog objects can thus be deleted or created in an existing dialog window. 
+All the Dialog framework classes share the way to get their behavior, and attributes. The behavior is set in the object constructor using by assigning a parent object and a style. Attributes are the visibility, and the sensitivity to the end user interactions. Dialog windows and objects can be dynamically created and modified with respect to their changing environment, and dialog objects can thus be deleted or created in an existing dialog window.
 
   * **Constructing Dialog Objects**
   * **Managing Visibility and Sensitivity**
@@ -34,14 +34,14 @@ All the Dialog framework classes share the way to get their behavior, and attrib
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### Constructing Dialog Objects
 
-Most of the dialog classes can be used as is, that is instantiated, such as the controls, or the containers. Some others must be derived to create specialized objects, such as the dialog windows. Each class has a constructor which requires at least two parameters, and sometimes three: 
+Most of the dialog classes can be used as is, that is instantiated, such as the controls, or the containers. Some others must be derived to create specialized objects, such as the dialog windows. Each class has a constructor which requires at least two parameters, and sometimes three:
 
-  1. **The parent** [1]. It is altogether: 
+  1. **The parent** [1]. It is altogether:
      * The parent in the dialog object containment structure. It is the container object. Some rules exist on the parent object. For example, a control cannot be a parent object, since it cannot contain other dialog objects. A [ CATDlgTabContainer](../CAADlgQuickRefs/CAADlgCATDlgTabContainer.md) instance can contain only [ CATDlgTabPage](../CAADlgQuickRefs/CAADlgCATDlgTabPage.md) instances, and conversely, a [ CATDlgTabPage](../CAADlgQuickRefs/CAADlgCATDlgTabPage.md) instance can only be contained by [ CATDlgTabContainer](../CAADlgQuickRefs/CAADlgCATDlgTabContainer.md), but can contain in turn other containers, such as [CATDlgFrame](../CAADlgQuickRefs/CAADlgCATDlgFrame.md) instances, and controls.
      * The parent in the command tree structure. Since [CATDialog](../CAADlgQuickRefs/CAADlgCATDialog.md) derives from _CATCommand_ , each dialog object instance is seen as a command for the event management mechanisms, such as the send/receive [2] and the callback [3] mechanisms.
 
@@ -53,27 +53,33 @@ This parent must of course be an instance of a class that derives from _CATComma
 As an example, the construction of a _[CATDlgCombo](../CAADlgQuickRefs/CAADlgCATDlgCombo.md)_ instance could be as follows:
 
     CATDlgCombo * pMyCombo;
+```vbscript
     pMyCombo = new CATDlgCombo(this,                  // parent
+
+```
 
                                "MyNiceCombo",         // identifier
 CATDlgCombo * pMyCombo;
 pMyCombo = new CATDlgCombo(this,                  // parent
-                               CATDlgCmbOptionStyle); // style  
+                               CATDlgCmbOptionStyle); // style
 
----  
+---
 
 When the style can be composite, use the pipe | to concatenate the style attributes. For example, if you want to create a combo with the drop down style and with an editable field, construct it as follows:
 
 When the style can be composite, use the pipe | to concatenate the style attributes. For example, if you want to create a combo with the drop down style and with an editable field, construct it as follows:
     CATDlgCombo * pMyCombo;
+```vbscript
     pMyCombo = new CATDlgCombo(this,
+
+```
 
                                "MyNiceCombo",
 CATDlgCombo * pMyCombo;
 pMyCombo = new CATDlgCombo(this,
-                               CATDlgCmbDropDown | CATDlgCmbEntry);  
+                               CATDlgCmbDropDown | CATDlgCmbEntry);
 
----  
+---
 
 [Top]
 ### Managing Visibility and Sensitivity
@@ -85,9 +91,9 @@ The other generic attributes of a dialog object are the ability to be seen or hi
 
 A given dialog object can be set visible or invisible by means of its visibility attribute which takes the values `CATDlgShow` and ` CATDlgHide`. When creating a main container, such as a _[CATDlgDocument](../CAADlgQuickRefs/CAADlgCATDlgDocument.md)_ or a _[CATDlgDialog](../CAADlgQuickRefs/CAADlgCATDlgDialog.md)_ instance, you need to set it visible using the following method:
 
-    SetVisibility(CATDlgShow);  
+    SetVisibility(CATDlgShow);
 
----  
+---
 
 ```vbscript
 SetVisibility(CATDlgShow);
@@ -103,9 +109,9 @@ The `GetVisibility` method allows you to know whether a given object is visible:
 if (pObject->GetVisibility() == CATDlgShow)
     else
 
-      ... //Do what is required if the object is not visible  
+      ... //Do what is required if the object is not visible
 
----  
+---
 
 To hide a part of a window, set the visibility attribute of the container(s) making up this part to `CATDlgHide `rather than deleting the involved dialog objects. This avoids to recreate them if you need them again. Just set their visibility attribute to `CATDlgShow`.
 
@@ -114,19 +120,19 @@ To hide a part of a window, set the visibility attribute of the container(s) mak
 
 Another key attribute is the sensitivity of the dialog object to the user interactions. This is usually dedicated usually to controls. You can request a control to be sensitive to user interactions by assigning it the state ` CATDlgEnable`, or the reverse using the state `CATDlgDisable`, by means of the `SetSensitivity` method, as follows:
 
-    Control->SetSensitivity(CATDlgEnable);  
+    Control->SetSensitivity(CATDlgEnable);
 
----  
+---
 
 A disabled control is displayed dimmed and cannot be selected. Below are some examples of controls shown as disabled and enabled.
 
-| CATDlgDisable | CATDlgEnable  
----|---|---  
+| CATDlgDisable | CATDlgEnable
+---|---|---
 A disabled control is displayed dimmed and cannot be selected. Below are some examples of controls shown as disabled and enabled.
-Radio buttons 
-Combo 
-Menu items 
-Push items 
+Radio buttons
+Combo
+Menu items
+Push items
 
 The ThickSurface and CloseSurface menu items are enabled in both cases.
 
@@ -150,20 +156,20 @@ The behavior of a dialog object is set using its parent to anchor it in the comm
 * * *
 ### References
 
-[1] | [Dialog Class Usage and Link Reference](../CAADlgQuickRefs/CAADlgDialogSummary.md)  
----|---  
-[2] |  [ The Send/Receive Communication Protocol](../CAASysTechArticles/CAASysSendReceive.md)  
-[3] |  [ The Callback Mechanism](../CAASysTechArticles/CAASysCallbacks.md)  
-[4] | [Designing Your Interactive Application](CAADlgInteractiveApplication.md)  
-[5] | [Assigning Resources](CAADlgResources.md)  
-[Top]  
+[1] | [Dialog Class Usage and Link Reference](../CAADlgQuickRefs/CAADlgDialogSummary.md)
+---|---
+[2] |  [ The Send/Receive Communication Protocol](../CAASysTechArticles/CAASysSendReceive.md)
+[3] |  [ The Callback Mechanism](../CAASysTechArticles/CAASysCallbacks.md)
+[4] | [Designing Your Interactive Application](CAADlgInteractiveApplication.md)
+[5] | [Assigning Resources](CAADlgResources.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Jan 2000] | Document created  
----|---  
-[Top]  
+Version: **1** [Jan 2000] | Document created
+---|---
+[Top]
 
 * * *
 

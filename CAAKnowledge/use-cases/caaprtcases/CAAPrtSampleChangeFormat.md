@@ -11,20 +11,20 @@ converted: "2026-05-11T17:17:56.103894"
 ---
 # 3D PLM Enterprise Architecture
 
-| 
+|
 ## 3D Visualization - Print
 
-| 
+|
 ### Converting Print Files
 
-_Creating a TIFF file from a CGM file_  
----|---|---  
-Use Case  
+_Creating a TIFF file from a CGM file_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
 
-This article discusses the CAAPrtChangeFormat use case. This use case explains how to convert an input file encoded using a given format into an output file encoded using another format. 
+This article discusses the CAAPrtChangeFormat use case. This use case explains how to convert an input file encoded using a given format into an output file encoded using another format.
 
   * **What You Will Learn With This Use Case**
   * **The CAAPrtChangeFormat Use Case**
@@ -35,7 +35,7 @@ This article discusses the CAAPrtChangeFormat use case. This use case explains h
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
@@ -60,19 +60,19 @@ To launch CAAPrtChangeFormat, you will need to set up the build time environment
 
 In addition, the `CAAPrtOut` environment variable should be set to the directory into which you want to create the resulting TIFF file, prior to launching CAAPrtChangeFormat with the path of the input CGM file as argument.
 
-  * With Windows 
+  * With Windows
 
 In addition, the `CAAPrtOut` environment variable should be set to the directory into which you want to create the resulting TIFF file, prior to launching CAAPrtChangeFormat with the path of the input CGM file as argument.
-        E:>set CAAPrtOut=DirForOutputTIFFFile     
-        E:>CAAPrtChangeFormat InstallRootDirectory\CAAPrint.edu\CNext\resources\graphic\images\CAAPrtChangeFormat.cgm  
+        E:>set CAAPrtOut=DirForOutputTIFFFile
+        E:>CAAPrtChangeFormat InstallRootDirectory\CAAPrint.edu\CNext\resources\graphic\images\CAAPrtChangeFormat.cgm
 
----  
-  * With UNIX 
+---
+  * With UNIX
 
-        $ export CAAPrtOut=DirForOutputTIFFFile     
-        $ CAAPrtChangeFormat InstallRootDirectory/CAAPrint.edu/CNext/resources/graphic/images/CAAPrtChangeFormat.cgm  
+        $ export CAAPrtOut=DirForOutputTIFFFile
+        $ CAAPrtChangeFormat InstallRootDirectory/CAAPrint.edu/CNext/resources/graphic/images/CAAPrtChangeFormat.cgm
 
----  
+---
 
 where:
 
@@ -86,11 +86,11 @@ where:
 The CAAPrtChangeFormat use case is made of a single source file located in the CAAPrtChangeFormat.m module of the CAAPrint.edu framework:
 
 The CAAPrtChangeFormat use case is made of a single source file located in the CAAPrtChangeFormat.m module of the CAAPrint.edu framework:
-Windows | ` InstallRootDirectory\CAAPrint.edu\CAAPrtChangeFormat.m\src\CAACPrtChangeFormat.cpp`  
+Windows | ` InstallRootDirectory\CAAPrint.edu\CAAPrtChangeFormat.m\src\CAACPrtChangeFormat.cpp`
 
 The CAAPrtChangeFormat use case is made of a single source file located in the CAAPrtChangeFormat.m module of the CAAPrint.edu framework:
 Windows | ` InstallRootDirectory\CAAPrint.edu\CAAPrtChangeFormat.m\src\CAACPrtChangeFormat.cpp`
-Unix | ` InstallRootDirectory/CAAPrint.edu/CAAPrtChangeFormat.m/src/CAACPrtChangeFormat.cpp`  
+Unix | ` InstallRootDirectory/CAAPrint.edu/CAAPrtChangeFormat.m/src/CAACPrtChangeFormat.cpp`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
@@ -124,9 +124,9 @@ Some preliminary tasks are not described. They deal with retrieving the input fi
       ... // building the output file name is not described here_
 
       **CATPrinterManager::Begin()** ;
-      ...  
+      ...
 
----  
+---
 
 As soon as the input file is retrieved and the output file directory and name are set, the printer manager is initialized.
 
@@ -136,13 +136,16 @@ As soon as the input file is retrieved and the output file directory and name ar
 As soon as the input file is retrieved and the output file directory and name are set, the print file image can be built from the input file.
 
 As soon as the input file is retrieved and the output file directory and name are set, the print file image can be built from the input file.
-    _..._     
+    _..._
       CATPrintFileImage *pImage;
+```vbscript
       pImage = new **CATPrintFileImage**(InputName, "CGM");
 
-      ...  
+```
 
----  
+      ...
+
+---
 
 This print file image is an instance of the _CATPrintFileImage_ class instantiated from the input file. The input file format is passed as the second argument, here CGM. The print file image created holds the input file in memory and the CGM interpreter to enable the file interpretation as soon as this will be asked.
 
@@ -154,11 +157,14 @@ The print raster file device should be next instantiated.
       ...
 The print raster file device should be next instantiated.
       CATPrintFileDevice *pDevice;
+```vbscript
       pDevice = new **CATPrintFileDevice**( (const char*) TmpFile, "RASTER" );
 
-      ...     
+```
 
----  
+      ...
+
+---
 
 The print raster file device represents the output logical unit for a real device. It is made of a TIFF generator and of a stream into which the TIFF image writing will be performed. For this reason, the output file name and the RASTER type, that stands for TIFF, are passed as arguments.
 
@@ -179,9 +185,12 @@ A print parameter object should be defined to be associated with the print file 
 
       float imageWidth=0, imageHeight=0;
       int result = pImage->**GetSize**(imageWidth, imageHeight); _// Retrieve input file dimensions_
+```vbscript
       if (result)
 
-      { 
+```
+
+      {
         // Set the output image dimensions: width increases from 50%, height doesn't change
 float imageWidth=0, imageHeight=0;
 int result = pImage->**GetSize**(imageWidth, imageHeight); _// Retrieve input file dimensions_
@@ -189,12 +198,12 @@ if (result)
         CATPrintForm CurrentForm = Parameters.**GetCurrentForm**();
         CurrentForm().**SetSize**(imageWidth*1.5, imageHeight);
 
-      } 
-      ...  
+      }
+      ...
 
----  
+---
 
-The print parameters are taken into account to create the output image. The following parameters are set: 
+The print parameters are taken into account to create the output image. The following parameters are set:
 
   * White pixels are kept white (for a print on white paper, it can be convenient to print them in black)
   * The image is resized to match the paper size
@@ -212,7 +221,10 @@ The file conversion can now take place.
 
       ...
 The file conversion can now take place.
+```vbscript
       if ( !pImage->**Print**(pDevice, Parameters) )
+
+```
 
       {
 ```vbscript
@@ -221,10 +233,10 @@ if ( !pImage->**Print**(pDevice, Parameters) )
         ReturnCode = 1;
 ```
 
-      }    
-      ...  
+      }
+      ...
 
----  
+---
 
 The `Print` method converts the print file image from CGM to TIFF using the parameters set, and writes the output to the print raster file device.
 
@@ -241,9 +253,9 @@ delete pDevice;
 delete pImage;
       return ReturnCode;
 
-    }  
+    }
 
----  
+---
 
 Simply don't forget to delete allocated objects, close the Printer Manager, and return the appropriate return code.
 
@@ -261,16 +273,16 @@ First, the Printer Manager is initialized. Then, a _CATPrintFileImage_ instance 
 * * *
 ### References
 
-[1] |  [ Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-[Top]  
+[1] |  [ Building and Lauching CAA V5 Samples](../CAADocUseCases/CAADocRunSample.md)
+---|---
+[Top]
 
 * * *
 ### History
 
-Version: **1** [Jan 2000] | Document created  
----|---  
-[Top]  
+Version: **1** [Jan 2000] | Document created
+---|---
+[Top]
 
 * * *
 

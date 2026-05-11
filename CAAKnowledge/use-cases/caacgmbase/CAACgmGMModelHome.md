@@ -12,14 +12,14 @@ converted: "2026-05-11T17:33:47.811413"
 tags: ["CATIA", "CAAGMModelInterfaces"]
 source_file: "Doc/online/CAACgmBase/CAACgmGMModelHome.htm"
 converted: "2026-05-11T17:33:47.811413"
-GM Model  
+GM Model
 
----  
+---
 converted: "2026-05-11T17:33:47.811413"
 GM Model
-This section deals with the GMModelInterfaces operators and objects which are being used in Version 6 and V5 as well. CAA developers are encouraged to migrate to these new interfaces. Here is the documentation associated with GMModelInterfaces and CAAGMModelInterfaces.edu frameworks. 
+This section deals with the GMModelInterfaces operators and objects which are being used in Version 6 and V5 as well. CAA developers are encouraged to migrate to these new interfaces. Here is the documentation associated with GMModelInterfaces and CAAGMModelInterfaces.edu frameworks.
 
-  * Geometric Modeler Objects, Model Size and Tolerances  
+  * Geometric Modeler Objects, Model Size and Tolerances
 
     * [Geometric Objects and Operators](../CAACgmModel/CAACgmTcGobGeometricObjects.md)
     * [The Objects of CATIA Geometric Modeler](../CAACgmModel/CAACgmTaGobGeoObjects.md)
@@ -87,6 +87,6 @@ This section deals with the GMModelInterfaces operators and objects which are be
     * [Introduction to Multiprocessing](../CAACgmModel/CAACgmTaMultiProcIntro.md)
     * [How to Use MProc to Tessellate a Multi-Body Model](../CAACgmModel/CAACgmUcMultiProc.md)
 
----  
-History Version: **1** [Oct 2011] | Document created  
+---
+History Version: **1** [Oct 2011] | Document created
 ---|---

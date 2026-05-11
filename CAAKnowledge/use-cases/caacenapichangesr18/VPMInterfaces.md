@@ -10,11 +10,11 @@ converted: "2026-05-11T17:33:51.510219"
 ```
 
 ---
-| 
+|
 # CAA C++ API Modifications
 
-| 
-##  VPMInterfaces Framework Modifications in V5R18 
+|
+##  VPMInterfaces Framework Modifications in V5R18
 
 * * *
 

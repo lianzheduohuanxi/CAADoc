@@ -10,24 +10,35 @@ converted: "2026-05-11T17:31:51.802920"
 
 ---
 ```vbscript
+```vbscript
+```vbscript
     ' COPYRIGHT DASSAULT SYSTEMES 2000
     '***********************************************************************
     '   Purpose:  Update the static case solution in AA
     '             Export the loads
     '	      Add a new solution case and import
-    '   Assumptions: 
+    '   Assumptions:
     '   Author:       bmw
     '   Languages:    VBScript
-    '   Locales:      English 
+    '   Locales:      English
     '   CATIA Level:  V5R17
     ' ***********************************************************************
 
 ```
 
-    Sub CATMain()
+```
+
+```
 
 ```vbscript
-    ' ----------------------------------------------------------- 
+    Sub CATMain()
+
+```
+
+```vbscript
+```vbscript
+```vbscript
+    ' -----------------------------------------------------------
     ' Optional: allows to find the sample wherever it's installed
     sDocPath=CATIA.SystemService.Environ("CATDocView")
     sOut = CATIA.SystemService.Environ("CATTemp")
@@ -35,13 +46,22 @@ converted: "2026-05-11T17:31:51.802920"
     If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 ```
 
-```vbscript
-    Err.Raise 9999,,"No Doc Path Defined"
-    End If
+```
+
 ```
 
 ```vbscript
-    ' ----------------------------------------------------------- 
+    Err.Raise 9999,,"No Doc Path Defined"
+```vbscript
+    End If
+```
+
+```
+
+```vbscript
+```vbscript
+```vbscript
+    ' -----------------------------------------------------------
     ' Open the CATAnalysis Document
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Assembled_Loads_Solutions.CATAnalysis")
     Set analysisDocument1 = CATIA.Documents.Open(sFilePath)
@@ -59,18 +79,39 @@ converted: "2026-05-11T17:31:51.802920"
     Set analysisSet1 = analysisSets1.Item("Static Case Solution.1", catAnalysisSetSearchAll)
 ```
 
+```
+
+```
+
+```vbscript
     'Search for the Analysis Manager in the document
+```
+
 ```vbscript
     Set selection1 = analysisDocument1.Selection
     selection1.Search "Name=*Analysis Manager*,all"
+```vbscript
+```vbscript
     'Remove the first Analysis Manager that is the manager of
     'analysis assembly document
+```
+
+```
+
     selection1.Remove(1)
+```vbscript
+```vbscript
     'Get the AnalysisExport interface from analysis set
     Set analysisExport =  analysisSet1.GetItem("AnalysisExport")
+```
+
+```
+
     analysisSet1.Update
 ```
 
+```vbscript
+```vbscript
 ```vbscript
     'Define Array
     safeArray = Array()
@@ -80,33 +121,61 @@ converted: "2026-05-11T17:31:51.802920"
     For i =1 To selection1.Count
               Set manager = selection1.FindObject("CATIAAnalysisManager")
              'Export the computed loads
-              fullPath = sout + sSep + "ComputedLoads"+ CStr(i) + ".CATAnalysisExport" 
+              fullPath = sout + sSep + "ComputedLoads"+ CStr(i) + ".CATAnalysisExport"
+```
+
+```
+
 ```
 
 ```vbscript
 Set manager = selection1.FindObject("CATIAAnalysisManager")
+```vbscript
 'Export the computed loads
+```
+
+```
+
 fullPath = sout + sSep + "ComputedLoads"+ CStr(i) + ".CATAnalysisExport"
               analysisExport.Export  fullPath, "ComputedLoads", array, manager
 
+```vbscript
               Set analysisModel = manager.AnalysisModels.Item(1)
-              Set analysisCases = analysisModel.AnalysisCases         
+```vbscript
+              Set analysisCases = analysisModel.AnalysisCases
+```
+
 ```
 
 ```vbscript
-              'Import Loads  
-              Set preProCase = analysisCases.Item("Preprocessing Case.1")  
+```vbscript
+```vbscript
+              'Import Loads
+              Set preProCase = analysisCases.Item("Preprocessing Case.1")
               Set importCase =  preProCase.GetItem("AnalysisImport")
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 'Import Loads
 Set preProCase = analysisCases.Item("Preprocessing Case.1")
 Set importCase =  preProCase.GetItem("AnalysisImport")
+```
+
+```
+
               importCase.ImportForce preProCase, fullPath, manager, NOTHING
 
 ```
 
+```vbscript
     Next
 
     End Sub
+
+```

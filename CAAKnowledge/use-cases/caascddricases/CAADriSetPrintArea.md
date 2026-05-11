@@ -11,19 +11,19 @@ converted: "2026-05-11T17:31:51.099755"
 ---
 ## Interactive Drafting
 
-| 
-## Setting the Print Area of a Drawing Sheet  
+|
+## Setting the Print Area of a Drawing Sheet
 
 * * *
 
- This macro shows you how to set the print area of the current sheet using the mouse selection. You select a couple of drawing points to define the print area rectangle. You can can select any drawing point into the sheet, including those into a view.  
+ This macro shows you how to set the print area of the current sheet using the mouse selection. You select a couple of drawing points to define the print area rectangle. You can can select any drawing point into the sheet, including those into a view.
 This macro shows you how to set the print area of the current sheet using the mouse selection. You select a couple of drawing points to define the print area rectangle. You can can select any drawing point into the sheet, including those into a view.
-This macro is based on an active drawing document.  
+This macro is based on an active drawing document.
 
 This macro shows you how to set the print area of the current sheet using the mouse selection. You select a couple of drawing points to define the print area rectangle. You can can select any drawing point into the sheet, including those into a view.
 This macro is based on an active drawing document.
- Open the drawing document: [CAADriSetPrintArea.CATDrawing](samples/CAADriSetPrintArea.CATDrawing) Run CAADriISetPrintArea in CATIA [1]. [CAADriISetPrintArea](CAADriSetPrintAreaSource.md) is located in the CAADriUseCases module.  [Execute macro](macros/CAADriSetPrintArea.CATScript) (Windows only).  
- CAADriISetPrintArea includes seven steps: 
+ Open the drawing document: [CAADriSetPrintArea.CATDrawing](samples/CAADriSetPrintArea.CATDrawing) Run CAADriISetPrintArea in CATIA [1]. [CAADriISetPrintArea](CAADriSetPrintAreaSource.md) is located in the CAADriUseCases module.  [Execute macro](macros/CAADriSetPrintArea.CATScript) (Windows only).
+ CAADriISetPrintArea includes seven steps:
 
   1. Prolog
   2. Retrieving the Active Sheet
@@ -36,15 +36,23 @@ This macro is based on an active drawing document.
 
 #### Prolog
 
-| 
+|
 
     ...
+```vbscript
     ' Retrieve the active document
+```
+
 ```vbscript
     Dim oDocument As Document
+```vbscript
     Set oDocument = CATIA.ActiveDocument
 ```
 
+```
+
+```vbscript
+```vbscript
 ```vbscript
     ' Test the document's type, if it is not a drawing document the macro stops
     If TypeName(oDocument) = "DrawingDocument" Then
@@ -52,83 +60,136 @@ This macro is based on an active drawing document.
         Set oDrawingDocument = oDocument
 ```
 
+```
+
+```
+
 ```vbscript
 If TypeName(oDocument) = "DrawingDocument" Then
+```vbscript
+```vbscript
 Dim oDrawingDocument As DrawingDocument
 Set oDrawingDocument = oDocument
+```
+
+```
+
     Else
         MsgBox "This macro can be run with a drawing document only."
         Exit Sub
     End If
 ```
 
-    ...  
+    ...
 
----  
+---
 
 The active document type is tested. If it is a `DrawingDocument`, the `oDrawingDocument` is retrieved from the `oDocument`. Otherwise the macro stops and prompts a warning message.
 #### Retrieving the Active Sheet
 
     ...
 The active document type is tested. If it is a `DrawingDocument`, the `oDrawingDocument` is retrieved from the `oDocument`. Otherwise the macro stops and prompts a warning message.
+```vbscript
+```vbscript
     ' Retrieve the active sheet of the document
+
+```
+
+```
 
 ```vbscript
     Dim oSheet As DrawingSheet
-    Set oSheet = oDrawingDocument.Sheets.ActiveSheet  
+```vbscript
+    Set oSheet = oDrawingDocument.Sheets.ActiveSheet
 ```
 
-    ...  
+```
 
----  
+    ...
+
+---
 
 The active sheet object is retrieved from the `Sheets` collection of the `oDrawingDocument` object, using the `ActiveSheet` method.
 #### Retrieving the Selection of the Drawing Document
 
     ...
 The active sheet object is retrieved from the `Sheets` collection of the `oDrawingDocument` object, using the `ActiveSheet` method.
+```vbscript
+```vbscript
     ' Retrieve the selection of the document
+
+```
+
+```
 
 ```vbscript
     Dim oSelection 'As Selection
+```vbscript
+```vbscript
     Set oSelection = oDrawingDocument.Selection
     ' Clear the selection
+```
+
+```
+
     oSelection.Clear
 ```
 
-    ...  
+    ...
 
----  
+---
 
-The selection object is retrieved from the `oDrawingDocument` object using the `Selection` method.  
+The selection object is retrieved from the `oDrawingDocument` object using the `Selection` method.
 The selection is cleared.
 #### Defining the Selection
 
     ...
 The selection is cleared.
+```vbscript
+```vbscript
     ' Define the object type allowed to be selected, here a drawing point
+
+```
+
+```
 
 ```vbscript
     Dim InputObjectType(0)
+```vbscript
     InputObjectType(0) = "Point2D"
+```
+
 ```
 
     ...
 ```vbscript
+```vbscript
+```vbscript
 ' Define the object type allowed to be selected, here a drawing point
 Dim InputObjectType(0)
-InputObjectType(0) = "Point2D"
-    ' Retrieve the first point location to set the print area from the mouse selection
-    ReturnStatus = oSelection.IndicateOrSelectElement2D("Select the first point", _
-    InputObjectType, True, True, False, ObjectSelected, oFirstPointAbsolute)
 ```
 
-    ...  
+```
 
----  
+```
 
-The `Point2D` filtering string is defined in the `InputObjectType` array.  
-The first point location is retrieved from  the `oSelection` object using the `IndicateOrSelectElement2D` method.  
+InputObjectType(0) = "Point2D"
+```vbscript
+```vbscript
+    ' Retrieve the first point location to set the print area from the mouse selection
+    ReturnStatus = oSelection.IndicateOrSelectElement2D("Select the first point", _
+```
+
+```
+
+    InputObjectType, True, True, False, ObjectSelected, oFirstPointAbsolute)
+
+    ...
+
+---
+
+The `Point2D` filtering string is defined in the `InputObjectType` array.
+The first point location is retrieved from  the `oSelection` object using the `IndicateOrSelectElement2D` method.
 According to the `ObjectSelected` boolean value retrieved:
 
   * `True`: the selection contains a drawing point.
@@ -137,8 +198,14 @@ According to the `ObjectSelected` boolean value retrieved:
 #### Retrieving the Location of the First Point
 
     ...
+```vbscript
+```vbscript
     ' Test of the selection content from the ObjectSelected value
     If ObjectSelected = True Then
+```
+
+```
+
         ...
 ```vbscript
         Set iFirstPoint = oSelection.Item(1).Value
@@ -147,28 +214,40 @@ According to the `ObjectSelected` boolean value retrieved:
         ...
 ```vbscript
 If ObjectSelected = True Then
+```vbscript
+```vbscript
 Set iFirstPoint = oSelection.Item(1).Value
         Set oView = oSelection.FindObject("CATIADrawingView")
+```
+
+```
+
 ```
 
         ...
 ```vbscript
 Set iFirstPoint = oSelection.Item(1).Value
+```vbscript
 Set oView = oSelection.FindObject("CATIADrawingView")
+```
+
         iFirstPoint.GetCoordinates oFirstPointRelative
 ```
 
         ...
 ```vbscript
 Set oView = oSelection.FindObject("CATIADrawingView")
+```
+
 iFirstPoint.GetCoordinates oFirstPointRelative
         CatAbsoluteCoordinates oView, oFirstPointAbsolute, oFirstPointRelative
+```vbscript
     End If
 ```
 
-    ...  
+    ...
 
----  
+---
 
 According to the `ObjectSelected` boolean value retrieved as `True`:
 
@@ -180,47 +259,85 @@ According to the `ObjectSelected` boolean value retrieved as `True`:
 Otherwise, the `oFirstPointAbsolute` array already contains the location of the virtual point.
 
 Otherwise, the `oFirstPointAbsolute` array already contains the location of the virtual point.
-  1. Select the first point. This point is located in the hidden view of the sheet and not in the `Front view`.  
+  1. Select the first point. This point is located in the hidden view of the sheet and not in the `Front view`.
 
 ![](images/img021.gif)
 Otherwise, the `oFirstPointAbsolute` array already contains the location of the virtual point.
 1. Select the first point. This point is located in the hidden view of the sheet and not in the `Front view`.
-  2. Select the second point. This point is located in the hidden view of the sheet and not in the `Isometric view`.  
+  2. Select the second point. This point is located in the hidden view of the sheet and not in the `Isometric view`.
 
 ![](images/img022.gif)
 
 #### Defining the Print Area
 
     ...
+```vbscript
     ' Define the coordinates of the print area's point
+```
+
 ```vbscript
     Dim XPrintArea As Double
+```vbscript
+```vbscript
     Dim YPrintArea As Double
+
+```
+
+```
 
 ```
 
 ```vbscript
 Dim XPrintArea As Double
+```vbscript
+```vbscript
 Dim YPrintArea As Double
     If oFirstPointAbsolute(0) > oSecondPointAbsolute(0) Then
         XPrintArea = oSecondPointAbsolute(0)
+```
+
+```
+
     Else
         XPrintArea = oFirstPointAbsolute(0)
+```vbscript
+```vbscript
     End If
 
 ```
 
+```
+
+```
+
 XPrintArea = oFirstPointAbsolute(0)
+```vbscript
 End If
+```vbscript
+```vbscript
     If oFirstPointAbsolute(1) > oSecondPointAbsolute(1) Then
         YPrintArea = oSecondPointAbsolute(1)
+```
+
+```
+
     Else
         YPrintArea = oFirstPointAbsolute(1)
+```vbscript
+```vbscript
     End If
 
     Dim WidthPrintArea As Double
     Dim HeightPrintArea As Double
 
+```
+
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
     ' Define the width and height of the print area
     WidthPrintArea = Abs(oSecondPointAbsolute(0) - oFirstPointAbsolute(0))
@@ -230,16 +347,20 @@ End If
     Set oPrintArea = oSheet.PrintArea
 ```
 
+```
+
+```
+
     oPrintArea.SetArea XPrintArea, YPrintArea, WidthPrintArea, HeightPrintArea
     oPrintArea.ActivationState = True
-    ...  
+    ...
 
----  
+---
 
-The print area is defined from a starting point and from its width and height. As this starting point must be in the left-bottom corner of the print area, to ensure this rule, two tests are performed to find the smallest abscissa and ordinate: `XPrintArea` and `YPrintArea`.  
-The width and height are computed form the coordinates of the selected points: `WidthPrintArea` and `HeightPrintArea`.  
-The print area object is retrieved from the `oSheet` object using the `PrintArea` method.  
-The `oPrintArea` object is defined using the `SetArea` method.  
+The print area is defined from a starting point and from its width and height. As this starting point must be in the left-bottom corner of the print area, to ensure this rule, two tests are performed to find the smallest abscissa and ordinate: `XPrintArea` and `YPrintArea`.
+The width and height are computed form the coordinates of the selected points: `WidthPrintArea` and `HeightPrintArea`.
+The print area object is retrieved from the `oSheet` object using the `PrintArea` method.
+The `oPrintArea` object is defined using the `SetArea` method.
 The `oPrintArea` object is activated using the `ActivationState` property set to `True`.
 
 #### Visualizing the Print Area
@@ -253,14 +374,14 @@ The `oPrintArea` object is activated using the `ActivationState` property set to
     oSelection.Clear
 ```
 
-     ...  
+     ...
 
----  
+---
 
-To visualize the print area we have to run the specific command, but as this command can be run only with a selected sheet, we have to select it before: `oSelection.Add oSheet`  
+To visualize the print area we have to run the specific command, but as this command can be run only with a selected sheet, we have to select it before: `oSelection.Add oSheet`
 To run the command you can use its id or its alias. In English context, the alias is the name of the command `"Visualize Print Area"`, but to ensure the macro works in a non-language context, we use its id `"CATDrwVisualizePrintAreaHdr".`
 
-![](images/img023.gif)  
+![](images/img023.gif)
 
 ![](../CAAScrBase/images/aendtask.gif)
 
@@ -276,10 +397,10 @@ This use case has shown how to define the print area using the new method `Indic
 * * *
 #### References
 
-[1] | [Replaying a Macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)  
----|---  
-[2] | _[DrawingDocument](../CAAScdDriTechArticles/CAADriObjDrawingDocument.md)_ , _[DrawingSheet](../CAAScdDriTechArticles/CAADriObjDrawingSheet.md),_ [_DrawingSheets_](../CAAScdDriTechArticles/CAADriObjDrawingSheets.md) _,__[DrawingView](../CAAScdDriTechArticles/CAADriObjDrawingView.md), Selection_  
-[Top]  
+[1] | [Replaying a Macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)
+---|---
+[2] | _[DrawingDocument](../CAAScdDriTechArticles/CAADriObjDrawingDocument.md)_ , _[DrawingSheet](../CAAScdDriTechArticles/CAADriObjDrawingSheet.md),_ [_DrawingSheets_](../CAAScdDriTechArticles/CAADriObjDrawingSheets.md) _,__[DrawingView](../CAAScdDriTechArticles/CAADriObjDrawingView.md), Selection_
+[Top]
 
 * * *
 

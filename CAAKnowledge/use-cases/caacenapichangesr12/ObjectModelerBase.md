@@ -10,10 +10,10 @@ converted: "2026-05-11T17:33:50.579797"
 ```
 
 ---
-| CAA C++ API Modifications|  ObjectModelerBase  |   
----|---|---  
+| CAA C++ API Modifications|  ObjectModelerBase  |
+---|---|---
 
 * * *
 
-**Entity|  SP| Modification| To Do** | ObjectModelerBase/Public/CATDocument.h/CATDocument/GetType| GA| INDM| Check that you don't use it  
+**Entity|  SP| Modification| To Do** | ObjectModelerBase/Public/CATDocument.h/CATDocument/GetType| GA| INDM| Check that you don't use it
 ---|---|---|---

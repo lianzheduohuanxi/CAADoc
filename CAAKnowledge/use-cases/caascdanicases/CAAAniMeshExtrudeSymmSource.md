@@ -10,6 +10,8 @@ converted: "2026-05-11T17:31:51.648574"
 
 ---
 ```vbscript
+```vbscript
+```vbscript
     'COPYRIGHT DASSAULT SYSTEMES 2000
     '***********************************************************************
     '  Purpose:      Open an analysis document
@@ -19,31 +21,53 @@ converted: "2026-05-11T17:31:51.648574"
     '  Assumptions:   Looks for surface.CATAnalysis in the directory and surface Analysis Connection
     '  Author:       bmw
     '  Languages:    VBScript
-    '  Locales:      English 
+    '  Locales:      English
     '  CATIA Level:  V5R16
     '***********************************************************************
 ```
 
+```
+
+```
+
     Sub CATMain()
-    '----------------------------------------------------------- 
+```vbscript
+```vbscript
+    '-----------------------------------------------------------
     'Optional: allows to find the sample wherever it's installed
 
       sDocPath=CATIA.SystemService.Environ("CATDocView")
 
         If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
 
+```
+
+```
+
 ```vbscript
           Err.Raise 9999,,"No Doc Path Defined"
+```vbscript
+```vbscript
         End If
-    '----------------------------------------------------------- 
+    '-----------------------------------------------------------
+
+```
+
+```
 
 ```
 
 ```vbscript
 End If
+```vbscript
+```vbscript
 '-----------------------------------------------------------
     'Open the CATAnalysis Document
     sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Surface.CATAnalysis")
+```
+
+```
+
 ```
 
 ```vbscript
@@ -51,7 +75,9 @@ End If
 ```
 
 ```vbscript
-    'Retrieve the analysis Manager 
+```vbscript
+```vbscript
+    'Retrieve the analysis Manager
     Set oAnalysisManagar = oAnalysisDocument.Analysis
     Set oAnalysisSet = oAnalysisManagar.AnalysisSets
     'Retrieve the part document and product
@@ -66,7 +92,7 @@ End If
     Set oAnalysisModels = oAnalysisManagar.AnalysisModels
     Set oAnalysisModel = oAnalysisModels.Item(1)
     'Retrieve the mesh manager and list of mesh parts
-    Set oAnalysisMeshManager = oAnalysisModel.MeshManager 
+    Set oAnalysisMeshManager = oAnalysisModel.MeshManager
     Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
     Set surfMesh = oAnalysisMeshParts.Item("Surface Mesh.1")
     'Create the reference of the surface mesh
@@ -76,18 +102,36 @@ End If
     'Assign the surface mesh part as support
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 'Add the extrude with translation mesh part to the list of mesh parts
 Set extrudeMesh = oAnalysisMeshParts.Add("MSHPartExtrSymmetry")
 'Assign the surface mesh part as support
+```
+
+```
+
     extrudeMesh.AddSupportFromReference NOTHING, reference
+```vbscript
     'Set the global specifications
+```
+
     extrudeMesh.SetGlobalSpecification "Condensation", 1
     extrudeMesh.SetGlobalSpecification "Tolerance", "1.0 mm"
+```vbscript
     'Set the specification; specifying the plane of symmetry
+```
+
     extrudeMesh.SetSpecificationFromPublication "Direction", product, pubPlane, 0
 ```
 
+```vbscript
+```vbscript
 ```vbscript
     'Get the basic components and sub components
     Set basicComps = extrudeMesh.BasicComponents
@@ -96,10 +140,20 @@ Set extrudeMesh = oAnalysisMeshParts.Add("MSHPartExtrSymmetry")
     Set subBasicComp1 = subBasicComps.Item("Type")
 ```
 
+```
+
+```
+
 ```vbscript
 Set subBasicComps = basicComps.Item(1).BasicComponents
+```vbscript
+```vbscript
 'Retrieve each of the attributes by name and set their values
 Set subBasicComp1 = subBasicComps.Item("Type")
+```
+
+```
+
     subBasicComp1.SetValue "", 0, 0, 0, "Geometric"
 
     Set subBasicComp2 = subBasicComps.Item("NbNodes")
@@ -110,9 +164,15 @@ Set subBasicComp1 = subBasicComps.Item("Type")
 
     Set subBasicComp4 = subBasicComps.Item("Ratio")
     subBasicComp4.SetValue "", 0, 0, 0, 10
+```vbscript
     'Update the mesh
+```
+
     extrudeMesh.Update
 
 ```
 
+```vbscript
     End Sub
+
+```

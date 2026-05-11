@@ -2,116 +2,68 @@
 title: "CAAAniMeshOctTriangle.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CAAScrBase", "CATIA", "CAAScdAniUseCases", "CAAAniMeshOctTriangle"]
+tags: ["CAAScrBase", "CAAAniMeshOctTriangle", "CATIA", "CAAScdAniUseCases"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshOctTriangleSource.htm"
-converted: "2026-05-11T11:06:32.352897"
+converted: "2026-05-11T11:27:02.519442"
 ---
 
-```
 ' COPYRIGHT DASSAULT SYSTEMES 2000
 
 ' ***********************************************************************
-
-' Purpose: Open an analysis document
-
-' Create an octree triangle mesh 
-
-' assign the surface as support
-
-' specify the global specifications and assign values
-
-' Assumptions: Looks for Surface.CATAnalysis in the directory
-
-' Author: bmw
-
-' Languages: VBScript
-
-' Locales: English 
-
-' CATIA Level: V5R16
-
+'   Purpose:      Open an analysis document
+'                 Create an octree triangle mesh  
+'                 assign the surface as support
+'                 specify the global specifications and assign values
+'   Assumptions:   Looks for Surface.CATAnalysis in the directory
+'   Author:       bmw
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R16
 ' ***********************************************************************
 
 ' ----------------------------------------------------------- 
-
 ' Optional: allows to find the sample wherever it's installed
+  sDocPath=CATIA.SystemService.Environ("CATDocView")
 
- sDocPath=CATIA.SystemService.Environ("CATDocView")
-
- If 
-(Not CATIA.FileSystem.FolderExists(sDocPath))
- Then
-
- Err.Raise 9999,,"No Doc Path Defined"
-
- End If
-
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,,"No Doc Path Defined"
+    End If
 ' ----------------------------------------------------------- 
 
-Sub 
-CATMain()
+Sub CATMain()
 
 'Open the analysis document
-
 sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Surface.CATAnalysis")
-
-Set
- oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
 
 ' Retrieve the Analysis Manager and Analysis Model
-
-Set 
-oAnalysisManager = oAnalysisDocument.Analysis
+Set oAnalysisManager = oAnalysisDocument.Analysis
 
 ' Retrieve the part document and product from Analysis manager
-
-Set 
-oAnalysisLinkedDocuments = oAnalysisManager.LinkedDocuments
-
-Set 
-partDocument1 = oAnalysisLinkedDocuments.Item(1)
-
-Set 
-Product = partDocument1.Product
+Set oAnalysisLinkedDocuments = oAnalysisManager.LinkedDocuments
+Set partDocument1 = oAnalysisLinkedDocuments.Item(1)
+Set Product = partDocument1.Product
 
 ' Retrieve the analysis model from the list of models
-
-Set 
-oAnalysisModels = oAnalysisManager.AnalysisModels
-
-Set 
-oAnalysisModel = oAnalysisModels.Item(1)
+Set oAnalysisModels = oAnalysisManager.AnalysisModels
+Set oAnalysisModel = oAnalysisModels.Item(1)
 
 ' Retrieve mesh manager and mesh part 
-
-Set 
-meshManagar = oAnalysisModel.MeshManager
-
-Set 
-meshPart = meshManagar.AnalysisMeshParts
+Set meshManagar = oAnalysisModel.MeshManager
+Set meshPart = meshManagar.AnalysisMeshParts
 
 ' Retrieve publications from product and retrieve the published face.
-
-Set 
-Publications = Product.Publications
-
-Set 
-pubSurf = Publications.Item("Round Hole.1")
-
-Set 
-pubEdge = Publications.Item("Edge")
+Set Publications = Product.Publications
+Set pubSurf = Publications.Item("Round Hole.1")
+Set pubEdge = Publications.Item("Edge")
 
 ' Add the new Octree Triangle part to the list of mesh parts
-
-Set 
-octreePart = meshPart.Add ("MSHPartOctree2D") 
+Set octreePart = meshPart.Add ("MSHPartOctree2D") 
 
 ' Add the support from the published surface
-
 octreePart.AddSupportFromPublication Product, pubSurf
 
 ' Set the global Specifications
-
 octreePart.SetGlobalSpecification "SizeValue", "10.0 mm"
 octreePart.SetGlobalSpecification "AbsoluteSageValue", "3.0 mm"
 octreePart.SetGlobalSpecification "ElementOrder", "Parabolic"
@@ -130,17 +82,101 @@ octreePart.SetGlobalSpecification "MinJacobian", 0.3
 octreePart.SetGlobalSpecification "MaxAttempts", 2
 
 ' Add the domain specifications as local specifications and assign it attributes
-
-Set 
-meshspecs1 = octreePart.AnalysisMeshLocalSpecifications
-
-Set 
-spec1 = meshspecs1.Add("MSHLocalMeshSize")
+Set meshspecs1 = octreePart.AnalysisMeshLocalSpecifications
+Set spec1 = meshspecs1.Add("MSHLocalMeshSize")
 spec1.SetAttribute "MSHMeshSizeMag", "1.0 mm"
 spec1.AddSupportFromPublication "ConnectorList", Product, pubEdge
 
 'Update mesh part
+octreePart.Update
 
+End Sub
+
+
+
+```vbscript
+' COPYRIGHT DASSAULT SYSTEMES 2000
+
+' ***********************************************************************
+'   Purpose:      Open an analysis document
+'                 Create an octree triangle mesh  
+'                 assign the surface as support
+'                 specify the global specifications and assign values
+'   Assumptions:   Looks for Surface.CATAnalysis in the directory
+'   Author:       bmw
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R16
+' ***********************************************************************
+
+' ----------------------------------------------------------- 
+' Optional: allows to find the sample wherever it's installed
+  sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,,"No Doc Path Defined"
+    End If
+' ----------------------------------------------------------- 
+
+Sub CATMain()
+
+'Open the analysis document
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Surface.CATAnalysis&quot;)
+Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+' Retrieve the Analysis Manager and Analysis Model
+Set oAnalysisManager = oAnalysisDocument.Analysis
+
+' Retrieve the part document and product from Analysis manager
+Set oAnalysisLinkedDocuments = oAnalysisManager.LinkedDocuments
+Set partDocument1 = oAnalysisLinkedDocuments.Item(1)
+Set Product = partDocument1.Product
+
+' Retrieve the analysis model from the list of models
+Set oAnalysisModels = oAnalysisManager.AnalysisModels
+Set oAnalysisModel = oAnalysisModels.Item(1)
+
+' Retrieve mesh manager and mesh part 
+Set meshManagar = oAnalysisModel.MeshManager
+Set meshPart = meshManagar.AnalysisMeshParts
+
+' Retrieve publications from product and retrieve the published face.
+Set Publications = Product.Publications
+Set pubSurf = Publications.Item("Round Hole.1")
+Set pubEdge = Publications.Item("Edge")
+
+
+' Add the new Octree Triangle part to the list of mesh parts
+Set octreePart = meshPart.Add ("MSHPartOctree2D") 
+
+' Add the support from the published surface
+octreePart.AddSupportFromPublication Product, pubSurf
+
+' Set the global Specifications
+octreePart.SetGlobalSpecification "SizeValue", "10.0 mm"
+octreePart.SetGlobalSpecification "AbsoluteSageValue", "3.0 mm"
+octreePart.SetGlobalSpecification "ElementOrder", "Parabolic"
+octreePart.SetGlobalSpecification "MinSizeForSags", "0.5 mm"
+octreePart.SetGlobalSpecification "MinGeometrySize", "0.5 mm"
+octreePart.SetGlobalSpecification "AbsoluteSag", 1
+octreePart.SetGlobalSpecification "AbsoluteSagValue", "1.1 mm"
+octreePart.SetGlobalSpecification "ProportionalSag", 1
+octreePart.SetGlobalSpecification "ProportionalSagValue", 0.5
+octreePart.SetGlobalSpecification "MaxWarpAngle", "1.0 rad"
+octreePart.SetGlobalSpecification "Criteria", "Shape"
+octreePart.SetGlobalSpecification "MeshGeometryViolation", "1.2 mm"
+octreePart.SetGlobalSpecification "InteriorSize", 2
+octreePart.SetGlobalSpecification "InteriorSizeValue", "5.0 mm"
+octreePart.SetGlobalSpecification "MinJacobian", 0.3
+octreePart.SetGlobalSpecification "MaxAttempts", 2
+
+' Add the domain specifications as local specifications and assign it attributes
+Set meshspecs1 = octreePart.AnalysisMeshLocalSpecifications
+Set spec1 = meshspecs1.Add("MSHLocalMeshSize")
+spec1.SetAttribute "MSHMeshSizeMag", "1.0 mm"
+spec1.AddSupportFromPublication "ConnectorList", Product, pubEdge
+
+'Update mesh part
 octreePart.Update
 
 End Sub

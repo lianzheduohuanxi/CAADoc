@@ -15,13 +15,15 @@ converted: "2026-05-11T17:31:51.539115"
     Option Explicit
 
 ```vbscript
+```vbscript
+```vbscript
     '// COPYRIGHT DASSAULT SYSTEMES  2000
     '******************************************************************************
     ' Purpose:       This CATScript demonstrates how to create an ArrangementBoundary
     '                and change it's visualization to "Solid" mode, define a
     '                Rectangular section data and apply a constant bend radius of 25 mm.
     ' Assumptions:   This assumes that a macro is being executed interactively.
-    ' Author     :                               
+    ' Author     :
     ' Languages  :   VBScript
     ' CATIA Level:   V5R6
     ' Locale     :   English
@@ -29,21 +31,42 @@ converted: "2026-05-11T17:31:51.539115"
 
 ```
 
+```
+
+```
+
+```vbscript
     Sub CATMain()
 
+```
+
+```vbscript
+```vbscript
 ```vbscript
        ' On Error Resume Next
        '----------------------------------------------
        'Create a new product document
 ```
 
+```
+
+```
+
 ```vbscript
        Dim objProdDoc        As ProductDocument
+```vbscript
+```vbscript
        Dim objRootProd       As Product
        Set objProdDoc      = CATIA.Documents.Add("Product")
        Set objRootProd     = objProdDoc.Product
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
        '----------------------------------------------
        'Retrieving Root Product's Relative Axis and Position Information
@@ -60,8 +83,13 @@ converted: "2026-05-11T17:31:51.539115"
        Dim objArrBoundary             As ArrangementBoundary
 ```
 
+```
+
+```
+
 ```vbscript
        dblBoundaryPoints(0)   =  300.0
+```vbscript
        dblBoundaryPoints(1)   =  100.0
        dblBoundaryPoints(2)   =  0.0
 
@@ -87,7 +115,7 @@ converted: "2026-05-11T17:31:51.539115"
 
        dblBoundaryPoints(18)  =  100.0
        dblBoundaryPoints(19)  =  300.0
-       dblBoundaryPoints(20)  =  7.5 
+       dblBoundaryPoints(20)  =  7.5
 
        dblBoundaryPoints(21)  =  158.58
        dblBoundaryPoints(22)  =  158.58
@@ -119,7 +147,7 @@ converted: "2026-05-11T17:31:51.539115"
 
        dblBoundaryPoints(42)  =  100.0
        dblBoundaryPoints(43)  =  300.0
-       dblBoundaryPoints(44)  =  17.5  
+       dblBoundaryPoints(44)  =  17.5
 
        dblBoundaryPoints(45)  =  158.58
        dblBoundaryPoints(46)  =  158.58
@@ -151,7 +179,7 @@ converted: "2026-05-11T17:31:51.539115"
 
        dblBoundaryPoints(66)  =  100.0
        dblBoundaryPoints(67)  =  300.0
-       dblBoundaryPoints(68)  =  27.5 
+       dblBoundaryPoints(68)  =  27.5
 
        dblBoundaryPoints(69)  =  158.58
        dblBoundaryPoints(70)  =  158.58
@@ -167,30 +195,53 @@ converted: "2026-05-11T17:31:51.539115"
 
 ```
 
+```
+
 ```vbscript
        Set objArrBoundary             = objArrProd.ArrangementBoundaries.AddBoundary(objMove,dblBoundaryPoints, dblMathDirection)
+```vbscript
+```vbscript
        '----------------------------------------------
        ' Change Properties of ArrangementBoundary
        objArrBoundary.SectionType     = CatArrangementRouteSectionRectangular
        objArrBoundary.SectionWidth    = 10.0
-       objArrBoundary.SectionHeight   = 10.0 
+       objArrBoundary.SectionHeight   = 10.0
        objArrBoundary.VisuMode        = CatArrangementRouteVisuModeSolid
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
        '----------------------------------------------
        ' Define Bend Radius of Nodes
        Dim intK  As Integer
-       For intK = 1 To objArrBoundary.ArrangementNodes.Count  
+       For intK = 1 To objArrBoundary.ArrangementNodes.Count
+```
+
+```
+
 ```
 
 ```vbscript
+```vbscript
+```vbscript
 ' Define Bend Radius of Nodes
 Dim intK  As Integer
-For intK = 1 To objArrBoundary.ArrangementNodes.Count
-         objArrBoundary.ArrangementNodes.Item(intK).BendRadius = 10.0
-       Next
+```
 
 ```
 
-    End Sub 
+```
+
+For intK = 1 To objArrBoundary.ArrangementNodes.Count
+         objArrBoundary.ArrangementNodes.Item(intK).BendRadius = 10.0
+```vbscript
+       Next
+
+    End Sub
+
+```

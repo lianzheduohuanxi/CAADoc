@@ -12,31 +12,31 @@ converted: "2026-05-11T17:33:47.519115"
 tags: ["CATIVpmLightQueryManager", "CATIPrtExplodeServices", "CATIGSMMultiSelAccess", "CATIGSMUIFactory", "CATIGSMGrid", "CATICGMObjectsSaveDiagnosis", "CATIEwrWire", "CATIGSMWorkingSupport", "CATIGSMMultiSelManager", "CATIGSMCartesianGrid", "CATIGSMAutomaticFillGeo", "CATIGSMFactoryGeo", "CATIDdeDxfSettingAtt", "CATIDdeIg2SettingAtt", "CATIGSM3DFurtiveGrid", "CATIA", "CATIGSMTransfer", "CATIGSMWorkingSupportFactory", "CATIGSMWorkingSupportSet"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R22GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.519115"
-CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5-6R2012 GA  
+CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5-6R2012 GA
 
 * * *
 
 The following are the new CAA V5-6R2012 GA C++ Authorized APIs, compared with CAA V5R21 at GA level.
 
-  * CATDdeSettingsInterfaces framework 
+  * CATDdeSettingsInterfaces framework
     * Interface CATIDdeDxfSettingAtt
     * Interface CATIDdeIg2SettingAtt
-  * CATFmtModelInterfaces framework 
+  * CATFmtModelInterfaces framework
     * Class CATFmtElementIter
     * Class CATFmtNodeIter
-  * CATSurfacicOpeInterfaces framework 
+  * CATSurfacicOpeInterfaces framework
     * Interface CATIGSMAutomaticFillGeo
     * Interface CATIGSMFactoryGeo
-  * ElecRoutingItf framework 
+  * ElecRoutingItf framework
     * Interface CATIEwrWire
-  * FreeFormOperators framework 
+  * FreeFormOperators framework
     * Global Function CATCreateCrvFittingToNurbsCrv
     * Global Function CATCreateSurFittingToNurbsSur
-  * GMOperatorsInterfaces framework 
+  * GMOperatorsInterfaces framework
     * Global Function CATCGMCreateCrvFittingToNurbsCrv
     * Global Function CATCGMCreateGeodesicLinePtPt
     * Global Function CATCGMCreateSurFittingToNurbsSur
-  * GSMInterfaces framework 
+  * GSMInterfaces framework
     * Class CATGSMPublicServices
     * Macro or #define CATGSMWFCircle2Pts
     * Macro or #define CATGSMWFCircle3Pts
@@ -92,29 +92,29 @@ The following are the new CAA V5-6R2012 GA C++ Authorized APIs, compared with CA
     * Interface CATIGSMWorkingSupportFactory
     * Interface CATIGSMWorkingSupportSet
     * Interface CATIGSMWorkingSupport
-  * GSOInterfaces framework 
+  * GSOInterfaces framework
     * Interface CATIGSMTransfer
-  * GeometricObjects framework 
+  * GeometricObjects framework
     * Macro or #define CATCGMObjectsVersion
     * Enumeration CATICGMObjectsSaveDiagnosis
-  * Mathematics framework 
+  * Mathematics framework
     * Macro or #define CATToleranceCheckValidity
-  * PartInterfaces framework 
+  * PartInterfaces framework
     * Enumeration CATPrtChamferExtremities
     * Enumeration CATPrtTrimSupportMode
     * Interface CATIPrtExplodeServices
-  * SDMRuntime framework 
+  * SDMRuntime framework
     * Macro or #define SDAIAGGR
-  * TopologicalOperators framework 
+  * TopologicalOperators framework
     * Macro or #define CATExtrapolateBody_NewR21SP2Methods
     * Global Function CATCreateTopPattern
     * Global Function CATCreateTopPattern
     * Global Function CATLoadCATExtrapolateBody
     * Interface CATTopPattern
-  * VPMInterfaces framework 
+  * VPMInterfaces framework
     * Enumeration QueryType
     * Interface CATIVpmLightQueryManager
-  * VisualizationBase framework 
+  * VisualizationBase framework
     * Macro or #define FILL
     * Macro or #define NOFILL
 
@@ -122,11 +122,11 @@ The following are the new CAA V5-6R2012 GA C++ Authorized APIs, compared with CA
 
 * * *
 
-History Version: **1** [Sep 2011] | Document created  
----|---  
-[Top]  
+History Version: **1** [Sep 2011] | Document created
+---|---
+[Top]
 
 * * *
 
-_Copyright © 1999-2011, Dassault Systèmes. All rights reserved._  
+_Copyright © 1999-2011, Dassault Systèmes. All rights reserved._
 Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)

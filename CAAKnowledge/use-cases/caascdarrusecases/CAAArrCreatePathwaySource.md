@@ -4,246 +4,333 @@ category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CAAScrBase", "CATIA", "CAAArrCreatePathway"]
 source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreatePathwaySource.htm"
-converted: "2026-05-11T11:06:32.750357"
+converted: "2026-05-11T11:27:02.681044"
 ---
 
-```
 Option Explicit
-
-'// COPYRIGHT DASSAULT SYSTEMES 2000
-
+'// COPYRIGHT DASSAULT SYSTEMES  2000
+'******************************************************************************
+' Purpose:       This CATScript demonstrates how to create an ArrangementPathway
+'                and change it's visualization to "Solid" mode, define a
+'                round section data and apply a constant bend radius of 10 mm.
+' Assumptions:   This assumes that a macro is being executed interactively.
+' Author     :                              
+' Languages  :   VBScript
+' CATIA Level:   V5R6
+' Locale     :   English
 '******************************************************************************
 
-' Purpose: This CATScript demonstrates how to create an ArrangementPathway
+Sub CATMain()
+   
+   ' On Error Resume Next
 
-' and change it's visualization to "Solid" mode, define a
+   '----------------------------------------------
+   'Create a new product document
+   Dim objProdDoc        As ProductDocument
+   Dim objRootProd       As Product
+   Set objProdDoc      = CATIA.Documents.Add("Product")
+   Set objRootProd     = objProdDoc.Product
 
-' round section data and apply a constant bend radius of 10 mm.
+   '----------------------------------------------
+   'Retrieving Root Product's Relative Axis and Position Information
+   Dim objMove           As Move
+   Set objMove      = objRootProd.Move
 
-' Assumptions: This assumes that a macro is being executed interactively.
+   '----------------------------------------------
+   ' Get ArrangementProduct
+   Dim objArrProd        As ArrangementProduct
+   Set objArrProd   = objRootProd.GetTechnologicalObject("ArrangementProduct")
 
-' Author : 
+   '----------------------------------------------
+   ' Create ArrangementPathway under the Root Product
+   Dim dblPathwayPoints(75)      As Double
+   Dim dblMathDirection(3)       As Double
+   Dim objArrPathway             As ArrangementPathway
 
-' Languages : VBScript
+   dblPathwayPoints(0)   =  300.0
+   dblPathwayPoints(1)   =  100.0
+   dblPathwayPoints(2)   =  0.0
 
-' CATIA Level: V5R6
+   dblPathwayPoints(3)   =  441.42
+   dblPathwayPoints(4)   =  158.58
+   dblPathwayPoints(5)   =  1.25
 
-' Locale : English
+   dblPathwayPoints(6)   =  500.0
+   dblPathwayPoints(7)   =  300.0
+   dblPathwayPoints(8)   =  2.5
 
+   dblPathwayPoints(9)   =  441.42
+   dblPathwayPoints(10)  =  441.42
+   dblPathwayPoints(11)  =  3.75
+
+   dblPathwayPoints(12)   =  300.0
+   dblPathwayPoints(13)  =  500.0
+   dblPathwayPoints(14)  =  5.0
+
+   dblPathwayPoints(15)  =   158.58
+   dblPathwayPoints(16)  =  441.42
+   dblPathwayPoints(17)  =  6.25
+
+   dblPathwayPoints(18)  =  100.0
+   dblPathwayPoints(19)  =  300.0
+   dblPathwayPoints(20)  =  7.5 
+
+   dblPathwayPoints(21)  =  158.58
+   dblPathwayPoints(22)  =  158.58
+   dblPathwayPoints(23)  =  8.75
+
+   dblPathwayPoints(24)  =  300.0
+   dblPathwayPoints(25)  =  100.0
+   dblPathwayPoints(26)  =  10
+
+   dblPathwayPoints(27)   =  441.42
+   dblPathwayPoints(28)   =  158.58
+   dblPathwayPoints(29)   =  11.25
+
+   dblPathwayPoints(30)   =  500.0
+   dblPathwayPoints(31)   =  300.0
+   dblPathwayPoints(32)   =  12.5
+
+   dblPathwayPoints(33)   =  441.42
+   dblPathwayPoints(34)  =  441.42
+   dblPathwayPoints(35)  =  13.75
+
+   dblPathwayPoints(36)   =  300.0
+   dblPathwayPoints(37)  =  500.0
+   dblPathwayPoints(38)  =  15.0
+
+   dblPathwayPoints(39)  =   158.58
+   dblPathwayPoints(40)  =  441.42
+   dblPathwayPoints(41)  =  16.25
+
+   dblPathwayPoints(42)  =  100.0
+   dblPathwayPoints(43)  =  300.0
+   dblPathwayPoints(44)  =  17.5  
+
+   dblPathwayPoints(45)  =  158.58
+   dblPathwayPoints(46)  =  158.58
+   dblPathwayPoints(47)  =  18.75
+
+   dblPathwayPoints(48)  =  300.0
+   dblPathwayPoints(49)  =  100.0
+   dblPathwayPoints(50)  =  20
+
+   dblPathwayPoints(51)   =  441.42
+   dblPathwayPoints(52)   =  158.58
+   dblPathwayPoints(53)   =  21.25
+
+   dblPathwayPoints(54)   =  500.0
+   dblPathwayPoints(55)   =  300.0
+   dblPathwayPoints(56)   =  22.5
+
+   dblPathwayPoints(57)   =  441.42
+   dblPathwayPoints(58)  =  441.42
+   dblPathwayPoints(59)  =  23.75
+
+   dblPathwayPoints(60)   =  300.0
+   dblPathwayPoints(61)  =  500.0
+   dblPathwayPoints(62)  =  25.0
+
+   dblPathwayPoints(63)  =   158.58
+   dblPathwayPoints(64)  =  441.42
+   dblPathwayPoints(65)  =  26.25
+
+   dblPathwayPoints(66)  =  100.0
+   dblPathwayPoints(67)  =  300.0
+   dblPathwayPoints(68)  =  27.5 
+
+   dblPathwayPoints(69)  =  158.58
+   dblPathwayPoints(70)  =  158.58
+   dblPathwayPoints(71)  =  28.75
+
+   dblPathwayPoints(72)  =  300.0
+   dblPathwayPoints(73)  =  100.0
+   dblPathwayPoints(74)  =  30
+
+   dblMathDirection(0) = 1.0
+   dblMathDirection(1) = 0.0
+   dblMathDirection(2) = 0.0
+
+   Set objArrPathway             = objArrProd.ArrangementPathways.AddPathway(objMove,dblPathwayPoints, dblMathDirection)
+
+   '----------------------------------------------
+   ' Change Properties of ArrangementPathway
+   objArrPathway.SectionType     = CatArrangementRouteSectionRound
+   objArrPathway.SectionDiameter = 10.0
+   objArrPathway.VisuMode        = CatArrangementRouteVisuModeSolid
+
+   '----------------------------------------------
+   ' Define Bend Radius of Nodes
+   Dim intK As Integer   
+   For intK = 1 To objArrPathway.ArrangementNodes.Count
+     objArrPathway.ArrangementNodes.Item(intK).BendRadius = 10.0
+   Next
+
+End Sub 
+
+
+
+```vbscript
+Option Explicit
+'// COPYRIGHT DASSAULT SYSTEMES  2000
+'******************************************************************************
+' Purpose:       This CATScript demonstrates how to create an ArrangementPathway
+'                and change it's visualization to "Solid" mode, define a
+'                round section data and apply a constant bend radius of 10 mm.
+' Assumptions:   This assumes that a macro is being executed interactively.
+' Author     :                              
+' Languages  :   VBScript
+' CATIA Level:   V5R6
+' Locale     :   English
 '******************************************************************************
 
-Sub 
-CATMain()
- 
- 
-' On Error Resume Next
 
- 
-'----------------------------------------------
+Sub CATMain()
+   
+   ' On Error Resume Next
 
- 
-'Create a new product document
+   '----------------------------------------------
+   'Create a new product document
+   Dim objProdDoc        As ProductDocument
+   Dim objRootProd       As Product
+   Set objProdDoc      = CATIA.Documents.Add("Product")
+   Set objRootProd     = objProdDoc.Product
 
- Dim 
-objProdDoc 
- As 
-ProductDocument
+   '----------------------------------------------
+   'Retrieving Root Product's Relative Axis and Position Information
+   Dim objMove           As Move
+   Set objMove      = objRootProd.Move
 
- Dim 
-objRootProd 
- As 
-Product
+   '----------------------------------------------
+   ' Get ArrangementProduct
+   Dim objArrProd        As ArrangementProduct
+   Set objArrProd   = objRootProd.GetTechnologicalObject("ArrangementProduct")
 
- Set 
-objProdDoc = CATIA.Documents.Add("Product")
 
- Set 
-objRootProd = objProdDoc.Product
+   '----------------------------------------------
+   ' Create ArrangementPathway under the Root Product
+   Dim dblPathwayPoints(75)      As Double
+   Dim dblMathDirection(3)       As Double
+   Dim objArrPathway             As ArrangementPathway
 
- 
-'----------------------------------------------
+   dblPathwayPoints(0)   =  300.0
+   dblPathwayPoints(1)   =  100.0
+   dblPathwayPoints(2)   =  0.0
 
- 
-'Retrieving Root Product's Relative Axis and Position Information
+   dblPathwayPoints(3)   =  441.42
+   dblPathwayPoints(4)   =  158.58
+   dblPathwayPoints(5)   =  1.25
 
- Dim 
-objMove 
- As 
-Move
+   dblPathwayPoints(6)   =  500.0
+   dblPathwayPoints(7)   =  300.0
+   dblPathwayPoints(8)   =  2.5
 
- Set 
-objMove = objRootProd.Move
+   dblPathwayPoints(9)   =  441.42
+   dblPathwayPoints(10)  =  441.42
+   dblPathwayPoints(11)  =  3.75
 
- 
-'----------------------------------------------
+   dblPathwayPoints(12)   =  300.0
+   dblPathwayPoints(13)  =  500.0
+   dblPathwayPoints(14)  =  5.0
 
- 
-' Get ArrangementProduct
+   dblPathwayPoints(15)  =   158.58
+   dblPathwayPoints(16)  =  441.42
+   dblPathwayPoints(17)  =  6.25
 
- Dim 
-objArrProd 
- As 
-ArrangementProduct
+   dblPathwayPoints(18)  =  100.0
+   dblPathwayPoints(19)  =  300.0
+   dblPathwayPoints(20)  =  7.5 
 
- Set 
-objArrProd = objRootProd.GetTechnologicalObject("ArrangementProduct")
+   dblPathwayPoints(21)  =  158.58
+   dblPathwayPoints(22)  =  158.58
+   dblPathwayPoints(23)  =  8.75
 
- 
-'----------------------------------------------
+   dblPathwayPoints(24)  =  300.0
+   dblPathwayPoints(25)  =  100.0
+   dblPathwayPoints(26)  =  10
 
- 
-' Create ArrangementPathway under the Root Product
+   dblPathwayPoints(27)   =  441.42
+   dblPathwayPoints(28)   =  158.58
+   dblPathwayPoints(29)   =  11.25
 
- Dim 
-dblPathwayPoints(75) 
- As 
-Double
+   dblPathwayPoints(30)   =  500.0
+   dblPathwayPoints(31)   =  300.0
+   dblPathwayPoints(32)   =  12.5
 
- Dim 
-dblMathDirection(3) 
- As 
-Double
+   dblPathwayPoints(33)   =  441.42
+   dblPathwayPoints(34)  =  441.42
+   dblPathwayPoints(35)  =  13.75
 
- Dim 
-objArrPathway 
- As 
-ArrangementPathway
+   dblPathwayPoints(36)   =  300.0
+   dblPathwayPoints(37)  =  500.0
+   dblPathwayPoints(38)  =  15.0
 
- dblPathwayPoints(0) = 300.0
- dblPathwayPoints(1) = 100.0
- dblPathwayPoints(2) = 0.0
+   dblPathwayPoints(39)  =   158.58
+   dblPathwayPoints(40)  =  441.42
+   dblPathwayPoints(41)  =  16.25
 
- dblPathwayPoints(3) = 441.42
- dblPathwayPoints(4) = 158.58
- dblPathwayPoints(5) = 1.25
+   dblPathwayPoints(42)  =  100.0
+   dblPathwayPoints(43)  =  300.0
+   dblPathwayPoints(44)  =  17.5  
 
- dblPathwayPoints(6) = 500.0
- dblPathwayPoints(7) = 300.0
- dblPathwayPoints(8) = 2.5
+   dblPathwayPoints(45)  =  158.58
+   dblPathwayPoints(46)  =  158.58
+   dblPathwayPoints(47)  =  18.75
 
- dblPathwayPoints(9) = 441.42
- dblPathwayPoints(10) = 441.42
- dblPathwayPoints(11) = 3.75
+   dblPathwayPoints(48)  =  300.0
+   dblPathwayPoints(49)  =  100.0
+   dblPathwayPoints(50)  =  20
 
- dblPathwayPoints(12) = 300.0
- dblPathwayPoints(13) = 500.0
- dblPathwayPoints(14) = 5.0
+   dblPathwayPoints(51)   =  441.42
+   dblPathwayPoints(52)   =  158.58
+   dblPathwayPoints(53)   =  21.25
 
- dblPathwayPoints(15) = 158.58
- dblPathwayPoints(16) = 441.42
- dblPathwayPoints(17) = 6.25
+   dblPathwayPoints(54)   =  500.0
+   dblPathwayPoints(55)   =  300.0
+   dblPathwayPoints(56)   =  22.5
 
- dblPathwayPoints(18) = 100.0
- dblPathwayPoints(19) = 300.0
- dblPathwayPoints(20) = 7.5 
+   dblPathwayPoints(57)   =  441.42
+   dblPathwayPoints(58)  =  441.42
+   dblPathwayPoints(59)  =  23.75
 
- dblPathwayPoints(21) = 158.58
- dblPathwayPoints(22) = 158.58
- dblPathwayPoints(23) = 8.75
+   dblPathwayPoints(60)   =  300.0
+   dblPathwayPoints(61)  =  500.0
+   dblPathwayPoints(62)  =  25.0
 
- dblPathwayPoints(24) = 300.0
- dblPathwayPoints(25) = 100.0
- dblPathwayPoints(26) = 10
+   dblPathwayPoints(63)  =   158.58
+   dblPathwayPoints(64)  =  441.42
+   dblPathwayPoints(65)  =  26.25
 
- dblPathwayPoints(27) = 441.42
- dblPathwayPoints(28) = 158.58
- dblPathwayPoints(29) = 11.25
+   dblPathwayPoints(66)  =  100.0
+   dblPathwayPoints(67)  =  300.0
+   dblPathwayPoints(68)  =  27.5 
 
- dblPathwayPoints(30) = 500.0
- dblPathwayPoints(31) = 300.0
- dblPathwayPoints(32) = 12.5
+   dblPathwayPoints(69)  =  158.58
+   dblPathwayPoints(70)  =  158.58
+   dblPathwayPoints(71)  =  28.75
 
- dblPathwayPoints(33) = 441.42
- dblPathwayPoints(34) = 441.42
- dblPathwayPoints(35) = 13.75
+   dblPathwayPoints(72)  =  300.0
+   dblPathwayPoints(73)  =  100.0
+   dblPathwayPoints(74)  =  30
 
- dblPathwayPoints(36) = 300.0
- dblPathwayPoints(37) = 500.0
- dblPathwayPoints(38) = 15.0
+   dblMathDirection(0) = 1.0
+   dblMathDirection(1) = 0.0
+   dblMathDirection(2) = 0.0
 
- dblPathwayPoints(39) = 158.58
- dblPathwayPoints(40) = 441.42
- dblPathwayPoints(41) = 16.25
+   Set objArrPathway             = objArrProd.ArrangementPathways.AddPathway(objMove,dblPathwayPoints, dblMathDirection)
 
- dblPathwayPoints(42) = 100.0
- dblPathwayPoints(43) = 300.0
- dblPathwayPoints(44) = 17.5 
+   '----------------------------------------------
+   ' Change Properties of ArrangementPathway
+   objArrPathway.SectionType     = CatArrangementRouteSectionRound
+   objArrPathway.SectionDiameter = 10.0
+   objArrPathway.VisuMode        = CatArrangementRouteVisuModeSolid
 
- dblPathwayPoints(45) = 158.58
- dblPathwayPoints(46) = 158.58
- dblPathwayPoints(47) = 18.75
-
- dblPathwayPoints(48) = 300.0
- dblPathwayPoints(49) = 100.0
- dblPathwayPoints(50) = 20
-
- dblPathwayPoints(51) = 441.42
- dblPathwayPoints(52) = 158.58
- dblPathwayPoints(53) = 21.25
-
- dblPathwayPoints(54) = 500.0
- dblPathwayPoints(55) = 300.0
- dblPathwayPoints(56) = 22.5
-
- dblPathwayPoints(57) = 441.42
- dblPathwayPoints(58) = 441.42
- dblPathwayPoints(59) = 23.75
-
- dblPathwayPoints(60) = 300.0
- dblPathwayPoints(61) = 500.0
- dblPathwayPoints(62) = 25.0
-
- dblPathwayPoints(63) = 158.58
- dblPathwayPoints(64) = 441.42
- dblPathwayPoints(65) = 26.25
-
- dblPathwayPoints(66) = 100.0
- dblPathwayPoints(67) = 300.0
- dblPathwayPoints(68) = 27.5 
-
- dblPathwayPoints(69) = 158.58
- dblPathwayPoints(70) = 158.58
- dblPathwayPoints(71) = 28.75
-
- dblPathwayPoints(72) = 300.0
- dblPathwayPoints(73) = 100.0
- dblPathwayPoints(74) = 30
-
- dblMathDirection(0) = 1.0
- dblMathDirection(1) = 0.0
- dblMathDirection(2) = 0.0
-
- Set 
-objArrPathway = objArrProd.ArrangementPathways.AddPathway(objMove,dblPathwayPoints, dblMathDirection)
-
- 
-'----------------------------------------------
-
- 
-' Change Properties of ArrangementPathway
-
- objArrPathway.SectionType = CatArrangementRouteSectionRound
- objArrPathway.SectionDiameter = 10.0
- objArrPathway.VisuMode = CatArrangementRouteVisuModeSolid
-
- 
-'----------------------------------------------
-
- 
-' Define Bend Radius of Nodes
-
- Dim 
-intK
- As 
-Integer 
-
- For 
-intK = 1
- To 
-objArrPathway.ArrangementNodes.Count
- objArrPathway.ArrangementNodes.Item(intK).BendRadius = 10.0
-
- Next
+   '----------------------------------------------
+   ' Define Bend Radius of Nodes
+   Dim intK As Integer   
+   For intK = 1 To objArrPathway.ArrangementNodes.Count
+     objArrPathway.ArrangementNodes.Item(intK).BendRadius = 10.0
+   Next
 
 End Sub
 ```

@@ -10,12 +10,12 @@ converted: "2026-05-11T17:33:51.783098"
 ```
 
 ---
-# CAA C++ API Modifications  
+# CAA C++ API Modifications
 
-| 
-##  ObjectModelerBase Framework Modifications in V5-6R2013 
+|
+##  ObjectModelerBase Framework Modifications in V5-6R2013
 
 * * *
 
-**Entity|  SP| Modification| To Do** | ObjectModelerBase/Public/CATIDomain.h| GA| [FHBD ](CAACenAPIChangeDetail.htm#Abstract)| Interface was not implemented, so was useless and has been removed.  
+**Entity|  SP| Modification| To Do** | ObjectModelerBase/Public/CATIDomain.h| GA| [FHBD ](CAACenAPIChangeDetail.htm#Abstract)| Interface was not implemented, so was useless and has been removed.
 ---|---|---|---

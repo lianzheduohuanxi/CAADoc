@@ -2,82 +2,36 @@
 title: "Untitled"
 category: "use-case"
 module: "CAAScdStrUseCases"
-tags: ["CAAScrBase", "CAAInfLauchMacro", "CAAScdInfUseCases", "CAAStrModificationOfCutoutSource", "CAAScdStrCutout02", "CAAStrEditCutout", "CAAScdStrUseCases", "CATIA", "CAAScrJavaScript"]
+tags: ["CAAScrBase", "CATIA", "CAAScrJavaScript", "CAAScdInfUseCases", "CAAScdStrCutout02", "CAAStrEditCutout", "CAAStrModificationOfCutoutSource", "CAAScdStrUseCases", "CAAInfLauchMacro"]
 source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfCutout.htm"
-converted: "2026-05-11T11:06:32.536884"
+converted: "2026-05-11T11:27:02.598896"
 ---
-
-## Structure Design
-		
-		
-## []Modifying Cutouts
-		
-	
 
 ---
 
-	
-		![Target Icon](../CAAScrBase/images/atarget.gif)
-		
+![End Task Icon](../CAAScrBase/images/aendtask.gif)
 
-[]This macro shows you how to edit existing cutout 
-		on Structure Objects.
-		
+[Top]
 
-This macro replaces the contour and direction used for creating existing 
-		cutout.
-		
+---
 
-		![Starting Product](images/CAAScdStrCutout02.png)
-		
-		
-		
-	
-	
-		![Information Icon](../CAAScrBase/images/ainfo.gif)
-		
+#### In Short
 
-[]CAAStrEditCutout is launched in CATIA [[1]]. 
-		Some documents are needed.
-		
+This use case has shown how to edit Cutouts on structure Objects.
 
-			
-- You have to run CreateCutout.CATScript macro before running this 
-			macro.
-			
-- [CAAStrEditCutout.CATScript] 
-			is located in the CAAScdStrUseCases module.
-			[Execute macro] (Windows 
-			only).
-			
-- The document Product1.CATProduct is located in the CAAScdStrUseCases 
-			module in the samples directory. Grid.CATPart is linked to the previous 
-			document and it contains the grid, sketches and surfaces used by the 
-			macro.
-			
-- The CATPart containing the section is located in the samples directory.
-		
-		
-	
-	
-		![Scenario Icon](../CAAScrBase/images/ascenari.gif)
-		
+[Top]
 
-[]CAAStrEditCutout includes three steps:
-		
+---
 
-			
-- [Prolog]
-			
-- [Retrieving Existing Cutout]
-			
-- [Modifying the Cutout]
-		
-		
-		
-#### []Prolog
-		
-```
+#### References
+
+---
+
+*Copyright  1999-2010, Dassault Systmes. All rights reserved.*
+
+
+
+```vbscript
 Dim doc As Document
 
 Dim StrWorkbench As StrWorkbench
@@ -87,102 +41,50 @@ Set doc = CATIA.ActiveDocument
 
 Dim rootProduct As Product
 Set rootProduct = doc.Product
- 
-Set StrWorkbench = doc.GetWorkbench("StrWorkbench")
- 
+   
+Set StrWorkbench = doc.GetWorkbench(&quot;StrWorkbench&quot;)
+    
 Dim strPlates As strPlates
-Set strPlates = rootProduct.GetTechnologicalObject("StructurePlates")
+Set strPlates = rootProduct.GetTechnologicalObject(&quot;StructurePlates&quot;)
 ```
 
-		
-		
-#### []Retrieving Existing Cutout
-		
-
-The Existing cutout can be searched by using the search method on selection.”StrCutout.1” 
-		is searched for in the entire product.
-		
-
-We will modify the first cutout retrieved.
-		
-```
+```vbscript
 Dim selection1 As Selection
 Set selection1 = doc.Selection
 
-selection1.Search "Name='StrCutout.1',all"
+selection1.Search &quot;Name=&#39;StrCutout.1&#39;,all&quot;
 
 Dim CutoutToEdit As StrCutoutFeature
 Set CutoutToEdit = selection1.Item(1).Value
 ```
 
-		
-		
-#### []Modifying the Cutout
-		
-
-Replace the existing contour of the cutout with a new one and also change 
-		the direction.
-		
-```
-'Get the Cutout Type
+```vbscript
+&#39;Get the Cutout Type
 Dim FormingMode As String
 FromingMode = CutoutToEdit.CutoutType
 
-'Get the Current Contour
+&#39;Get the Current Contour
 Dim CurrentContour As Reference
 Set CurrentContour = CutoutToEdit.Contour
 
-'Get the Current Direction Element
+&#39;Get the Current Direction Element
 Dim CurrentDirElement As Reference
 Set CurrentDirElement = CutoutToEdit.DirectionElement
 
-'Set the New Direction Element
+&#39;Set the New Direction Element
 
 Set documents1 = CATIA.Documents
-Set partDocument1 = documents1.Item("Grid.CATPart")
+Set partDocument1 = documents1.Item(&quot;Grid.CATPart&quot;)
 Set part1 = partDocument1.Part
 
-Set Newdir = part1.FindObjectByName("Sketch.4")
+Set Newdir = part1.FindObjectByName(&quot;Sketch.4&quot;)
 Set NewDirElement = part1.CreateReferenceFromObject(Newdir)
 CutoutToEdit.DirectionElement = NewDirElement
 
-'Set the New Contour
+&#39;Set the New Contour
 Dim NewContour As Reference
-Set NewContour = rootProduct.CreateReferenceFromName("Product1/Grid/!Sketch.2")
+Set NewContour = rootProduct.CreateReferenceFromName(&quot;Product1/Grid/!Sketch.2&quot;)
 CutoutToEdit.Contour = NewContour
 
 End Sub
 ```
-
-		
-		
-	
-
-![End Task Icon](../CAAScrBase/images/aendtask.gif)
-
-[[Top]]
-
----
-
-#### []In Short
-
-This use case has shown how to edit Cutouts on structure Objects.
-
-[[Top]]
-
----
-
-#### []References
-
-	
-		|[1]
-		|[Replaying 
-		a macro]
-	
-	
-		|[[Top]]
-	
-
----
-
-*Copyright 1999-2010, Dassault Systmes. All rights reserved.*

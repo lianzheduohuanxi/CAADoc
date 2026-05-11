@@ -9,16 +9,16 @@ converted: "2026-05-11T17:31:50.892078"
 ```
 
 ---
-| 
+|
 ## Structure Design
 
-| 
-## Modifying Copings  
+|
+## Modifying Copings
 
 * * *
 
-  This macro shows you how to Edit existing coping between structure objects. This macro modifies SubType of Existing Coping created using CreateCoping Macro. ![Starting Product](images/CAAScdStrCoping02.png)  
----|---  
+  This macro shows you how to Edit existing coping between structure objects. This macro modifies SubType of Existing Coping created using CreateCoping Macro. ![Starting Product](images/CAAScdStrCoping02.png)
+---|---
   CAAStrEditCoping is launched in CATIA [1]. Some documents are needed.
 
   * [CAAStrEditCoping.CATScript](CAAStrModificationOfCopingSource.md) is located in the CAAScdStrUseCases module. [Execute macro](macros/CAAStrEditCoping.CATScript) (Windows only).
@@ -32,10 +32,15 @@ CAAStrEditCoping includes two steps:
 
 #### Prolog
 
+```vbscript
     Sub CATMain()
+
+```
 
 ```vbscript
       Dim StrWorkbench As StrWorkbench
+```vbscript
+```vbscript
       Dim strFactory As StrObjectFactory
 
       Set doc = CATIA.ActiveDocument
@@ -52,40 +57,62 @@ CAAStrEditCoping includes two steps:
 
 ```
 
+```
+
+```
+
 #### Retrieving Existing Coping and Modifying its SubType
 
 The Existing coping can be searched by using the search method on selection.”Coping.1” is searched for in the entire product. The subtype of 1st coping feature is modifed to "CurrCurr".
 
 ```vbscript
       Dim selection1 As Selection
+```vbscript
+```vbscript
       Set selection1 = doc.Selection
+
+```
+
+```
 
 ```
 
 ```vbscript
 Dim selection1 As Selection
+```vbscript
 Set selection1 = doc.Selection
+```
+
       selection1.Search "Name='Coping.1',all"
 
 ```
 
 ```vbscript
       Dim NibblingToEdit As StrNibblingFeature
+```vbscript
+```vbscript
       Set NibblingToEdit = selection1.Item(1).Value
 
       Dim SubTypeOfNibbling As String
+```
+
+```
+
       SubTypeOfNibbling = NibblingToEdit.SubType
 
 ```
 
 ```vbscript
 Dim SubTypeOfNibbling As String
-SubTypeOfNibbling = NibblingToEdit.SubType
-      NibblingToEdit.SubType = "CurrCurr"
-
 ```
 
-    End Sub  
+SubTypeOfNibbling = NibblingToEdit.SubType
+```vbscript
+      NibblingToEdit.SubType = "CurrCurr"
+
+    End Sub
+
+```
 
 ![End Task Icon](../CAAScrBase/images/aendtask.gif)
 
@@ -101,9 +128,9 @@ This use case has shown how to edit coping between structure objects.
 * * *
 #### References
 
-[1] | [Replaying a macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)  
+[1] | [Replaying a macro](../CAAScdInfUseCases/CAAInfLauchMacro.md)
 
-[Top]  
+[Top]
 
 * * *
 

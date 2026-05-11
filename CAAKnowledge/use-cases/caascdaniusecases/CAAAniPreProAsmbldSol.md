@@ -2,122 +2,13 @@
 title: "Creating Assembled Solution"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CAAScrBase", "CAAInfLauchMacro", "CAAScdInfUseCases", "CAAAniPreProAsmbldSol", "CAAAniTocAnalysisDocument", "CAAAniPreProAsmbldSolSource", "CAAScdAniTechArticles", "CAAScdAniUseCases", "CATIA", "CAAScrJavaScript"]
+tags: ["CAAScrBase", "CAAAniPreProAsmbldSolSource", "CATIA", "CAAScdAniUseCases", "CAAScrJavaScript", "CAAAniTocAnalysisDocument", "CAAScdInfUseCases", "CAAScdAniTechArticles", "CAAAniPreProAsmbldSol", "CAAInfLauchMacro"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProAsmbldSol.htm"
-converted: "2026-05-11T11:06:32.372554"
+converted: "2026-05-11T11:27:02.527850"
 ---
-
-## Analysis Modeler
-		
-		
-## []Creating Assembled Solution
-		
-	
 
 ---
 
-	
-		![](../CAAScrBase/images/atarget.gif)
-		
-
-[]This use case shows you how to create an 
-		assembled solution. Here use of Edit/Search... capability through VB is also 
-		demonstrated.
-		
-
-This macro opens an analysis assembly document and creates two 
-		assembled solutions. In the first assembled solution a V4 imported 
-		solution is added and in the second a static case is added. Both of 
-		these solutions are selected using the Edit/Search... capability. 
-		Assembled solution ( also called displacement assembly) is created in 
-		assembled analysis. This solution is concatenation of several solutions 
-		computed in the sub-analysis. This scenario is available only in 
-		Generative Assembly Structural Analysis (GAS) product.
-		
-
- 
-		
-
-![](images/AsmbldSol.jpg)
-		
-
- 
-		
-	
-	
-		![](../CAAScrBase/images/ainfo.gif)
-		
-
-[]CAAAniPreProAsmbldSol is launched in CATIA [[1]].No open document is needed.
-		
-
-[CAAAniPreProAsmbldSol.catvbs]
-		]is located in the CAAScdAniUseCases module.
-		[Execute macro] (Windows 
-		only).
-		
-
- 
-		
-	
-	
-		![](../CAAScrBase/images/ascenari.gif)
-		
-
-[]CAAAniPreProAsmbldSol includes the following steps:
-		
-
-			
-- [Prolog]
-			
-- [Extracting the analysis documents and analysis models]
-			
-- [Adding the assembled solution set]
-			
-- [Searching through the selection and applying the selected objects]
-			
-- [Epilog]
-		
-		
-#### []Prolog
-		
-			
-				
-```
-...
-```
-
-				
-```
-' ----------------------------------------------------------- 
-
-' Optional: allows to find the sample wherever it's installed
-
-sDocPath=CATIA.SystemService.Environ("CATDocView")
-sSep=CATIA.SystemService.Environ("ADL_ODT_SLASH")
-
-If 
-(Not CATIA.FileSystem.FolderExists(sDocPath))
- Then
-
-Err.Raise 9999,,"No Doc Path Defined"
-
-End If
-
-' ----------------------------------------------------------- 
-
-' Open the Analysis document
- 
-
-Set 
-analysisDocument1 = CATIA.Documents.Open(sDocPath & sSep & "online" & sSep & "CAAScdAniUseCases" &
-						 sSep & "samples" & sSep & "Assembled_Loads_Slutions.CATAnalysis")
-...
-```
-
-				
-			
-		
 		
 
 Open the Analysis document. The Analysis document is retrieved in the 
@@ -125,131 +16,24 @@ Open the Analysis document. The Analysis document is retrieved in the
 		`sDocPath` variable. In the collection of documents, two documents 
 		can be retrieved; the Analysis document and the Part document.
 		
-#### []**Extracting the analysis documents and 
+
+#### **Extracting the analysis documents and 
 		analysis models**
-		
-			
-				
-```
-...
-```
-
-				
-```
-'Retrieve the Analysis Manageer from tha analysis document
-
-Set 
-analysisManager1 = analysisDocument1.Analysis
-
-'Retrieve the product document from the linked document
-
-Set 
-analysisLinkedDocuments1 = analysisManager1.LinkedDocuments
-
-Set 
-productDocument1 = analysisLinkedDocuments1.Item(1)
-
-'From product document retrieve products
-
-Set 
-product1 = productDocument1.Product
-
-Set 
-products1 = product1.Products
-
-Set 
-product2 = products1.Item("Analysis1.1")
-
-'Retrieve the analysis models and the first model
-
-Set 
-analysisModels1 = analysisManager1.AnalysisModels
-
-Set 
-analysisModel1 = analysisModels1.Item(1)
-
-...
-```
-
-				
-			
 		
 		
 
 According to the general
 		[
-		Analysis Document] structure, this macro uses some standard procedures 
+		Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm) structure, this macro uses some standard procedures 
 		to navigate or retrieve the required objects. First, from the **Document**, 
-		we find the **Analysis Manager Object**, and  **Analysis Models**. 
+		we find the **Analysis Manager Object**, and  **Analysis Models**. 
 		From analysis models we retrieve the **Analysis Cases.**
 		
-#### []Adding the assembled load set
-		
-			
-				
-```
-...
-```
 
-				
-```
-'Retrieve the analysis cases from analysis model
-
- 
-Set 
-analysisCases1 = analysisModel1.AnalysisCases
- 
-
-'Retrieve the second object that is Solution Case.1 
-
-'from the list of analysis cases
-
-Set 
-analysisCase1 = analysisCases1.Item(2)
- 
-
-'Retrieve the analysis case
-
-Set 
-analysisSets1 = analysisCase1.AnalysisSets
- 
-
-'Add two Assembled solution sets
-
-Set 
-analysisSet1 = analysisSets1.Add("ElfAssembledSet", catAnalysisSetOut)
-
-Set 
-analysisSet2 = analysisSets1.Add("ElfAssembledSet", catAnalysisSetOut)
- 
-
-'Retrieve the basic component from the analysis set
-
-Set 
-basicComponents1 = analysisSet1.BasicComponents
-
-Set 
-basicComponent1 = basicComponents1.GetItem("ElfAssemblyPtr.1")
- 
-
-'Retrieve the basic component from the analysis set
-
-Set 
-basicComponents2 = analysisSet2.BasicComponents
-
-Set 
-basicComponent2 = basicComponents2.GetItem("ElfAssemblyPtr.1")
-```
-
-				
-```
-...
-```
-
-				
-			
+#### Adding the assembled load set
 		
 		
+
 #### Here we 
 		retrieve the solution case, in which we want to add the assembled load. 
 		First the list of cases is retrieved from analysis model. The index 
@@ -258,101 +42,11 @@ basicComponent2 = basicComponents2.GetItem("ElfAssemblyPtr.1")
 		the set and add assembled solution to it. To add analysis sets to 
 		assembled solution
 		
-#### []Searching through the selection and applying the selected objects
-		
-			
-				
-```
-...
-```
 
-				
-```
-'Search and select
-
-Set 
-selection1 = analysisDocument1.Selection
-selection1.Search "Name=*DISP*,all"
-
-'Retrieve the analysis manager object from the analysis document
-
-Set 
-documents1 = CATIA.Documents
-
-Set 
-analysisDocument2 = documents1.Item("Analysis1.CATAnalysis")
-
-Set 
-analysisManager2 = analysisDocument2.Analysis
-
-'Go through the selections and find out the the analysis set
-
-'create a reference from the analysis set and add it to the basic component
-
-For 
-i =1
- To 
-selection1.Count
-
- Set 
-element = selection1.Item(i)
- IF (element.Type = "AnalysisSet" ) Then 'DO NOTHING
- 
- Set 
-Reference = analysisManager2.CreateReferenceFromObject(element.Value)
- basicComponent1.AddSupportFromProduct product2, Reference
- END IF
- 
-
-Next
-
-'Search and select
-
-selection1.Clear
-selection1.Search "Name=*Static Case*,all"
-
-'Remove the last static case, since this is at the same
-
-'level in the analysis assembly
-
-selection1.Remove2(selection1.Count)
-
-'Go through the selections and find out the the analysis set
-
-'create a reference from the analysis set and add it to the basic component
-
-For 
-i =1
- To 
-selection1.Count
-
- Set 
-element = selection1.Item(i)
- IF (element.Type = "AnalysisSet" ) Then 'DO NOTHING
-
- Set 
-Reference = analysisManager2.CreateReferenceFromObject(element.Value)
- basicComponent2.AddSupportFromProduct product2, Reference
- END IF
- 
-
-Next
-
-'update the two analysis sets
-
-analysisSet1.Update
-analysisSet2.Update
-```
-
-				
-```
-...
-```
-
-				
-			
+#### Searching through the selection and applying the selected objects
 		
 		
+
 #### The selection 
 		interface allows the user to search objects by providing a search 
 		string. This is equivalent of selecting objects interactively through edit 
@@ -364,52 +58,177 @@ analysisSet2.Update
 		again we search for the static case solution which is set as support to 
 		the second assembled solution. 
 		
-#### []Epilog
-		
-			
-				
-```
-...
-```
 
-				 End Sub
-				
-```
-...
-```
-
-				
-			
+#### Epilog
 		
 		
 	
 
 ![](../CAAScrBase/images/aendtask.gif)
 
-[[Top]]
+[Top]
 
 ---
 
-#### []In Short
+#### In Short
 
 This use case has shown how to create assembled solution and how to select 
 object using the selection interface.
 
-[[Top]]
+[Top]
 
 ---
 
-#### []References
-
-	
-		|[1]
-		[Replaying 
-		a Macro]
-	
-	
-		|[[Top]]
-	
+#### References
 
 ---
 
-*Copyright 2001, Dassault Systmes. All rights reserved.*
+*Copyright  2001, Dassault Systmes. All rights reserved.*
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+```vbscript
+...
+```
+
+```vbscript
+' ----------------------------------------------------------- 
+' Optional: allows to find the sample wherever it's installed
+sDocPath=CATIA.SystemService.Environ("CATDocView")
+sSep=CATIA.SystemService.Environ("ADL_ODT_SLASH")
+
+If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+Err.Raise 9999,,"No Doc Path Defined"
+End If
+' ----------------------------------------------------------- 
+' Open the Analysis document 
+Set analysisDocument1 = CATIA.Documents.Open(sDocPath & sSep & "online" & sSep & "CAAScdAniUseCases" &
+						 sSep & "samples" & sSep & "Assembled_Loads_Slutions.CATAnalysis")
+...
+```
+
+```vbscript
+...
+```
+
+```vbscript
+'Retrieve the Analysis Manageer from tha analysis document
+Set analysisManager1 = analysisDocument1.Analysis
+
+'Retrieve the product document from the linked document
+Set analysisLinkedDocuments1 = analysisManager1.LinkedDocuments
+Set productDocument1 = analysisLinkedDocuments1.Item(1)
+
+'From product document retrieve products
+Set product1 = productDocument1.Product
+Set products1 = product1.Products
+Set product2 = products1.Item("Analysis1.1")
+
+'Retrieve the analysis models and the first model
+Set analysisModels1 = analysisManager1.AnalysisModels
+Set analysisModel1 = analysisModels1.Item(1)
+
+...
+```
+
+```vbscript
+...
+```
+
+```vbscript
+'Retrieve the analysis cases from analysis model
+&nbsp;Set analysisCases1 = analysisModel1.AnalysisCases
+&nbsp;
+'Retrieve the second object that is Solution Case.1 
+'from the list of analysis cases
+Set analysisCase1 = analysisCases1.Item(2)
+&nbsp;
+'Retrieve the analysis case
+Set analysisSets1 = analysisCase1.AnalysisSets
+&nbsp;
+'Add two Assembled solution sets
+Set analysisSet1 = analysisSets1.Add(&quot;ElfAssembledSet&quot;, catAnalysisSetOut)
+Set analysisSet2 = analysisSets1.Add(&quot;ElfAssembledSet&quot;, catAnalysisSetOut)
+&nbsp;
+'Retrieve the basic component from the analysis set
+Set basicComponents1 = analysisSet1.BasicComponents
+Set basicComponent1 = basicComponents1.GetItem(&quot;ElfAssemblyPtr.1&quot;)
+&nbsp;
+'Retrieve the basic component from the analysis set
+Set basicComponents2 = analysisSet2.BasicComponents
+Set basicComponent2 = basicComponents2.GetItem(&quot;ElfAssemblyPtr.1&quot;)
+```
+
+```vbscript
+...
+```
+
+```vbscript
+...
+```
+
+```vbscript
+'Search and select
+Set selection1 = analysisDocument1.Selection
+selection1.Search "Name=*DISP*,all"
+
+'Retrieve the analysis manager object from the analysis document
+Set documents1 = CATIA.Documents
+Set analysisDocument2 = documents1.Item("Analysis1.CATAnalysis")
+Set analysisManager2 = analysisDocument2.Analysis
+
+
+'Go through the selections and find out the the analysis set
+'create a reference from the analysis set and add it to the basic component
+For i =1 To selection1.Count
+          Set element = selection1.Item(i)
+           IF (element.Type = "AnalysisSet" ) Then 'DO NOTHING
+              Set Reference = analysisManager2.CreateReferenceFromObject(element.Value)
+              basicComponent1.AddSupportFromProduct product2, Reference
+         END IF
+       
+Next
+
+'Search and select
+selection1.Clear
+selection1.Search "Name=*Static Case*,all"
+
+'Remove the last static case, since this is at the same
+'level in the analysis assembly
+selection1.Remove2(selection1.Count)
+
+'Go through the selections and find out the the analysis set
+'create a reference from the analysis set and add it to the basic component
+For i =1 To selection1.Count
+          Set element = selection1.Item(i)
+           IF (element.Type = "AnalysisSet" ) Then 'DO NOTHING
+               Set Reference = analysisManager2.CreateReferenceFromObject(element.Value)
+               basicComponent2.AddSupportFromProduct product2, Reference
+         END IF
+       
+Next
+
+'update the two analysis sets
+analysisSet1.Update
+analysisSet2.Update
+```
+
+```vbscript
+...
+```
+
+```vbscript
+...
+```
+
+```vbscript
+...
+```

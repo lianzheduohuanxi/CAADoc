@@ -12,32 +12,52 @@ converted: "2026-05-11T17:31:50.861645"
 tags: ["CATIA", "CAAAsmModifyOptions"]
 source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmModifyOptionsSource.htm"
 converted: "2026-05-11T17:31:50.861645"
+```vbscript
     ' COPYRIGTH DASSAULT SYSTEMES 2004
+```
+
     Language="VBSCRIPT"
 
 ```vbscript
+```vbscript
+```vbscript
     ' ***********************************************************************
     '   Purpose:      Gets and modifies Assembly Design options
-    '   Assumtions:      
+    '   Assumtions:
     '   Languages:    VBSCRIPT
-    '   Locales:      English 
+    '   Locales:      English
     '   CATIA Level:  V5R15
     ' ***********************************************************************
 
 ```
 
+```
+
+```
+
+```vbscript
     Sub CATMain()
 
+```
+
+```vbscript
+```vbscript
 ```vbscript
     ' ----------------------------
     ' Get the settings controller
     ' ----------------------------
 ```
 
+```
+
+```
+
 ```vbscript
     Set settingControllers1 = CATIA.SettingControllers
 ```
 
+```vbscript
+```vbscript
 ```vbscript
     ' ------------------------------
     ' Assembly / General options
@@ -47,6 +67,10 @@ converted: "2026-05-11T17:31:50.861645"
     ' ------------------------------
     ' Get/Set the options values
     ' ------------------------------
+```
+
+```
+
 ```
 
     asmGeneralSetting.AutoUpdateMode = catManualUpdate
@@ -66,14 +90,26 @@ converted: "2026-05-11T17:31:50.861645"
     msgbox "Move components involved in a Fix Together mode = " & moveFixT
 
 ```vbscript
+```vbscript
+```vbscript
     ' ------------------------------
     ' Lock/Unlock informations
     ' ------------------------------
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' Lock/Unlock informations
 ' ------------------------------
+```
+
+```
+
     asmGeneralSetting.SetAutoUpdateModeLock True
     isModified = asmGeneralSetting.GetAutoUpdateModeInfo (adminlevel, locked)
     msgbox "Automatic Update : administrator level = " & adminlevel & " - lock status = " & locked
@@ -92,21 +128,39 @@ converted: "2026-05-11T17:31:50.861645"
 ```
 
 ```vbscript
+```vbscript
+```vbscript
     ' --------------------------------------------
     ' SaveRepository
     ' --------------------------------------------
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' SaveRepository
 ' --------------------------------------------
+```
+
+```
+
     asmGeneralSetting.SaveRepository
 ```
 
 ```vbscript
+```vbscript
+```vbscript
     ' ------------------------------
     ' Assembly / Constraint Options
     ' ------------------------------
+```
+
+```
+
 ```
 
 ```vbscript
@@ -114,9 +168,15 @@ converted: "2026-05-11T17:31:50.861645"
 ```
 
 ```vbscript
+```vbscript
+```vbscript
     ' ------------------------------
     ' Get/Set the options values
     ' ------------------------------
+```
+
+```
+
 ```
 
     asmConstraintSetting.PasteComponentMode = catPasteWithCstOnCopyAndCut
@@ -127,28 +187,43 @@ converted: "2026-05-11T17:31:50.861645"
     pub = asmConstraintSetting.ConstraintCreationMode
     msgbox "Selectable elements to create a constraint = " & pub
 
+```vbscript
     asmConstraintSetting.QuickConstraintMode = catVerifiedConstraintFirst
+
+```
 
 ```vbscript
     Dim newArray(5)
+```vbscript
     newArray(0) = "CATAsmPerpendType"
     newArray(1) = "CATAsmSurfContactType"
     newArray(2) = "CATAsmAngleType"
     newArray(3) = "CATAsmDistanceType"
     newArray(4) = "CATAsmCoincidenceType"
     newArray(5) = "CATAsmParallelType"
+```
+
     asmConstraintSetting.SetQuickConstraintOrderedList newArray
     quick = asmConstraintSetting.QuickConstraintMode
     Dim array
+```vbscript
     array = asmConstraintSetting.GetQuickConstraintOrderedList()
-    msgbox "Quick Constraint creation mode = " & quick
-    msgbox "ordered list : " & array(0) & " - " & array(1) & " - " & array(2) & " - " & array(3) & " - " & array(4) & " - " & array(5) 
 ```
 
+    msgbox "Quick Constraint creation mode = " & quick
+    msgbox "ordered list : " & array(0) & " - " & array(1) & " - " & array(2) & " - " & array(3) & " - " & array(4) & " - " & array(5)
+```
+
+```vbscript
+```vbscript
 ```vbscript
     ' ------------------------------
     ' Lock/Unlock informations
     ' ------------------------------
+```
+
+```
+
 ```
 
     asmConstraintSetting.SetPasteComponentModeLock False
@@ -164,22 +239,43 @@ converted: "2026-05-11T17:31:50.861645"
     msgbox "Quick Constraint creation : admin level = " & adminlevel & " - locked = " & locked
 
 ```vbscript
+```vbscript
+```vbscript
     ' --------------------------------------------
     ' SaveRepository, Rollback and ResetToDefault
     ' --------------------------------------------
 ```
 
+```
+
+```
+
+```vbscript
+```vbscript
 ```vbscript
 ' --------------------------------------------
 ' SaveRepository, Rollback and ResetToDefault
 ' --------------------------------------------
+```
+
+```
+
     asmConstraintSetting.SaveRepository
 ```
 
+```vbscript
+```vbscript
 ```vbscript
     ' -------------
     ' The End...
     ' -------------
 ```
 
+```
+
+```
+
+```vbscript
     End Sub
+
+```

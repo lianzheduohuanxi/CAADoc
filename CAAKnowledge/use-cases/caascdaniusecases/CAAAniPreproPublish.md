@@ -2,268 +2,27 @@
 title: "Creating Preprocessing Data from Publications"
 category: "use-case"
 module: "CAAScdAniUseCases"
-tags: ["CAAAniPreproOnPublish", "CAAScrBase", "CAAInfLauchMacro", "CAAAniPreprocessingFeatures", "CAAScdInfUseCases", "CAAAniTocAnalysisDocument", "CATISamImportDefine", "CAAAniPreproOnPublishSource", "CAAScdAniTechArticles", "CAAScdAniUseCases", "CATIA", "CAAScrJavaScript"]
+tags: ["CAAScrBase", "CATIA", "CAAScdAniUseCases", "CAAScrJavaScript", "CAAAniPreproOnPublish", "CAAAniTocAnalysisDocument", "CAAScdInfUseCases", "CAAScdAniTechArticles", "CAAAniPreprocessingFeatures", "CATISamImportDefine", "CAAAniPreproOnPublishSource", "CAAInfLauchMacro"]
 source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproPublish.htm"
-converted: "2026-05-11T11:06:32.304204"
+converted: "2026-05-11T11:27:02.498470"
 ---
-
-## Analysis Modeler
-		
-		
-## []Creating Preprocessing Data from Publications
-		
-	
 
 ---
 
-	
-		![](../CAAScrBase/images/atarget.gif)
-		|[]This macro shows you how to create an 
-		Analysis document for a generative structural analysis. With this scenario, 
-		you will cover all the steps of a generative analysis application.
 		
 
-It creates an Analysis document, imports a Part document provided with 
-		the sample. An Analysis Case is created as for static linear analysis. Some 
-		preprocessing data are defined by using the publication defined on the part. 
-		Then, the computation is launched. An image (for Von Misses stresses) is 
-		created and displayed. A parameter that measure the maximum value of this 
-		stress is created and value is printed. At last, image data is exported 
-		and the image is deactivated.
-		
-
-		![](images/PreproOnPublish.jpg)
-		
-
- 
-		
-	
-	
-		![](../CAAScrBase/images/ainfo.gif)
-		|[]CAAAniPreproOnPublish is launched in CATIA 
-		[[1]]. No open document is needed.
-		
-
-[CAAAniPreproOnPublish.catvbs] 
-		is located in the CAAScdAniUseCases module.
-		[Execute macro] (Windows 
-		only).
-		
-
- 
-		
-	
-	
-		![](../CAAScrBase/images/ascenari.gif)
-		|[]CAAAniPreproOnPublish includes the following 
-		steps:
-		
-
-			
-- [Prolog]
-			
-- [Importing the Part Document and Extracting 
-			the Publication]
-			
-- [Creating an Analysis Case for Static Analysis]
-			
-- [Defining the Boundaries]
-			
-- [Defining the Load]
-			
-- [Defining a Sensor ]
-			
-- [Computing the Case and Printing the Sensor Value]
-			
-- [Creating an Image]
-			
-- [Exporting Data from the Image]
-			
-- [Deactivating the Image]
-			
-- [Epilog]
-		
-		
-#### []Prolog
-		
-			
-				
-```
-...
-```
-
-				
-```
-' ----------------------------------------------------------- 
-
-' Optional: allows to find the sample wherever it's installed
-
- sDocPath=CATIA.SystemService.Environ("CATDocView")
-
- If
-(Not CATIA.FileSystem.FolderExists(sDocPath)) 
-Then
-
- Err.Raise 9999,,"No Doc Path Defined"
-
- End If
-
-' -----------------------------------------------------------
-```
-
-				
-```
-' Get the collection of documents in session
-
- Set 
-documents1 = CATIA.Documents
-
-' ----------------------------------------------------------- 
-
-' Get the collection of documents in session
- 
-
-' Create the CATAnalysis Document 
-
- 
-Set 
-TheAnalysisDocument = documents1.
-Add
-("Analysis") 
- 
-
-' if WB name already is "GPSCfg", not to use StartWorkbench
- 
- WBName = CATIA.GetWorkbenchId 
-if 
-(WBName <> "GPSCfg") 
-Then
- 
- CATIA.
-StartWorkbench
-("GPSCfg")
- 
- 
-End If
-
- ...
-```
-
-				
-			
-		
-		
-
-Create the Analysis document. The use of StartWorkbench  will customize 
+Create the Analysis document. The use of StartWorkbench  will customize 
 		the analysis document as a generative one. it mean's that meshparts and 
 		properties will be automatically created as in the Generative workbench.
 		
-#### []Importing the Part Document and Extracting the 
+
+#### Importing the Part Document and Extracting the 
 		Publications
 		
 
 In order to import the document you have to give the path of this document, 
 		the late type which implements CATISamImportDefine and an array of CATVariant 
 		if you want to customize the import.
-		
-			
-				
-```
-...
-
-'_____________________________________________________________________________________
- 
-
-' Start to scan the existing structure of analysis document: Retrieve the AnalysisManager
- 
- 
-Set 
-analysisManager1 = TheAnalysisDocument.Analysis
-```
-
-				
-```
-Dim arrayOfVariantOfShort1(0)
- analysisManager1.
-ImportDefineFile
- (sDocPath & sSep & "online" & sSep & "CAAScdAniUseCases" & sSep & "samples" & sSep & "AnalysisMechfeat.CATPart"),
-```
-
-				
-```
-"CATAnalysisImport", arrayOfVariantOfShort1
-```
-
-				
-```
-' _____________________________________________________________________________________
- 
-
-' Reframe All.
- 
- 
-Set 
-specsAndGeomWindow1 = CATIA.ActiveWindow 
- 
-Set 
-viewer3D1 = specsAndGeomWindow1.ActiveViewer 
- viewer3D1.
-Reframe
- 
-
-' _____________________________________________________________________________________
- 
-
-' Scan the analysis document: Retrieve the Pointed documents to extract the reference for preprocessing
- 
- 
-Set 
-analysisLinkedDocuments1 = analysisManager1.LinkedDocuments 
- CATIA.SystemService.Print analysisLinkedDocuments1.Name 
- 
-If 
-(analysisLinkedDocuments1.Count <> 1 )
- Then
- 
- Err.Raise 9999,,"NbDoc Li NE 1" 
- 
-End If
- 
-
-' _____________________________________________________________________________________
- 
-
-' Retrieve the CATPart Document and associated publications for preprocessing.
- 
- 
-Set 
-TheDoc = analysisLinkedDocuments1.Item(1) 
- CATIA.SystemService.Print TheDoc.FullName 
- 
-Set 
-product1 = TheDoc.Product 
- 
-Set 
-publications1 = product1.
-Publications
- 
- 
-Set 
-publication1 = publications1.Item("Bottomface") 
- 
-Set 
-publication2 = publications1.Item("Sliding1") 
- 
-Set 
-publication3 = publications1.Item("Sliding2") 
- 
-Set 
-publication4 = publications1.Item("ResizeBody")
-...
-```
-
-				
-			
 		
 		
 
@@ -276,64 +35,16 @@ The part document is fetched in the documentation installation path,
 		the selection of a Publication element inside the interactive applications.
 		
 
-[[Top]]
+[Top]
 		
-#### []Creating an Analysis Case for Static Analysis
-		
-			
-				
-```
-...
 
-' _____________________________________________________________________________________
- 
-
-' Create a Static Case in the current analysis model.
- 
- 
-Set 
-analysisModels1 = analysisManager1.AnalysisModels 
- 
-Set 
-analysisModel1 = analysisModels1.Item(1) 
- 
-Set 
-analysisCases1 = analysisModel1.AnalysisCases
- 
- 
-Set 
-analysisCase1 = analysisCases1.
-Add
-()
- 
-Set 
-analysisSets1 = analysisCase1.AnalysisSets
- 
-Set 
-analysisSet1 = analysisSets1.
-Add
-("RestraintSet", catAnalysisSetIn)
- 
-Set 
-analysisSet2 = analysisSets1.
-Add
-("LoadSet", catAnalysisSetIn)
- 
-Set 
-analysisSet3 = analysisCase1.
-AddSolution
-("StaticSet")
- ...
-```
-
-				
-			
+#### Creating an Analysis Case for Static Analysis
 		
 		
 
 According to the general
 		[
-		Analysis Document] structure, this macro uses some standard procedures 
+		Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm) structure, this macro uses some standard procedures 
 		to navigate or retrieve the required objects. First, from the **document**, 
 		we find the **Analysis manager Object**, the **Analysis models** and 
 		the **Analysis cases Objects**. From both last object (Analysis Model 
@@ -343,155 +54,42 @@ According to the general
 		set (StaticSet).
 		
 
-[[Top]]
+[Top]
 		
-#### []Defining the Boundaries
-		
-			
-				
-```
-...
 
-' To work with the collection of entities that defines the Boundary condition.
-
-' _____________________________________________________________________________________
- 
- 
-Set 
-analysisEntities1 = analysisSet1.AnalysisEntities
- 
- 
-Set 
-analysisEntity1 = analysisEntities1.Add("SAMClamp")
- 
- analysisEntity1.
-AddSupportFromPublication
- product1, publication1 
-
-' _____________________________________________________________________________________
- 
-
-' Create Slider boundary.
-
- 
-Set 
-analysisEntity2 = analysisEntities1.Add("SAMSurfaceSlider")
- 
- analysisEntity2.
-AddSupportFromPublication
- product1, publication2
- 
- analysisEntity2.
-AddSupportFromPublication
- product1, publication3
-...
-```
-
-				
-			
+#### Defining the Boundaries
 		
 		
 
 From the restraint set defined on the analysis case, we retrieve the 
-		collection of  analysis entities. We add to this collection a fix (clamp) 
+		collection of  analysis entities. We add to this collection a fix (clamp) 
 		boundary condition and apply it on the geometry extracted from the Part 
 		document. Then, same is done for the sliding conditions.
 		
 
-[[Top]]
+[Top]
 		
-#### []Defining the Load
-		
-			
-				
-```
-...
 
-' _____________________________________________________________________________________
- 
-
-' Create Pressure.
-
- 
-Set 
-analysisEntities2 = analysisSet2.AnalysisEntities 
- 
-Set 
-analysisEntity3 = analysisEntities2.Add("SAMPressure")
- analysisEntity3.
-AddSupportFromPublication
- product1, publication4 
- analysisEntity3.
-SetValue
- "SAMPressureMag","", 0, 0, 0, 500.
-...
-```
-
-				
-			
+#### Defining the Load
 		
 		
 
 The load is defined as the boundaries. For more information about the 
 		physical type included inside analysis entities and the way to valuate them, 
-		refer to the reference [[2]]
+		refer to the reference [2]
 		
 
-[[Top]]
+[Top]
 		
-#### []Defining a Sensor
-		
-			
-				
-```
-...
 
-' _____________________________________________________________________________________
- 
-
-' Define a global sensor measuring the maximum value of VonMises criterion.
- 
- 
-Set 
-dimension1 = 
-analysisManager1.Parameters.CreateDimension
-("Maximum value of VonMises criterion", "PRESSURE", 0.000000)
- 
-Set 
-formula1 = analysisManager1.
-Relations.CreateFormula
-("Maximum value of VonMises criterion","",dimension1,
- "misesmax(`Finite Element Model.1\Static Case Solution.1` ) ")
-...
-```
-
-				
-			
+#### Defining a Sensor
 		
 		
 
-[[Top]]
+[Top]
 		
-#### []Computing the Case and Printing the Sensor Value
-		
-			
-				
-```
-...
 
-' Launch the computation of the Case
- 
- MyCase.Compute ...
- 
-
-' Extract the computed value of the sensor
-
- CATIA.SystemService.Print " Mises Max Computed " & dimension1.ValueAsString
-...
-```
-
-				
-			
+#### Computing the Case and Printing the Sensor Value
 		
 		
 
@@ -499,45 +97,10 @@ This method will launch the mesher, generate the finite element model
 		for preprocessing and launch the solver to generate the finite element results.
 		
 
-[[Top]]
+[Top]
 		
-#### []Creating an Image
-		
-			
-				
-```
-...
 
-' _____________________________________________________________________________________
- 
-
-' Create corresponding image.
-
- 
-Set 
-analysisImages1 = analysisSet3.
-AnalysisImages
- 
- 
-Set 
-analysisImage1 = analysisImages1.
-Add
-("StressVonMises_Iso_Smooth", False, False, True)
- 
-' _____________________________________________________________________________________
- 
-'
-
- Reframe All.
- 
- viewer3D1.
-Reframe
-
-...
-```
-
-				
-			
+#### Creating an Image
 		
 		
 
@@ -546,100 +109,25 @@ The image is created based on the solution of the case. For this use
 		Then, reframe will update the display.
 		
 
-[[Top]]
+[Top]
 		
-#### []Exporting Data from the Image
-		
-			
-				
-```
-...
 
-' _____________________________________________________________________________________
- 
-
-' Export data from the created image.
-
- 
-Set 
-fileSystem1 = CATIA.FileSystem 
- 
-Set 
-folder1 = fileSystem1.
-GetFolder
-(outputPath)
- analysisImage1.
-ExportData
- folder1, "VonMises", "txt"
- 
-' _____________________________________________________________________________________
- 
-'
-
- 
-
-...
-```
-
-				
-			
+#### Exporting Data from the Image
 		
 		
 
 The image is exported in the specified file. This file is defined by 
 		folder, export data filename and filetype.
 		
-#### []Deactivating the Image
-		
-			
-				
-```
-...
 
-' _____________________________________________________________________________________
- 
-
-' Deactivate and Update the created image.
-
- analysisImage1.
-SetActivationStatus
- false
- analysisImage1.
-Update
-
- 
-' _____________________________________________________________________________________
- 
-'
-
- 
-
-...
-```
-
-				
-			
+#### Deactivating the Image
 		
 		
 
 The image is deactivated.
 		
-#### []Epilog
-		
-			
-				
-```
-...
-```
 
-				End Sub
-				
-```
-...
-```
-
-				
-			
+#### Epilog
 		
 		
 
@@ -649,35 +137,200 @@ To run the macro interactively CATDocView and ADL_ODT_SLASH
 
 ![](../CAAScrBase/images/aendtask.gif)
 
-[[Top]]
+[Top]
 
 ---
 
-#### []In Short
+#### In Short
 
 This use case has shown how to produce in VB a complete analysis document with 
 a generative way.
 
-[[Top]]
+[Top]
 
 ---
 
-#### []References
-
-	
-		|[1]
-		|[Replaying 
-		a macro]
-	
-	
-		|[2]
-		[
-		The Physical Types for Structural Analysis]
-	
-	
-		|[[Top]]
-	
+#### References
 
 ---
 
-*Copyright 2001, Dassault Systmes. All rights reserved.*
+*Copyright  2001, Dassault Systmes. All rights reserved.*
+
+
+
+```vbscript
+...
+```
+
+```vbscript
+&#39; ----------------------------------------------------------- 
+&#39; Optional: allows to find the sample wherever it&#39;s installed
+    sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+    If(Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+    Err.Raise 9999,,&quot;No Doc Path Defined&quot;
+    End If
+&#39; -----------------------------------------------------------
+```
+
+```vbscript
+&#39; Get the collection of documents in session
+    Set documents1 = CATIA.Documents
+
+&#39; ----------------------------------------------------------- 
+&#39; Get the collection of documents in session 
+&#39; Create the CATAnalysis Document 
+   Set TheAnalysisDocument = documents1.Add(&quot;Analysis&quot;) 
+   
+&#39; if WB name already is &quot;GPSCfg&quot;, not to use StartWorkbench 
+   WBName = CATIA.GetWorkbenchId if (WBName &lt;&gt; &quot;GPSCfg&quot;) Then 
+      CATIA.StartWorkbench(&quot;GPSCfg&quot;)
+   End If
+ ...
+```
+
+```vbscript
+...
+&#39;_____________________________________________________________________________________ 
+&#39; Start to scan the existing structure of analysis document: Retrieve the AnalysisManager 
+   Set analysisManager1 = TheAnalysisDocument.Analysis
+```
+
+```vbscript
+Dim arrayOfVariantOfShort1(0)
+   analysisManager1.ImportDefineFile (sDocPath &amp; sSep &amp; &quot;online&quot; &amp; sSep &amp; &quot;CAAScdAniUseCases&quot; &amp; sSep &amp; &quot;samples&quot; &amp; sSep &amp; &quot;AnalysisMechfeat.CATPart&quot;),
+```
+
+```vbscript
+&quot;CATAnalysisImport&quot;, arrayOfVariantOfShort1
+```
+
+```vbscript
+&#39; _____________________________________________________________________________________ 
+&#39; Reframe All. 
+   Set specsAndGeomWindow1 = CATIA.ActiveWindow 
+   Set viewer3D1 = specsAndGeomWindow1.ActiveViewer 
+   viewer3D1.Reframe 
+&#39; _____________________________________________________________________________________ 
+&#39; Scan the analysis document: Retrieve the Pointed documents to extract the reference for preprocessing 
+   Set analysisLinkedDocuments1 = analysisManager1.LinkedDocuments 
+   CATIA.SystemService.Print analysisLinkedDocuments1.Name 
+   If (analysisLinkedDocuments1.Count &lt;&gt; 1 ) Then 
+      Err.Raise 9999,,&quot;NbDoc Li NE 1&quot; 
+   End If 
+&#39; _____________________________________________________________________________________ 
+&#39; Retrieve the CATPart Document and associated publications for preprocessing. 
+   Set TheDoc = analysisLinkedDocuments1.Item(1) 
+   CATIA.SystemService.Print TheDoc.FullName 
+   Set product1 = TheDoc.Product 
+   Set publications1 = product1.Publications 
+   Set publication1 = publications1.Item(&quot;Bottomface&quot;) 
+   Set publication2 = publications1.Item(&quot;Sliding1&quot;) 
+   Set publication3 = publications1.Item(&quot;Sliding2&quot;) 
+   Set publication4 = publications1.Item(&quot;ResizeBody&quot;)
+...
+```
+
+```vbscript
+...
+&#39; _____________________________________________________________________________________ 
+&#39; Create a Static Case in the current analysis model. 
+   Set analysisModels1 = analysisManager1.AnalysisModels 
+   Set analysisModel1 = analysisModels1.Item(1) 
+   Set analysisCases1 = analysisModel1.AnalysisCases
+   
+   Set analysisCase1 = analysisCases1.Add()
+   Set analysisSets1 = analysisCase1.AnalysisSets
+   Set analysisSet1 = analysisSets1.Add(&quot;RestraintSet&quot;, catAnalysisSetIn)
+   Set analysisSet2 = analysisSets1.Add(&quot;LoadSet&quot;, catAnalysisSetIn)
+   Set analysisSet3 = analysisCase1.AddSolution(&quot;StaticSet&quot;)
+  ...
+```
+
+```vbscript
+...
+&#39; To work with the collection of entities that defines the Boundary condition.
+&#39; _____________________________________________________________________________________ 
+   Set analysisEntities1 = analysisSet1.AnalysisEntities
+   Set analysisEntity1 = analysisEntities1.Add(&quot;SAMClamp&quot;)
+   analysisEntity1.AddSupportFromPublication product1, publication1 
+&#39; _____________________________________________________________________________________ 
+&#39; Create Slider boundary.
+   Set analysisEntity2 = analysisEntities1.Add(&quot;SAMSurfaceSlider&quot;)
+   analysisEntity2.AddSupportFromPublication product1, publication2
+   analysisEntity2.AddSupportFromPublication product1, publication3
+...
+```
+
+```vbscript
+...
+&#39; _____________________________________________________________________________________ 
+&#39; Create Pressure.
+   Set analysisEntities2 = analysisSet2.AnalysisEntities 
+   Set analysisEntity3 = analysisEntities2.Add(&quot;SAMPressure&quot;)
+   analysisEntity3.AddSupportFromPublication product1, publication4  
+   analysisEntity3.SetValue &quot;SAMPressureMag&quot;,&quot;&quot;, 0, 0, 0, 500.
+...
+```
+
+```vbscript
+...
+&#39; _____________________________________________________________________________________ 
+&#39; Define a global sensor measuring the maximum value of VonMises criterion. 
+   Set dimension1 = analysisManager1.Parameters.CreateDimension(&quot;Maximum value of VonMises criterion&quot;, &quot;PRESSURE&quot;, 0.000000)
+   Set formula1 = analysisManager1.Relations.CreateFormula(&quot;Maximum value of VonMises criterion&quot;,&quot;&quot;,dimension1,
+                                                 &quot;misesmax(`Finite Element Model.1\Static Case Solution.1` ) &quot;)
+...
+```
+
+```vbscript
+...
+&#39; Launch the computation of the Case 
+   MyCase.Compute ...
+  
+&#39; Extract the computed value of the sensor
+   CATIA.SystemService.Print &quot; Mises Max Computed &quot; &amp; dimension1.ValueAsString
+...
+```
+
+```vbscript
+...
+&#39; _____________________________________________________________________________________ 
+&#39; Create corresponding image.
+   Set analysisImages1 = analysisSet3.AnalysisImages 
+   Set analysisImage1 = analysisImages1.Add(&quot;StressVonMises_Iso_Smooth&quot;, False, False, True)
+ &#39; _____________________________________________________________________________________ &#39;
+ Reframe All. 
+   viewer3D1.Reframe
+...
+```
+
+```vbscript
+...
+&#39; _____________________________________________________________________________________ 
+&#39; Export data from the created image.
+   Set fileSystem1 = CATIA.FileSystem 
+   Set folder1 = fileSystem1.GetFolder(outputPath)
+   analysisImage1.ExportData folder1, &quot;VonMises&quot;, &quot;txt&quot;
+ &#39; _____________________________________________________________________________________ &#39;
+ 
+...
+```
+
+```vbscript
+...
+&#39; _____________________________________________________________________________________ 
+&#39; Deactivate and Update the created image.
+   analysisImage1.SetActivationStatus false
+   analysisImage1.Update
+ &#39; _____________________________________________________________________________________ &#39;
+ 
+...
+```
+
+```vbscript
+...
+```
+
+```vbscript
+...
+```

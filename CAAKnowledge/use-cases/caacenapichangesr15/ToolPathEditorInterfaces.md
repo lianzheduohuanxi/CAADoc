@@ -10,11 +10,11 @@ converted: "2026-05-11T17:33:51.151342"
 ```
 
 ---
-| 
+|
 # CAA C++ API Modifications
 
-| 
-##  ToolPathEditorInterfaces Framework Modifications in V5R15 
+|
+##  ToolPathEditorInterfaces Framework Modifications in V5R15
 
 * * *
 

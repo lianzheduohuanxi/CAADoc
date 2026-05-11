@@ -2,55 +2,58 @@
 title: "Untitled"
 category: "use-case"
 module: "CAAScdInfUseCases"
-tags: ["CAAScrBase", "CAAInfCreateDocument", "CATIA"]
+tags: ["CAAInfCreateDocument", "CAAScrBase", "CATIA"]
 source_file: "Doc/online/CAAScdInfUseCases/CAAInfCreateDocumentSource.htm"
-converted: "2026-05-11T11:06:32.793962"
+converted: "2026-05-11T11:27:02.699521"
 ---
 
-```
 Option Explicit
-
 ' COPYRIGHT DASSAULT SYSTEMES 2001
 
 ' *****************************************************************************
-
-' Purpose: Create a New Document.
-
-' Assumtions: None
-
-' Author: 
-
-' Languages: VBScript
-
-' Locales: English 
-
-' CATIA Level: V5R7 
-
+'   Purpose:       Create a New Document.
+'   Assumtions:   None
+'   Author: 
+'   Languages:   VBScript
+'   Locales:        English 
+'   CATIA Level:  V5R7 
 ' *****************************************************************************
 
-Sub 
-CATMain()
+Sub CATMain()
 
- 
-'Create a new part document.
+    'Create a new part document.
+    'Add the new document to the end of the collection of documents.
+    'Create and display a new window for the new document.
+    'Activate the new document and the window.
+    Dim oNewPartDoc As Document
+    Set oNewPartDoc = CATIA.Documents.Add("Part")
+   
+End Sub
 
- 
-'Add the new document to the end of the collection of documents.
 
- 
-'Create and display a new window for the new document.
 
- 
-'Activate the new document and the window.
+```vbscript
+Option Explicit
+' COPYRIGHT DASSAULT SYSTEMES 2001
 
- Dim 
-oNewPartDoc
- As 
-Document
+' *****************************************************************************
+'   Purpose:       Create a New Document.
+'   Assumtions:   None
+'   Author: 
+'   Languages:   VBScript
+'   Locales:        English 
+'   CATIA Level:  V5R7 
+' *****************************************************************************
 
- Set 
-oNewPartDoc = CATIA.Documents.Add("Part")
- 
 
+Sub CATMain()
+
+    'Create a new part document.
+    'Add the new document to the end of the collection of documents.
+    'Create and display a new window for the new document.
+    'Activate the new document and the window.
+    Dim oNewPartDoc As Document
+    Set oNewPartDoc = CATIA.Documents.Add("Part")
+   
 End Sub
 ```

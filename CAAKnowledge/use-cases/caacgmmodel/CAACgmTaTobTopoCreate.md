@@ -9,10 +9,10 @@ converted: "2026-05-11T17:33:48.033778"
 ```
 
 ---
-# How to Associate Topology with Geometry  
+# How to Associate Topology with Geometry
 
----  
-Technical Article  
+---
+Technical Article
 ## Abstract
 
 The topology describes the limitation of a geometry. Hence, topological objects are related to geometric objects within specified rules, which are detailed here
@@ -29,8 +29,8 @@ The topology describes the limitation of a geometry. Hence, topological objects 
     * Main Steps to Create Cells Related to Geometry
     * Example: Wire Creation
     * In Short
-    * References  
----  
+    * References
+---
 ## Introduction
 
 The topology is a building set for limiting the space. Vertex bound edges, which bound faces, which bound volumes. How to map these topological entities to geometric entities in order to limit the geometric space?
@@ -90,14 +90,14 @@ The geometric entity corresponding to a vertex is a CATMacroPoint. Imagine you w
 The following diagrams summarize the different configurations between the geometry and the topology.
 
 The following diagrams summarize the different configurations between the geometry and the topology.
-Fig. 1: Geometry Associated with Topology: the Case of the Shell Domain ![Shell Domain](images/CAACgmTobTopoGeom1.gif)  
+Fig. 1: Geometry Associated with Topology: the Case of the Shell Domain ![Shell Domain](images/CAACgmTobTopoGeom1.gif)
 
----  
+---
 The following diagrams summarize the different configurations between the geometry and the topology.
 Fig. 1: Geometry Associated with Topology: the Case of the Shell Domain ![Shell Domain](images/CAACgmTobTopoGeom1.gif)
-Fig. 2: Geometry Associated with Topology: the Case of the Wire and VertexInVolume Domain ![Wire and VertexInVolume Domain](images/CAACgmTobTopoGeom2.gif)  
+Fig. 2: Geometry Associated with Topology: the Case of the Wire and VertexInVolume Domain ![Wire and VertexInVolume Domain](images/CAACgmTobTopoGeom2.gif)
 
----  
+---
 ## Main Steps to Create Cells Related to Geometry
 
 We suppose in all these examples that a CATGeoFactory and a CATBody have been already created. These examples only detail the cell construction. You must then create the domain (Lump, Shell, Wire, VertexInVolume) containing the cells and add it to the body to complete it.
@@ -199,11 +199,11 @@ This section details step by step the creation of a Wire containing one edge.
     * Topological operators allow you to easily create domains.
 ## References
 
-[1] |  [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.md)  
----|---  
-[2] | [Topology Concepts](CAACgmTaTobTopoConcepts.md)  
-[3] | [The CGM Topological Model](CAACgmTaTobTopoModel.md)  
+[1] |  [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.md)
+---|---
+[2] | [Topology Concepts](CAACgmTaTobTopoConcepts.md)
+[3] | [The CGM Topological Model](CAACgmTaTobTopoModel.md)
 ## History
 
-Version: **1** [Mar 2000] | Document created  
+Version: **1** [Mar 2000] | Document created
 ---|---

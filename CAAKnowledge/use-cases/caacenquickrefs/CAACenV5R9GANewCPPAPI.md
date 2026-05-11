@@ -12,7 +12,7 @@ converted: "2026-05-11T17:33:47.676659"
 tags: ["CATIFunctActionsGroup", "CATITPSView", "CATIAVPMVDAImport", "CATIFunctVariant", "CATIMfgTPModification", "CATISchRouteAlternateGraphic", "CATIFunctAction", "CATIKnowledgeAdvisorAddin", "CATIMfgGeometryTabPage", "CATIVpmSCLogin", "CATIValue", "CATISchGRRRouteAlternate", "CATIFunctVariants", "CATISmgMachiningAreaChecks", "CATIFunctDocument", "CATIMfgManufacturingUtilities", "CATIFunctElement", "CATIInstance", "CATISchAppReplace", "CATIFunctFacetMgr"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R9GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.676659"
-CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R9 GA  
+CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R9 GA
 
 * * *
 
@@ -292,9 +292,9 @@ The following are the new CAA V5R9 GA C++ Authorized APIs, compared with CAA V5R
 
 * * *
 
-History Version: **1** [Apr 2002] | Document created  
----|---  
-[Top]  
+History Version: **1** [Apr 2002] | Document created
+---|---
+[Top]
 
 * * *
 

@@ -2,246 +2,255 @@
 title: "Untitled"
 category: "use-case"
 module: "CAAScdSchUseCases"
-tags: ["CAAScrBase", "CAASchCreateSchDocument", "CAASCH_Detail01", "CAAScdSchUseCases", "CATIA"]
+tags: ["CAAScrBase", "CATIA", "CAAScdSchUseCases", "CAASCH_Detail01", "CAASchCreateSchDocument"]
 source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocumentSource.htm"
-converted: "2026-05-11T11:06:32.648889"
+converted: "2026-05-11T11:27:02.643369"
 ---
 
-```
 Option Explicit
-
 ' COPYRIGHT DASSAULT SYSTEMES 2004
 
 ' *****************************************************************************
-
-' Purpose: Create a schematic document.
-
-' Languages: VBScript
-
-' Locales: English 
-
-' CATIA Level: V5R15 
-
+'   Purpose:      Create a schematic document.
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R15 
 ' *****************************************************************************
 
-Sub 
-CATMain()
+Sub CATMain()
 
- 
-' ------------------------------------------------------------------------- 
+    ' ------------------------------------------------------------------------- 
+    ' Optional: allows to find the sample wherever it's installed
 
- 
-' Optional: allows to find the sample wherever it's installed
+    dim sDocPath As String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
 
- dim 
-sDocPath
- As 
-String 
- sDocPath=CATIA.SystemService.Environ("CATDocView")
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,sDocPath,"No Doc Path Defined"
+    End If
 
- If 
-(Not CATIA.FileSystem.FolderExists(sDocPath))
- Then
+    dim sSavePath As String 
+    sSavePath=CATIA.SystemService.Environ("CATSavePath")
 
- Err.Raise 9999,sDocPath,"No Doc Path Defined"
+    CATIA.SystemService.Print "CATSavePath = " & sSavePath
 
- End If
+    If (Not CATIA.FileSystem.FolderExists(sSavePath)) Then
+      Err.Raise 9999,sSavePath,"No Path for saving document"
+    End If
 
- dim 
-sSavePath
- As 
-String 
- sSavePath=CATIA.SystemService.Environ("CATSavePath")
+    ' Open main schematic P&ID design document 
+    Dim sFilePath
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+            "online\CAAScdSchUseCases\samples\CAASCH_Detail01.CATProduct")
 
- CATIA.SystemService.Print "CATSavePath = " & sSavePath
+    Dim objSchDoc As Document
+    Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
- If 
-(Not CATIA.FileSystem.FolderExists(sSavePath))
- Then
+    Dim strMessage As String
 
- Err.Raise 9999,sSavePath,"No Path for saving document"
+    strMessage = _
+      "--------------------------------------------------------------------" & vbCr
+    strMessage = strMessage & _
+      "Output traces from CAASchCreateSchDocument.CATScript" & vbCrLf
 
- End If
+    '
+    ' Find the top node of the schematic object tree - schematic root.
+    Dim objPrdRoot As Product
+    Dim objSchRoot As SchematicRoot
+    If ( Not ( objSchDoc Is Nothing ) ) Then
+      Set objPrdRoot = objSchDoc.Product 
+      If ( Not ( objPrdRoot Is Nothing ) ) Then
+        Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
+      End If
+    End If
 
- 
-' Open main schematic P&ID design document 
+    Dim objSchSession As SchSession
+    Dim objSchDocNew As Document
+    Dim bInteractive As boolean
 
- Dim 
-sFilePath
- sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
- "online\CAAScdSchUseCases\samples\CAASCH_Detail01.CATProduct")
+    If ( Not ( objSchRoot Is Nothing ) ) Then
 
- Dim 
-objSchDoc
- As 
-Document
+       '-----------------------------------------------------------------------
+       ' Get the schematic session.
+       '-----------------------------------------------------------------------
 
- Set 
-objSchDoc = CATIA.Documents.Open(sFilePath)
+       Set objSchSession = objSchRoot.GetSchematicSession
+       If ( Not ( objSchSession Is Nothing ) ) Then
+         strMessage = strMessage &  "Got schematic session" & vbCr
 
- Dim 
-strMessage
- As 
-String
+         '---------------------------------------------------------------------
+         ' Create another schematic document.
+         '---------------------------------------------------------------------
+         'bInteractive = true
+         bInteractive = false
+         objSchSession.CreateDocument "CATProduct",bInteractive,objSchDocNew
 
- strMessage = _
- "--------------------------------------------------------------------" & vbCr
- strMessage = strMessage & _
- "Output traces from CAASchCreateSchDocument.CATScript" & vbCrLf
+         If ( Not ( objSchDocNew Is Nothing ) ) Then
 
- 
-'
+            Set objPrdRoot = Nothing
+            Set objSchRoot = Nothing
 
- 
-' Find the top node of the schematic object tree - schematic root.
+            Set objPrdRoot = objSchDocNew.Product 
+            If ( Not ( objPrdRoot Is Nothing ) ) Then
+               Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
+            End If
 
- Dim 
-objPrdRoot
- As 
-Product
+            If ( Not ( objSchRoot Is Nothing ) ) Then
+               objSchRoot.SetDrawingStandard catISO
+               strMessage = strMessage & "drawing standard set to catISO" & vbCr
+               Dim std As CatDrawingStandard
+               std = objSchRoot.GetDrawingStandard
+               strMessage = strMessage & "drawing standard = " & std & vbCr
+            End If
 
- Dim 
-objSchRoot
- As 
-SchematicRoot
+            Dim strDocName As String
 
- If 
-( Not ( objSchDoc Is Nothing ) )
- Then
+            strDocName = objSchDocNew.FullName
 
- Set 
-objPrdRoot = objSchDoc.Product 
+            strMessage = strMessage & "document created" & vbCr
+            strMessage = strMessage & "default name = " & strDocName & vbCr
 
- If 
-( Not ( objPrdRoot Is Nothing ) )
- Then
+            strDocName = CATIA.FileSystem.ConcatenatePaths(sSavePath, _
+			              "SampleOutput_SchDoc01.CATProduct")
 
- Set 
-objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
+            objSchDocNew.SaveAs strDocName
 
- End If
+            strMessage = strMessage &  "document created" & vbCr
+            strMessage = strMessage &  "document saved as " & strDocName & vbCr
+         End If
 
- End If
+       End If '--- If ( Not ( objSchDocNew ...
 
- Dim 
-objSchSession
- As 
-SchSession
+    End If  '----If ( Not ( objSchRoot Is Nothing )...
 
- Dim 
-objSchDocNew
- As 
-Document
+    strMessage = strMessage & _
+      "--------------------------------------------------------------------" & vbCr
+    MsgBox strMessage
 
- Dim 
-bInteractive
- As 
-boolean
+End Sub
 
- If 
-( Not ( objSchRoot Is Nothing ) )
- Then
 
- 
-'-----------------------------------------------------------------------
 
- 
-' Get the schematic session.
+```vbscript
+Option Explicit
+' COPYRIGHT DASSAULT SYSTEMES 2004
 
- 
-'-----------------------------------------------------------------------
+' *****************************************************************************
+'   Purpose:      Create a schematic document.
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R15 
+' *****************************************************************************
 
- Set 
-objSchSession = objSchRoot.GetSchematicSession
+Sub CATMain()
 
- If 
-( Not ( objSchSession Is Nothing ) )
- Then
+    ' ------------------------------------------------------------------------- 
+    ' Optional: allows to find the sample wherever it's installed
 
- strMessage = strMessage & "Got schematic session" & vbCr
+    dim sDocPath As String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
 
- 
-'---------------------------------------------------------------------
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,sDocPath,"No Doc Path Defined"
+    End If
 
- 
-' Create another schematic document.
+    dim sSavePath As String 
+    sSavePath=CATIA.SystemService.Environ("CATSavePath")
 
- 
-'---------------------------------------------------------------------
+    CATIA.SystemService.Print "CATSavePath = " & sSavePath
 
- 
-'bInteractive = true
+    If (Not CATIA.FileSystem.FolderExists(sSavePath)) Then
+      Err.Raise 9999,sSavePath,"No Path for saving document"
+    End If
 
- bInteractive = false
- objSchSession.CreateDocument "CATProduct",bInteractive,objSchDocNew
+    ' Open main schematic P&ID design document 
+    Dim sFilePath
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+            "online\CAAScdSchUseCases\samples\CAASCH_Detail01.CATProduct")
 
- If 
-( Not ( objSchDocNew Is Nothing ) )
- Then
+    Dim objSchDoc As Document
+    Set objSchDoc = CATIA.Documents.Open(sFilePath)
 
- Set 
-objPrdRoot = Nothing
+    Dim strMessage As String
 
- Set 
-objSchRoot = Nothing
+    strMessage = _
+      "--------------------------------------------------------------------" & vbCr
+    strMessage = strMessage & _
+      "Output traces from CAASchCreateSchDocument.CATScript" & vbCrLf
 
- Set 
-objPrdRoot = objSchDocNew.Product 
+    '
+    ' Find the top node of the schematic object tree - schematic root.
+    Dim objPrdRoot As Product
+    Dim objSchRoot As SchematicRoot
+    If ( Not ( objSchDoc Is Nothing ) ) Then
+      Set objPrdRoot = objSchDoc.Product 
+      If ( Not ( objPrdRoot Is Nothing ) ) Then
+        Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
+      End If
+    End If
 
- If 
-( Not ( objPrdRoot Is Nothing ) )
- Then
+    Dim objSchSession As SchSession
+    Dim objSchDocNew As Document
+    Dim bInteractive As boolean
 
- Set 
-objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
+    If ( Not ( objSchRoot Is Nothing ) ) Then
 
- End If
+       '-----------------------------------------------------------------------
+       ' Get the schematic session.
+       '-----------------------------------------------------------------------
 
- If 
-( Not ( objSchRoot Is Nothing ) )
- Then
+       Set objSchSession = objSchRoot.GetSchematicSession
+       If ( Not ( objSchSession Is Nothing ) ) Then
+         strMessage = strMessage &  "Got schematic session" & vbCr
 
- objSchRoot.SetDrawingStandard catISO
- strMessage = strMessage & "drawing standard set to catISO" & vbCr
+         '---------------------------------------------------------------------
+         ' Create another schematic document.
+         '---------------------------------------------------------------------
+         'bInteractive = true
+         bInteractive = false
+         objSchSession.CreateDocument "CATProduct",bInteractive,objSchDocNew
 
- Dim 
-std
- As 
-CatDrawingStandard
- std = objSchRoot.GetDrawingStandard
- strMessage = strMessage & "drawing standard = " & std & vbCr
+         If ( Not ( objSchDocNew Is Nothing ) ) Then
 
- End If
+            Set objPrdRoot = Nothing
+            Set objSchRoot = Nothing
 
- Dim 
-strDocName
- As 
-String
+            Set objPrdRoot = objSchDocNew.Product 
+            If ( Not ( objPrdRoot Is Nothing ) ) Then
+               Set objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
+            End If
 
- strDocName = objSchDocNew.FullName
+            If ( Not ( objSchRoot Is Nothing ) ) Then
+               objSchRoot.SetDrawingStandard catISO
+               strMessage = strMessage & "drawing standard set to catISO" & vbCr
+               Dim std As CatDrawingStandard
+               std = objSchRoot.GetDrawingStandard
+               strMessage = strMessage & "drawing standard = " & std & vbCr
+            End If
 
- strMessage = strMessage & "document created" & vbCr
- strMessage = strMessage & "default name = " & strDocName & vbCr
+            Dim strDocName As String
 
- strDocName = CATIA.FileSystem.ConcatenatePaths(sSavePath, _
-			 "SampleOutput_SchDoc01.CATProduct")
+            strDocName = objSchDocNew.FullName
 
- objSchDocNew.SaveAs strDocName
+            strMessage = strMessage & "document created" & vbCr
+            strMessage = strMessage & "default name = " & strDocName & vbCr
 
- strMessage = strMessage & "document created" & vbCr
- strMessage = strMessage & "document saved as " & strDocName & vbCr
+            strDocName = CATIA.FileSystem.ConcatenatePaths(sSavePath, _
+			              "SampleOutput_SchDoc01.CATProduct")
 
- End If
+            objSchDocNew.SaveAs strDocName
 
- End If 
-'--- If ( Not ( objSchDocNew ...
+            strMessage = strMessage &  "document created" & vbCr
+            strMessage = strMessage &  "document saved as " & strDocName & vbCr
+         End If
 
- End If 
-'----If ( Not ( objSchRoot Is Nothing )...
+       End If '--- If ( Not ( objSchDocNew ...
 
- strMessage = strMessage & _
- "--------------------------------------------------------------------" & vbCr
- MsgBox strMessage
+    End If  '----If ( Not ( objSchRoot Is Nothing )...
+
+    strMessage = strMessage & _
+      "--------------------------------------------------------------------" & vbCr
+    MsgBox strMessage
 
 End Sub
 ```

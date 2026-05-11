@@ -10,11 +10,11 @@ converted: "2026-05-11T17:33:51.360074"
 ```
 
 ---
-| 
+|
 # CAA C++ API Modifications
 
-| 
-##  ObjectModelerBase Framework Modifications in V5R17 
+|
+##  ObjectModelerBase Framework Modifications in V5R17
 
 * * *
 

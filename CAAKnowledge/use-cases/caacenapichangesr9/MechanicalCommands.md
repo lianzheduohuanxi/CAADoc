@@ -13,11 +13,11 @@ converted: "2026-05-11T17:33:52.930054"
 tags: ["CATIReplaceUI", "CATIIcon", "CATIReplacable"]
 source_file: "Doc/online/CAACenAPIChangesR9/MechanicalCommands.htm"
 converted: "2026-05-11T17:33:52.930054"
-CAA C++ API Modifications|  MechanicalCommands  |   
+CAA C++ API Modifications|  MechanicalCommands  |
 
 * * *
 
-**Entity|  SP| Modification| To Do** | MechanicalCommands/Protected/CATIIcon.h| GA| FHBD| COUCOU  
----|---|---|---  
-MechanicalCommands/Protected/CATIReplacable.h| GA| FHBD| COUCOU  
+**Entity|  SP| Modification| To Do** | MechanicalCommands/Protected/CATIIcon.h| GA| FHBD| COUCOU
+---|---|---|---
+MechanicalCommands/Protected/CATIReplacable.h| GA| FHBD| COUCOU
 MechanicalCommands/Protected/CATIReplaceUI.h| GA| FHBD| COUCOU

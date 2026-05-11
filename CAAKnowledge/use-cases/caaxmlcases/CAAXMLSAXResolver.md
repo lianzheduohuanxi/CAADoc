@@ -11,15 +11,15 @@ converted: "2026-05-11T17:33:45.664165"
 ---
 # 3D PLM Enterprise Architecture
 
-| 
+|
 ## Middleware Abstraction
 
-| 
+|
 ### Fetching an External Entity with SAX
 
-_Using a SAX entity resolver to fetch an external entity_  
----|---|---  
-Use Case  
+_Using a SAX entity resolver to fetch an external entity_
+---|---|---
+Use Case
 
 * * *
 ### Abstract
@@ -35,7 +35,7 @@ This article shows how to specify an entity resolver and how to use it with a SA
   * **In Short**
   * **References**
 
----  
+---
 
 * * *
 ### What You Will Learn With This Use Case
@@ -66,16 +66,16 @@ where `<databasedir>` is the path of the directory, which contains the DTDs and 
 
 A sample XML file and a sample DTD are provided with the use case. To use them, launch the following command from the command line:
 
-Windows | `CAAXMLSAXResolver InstallRoot\OS\resources\xml\CAAXMLSAXResolver\database InstallRoot\OS\resources\xml\CAAXMLSAXResolver\car.xml`  
+Windows | `CAAXMLSAXResolver InstallRoot\OS\resources\xml\CAAXMLSAXResolver\database InstallRoot\OS\resources\xml\CAAXMLSAXResolver\car.xml`
 
 A sample XML file and a sample DTD are provided with the use case. To use them, launch the following command from the command line:
 Windows | `CAAXMLSAXResolver InstallRoot\OS\resources\xml\CAAXMLSAXResolver\database InstallRoot\OS\resources\xml\CAAXMLSAXResolver\car.xml`
-Unix | `CAAXMLSAXResolver InstallRoot/OS/resources/xml/CAAXMLSAXResolver/database InstallRoot/OS/resources/xml/CAAXMLSAXResolver/car.xml`  
+Unix | `CAAXMLSAXResolver InstallRoot/OS/resources/xml/CAAXMLSAXResolver/database InstallRoot/OS/resources/xml/CAAXMLSAXResolver/car.xml`
 
 where:
 
   * `InstallRoot` is the directory in which you have installed the run time part or the product line
-  * `OS` is the directory containing the installed code 
+  * `OS` is the directory containing the installed code
     * `aix_a` for 32-bit AIX
     * `hpux_b` for HP-UX
     * `solaris_a` for Solaris
@@ -88,11 +88,11 @@ where:
 The CAAXMLSAXResolver use case is made of several classes located in the CAAXMLSAXResolver.m module of the CAAXMLParser.edu framework:
 
 The CAAXMLSAXResolver use case is made of several classes located in the CAAXMLSAXResolver.m module of the CAAXMLParser.edu framework:
-Windows | `InstallRootDirectory\CAAXMLParser.edu\CAAXMLSAXResolver.m\`  
+Windows | `InstallRootDirectory\CAAXMLParser.edu\CAAXMLSAXResolver.m\`
 
 The CAAXMLSAXResolver use case is made of several classes located in the CAAXMLSAXResolver.m module of the CAAXMLParser.edu framework:
 Windows | `InstallRootDirectory\CAAXMLParser.edu\CAAXMLSAXResolver.m\`
-Unix | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLSAXResolver.m/`  
+Unix | `InstallRootDirectory/CAAXMLParser.edu/CAAXMLSAXResolver.m/`
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 
@@ -100,15 +100,15 @@ where `InstallRootDirectory` is the directory where the CAA CD-ROM is installed.
 ### Step-by-Step
 
 To create a SAX parser, create and register event handlers with this parser, and parse a file, there are six main steps:
-# |  Step  
----|---  
+# |  Step
+---|---
 To create a SAX parser, create and register event handlers with this parser, and parse a file, there are six main steps:
-1 | Implement a V5 Entity Resolver and Error Handler component  
-2 | Create a V5 SAX Component  
-3 | Create and Configure a V5 SAX Parser  
-4 | Create the Entity Resolver and Error Handler Components and Register Them With the Parser  
-5 | Parse the XML File  
-6 | Manage Errors  
+1 | Implement a V5 Entity Resolver and Error Handler component
+2 | Create a V5 SAX Component
+3 | Create and Configure a V5 SAX Parser
+4 | Create the Entity Resolver and Error Handler Components and Register Them With the Parser
+5 | Parse the XML File
+6 | Manage Errors
 
 [Top]
 #### Implement a V5 Entity Resolver and Error Handler Component
@@ -130,23 +130,23 @@ Therefore, to write a SAX document handler, all you need to do is to create a ne
             // CATISAXEntityResolver interface.
 public:
             virtual HRESULT **ResolveEntity**(
-                const CATUnicodeString & iPublicId, 
-                const CATUnicodeString & iSystemId, 
+                const CATUnicodeString & iPublicId,
+                const CATUnicodeString & iSystemId,
                 CATISAXInputSource_var& oInputSource);
 
             // Override part of the default implementation of the
             // CATISAXErrorHandler interface.
 const CATUnicodeString & iSystemId,
 CATISAXInputSource_var& oInputSource);
-            virtual HRESULT **Error**( 
+            virtual HRESULT **Error**(
                 CATSAXParseException* iException);
-            virtual HRESULT **FatalError**( 
+            virtual HRESULT **FatalError**(
                 CATSAXParseException* iException);
 
             ...
     };
 
----  
+---
 
     // CAAXMLSAXResolverHandlers.cpp
     #include "CAAXMLSAXResolverHandlers.h"
@@ -162,21 +162,21 @@ CATISAXInputSource_var& oInputSource);
     **#include "TIE_CATISAXErrorHandler.h"
     TIE_CATISAXErrorHandler(CAAXMLSAXResolverHandlers);**
 
----  
+---
 
 The next step is to provide an implementation for each of the SAX events you want to catch. The following code shows how the `ResolveEntity` event callback function is implemented. This method receives the name of the external entity to resolve as a _CATUnicodeString_. In the use case, the method will be invoked when the parser reads the document type declaration an cannot find the entity called `"sql://automotive.dtd"`.
 
     <!DOCTYPE car SYSTEM **"sql://automotive.dtd"** >
 
----  
+---
 
 The method must return the source of the corresponding entity in the form of a _CATISAXInputSource_ object. In this case, the entity consist of a DTD file stored in the database directory of the disk.
 
     // CAAXMLSAXResolverHandlers.cpp
 The method must return the source of the corresponding entity in the form of a _CATISAXInputSource_ object. In this case, the entity consist of a DTD file stored in the database directory of the disk.
     HRESULT CAAXMLSAXResolverHandlers::ResolveEntity(
-        const CATUnicodeString & iPublicId, 
-        const CATUnicodeString & iSystemId, 
+        const CATUnicodeString & iPublicId,
+        const CATUnicodeString & iSystemId,
         CATISAXInputSource_var& oInputSource) {
 
         ...
@@ -187,7 +187,10 @@ CATISAXInputSource_var& oInputSource) {
 
         CATIXMLSAXFactory_var factory;
         HRESULT hr2 = **::CreateCATIXMLSAXFactory**(factory);
+```vbscript
         if (SUCCEEDED(hr2) && (factory != NULL_var)) {
+
+```
 
             // Compute the file path where the DTD is located.
 CATIXMLSAXFactory_var factory;
@@ -214,13 +217,16 @@ filePath.Append("/");
             // Create a SAX input source
 filePath.Append("/");
 filePath.Append(iSystemId.SubString(prefix.GetLengthInChar(), iSystemId.GetLengthInChar() - prefix.GetLengthInChar()));
+```vbscript
             hr = factory->**CreateInputSourceFromFile**(filePath, "", oInputSource);
+
+```
 
         }
         ...
     }
 
----  
+---
 
 To create an input source for this file, invoke the `CreateInputSourceFromFile` of the _CATIXMLSAXFactory_ object. To get a _CATIXMLSAXFactory_ object, use the global function **CreateCATIXMLSAXFactory** (more on this in the next section).
 
@@ -231,9 +237,9 @@ To create an input source for this file, invoke the `CreateInputSourceFromFile` 
     // CAAXMLSAXResolverMain.cpp
     CATIXMLSAXFactory_var factory;
     HRESULT hr = **::CreateCATIXMLSAXFactory****(factory);
-    ...****  
+    ...****
 
----  
+---
 
 To work with SAX, you need to instantiate the V5 SAX component. The V5 SAX component can be created by calling the `CreateCATIXMLSAXFactory` global function. This function returns a V5 handler on the _CATIXMLSAXFactory_ interface, which is the main interface for the V5 SAX component. Using this interface you will be able to create SAX1 and SAX2 parsers and to create input source to feed XML to the parser. Note that the code above does not specify the CLSID of the component to use, so the default SAX component (XML4C3) will be used. See [3] and [4] if you want to use another V5 SAX component.
 
@@ -242,9 +248,9 @@ To work with SAX, you need to instantiate the V5 SAX component. The V5 SAX compo
 
     CATISAXParser_var parser;
     hr = factory->**CreateParser**(parser);
-    ...  
+    ...
 
----  
+---
 
 To create a SAX1 parser, one simply invokes the `CreateParser` on the _CATIXMLSAXFactory_ object. There are two kinds of SAX1 parsers, non-validating SAX1 parsers and validating SAX1 parsers. If you do specify optional arguments to your `CreateParser` call, a validating parser will be created. See [3] and [4] if you want to use another V5 SAX component.
 
@@ -259,9 +265,9 @@ The SAX1 parser created in the previous section is not yet usable as it does not
     CATISAXEntityResolver_var entityHandler = handlersImpl;
     CATISAXErrorHandler_var errHandler = handlersImpl;
     handlersImpl->Release();
-    handlersImpl = NULL;  
+    handlersImpl = NULL;
 
----  
+---
 
 handlersImpl->Release();
 handlersImpl = NULL;
@@ -269,22 +275,28 @@ To instantiate the entity resolver and the error handler you have defined in the
 
     ...
 To instantiate the entity resolver and the error handler you have defined in the previous section, simply do a `new` of the main implementation class, then get interface handles of the right type on the component.
+```vbscript
     hr = parser->**SetEntityResolver**(entityHandler);
+
+```
 
     ...
     hr = parser->**SetErrorHandler**(errHandler);
-    ...  
+    ...
 
----  
+---
 
 To register your entityResolver handler, call the `SetEntityResolver` method of the _CATISAXParser_ interface. To register your error handler, call the `SetErrorHandler` method of the _CATISAXParser_ interface. Passing `NULL_var` to these methods unregisters the previously registered handlers.
 
 [Top]
 #### Parse the XML File
 
-    hr = parser->**Parse**(filePath);  
+```vbscript
+    hr = parser->**Parse**(filePath);
 
----  
+```
+
+---
 
 To parse the XML file, call the `Parse` method of the _CATISAXParser_ interface. Pass the path of the file to read as a parameter. The method will read the file from top to bottom and generate the corresponding events, calling your event handlers for all the events you want to manage.
 
@@ -303,19 +315,19 @@ This use case shows you how to parse XML documents using the SAX API.
 * * *
 ### References
 
-[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)  
----|---  
-[2] | [ Managing Errors Using HRESULT](../CAASysTechArticles/CAASysErrors.md)  
-[3] | [ Using XML in V5](../CAAXmlTechArticles/CAAXmlV5Overview.md)  
-[4] | [XML Tips and Tricks](../CAAXmlTechArticles/CAAXmlTipsAndTricks.md)  
-[Top]  
+[1] | [Building and Launching a CAA V5 Use Case](../CAADocUseCases/CAADocRunSample.md)
+---|---
+[2] | [ Managing Errors Using HRESULT](../CAASysTechArticles/CAASysErrors.md)
+[3] | [ Using XML in V5](../CAAXmlTechArticles/CAAXmlV5Overview.md)
+[4] | [XML Tips and Tricks](../CAAXmlTechArticles/CAAXmlTipsAndTricks.md)
+[Top]
 
 * * *
 ### History
 
-Version: **1** [May 2005] | Document created  
----|---  
-[Top]  
+Version: **1** [May 2005] | Document created
+---|---
+[Top]
 
 * * *
 

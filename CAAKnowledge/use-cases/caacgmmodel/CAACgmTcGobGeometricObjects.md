@@ -9,14 +9,14 @@ converted: "2026-05-11T17:33:48.111905"
 ```
 
 ---
-# Geometric Objects and Operators  
+# Geometric Objects and Operators
 
----  
+---
 This section deals with Geometric Objects.
 
-* * *  
+* * *
 
----  
+---
 In this section:
     * [The Objects of CATIA Geometric Modeler](CAACgmTaGobGeoObjects.md) is an introduction to CGM objects.
     * [The Curves of CATIA Geometric Modeler](CAACgmTaGobCurves.md) describes the properties and the particular features of the CGM curves.

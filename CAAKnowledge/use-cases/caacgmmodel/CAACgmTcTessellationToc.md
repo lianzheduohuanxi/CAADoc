@@ -9,8 +9,8 @@ converted: "2026-05-11T17:33:48.118389"
 ```
 
 ---
-#   
+#
 
----  
-In this section:  
+---
+In this section:
 ---

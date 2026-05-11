@@ -9,10 +9,10 @@ converted: "2026-05-11T17:33:48.103760"
 ```
 
 ---
-# GM Model  
+# GM Model
 
----  
----  
-In this section:  
+---
+---
+In this section:
 Also in this section, the framework API reference:
     * GMModelInterfaces.

@@ -11,8 +11,8 @@ converted: "2026-05-11T17:31:52.433114"
 ---
 ## Infrastructure
 
- | 
- ## About CATSafeArrayVariant  
+ |
+ ## About CATSafeArrayVariant
 
  * * *
 
@@ -26,7 +26,10 @@ Many methods which return a value do not return a single value, but an array of 
      ReDim MyVPOrigin(2)
 
 ```vbscript
+```vbscript
      CATIA.ActiveWindow.ActiveViewer.Viewpoint3D.GetOrigin MyVPOrigin
+
+```
 
 ```
 
@@ -34,9 +37,9 @@ Many methods which return a value do not return a single value, but an array of 
 CATIA.ActiveWindow.ActiveViewer.Viewpoint3D.GetOrigin MyVPOrigin
  You should directly use the ReDim statement to assign a size to the array while declaring it as a variable size array, and then call the GetOrigin method. Assigning a size of 2 allocates an array containing three values.
 
- To access each coordinate, you need to go deeper:
-
 ```
+
+ To access each coordinate, you need to go deeper:
 
      * The x coordinate is in **MyVPOrigin(0)**
      * The y coordinate is in **MyVPOrigin(1)**
@@ -45,17 +48,26 @@ CATIA.ActiveWindow.ActiveViewer.Viewpoint3D.GetOrigin MyVPOrigin
  Contrary to collections, a CATSafeArrayVariant's index begins at 0. To set a new triplet of values, you can write:
 
 Contrary to collections, a CATSafeArrayVariant's index begins at 0. To set a new triplet of values, you can write:
+```vbscript
      MyVPOrigin = Array(150, 200, 50)
 
+```
+
+```vbscript
 ```vbscript
      CATIA.ActiveWindow.ActiveViewer.Viewpoint3D.PutOrigin MyVPOrigin
+
+```
 
 ```
 
  or
 
 ```vbscript
+```vbscript
      CATIA.ActiveWindow.ActiveViewer.Viewpoint3D.PutOrigin Array(150, 200, 50)
+
+```
 
 ```
 
@@ -63,12 +75,15 @@ Contrary to collections, a CATSafeArrayVariant's index begins at 0. To set a new
 CATIA.ActiveWindow.ActiveViewer.Viewpoint3D.PutOrigin Array(150, 200, 50)
  But to modify the y coordinate only, write:
 
-     MyVPOrigin(1) = 200
-
 ```
 
+     MyVPOrigin(1) = 200
+
 ```vbscript
- CATIA.ActiveWindow.ActiveViewer.Viewpoint3D.PutOrigin MyVPOrigin 
+```vbscript
+ CATIA.ActiveWindow.ActiveViewer.Viewpoint3D.PutOrigin MyVPOrigin
+
+```
 
 ```
 
@@ -76,6 +91,9 @@ CATIA.ActiveWindow.ActiveViewer.Viewpoint3D.PutOrigin Array(150, 200, 50)
 CATIA.ActiveWindow.ActiveViewer.Viewpoint3D.PutOrigin MyVPOrigin
  When you don't know the size of an array, use the UBound function. It returns the rank of the highest element in the array. For example the following example returns 2 in Highestrank:
 
+```
+
+```vbscript
      Highestrank = Ubound(MyVPOrigin)
 
 ```

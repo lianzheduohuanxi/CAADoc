@@ -12,7 +12,7 @@ converted: "2026-05-11T17:33:47.410936"
 tags: ["CATIA", "CATIPspPlacePartOnRun", "CATISysFileAccessStatisticsSettingAtt"]
 source_file: "Doc/online/CAACenQuickRefs/CAACenV5R18SP4NewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.410936"
-CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R18 SP3  
+CAA V5 Encyclopedia |  New C++ Authorized APIs in CAA V5R18 SP3
 
 * * *
 
@@ -36,11 +36,11 @@ The following are the new CAA V5R18 SP4 C++ Authorized APIs, compared with CAA V
 
 * * *
 
-History Version: **1** [Feb 2008] | Document created  
----|---  
-[Top]  
+History Version: **1** [Feb 2008] | Document created
+---|---
+[Top]
 
 * * *
 
-_Copyright © 1999-2007, Dassault Systèmes. All rights reserved._  
+_Copyright © 1999-2007, Dassault Systèmes. All rights reserved._
 Special Notices [CAA V5 CATIA](../CAADocQuickRefs/CAADocSpecialNoticesCATIA.md) | [CAA V5 DELMIA](../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.md) | [CAA V5 ENOVIA](../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.md)

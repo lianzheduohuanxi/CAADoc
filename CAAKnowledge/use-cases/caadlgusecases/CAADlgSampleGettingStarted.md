@@ -2,266 +2,116 @@
 title: "Untitled"
 category: "use-case"
 module: "CAADlgUseCases"
-tags: ["CAADlgInteractiveApplication", "CAADlgHelloWindow", "CAADialog", "CAADlgOverview", "CAADocUseCases", "CAADocRunSample", "CAADlgBurger", "CAADlgHelloWindowId", "CAADlgTechArticles", "CAADlgHelloApplication", "CAADocStyleSheets", "CATIA", "CATInteractiveApplication"]
+tags: ["CATInteractiveApplication", "CAADlgHelloWindowId", "CATIA", "CAADlgBurger", "CAADocStyleSheets", "CAADlgInteractiveApplication", "CAADocRunSample", "CAADlgHelloApplication", "CAADlgOverview", "CAADocUseCases", "CAADialog", "CAADlgTechArticles", "CAADlgHelloWindow"]
 source_file: "Doc/online/CAADlgUseCases/CAADlgSampleGettingStarted.htm"
-converted: "2026-05-11T11:06:33.028999"
+converted: "2026-05-11T11:27:02.797370"
 ---
-
-# 3D PLM Enterprise Architecture
- 
- 
-## User Interface - Dialogs
- 
- 
-### []Getting Started with Dialog Boxes
- *A first sample with dialog boxes*
- 
- 
- |Use Case
- 
 
 ---
 
- 
- 
-### Abstract
- 
-
-This article shows a simple example of dialog box created using the
- Dialog framework.
- 
-
- 
-- [**What You Will Learn With This Use Case**]
- 
-- [**The CAADlgHelloApplication Use Case**]
- 
-
- 
-- [What Does CAADlgHelloApplication Do]
- 
-- [How to Launch CAADlgHelloApplication]
- 
-- [Where to Find the CAADlgHelloApplication Code]
- 
- 
-- [**Step-by-Step**]
- 
-- [**In Short**]
- 
-- [**References**]
- 
-
 ---
 
-### []What You Will Learn With This Use Case
+### What You Will Learn With This Use Case
 
 The Dialog framework is intended to help application developers to simply
 design an implement their dialog windows and boxes. Its main characteristics
 are:
 
- 
+  
 - Programmer productivity: it provides high-level objects that allow for
- component reusability
- 
+    component reusability
+  
 - Portability: the objects created can be implemented on Motif and Windows
- platforms without any change or customization
- 
+    platforms without any change or customization
+  
 - Standard compliance: it is built on top of the OSF/Motif and MFC layers
- 
+  
 - Versatility: it can be used as a standalone framework, along with its
- prerequisites, or in a CATIA Version 4 or Version 5 environment.
+    prerequisites, or in a CATIA Version 4 or Version 5 environment.
 
 Let's have a look at this framework through two examples. The first sample
 program shows how to build a very simple window and how to close it. The second
 sample introduces a larger number of dialog window components or objects and how
 to manage window layouts as well as triggering actions when clicking on Dialog
-framework objects [[1]].
+framework objects [1].
 
-[[Top]]
+[Top]
 
-### []The CAADlgHelloApplication Use Case
+### The CAADlgHelloApplication Use Case
 
 CAADlgHelloApplication is a use case of the CAADialog.edu framework that
 illustrates Dialog framework capabilities.
 
-[[Top]]
+[Top]
 
-#### []What Does CAADlgHelloApplication Do
+#### What Does CAADlgHelloApplication Do
 
 For this example, you will simply display a prompt box that prints
 "Hello, CAA V5". To do this, derive your own application class, called
-*CAADlgHelloApplication*, from the class *CATInteractiveApplication* [[2]].
+*CAADlgHelloApplication*, from the class *CATInteractiveApplication* [2].
 This application will:
 
- 
+  
 - create a window to display "Hello, CAA V5" by deriving the class
- *CATDlgDocument*
- 
+    *CATDlgDocument*
+  
 - makes the window visible.
 
 In addition, the mechanism to close the application from the window is
 included. The window is as follows:
 
- 
- |![](../CAADlgTechArticles/images/CATDlgHello.jpg)
- 
+[Top]
 
-[[Top]]
-
-#### []How to Launch CAADlgHelloApplication
+#### How to Launch CAADlgHelloApplication
 
 To launch CAADlgHelloApplication, you will need to set up the build time environment,
 then compile CAADlgHelloApplication along with its prerequisites, set up the run time
-environment, and then execute the use case [[3]].
+environment, and then execute the use case [3].
 
-[[Top]]
+[Top]
 
-#### []Where to Find the CAADlgHelloApplication Code
+#### Where to Find the CAADlgHelloApplication Code
 
 The CAADlgHelloApplication use case is made of a several classes located in
 the CAADlgHelloApplication.m module of the CAADialog.edu framework:
-
- 
- 
- |Windows
- |`InstallRootDirectory\CAADialog.edu\``CAADlgHelloApplication``.m\`
- 
- 
- |Unix
- |`InstallRootDirectory/CAADialog.edu/CAADlgHelloApplication.m/`
- 
- 
 
 where `InstallRootDirectory` is the directory where the CAA CD-ROM
 is installed.
 
 The CAADlgHelloApplication.m module includes four files:
 
- 
- 
- |*CAADlgHelloApplication.h*
- |The interactive application header file
- 
- 
- |*CAADlgHelloApplication.cpp*
- |The interactive application source file
- 
- 
- |*CAADlgHelloWindow.h*
- |The application window header file
- 
- 
- |*CAADlgHelloWindow.cpp*
- |The application window source file
- 
- 
-
 The resource file CAADlgHelloWindow.CATNls is located in the CNext\resources\msgcatalog
 directory.
 
-[[Top]]
+[Top]
 
-### []Step-by-Step
+### Step-by-Step
 
 There are two logical steps in CAADlgHelloApplication:
 
- 
-- [Creating the Interactive Application]
- 
-- [Creating the Application Window]
+  
+- Creating the Interactive Application
+  
+- Creating the Application Window
 
-[[Top]]
+[Top]
 
-#### []Creating the Interactive Application
+#### Creating the Interactive Application
 
 Let's look at CAADlgHelloApplication.h, the application header file:
 
- 
- ********
-```
-#include "CATInteractiveApplication.h"
-
-class CAADlgHelloApplication: public CATInteractiveApplication {
-
- public:
-
- CAADlgHelloApplication(const CATString &iIdentifier);
-
- virtual ~CAADlgHelloApplication();
- void 
-BeginApplication
-();
- int 
-EndApplication
-();
-
-};
-```
-
- 
- 
-
 We find here:
 
- 
+  
 - the *CAADlgHelloApplication* class declaration which derives from the
- *CATInteractiveApplication* class
- 
+    *CATInteractiveApplication* class
+  
 - its constructor and destructor
- 
+  
 - the `BeginApplication` and `EndApplication` methods
- overridden from the *CATInteractiveApplication* class
+    overridden from the *CATInteractiveApplication* class
 
 The CAADlgHelloApplication.cpp looks like that:
-
- 
- ********************************
-```
-#include "CAADlgHelloApplication.h"
-#include "CAADlgHelloWindow.h"
-
-CAADlgHelloApplication::CAADlgHelloApplication(const CATString& iIdentifier):
- 
-CATInteractiveApplication
-(NULL, iIdentifier) {}
- 
-CAADlgHelloApplication::~CAADlgHelloApplication() {}
-
-void CAADlgHelloApplication::
-BeginApplication
-() 
-{
- 
- CAADlgHelloWindow * pMainWindow = new 
-CAADlgHelloWindow
-(this);
-
- pMainWindow->
-Build
-();
-
- pMainWindow->
-SetVisibility
-(CATDlgShow);
-}
-
-int CAADlgHelloApplication::
-EndApplication
-() 
-{
- return(
-0
-);
-}
-
-CAADlgHelloApplication 
-ApplicationInstance
-("Hello");
-```
-
- 
- 
 
 The constructor is empty. It leaves the constructors of the inherited classes
 run, and it automatically runs the method `BeginApplication` which
@@ -270,132 +120,33 @@ visible. The method `EndApplication` only returns 0 to state that all
 is Ok . The application
 run is just triggerred by the its instantiation in the last statement.
 
-[[Top]]
+[Top]
 
-#### []Creating the Application Window
+#### Creating the Application Window
 
 Let's look at CAADlgHelloWindow.h, the application window header file:
 
- 
- ********************
-```
-#include "CATDlgDocument.h" 
-
-class CATInteractiveApplication; 
-
-class CAADlgHelloWindow : public 
-CATDlgDocument
-
-{
- 
- 
-DeclareResource
-(CAADlgHelloWindow, CATDlgDocument)
-
- public:
- 
- CAADlgHelloWindow(CATInteractiveApplication * iParentCommand);
-
- virtual ~CAADlgHelloWindow();
-
- void 
-Build
-();
-
- private:
-
- void 
-Exit
- (CATCommand * iSendingCommand, 
- CATNotification * iSentNotification, 
- CATCommandClientData iUsefulData);
-
- private:
- 
-CATInteractiveApplication
- * _pHelloApplication;
-
- 
-};
-```
-
- 
- 
-
 We find here:
 
- 
+  
 - The *CAADlgHelloWindow* class declaration which derives from the *CATDlgDocument*
- class
- 
+    class
+  
 - The `DeclareResource` macro which allows to retrieve the class
- resources, such as character strings displayed in the window, from an
- external resource file
- 
+    resources, such as character strings displayed in the window, from an
+    external resource file
+  
 - The class constructor
- 
+  
 - the `Build` method used to create and value the window
- components
- 
+    components
+  
 - The `Exit` method used to close the application when the end
- user closes the window
- 
+    user closes the window
+  
 - A reference to the application.
 
 The file CAADlgHelloWindow.cpp looks like that:
-
- 
- ********************
-```
-#include "CAADlgHelloWindow.h"
-
-#include "CATInteractiveApplication.h" 
-#include "CATDlgInclude.h"
-
-CAADlgHelloWindow::CAADlgHelloWindow(CATInteractiveApplication * iParentCommand) 
-: 
-CATDlgDocument
-(iParentCommand, "CAADlgHelloWindowId"),_pHelloApplication(iParentCommand)
-
-{
-}
-
-CAADlgHelloWindow::~CAADlgHelloWindow()
-{ 
- _pHelloApplication = NULL ;
-}
-
-void CAADlgHelloWindow::Build()
-{
- 
- CATDlgLabel * pLabel = new 
-CATDlgLabel
-(this,"MessageId");
-
- 
- AddAnalyseNotificationCB(this,
- GetWindCloseNotification(),
- (CATCommandMethod)&CAADlgHelloWindow::
-Exit
-, NULL);
-
-}
-
-void CAADlgHelloWindow::
-Exit
-(CATCommand * iSendingCommand, 
- CATNotification * iSentNotification, 
- CATCommandClientData iUsefulData)
-{
- _pHelloApplication->
-Destroy
-();
- _pHelloApplication = NULL ;
-}
-```
-
- 
- 
 
 The constructor for *CAADlgHelloWindow* only values the `_pHelloApplication`
 data member. The `Build` method creates the message to display as a *CATDlgLabel*
@@ -406,72 +157,150 @@ method, and never instantiate dialog objects in the window constructor.
 
 The message file that contains the displayed messages is as follows.
 
- 
- 
-```
-Title = "Hello Application";
-MessageId.Title = "Hello, CAA V5";
-```
-
- 
- 
-
 The first message is the window title and has the simple key `Title`.
 The second one is the displayed message and its key is built using the
 identifier passed as second argument of the label constructor, concatenated with
 a dot to the `Title` keyword.
 
-[[Top]]
+[Top]
 
 ---
 
-### []In Short
+### In Short
 
 This use case enables you to have a first approach with the Dialog framework
 concepts. In the `Build` method of the application window you can
-test the Dialog objects [[4]]
+test the Dialog objects [4]
 
-[[Top]]
-
----
-
-### []References
-
- 
- |[1]
- |[The Burger Order Dialog Box]
- 
- 
- |[2]
- |[Designing
- Your Interactive Application]
- 
- 
- |[3]
- |[Building
- and Launching a CAA V5 Use Case]
- 
- 
- |[4]
- |[Dialog
- Overview]
- 
- 
- |[[Top]]
- 
+[Top]
 
 ---
 
-### []History
-
- 
- |Version: **1** [Fev 2003]
- |Document created
- 
- 
- |[[Top]]
- 
+### References
 
 ---
 
-*Copyright 2003, Dassault Systmes. All rights reserved.*
+### History
+
+---
+
+*Copyright  2003, Dassault Systmes. All rights reserved.*
+
+
+
+```vbscript
+#include &quot;CATInteractiveApplication.h&quot;
+
+class CAADlgHelloApplication: public CATInteractiveApplication {
+
+  public:
+
+    CAADlgHelloApplication(const CATString &amp;iIdentifier);
+
+    virtual ~CAADlgHelloApplication();
+    void BeginApplication();
+    int EndApplication();
+
+};
+```
+
+```vbscript
+#include &quot;CAADlgHelloApplication.h&quot;
+#include &quot;CAADlgHelloWindow.h&quot;
+
+CAADlgHelloApplication::CAADlgHelloApplication(const CATString&amp; iIdentifier):
+                        CATInteractiveApplication(NULL, iIdentifier) {}
+                        
+CAADlgHelloApplication::~CAADlgHelloApplication() {}
+
+void CAADlgHelloApplication::BeginApplication() 
+{
+ 
+  CAADlgHelloWindow * pMainWindow = new CAADlgHelloWindow(this);
+
+  pMainWindow-&gt;Build();
+
+  pMainWindow-&gt;SetVisibility(CATDlgShow);
+}
+
+int CAADlgHelloApplication::EndApplication() 
+{
+  return(0);
+}
+
+CAADlgHelloApplication ApplicationInstance(&quot;Hello&quot;);
+```
+
+```vbscript
+#include &quot;CATDlgDocument.h&quot;   
+
+class CATInteractiveApplication;   
+
+class CAADlgHelloWindow : public CATDlgDocument
+{
+ 
+  DeclareResource(CAADlgHelloWindow, CATDlgDocument)
+
+  public:
+ 
+    CAADlgHelloWindow(CATInteractiveApplication * iParentCommand);
+
+    virtual ~CAADlgHelloWindow();
+
+    void     Build();
+
+  private:
+
+    void Exit (CATCommand           * iSendingCommand, 
+                CATNotification      * iSentNotification, 
+                CATCommandClientData   iUsefulData);
+
+  private:
+    CATInteractiveApplication * _pHelloApplication;
+
+    
+};
+```
+
+```vbscript
+#include &quot;CAADlgHelloWindow.h&quot;
+
+#include &quot;CATInteractiveApplication.h&quot; 
+#include &quot;CATDlgInclude.h&quot;
+
+CAADlgHelloWindow::CAADlgHelloWindow(CATInteractiveApplication * iParentCommand)                              
+: CATDlgDocument(iParentCommand, &quot;CAADlgHelloWindowId&quot;),_pHelloApplication(iParentCommand)
+
+{
+}
+
+CAADlgHelloWindow::~CAADlgHelloWindow()
+{ 
+  _pHelloApplication = NULL ;
+}
+
+void CAADlgHelloWindow::Build()
+{
+ 
+  CATDlgLabel * pLabel = new CATDlgLabel(this,&quot;MessageId&quot;);
+
+  
+  AddAnalyseNotificationCB(this,
+                            GetWindCloseNotification(),
+                           (CATCommandMethod)&amp;CAADlgHelloWindow::Exit, NULL);
+
+}
+
+void CAADlgHelloWindow::Exit(CATCommand         * iSendingCommand, 
+                           CATNotification    * iSentNotification, 
+                           CATCommandClientData iUsefulData)
+{
+   _pHelloApplication-&gt;Destroy();
+   _pHelloApplication = NULL ;
+}
+```
+
+```vbscript
+Title           = &quot;Hello Application&quot;;
+MessageId.Title = &quot;Hello, CAA V5&quot;;
+```

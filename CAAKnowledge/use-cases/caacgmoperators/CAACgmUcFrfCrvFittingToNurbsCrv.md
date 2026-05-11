@@ -12,12 +12,12 @@ converted: "2026-05-11T17:33:48.934549"
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CAACrvFittingToNurbsCrv", "CAAGMOperatorsCrvFittingToNurbsCrv", "CATICGMCrvFittingToNurbsCrv", "CATICGMObject", "CAAGMModelGemBrowser", "CATIA"]
 source_file: "Doc/online/CAACgmOperators/CAACgmUcFrfCrvFittingToNurbsCrv.htm"
 converted: "2026-05-11T17:33:48.934549"
-Converting Curves into NURBS  
+Converting Curves into NURBS
 
----  
+---
 converted: "2026-05-11T17:33:48.934549"
 Converting Curves into NURBS
-Use Case  
+Use Case
 Abstract You can convert curves into NURBS by using the CATICGMCrvFittingToNurbsCrv operator. This operator allows you to specify the characteristics of the resulting NURBS as well as a maximum deviation you would like to obtain with respect to the initial curve. This maximum deviation may not be achieved.
 
     * What You Will Learn With This Use Case
@@ -28,8 +28,8 @@ Abstract You can convert curves into NURBS by using the CATICGMCrvFittingToNurbs
       * Where to Find the CAAGMOperatorsCrvFittingToNurbsCrv Code
     * Step-by-Step
     * In Short
-    * References  
----  
+    * References
+---
 What You Will Learn With This Use Case This use case is intended to help you use the free form operators. It particularly illustrates how to convert a curve into a NURBS. The CATICGMCrvFittingToNurbsCrv  Operator The CATICGMCrvFittingToNurbsCrv  operator is to be used according to the general scheme of operators:
     1. Creation of an operator instance from a global function. Two modes BASIC or ADVANCED are proposed.
     2. If the ADVANCED mode is chosen, tuning of the parameters by using the Setxxx methods then run of the operator.
@@ -57,7 +57,10 @@ How to Launch CAAGMOperatorsCrvFittingToNurbsCrv To launch CAAGMOperatorsCrvFitt
 Creating the Geometry Factory The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject (and the curves and surfaces in particular) [1]. This creation is done by the global function `::CATCreateCGMContainer`. Notice that the factory can be defined by reading a NCGM file that was previously stored. In that case, the global function `::CATLoadCGMContainer` must be used.
 
     CATGeoFactory* piGeomFactory = **::CATCreateCGMContainer**() ;
+```vbscript
     if (NULL==piGeomFactory) return (1);
+
+```
 
 Creating the Curve to Be Converted into a NURBS The curve to be converted is a PSpline. Its underlying geometry is a sphere. All the geometric objects are created from the geometry factory. Converting the Created Curve into a NURBS and Specifying a Constraint on the Minimum Length of an Arc This first operator is intended to create an operator instance with the following parameters:
     1. A 0.001 maximum deviation. It is important to note that this value is the modeler resolution and it would not be meaningful to specify a maximum deviation less than this resolution.
@@ -80,7 +83,10 @@ At this stage, you have just created an instance of operator. Prior to running t
     pCrvFitting1->SetInternalMinLength(14);
 
 pCrvFitting1->SetInternalMinLength(14);
+```vbscript
 If you want to get the converted NURBS, you must Run the operator and retrieve the resulting NURBS by using the GetPNurbs method. To convert a CATPCurve into a CATNurbsCurve, you can use the Set3DCurveCreation method (before applying the Run method), then use the GetNurbsCurve method instead of GetPNurbs.
+
+```
 
     pCrvFitting1->Run();
     CATPNurbs * piPNurbs1 = pCrvFitting1->GetPNurbs();
@@ -110,18 +116,18 @@ ofstream filetowrite(pfileName, ios::binary ) ;
 
        **::CATSaveCGMContainer**(piGeomFactory,filetowrite);
        filetowrite.close();
-     }	
+     }
 
      //
      // Closes the container
-     //	
+     //
      **::CATCloseCGMContainer**(piGeomFactory);
 
-In Short The CATICGMCrvFittingToNurbsCrv operator allows you to convert a curve into a NURBS. Apart from the usual parameters, this operator requires you specify the maximum deviation you would like to obtain from the initial curve as well as the rationality. Constraints on the resulting curve can be specified by using Setxxx methods. References [1] |  [ About NURBS](../CAACgmModel/CAACgmTaGobAboutNurbs.md)  
----|---  
-[2] |  [ The Objects of CATIA Geometric Modeler](../CAACgmModel/CAACgmTaGobGeoObjects.md)  
-[3] |  [ The Curves of CATIA Geometric Modeler](../CAACgmModel/CAACgmTaGobCurves.md)  
-[4] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)  
-[5] | [Converting Surfaces into NURBS](CAACgmUcFrfSurFittingToNurbsSur.md)  
-History Version: **1** [Feb 2000] | Document created  
+In Short The CATICGMCrvFittingToNurbsCrv operator allows you to convert a curve into a NURBS. Apart from the usual parameters, this operator requires you specify the maximum deviation you would like to obtain from the initial curve as well as the rationality. Constraints on the resulting curve can be specified by using Setxxx methods. References [1] |  [ About NURBS](../CAACgmModel/CAACgmTaGobAboutNurbs.md)
+---|---
+[2] |  [ The Objects of CATIA Geometric Modeler](../CAACgmModel/CAACgmTaGobGeoObjects.md)
+[3] |  [ The Curves of CATIA Geometric Modeler](../CAACgmModel/CAACgmTaGobCurves.md)
+[4] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.md)
+[5] | [Converting Surfaces into NURBS](CAACgmUcFrfSurFittingToNurbsSur.md)
+History Version: **1** [Feb 2000] | Document created
 ---|---

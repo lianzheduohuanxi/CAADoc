@@ -13,7 +13,7 @@ converted: "2026-05-11T17:33:50.546840"
 tags: []
 source_file: "Doc/online/CAACenAPIChangesR12/CATTPSInterfaces.htm"
 converted: "2026-05-11T17:33:50.546840"
-CAA C++ API Modifications|  CATTPSInterfaces  |   
+CAA C++ API Modifications|  CATTPSInterfaces  |
 
 * * *
 
