@@ -3,7 +3,7 @@ title: "Projecting a Point onto a Curve"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CATICGMProjectionPtCrv", "CAAGMModelInterfaces", "CAAGMModelProjectionOpe"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcProjPtCrv.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcProjPtCrv.htm"
 converted: "2026-05-11T17:33:48.498129"
 ---
 

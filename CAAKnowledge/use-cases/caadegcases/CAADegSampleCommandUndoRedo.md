@@ -3,7 +3,7 @@ title: "Managing Command Undo/Redo"
 category: "use case"
 module: "CAADegUseCases"
 tags: ["CAADegCreatePolylineCmd", "CATIUndoTransaction", "CAAISysPolyline", "CAADialogEngine", "CAAGeometry", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleCommandUndoRedo.md"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleCommandUndoRedo.htm"
 converted: "2026-05-11T17:33:49.596686"
 ---
 

@@ -3,7 +3,7 @@ title: "Creating Pocket"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CAAScdPriUseCases", "CATIA", "CAAPriPocket"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriPocket.md"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriPocket.htm"
 converted: "2026-05-11T17:31:51.231457"
 ---
 

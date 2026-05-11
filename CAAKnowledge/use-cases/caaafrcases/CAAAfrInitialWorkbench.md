@@ -3,7 +3,7 @@ title: "Defining the Activated Workbench"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CAAEAfrActivateWorkbenchOnPart", "CATIAfrActivateWorkbench", "CAAAfrInitialWorkbench", "CATIAApplicationFrm", "CAACATIAApplicationFrm", "CAAAfrProduct", "CAAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrInitialWorkbench.md"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrInitialWorkbench.htm"
 converted: "2026-05-11T17:17:55.614529"
 ---
 # 3D PLM Enterprise Architecture

@@ -3,7 +3,7 @@ title: "The CGM Topological Model"
 category: "use-case"
 module: "CAACgmModel"
 tags: ["CATIA"]
-source_file: "Doc/online/CAACgmModel/CAACgmTaTobTopoModel.md"
+source_file: "Doc/online/CAACgmModel/CAACgmTaTobTopoModel.htm"
 converted: "2026-05-11T17:33:48.051276"
 ---
 # The CGM Topological Model  

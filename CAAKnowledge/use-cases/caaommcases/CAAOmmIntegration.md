@@ -3,7 +3,7 @@ title: "Integrating a New Mechanical Feature in the CAA Exposed Model"
 category: "use case"
 module: "CAAOmmUseCases"
 tags: ["CATIContainer_var", "CAAOmmverticalLine", "CATISpecObject", "CATIAReferences", "CAAOllTypeLib", "CAAEOmmBuildVerticalLine", "CAAOmmVerticalLine", "CATIAReference", "CAAOmmCatalog", "CATIAHybriShape", "CATIPartRequest", "CATIAPart", "CATIAHybridShape", "CAAIOmmFactory", "CAAIAOmmFactory", "CATIBuild", "CAAIA", "CAAIOmmVerticalLine", "CAAOmm", "CATIAlias"]
-source_file: "Doc/online/CAAOmmUseCases/CAAOmmIntegration.md"
+source_file: "Doc/online/CAAOmmUseCases/CAAOmmIntegration.htm"
 converted: "2026-05-11T17:33:46.031570"
 ---
 

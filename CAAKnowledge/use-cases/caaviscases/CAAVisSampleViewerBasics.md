@@ -3,7 +3,7 @@ title: "Understanding the Basics of the Visualization Process"
 category: "use case"
 module: "CAAVisUseCases"
 tags: ["CAAVisBasicApplication", "CAAVisBasicAppli", "CAAVisualization", "CAAVisBasicWindow", "CAAVisBAseView"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleViewerBasics.md"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleViewerBasics.htm"
 converted: "2026-05-11T17:31:52.210579"
 ---
 # 3D PLM Enterprise Architecture

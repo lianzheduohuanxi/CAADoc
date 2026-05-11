@@ -3,7 +3,7 @@ title: "CAAAniMeshSweep3D.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshSweep3D", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSweep3DSource.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSweep3DSource.htm"
 converted: "2026-05-11T17:31:51.714618"
 ---
 

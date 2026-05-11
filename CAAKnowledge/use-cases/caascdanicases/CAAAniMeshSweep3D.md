@@ -3,7 +3,7 @@ title: "Creating Sweep 3D Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshSweep3D", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSweep3D.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSweep3D.htm"
 converted: "2026-05-11T17:31:51.713621"
 ---
 ## Analysis Modeler

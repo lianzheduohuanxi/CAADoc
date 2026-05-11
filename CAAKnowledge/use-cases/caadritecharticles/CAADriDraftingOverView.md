@@ -3,7 +3,7 @@ title: "Drafting Modeler Overview"
 category: "concept"
 module: "CAADriTechArticles"
 tags: ["CATISketchEditor", "CATIDftDrawing", "CATIABase", "CATIADrawingComponent", "CATIDrwAnnotationFactory", "CATI2DWFFactory", "CATIGenerSpec", "CATIDrwAnnotation", "CATIDrwAddIn", "CATI2Dxxx", "CATIDrwFactory", "CATIView", "CATIDftMultiSheet", "CATIDrwAnnotationComponent", "CATIDftGenViewFactory", "CATI2DConstraintFactory", "CAADraftingInterfaces", "CATISketch", "CATIDftSheet"]
-source_file: "Doc/online/CAADriTechArticles/CAADriDraftingOverView.md"
+source_file: "Doc/online/CAADriTechArticles/CAADriDraftingOverView.htm"
 converted: "2026-05-11T17:31:51.038395"
 ---
 # Mechanical Design

@@ -3,7 +3,7 @@ title: "Scanning a Model to Retrieve V4 Elements"
 category: "use case"
 module: "CAAV4iUseCases"
 tags: ["CATIAV4Interfaces", "CAACATIAV4Interfaces", "CAAV4iEduModelScan", "CAAV4iModelScan"]
-source_file: "Doc/online/CAAV4iUseCases/CAAV4iScanUseCase.md"
+source_file: "Doc/online/CAAV4iUseCases/CAAV4iScanUseCase.htm"
 converted: "2026-05-11T17:33:45.798397"
 ---
 # 3D PLM PPR Hub Open Gateway

@@ -3,7 +3,7 @@ title: "New C++ Authorized APIs in CAA V5-6R2018 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATICGMTopDefeature", "CATIABFExport", "CATIGSMPlaneBetween", "CATIPrtCDSHoleManagement", "CATICGMTopWireContinuity", "CATIGSMUseSurfaceSimplification", "CATIGSMSurfaceSimplification", "CATICGMTopExtractCells", "CATIA", "CATIGSMUsePlaneBetween", "CATITPSManageAssociativity"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R28GANewCPPAPI.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R28GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.595481"
 ---
 

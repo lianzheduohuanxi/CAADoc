@@ -3,7 +3,7 @@ title: "An Introduction to Geometric Modeler Use Cases"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMOperatorsOverview", "CATICGMContainer", "CAAGMOperatorsChamfer", "CATICGMObject", "CAAGMModelGemBrowser"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGMUseCases.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGMUseCases.htm"
 converted: "2026-05-11T17:33:48.329658"
 ---
 # About Geometric Modeler Use Cases  

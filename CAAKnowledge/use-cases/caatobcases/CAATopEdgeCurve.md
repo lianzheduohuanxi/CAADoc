@@ -3,7 +3,7 @@ title: "Scanning an Edge Curve"
 category: "use case"
 module: "CAATobUseCases"
 tags: ["CAAEdgeCurve", "CAATopEdgeCurve", "CATICGMContainer", "CATICGMObject", "CATIntCurve", "CAATopologicalObjects"]
-source_file: "Doc/online/CAATobUseCases/CAATopEdgeCurve.md"
+source_file: "Doc/online/CAATobUseCases/CAATopEdgeCurve.htm"
 converted: "2026-05-11T17:33:45.859498"
 ---
 # Geometric Modeler

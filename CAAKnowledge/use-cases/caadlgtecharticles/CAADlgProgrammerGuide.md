@@ -3,7 +3,7 @@ title: "Dialog Programmer's Guide"
 category: "use-case"
 module: "CAADlgTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAADlgTechArticles/CAADlgProgrammerGuide.md"
+source_file: "Doc/online/CAADlgTechArticles/CAADlgProgrammerGuide.htm"
 converted: "2026-05-11T17:17:56.072469"
 ---
 # 3D PLM Enterprise Architecture

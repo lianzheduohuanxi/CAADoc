@@ -3,7 +3,7 @@ title: "Creating a Schematic Component Instance (Placement)"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAADoc", "CAASCH_Sample", "CAASCH_RouteForPlacement2", "CAAScdSchUseCases", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASchPlaceComponent", "CAASchPlatformModeler", "CATIASchComponent2", "CAASchAppUtilities"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchPlaceComponent.md"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchPlaceComponent.htm"
 converted: "2026-05-11T17:31:51.433971"
 ---
 ## Schematics Platform Modeler

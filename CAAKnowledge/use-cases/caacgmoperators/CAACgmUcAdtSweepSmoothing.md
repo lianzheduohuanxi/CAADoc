@@ -3,7 +3,7 @@ title: "Using the Smoothing Options when Creating a Sweep"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CAAAdtSweepSmoothingCode", "CATICGMObject", "CAAGemBrowser", "CATICGMFrFTopologicalSweep", "CAAGMOperatorsSweepSmoothing", "CATIA"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtSweepSmoothing.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtSweepSmoothing.htm"
 converted: "2026-05-11T17:33:48.857282"
 ---
 

@@ -3,7 +3,7 @@ title: "Inserting Boolean Operations on Volume Features"
 category: "use case"
 module: "CAAGsiUseCases"
 tags: ["CAAGSMInterfaces", "CATIPrtBooleanFactory", "CATIPrtContainer", "CAAGsiStartVolumeForBoolean", "CAAGsiVolumeOpe", "CATIPrtPart_var", "CATInit", "CATISpecObject_var", "CATIPrtBooleanFactory_var", "CAAGsiStartForBoolean", "CAAGsiVolumeFormFeatures", "CAAGsiObjectUpdate", "CAAGsiVolumeBooleanOpe"]
-source_file: "Doc/online/CAAGsiUseCases/CAAGsiVolumeBooleanOpe.md"
+source_file: "Doc/online/CAAGsiUseCases/CAAGsiVolumeBooleanOpe.htm"
 converted: "2026-05-11T17:31:50.644673"
 ---
 # Shape Design & Styling

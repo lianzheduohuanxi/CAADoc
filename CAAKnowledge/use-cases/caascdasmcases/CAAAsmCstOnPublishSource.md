@@ -3,7 +3,7 @@ title: "CAAAsmCstOnPublish.CATScript"
 category: "use-case"
 module: "CAAScdAsmUseCases"
 tags: ["CAAScdAsmUseCases", "CAAAsmCstOnPublish", "CATIA", "CATIAConstraints"]
-source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmCstOnPublishSource.md"
+source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmCstOnPublishSource.htm"
 converted: "2026-05-11T17:31:50.854661"
 ---
 

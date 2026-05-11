@@ -3,7 +3,7 @@ title: "Intersecting Surfaces"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMModelInterfaces", "CAAGMModelGeometryCreation", "CATICGMIntersectionSurSur", "CAAGMModelIntersectionOpe"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcIntersectSurSur.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcIntersectSurSur.htm"
 converted: "2026-05-11T17:33:48.461523"
 ---
 # Intersecting Surfaces  

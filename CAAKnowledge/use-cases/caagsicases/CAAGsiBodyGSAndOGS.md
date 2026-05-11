@@ -3,7 +3,7 @@ title: "Inserting Shape Design Features in Different Geometrical Feature Sets"
 category: "use case"
 module: "CAAGsiUseCases"
 tags: ["CAAGsiCreateGeometricFeatureSets", "CATIMmiOrderedGeometricalSet_var", "CATIPrtBooleanFactory", "CATIPrtContainer", "CATIGSMSweepUnspec_var", "CAAGSMInterfaces", "CAAGsiUserTools", "CATIMechanicalTool_var", "CAAGsiServices", "CATIGSMProceduralViwe", "CATIGSMFactory", "CATIPrtFactory", "CATIGSMExtrude_var", "CATIPrtFactory_var", "CATIPrtPart_var", "CAAGsiObjectUpdate", "CATIDescendants_var", "CATIBasicTool_var", "CATISpecObject_var", "CATIMmiNonOrderedGeometricalSet_var"]
-source_file: "Doc/online/CAAGsiUseCases/CAAGsiBodyGSAndOGS.md"
+source_file: "Doc/online/CAAGsiUseCases/CAAGsiBodyGSAndOGS.htm"
 converted: "2026-05-11T17:31:50.621208"
 ---
 # Shape Design & Styling

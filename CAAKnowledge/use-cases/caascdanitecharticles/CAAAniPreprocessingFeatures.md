@@ -3,7 +3,7 @@ title: "The Physical Types for Structural Analysis"
 category: "use-case"
 module: "CAAScdAniTechArticles"
 tags: ["CATIAConstraints"]
-source_file: "Doc/online/CAAScdAniTechArticles/CAAAniPreprocessingFeatures.md"
+source_file: "Doc/online/CAAScdAniTechArticles/CAAAniPreprocessingFeatures.htm"
 converted: "2026-05-11T17:31:51.963872"
 ---
 # Analysis Solution

@@ -3,7 +3,7 @@ title: "Advanced Mathematics"
 category: "use-case"
 module: "CAACgmModel"
 tags: []
-source_file: "Doc/online/CAACgmModel/CAACgmTcAmtAdvancedMathematics.md"
+source_file: "Doc/online/CAACgmModel/CAACgmTcAmtAdvancedMathematics.htm"
 converted: "2026-05-11T17:33:48.067272"
 ---
 # Advanced Mathematics  

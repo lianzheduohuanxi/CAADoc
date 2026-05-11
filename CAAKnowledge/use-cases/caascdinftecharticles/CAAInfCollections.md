@@ -3,7 +3,7 @@ title: "About Collections"
 category: "use-case"
 module: "CAAScdInfTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfCollections.md"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfCollections.htm"
 converted: "2026-05-11T17:31:52.408942"
 ---
 ## Infrastructure

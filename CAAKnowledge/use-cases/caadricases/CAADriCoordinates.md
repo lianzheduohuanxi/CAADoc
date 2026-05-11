@@ -3,7 +3,7 @@ title: "Creating Annotations on View Components"
 category: "use case"
 module: "CAADriUseCases"
 tags: ["CATIDrwAnnotationFactory_var", "CATISheet_var", "CATIDftTextProperties", "CATIDftText", "CATIDrwAnnotationFactory", "CATIDftDocumentServices", "CAADrwCoordinates", "CATIA", "CATI2DPoint_var", "CATIDrawing", "CATI2DPoint", "CATIView_var", "CAADRWCoordinates", "CATIDescendants_var", "CATIView", "CATIDrwSubString", "CATIDescendants", "CAADraftingInterfaces", "CATIDrwTextProperties", "CATISheet"]
-source_file: "Doc/online/CAADriUseCases/CAADriCoordinates.md"
+source_file: "Doc/online/CAADriUseCases/CAADriCoordinates.htm"
 converted: "2026-05-11T17:31:50.944012"
 ---
 # Mechanical Design

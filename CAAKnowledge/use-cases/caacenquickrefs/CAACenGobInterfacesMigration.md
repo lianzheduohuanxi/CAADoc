@@ -3,7 +3,7 @@ title: "New Geometric Modeler Interfaces Layer"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATICGMTopWire_h_", "CATIPGMTopBlendInt", "CAA2Usage", "CATICGMxxx", "CATIPGMOperator", "CAACGMItfVisualStudio", "CATIPGMSolidCylinder", "CAA2Level", "CATIPGMTopBlend", "CATICGMTopWire", "CAAMathematics", "CATIA", "CAACGMItfMacros", "CATICGMGeoToTopOperator"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenGobInterfacesMigration.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenGobInterfacesMigration.htm"
 converted: "2026-05-11T17:33:46.528911"
 ---
 

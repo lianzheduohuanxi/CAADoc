@@ -3,7 +3,7 @@ title: "Making Your Components Printable"
 category: "use-case"
 module: "CAAPrtTechArticles"
 tags: ["CAACmp", "CAAECmpPrintable", "CAACmpInstanceToPrint", "CATIPrintable", "CAACmpImage"]
-source_file: "Doc/online/CAAPrtTechArticles/CAAPrtPrintableObjects.md"
+source_file: "Doc/online/CAAPrtTechArticles/CAAPrtPrintableObjects.htm"
 converted: "2026-05-11T17:17:56.147286"
 ---
 # 3D PLM Enterprise Architecture

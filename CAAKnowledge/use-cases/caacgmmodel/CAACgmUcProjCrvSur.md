@@ -3,7 +3,7 @@ title: "Projecting a Curve onto a Surface"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CATICGMProjectionCrvSur", "CAAGMModelInterfaces", "CAAGMModelProjectionOpe"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcProjCrvSur.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcProjCrvSur.htm"
 converted: "2026-05-11T17:33:48.489649"
 ---
 

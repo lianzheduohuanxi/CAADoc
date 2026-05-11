@@ -3,7 +3,7 @@ title: "About VB, VBA, Debug, and Portability"
 category: "use-case"
 module: "CAAScdInfTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfHints.md"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfHints.htm"
 converted: "2026-05-11T17:31:52.415555"
 ---
 ## Infrastructure

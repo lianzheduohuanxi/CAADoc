@@ -3,7 +3,7 @@ title: "Using a Dialog Box as Input"
 category: "use-case"
 module: "CAADegTechArticles"
 tags: ["CAACommandCmd", "CAAPointEditor"]
-source_file: "Doc/online/CAADegTechArticles/CAADegDialogBox.md"
+source_file: "Doc/online/CAADegTechArticles/CAADegDialogBox.htm"
 converted: "2026-05-11T17:33:49.784465"
 ---
 

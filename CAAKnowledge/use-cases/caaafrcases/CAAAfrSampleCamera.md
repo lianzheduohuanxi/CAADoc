@@ -3,7 +3,7 @@ title: "Using Cameras"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CATI3DCamera", "CAAAfrChangeViewNormalCmd", "CAAAfrGeometryWshop", "CAAAfrGeoCommands", "CAAGeometry", "CAAAfrGeoCommand", "CAAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleCamera.md"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleCamera.htm"
 converted: "2026-05-11T17:17:55.631615"
 ---
 # 3D PLM Enterprise Architecture

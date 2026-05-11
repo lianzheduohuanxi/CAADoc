@@ -3,7 +3,7 @@ title: "Contextual Help for an Add-on"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CAAAfrDumpCommandHeader", "CAAAfrExploreHdr", "CAAAfrCuboidHdr", "CAAAfrBoundingEltHdr", "CAAGeometry", "CAAAfrGeoAnalysisWkbHeader", "CATIA", "CAAAfrCylinder2Hdr", "CATIAfr_C2", "CAADialogEngine", "CAACATIAApplicationFrame", "CAAAfrGeoChartWindowAdnHeader", "CATIAfrs", "CATIAApplicationFrame", "CAADoc", "CAAVisualization", "CAAAfrGeoCreationWkbHeader", "CAAAfrCylinder1Hdr", "CATIAtoc", "CAAAfrHistogramChartWindowHdr"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleContextualHelpCATIA.md"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleContextualHelpCATIA.htm"
 converted: "2026-05-11T17:17:55.660612"
 ---
 # 3D PLM Enterprise Architecture

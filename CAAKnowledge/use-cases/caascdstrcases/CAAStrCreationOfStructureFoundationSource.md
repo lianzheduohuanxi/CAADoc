@@ -3,7 +3,7 @@ title: "CAAStrCreationOfStructureObjects.CATScript"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CAAStrCreationOfStructureObjects", "CATIA"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfStructureFoundationSource.md"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfStructureFoundationSource.htm"
 converted: "2026-05-11T17:31:50.879106"
 ---
 

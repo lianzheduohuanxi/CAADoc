@@ -3,7 +3,7 @@ title: "Arranging Dialog Objects Using a Grid"
 category: "use-case"
 module: "CAADlgTechArticles"
 tags: []
-source_file: "Doc/online/CAADlgTechArticles/CAADlgGridLayout.md"
+source_file: "Doc/online/CAADlgTechArticles/CAADlgGridLayout.htm"
 converted: "2026-05-11T17:17:56.038135"
 ---
 # 3D PLM Enterprise Architecture

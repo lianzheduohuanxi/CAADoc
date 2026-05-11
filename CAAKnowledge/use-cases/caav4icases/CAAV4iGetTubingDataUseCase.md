@@ -3,7 +3,7 @@ title: "Retrieving Data of an Element of a V4 Document"
 category: "use case"
 module: "CAAV4iUseCases"
 tags: ["CAADoc", "CAACATIAV4Interfaces", "CAAV4iEduV4GetTubingData", "CAAV4iEduGetTubingData", "CAAV4iEduV4DataAccess", "CAAV4iGetTubingData", "CATIAV4Interfaces"]
-source_file: "Doc/online/CAAV4iUseCases/CAAV4iGetTubingDataUseCase.md"
+source_file: "Doc/online/CAAV4iUseCases/CAAV4iGetTubingDataUseCase.htm"
 converted: "2026-05-11T17:33:45.764869"
 ---
 # 3D PLM PPR Hub Open Gateway

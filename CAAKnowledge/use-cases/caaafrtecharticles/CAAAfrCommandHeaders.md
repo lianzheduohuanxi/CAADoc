@@ -3,7 +3,7 @@ title: "The Command Headers"
 category: "use-case"
 module: "CAAAfrTechArticles"
 tags: ["CAAAfrNormalZHdr", "CATIAfrPaletteOptions", "CAAAfrMRUHeader", "CATIA", "CAAAfrNormalXHdr", "CAAAfrCommandHeader", "CAADegGeoCommands", "CATIAfrCommandHeaderRep", "CATINT32ToPtr", "CAAAfrMyCommandHdr", "CAAAfrGeometryWks", "CATImplementHeaderResources", "CAAAfrGeoCommands", "CAAAfrCommandClass", "CATIAfrCmdPaletteOptions", "CAAAfrPointHdr", "CAA2", "CAAAfrChangeViewNormalCmd", "CAAAfrGeometryWksHeader"]
-source_file: "Doc/online/CAAAfrTechArticles/CAAAfrCommandHeaders.md"
+source_file: "Doc/online/CAAAfrTechArticles/CAAAfrCommandHeaders.htm"
 converted: "2026-05-11T17:17:55.868797"
 ---
 # 3D PLM Enterprise Architecture

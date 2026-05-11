@@ -3,7 +3,7 @@ title: "Querying Schematic Document Content"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAASCH_CompRoute01", "CAADoc", "CAASchQueryCompRoute", "CAAScdSchUseCases", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASchPlatformModeler", "CATIASchCntrLocation", "CAASchAppUtilities"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryCompRoute.md"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryCompRoute.htm"
 converted: "2026-05-11T17:31:51.448432"
 ---
 ## Schematics Platform Modeler

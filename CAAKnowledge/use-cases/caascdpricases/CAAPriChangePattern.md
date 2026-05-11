@@ -3,7 +3,7 @@ title: "Changing the Pattern Parameters"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CATIA", "CAAPriChangePattern", "CAAPriPatternDescription"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangePattern.md"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangePattern.htm"
 converted: "2026-05-11T17:31:51.211500"
 ---
 ## Part Design

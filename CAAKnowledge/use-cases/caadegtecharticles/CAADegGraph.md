@@ -3,7 +3,7 @@ title: "Implementing the Command Statechart Diagram"
 category: "use-case"
 module: "CAADegTechArticles"
 tags: ["CAACreatePolylineCmd", "CAAILine", "CATI2DPoint", "CAACommandCmd", "CAACreateCircleCmd", "CATI3DCamera", "CATI2DControlPoint", "CATIAxle", "CAAIPoint", "CAACreateLineCmd", "CATIndication", "CATICamera", "CATIndicationAgent"]
-source_file: "Doc/online/CAADegTechArticles/CAADegGraph.md"
+source_file: "Doc/online/CAADegTechArticles/CAADegGraph.htm"
 converted: "2026-05-11T17:33:49.838586"
 ---
 

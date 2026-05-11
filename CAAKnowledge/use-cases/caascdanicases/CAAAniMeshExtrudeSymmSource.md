@@ -3,7 +3,7 @@ title: "CAAAniMeshExtrudeSymm.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAAniMeshExtrudeSymm", "CATIA", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshExtrudeSymmSource.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshExtrudeSymmSource.htm"
 converted: "2026-05-11T17:31:51.648574"
 ---
 

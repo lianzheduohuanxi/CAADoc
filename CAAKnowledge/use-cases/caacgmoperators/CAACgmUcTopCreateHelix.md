@@ -3,7 +3,7 @@ title: "Creating an Helix"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsOverview", "CAAGMOperatorsInterfaces", "CAAGMOperatorsCreateHelix", "CAADoc", "CATICGMDynMassProperties1D", "CATICGMObject", "CAAGMModelGemBrowser", "CAATopCreateHelix"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopCreateHelix.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopCreateHelix.htm"
 converted: "2026-05-11T17:33:49.138578"
 ---
 

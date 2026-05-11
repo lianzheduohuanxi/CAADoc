@@ -3,7 +3,7 @@ title: "Type Libraries in C++ for Windows"
 category: "use-case"
 module: "CAABtlTechArticles"
 tags: []
-source_file: "Doc/online/CAABtlTechArticles/CAABtlMANtlb.md"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANtlb.htm"
 converted: "2026-05-11T17:33:46.134211"
 ---
 

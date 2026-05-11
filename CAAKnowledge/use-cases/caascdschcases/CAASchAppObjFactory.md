@@ -3,7 +3,7 @@ title: "Building a Schematic Reference Component"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAADoc", "CAASchPlatformModeler", "CAASchAppObjFactory", "CATIASchCompConnector", "CAASCHEDUCompressFunc", "CAAScdSchUseCases", "CAASCHEDU_SamplePID", "CAASCHEDUFuncString", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASCHEDUConnector", "CATIASchGRR", "CATIASchCompatible", "CAASCH_Detail01", "CATIASchComponent2", "CAASchAppUtilities"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchAppObjFactory.md"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchAppObjFactory.htm"
 converted: "2026-05-11T17:31:51.312764"
 ---
 ## Schematics Platform Modeler

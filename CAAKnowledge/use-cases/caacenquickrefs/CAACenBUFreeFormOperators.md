@@ -3,7 +3,7 @@ title: "FreeFormOperators Changed Classes or Interfaces"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATICGMCrvDegreeModification", "CATICGMLiss", "CATICGMSurFittingToNurbsSur", "CATICGMCrvFittingToNurbsCrv", "CATICGMInterproxCrv", "CATICGMInterproxSur", "CATInterproxCrv", "CATICGMSurDegreeModification", "CATInterproxSur"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenBUFreeFormOperators.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenBUFreeFormOperators.htm"
 converted: "2026-05-11T17:33:46.278454"
 ---
 

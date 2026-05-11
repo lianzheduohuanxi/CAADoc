@@ -4,7 +4,7 @@ category: "use-case"
 module: "CAACenAPIChangesR11"
 version: "V5R11"
 tags: ["CATICkeLaw", "CATICkeMagnitude", "CATICkeRelationExp", "CATICkeSignature", "CATIParmTolerance", "CATIEnumere", "CATICkeRelation", "CATICkeFunctionFactory", "CATICkeParm", "CATIList", "CATIDesignTable", "CATIParmManipulator", "CATICkeUnit", "CATICkeForwards", "CATICkeRelationForwards", "CATICkeExpression", "CATICkeRelationFactory", "CATIParameterEditor", "CATIParmPublisher", "CATIParmAsStored"]
-source_file: "Doc/online/CAACenAPIChangesR11/LiteralFeatures.md"
+source_file: "Doc/online/CAACenAPIChangesR11/LiteralFeatures.htm"
 converted: "2026-05-11T17:33:50.419703"
 ---
 

@@ -3,7 +3,7 @@ title: "Parameters Automation Objects"
 category: "use-case"
 module: "CAAScdKniTechArticles"
 tags: []
-source_file: "Doc/online/CAAScdKniTechArticles/CAAKniTocParameter.md"
+source_file: "Doc/online/CAAScdKniTechArticles/CAAKniTocParameter.htm"
 converted: "2026-05-11T17:31:52.006491"
 ---
 # Parameters Automation Objects

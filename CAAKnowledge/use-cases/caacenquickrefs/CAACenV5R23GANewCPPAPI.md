@@ -3,7 +3,7 @@ title: "New C++ Authorized APIs in CAA V5-6R2013 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATICGMHybTrim", "CATITPSThreadGeometrySpecification", "CATICGMHybIntersect", "CATIMmiUseDatumFactory", "CATIMmiUseSolidInsertion", "CATIMmiMechanicalFeature_var", "CATITPSAssociatedTextVisu", "CATIMmiUseCharacteristicExtremity", "CATITPSTextVisu", "CATIVpmLightVersion", "CATIMmiUseStructureAnalyse", "CATIMmiUseMfBRep", "CATIMmiUseREdge", "CATICGMDynAdvancedFillet", "CATIMmiBRepScanServices", "CATIStrPPGExecLogSettingAtt", "CATICGMDynAdvancedDraft", "CATICGMTopExtrude", "CATICGMTopExtractFace", "CATIMmiUsePrtPart"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R23GANewCPPAPI.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R23GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.535004"
 ---
 

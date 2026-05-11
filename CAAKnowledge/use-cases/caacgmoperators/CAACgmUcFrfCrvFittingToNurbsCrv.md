@@ -3,7 +3,7 @@ title: "Converting Curves into NURBS"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CAACrvFittingToNurbsCrv", "CAAGMOperatorsCrvFittingToNurbsCrv", "CATICGMCrvFittingToNurbsCrv", "CATICGMObject", "CAAGMModelGemBrowser", "CATIA"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcFrfCrvFittingToNurbsCrv.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcFrfCrvFittingToNurbsCrv.htm"
 converted: "2026-05-11T17:33:48.934549"
 ---
 

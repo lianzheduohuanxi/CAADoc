@@ -3,7 +3,7 @@ title: "The Send/Receive Mechanism"
 category: "use case"
 module: "CAADlgUseCases"
 tags: ["CAADlgErrorNotification", "CAADlgViewScreen", "CAADlgElement", "CAADlgNotifError", "CAADlgAddNotification", "CAADlgNotifRemove", "CAADlgModel", "CATIA", "CAADlgNotifAdd", "CAADlgRemoveNotification", "CAADlgSendReceive", "CAADialog", "CAADlgContainer"]
-source_file: "Doc/online/CAADlgUseCases/CAADlgSampleSendReceive.md"
+source_file: "Doc/online/CAADlgUseCases/CAADlgSampleSendReceive.htm"
 converted: "2026-05-11T17:17:55.987209"
 ---
 # 3D PLM Enterprise Architecture

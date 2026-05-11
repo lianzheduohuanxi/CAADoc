@@ -3,7 +3,7 @@ title: "Foreign Mathematical Functions"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAAmtForeign", "CAAGobForeign", "CAADoc", "CAAAmtFctMain", "CAAAdvancedMathematics", "CAAAmtForeignFunctionXY", "CAAAmtForeignFct", "CAAAmtForeignFctXY", "CAAAmtFct"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcAmtForeign.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcAmtForeign.htm"
 converted: "2026-05-11T17:33:48.152406"
 ---
 # Foreign Mathematical Functions  

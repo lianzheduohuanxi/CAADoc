@@ -3,7 +3,7 @@ title: "Creating Seam Welding Connection Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshSeamWelding", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSeamWelding.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSeamWelding.htm"
 converted: "2026-05-11T17:31:51.689200"
 ---
 ## Analysis Modeler

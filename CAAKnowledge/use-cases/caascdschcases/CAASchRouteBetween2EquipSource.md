@@ -3,7 +3,7 @@ title: "CAASchRouteBetween2Equip.CATScript"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CATIASchAppConnectable", "CATIAProduct", "CAASchRouteBetween2Equip", "CATIASchRouteGraphic", "CAAScdSchUseCases", "CATIASchAppConnector", "CATIASchGRRComp", "CATIA", "CATIASchListOfBSTRs", "CAASCHEDU_SamplePID", "CAASCHEDUConnector", "CATIASchGRR", "CAASCHEDUFuncString", "CATIASchCompatible", "CAASCH_RouteBetween2Equip", "CATIASchCompGraphic", "CATIASchCntrLocation"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchRouteBetween2EquipSource.md"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchRouteBetween2EquipSource.htm"
 converted: "2026-05-11T17:31:51.497816"
 ---
 

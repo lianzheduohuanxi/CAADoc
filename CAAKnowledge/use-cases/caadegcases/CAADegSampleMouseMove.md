@@ -3,7 +3,7 @@ title: "Subscribing to Mouse Move Events"
 category: "use case"
 module: "CAADegUseCases"
 tags: ["CAAISysCircle", "CAADegCreateCircleCmd", "CAAISysPoint", "CATISO", "CATI3DGoVisu", "CATI3DGeoVisu", "CAADialogEngine", "CAAGeometry", "CATIndicationAgent", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleMouseMove.md"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleMouseMove.htm"
 converted: "2026-05-11T17:33:49.711451"
 ---
 

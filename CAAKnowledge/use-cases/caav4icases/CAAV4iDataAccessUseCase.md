@@ -3,7 +3,7 @@ title: "Retrieving Data of an Element of a V4 Document"
 category: "use case"
 module: "CAAV4iUseCases"
 tags: ["CAADoc", "CAACATIAV4Interfaces", "CAAV4iV4DataAccess", "CAAV4iEduV4DataAccess", "CATIAV4Interfaces"]
-source_file: "Doc/online/CAAV4iUseCases/CAAV4iDataAccessUseCase.md"
+source_file: "Doc/online/CAAV4iUseCases/CAAV4iDataAccessUseCase.htm"
 converted: "2026-05-11T17:33:45.752658"
 ---
 # 3D PLM PPR Hub Open Gateway

@@ -3,7 +3,7 @@ title: "Managing Multi-Selection"
 category: "use case"
 module: "CAADegUseCases"
 tags: ["CAADegCreateNumericCmd", "CAADegAnalysisNumericCmd", "CAADegChoiceBehaviorDlg", "CAADialogEngine", "CAAGeometry", "CAADegAnalysisNumericDlg", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleMultiSelection.md"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleMultiSelection.htm"
 converted: "2026-05-11T17:33:49.728334"
 ---
 

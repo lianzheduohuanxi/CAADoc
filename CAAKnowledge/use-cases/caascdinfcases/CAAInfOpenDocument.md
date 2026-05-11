@@ -3,7 +3,7 @@ title: "Opening an Existing CATIA Document"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAScdInfUseCases", "CAAInfReadDocument", "CAAInfOpenDocument", "CAAInfCloseDocument", "CATIA", "CAAInfSaveDocument"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfOpenDocument.md"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfOpenDocument.htm"
 converted: "2026-05-11T17:31:52.383001"
 ---
 ## Infrastructure

@@ -3,7 +3,7 @@ title: "Topology Concepts"
 category: "use-case"
 module: "CAATobTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAATobTechArticles/TopoConcepts.md"
+source_file: "Doc/online/CAATobTechArticles/TopoConcepts.htm"
 converted: "2026-05-11T17:33:45.891757"
 ---
 

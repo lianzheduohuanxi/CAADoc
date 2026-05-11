@@ -3,7 +3,7 @@ title: "Editing Generated Shapes in Generative Views"
 category: "use case"
 module: "CAADriUseCases"
 tags: ["CATIDftDocumentServices", "CATIDftPattern", "CATIDftView", "CATIProduct", "CATIDftDrawing", "CAADraftingInterfaces", "CATIA", "CAADrwGenShape", "CATIDrwGenDrawShape", "CATIUnknownList"]
-source_file: "Doc/online/CAADriUseCases/CAADriGenShape.md"
+source_file: "Doc/online/CAADriUseCases/CAADriGenShape.htm"
 converted: "2026-05-11T17:31:51.006322"
 ---
 # Mechanical Design

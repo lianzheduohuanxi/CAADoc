@@ -3,7 +3,7 @@ title: "Conveying End User Intent from Mouse to Controller"
 category: "use-case"
 module: "CAAVisTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAAVisTechArticles/CAAVisViewerProtocol.md"
+source_file: "Doc/online/CAAVisTechArticles/CAAVisViewerProtocol.htm"
 converted: "2026-05-11T17:31:52.306819"
 ---
 # 3D PLM Enterprise Architecture

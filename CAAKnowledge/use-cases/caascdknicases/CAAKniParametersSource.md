@@ -3,7 +3,7 @@ title: "CAAKniParameters.CATScript"
 category: "use-case"
 module: "CAAScdKniUseCases"
 tags: ["CATIA", "CAAKniParameters", "CAAScdKniUseCases"]
-source_file: "Doc/online/CAAScdKniUseCases/CAAKniParametersSource.md"
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniParametersSource.htm"
 converted: "2026-05-11T17:31:51.987316"
 ---
 

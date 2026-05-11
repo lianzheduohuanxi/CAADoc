@@ -3,7 +3,7 @@ title: "Analyzing the Parameters of a Point on a Surface"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAADoc", "CAAGMModelAnalysisOpe", "CAAGMModelGemBrowser", "CAAGMModelInterfaces", "CATICGMLocalAnalysis2D", "CATICGMLocalAnalysis1D"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelAnalysisOpe2.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelAnalysisOpe2.htm"
 converted: "2026-05-11T17:33:48.247650"
 ---
 # Analyzing the Parameters of a Point on a Surface  

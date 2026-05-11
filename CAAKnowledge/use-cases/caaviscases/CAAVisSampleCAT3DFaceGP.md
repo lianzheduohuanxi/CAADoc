@@ -3,7 +3,7 @@ title: "Tessellating and Displaying a Torus"
 category: "use case"
 module: "CAAVisUseCases"
 tags: ["CAAVisBaseView", "CAAVisBaseDocument", "CAAVisBaseDefaultDocument", "CAAVisBasics", "CAAVisBaseApplication", "CAAVisualization"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleCAT3DFaceGP.md"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleCAT3DFaceGP.htm"
 converted: "2026-05-11T17:31:52.036246"
 ---
 # 3D PLM Enterprise Architecture

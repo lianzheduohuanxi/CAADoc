@@ -3,7 +3,7 @@ title: "Creating Assembled Loads"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAAniPreProAsmbldLoads", "CATIA", "CATIAAnalysisSet", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProAsmbldLoads.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProAsmbldLoads.htm"
 converted: "2026-05-11T17:31:51.779974"
 ---
 ## Analysis Modeler

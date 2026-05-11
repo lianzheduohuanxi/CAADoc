@@ -3,7 +3,7 @@ title: "CAAAniMeshOctTetra.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAScdAniUseCases", "CAAAniMeshOctTetra"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshOctTetraSource.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshOctTetraSource.htm"
 converted: "2026-05-11T17:31:51.673241"
 ---
 

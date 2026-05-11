@@ -3,7 +3,7 @@ title: "CAAAniMeshSpotWelding.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAAniMeshSpotWelding", "CATIA", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSpotWeldingSource.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSpotWeldingSource.htm"
 converted: "2026-05-11T17:31:51.703240"
 ---
 

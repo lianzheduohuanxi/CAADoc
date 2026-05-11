@@ -3,7 +3,7 @@ title: "Getting Started with State Dialog Commands"
 category: "use-case"
 module: "CAADegTechArticles"
 tags: ["CAAISysPoint", "CATISO", "CAAGeometryHeader", "CAADialogEngine", "CAADegCreateLineCmd", "CATIndicationAgent", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegTechArticles/CAADegGettingStarted.md"
+source_file: "Doc/online/CAADegTechArticles/CAADegGettingStarted.htm"
 converted: "2026-05-11T17:33:49.801485"
 ---
 

@@ -3,7 +3,7 @@ title: "Breaking a C1 Surface into C2 Pieces"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMModelInterfaces", "CATICGMMathNurbsSurfaceTools", "CAAGMModelConvertSurfaceToC2", "CATICGMNurbsSurfaceTools"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcTopGMModelSurfaceC1ToC2.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTopGMModelSurfaceC1ToC2.htm"
 converted: "2026-05-11T17:33:48.605582"
 ---
 

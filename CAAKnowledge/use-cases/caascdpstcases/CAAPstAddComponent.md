@@ -3,7 +3,7 @@ title: "Adding Components"
 category: "use-case"
 module: "CAAScdPstUseCases"
 tags: ["CAAPstAddComponent", "CAAPstHull", "CATIA", "CAAScdPstUseCases", "CAAPstFunnel"]
-source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddComponent.md"
+source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddComponent.htm"
 converted: "2026-05-11T17:31:52.313802"
 ---
 ## Product Structure

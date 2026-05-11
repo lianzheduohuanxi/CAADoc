@@ -4,7 +4,7 @@ category: "use-case"
 module: "CAACenAPIChangesR9"
 version: "V5R9"
 tags: ["CATIConfigurable", "CATIVpmObjectRules", "CATIVpmGraphPredicat", "CATIVpmAttribute", "CATICfgManager", "CATIVpmAggrAttribute", "CATIVpmServices", "CATIVpmAFLLink", "CATIVpmAFLAffectedObject", "CATIVpmAFLAttachement", "CATICfgModification", "CATIVpmAFLAction", "CATIVpmGraphAdministrator", "CATIVpmGraphStatus", "CATIVpmGraphMng", "CATIVpmAFLResp"]
-source_file: "Doc/online/CAACenAPIChangesR9/VPMInterfaces.md"
+source_file: "Doc/online/CAACenAPIChangesR9/VPMInterfaces.htm"
 converted: "2026-05-11T17:33:53.009876"
 ---
 

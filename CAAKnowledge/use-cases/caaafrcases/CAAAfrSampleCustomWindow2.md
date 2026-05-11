@@ -3,7 +3,7 @@ title: "Creating a Document's Window - Part 2"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CATI2DGeoVisu", "CAAGeometry", "CATISO", "CATI3DGeoVisu", "CAASample", "CAAAfrCustomWindow", "CAAApplicationFrame", "CAAAfrGeoWindows"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleCustomWindow2.md"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleCustomWindow2.htm"
 converted: "2026-05-11T17:17:55.703896"
 ---
 # 3D PLM Enterprise Architecture

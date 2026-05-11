@@ -4,7 +4,7 @@ title: "CATIArrNomenclature, CATIArrNomenclatures, CATIArrNomenclatureTrees
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CAAPslNomenAccessFeat", "CATIA", "CATIArrNomenclatures", "CATIArrNomenclature", "CATIAArrNomenclatureTrees", "CATIArrNomenclatureTrees"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAPslNomenAccessFeat.md"
+source_file: "Doc/online/CAAScdArrUseCases/CAAPslNomenAccessFeat.htm"
 converted: "2026-05-11T17:31:51.577544"
 ---
 ## Arrangement  

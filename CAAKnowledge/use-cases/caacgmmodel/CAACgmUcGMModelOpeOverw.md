@@ -3,7 +3,7 @@ title: "How to Use Geometric Operators"
 category: "technical article"
 module: "CAACgmModel"
 tags: ["CATICGMProjectionCrvSur", "CATICGMProjectionPtSur", "CATICGMConfusionPtOnSurPtOnSur", "CATICGMDistanceMinPtSur", "CATICGMIntersectionSurSur", "CATICGMDistanceMinPtCrv", "CATICGMProjectionPtCrv", "CATICGMIntersectionCrvCrv", "CATICGMContainer", "CATICGMInclusionPtCrv", "CATICGMMassProperties1D", "CATICGMDistanceMinCrvCrv", "CATICGMLocalAnalysis1D", "CATIA", "CATICGMConfusionPtOnCrvPtOnCrv", "CATICGMInclusionPtSur", "CATICGMIntersectionCrvSur", "CATICGMReflectCurve", "CATICGMLocalAnalysis2D", "CATICGMEdgeCurveComputation"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelOpeOverw.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelOpeOverw.htm"
 converted: "2026-05-11T17:33:48.309647"
 ---
 # How to Use Geometric Operators  

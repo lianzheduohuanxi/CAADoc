@@ -3,7 +3,7 @@ title: "New C++ Authorized APIs in CAA V5-6R2014 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATICGMPersistentOperator", "CATICGMAdvancedRemoveFaceOpe", "CATISpecObject", "CATIMmiMechanicalSet", "CATIOsmExtensionFactory", "CATIProviders", "CATISpecAttribute", "CATIWflUserExit", "CATIDescendants", "CATIReplace", "CATITPSSetGlobalCopy", "CATITPSOrientedLinearDimension", "CATIVpmLightNavigationServices", "CATIMmiViewServices", "CATIConnector", "CATIMfgLatheMultiTurSpiMachineMgt", "CATISpecUpdate", "CATIClientContainer", "CATISpecAttribute_var", "CATIUpdateProvider"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R24GANewCPPAPI.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R24GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.553018"
 ---
 

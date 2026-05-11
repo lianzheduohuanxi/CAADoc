@@ -3,7 +3,7 @@ title: "Creating a Schematic Network Object"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAADoc", "CATIAProduct", "CATIASchNetworkAnalysis", "CAAScdSchUseCases", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASchNetwork", "CAASchPlatformModeler", "CAASCH_Network01", "CAASchAppUtilities"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchNetwork.md"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchNetwork.htm"
 converted: "2026-05-11T17:31:51.405039"
 ---
 ## Schematics Platform Modeler

@@ -3,7 +3,7 @@ title: "Changing the Hole Parameters (catvba Version)"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CAAScdPriUseCases", "CATIA", "CAAPriChangeHole", "CAAPriChangeHoleModule", "CATIAHole", "CAAPriChangeHoleForm"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHoleVBA.md"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHoleVBA.htm"
 converted: "2026-05-11T17:31:51.207011"
 ---
 ## Part Design

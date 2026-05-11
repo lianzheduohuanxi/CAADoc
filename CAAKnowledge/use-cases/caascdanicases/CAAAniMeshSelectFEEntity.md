@@ -3,7 +3,7 @@ title: "Selecting a mesh entity (node, element)"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshSelectFEEntity", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSelectFEEntity.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSelectFEEntity.htm"
 converted: "2026-05-11T17:31:51.695188"
 ---
 ## Analysis Modeler

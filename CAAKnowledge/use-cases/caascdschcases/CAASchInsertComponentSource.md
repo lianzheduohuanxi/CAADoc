@@ -3,7 +3,7 @@ title: "CAASchInsertComponent.CATScript"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAASCH_Sample", "CATIASchGRRRoute", "CATIASchRouteGraphic", "CAAScdSchUseCases", "CAASCH_RouteForPlacement", "CATIA", "CAASacInsertComponent", "CATIASchCompatible", "CATIASchComponent", "CATIASchCompGraphic", "CATIASchRoute", "CATIASchAppConnectable", "CAASchInsertComponent"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchInsertComponentSource.md"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchInsertComponentSource.htm"
 converted: "2026-05-11T17:31:51.378605"
 ---
 

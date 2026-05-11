@@ -3,7 +3,7 @@ title: "Using the CATSurfacicRep class"
 category: "use case"
 module: "CAAVisUseCases"
 tags: ["CAAVisBaseView", "CAAVisBaseDocument", "CAAVisBasics", "CATInternalSharpeEdge", "CATInternalSharpePoint", "CAAVisBaseApplication", "CAAVisBaseVisuObjectDocument", "CATInternalSmoothPoint", "CAAVisualization", "CATInternalSmoothEdge"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleCATSurfacicRep.md"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleCATSurfacicRep.htm"
 converted: "2026-05-11T17:31:52.081159"
 ---
 # 3D PLM Enterprise Architecture

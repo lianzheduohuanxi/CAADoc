@@ -3,7 +3,7 @@ title: "Constructing Graphic Representations in Batch Mode"
 category: "use case"
 module: "CAAVisUseCases"
 tags: ["CATI3DGeoVisu", "CATIPrtContainer", "CAAGviVisuBatchuse", "CAAGviVisuBatch", "CAAVisuBatch", "CAAGeometryVisualization"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleVisuBatch.md"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleVisuBatch.htm"
 converted: "2026-05-11T17:31:52.235473"
 ---
 # 3D PLM Enterprise Architecture

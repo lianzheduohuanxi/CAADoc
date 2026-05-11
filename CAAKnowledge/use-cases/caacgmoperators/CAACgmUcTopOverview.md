@@ -3,7 +3,7 @@ title: "Overview of the Topological Operators"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CATICGMSolidCuboid", "CATICGMDynSolidCylinder", "CATICGMGeoOperator", "CATICGMDynSolidCuboid", "CATICGMIntersectionCrvCrv", "CATICGMContainer", "CAADoc", "CATICGMDynMassProperties3D", "CAAGMModelGemBrowser", "CAAGMOperatorsTopSpline", "CATICGMDynShell", "CAATopJournal", "CAAGMOperatorsOverview", "CATICGMTopSkin", "CATIA", "CATICGMTopOperator", "CATICGMSolidCylinder", "CATICGMSolidPrimitive", "CATICGMObject"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopOverview.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopOverview.htm"
 converted: "2026-05-11T17:33:49.256937"
 ---
 

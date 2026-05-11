@@ -3,7 +3,7 @@ title: "CAAAniMeshSeamWelding.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshSeamWelding", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSeamWeldingSource.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSeamWeldingSource.htm"
 converted: "2026-05-11T17:31:51.690703"
 ---
 

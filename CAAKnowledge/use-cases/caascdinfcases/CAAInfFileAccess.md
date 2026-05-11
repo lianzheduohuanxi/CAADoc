@@ -3,7 +3,7 @@ title: "Accessing Files and Folders"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAScdInfUseCases", "CATIA", "CAAInfFileAccess"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfFileAccess.md"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfFileAccess.htm"
 converted: "2026-05-11T17:31:52.362048"
 ---
 

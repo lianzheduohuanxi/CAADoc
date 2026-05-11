@@ -3,7 +3,7 @@ title: "The Management of Foreign Data"
 category: "use-case"
 module: "CAACgmModel"
 tags: ["CATICGMObject", "CATICGMDomainBinder", "CATICGMObjects", "CATIA", "CATIForeignSurface"]
-source_file: "Doc/online/CAACgmModel/CAACgmTaGobAttribute.md"
+source_file: "Doc/online/CAACgmModel/CAACgmTaGobAttribute.htm"
 converted: "2026-05-11T17:33:47.890093"
 ---
 # The Management of Foreign Data  

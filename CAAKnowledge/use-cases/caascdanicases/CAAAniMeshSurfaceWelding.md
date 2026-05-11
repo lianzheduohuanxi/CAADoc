@@ -3,7 +3,7 @@ title: "Creating Surface Welding Connection Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshSrufaceWelding", "CAAAniMeshSurfaceWelding", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSurfaceWelding.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSurfaceWelding.htm"
 converted: "2026-05-11T17:31:51.707358"
 ---
 ## Analysis Modeler

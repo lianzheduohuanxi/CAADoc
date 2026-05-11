@@ -3,7 +3,7 @@ title: "Viewers Object"
 category: "use-case"
 module: "CAAScdInfTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfObjViewer3D.md"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfObjViewer3D.htm"
 converted: "2026-05-11T17:31:52.429128"
 ---
 # Viewers Object

@@ -3,7 +3,7 @@ title: "Creating Frames and Title Blocks in a CATDrawing Document"
 category: "use case"
 module: "CAADriUseCases"
 tags: ["CATIDrwAnnotationFactory_var", "CATISheet_var", "CATIDftTextProperties", "CATIDftText", "CATIDrwAnnotationFactory", "CAADrwTitleBlock", "CATIDftDocumentServices", "CATI2DWFFactory", "CAA2", "CATIA", "CAADRWTitleBlock", "CATIDrawing", "CATIView_var", "CATIDrwAxisLine_var", "CATISpecObject_var", "CATIView", "CATIDrwSubString", "CATI2DWFFactory_var", "CATIDrwCenterLine_var", "CAADraftingInterfaces"]
-source_file: "Doc/online/CAADriUseCases/CAADriTitleBlock.md"
+source_file: "Doc/online/CAADriUseCases/CAADriTitleBlock.htm"
 converted: "2026-05-11T17:31:51.027919"
 ---
 # Mechanical Design

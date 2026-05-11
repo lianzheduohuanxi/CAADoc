@@ -3,7 +3,7 @@ title: "Getting Started with Automation"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAScdInfUseCases", "CATIA", "CAAInfGettingStarted", "CATIASketch3"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfGettingStarted.md"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfGettingStarted.htm"
 converted: "2026-05-11T17:31:52.374517"
 ---
 

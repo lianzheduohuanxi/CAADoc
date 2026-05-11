@@ -3,7 +3,7 @@ title: "Transforming a Schematic Network Object"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAADoc", "CAAScdSchUseCases", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASchPlatformModeler", "CATIASchMovable", "CAASCH_Network01", "CAASchNetworkTransf", "CAASchAppUtilities"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchNetworkTransf.md"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchNetworkTransf.htm"
 converted: "2026-05-11T17:31:51.417508"
 ---
 ## Schematics Platform Modeler

@@ -3,7 +3,7 @@ title: "Understanding the CGM Journal"
 category: "use-case"
 module: "CAACgmOperators"
 tags: []
-source_file: "Doc/online/CAACgmOperators/CAACgmTaTopJournal.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmTaTopJournal.htm"
 converted: "2026-05-11T17:33:48.669001"
 ---
 

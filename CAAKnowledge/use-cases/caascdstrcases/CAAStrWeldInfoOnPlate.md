@@ -3,7 +3,7 @@ title: "Retrieving Weld Information on Plate Objects"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CATIA", "CAAStrWeldInfoOnPlate", "CAAScdStrUseCases"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnPlate.md"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnPlate.htm"
 converted: "2026-05-11T17:31:50.915079"
 ---
 ## Structure Design

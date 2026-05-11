@@ -3,7 +3,7 @@ title: "The Clone and Transformation Managers"
 category: "use-case"
 module: "CAACgmModel"
 tags: ["CATIA", "CATICGMObjects", "CATICGMObject"]
-source_file: "Doc/online/CAACgmModel/CAACgmTaGobClone.md"
+source_file: "Doc/online/CAACgmModel/CAACgmTaGobClone.htm"
 converted: "2026-05-11T17:33:47.903606"
 ---
 # The Clone and Transformation Managers  

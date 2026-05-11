@@ -3,7 +3,7 @@ title: "The Management of Tolerances"
 category: "use-case"
 module: "CAACgmModel"
 tags: ["CATIA"]
-source_file: "Doc/online/CAACgmModel/CAACgmTaGobTolerances.md"
+source_file: "Doc/online/CAACgmModel/CAACgmTaGobTolerances.htm"
 converted: "2026-05-11T17:33:47.977985"
 ---
 # The Management of Tolerances  

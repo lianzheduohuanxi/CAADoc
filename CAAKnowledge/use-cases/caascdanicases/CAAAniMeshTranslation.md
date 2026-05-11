@@ -3,7 +3,7 @@ title: "Creating Translation Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAAniMeshTranslation", "CATIA", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshTranslation.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshTranslation.htm"
 converted: "2026-05-11T17:31:51.730103"
 ---
 ## Analysis Modeler

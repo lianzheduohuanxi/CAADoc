@@ -4,7 +4,7 @@ category: "use-case"
 module: "CAACenAPIChangesR9"
 version: "V5R9"
 tags: ["CATISamDefineSolution", "CATISamValidity", "CATISamAnalysisModel"]
-source_file: "Doc/online/CAACenAPIChangesR9/CATAnalysisInterfaces.md"
+source_file: "Doc/online/CAACenAPIChangesR9/CATAnalysisInterfaces.htm"
 converted: "2026-05-11T17:33:52.841200"
 ---
 

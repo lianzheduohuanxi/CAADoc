@@ -3,7 +3,7 @@ title: "Geometric Objects and Operators"
 category: "use-case"
 module: "CAACgmModel"
 tags: ["CATICGMConfusionPtOnCrvPtOnCrv", "CATICGMAnalysisLocal2D", "CATICGMConfusionPtOnSurPtOnSur", "CATIA", "CATICGMAnalysisLocal1D"]
-source_file: "Doc/online/CAACgmModel/CAACgmTcGobGeometricObjects.md"
+source_file: "Doc/online/CAACgmModel/CAACgmTcGobGeometricObjects.htm"
 converted: "2026-05-11T17:33:48.111905"
 ---
 # Geometric Objects and Operators  

@@ -3,7 +3,7 @@ title: "Creating Constraints on Published Elements"
 category: "use-case"
 module: "CAAScdAsmUseCases"
 tags: ["CAAScdAsmUseCases", "CAAAsmCstOnPublish", "CATIA"]
-source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmCstOnPublish.md"
+source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmCstOnPublish.htm"
 converted: "2026-05-11T17:31:50.852164"
 ---
 

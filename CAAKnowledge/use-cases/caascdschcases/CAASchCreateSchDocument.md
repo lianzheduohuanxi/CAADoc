@@ -3,7 +3,7 @@ title: "Creating a Schematic Document from an Existing Document"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAAScdSchUseCases", "CATIA", "CAASchCreateSchDocument", "CAASchSCH_Detail01", "CAASCH_Detail01"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocument.md"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocument.htm"
 converted: "2026-05-11T17:31:51.340196"
 ---
 ## Schematics Platform Modeler

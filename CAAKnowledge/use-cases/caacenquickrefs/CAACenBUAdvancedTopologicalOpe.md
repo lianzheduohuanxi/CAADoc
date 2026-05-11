@@ -3,7 +3,7 @@ title: "AdvancedTopologicalOpe Changed Classes or Interfaces"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATICGMThickenOp", "CATICGMTopologicalBlendCurve", "CATICGMTopSpine", "CATICGMTopBlend", "CATICGMTopMostContinuousGeoInWireOperator", "CATICGMTopSimilarCurve", "CATICGMTopCleanCrvOperator", "CATICGMTopShellOrientation", "CATICGMTopExtrapolWireOpe", "CATICGMTopologicalMatch", "CATICGMTopGeodesicPtPt", "CATICGMSkinExtrapolation", "CATICGMSketchGeodesic", "CATICGMTopologicalFill", "CATICGMGeometrySizeOptimization", "CATICGMFrFTopologicalSweep", "CATICGMSketchOperators", "CATICGMTopSweep"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenBUAdvancedTopologicalOpe.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenBUAdvancedTopologicalOpe.htm"
 converted: "2026-05-11T17:33:46.211376"
 ---
 

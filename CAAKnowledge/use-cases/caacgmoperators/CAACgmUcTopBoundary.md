@@ -3,7 +3,7 @@ title: "Boundaries"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsBoundaryCreation", "CAAGMOperatorsInterfaces", "CATICGMHybBoundary"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopBoundary.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopBoundary.htm"
 converted: "2026-05-11T17:33:49.099805"
 ---
 

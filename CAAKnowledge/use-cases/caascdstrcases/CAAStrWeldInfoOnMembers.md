@@ -3,7 +3,7 @@ title: "Retrieving Weld Information on Member Objects"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CATIA", "CATIASfmMember", "CAAScdStrUseCases", "CAAStrWeldInfoOnMembers"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnMembers.md"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnMembers.htm"
 converted: "2026-05-11T17:31:50.908610"
 ---
 

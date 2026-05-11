@@ -3,7 +3,7 @@ title: "Managing Selection"
 category: "use case"
 module: "CAADegUseCases"
 tags: ["CAADegCreatePlaneCmd", "CAAISysPoint", "CAADialogEngine", "CAAGeometry", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleSelection.md"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleSelection.htm"
 converted: "2026-05-11T17:33:49.741834"
 ---
 

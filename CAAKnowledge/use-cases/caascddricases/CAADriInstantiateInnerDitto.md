@@ -3,7 +3,7 @@ title: "Instantiating a Ditto in a Drawing View"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CAADriInstantiateInnerDitto", "CAADriInstantiateDittoSource", "CATIA", "CAADriUseCases", "CAAScdDriUseCases"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriInstantiateInnerDitto.md"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriInstantiateInnerDitto.htm"
 converted: "2026-05-11T17:31:51.080302"
 ---
 ## Interactive Drafting

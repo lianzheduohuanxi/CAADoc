@@ -3,7 +3,7 @@ title: "CAAAniMeshCoating1D.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshCoating1D", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshCoating1DSource.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshCoating1DSource.htm"
 converted: "2026-05-11T17:31:51.623499"
 ---
 

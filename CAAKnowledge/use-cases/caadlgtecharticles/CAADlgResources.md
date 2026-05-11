@@ -3,7 +3,7 @@ title: "Assigning Resources to a Dialog Box"
 category: "use-case"
 module: "CAADlgTechArticles"
 tags: ["CATIconPath", "CAADegPointErrorBox", "CAADlgMoreButtonDlg", "CATIA"]
-source_file: "Doc/online/CAADlgTechArticles/CAADlgResources.md"
+source_file: "Doc/online/CAADlgTechArticles/CAADlgResources.htm"
 converted: "2026-05-11T17:17:56.085439"
 ---
 # 3D PLM Enterprise Architecture

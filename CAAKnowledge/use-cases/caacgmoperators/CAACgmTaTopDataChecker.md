@@ -3,7 +3,7 @@ title: "How to Use the CGM Data Checker"
 category: "tutorial"
 module: "CAACgmOperators"
 tags: ["CATINTCurve", "CATIntCurveType", "CATICPath", "CATIntCurve", "CATIA"]
-source_file: "Doc/online/CAACgmOperators/CAACgmTaTopDataChecker.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmTaTopDataChecker.htm"
 converted: "2026-05-11T17:33:48.656134"
 ---
 

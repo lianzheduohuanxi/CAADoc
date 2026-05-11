@@ -3,7 +3,7 @@ title: "The Boolean Operators"
 category: "use-case"
 module: "CAATopTechArticles"
 tags: []
-source_file: "Doc/online/CAATopTechArticles/TopoBoolean.md"
+source_file: "Doc/online/CAATopTechArticles/TopoBoolean.htm"
 converted: "2026-05-11T17:31:50.792795"
 ---
 # Geometric Modeler

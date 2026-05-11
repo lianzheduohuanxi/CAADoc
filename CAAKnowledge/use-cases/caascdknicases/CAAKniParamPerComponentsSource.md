@@ -3,7 +3,7 @@ title: "CAAKniParamPerComponents.CATScript"
 category: "use-case"
 module: "CAAScdKniUseCases"
 tags: ["CATIA", "CAAKniParamPerComponents", "CAAKniClash", "CAAScdKniUseCases"]
-source_file: "Doc/online/CAAScdKniUseCases/CAAKniParamPerComponentsSource.md"
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniParamPerComponentsSource.htm"
 converted: "2026-05-11T17:31:51.989309"
 ---
 

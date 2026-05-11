@@ -3,7 +3,7 @@ title: "Fillet: Untwist"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CATICGMDynAdvancedFillet", "CATICGMDynFillet", "CAATopAdvancedFillets", "CAAGMOperatorsAllFillets"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcFilletUntwist.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcFilletUntwist.htm"
 converted: "2026-05-11T17:33:48.922069"
 ---
 

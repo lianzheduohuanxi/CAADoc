@@ -3,7 +3,7 @@ title: "CAAAniPreproMapping.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniPreproMapping", "CATISamImportDefine", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproMappingSource.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproMappingSource.htm"
 converted: "2026-05-11T17:31:51.813397"
 ---
 

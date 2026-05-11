@@ -3,7 +3,7 @@ title: "Creating Cutouts"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CATIA", "CATIAStrFeatureFactory", "CAAStrCreateCutout", "CAAScdStrUseCases"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfCutout.md"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfCutout.htm"
 converted: "2026-05-11T17:31:50.872122"
 ---
 ## Structure Design

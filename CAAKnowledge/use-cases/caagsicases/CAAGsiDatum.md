@@ -3,7 +3,7 @@ title: "Converting a Shape Design Feature into a Datum"
 category: "use case"
 module: "CAAGsiUseCases"
 tags: ["CAAGsiNozzle", "CATIGSMProceduralView_var", "CATICkeParm_var", "CATIPrtContainer", "CATICkeParmFactory_var", "CAAGSMInterfaces", "CATIMf3DBehavior_var", "CATIGSMAssemble_var", "CATIGSMFactory", "CATIGSMProceduralView", "CATIPrtPart_var", "CAAGsiObjectUpdate", "CATIDescendants_var", "CATISpecObject_var", "CATIModelEvents_var", "CATInit", "CATIGSMFactory_var", "CATIDescendant", "CAAGsiDatum"]
-source_file: "Doc/online/CAAGsiUseCases/CAAGsiDatum.md"
+source_file: "Doc/online/CAAGsiUseCases/CAAGsiDatum.htm"
 converted: "2026-05-11T17:31:50.628699"
 ---
 # Shape Design & Styling

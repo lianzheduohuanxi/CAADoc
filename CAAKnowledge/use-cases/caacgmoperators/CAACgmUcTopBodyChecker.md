@@ -3,7 +3,7 @@ title: "Using the Body Checker"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CATICGMContainer", "CAADoc", "CAAGMOperatorsBodyChecker", "CATICGMObject", "CAATopBodyChecker", "CATICGMBodyChecker"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopBodyChecker.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopBodyChecker.htm"
 converted: "2026-05-11T17:33:49.090808"
 ---
 

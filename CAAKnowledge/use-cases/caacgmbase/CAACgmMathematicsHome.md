@@ -3,7 +3,7 @@ title: "Mathematics"
 category: "use cases"
 module: "CAACgmBase"
 tags: ["CATIA"]
-source_file: "Doc/online/CAACgmBase/CAACgmMathematicsHome.md"
+source_file: "Doc/online/CAACgmBase/CAACgmMathematicsHome.htm"
 converted: "2026-05-11T17:33:47.833418"
 ---
 

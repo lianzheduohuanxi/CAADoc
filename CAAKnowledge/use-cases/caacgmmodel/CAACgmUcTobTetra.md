@@ -3,7 +3,7 @@ title: "Using the Topological Objects"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CATICGMIntersectionCrvCrv", "CAADoc", "CAATobTetra", "CATICGMObject", "CATICGMProjectionPtSur", "CAAGMModelGemBrowser", "CAAGMModelCreation", "CATIntersectionSurSur", "CAAGMModelInterfaces", "CAAGMModelTetra", "CATIA"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcTobTetra.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTobTetra.htm"
 converted: "2026-05-11T17:33:48.580181"
 ---
 

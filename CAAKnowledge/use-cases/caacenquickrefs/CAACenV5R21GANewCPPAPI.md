@@ -3,7 +3,7 @@ title: "New C++ Authorized APIs in CAA V5R21 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIPspDefinePhysicalPart", "CATICGMRemoveFace", "CATIFmtMeshDomain", "CATIMfgCCPCustom", "CATIMfgMultiAxisCurveMachiningAuxDrive", "CATIMfg5AxisSpiralMilling", "CATICGMRemoveFacesInShell", "CATIPDMUEOnCancel", "CATIFmtCustomVisualization", "CATIMfgCustomizeCSOFilter", "CATIFmtMesher", "CATIFmtSelectedElement", "CATICGMObjectsLoad", "CATIFmtMeshPartOutput", "CATIFmtTrapSelector", "CATICGMRemoveEdge", "CATIUExitPVRCommands", "CATICGMThickSurfacePlus", "CATIPDMCharacteristicScm", "CATIFmtMesh"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R21GANewCPPAPI.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R21GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.505618"
 ---
 

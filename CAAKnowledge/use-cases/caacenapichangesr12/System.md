@@ -4,7 +4,7 @@ category: "use-case"
 module: "CAACenAPIChangesR12"
 version: "V5R12"
 tags: ["CATISysSettingControler", "CATIIniSettingManagement"]
-source_file: "Doc/online/CAACenAPIChangesR12/System.md"
+source_file: "Doc/online/CAACenAPIChangesR12/System.htm"
 converted: "2026-05-11T17:33:50.591299"
 ---
 

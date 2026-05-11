@@ -3,7 +3,7 @@ title: "Creating an Open Body"
 category: "technical article"
 module: "CAAGsiTechArticles"
 tags: ["CATIPrtPart", "CAAGsiNozzle", "CATIPrtManagement_var", "CATIPrtContainer", "CATIMechanicalRootFactory", "CAAGSMInterfaces", "CAAGsiUserTools", "CATIContainer_var", "CATIA", "CATIGSMFactory", "CATIGSMTool", "CATIPrtPart_var", "CATIDescendants_var", "CATInit_var", "CATIBasicTool_var", "CATISpecObject_var", "CATIDescendants", "CAAGsiToolkit", "CATIBasicTool", "CATIPrtManagement"]
-source_file: "Doc/online/CAAGsiTechArticles/CAAGsiCreateGSMTool.md"
+source_file: "Doc/online/CAAGsiTechArticles/CAAGsiCreateGSMTool.htm"
 converted: "2026-05-11T17:31:50.660543"
 ---
 # Shape Design & Styling

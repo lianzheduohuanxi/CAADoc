@@ -3,7 +3,7 @@ title: "Creating an Interruptible Task"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CATIProgressTask", "CAAAfrProgressTaskSampleCmd", "CAAApplicationFrame", "CAAProgressClock", "CAAGeometry", "CAAAfrProgressTaskSampleId", "CAAAfrProgressTask", "CATIA", "CATIProgressTaskUI"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleProgressTask.md"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleProgressTask.htm"
 converted: "2026-05-11T17:17:55.806965"
 ---
 # 3D PLM Enterprise Architecture

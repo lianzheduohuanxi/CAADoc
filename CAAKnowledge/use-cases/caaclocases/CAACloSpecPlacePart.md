@@ -3,7 +3,7 @@ title: "Placing Spec Parts"
 category: "use case"
 module: "CAACloUseCases"
 tags: ["CAACommonLayoutItf", "CATIPspDefinePhysicalPart", "CAACloSpecPlace", "CATIProduct", "CAACloPlacePart", "CAACloEduRuns", "CAACloSpecPlacePartMain", "CAAPspUtilities", "CATIPspPlacePartOnRun", "CAAPlantShipInterfaces", "CAAPspBaseEnvProtected", "CAACloSpecPlacePart", "CATIPspLogicalLine", "CATICloPartRules", "CATIA"]
-source_file: "Doc/online/CAACloUseCases/CAACloSpecPlacePart.md"
+source_file: "Doc/online/CAACloUseCases/CAACloSpecPlacePart.htm"
 converted: "2026-05-11T17:33:49.530102"
 ---
 

@@ -4,7 +4,7 @@ category: "use-case"
 module: "CAACenAPIChangesR21"
 version: "V5R21"
 tags: ["CATIColMergeItem", "CATIColIdManager", "CATIColMergeBriefcase", "CATICollabServices", "CATInstantCollabDesignCAAItf"]
-source_file: "Doc/online/CAACenAPIChangesR21/CATInstantCollabDesignCAAItf.md"
+source_file: "Doc/online/CAACenAPIChangesR21/CATInstantCollabDesignCAAItf.htm"
 converted: "2026-05-11T17:33:51.660575"
 ---
 # CAA C++ API Modifications

@@ -3,7 +3,7 @@ title: "Creating a Schematic Route between two Schematic Equipments"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAASCH_RouteBetween2Equip", "CAADoc", "CAASchRouteBetween2Equip", "CATIAProduct", "CAAScdSchUseCases", "CATIASchGRRComp", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASCHEDUConnector", "CATIASchGRR", "CAASCHEDUFuncString", "CATIASchCompatible", "CAASchPlatformModeler", "CATIASchCompGraphic", "CAASchAppUtilities"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchRouteBetween2Equip.md"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchRouteBetween2Equip.htm"
 converted: "2026-05-11T17:31:51.486843"
 ---
 ## Schematics Platform Modeler

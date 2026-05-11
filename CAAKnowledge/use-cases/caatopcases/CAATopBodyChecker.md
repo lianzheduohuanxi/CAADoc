@@ -3,7 +3,7 @@ title: "Creating a Multi Patch NURBS Surface"
 category: "use case"
 module: "CAATopUseCases"
 tags: ["CATICGMObject", "CAATopBopdyChecker", "CAATopBodyChecker", "CAATopologicalOperators", "CATICGMContainer"]
-source_file: "Doc/online/CAATopUseCases/CAATopBodyChecker.md"
+source_file: "Doc/online/CAATopUseCases/CAATopBodyChecker.htm"
 converted: "2026-05-11T17:31:50.690774"
 ---
 # Geometric Modeler

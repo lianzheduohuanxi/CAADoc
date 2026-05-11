@@ -3,7 +3,7 @@ title: "Using the Smart Duplicator"
 category: "use case"
 module: "CAATobUseCases"
 tags: ["CATICGMContainer", "CAATopologicalOjects", "CATICGMObject", "CAATobSmartDuplicator", "CAATopSmartDuplicator", "CAATopologicalObjects"]
-source_file: "Doc/online/CAATobUseCases/CAATobSmartDuplicator.md"
+source_file: "Doc/online/CAATobUseCases/CAATobSmartDuplicator.htm"
 converted: "2026-05-11T17:33:45.823962"
 ---
 # Geometric Modeler

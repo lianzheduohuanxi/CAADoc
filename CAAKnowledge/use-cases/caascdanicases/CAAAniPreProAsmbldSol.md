@@ -3,7 +3,7 @@ title: "Creating Assembled Solution"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniPreProAsmbldSol", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProAsmbldSol.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProAsmbldSol.htm"
 converted: "2026-05-11T17:31:51.786958"
 ---
 ## Analysis Modeler

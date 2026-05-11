@@ -3,7 +3,7 @@ title: "CAADriInstantiateOuterDitto.CATScript"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CAADriInstantiateOuterDitto", "CAADriInstantiateDittoTarget", "CAADriInstantiateDittoSource", "CATIA", "CAAScdDriUseCases"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriInstantiateOuterDittoSource.md"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriInstantiateOuterDittoSource.htm"
 converted: "2026-05-11T17:31:51.092771"
 ---
 

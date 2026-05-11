@@ -3,7 +3,7 @@ title: "New C++ Authorized APIs in CAA V5R14 SP3"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATISysDLNameSettingAtt", "CATIAVPMVDASynch", "CATISysMemoryWarningSettingAtt", "CATISysDisconnectionSettingAtt", "CATIVpmLongTransaction", "CATISysCacheSettingAtt"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R14SP3NewCPPAPI.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R14SP3NewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.215392"
 ---
 

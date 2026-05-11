@@ -3,7 +3,7 @@ title: "Creating Sheets and Views in a CATDrawing Document"
 category: "use case"
 module: "CAADriUseCases"
 tags: ["CATIDftStandardManager", "CATIDftDrawing", "CATIDftDrawingFormat", "CATIDftDocumentServices", "CATIContainer_var", "CATIA", "CATIDftViewMakeUp", "CAADrwStructure", "CATIDrawing", "CATIStringList", "CATIDftView", "CATIDftSheetFormat", "CATIDrwFactory", "CATIUnknownList", "CATISpecObject_var", "CATIView", "CATISpecObject", "CATI2DWFFactory_var", "CATIDftFormat_var", "CAADraftingInterfaces"]
-source_file: "Doc/online/CAADriUseCases/CAADriStructure.md"
+source_file: "Doc/online/CAADriUseCases/CAADriStructure.htm"
 converted: "2026-05-11T17:31:51.020431"
 ---
 # Mechanical Design

@@ -3,7 +3,7 @@ title: "New C++ Authorized APIs in CAA V5R18 SP3"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIIniSearchJapaneseNameCriterion", "CATIMfgCatalogServices", "CATIIniSearchJapaneseGraphNameCriterion", "CATIA", "CATIOmbContainerLinksUpdateStatus", "CATIMmiInternalCopyWithLink"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R18SP3NewCPPAPI.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R18SP3NewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.394923"
 ---
 

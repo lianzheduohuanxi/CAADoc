@@ -3,7 +3,7 @@ title: "The Mesh Parts and their Attributes"
 category: "use-case"
 module: "CAAScdAniTechArticles"
 tags: []
-source_file: "Doc/online/CAAScdAniTechArticles/CAAAniMeshPartsAndAttributes.md"
+source_file: "Doc/online/CAAScdAniTechArticles/CAAAniMeshPartsAndAttributes.htm"
 converted: "2026-05-11T17:31:51.914774"
 ---
 # Analysis Solution

@@ -3,7 +3,7 @@ title: "CAASchQueryCompRoute.CATScript"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAASCH_CompRoute01", "CATIAProduct", "CAASchQueryCompRoute", "CATIASchGRRRoute", "CATIASchRouteGraphic", "CAAScdSchUseCases", "CATIASchGRRComp", "CATIA", "CATIASchCntrLocation", "CATIASchGRR", "CATIASchCompGraphic", "CATIASchAppConnectable"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryCompRouteSource.md"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryCompRouteSource.htm"
 converted: "2026-05-11T17:31:51.455417"
 ---
 

@@ -3,7 +3,7 @@ title: "Creating a Distance Dimension on Interactive Geometry"
 category: "use case"
 module: "CAADriUseCases"
 tags: ["CATIDftStandardManager", "CATIDrwAnnotationFactory_var", "CATISheet_var", "CATIDrwAnnotationFactory", "CATIDftDocumentServices", "CATIDrwDimDimension", "CATIContainer_var", "CATIA", "CATIDrawing", "CATIStringList", "CATIView_var", "CAADrwCreateDimCmd", "CATIUnknownList", "CATISpecObject_var", "CAADrwCreateDim", "CATIUnknownListImpl", "CATI2DWFFactory_var", "CAADraftingInterfaces", "CAADRWCreateDim"]
-source_file: "Doc/online/CAADriUseCases/CAADriCreateDim.md"
+source_file: "Doc/online/CAADriUseCases/CAADriCreateDim.htm"
 converted: "2026-05-11T17:31:50.950000"
 ---
 # Mechanical Design

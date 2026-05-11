@@ -3,7 +3,7 @@ title: "GMOperators List of Use Cases"
 category: "use-case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsDraftCreation", "CAAGMOperatorsCompatible", "CAAGMOperatorsBodyExtremum", "CAAGMOperatorsShellOrientation", "CAAGMOperatorsCornerCreation", "CAAGMOperatorsSilhouette", "CAAGMOperatorsFaceReplaceSurface", "CAAGMOperatorsPattern", "CAAGMOperatorsCheckForPart", "CAAGMOperatorsNurbsSurfMultiPatch", "CAAGMOperatorsProgressBar", "CAAGMOperatorsAllFillets", "CAAGMOperatorsCheckGnOK", "CAAGMOperatorsExtractFace", "CAAGMOperatorsInDegree", "CAAGMOperatorsProperties", "CAAGMOperatorsBoundaryCreation", "CAAGMOperatorsWireAssembly", "CAAGMOperatorsIntersectShellShell"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcOperatorsSummary.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcOperatorsSummary.htm"
 converted: "2026-05-11T17:33:49.012195"
 ---
 

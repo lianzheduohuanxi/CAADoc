@@ -3,7 +3,7 @@ title: "Creating an ArrangementArea without a Contour"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CATIA", "CAAArrCreateNoContourArea", "CAAScdArrUseCases"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateNoContourArea.md"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateNoContourArea.htm"
 converted: "2026-05-11T17:31:51.556574"
 ---
 

@@ -3,7 +3,7 @@ title: "CAADriDrawingTable.CATScript"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CATIA", "CAADriDrawingTable"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriDrawingTableSource.md"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriDrawingTableSource.htm"
 converted: "2026-05-11T17:31:51.067330"
 ---
 

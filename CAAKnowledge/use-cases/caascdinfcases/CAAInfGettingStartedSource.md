@@ -3,7 +3,7 @@ title: "CAAInfGettingStarted.CATScript"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CATIA", "CAAInfGettingStarted"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfGettingStartedSource.md"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfGettingStartedSource.htm"
 converted: "2026-05-11T17:31:52.376020"
 ---
 

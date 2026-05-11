@@ -3,7 +3,7 @@ title: "New Java Authorized APIs in CAA V5R17 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIA"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R17GANewJavaAPI.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R17GANewJavaAPI.htm"
 converted: "2026-05-11T17:33:47.302648"
 ---
 

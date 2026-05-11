@@ -3,7 +3,7 @@ title: "Updating Shape Design Features"
 category: "technical article"
 module: "CAAGsiTechArticles"
 tags: ["CAAGSMInterfaces", "CATIPrtPart", "CAAGsiNozzle", "CATIGSMTool", "CAAAGsiService", "CAAGsiService", "CAAGsiServices", "CATIAV5", "CAAGsiObjectUpdate", "CATISpecObject_var"]
-source_file: "Doc/online/CAAGsiTechArticles/CAAGsiUpdateShapeDesign.md"
+source_file: "Doc/online/CAAGsiTechArticles/CAAGsiUpdateShapeDesign.htm"
 converted: "2026-05-11T17:31:50.677519"
 ---
 # Shape Design& Styling

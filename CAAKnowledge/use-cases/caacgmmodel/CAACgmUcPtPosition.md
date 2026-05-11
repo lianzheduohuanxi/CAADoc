@@ -3,7 +3,7 @@ title: "Testing the Position of a Point inside a Face or a Volume "
 category: "use case"
 module: "CAACgmModel"
 tags: ["CATICGMPositionPtFaceOperator", "CAAGMModelPositionOpe", "CAAGMModelInterfaces", "CATICGMPositionPtVolOperator"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcPtPosition.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcPtPosition.htm"
 converted: "2026-05-11T17:33:48.514152"
 ---
 

@@ -3,7 +3,7 @@ title: "New C++ Authorized APIs in CAA V5R17 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIMfgCopyOperation", "CATIPrdTransactionalEventMgt", "CATITPSConsumable", "CATI2DLMainWkbAddin", "CATInstantCollabDesignCAAItf", "CATIMfgUndoManager", "CATI2DLBackWkbAddin", "CATIColMergeContextRole", "CATIAVPMVDAAlternatePart", "CATImmIdentifierAcquisitionAgent", "CATIColMergeable", "CATIImmNavAddin", "CATISamAnalysisGeneralSettingAtt", "CATIMfgMultiAxisAlgorithm", "CATIAApplicationFrame", "CATIPDMUEDocumentName", "CATIColSharable", "CATIPrtUIFactory", "CATIAV4Interfaces", "CATIEhfUIPArrangeJunction"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R17GANewCPPAPI.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R17GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.294353"
 ---
 

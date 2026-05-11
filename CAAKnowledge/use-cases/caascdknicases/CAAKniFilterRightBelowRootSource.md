@@ -3,7 +3,7 @@ title: "CAAKniFilterRightBelowRoot.CATScript"
 category: "use-case"
 module: "CAAScdKniUseCases"
 tags: ["CAAKniFilterRightBelowRoot", "CATIA", "CAAKniClash", "CAAScdKniUseCases"]
-source_file: "Doc/online/CAAScdKniUseCases/CAAKniFilterRightBelowRootSource.md"
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniFilterRightBelowRootSource.htm"
 converted: "2026-05-11T17:31:51.981824"
 ---
 

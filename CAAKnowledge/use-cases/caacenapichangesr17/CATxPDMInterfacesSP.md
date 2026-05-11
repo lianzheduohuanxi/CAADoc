@@ -4,7 +4,7 @@ category: "use-case"
 module: "CAACenAPIChangesR17"
 version: "V5R17"
 tags: ["CATIxPDMProductItem"]
-source_file: "Doc/online/CAACenAPIChangesR17/CATxPDMInterfacesSP.md"
+source_file: "Doc/online/CAACenAPIChangesR17/CATxPDMInterfacesSP.htm"
 converted: "2026-05-11T17:33:51.319780"
 ---
 

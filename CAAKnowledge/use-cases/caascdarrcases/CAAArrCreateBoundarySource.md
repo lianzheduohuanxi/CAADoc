@@ -3,7 +3,7 @@ title: "CAAArrCreateBoundary.CATScript"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CAAArrCreateBoundary", "CATIA"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateBoundarySource.md"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateBoundarySource.htm"
 converted: "2026-05-11T17:31:51.539115"
 ---
 

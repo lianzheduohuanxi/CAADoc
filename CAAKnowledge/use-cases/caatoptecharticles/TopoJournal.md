@@ -3,7 +3,7 @@ title: "The CGM Journal"
 category: "use-case"
 module: "CAATopTechArticles"
 tags: ["CAATopJournal"]
-source_file: "Doc/online/CAATopTechArticles/TopoJournal.md"
+source_file: "Doc/online/CAATopTechArticles/TopoJournal.htm"
 converted: "2026-05-11T17:31:50.799285"
 ---
 # Geometric Modeler

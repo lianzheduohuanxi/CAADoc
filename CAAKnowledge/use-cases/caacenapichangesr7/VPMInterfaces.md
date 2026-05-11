@@ -4,7 +4,7 @@ category: "use-case"
 module: "CAACenAPIChangesR7"
 version: "V5R7"
 tags: ["CATIAVPMItemInstance", "CATIAVPMObject", "CATICfgSignedSpec", "CATIAVPMDocumentVersion", "CATIAVPMTPConfigurable", "CATICfgManager", "CATIAVPMTPRootDesktop", "CATIAVPMPartVersion", "CATIAVPMBOPartInstance", "CATIAVPMObjectVersion", "CATIAVPMProductRootClass", "CATIAVPMRootDesktop", "CATIVpmAFLAction", "CATIAVPMObjectMaster", "CATICfgSpecANDExpression", "CATIAVPMBOVersionMaster", "CATIAVPMProductClass"]
-source_file: "Doc/online/CAACenAPIChangesR7/VPMInterfaces.md"
+source_file: "Doc/online/CAACenAPIChangesR7/VPMInterfaces.htm"
 converted: "2026-05-11T17:33:52.306203"
 ---
 

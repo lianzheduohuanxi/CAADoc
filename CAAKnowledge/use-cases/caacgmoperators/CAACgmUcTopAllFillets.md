@@ -3,7 +3,7 @@ title: "Creating Fillets"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CAATopVariableFillets", "CAATopConstantFillets", "CATICGMObject", "CAAGMModelGemBrowser", "CATICGMDynFillet", "CAATopRollingEdges", "CAATopFilletsMain", "CAAGMOperatorsAllFillets"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopAllFillets.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopAllFillets.htm"
 converted: "2026-05-11T17:33:49.071438"
 ---
 

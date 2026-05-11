@@ -3,7 +3,7 @@ title: "Creating a State Dialog Command"
 category: "use-case"
 module: "CAADegTechArticles"
 tags: ["CAACommandCmd", "CATIndicationAgent"]
-source_file: "Doc/online/CAADegTechArticles/CAADegCreatingCommand.md"
+source_file: "Doc/online/CAADegTechArticles/CAADegCreatingCommand.htm"
 converted: "2026-05-11T17:33:49.764355"
 ---
 

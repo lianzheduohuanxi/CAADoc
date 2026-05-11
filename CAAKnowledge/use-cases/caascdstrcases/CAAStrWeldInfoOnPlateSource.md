@@ -3,7 +3,7 @@ title: "CAAStrWeldInfoOnPlate.CATScript"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CATIA", "CAAStrWeldInfoOnPlate"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnPlateSource.md"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnPlateSource.htm"
 converted: "2026-05-11T17:31:50.917575"
 ---
 

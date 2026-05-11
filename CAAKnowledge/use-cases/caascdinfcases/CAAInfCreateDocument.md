@@ -3,7 +3,7 @@ title: "Creating a New CATIA Document"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAScdInfUseCases", "CAAInfSaveAsDocument", "CAAInfCloseDocument", "CAAInfCreateDocument", "CATIA"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfCreateDocument.md"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfCreateDocument.htm"
 converted: "2026-05-11T17:31:52.355066"
 ---
 

@@ -3,7 +3,7 @@ title: "NewTopologicalObjects Changed Classes or Interfaces"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATICGMPositionPtFaceOperator", "CATICGMTopMultiResult", "CATICGMTopPropagationEdge", "CATICGMSmartBodyDuplicator", "CATICGMTopSewSkin", "CATICGMTopCAACompliantJournalChecker", "CATICGMRecomposeShells", "CATICGMTopOperator", "CATICGMPositionPtVolOperator"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenBUNewTopologicalObjects.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenBUNewTopologicalObjects.htm"
 converted: "2026-05-11T17:33:46.407218"
 ---
 

@@ -3,7 +3,7 @@ title: "Computing a Tool Path with Machining Areas"
 category: "use case"
 module: "CAASmiUseCases"
 tags: ["CATISmgMachiningAreaGuidingCurves", "CAASmiConnectUserOperationWithMA", "CATIMfgToolPathComponents", "CATIMfgComputeToolPathCustom", "CATISmgMachiningAreaParts", "CATIMfgTPSaveData", "CAASmiUserOperationWithMA", "CAAESmiUserOperationWithMATPComputation", "CAASmiUserOperationWithMAToolPath", "CATISmgMachiningAreaxxx", "CATIMfgCompoundTraject", "CATISmgMachiningAreaChecks", "CAASurfaceMachiningItf", "CAAOffset", "CATIMfgToolPathFactory", "CAASmgOperationWithMA"]
-source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithMAToolPath.md"
+source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithMAToolPath.htm"
 converted: "2026-05-11T17:31:51.272858"
 ---
 # Machining

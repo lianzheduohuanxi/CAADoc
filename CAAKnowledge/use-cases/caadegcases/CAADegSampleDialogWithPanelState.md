@@ -3,7 +3,7 @@ title: "Associating a Dialog Box with a State"
 category: "use case"
 module: "CAADegUseCases"
 tags: ["CAADegGeoCommands", "CAADegPointEditor", "CATIndicationAgent", "CAADialogEngine", "CAAGeometry", "CAADegCreatePointCmd", "CAADegFileCmd"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleDialogWithPanelState.md"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleDialogWithPanelState.htm"
 converted: "2026-05-11T17:33:49.657183"
 ---
 

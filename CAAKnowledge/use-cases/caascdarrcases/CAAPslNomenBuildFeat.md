@@ -3,7 +3,7 @@ title: "CATIArrWorkbench Interfaces Use Case"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CATIA", "CATIArrWorkbench", "CAAPslNomenBuildFeat"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAPslNomenBuildFeat.md"
+source_file: "Doc/online/CAAScdArrUseCases/CAAPslNomenBuildFeat.htm"
 converted: "2026-05-11T17:31:51.580064"
 ---
 ## Arrangement

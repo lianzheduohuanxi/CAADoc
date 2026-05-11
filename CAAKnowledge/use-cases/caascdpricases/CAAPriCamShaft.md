@@ -3,7 +3,7 @@ title: "Creating a Simplified Camshaft"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CAAPriCamshaft", "CATIA", "CAAPriCreateCamshaft", "CAAscdPriUseCases"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriCamShaft.md"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriCamShaft.htm"
 converted: "2026-05-11T17:31:51.170595"
 ---
 

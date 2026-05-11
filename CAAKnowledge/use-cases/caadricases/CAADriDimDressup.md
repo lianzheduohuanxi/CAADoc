@@ -3,7 +3,7 @@ title: "Editing Dimension Dress-Up"
 category: "use case"
 module: "CAADriUseCases"
 tags: ["CAADrwDimDressupCmduse", "CAAUseCaseCommands", "CATIDrwDimDimension", "CATIDrwDimFormat", "CAADrwAddin", "CATIDrwDimValueComponent_var", "CATIDrwDimText_var", "CATIDrwDimExtensionLine", "CATIDrwDimExtensionLine_var", "CATIA", "CATIDrwDimExtensionLineLinear", "CATIDrwDimDimensionLine_var", "CATIDrwDimDimensionLine", "CATIDrwDimText", "CATIDrwDimValue_var", "CATIDrwDimValue", "CAADrwDimDressupCmd", "CATIDrwDimExtensionLineLinear_var", "CATISpecObject_var", "CAADrwDimDressup"]
-source_file: "Doc/online/CAADriUseCases/CAADriDimDressup.md"
+source_file: "Doc/online/CAADriUseCases/CAADriDimDressup.htm"
 converted: "2026-05-11T17:31:50.992103"
 ---
 # Mechanical Design

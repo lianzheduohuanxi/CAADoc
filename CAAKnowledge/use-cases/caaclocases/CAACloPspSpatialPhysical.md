@@ -3,7 +3,7 @@ title: "Accessing Spatial Integration Data"
 category: "use case"
 module: "CAACloUseCases"
 tags: ["CAACommonLayoutItf", "CAACloPspSpatialPhysical", "CATIArrNode_var", "CAACloPspSpatialPhysicalMain", "CAACloPlacePart", "CATIPspPhysical", "CATIArrSegmentsString", "CAAPspUtilities", "CATIPspSpatial", "CATIUnknownList", "CAAPspBaseEnvProtected", "CAAPlantShipInterfaces", "CAACloPspEduIn", "CATIA"]
-source_file: "Doc/online/CAACloUseCases/CAACloPspSpatialPhysical.md"
+source_file: "Doc/online/CAACloUseCases/CAACloPspSpatialPhysical.htm"
 converted: "2026-05-11T17:33:49.507426"
 ---
 

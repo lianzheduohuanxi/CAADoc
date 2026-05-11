@@ -3,7 +3,7 @@ title: "Creating a Schematic Document"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CATIA", "CAASchCreateSchDocument2", "CAAScdSchUseCases"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocument2.md"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocument2.htm"
 converted: "2026-05-11T17:31:51.345185"
 ---
 ## Schematics Platform Modeler

@@ -3,7 +3,7 @@ title: "Visualizing Temporary Components"
 category: "use case"
 module: "CAAVisUseCases"
 tags: ["CAADegGeoCommands", "CATInstantiateComponent", "CATI3DGeoVisu", "CAAVisualization", "CAAVisWireBox", "CAAVisTextModel", "CATIndicationAgent", "CATISO", "CATIA", "CATI2DGeoVisu", "CAAIVisTextModel", "CAADialogEngine", "CAAGeometry", "CAAIVisWireBox", "CAADegClippingByBoxCmd", "CATI3GeoVisu", "CAAVisTemporaryObjects"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleISO.md"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleISO.htm"
 converted: "2026-05-11T17:31:52.128785"
 ---
 # 3D PLM Enterprise Architecture

@@ -3,7 +3,7 @@ title: "Inserting a Schematic Component into a Schematic Route"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAASCH_Sample", "CAADoc", "CATIASchComponent", "CAAScdSchUseCases", "CAASCH_RouteForPlacement", "CATIA", "CAASchAppBase", "CAASchAppUtilities", "CAASCHEDUApp", "CAASchPlatformModeler", "CAASchInsertComponent"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchInsertComponent.md"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchInsertComponent.htm"
 converted: "2026-05-11T17:31:51.373120"
 ---
 ## Schematics Platform Modeler

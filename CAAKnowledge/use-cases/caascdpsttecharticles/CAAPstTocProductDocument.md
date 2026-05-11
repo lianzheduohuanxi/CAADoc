@@ -3,7 +3,7 @@ title: "Product Document Automation Objects"
 category: "use-case"
 module: "CAAScdPstTechArticles"
 tags: ["CATIA", "CATIAFixTogethers"]
-source_file: "Doc/online/CAAScdPstTechArticles/CAAPstTocProductDocument.md"
+source_file: "Doc/online/CAAScdPstTechArticles/CAAPstTocProductDocument.htm"
 converted: "2026-05-11T17:31:52.343589"
 ---
 # Product Document Automation Objects

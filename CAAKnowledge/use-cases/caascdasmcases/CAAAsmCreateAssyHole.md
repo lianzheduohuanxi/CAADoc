@@ -3,7 +3,7 @@ title: "Creating and Modifying an Assembly Hole"
 category: "use-case"
 module: "CAAScdAsmUseCases"
 tags: ["CAAScdAsmUseCases", "CATIA", "CAAAsmCreateAssyHole"]
-source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmCreateAssyHole.md"
+source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmCreateAssyHole.htm"
 converted: "2026-05-11T17:31:50.843187"
 ---
 ## Assembly

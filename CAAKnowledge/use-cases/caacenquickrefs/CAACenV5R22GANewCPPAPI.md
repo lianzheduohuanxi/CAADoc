@@ -3,7 +3,7 @@ title: "New C++ Authorized APIs in CAA V5-6R2012 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIVpmLightQueryManager", "CATIPrtExplodeServices", "CATIGSMMultiSelAccess", "CATIGSMUIFactory", "CATIGSMGrid", "CATICGMObjectsSaveDiagnosis", "CATIEwrWire", "CATIGSMWorkingSupport", "CATIGSMMultiSelManager", "CATIGSMCartesianGrid", "CATIGSMAutomaticFillGeo", "CATIGSMFactoryGeo", "CATIDdeDxfSettingAtt", "CATIDdeIg2SettingAtt", "CATIGSM3DFurtiveGrid", "CATIA", "CATIGSMTransfer", "CATIGSMWorkingSupportFactory", "CATIGSMWorkingSupportSet"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R22GANewCPPAPI.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R22GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.519115"
 ---
 

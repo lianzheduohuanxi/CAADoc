@@ -4,7 +4,7 @@ category: "api-changes"
 module: "CAACenAPIChangesR25"
 version: "V5R25"
 tags: ["CATICfgInterval", "CATIConfigurable", "CAA2Usage", "CATICfgFilter", "CATICfgManager", "CATIVpmAttribute", "CAA2Level", "CATICfgAttachable", "CATIVpmAFLManager", "CATICfgSimpleSpecification", "CATICfgUEValidateEff", "CATIVpmFactoryObject", "CATIEnovCMManager"]
-source_file: "Doc/online/CAACenAPIChangesR25/CAACenAPIChangeDetail.md"
+source_file: "Doc/online/CAACenAPIChangesR25/CAACenAPIChangeDetail.htm"
 converted: "2026-05-11T17:33:51.832518"
 ---
 #   

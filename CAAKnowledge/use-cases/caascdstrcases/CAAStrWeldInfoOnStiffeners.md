@@ -3,7 +3,7 @@ title: "Retrieving Weld Information on Stiffener Objects"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CATIA", "CATIASfmStiffener", "CAAScdStrUseCases", "CAAStrWeldInfoOnStiffeners"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnStiffeners.md"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnStiffeners.htm"
 converted: "2026-05-11T17:31:50.922064"
 ---
 ## Structure Design

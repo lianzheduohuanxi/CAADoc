@@ -3,7 +3,7 @@ title: "CAAAsmModifyOptions.catvbs"
 category: "use-case"
 module: "CAAScdAsmUseCases"
 tags: ["CATIA", "CAAAsmModifyOptions"]
-source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmModifyOptionsSource.md"
+source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmModifyOptionsSource.htm"
 converted: "2026-05-11T17:31:50.861645"
 ---
 

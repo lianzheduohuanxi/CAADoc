@@ -3,7 +3,7 @@ title: "Creating a Surface Machining Operation StartUp"
 category: "use case"
 module: "CAASmiUseCases"
 tags: ["CATIM3xFeature", "CAAUserOperationCatalog", "CAASmgOperation", "CAASmgMachiningFeature", "CAAApproachDistance", "CAASmgOperationWithMASU", "CATIMfgMachiningFeature", "CAAStep", "CAASurfaceMachiningItf", "CAASmiUserOperationCatalog", "CAASmgOperationSU", "CAAISmiUserMachFeature", "CAAOffset", "CAAToolAngle", "CAASmgOperationWithMA"]
-source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationCatalog.md"
+source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationCatalog.htm"
 converted: "2026-05-11T17:31:51.254402"
 ---
 #  Machining

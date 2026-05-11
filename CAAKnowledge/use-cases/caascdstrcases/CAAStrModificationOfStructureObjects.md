@@ -3,7 +3,7 @@ title: "Modifying Structure Objects"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CAAStrCreationOfStructureObjects", "CAAStrCreateOfStructureObject", "CAAStrModificationOfStructureObjects", "CAAScdStrUseCases", "CATIA"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfStructureObjects.md"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfStructureObjects.htm"
 converted: "2026-05-11T17:31:50.901137"
 ---
 ## Structure Design

@@ -3,7 +3,7 @@ title: "Managing Indication"
 category: "use case"
 module: "CAADegUseCases"
 tags: ["CAACreateCircleCmd", "CAADegCreateCircleCmd", "CAADialogEngine", "CAAGeometry", "CATIndicationAgent", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleIndication.md"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleIndication.htm"
 converted: "2026-05-11T17:33:49.684430"
 ---
 

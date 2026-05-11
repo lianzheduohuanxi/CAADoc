@@ -3,7 +3,7 @@ title: "Using NURBS"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CATICGMContainer", "CAADoc", "CAAGMModelNurbs", "CATICGMObject", "CAAGMModelGemBrowser", "CAAGMModelInterfaces", "CATIA"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGobNurbs.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGobNurbs.htm"
 converted: "2026-05-11T17:33:48.422980"
 ---
 # Using NURBS  

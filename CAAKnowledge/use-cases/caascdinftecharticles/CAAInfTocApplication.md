@@ -3,7 +3,7 @@ title: "Infrastructure Automation Objects"
 category: "use-case"
 module: "CAAScdInfTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfTocApplication.md"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfTocApplication.htm"
 converted: "2026-05-11T17:31:52.485667"
 ---
 # Infrastructure Automation Objects

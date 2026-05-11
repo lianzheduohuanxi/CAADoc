@@ -3,7 +3,7 @@ title: "Understanding the Topological Journal"
 category: "use-case"
 module: "CAACgmOperators"
 tags: ["CAATopDumpJournal", "CAATopologicalOperators", "CAACheckForPart", "CATIMfProcReport", "CAATopCheckGnOK", "CATICGMTopwire", "CAATopCheckForPart", "CATICGMTopPrism", "CATICGMTopSkin", "CATIA", "CATIBRepAccess", "CAACheck", "CAATopCheckGnKO"]
-source_file: "Doc/online/CAACgmOperators/CAACgmTaTopJournalMethodology.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmTaTopJournalMethodology.htm"
 converted: "2026-05-11T17:33:48.691140"
 ---
 

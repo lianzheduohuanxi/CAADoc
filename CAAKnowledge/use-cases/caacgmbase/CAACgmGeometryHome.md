@@ -3,7 +3,7 @@ title: "Geometry"
 category: "use cases"
 module: "CAACgmBase"
 tags: ["CATIA", "CAAGMModelInterfaces"]
-source_file: "Doc/online/CAACgmBase/CAACgmGeometryHome.md"
+source_file: "Doc/online/CAACgmBase/CAACgmGeometryHome.htm"
 converted: "2026-05-11T17:33:47.799971"
 ---
 

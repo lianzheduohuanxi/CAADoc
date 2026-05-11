@@ -3,7 +3,7 @@ title: "Running Light Query"
 category: "use case"
 module: "CAADkoUseCases"
 tags: ["CATIVpmLightQueryManager", "CAAVPMDesktopObjects", "CATIVpmPredicate_var", "CATIVpmQuery_var", "CAADkoLightQuery", "CATIVpmPathExpression_var", "CATIVpmLightQueryManager_var", "CATIVpmFactoryManager_var"]
-source_file: "Doc/online/CAADkoUseCases/CAADkoLightQuery.md"
+source_file: "Doc/online/CAADkoUseCases/CAADkoLightQuery.htm"
 converted: "2026-05-11T17:33:45.996993"
 ---
 

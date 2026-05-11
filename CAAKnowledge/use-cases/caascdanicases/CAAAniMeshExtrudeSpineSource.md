@@ -3,7 +3,7 @@ title: "CAAAniMeshExtrudeSpine.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAScdAniUseCases", "CAAAniMeshExtrudeSpine"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshExtrudeSpineSource.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshExtrudeSpineSource.htm"
 converted: "2026-05-11T17:31:51.642594"
 ---
 

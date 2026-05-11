@@ -3,7 +3,7 @@ title: "Threading a Rod"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMCheckForPart", "CAAGMOperatorsInterfaces", "CAAGMOperatorsJournalThreadOpMain", "CAADoc", "CAAGMModelGemBrowser", "CAASweepProfile", "CAAGMOperatorsJournalThreadUtility", "CAASweepCreate", "CATICGMFrFTopologicalSweep", "CAAAdtJournalThread", "CAAAdtJournalCreateThread"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtThreadOperator.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtThreadOperator.htm"
 converted: "2026-05-11T17:33:48.868926"
 ---
 

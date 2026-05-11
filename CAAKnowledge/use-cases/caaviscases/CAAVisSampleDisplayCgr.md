@@ -3,7 +3,7 @@ title: "Displaying cgr Files"
 category: "use case"
 module: "CAAVisUseCases"
 tags: ["CAAVisBaseView", "CAAVisBaseCGRDocument", "CAAVisBaseDocument", "CAAVisBasics", "CAAVisBaseApplication", "CAAVisualization"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleDisplayCgr.md"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleDisplayCgr.htm"
 converted: "2026-05-11T17:31:52.093625"
 ---
 # 3D PLM Enterprise Architecture

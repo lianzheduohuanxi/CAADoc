@@ -3,7 +3,7 @@ title: "Modifying the Faces Orientation in a Shell"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CATICGMTopShellOrientation", "CAAGMOperatorsInterfaces", "CAAGMOperatorsShellOrientation"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcShellOrientation.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcShellOrientation.htm"
 converted: "2026-05-11T17:33:49.037216"
 ---
 

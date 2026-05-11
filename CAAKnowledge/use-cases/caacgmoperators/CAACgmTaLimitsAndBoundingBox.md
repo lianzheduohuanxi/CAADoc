@@ -3,7 +3,7 @@ title: "Limits and Bounding Boxes of Geometrical Objects "
 category: "use-case"
 module: "CAACgmOperators"
 tags: ["CATICGMProjectionPtCrv", "CATICGMInclusionPtCrv", "CATICGMInclusionPtSur", "CATICGMProjectionCrvSur", "CATICGMTopExtrapolWireOpe", "CATICGMIntersectionCrvSur", "CATICGMDistanceMinPtSur", "CATICGMReflectCurve", "CATICGMIntersectionSurSur", "CATICGMEdgeCurveComputation", "CATICGMDistanceMinCrvCrv", "CATICGMTopSkin", "CATICGMDistanceMinPtCrv"]
-source_file: "Doc/online/CAACgmOperators/CAACgmTaLimitsAndBoundingBox.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmTaLimitsAndBoundingBox.htm"
 converted: "2026-05-11T17:33:48.626586"
 ---
 

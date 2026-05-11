@@ -3,7 +3,7 @@ title: "CAAStrWeldInfoOnStiffener.CATScript"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CATIA", "CAAStrWeldInfoOnStiffener", "CATIASfmStiffener"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnStiffenersSource.md"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnStiffenersSource.htm"
 converted: "2026-05-11T17:31:50.924560"
 ---
 

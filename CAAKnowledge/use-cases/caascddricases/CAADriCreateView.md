@@ -3,7 +3,7 @@ title: "Creating a Front View in a new Drawing Document"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CATIA", "CAADriCreateView", "CAAScdDriUseCases"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriCreateView.md"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriCreateView.htm"
 converted: "2026-05-11T17:31:51.042883"
 ---
 ## Generative Drafting

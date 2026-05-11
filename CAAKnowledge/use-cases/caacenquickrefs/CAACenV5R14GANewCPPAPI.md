@@ -3,7 +3,7 @@ title: "New C++ Authorized APIs in CAA V5R14 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATICfgUserExit2", "CATIV4IV4WritingSettingAtt", "CATIMf3DBehavior", "CATIAVPMVDAUnlock", "CATISPAMeasureSettingAtt", "CATISchematicInit", "CATIPDAdapterInterfaces", "CATIMciMultiCADSettingAtt", "CATIDftFormat", "CATIMfgActivityInformation", "CATILieToleranceSheetSettingAtt", "CATIArrAttachSubscriber", "CATIStrColorSTDObjectSettingAtt", "CATITPSEditorUIFTASettingAtt", "CATIMfGeometryAccess", "CATIArrAttachmentFactory", "CATIStrMaterialSFDObjectSettingAtt", "CATISPASectioningSettingAtt", "CATIMfTriDimResult", "CATIDftSheetFormat"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R14GANewCPPAPI.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R14GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.180388"
 ---
 

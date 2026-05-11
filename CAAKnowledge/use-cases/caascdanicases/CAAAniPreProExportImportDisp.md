@@ -3,7 +3,7 @@ title: "Export/Import of Displacements"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAAniPreProExportImportDisp", "CATIA", "CAAScdAniUseCases", "CATIAAnalysisManager"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProExportImportDisp.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProExportImportDisp.htm"
 converted: "2026-05-11T17:31:51.793943"
 ---
 ## Analysis Modeler

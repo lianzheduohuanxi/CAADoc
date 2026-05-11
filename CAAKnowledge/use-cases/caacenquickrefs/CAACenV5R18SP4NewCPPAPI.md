@@ -3,7 +3,7 @@ title: "New C++ Authorized APIs in CAA V5R18 SP4"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIA", "CATIPspPlacePartOnRun", "CATISysFileAccessStatisticsSettingAtt"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R18SP4NewCPPAPI.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R18SP4NewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.410936"
 ---
 

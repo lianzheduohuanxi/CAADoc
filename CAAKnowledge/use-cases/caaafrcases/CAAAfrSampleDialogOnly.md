@@ -3,7 +3,7 @@ title: "Creating a Command that Consists in a Dialog Window"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CAAAfrBoundingEltHdr", "CAAAfrBoundingElementId", "CAAAfrGeoCommands", "CAAGeometry", "CAAAfrGeoAnalysisWkbHeader", "CATISO", "CAAAfrBoundingElementCmd", "CAAAfrBoundingElement", "CAAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleDialogOnly.md"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleDialogOnly.htm"
 converted: "2026-05-11T17:17:55.713101"
 ---
 # 3D PLM Enterprise Architecture

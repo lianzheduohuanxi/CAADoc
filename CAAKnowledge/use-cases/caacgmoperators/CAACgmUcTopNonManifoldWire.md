@@ -3,7 +3,7 @@ title: "Creating a Non-Manifold Wire "
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsTopWireAssembly", "CAAGMOperatorsInterfaces", "CATICGMHybAssemble", "CATICGMHybProject"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopNonManifoldWire.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopNonManifoldWire.htm"
 converted: "2026-05-11T17:33:49.211399"
 ---
 

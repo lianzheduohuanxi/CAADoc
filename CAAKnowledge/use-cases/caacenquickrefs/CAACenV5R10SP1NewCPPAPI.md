@@ -3,7 +3,7 @@ title: "New C++ Authorized APIs in CAA V5R10 SP1"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIMSHSelectedNode", "CATIMSHSelectedFace", "CATInitBatchOnHost", "CATICst_var", "CATIMfgMacroMotionsGeomMapping", "CATIPDMUnixNTMapping", "CATIRSur", "CATIMfgMacrosTabPage", "CATIAVPMBOProductClass", "CATIMSHSelectedEdge", "CATIBRepAccess"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R10SP1NewCPPAPI.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R10SP1NewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.042281"
 ---
 

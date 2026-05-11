@@ -3,7 +3,7 @@ title: "Creating Customized Command Headers"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CAAFindP2", "CAAAfrDumpCommandHeader", "CAASysCollectionEmptyNotif", "CAAAfrGeometryWksHeader", "CAAAfrGeometryWks", "CATImplementHeaderResources", "CAAAfrGeometryWshop", "CAAGeometry", "CAAAfrGeoCommands", "CAASysCollectionFilledNotif", "CAAAfrDumpCmd", "CAAAfrDumpHdr", "CAAISysCollection", "CAAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleCustomCommandHeader.md"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleCustomCommandHeader.htm"
 converted: "2026-05-11T17:17:55.679598"
 ---
 # 3D PLM Enterprise Architecture

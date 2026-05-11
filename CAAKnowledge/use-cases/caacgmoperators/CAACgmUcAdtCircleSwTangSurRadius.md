@@ -3,7 +3,7 @@ title: "Creating a Circle Sweep with One Guide and a Tangency Surface"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CATICGMTopMultiResult", "CATICGMTopSweepWireSkinCircle", "CAAGMModelGemBrowser", "CAAGMOperatorsCircleSweepTangSurRadius", "CATICGMTopPrism"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCircleSwTangSurRadius.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCircleSwTangSurRadius.htm"
 converted: "2026-05-11T17:33:48.799462"
 ---
 

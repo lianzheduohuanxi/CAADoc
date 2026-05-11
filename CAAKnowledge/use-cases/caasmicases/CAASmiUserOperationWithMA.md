@@ -3,7 +3,7 @@ title: "Managing Geometry with Machining Areas"
 category: "use case"
 module: "CAASmiUseCases"
 tags: ["CAASmiConnectUserOperationWithMA", "CATIM3xFeature", "CAASmiUserOperationWithMAGeometryPanel", "CATISmgFactory", "CAASmiUserOperationWithMA", "CATIMfgGeometryActivity", "CAASurfaceMachiningItf", "CATIAlias", "CAAESmiUserOperationWithMAGeometryEditor", "CATIEdit", "CAASmgOperationWithMA"]
-source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithMA.md"
+source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithMA.htm"
 converted: "2026-05-11T17:31:51.267374"
 ---
 # Machining

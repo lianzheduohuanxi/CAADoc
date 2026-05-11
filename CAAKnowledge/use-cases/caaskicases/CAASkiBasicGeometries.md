@@ -3,7 +3,7 @@ title: "Creating Sketching Elements in a Part Document"
 category: "use case"
 module: "CAASkiUseCases"
 tags: ["CATIPrtContainer", "CATI2DConstraintFactory_var", "CATI2DTopologicalOperators_var", "CATISketch_var", "CATI2DPoint_var", "CATISketchFactory_var", "CATI2DLine_var", "CATI2DWFGeometry_var", "CATIContainerOfDocument_var", "CATIPrtPart_var", "CATIContainer", "CATInit_var", "CATISpecObject_var", "CAASketcherInterfaces", "CAASkiBasicGeometries", "CATI2DWFFactory_var", "CATI2DConstraintFactory", "CATISketch", "CATI2DCurve_var", "CATI2DAxis_var"]
-source_file: "Doc/online/CAASkiUseCases/CAASkiBasicGeometries.md"
+source_file: "Doc/online/CAASkiUseCases/CAASkiBasicGeometries.htm"
 converted: "2026-05-11T17:31:50.823243"
 ---
 # Mechanical Modeler

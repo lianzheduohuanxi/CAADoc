@@ -3,7 +3,7 @@ title: "CAAPriCreateEdgeFillet.CATScript"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CAAScdPriUseCases", "CATIA", "CAAPriCreateEdgeFillet"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriCreateEdgeFilletSource.md"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriCreateEdgeFilletSource.htm"
 converted: "2026-05-11T17:31:51.219986"
 ---
 

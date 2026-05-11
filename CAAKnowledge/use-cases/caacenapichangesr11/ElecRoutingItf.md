@@ -4,7 +4,7 @@ category: "use-case"
 module: "CAACenAPIChangesR11"
 version: "V5R11"
 tags: ["CATIEwrUipWires"]
-source_file: "Doc/online/CAACenAPIChangesR11/ElecRoutingItf.md"
+source_file: "Doc/online/CAACenAPIChangesR11/ElecRoutingItf.htm"
 converted: "2026-05-11T17:33:50.375169"
 ---
 

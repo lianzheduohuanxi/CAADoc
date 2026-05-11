@@ -3,7 +3,7 @@ title: "Creating Advanced Surface Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshAdvSurf", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshAdvSurf.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshAdvSurf.htm"
 converted: "2026-05-11T17:31:51.608533"
 ---
 ## Analysis Modeler

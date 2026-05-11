@@ -3,7 +3,7 @@ title: "Overview of the Topological Operators"
 category: "use case"
 module: "CAATopUseCases"
 tags: ["CAAGemBrowser", "CATICGMObject", "CAATopJournal", "CAATopSpline", "CAATopOverview", "CATIA", "CATIntersectionCrvCrv", "CAATopologicalOperators", "CATICGMContainer"]
-source_file: "Doc/online/CAATopUseCases/CAATopOverview.md"
+source_file: "Doc/online/CAATopUseCases/CAATopOverview.htm"
 converted: "2026-05-11T17:31:50.750855"
 ---
 # Geometric Modeler

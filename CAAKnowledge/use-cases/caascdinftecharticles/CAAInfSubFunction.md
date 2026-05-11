@@ -3,7 +3,7 @@ title: "About Subs and Functions"
 category: "use-case"
 module: "CAAScdInfTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfSubFunction.md"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfSubFunction.htm"
 converted: "2026-05-11T17:31:52.446744"
 ---
 ## Infrastructure

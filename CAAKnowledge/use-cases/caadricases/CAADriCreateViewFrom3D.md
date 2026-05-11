@@ -3,7 +3,7 @@ title: "Creating a View from 3D"
 category: "use case"
 module: "CAADriUseCases"
 tags: ["CATIDftStandardManager", "CATIDftDrawing", "CATIDftDocumentServices", "CATIContainer_var", "CATIA", "CATITPSList", "CATITPSDocument", "CAADrwCreateViewFrom3D", "CATIStringList", "CATIDftView", "CATITPSView", "CATITPSComponent", "CATISpecObject", "CAADrwCreatViewFrom3D", "CATInit", "CATIDftGenViewFactory", "CAADraftingInterfaces", "CATITPSSet", "CATIDftSheet"]
-source_file: "Doc/online/CAADriUseCases/CAADriCreateViewFrom3D.md"
+source_file: "Doc/online/CAADriUseCases/CAADriCreateViewFrom3D.htm"
 converted: "2026-05-11T17:31:50.983117"
 ---
 # Mechanical Design

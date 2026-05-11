@@ -3,7 +3,7 @@ title: "CAAPstAddComponent.CATScript"
 category: "use-case"
 module: "CAAScdPstUseCases"
 tags: ["CATIA", "CAAPstAddComponent", "CAAPstFunnel", "CAAPstHull"]
-source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddComponentSource.md"
+source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddComponentSource.htm"
 converted: "2026-05-11T17:31:52.316299"
 ---
 

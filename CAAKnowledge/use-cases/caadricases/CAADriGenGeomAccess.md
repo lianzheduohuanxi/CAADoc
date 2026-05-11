@@ -3,7 +3,7 @@ title: "Editing Generated Geometry in a Generative View"
 category: "use case"
 module: "CAADriUseCases"
 tags: ["CATIPrtContainer", "CATISheet_var", "CATIVisProperties", "CATIDftDocumentServices", "CAADRWGeomAccess", "CATIA", "CATILinkableObject_var", "CATIDftGenGeomAccess", "CATIDrawing", "CATIView_var", "CATIDftView", "CATIPrtPart_var", "CAADrwGeomAccess", "CATInit_var", "CATIUnknownList", "CATIView", "CAADraftingInterfaces", "CATIDftSheet", "CATIDftGenGeom", "CATISheet"]
-source_file: "Doc/online/CAADriUseCases/CAADriGenGeomAccess.md"
+source_file: "Doc/online/CAADriUseCases/CAADriGenGeomAccess.htm"
 converted: "2026-05-11T17:31:50.999826"
 ---
 # Mechanical Design

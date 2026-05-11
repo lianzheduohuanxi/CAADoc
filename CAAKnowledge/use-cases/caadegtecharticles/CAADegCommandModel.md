@@ -3,7 +3,7 @@ title: "The CAA Command Model"
 category: "use-case"
 module: "CAADegTechArticles"
 tags: []
-source_file: "Doc/online/CAADegTechArticles/CAADegCommandModel.md"
+source_file: "Doc/online/CAADegTechArticles/CAADegCommandModel.htm"
 converted: "2026-05-11T17:33:49.754845"
 ---
 

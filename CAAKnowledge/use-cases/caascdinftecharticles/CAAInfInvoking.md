@@ -3,7 +3,7 @@ title: "Invoking CATIA from a Scripting Language"
 category: "use-case"
 module: "CAAScdInfTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfInvoking.md"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfInvoking.htm"
 converted: "2026-05-11T17:31:52.420050"
 ---
 ## Infrastructure

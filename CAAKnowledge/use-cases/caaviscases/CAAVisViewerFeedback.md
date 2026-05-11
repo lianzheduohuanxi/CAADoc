@@ -3,7 +3,7 @@ title: "Viewer Feedback"
 category: "use case"
 module: "CAAVisUseCases"
 tags: ["CAAAfrGeneralWksAddin", "CAAApplicationFrame", "CAACafViewerFeedback", "CATIWorkbenchAddin", "CAACafViewerFeedbackCmd", "CAACATIAApplicationFrm", "CATIAlias", "CAACafViewerFeedbackManager", "CATIAfrGeneralWksAddin"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisViewerFeedback.md"
+source_file: "Doc/online/CAAVisUseCases/CAAVisViewerFeedback.htm"
 converted: "2026-05-11T17:31:52.253960"
 ---
 # 3D PLM Enterprise Architecture

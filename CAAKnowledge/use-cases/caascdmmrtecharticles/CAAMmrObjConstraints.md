@@ -3,7 +3,7 @@ title: "Constraints Object"
 category: "use-case"
 module: "CAAScdMmrTechArticles"
 tags: ["CATIAConstraints"]
-source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrObjConstraints.md"
+source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrObjConstraints.htm"
 converted: "2026-05-11T17:31:51.139670"
 ---
 # Constraints Object

@@ -3,7 +3,7 @@ title: "CAAKniRulesAndChecks.CATScript"
 category: "use-case"
 module: "CAAScdKniUseCases"
 tags: ["CATIA", "CAAKniRulesAndChecks", "CAAScdKniUseCases"]
-source_file: "Doc/online/CAAScdKniUseCases/CAAKniRulesAndChecksSource.md"
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniRulesAndChecksSource.htm"
 converted: "2026-05-11T17:31:51.995311"
 ---
 

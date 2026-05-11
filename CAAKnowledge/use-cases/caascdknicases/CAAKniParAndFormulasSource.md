@@ -3,7 +3,7 @@ title: "CAAKniParAndFormulas.CATScript"
 category: "use-case"
 module: "CAAScdKniUseCases"
 tags: ["CATIA", "CAAKniSamplePartR13", "CAAKniParAndFormulas", "CAAScdKniUseCases"]
-source_file: "Doc/online/CAAScdKniUseCases/CAAKniParAndFormulasSource.md"
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniParAndFormulasSource.htm"
 converted: "2026-05-11T17:31:51.992811"
 ---
 

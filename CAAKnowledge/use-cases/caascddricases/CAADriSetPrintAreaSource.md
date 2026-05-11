@@ -3,7 +3,7 @@ title: "CAADriSetPrintArea.CATScript"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CATIADrawingView", "CATIA", "CAADriSetPrintArea"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriSetPrintAreaSource.md"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriSetPrintAreaSource.htm"
 converted: "2026-05-11T17:31:51.102250"
 ---
 

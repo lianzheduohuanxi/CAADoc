@@ -3,7 +3,7 @@ title: "Saving an Existing CATIA Document"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAInfSaveAsDocument", "CAAScdInfUseCases", "CAAInfReadDocument", "CAAInfOpenDocument", "CAAInfCloseDocument", "CATIA", "CAAInfSaveDocument"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfSaveDocument.md"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfSaveDocument.htm"
 converted: "2026-05-11T17:31:52.395470"
 ---
 

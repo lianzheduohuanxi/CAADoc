@@ -3,7 +3,7 @@ title: "CAAKniSubListFilter.CATScript"
 category: "use-case"
 module: "CAAScdKniUseCases"
 tags: ["CAAScdKniUseCases", "CATIA", "CAAKniSamplePartR13", "CAAKniSubListFilter"]
-source_file: "Doc/online/CAAScdKniUseCases/CAAKniSubListFilterSource.md"
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniSubListFilterSource.htm"
 converted: "2026-05-11T17:31:51.997304"
 ---
 

@@ -3,7 +3,7 @@ title: "Determining available parsers"
 category: "use case"
 module: "CAAXmlUseCases"
 tags: ["CAAXMLInfo", "CAAXMLParser"]
-source_file: "Doc/online/CAAXmlUseCases/CAAXMLInfo.md"
+source_file: "Doc/online/CAAXmlUseCases/CAAXMLInfo.htm"
 converted: "2026-05-11T17:33:45.634065"
 ---
 # 3D PLM Enterprise Architecture

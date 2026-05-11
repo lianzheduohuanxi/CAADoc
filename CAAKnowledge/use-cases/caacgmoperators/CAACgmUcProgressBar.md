@@ -3,7 +3,7 @@ title: "Extrema of a Solid"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAAOpeA", "CAAOpeB", "CAAprogressBar", "CATIA", "CAAGMOperatorsProgressBar"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcProgressBar.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcProgressBar.htm"
 converted: "2026-05-11T17:33:49.019696"
 ---
 

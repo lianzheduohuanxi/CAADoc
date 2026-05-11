@@ -3,7 +3,7 @@ title: "Remove Faces from a Body"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CATICGMAdvancedRemoveFaceOpe", "CAAAdvRemoveFace", "CAAGMOperatorsAdvancedRemoveFace", "CAAGMOperatorsDoc"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcAdvRemoveFace.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdvRemoveFace.htm"
 converted: "2026-05-11T17:33:48.878453"
 ---
 

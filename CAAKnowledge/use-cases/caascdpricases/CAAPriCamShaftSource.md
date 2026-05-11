@@ -3,7 +3,7 @@ title: "CAAPriCamShaft.CATScript"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CATIA", "CAAPriCamShaft"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriCamShaftSource.md"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriCamShaftSource.htm"
 converted: "2026-05-11T17:31:51.181070"
 ---
 

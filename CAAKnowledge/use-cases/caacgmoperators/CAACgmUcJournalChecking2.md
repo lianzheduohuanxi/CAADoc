@@ -3,7 +3,7 @@ title: "Topological Journal: Creation and Validation (2)"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMCheckForPart", "CAAGMOperatorsInterfaces", "CAAGMOperatorsCheckGnOK", "CAAGMTopDumpJournal", "CAATopCheckNoCopy", "CAAAddInputBody", "CAACheck"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcJournalChecking2.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcJournalChecking2.htm"
 converted: "2026-05-11T17:33:48.974055"
 ---
 

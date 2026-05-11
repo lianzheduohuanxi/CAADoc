@@ -3,7 +3,7 @@ title: "Optimizations Automation Objects"
 category: "use-case"
 module: "CAAScdKniTechArticles"
 tags: []
-source_file: "Doc/online/CAAScdKniTechArticles/CAAKniTocOptimizations.md"
+source_file: "Doc/online/CAAScdKniTechArticles/CAAKniTocOptimizations.htm"
 converted: "2026-05-11T17:31:52.003484"
 ---
 # Optimizations Automation Objects

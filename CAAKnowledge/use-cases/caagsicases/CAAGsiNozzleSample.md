@@ -3,7 +3,7 @@ title: "Creating a Nozzle Shape Thanks to Shape Design Features"
 category: "use case"
 module: "CAAGsiUseCases"
 tags: ["CAAGSMInterfaces", "CAAGsiNozzle", "CATIGSMFactory", "CATISpecObject", "CAAGsiUserTools", "CAA2SampleSession", "CATIGSMTool_var", "CAAGsiObjTool", "CATISpecObject_var"]
-source_file: "Doc/online/CAAGsiUseCases/CAAGsiNozzleSample.md"
+source_file: "Doc/online/CAAGsiUseCases/CAAGsiNozzleSample.htm"
 converted: "2026-05-11T17:31:50.638182"
 ---
 # Shape Design & Styling

@@ -3,7 +3,7 @@ title: "Using the Basic Topological Operators"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CATICGMContainer", "CAADoc", "CATICGMTopPointOperator", "CAATopSpline", "CATICGMObject", "CATICGMTopSplineOperator", "CAAGMModelGemBrowser", "CAATGMOperatorsInterfaces", "CATICGMTopLineOperator", "CAAGMOperatorsSpline", "CATICGMSplineBody", "CATICGMLengthFromBodyOnWire"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopSpline.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopSpline.htm"
 converted: "2026-05-11T17:33:49.328293"
 ---
 

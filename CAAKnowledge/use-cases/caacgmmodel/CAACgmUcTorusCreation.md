@@ -3,7 +3,7 @@ title: "Torus"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMModelInterfaces", "CAAGMModelTorusCreation"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcTorusCreation.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTorusCreation.htm"
 converted: "2026-05-11T17:33:48.614089"
 ---
 

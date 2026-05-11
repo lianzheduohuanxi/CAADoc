@@ -3,7 +3,7 @@ title: "CAASchInternalFlow.CATScript"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CATIASchCompFlow", "CATIASchAppConnectable", "CAASchInternalFlow", "CAAScdSchUseCases", "CATIA", "CATIASchComponent", "CATIASchAppConnector", "CAASCH_Detail02"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchInternalFlowSource.md"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchInternalFlowSource.htm"
 converted: "2026-05-11T17:31:51.394565"
 ---
 

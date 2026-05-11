@@ -3,7 +3,7 @@ title: "Creating Resources for Command Headers"
 category: "use-case"
 module: "CAAAfrTechArticles"
 tags: ["CAAAfrPointHdr", "CAAGeometryWksHeader", "CAAAfrGeometryWksHeader", "CAAAfrCircleHdr", "CAAPoint", "CATImplementHeaderResources", "CAAAfrQueryExploreHdr", "CAACircle"]
-source_file: "Doc/online/CAAAfrTechArticles/CAAAfrI18NHeader.md"
+source_file: "Doc/online/CAAAfrTechArticles/CAAAfrI18NHeader.htm"
 converted: "2026-05-11T17:17:55.887253"
 ---
 # 3D PLM Enterprise Architecture

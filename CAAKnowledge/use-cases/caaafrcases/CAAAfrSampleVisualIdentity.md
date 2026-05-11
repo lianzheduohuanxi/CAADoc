@@ -3,7 +3,7 @@ title: "Creating a Product Line Visual Identity"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CAADecorationP1", "CAADecorationP2", "CAAProductLine", "CAABackgroundNT", "CAAProduct", "CAALogoP1IX", "CAALogoP1NT", "CAAAfrProductLine", "CAABackgroundIX", "CAALogoP2NT", "CAALogoP2IX", "CAASplash", "CAAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleVisualIdentity.md"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleVisualIdentity.htm"
 converted: "2026-05-11T17:17:55.820891"
 ---
 # 3D PLM Enterprise Architecture

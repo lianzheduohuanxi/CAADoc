@@ -3,7 +3,7 @@ title: "Browsing the Geometric Container"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGemBrowserRepWindowId", "CATICGMContainer", "CATICGMCellTessellator", "CAADoc", "CAAGMOperatorsTesBody", "CAAGemBrowserDocument_h", "CAAGMModelNurbs", "CATInteractiveApplication", "CAAGMModelGemBrowser", "CAAGMModelCreation", "CAAVisBase", "CAAGMModelIntersect", "CAATopJournal", "CAAGMOperatorsOverview", "CAAGemBrowserApplication", "CAAGemBrowserDocument", "CATIA", "CAAGemRep", "CATICGMSurfaceTessellator", "CATICGMObject"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGemBrowser.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGemBrowser.htm"
 converted: "2026-05-11T17:33:48.225077"
 ---
 # Browsing the Geometric Container  

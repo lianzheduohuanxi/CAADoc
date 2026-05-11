@@ -3,7 +3,7 @@ title: "About CATSafeArrayVariant"
 category: "use-case"
 module: "CAAScdInfTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfSafeArrays.md"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfSafeArrays.htm"
 converted: "2026-05-11T17:31:52.433114"
 ---
 ## Infrastructure

@@ -3,7 +3,7 @@ title: "Managing Internal Flow in a Schematic Reference Component"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CATIASchCompFlow", "CAADoc", "CAASchInternalFlow", "CATIASchComponent", "CAAScdSchUseCases", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CAASchPlatformModeler", "CATIASchAppConnector", "CAASCH_Detail02", "CAASchAppUtilities"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchInternalFlow.md"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchInternalFlow.htm"
 converted: "2026-05-11T17:31:51.390076"
 ---
 ## Schematics Platform Modeler

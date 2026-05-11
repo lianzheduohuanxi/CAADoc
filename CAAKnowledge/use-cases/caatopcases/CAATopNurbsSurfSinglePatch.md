@@ -3,7 +3,7 @@ title: "Creating a Single Patch NURBS Surface"
 category: "use case"
 module: "CAATopUseCases"
 tags: ["CAAGemBrowser", "CATICGMObject", "CATIA", "CAATopOverview", "CAATopNurbsSurfSinglePatch", "CAATopologicalOperators"]
-source_file: "Doc/online/CAATopUseCases/CAATopNurbsSurfSinglePatch.md"
+source_file: "Doc/online/CAATopUseCases/CAATopNurbsSurfSinglePatch.htm"
 converted: "2026-05-11T17:31:50.734376"
 ---
 # Geometric Modeler

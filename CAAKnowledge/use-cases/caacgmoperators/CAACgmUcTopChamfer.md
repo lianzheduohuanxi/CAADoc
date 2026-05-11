@@ -3,7 +3,7 @@ title: "Chamfer"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CATICGMDynAdvancedChamfer", "CAAGMOperatorsChamfer"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopChamfer.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopChamfer.htm"
 converted: "2026-05-11T17:33:49.109308"
 ---
 

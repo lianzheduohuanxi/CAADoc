@@ -3,7 +3,7 @@ title: "Creating Spot Welding Connection Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAAniMeshSpotWelding", "CATIA", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSpotWelding.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshSpotWelding.htm"
 converted: "2026-05-11T17:31:51.701305"
 ---
 ## Analysis Modeler

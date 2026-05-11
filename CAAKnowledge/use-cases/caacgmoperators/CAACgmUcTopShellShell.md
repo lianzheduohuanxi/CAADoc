@@ -3,7 +3,7 @@ title: "Corner"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CATICGMHybIntersect", "CAAGMOperatorsIntersectShellShell"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopShellShell.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopShellShell.htm"
 converted: "2026-05-11T17:33:49.305940"
 ---
 

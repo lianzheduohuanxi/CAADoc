@@ -3,7 +3,7 @@ title: "Inserting a Shape Design Feature in the Procedural View"
 category: "technical article"
 module: "CAAGsiTechArticles"
 tags: ["CATIPrtPart", "CAAGsiNozzle", "CATIGSMProceduralView_var", "CATIGSMInsertInProceduralView", "CAAGSMInterfaces", "CAAGsiUserTools", "CATIContainer_var", "CATIA", "CATIGSMTool", "CATIPrtPart_var", "CATIDescendants_var", "CATIBasicTool_var", "CATISpecObject_var", "CATISpecObject", "CATIDescendants", "CAAGsiToolkit", "CATIBasicTool", "CATIGSMTool_var", "CATIPrtContainer_var"]
-source_file: "Doc/online/CAAGsiTechArticles/CAAGsiInsertInProceduralView.md"
+source_file: "Doc/online/CAAGsiTechArticles/CAAGsiInsertInProceduralView.htm"
 converted: "2026-05-11T17:31:50.666036"
 ---
 # Shape Design & Styling

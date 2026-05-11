@@ -3,7 +3,7 @@ title: "New C++ Authorized APIs in CAA V5R19 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIEhiMechanicalImport", "CATIMfgCatalogServices", "CATIDlgTableViewLineModel", "CATIDrwCumulatedDimSystem", "CATITPSCylinder", "CATIDftElementInSystem", "CATIDrwDimSystem", "CATITPSThread", "CATIIniSearchJapaneseGraphNameCriterion", "CATICfgCatLnk", "CATIPspPlacePartOnRun", "CATICkeParm_var", "CATITPSPlane", "CATIPrdHandleImpactsOnInstance", "CAACloudQsrItf", "CATIDlgTableViewColumnModel", "CATIAApplicationFrame", "CATImplementHandler", "CATIQsrCAAPowerFit", "CATIGSMMask"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R19GANewCPPAPI.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R19GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.426935"
 ---
 

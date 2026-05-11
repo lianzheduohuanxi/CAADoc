@@ -3,7 +3,7 @@ title: "Printing Files"
 category: "use case"
 module: "CAAPrtUseCases"
 tags: ["CAAPrtPrintFile", "CAAPrint"]
-source_file: "Doc/online/CAAPrtUseCases/CAAPrtSamplePrintFile.md"
+source_file: "Doc/online/CAAPrtUseCases/CAAPrtSamplePrintFile.htm"
 converted: "2026-05-11T17:17:56.141802"
 ---
 # 3D PLM Enterprise Architecture

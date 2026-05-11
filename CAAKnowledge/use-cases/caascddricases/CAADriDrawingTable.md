@@ -3,7 +3,7 @@ title: "Creating a Drawing Table"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CATIA", "CAADriDrawingtable", "CAADriDrawingTable", "CAADriUseCases"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriDrawingTable.md"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriDrawingTable.htm"
 converted: "2026-05-11T17:31:51.064833"
 ---
 

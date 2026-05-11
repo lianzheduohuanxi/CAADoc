@@ -3,7 +3,7 @@ title: "CAAAniPreProAsmbldSol.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniPreProAsmbldSol", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProAsmbldSolSource.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProAsmbldSolSource.htm"
 converted: "2026-05-11T17:31:51.789455"
 ---
 

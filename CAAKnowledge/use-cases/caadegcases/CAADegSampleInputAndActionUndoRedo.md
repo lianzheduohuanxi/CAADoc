@@ -3,7 +3,7 @@ title: "Managing Undo/Redo of Input and Actions"
 category: "use case"
 module: "CAADegUseCases"
 tags: ["CAADegCreatePolylineCmd", "CATIUndoTransaction", "CAADialogEngine", "CAAGeometry", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleInputAndActionUndoRedo.md"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleInputAndActionUndoRedo.htm"
 converted: "2026-05-11T17:33:49.696437"
 ---
 

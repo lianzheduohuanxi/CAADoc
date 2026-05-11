@@ -3,7 +3,7 @@ title: "Creating Rotation Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshRotation", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshRotation.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshRotation.htm"
 converted: "2026-05-11T17:31:51.683727"
 ---
 ## Analysis Modeler

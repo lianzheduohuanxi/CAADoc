@@ -3,7 +3,7 @@ title: "Creating a Workbench"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CATIxxxConfiguration", "CAAAfrMSurfRevolStr", "CAACube", "CAAAfrGeoCreationMbr", "CAAAfrTSolidEltTorusStr", "CAAAfrCuboidHdr", "CAAAfrMSurfOffsetStr", "CAAGeometry", "CAAAfrTSolidEltCuboidStr", "CATIA", "CAAAfrCylinder2Hdr", "CAAAfrTSolidEltCylinder1Str", "CAAAfrMSolidSphereStr", "CAAAfrMSolidCuboidStr", "CAAAfrGeoCreationWkbFactory", "CAADegCreateCuboidCmd", "CAAAfrTorusHdr", "CAADegGeoCommands", "CAAAfrOffsetSurfHdr", "CAAAfrGeoCreationWkb"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleWorkbench.md"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleWorkbench.htm"
 converted: "2026-05-11T17:17:55.841364"
 ---
 # 3D PLM Enterprise Architecture

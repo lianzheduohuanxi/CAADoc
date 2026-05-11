@@ -3,7 +3,7 @@ title: "Part Object"
 category: "use-case"
 module: "CAAScdMmrTechArticles"
 tags: []
-source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrObjPart.md"
+source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrObjPart.htm"
 converted: "2026-05-11T17:31:51.142657"
 ---
 # Part Object

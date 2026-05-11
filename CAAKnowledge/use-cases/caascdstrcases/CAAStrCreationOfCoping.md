@@ -3,7 +3,7 @@ title: "Creating Copings"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CATIA", "CATIAStrFeatureFactory", "CAAScdStrUseCases", "CAAStrCreateCoping"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfCoping.md"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfCoping.htm"
 converted: "2026-05-11T17:31:50.865138"
 ---
 ## Structure Design

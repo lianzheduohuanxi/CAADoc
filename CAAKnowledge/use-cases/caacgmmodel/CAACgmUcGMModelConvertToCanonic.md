@@ -3,7 +3,7 @@ title: "Extracting the Canonical Representation of a Curve"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMModelInterfaces", "CATICGMConvertCurveToCanonic", "CAAGMModelConvertToCanonic"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelConvertToCanonic.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelConvertToCanonic.htm"
 converted: "2026-05-11T17:33:48.288651"
 ---
 # Extracting the Canonical Representation of a Curve  

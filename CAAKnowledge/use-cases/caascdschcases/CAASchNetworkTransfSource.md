@@ -3,7 +3,7 @@ title: "CAASchNetworkTransf.CATScript"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CATIAProduct", "CAAScdSchUseCases", "CATIA", "CATIASchGRR", "CATIASchCompGraphic", "CATIASchMovable", "CAASCH_Network01", "CAASchNetworkTransf", "CATIASchAppConnectable"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchNetworkTransfSource.md"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchNetworkTransfSource.htm"
 converted: "2026-05-11T17:31:51.422498"
 ---
 

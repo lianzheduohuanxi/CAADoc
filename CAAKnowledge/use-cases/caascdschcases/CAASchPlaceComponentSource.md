@@ -3,7 +3,7 @@ title: "CAASchPlaceComponent.CATScript"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CATIASchCompatibility", "CAASCH_Sample", "CAASCH_RouteForPlacement2", "CAAScdSchUseCases", "CATIASchGRRComp", "CATIA", "CAASchPlaceComponent", "CATIASchCompatible", "CATIASchComponent", "CATIASchCompGraphic", "CATIASchComponent2"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchPlaceComponentSource.md"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchPlaceComponentSource.htm"
 converted: "2026-05-11T17:31:51.438458"
 ---
 

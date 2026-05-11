@@ -3,7 +3,7 @@ title: "New C++ Authorized APIs in CAA V5R19 SP2"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIA", "CATICfgEffVal", "CATIAApplicationFrame", "CATISearchInformation"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R19SP2NewCPPAPI.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R19SP2NewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.452953"
 ---
 

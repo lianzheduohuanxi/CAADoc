@@ -3,7 +3,7 @@ title: "Analyzing the Parameters of a Point on a Curve"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAADoc", "CAAGMModelAnalysisOpe", "CAAGMModelGemBrowser", "CAAGMModelInterfaces", "CATICGMLocalAnalysis1Db", "CATICGMLocalAnalysis1D"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelAnalysisOpe.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelAnalysisOpe.htm"
 converted: "2026-05-11T17:33:48.237061"
 ---
 # Analyzing the Parameters of a Point on a Curve  

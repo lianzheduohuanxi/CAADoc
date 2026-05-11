@@ -3,7 +3,7 @@ title: "mkmk and Java"
 category: "use-case"
 module: "CAABtlTechArticles"
 tags: []
-source_file: "Doc/online/CAABtlTechArticles/CAABtlMANJava.md"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANJava.htm"
 converted: "2026-05-11T17:33:46.103916"
 ---
 

@@ -3,7 +3,7 @@ title: "Application Frame Overview"
 category: "concept"
 module: "CAAAfrTechArticles"
 tags: ["CATIUIActivate", "CATIExtGeo2DVisu", "CATI2DGeoVisu", "CATIWorkshopConfiguration", "CATIExtGeo3DVisu", "CATIShapeDesignAddin", "CATIWorkshop", "CATI3DGeoVisu", "CATIWorkbenchTransition", "CATIEditor"]
-source_file: "Doc/online/CAAAfrTechArticles/CAAAfrOverview.md"
+source_file: "Doc/online/CAAAfrTechArticles/CAAAfrOverview.htm"
 converted: "2026-05-11T17:17:55.934142"
 ---
 # 3D PLM Enterprise Architecture

@@ -3,7 +3,7 @@ title: "Setting the Print Area of a Drawing Sheet"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CAADriISetPrintArea", "CATIA", "CAADriSetPrintArea", "CAADriUseCases", "CATIADrawingView"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriSetPrintArea.md"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriSetPrintArea.htm"
 converted: "2026-05-11T17:31:51.099755"
 ---
 ## Interactive Drafting

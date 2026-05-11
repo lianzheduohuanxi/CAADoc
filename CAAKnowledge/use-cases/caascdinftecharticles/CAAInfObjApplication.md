@@ -3,7 +3,7 @@ title: "Application Object"
 category: "use-case"
 module: "CAAScdInfTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfObjApplication.md"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfObjApplication.htm"
 converted: "2026-05-11T17:31:52.425072"
 ---
 # Application Object

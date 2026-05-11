@@ -3,7 +3,7 @@ title: "Creating Fillets"
 category: "use case"
 module: "CAATopUseCases"
 tags: ["CAAGemBrowser", "CATICGMObject", "CAAATopAllFillets", "CAATopConstantFillets", "CAATopAllFillet", "CAATopRollingEdges", "CAATopAllFillets", "CAATopologicalOperators", "CAATopFillet", "CAATopVariableFillets"]
-source_file: "Doc/online/CAATopUseCases/CAATopAllFillets.md"
+source_file: "Doc/online/CAATopUseCases/CAATopAllFillets.htm"
 converted: "2026-05-11T17:31:50.684779"
 ---
 # Geometric Modeler

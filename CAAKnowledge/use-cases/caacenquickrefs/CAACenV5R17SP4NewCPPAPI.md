@@ -3,7 +3,7 @@ title: "New C++ Authorized APIs in CAA V5R17 SP4"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIAVPMVDADuplicatePRC", "CATIEhfManageLengthTolerance", "CATIEhfLengthTolerance", "CATIPspPlacePart", "CATIA", "CATIEhfUIPLengthTolerance"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R17SP4NewCPPAPI.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R17SP4NewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.334647"
 ---
 

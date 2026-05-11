@@ -3,7 +3,7 @@ title: "Administrating Assembly Design Workbench Settings with Automation"
 category: "use-case"
 module: "CAAScdAsmUseCases"
 tags: ["CAAScdAsmUseCases", "CATIA", "CAAAsmModifyOptions"]
-source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmModifyOptions.md"
+source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmModifyOptions.htm"
 converted: "2026-05-11T17:31:50.860146"
 ---
 

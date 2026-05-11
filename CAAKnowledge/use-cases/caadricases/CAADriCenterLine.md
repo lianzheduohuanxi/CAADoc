@@ -3,7 +3,7 @@ title: "Creating Center Lines in a CATDrawing Document"
 category: "use case"
 module: "CAADriUseCases"
 tags: ["CAADrwCenterLineCmd", "CAADrwAddin", "CAADrwCenterLine", "CAAUseCaseCommands", "CATI2Dxxx", "CAADraftingInterfaces", "CATIA", "CATI2Dxx", "CATIDrwAnnotationFactory"]
-source_file: "Doc/online/CAADriUseCases/CAADriCenterLine.md"
+source_file: "Doc/online/CAADriUseCases/CAADriCenterLine.htm"
 converted: "2026-05-11T17:31:50.937531"
 ---
 # Mechanical Design

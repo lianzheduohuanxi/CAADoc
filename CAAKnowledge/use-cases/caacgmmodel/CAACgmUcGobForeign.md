@@ -3,7 +3,7 @@ title: "Creating Foreign Surfaces"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAAmtForeign", "CAAGMModelForeignSurfaceData", "CAADoc", "CAAGobFS", "CAAGobApplicationName", "CAAGMModelCreation", "CAAAdvancedMathematics", "CAAGMModelForeign", "CAAGMModelInterfaces", "CAAAmtForeignFunctionXY", "CAAAmtForeignFct", "CAAAmtForeignFctXY", "CAAAForeignSurfaceSample", "CATICGMDomainBinder", "CATIA", "CATIForeignSurface"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGobForeign.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGobForeign.htm"
 converted: "2026-05-11T17:33:48.383671"
 ---
 # Creating Foreign Surfaces  

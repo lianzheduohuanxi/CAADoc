@@ -3,7 +3,7 @@ title: "Creating a Point on a Wire"
 category: "use case"
 module: "CAABtoUseCases"
 tags: ["CAATopComputePointOnWire", "CATICGMObject", "CAABasicTopoOpe", "CAAGemBrowser"]
-source_file: "Doc/online/CAABtoUseCases/CAABtoPointOnWire.md"
+source_file: "Doc/online/CAABtoUseCases/CAABtoPointOnWire.htm"
 converted: "2026-05-11T17:33:46.169729"
 ---
 

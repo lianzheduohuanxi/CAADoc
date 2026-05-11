@@ -3,7 +3,7 @@ title: "Creating a Point on a Wire"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMModelInterfaces", "CATICGMBodyFromLengthOnWire", "CAAGMModelBodyfromLengthOnWire"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcTopGMModelPtOnWire.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTopGMModelPtOnWire.htm"
 converted: "2026-05-11T17:33:48.597676"
 ---
 

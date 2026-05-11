@@ -3,7 +3,7 @@ title: "Reading and writing XML documents with DOM"
 category: "use case"
 module: "CAAXmlUseCases"
 tags: ["CAAXMLParser", "CATIXMLDOMDocumentBuilder", "CATIXMLDOMDocumentBuilder_var", "CATIDOMDocument_var", "CAAXMLDOMTranscode_utf16", "CAAXMLDOMTranscode"]
-source_file: "Doc/online/CAAXmlUseCases/CAAXMLDOMTranscode.md"
+source_file: "Doc/online/CAAXmlUseCases/CAAXMLDOMTranscode.htm"
 converted: "2026-05-11T17:33:45.623063"
 ---
 # 3D PLM Enterprise Architecture

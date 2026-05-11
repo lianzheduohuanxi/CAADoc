@@ -3,7 +3,7 @@ title: "New C++ Authorized APIs in CAA V5R13 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATINT32", "CATIElbMountingEquipment", "CATITPSCaptureList", "CATITPSSetVisu", "CATIEhfFlatteningParameters", "CATIEhiMultiBranchable", "CATIStructurePlate", "CATIBatchElementsCAA", "CATIAVPMVDAValidateAttributeChg", "CATIStructureObject", "CATISchGRRRoute2", "CATIEhiBranchable", "CATIMfgToolAssembly3DVisuCustom", "CATIMfgActivitySyntax", "CATIPDMUEReadMode", "CATIniInputDescriptionAdaptor", "CATISysSettingController", "CATImplementSettingCtrl", "CATIMfgToolAssemblyEditorCustom", "CATIBatchCAA"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R13GANewCPPAPI.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R13GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.138016"
 ---
 

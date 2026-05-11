@@ -3,7 +3,7 @@ title: "Creating Standard Command Headers"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CAADegGeoCommands", "CAAAfrChangeViewNormalCmd", "CAAAfrGeometryWksHeader", "CAAAfrGeometryWks", "CAAAfrGeometryWshop", "CAADegCreatePointCmd", "CAAGeometry", "CAAAfrGeoCommands", "CAADegCreateCircleCmd", "CATINT32ToPtr", "CAADegCreateLineCmd", "CAAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleStdCommandHeader.md"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleStdCommandHeader.htm"
 converted: "2026-05-11T17:17:55.814448"
 ---
 # 3D PLM Enterprise Architecture

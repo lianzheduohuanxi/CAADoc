@@ -3,7 +3,7 @@ title: "Using XML in V5"
 category: "use-case"
 module: "CAAXmlTechArticles"
 tags: ["CATIDOMElement", "CATIDOM", "CATIXMLSAXFactory_var", "CATISAXDocumentHandler", "CATIXML", "CATIDOMNode_var", "CATISAXAttributeList_var", "CATIDOMImplementation", "CATIDOMDocument_var", "CATISAXErrorHandler", "CATISAXInputSource_var", "CATIDOMXXX_var", "CATIXMLSAXFactory", "CATISAXYYY_var", "CATIXMLDOMDocumentBuilder", "CATISAXInputSource", "CATIDOMDocumentType_var", "CATIDOMElement_var", "CATIXMLDOMDocumentBuilder_var", "CATISAXEntityResolver"]
-source_file: "Doc/online/CAAXmlTechArticles/CAAXmlV5Overview.md"
+source_file: "Doc/online/CAAXmlTechArticles/CAAXmlV5Overview.htm"
 converted: "2026-05-11T17:33:45.712135"
 ---
 # 3D PLM Enterprise Architecture

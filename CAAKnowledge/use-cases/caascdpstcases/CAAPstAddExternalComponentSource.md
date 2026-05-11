@@ -3,7 +3,7 @@ title: "CAAPstAddExternalComponent.CATScript"
 category: "use-case"
 module: "CAAScdPstUseCases"
 tags: ["CAAPstHull", "CATIA", "CAAPstAddExternalComponent"]
-source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddExternalComponentSource.md"
+source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddExternalComponentSource.htm"
 converted: "2026-05-11T17:31:52.321783"
 ---
 

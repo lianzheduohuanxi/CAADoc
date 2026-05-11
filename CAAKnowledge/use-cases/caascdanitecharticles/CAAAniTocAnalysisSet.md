@@ -3,7 +3,7 @@ title: "Analysis Set Automation Objects"
 category: "use-case"
 module: "CAAScdAniTechArticles"
 tags: []
-source_file: "Doc/online/CAAScdAniTechArticles/CAAAniTocAnalysisSet.md"
+source_file: "Doc/online/CAAScdAniTechArticles/CAAAniTocAnalysisSet.htm"
 converted: "2026-05-11T17:31:51.975342"
 ---
 # Analysis Set Automation Objects

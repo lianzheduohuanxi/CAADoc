@@ -3,7 +3,7 @@ title: "Creating a Multi Patch NURBS Surface"
 category: "use case"
 module: "CAATopUseCases"
 tags: ["CAAGemBrowser", "CATICGMObject", "CAATopNurbsSurfMultiPatch", "CATIA", "CAATopOverview", "CAATopologicalOperators"]
-source_file: "Doc/online/CAATopUseCases/CAATopNurbsSurfMultiPatch.md"
+source_file: "Doc/online/CAATopUseCases/CAATopNurbsSurfMultiPatch.htm"
 converted: "2026-05-11T17:31:50.727379"
 ---
 # Geometric Modeler

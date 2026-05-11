@@ -3,7 +3,7 @@ title: "Placing Parts"
 category: "use case"
 module: "CAACloUseCases"
 tags: ["CATIArrNode_var", "CATIPspConnection", "CATIProduct", "CATIAHybridShapeFactory", "CAAPspUtilities", "CATIPspConnectable", "CATIArrSegment", "CAACloPlacePart", "CATIArrSegmentsString", "CATIPspPhysicalProduct", "CAACloEduRuns", "CATIAPart", "CATIArrSegment_var", "CATIPspPlacePartOnRun", "CATIUnknownList", "CATIPspLogicalLine", "CATIPspConnector", "CATIPspPartConnector", "CAACommonLayoutItf", "CATIUnknownListImpl"]
-source_file: "Doc/online/CAACloUseCases/CAACloPlacePart.md"
+source_file: "Doc/online/CAACloUseCases/CAACloPlacePart.htm"
 converted: "2026-05-11T17:33:49.487432"
 ---
 

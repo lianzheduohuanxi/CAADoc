@@ -3,7 +3,7 @@ title: "Arranging Dialog Objects"
 category: "use-case"
 module: "CAADlgTechArticles"
 tags: []
-source_file: "Doc/online/CAADlgTechArticles/CAADlgObjectLayout.md"
+source_file: "Doc/online/CAADlgTechArticles/CAADlgObjectLayout.htm"
 converted: "2026-05-11T17:17:56.052020"
 ---
 # 3D PLM Enterprise Architecture

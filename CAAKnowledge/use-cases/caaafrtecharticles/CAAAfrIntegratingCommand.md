@@ -3,7 +3,7 @@ title: "Making Your Commands Available"
 category: "use-case"
 module: "CAAAfrTechArticles"
 tags: []
-source_file: "Doc/online/CAAAfrTechArticles/CAAAfrIntegratingCommand.md"
+source_file: "Doc/online/CAAAfrTechArticles/CAAAfrIntegratingCommand.htm"
 converted: "2026-05-11T17:17:55.901724"
 ---
 # 3D PLM Enterprise Architecture

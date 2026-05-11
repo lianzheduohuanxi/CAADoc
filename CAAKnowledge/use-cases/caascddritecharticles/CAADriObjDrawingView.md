@@ -3,7 +3,7 @@ title: "DrawingView Object"
 category: "use-case"
 module: "CAAScdDriTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAAScdDriTechArticles/CAADriObjDrawingView.md"
+source_file: "Doc/online/CAAScdDriTechArticles/CAADriObjDrawingView.htm"
 converted: "2026-05-11T17:31:51.127693"
 ---
 # DrawingView Object

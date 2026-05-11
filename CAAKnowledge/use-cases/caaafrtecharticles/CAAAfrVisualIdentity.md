@@ -3,7 +3,7 @@ title: "What Is the Product Line Visual Identity"
 category: "use-case"
 module: "CAAAfrTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAAAfrTechArticles/CAAAfrVisualIdentity.md"
+source_file: "Doc/online/CAAAfrTechArticles/CAAAfrVisualIdentity.htm"
 converted: "2026-05-11T17:17:55.938631"
 ---
 # 3D PLM Enterprise Architecture

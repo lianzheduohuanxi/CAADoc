@@ -3,7 +3,7 @@ title: "Customizing the Surface Machining Operation Editor"
 category: "use case"
 module: "CAASmiUseCases"
 tags: ["CATIMfgMacroEditorActivity", "CAASmiUserOperationUI", "CAAToolAngle", "CAAESmiUserOperationToolEditor", "CATICkeParamFrame_var", "CAASmgOperation", "CAAApproachDistance", "CAAESmiUserOperationStrategyEditor", "CATIMacroEditorActivity", "CAAESmiUserOperationMacroEditor", "CATIMfgResourceFactory", "CATIMfgStrategyActivity", "CATIMfgActivity", "CAAMaiToolEditionCustomization", "CATIMfgActivityParameters", "CATIMfgTool", "CAAStep", "CAASurfaceMachiningItf", "CATIMfgToolActivity"]
-source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationUI.md"
+source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationUI.htm"
 converted: "2026-05-11T17:31:51.261386"
 ---
 # Machining

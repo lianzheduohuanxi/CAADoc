@@ -3,7 +3,7 @@ title: "Editing Callout in Generative Views"
 category: "use case"
 module: "CAADriUseCases"
 tags: ["CATIDftDocumentServices", "CATIGenerSpec", "CATIDrwSimpleText", "CATIDrwAnnotationComponent", "CATIDftView", "CATIDftDrawing", "CATIDrwSubText_var", "CAADraftingInterfaces", "CATIA", "CATIDftText", "CAADrwCallout", "CATIUnknownList", "CATIDrwCalloutAccess"]
-source_file: "Doc/online/CAADriUseCases/CAADriCallout.md"
+source_file: "Doc/online/CAADriUseCases/CAADriCallout.htm"
 converted: "2026-05-11T17:31:50.931544"
 ---
 # Mechanical Design

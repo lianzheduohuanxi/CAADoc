@@ -3,7 +3,7 @@ title: "CAAPriChangeHoleForm.frm"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CAAScdPriUseCases", "CATIA", "CAAPriChangeHole", "CATIAHole", "CAAPriChangeHoleForm", "CAAPriChangeHoleVBA"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHoleFormSource.md"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHoleFormSource.htm"
 converted: "2026-05-11T17:31:51.192048"
 ---
 

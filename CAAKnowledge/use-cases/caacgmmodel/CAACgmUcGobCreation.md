@@ -3,7 +3,7 @@ title: "Creating and Transforming Geometry"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMModelForeignSurfaceData", "CATICGMContainer", "CAADoc", "CAAForeignSurfaceData", "CATICGMObject", "CATICGMProjectionPtSur", "CAAGMModelGemBrowser", "CAAGMModelCreation", "CAAGobCreation", "CAAGMModelInterfaces", "CAAGMModelForeign", "CATIA", "CATIForeignSurface"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGobCreation.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGobCreation.htm"
 converted: "2026-05-11T17:33:48.368669"
 ---
 # Creating and Transforming Geometry  

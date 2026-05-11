@@ -4,7 +4,7 @@ category: "use-case"
 module: "CAACenAPIChangesR13"
 version: "V5R13"
 tags: ["CATIAVPMVDAAddChild", "CATIAVPMVDAMove", "CATIAVPMVDALock", "CATIAVPMVDACreate", "CATIAVPMVDANewVersion", "CATIAVPMVDACut", "CATIVPMVDAModify", "CATIAVPMVDACommandFactory", "CATIAVPMVDACommand", "CATIAVPMVDAAttachDocument", "CATIAVPMVDAExpandPart", "CATIAVPMVDAPaste", "CATIAVPMVDADelete", "CATIAVPMVDAExpandDocument", "CATIAVPMVDACopy", "CATIAVPMVDAExpand", "CATIAVPMVDAExists"]
-source_file: "Doc/online/CAACenAPIChangesR13/VPMDesktopObjects.md"
+source_file: "Doc/online/CAACenAPIChangesR13/VPMDesktopObjects.htm"
 converted: "2026-05-11T17:33:50.792367"
 ---
 

@@ -3,7 +3,7 @@ title: "New C++ Authorized APIs in CAA V5-6R2016 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIVpmAFLActionServices", "CATIUserExitLoginTracker", "CATIMfgElementaryMotion", "CAACompositesItf", "CATICGMRecognizeFeatures", "CATIDftDatumTarget", "CATICciCompositesParametersMSSImportExport", "CATIDftCoordDimension", "CATIA", "CATICGMTopSilhOperator"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R26GANewCPPAPI.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R26GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.574475"
 ---
 

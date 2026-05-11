@@ -3,7 +3,7 @@ title: "Creating a Check Button"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CAACafViewerFeedbackCmd", "CAACafViewerFeedback", "CAAAfrGeneralWksAddinHeader", "CAAAfrViewerFeedbackHdr", "CAAViewerFeedback", "CATIWorkbenchAddin", "CAACafViewerFeedbackManager", "CATIAfrGeneralWksAddin", "CAACafViewerFeedbackCheckHdr", "CAACafViewerFeedbackUncheckHdr", "CAACafViewerFeedbackCmdId", "CAACafCATIAApplicationFrm", "CAAAfrGeneralWksAddin", "CAAAfrGeneralWksAdn", "CATIAApplicationFrm", "CAACATIAApplicationFrm", "CAAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrCheckHeader.md"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrCheckHeader.htm"
 converted: "2026-05-11T17:17:55.585103"
 ---
 # 3D PLM Enterprise Architecture

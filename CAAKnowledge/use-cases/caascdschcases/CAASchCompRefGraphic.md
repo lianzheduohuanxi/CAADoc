@@ -3,7 +3,7 @@ title: "Managing the Graphical Representation of a Schematic Reference Component
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAAScdSchUseCases", "CAASchCompRefGraphic", "CATIA", "CATIASchGRR", "CATIASchCompGraphic", "CAASCH_Detail03"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchCompRefGraphic.md"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchCompRefGraphic.htm"
 converted: "2026-05-11T17:31:51.330224"
 ---
 ## Schematics Platform Modeler

@@ -3,7 +3,7 @@ title: "How to Use the Topological Operators"
 category: "technical article"
 module: "CAACgmModel"
 tags: ["CATICGMSolidPrimitive", "CAAGMOperatorsSpline", "CATICGMTopSkin", "CATICGMTopOperator", "CATICGMGeoToTopOperator"]
-source_file: "Doc/online/CAACgmModel/CAACgmTaUseTopoOperators.md"
+source_file: "Doc/online/CAACgmModel/CAACgmTaUseTopoOperators.htm"
 converted: "2026-05-11T17:33:48.060274"
 ---
 # How to Use Topological Operators  

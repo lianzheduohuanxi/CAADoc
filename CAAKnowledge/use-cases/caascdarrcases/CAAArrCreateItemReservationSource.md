@@ -3,7 +3,7 @@ title: "CAAArrCreateItemReservation.CATScript"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CAAArrCreateItemReservation", "CATIA"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateItemReservationSource.md"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateItemReservationSource.htm"
 converted: "2026-05-11T17:31:51.552087"
 ---
 

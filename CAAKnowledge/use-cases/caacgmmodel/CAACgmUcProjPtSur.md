@@ -3,7 +3,7 @@ title: "Projecting a Point onto  a Surface"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMModelInterfaces", "CATICGMProjectionPtSur", "CAAGMModelProjectionOpe"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcProjPtSur.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcProjPtSur.htm"
 converted: "2026-05-11T17:33:48.506138"
 ---
 

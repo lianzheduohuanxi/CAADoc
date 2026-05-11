@@ -3,7 +3,7 @@ title: "Updating all Sheets of all Drawing Documents of a Given Folder"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CAADriUpdateSheets", "CATIA", "CAADriUseCases", "CAAScdDriUseCases"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriUpdateSheets.md"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriUpdateSheets.htm"
 converted: "2026-05-11T17:31:51.112727"
 ---
 

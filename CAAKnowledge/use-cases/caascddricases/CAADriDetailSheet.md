@@ -3,7 +3,7 @@ title: "Creating a Detail Sheet"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CAADriDetailSheet", "CAAScdPriUseCases", "CAAPriPad", "CATIA", "CAADriSheet"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriDetailSheet.md"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriDetailSheet.htm"
 converted: "2026-05-11T17:31:51.047373"
 ---
 

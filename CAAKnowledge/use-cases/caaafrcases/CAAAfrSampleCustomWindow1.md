@@ -3,7 +3,7 @@ title: "Creating a Document's Window - Part 1"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CATIDocumentEdit", "CAAGeometry", "CAAxx", "CATISO", "CAAIVisHistogramChartVisu", "CAADegGeoCommands", "CAAxxx", "CAADialogEngine", "CAAyyy", "CAADegHistogramChartWindowCmd", "CATIEditor", "CAAAfrHistogramChartWindow", "CAASysGeoModelInf", "CAAVisualization", "CAAISysDocumentChartWindow", "CAAVisGeoModelInt", "CATI3DGeoVisu", "CAASystem", "CAAApplicationFrame"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleCustomWindow1.md"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleCustomWindow1.htm"
 converted: "2026-05-11T17:17:55.693605"
 ---
 # 3D PLM Enterprise Architecture

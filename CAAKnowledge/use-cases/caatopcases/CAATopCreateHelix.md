@@ -3,7 +3,7 @@ title: "Creating a Single Patch NURBS Surface"
 category: "use case"
 module: "CAATopUseCases"
 tags: ["CAAGemBrowser", "CATICGMObject", "CAATopCreateHelix", "CAATopOverview", "CAATopologicalOperators"]
-source_file: "Doc/online/CAATopUseCases/CAATopCreateHelix.md"
+source_file: "Doc/online/CAATopUseCases/CAATopCreateHelix.htm"
 converted: "2026-05-11T17:31:50.697467"
 ---
 # Geometric Modeler

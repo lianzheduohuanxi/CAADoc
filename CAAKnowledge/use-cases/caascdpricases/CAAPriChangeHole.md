@@ -3,7 +3,7 @@ title: "Changing the Hole Parameters"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CAAScdPriUseCases", "CATIA", "CATIAHole", "CAAPriChangeHole"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHole.md"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHole.htm"
 converted: "2026-05-11T17:31:51.189551"
 ---
 

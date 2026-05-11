@@ -5,7 +5,7 @@ title: "
 category: "use case"
 module: "CAAPLMSecUseCases"
 tags: ["CAAENOPosApplicationBinderImplProxy", "CAAENOPosApplicationBinderImplUseCase", "CAAENOPosAppBinderDotNet1_1ClientBase", "CAAENOPosApplicationBinderImplWrapper", "CAAENOPosAppBinderDotNet1_1Client", "CAAPLMSecurity"]
-source_file: "Doc/online/CAAPLMSecUseCases/CAAENOPosAppBinderDotNetClient.md"
+source_file: "Doc/online/CAAPLMSecUseCases/CAAENOPosAppBinderDotNetClient.htm"
 converted: "2026-05-11T17:33:45.579695"
 ---
 #  CAA Web Services Home 

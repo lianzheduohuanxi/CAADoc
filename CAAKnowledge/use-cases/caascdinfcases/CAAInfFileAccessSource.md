@@ -3,7 +3,7 @@ title: "CAAInfFileAccess.CATScript"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CATIA", "CAAInfFileAccess"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfFileAccessSource.md"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfFileAccessSource.htm"
 converted: "2026-05-11T17:31:52.364041"
 ---
 

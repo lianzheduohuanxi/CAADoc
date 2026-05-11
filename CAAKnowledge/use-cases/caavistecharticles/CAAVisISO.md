@@ -3,7 +3,7 @@ title: "Interactive Set of Objects"
 category: "use-case"
 module: "CAAVisTechArticles"
 tags: ["CATI3DGeoVisu", "CATIModelEvents", "CAAAfrBoundingElementCmd", "CATISO", "CATI2DGeoVisu", "CATICreateInstance", "CAADegClippingByBoxCmd"]
-source_file: "Doc/online/CAAVisTechArticles/CAAVisISO.md"
+source_file: "Doc/online/CAAVisTechArticles/CAAVisISO.htm"
 converted: "2026-05-11T17:31:52.295366"
 ---
 # 3D PLM Enterprise Architecture

@@ -3,7 +3,7 @@ title: "Creating Pad"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CAAScdPriUseCases", "CATIA", "CAAPriPad"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriPad.md"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriPad.htm"
 converted: "2026-05-11T17:31:51.225469"
 ---
 ## Part Design

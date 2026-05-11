@@ -3,7 +3,7 @@ title: "New C++ Authorized APIs in CAA V5R17 SP3"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIA", "CATIElbFillerPlugInstance", "CATIElbContactInstance"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R17SP3NewCPPAPI.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R17SP3NewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.325667"
 ---
 

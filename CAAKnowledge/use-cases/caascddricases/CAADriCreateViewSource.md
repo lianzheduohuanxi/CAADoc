@@ -3,7 +3,7 @@ title: "CAADriCreateView.CATScript"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CATIA", "CAADriCreateView", "CAAScdDriUseCases"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriCreateViewSource.md"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriCreateViewSource.htm"
 converted: "2026-05-11T17:31:51.043880"
 ---
 

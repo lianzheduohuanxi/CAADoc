@@ -3,7 +3,7 @@ title: "Querying for a List of Connected Objects"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAASCH_CompRoute01", "CAADoc", "CAAScdSchUseCases", "CAASchAppBase", "CATIA", "CAASCHEDUApp", "CAASchQueryConnectivity", "CAASchPlatformModeler", "CATIASchAppConnectable", "CAASchAppUtilities"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryConnectivity.md"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryConnectivity.htm"
 converted: "2026-05-11T17:31:51.464895"
 ---
 ## Schematics Platform Modeler

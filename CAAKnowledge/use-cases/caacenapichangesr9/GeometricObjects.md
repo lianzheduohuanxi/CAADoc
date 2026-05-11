@@ -4,7 +4,7 @@ category: "use-case"
 module: "CAACenAPIChangesR9"
 version: "V5R9"
 tags: ["CATICGMObject"]
-source_file: "Doc/online/CAACenAPIChangesR9/GeometricObjects.md"
+source_file: "Doc/online/CAACenAPIChangesR9/GeometricObjects.htm"
 converted: "2026-05-11T17:33:52.899814"
 ---
 

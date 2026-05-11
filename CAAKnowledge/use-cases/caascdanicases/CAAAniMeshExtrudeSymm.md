@@ -3,7 +3,7 @@ title: "Creating Extrude with Symmetry Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAAniMeshExtrudeSymm", "CATIA", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshExtrudeSymm.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshExtrudeSymm.htm"
 converted: "2026-05-11T17:31:51.647580"
 ---
 ## Analysis Modeler

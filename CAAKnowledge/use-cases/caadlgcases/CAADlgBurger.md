@@ -3,7 +3,7 @@ title: "The Burger Order Dialog Box"
 category: "use case"
 module: "CAADlgUseCases"
 tags: ["CAABurgerApplication", "CAABurgerApplication_h", "CAABurgerDialogBox_h", "CATInteractiveApplication", "CATIA", "CAADlgBurger", "CAADialog", "CAABurgerDialogBox"]
-source_file: "Doc/online/CAADlgUseCases/CAADlgBurger.md"
+source_file: "Doc/online/CAADlgUseCases/CAADlgBurger.htm"
 converted: "2026-05-11T17:17:55.961678"
 ---
 # 3D PLM Enterprise Architecture

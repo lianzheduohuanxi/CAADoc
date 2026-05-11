@@ -3,7 +3,7 @@ title: "Creating a Circle Sweep with Two Guides and a Tangency Surface"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CAAGMOperatorsCircleSweepTwoEdgesTangSur", "CAAGMModelGemBrowser", "CAAAdtCircleSweepTwoEdgesTangSur", "CATICGMFrFTopologicalSweep", "CATIA", "CATICGMTopPrism"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCircleSwTwoGuidesTangSur.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCircleSwTwoGuidesTangSur.htm"
 converted: "2026-05-11T17:33:48.833466"
 ---
 

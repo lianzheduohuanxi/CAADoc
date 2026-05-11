@@ -3,7 +3,7 @@ title: "Splitting a Wire"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsSplitShell", "CATICGMHybSplit"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcSplitShell.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcSplitShell.htm"
 converted: "2026-05-11T17:33:49.047706"
 ---
 

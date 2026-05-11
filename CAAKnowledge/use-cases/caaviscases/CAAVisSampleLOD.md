@@ -3,7 +3,7 @@ title: "Creating Levels of Details"
 category: "use case"
 module: "CAAVisUseCases"
 tags: ["CAAVisBaseView", "CAAVisBaseDocument", "CAAVisBasics", "CAAVisBaseDefaultDocument", "CAAVisBaseApplication", "CATIA", "CAAVisBase", "CAAVisualization"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleLOD.md"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleLOD.htm"
 converted: "2026-05-11T17:31:52.141771"
 ---
 # 3D PLM Enterprise Architecture

@@ -3,7 +3,7 @@ title: "Creating Contextual Menus in a State Dialog Command"
 category: "use case"
 module: "CAADegUseCases"
 tags: ["CAADegAnalysisLogCmd", "CAAISysGeomFactory", "CAAISysLine", "CAAISysPoint", "CATISO", "CAADialogEngine", "CAAGeometry", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleCtxMenu.md"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleCtxMenu.htm"
 converted: "2026-05-11T17:33:49.611686"
 ---
 

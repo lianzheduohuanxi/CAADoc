@@ -3,7 +3,7 @@ title: "Creating Explicit Objects"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CATICGMContainer", "CAADoc", "CATICGMObject", "CAAGMModelLifeCycleImplit", "CAAGMModelGemBrowser", "CAAGMModelLifeCycleImplicit", "CAAGMModelInterfaces", "CATIA", "CAAGMModelLifeCycleExplicit"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGobLifeCycleExplicit.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGobLifeCycleExplicit.htm"
 converted: "2026-05-11T17:33:48.395998"
 ---
 # Creating Explicit Objects  

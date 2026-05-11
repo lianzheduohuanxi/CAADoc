@@ -3,7 +3,7 @@ title: "Intersecting a Curve and a Surface"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMModelInterfaces", "CATICGMIntersectionCrvSur", "CAAGMModelGeometryCreation", "CAAGMModelIntersectionOpe"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcIntersectCrvSur.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcIntersectCrvSur.htm"
 converted: "2026-05-11T17:33:48.452515"
 ---
 # Intersecting a Curve and a Surface  

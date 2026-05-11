@@ -3,7 +3,7 @@ title: "Creating Contextual Menus"
 category: "use-case"
 module: "CAADegTechArticles"
 tags: ["CAAAnalysisEltTypeCmd", "CAAAnalysisLogCmd", "CAAILine", "CAAxxxCmd"]
-source_file: "Doc/online/CAADegTechArticles/CAADegCtxMenu.md"
+source_file: "Doc/online/CAADegTechArticles/CAADegCtxMenu.htm"
 converted: "2026-05-11T17:33:49.774351"
 ---
 

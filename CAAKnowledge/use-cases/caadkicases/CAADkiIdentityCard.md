@@ -3,7 +3,7 @@ title: "How to use the Identity Card Interface"
 category: "use case"
 module: "CAADkiUseCases"
 tags: ["CAADkiNotesTab", "CAADkiIdentityCard", "CAAVPMDesktop"]
-source_file: "Doc/online/CAADkiUseCases/CAADkiIdentityCard.md"
+source_file: "Doc/online/CAADkiUseCases/CAADkiIdentityCard.htm"
 converted: "2026-05-11T17:33:45.939442"
 ---
 

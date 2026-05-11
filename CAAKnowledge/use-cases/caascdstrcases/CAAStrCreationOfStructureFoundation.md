@@ -3,7 +3,7 @@ title: "Creating Structure Foundations"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CATIA", "CAAStrCreationOfStructureFoundation", "CAAScdStrUseCases"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfStructureFoundation.md"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfStructureFoundation.htm"
 converted: "2026-05-11T17:31:50.877607"
 ---
 ## Structure Design

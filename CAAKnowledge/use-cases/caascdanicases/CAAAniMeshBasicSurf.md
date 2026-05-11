@@ -3,7 +3,7 @@ title: "Creating Surface Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAAniMeshBasicSurf", "CATIA", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshBasicSurf.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshBasicSurf.htm"
 converted: "2026-05-11T17:31:51.615517"
 ---
 ## Analysis Modeler

@@ -3,7 +3,7 @@ title: "CAAPriPad.CATScript"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CAAScdPriUseCases", "CATIA", "CAAPriPad"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriPadSource.md"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriPadSource.htm"
 converted: "2026-05-11T17:31:51.226971"
 ---
 

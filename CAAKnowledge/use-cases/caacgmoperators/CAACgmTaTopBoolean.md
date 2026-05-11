@@ -3,7 +3,7 @@ title: "Understanding the Boolean Operators"
 category: "use-case"
 module: "CAACgmOperators"
 tags: []
-source_file: "Doc/online/CAACgmOperators/CAACgmTaTopBoolean.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmTaTopBoolean.htm"
 converted: "2026-05-11T17:33:48.639597"
 ---
 

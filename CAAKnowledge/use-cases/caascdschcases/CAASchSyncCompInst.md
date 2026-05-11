@@ -3,7 +3,7 @@ title: "Synchronizing component instances with the catalog reference"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAASchSyncCompInst", "CATIASchComponent", "CAASCH_SyncCompInst", "CAAScdSchUseCases", "CATIA", "CATIASchUpdateInstances"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchSyncCompInst.md"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchSyncCompInst.htm"
 converted: "2026-05-11T17:31:51.502797"
 ---
 ## Schematics Platform Modeler

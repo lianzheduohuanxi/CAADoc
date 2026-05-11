@@ -3,7 +3,7 @@ title: "Adding an External Component"
 category: "use-case"
 module: "CAAScdPstUseCases"
 tags: ["CAAPstAddExternalComponent", "CAAScdPstUseCases", "CATIA", "CAAPstHull"]
-source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddExternalComponent.md"
+source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddExternalComponent.htm"
 converted: "2026-05-11T17:31:52.319791"
 ---
 

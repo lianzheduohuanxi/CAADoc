@@ -3,7 +3,7 @@ title: "Arrangement Automation Objects"
 category: "use-case"
 module: "CAAScdArrTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAAScdArrTechArticles/CAAArrTocArrProduct.md"
+source_file: "Doc/online/CAAScdArrTechArticles/CAAArrTocArrProduct.htm"
 converted: "2026-05-11T17:31:51.588556"
 ---
 # Arrangement Automation Objects

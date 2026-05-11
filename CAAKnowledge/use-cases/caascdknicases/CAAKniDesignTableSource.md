@@ -3,7 +3,7 @@ title: "CAAKniDesignTable.CATScript"
 category: "use-case"
 module: "CAAScdKniUseCases"
 tags: ["CAAScdKniUseCases", "CATIA", "CAAKniDesignTable"]
-source_file: "Doc/online/CAAScdKniUseCases/CAAKniDesignTableSource.md"
+source_file: "Doc/online/CAAScdKniUseCases/CAAKniDesignTableSource.htm"
 converted: "2026-05-11T17:31:51.978836"
 ---
 

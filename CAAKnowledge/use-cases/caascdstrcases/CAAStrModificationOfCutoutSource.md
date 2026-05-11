@@ -3,7 +3,7 @@ title: "CAAStrEditCutout.CATScript"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CATIA", "CAAStrEditCutout"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfCutoutSource.md"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfCutoutSource.htm"
 converted: "2026-05-11T17:31:50.897562"
 ---
 

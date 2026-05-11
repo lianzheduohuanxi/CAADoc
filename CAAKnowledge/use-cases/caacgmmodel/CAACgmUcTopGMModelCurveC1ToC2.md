@@ -3,7 +3,7 @@ title: "Breaking a C1 Curve into C2 Pieces"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMModelConvertCurveToC2", "CAAGMModelInterfaces", "CATICGMNurbsCurveTools", "CATIA", "CATICGMMathNurbsCurveTools"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcTopGMModelCurveC1ToC2.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTopGMModelCurveC1ToC2.htm"
 converted: "2026-05-11T17:33:48.589667"
 ---
 

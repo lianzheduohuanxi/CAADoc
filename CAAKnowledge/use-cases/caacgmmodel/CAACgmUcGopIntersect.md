@@ -3,7 +3,7 @@ title: "Intersecting a Curve with a Surface"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGopIntersect", "CATICGMIntersectionCrvSur", "CAAGMModelGemBrowser", "CAAGMModelInterfaces", "CAAGMModelIntersect"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGopIntersect.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGopIntersect.htm"
 converted: "2026-05-11T17:33:48.435496"
 ---
 # Intersecting a Curve with a Surface  

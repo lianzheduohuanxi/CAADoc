@@ -3,7 +3,7 @@ title: "Using Graphic Attributes"
 category: "use case"
 module: "CAAVisUseCases"
 tags: ["CAAVisBaseView", "CAAVisRepWindow", "CAAVisualization", "CAAVisRep", "CAAVisRepApplication"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleGraphicAtt.md"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleGraphicAtt.htm"
 converted: "2026-05-11T17:31:52.107319"
 ---
 # 3D PLM Enterprise Architecture

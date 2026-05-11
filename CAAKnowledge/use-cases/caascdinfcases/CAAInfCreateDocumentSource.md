@@ -3,7 +3,7 @@ title: "CAAInfCreateDocument.CATScript"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CATIA", "CAAInfCreateDocument"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfCreateDocumentSource.md"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfCreateDocumentSource.htm"
 converted: "2026-05-11T17:31:52.356061"
 ---
 

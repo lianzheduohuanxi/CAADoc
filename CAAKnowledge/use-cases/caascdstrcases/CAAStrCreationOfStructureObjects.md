@@ -3,7 +3,7 @@ title: "Creating Structure Objects"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CAAStrCreationOfStructureObjects", "CATIA", "CAAScdStrUseCases"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfStructureObjects.md"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfStructureObjects.htm"
 converted: "2026-05-11T17:31:50.885094"
 ---
 

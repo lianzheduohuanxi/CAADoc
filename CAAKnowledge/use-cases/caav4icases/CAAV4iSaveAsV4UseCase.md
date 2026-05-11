@@ -3,7 +3,7 @@ title: "Creating V4 Data from a V5 Geometrical Element"
 category: "use case"
 module: "CAAV4iUseCases"
 tags: ["CAAGobSurfV4DataSaver", "CAACATIAV4Interfaces", "CAASurfV4DataSaver", "CATIForeignCurve_var", "CAAV4iEduSaveAsV4", "CATIForeignSurface_var", "CATIA", "CATIV4DataSaver"]
-source_file: "Doc/online/CAAV4iUseCases/CAAV4iSaveAsV4UseCase.md"
+source_file: "Doc/online/CAAV4iUseCases/CAAV4iSaveAsV4UseCase.htm"
 converted: "2026-05-11T17:33:45.786384"
 ---
 # 3D PLM PPR Hub Open Gateway

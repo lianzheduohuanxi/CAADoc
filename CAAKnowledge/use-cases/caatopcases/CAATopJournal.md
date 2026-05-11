@@ -3,7 +3,7 @@ title: "How to Use the Topological Journal"
 category: "use case"
 module: "CAATopUseCases"
 tags: ["CAAErrorTopStif7", "CAATopJournal", "CAAErrorTopStif6", "CAAErrorTopStif2", "CAAErrorTopStif5", "CAATopOperator", "CATICGMObject", "CAATopOverview", "CATIntersectionCrvCrv", "CAAErrorTopStif3", "CAAErrorTopStifx", "CAATopStifferner", "CAATopologicalOperators", "CATICGMContainer", "CAAGemBrowser", "CAATopStiffener", "CAAErrorTopStif1", "CAATopStiffner", "CAATeopJournal"]
-source_file: "Doc/online/CAATopUseCases/CAATopJournal.md"
+source_file: "Doc/online/CAATopUseCases/CAATopJournal.htm"
 converted: "2026-05-11T17:31:50.719384"
 ---
 # Geometric Modeler

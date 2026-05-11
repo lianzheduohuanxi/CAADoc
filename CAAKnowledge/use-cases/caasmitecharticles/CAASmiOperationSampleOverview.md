@@ -3,7 +3,7 @@ title: "Creating Surface Machining Operations Overview"
 category: "use-case"
 module: "CAASmiTechArticles"
 tags: ["CAASmiConnectUserOperationWithMA", "CAASmgGuide", "CAASmgOperation", "CAASmiUserOperationWithMA", "CAASmgMachiningFeature", "CAASmiUserOperationWithMAToolPath", "CAASmiUserOperationCommand", "CAASmiUserOperationUI", "CAASmiUserOperationWithUserMFToolPath", "CAASurfaceMachiningItf", "CAASmiUserOperationCatalog", "CAASmiUserOperationWithUserMF", "CATIA", "CAASmiUserOperationGeomUI", "CAASmiUserOperationToolPathReplay", "CAASmiUserMachFeatureCatalog", "CAASmgOperationWithMA"]
-source_file: "Doc/online/CAASmiTechArticles/CAASmiOperationSampleOverview.md"
+source_file: "Doc/online/CAASmiTechArticles/CAASmiOperationSampleOverview.htm"
 converted: "2026-05-11T17:31:51.295307"
 ---
 # Machining

@@ -3,7 +3,7 @@ title: "Relations Automation Objects"
 category: "use-case"
 module: "CAAScdKniTechArticles"
 tags: []
-source_file: "Doc/online/CAAScdKniTechArticles/CAAKniTocRelation.md"
+source_file: "Doc/online/CAAScdKniTechArticles/CAAKniTocRelation.htm"
 converted: "2026-05-11T17:31:52.009476"
 ---
 # Relations Automation Objects

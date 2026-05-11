@@ -3,7 +3,7 @@ title: "New C++ Authorized APIs in CAA V5R19 SP1"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIEcvPercentFill", "CATIMfgPPMachine", "CATIPrintableDrafting", "CATIAV4Interfaces", "CATIA"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R19SP1NewCPPAPI.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R19SP1NewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.444440"
 ---
 

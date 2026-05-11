@@ -3,7 +3,7 @@ title: "Managing Magnitudes and Units"
 category: "use-case"
 module: "CAADlgTechArticles"
 tags: ["CATInteractiveApplication", "CATIA"]
-source_file: "Doc/online/CAADlgTechArticles/CAADlgManagingUnits.md"
+source_file: "Doc/online/CAADlgTechArticles/CAADlgManagingUnits.htm"
 converted: "2026-05-11T17:17:56.047533"
 ---
 # 3D PLM Enterprise Architecture

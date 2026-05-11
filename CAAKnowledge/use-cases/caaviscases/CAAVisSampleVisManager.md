@@ -3,7 +3,7 @@ title: "Using the Visualization Manager"
 category: "use case"
 module: "CAAVisUseCases"
 tags: ["CAAVisManager", "CAAVisManagerDefaultDocument", "CAAVisManagerAppli", "CATI3DGeoVisu", "CAAVisManagerInt", "CAAVisManagerDocument", "CAAVisManagerCGRDocument", "CAAIVis2DGraphVisu", "CAAVisManagerCmdSelector", "CATIA", "CAAVisManagerComp", "CAAVisManagerApplicationFrame", "CAAVisManagerImp", "CAAVisManagerApplication", "CAAVisManagerWindow", "CAAVisualization", "CAAVisManagerEditor"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleVisManager.md"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleVisManager.htm"
 converted: "2026-05-11T17:31:52.224318"
 ---
 # 3D PLM Enterprise Architecture

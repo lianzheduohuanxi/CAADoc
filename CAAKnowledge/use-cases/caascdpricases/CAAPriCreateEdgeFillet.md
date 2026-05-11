@@ -3,7 +3,7 @@ title: "Creating EdgeFillets on a Rectangular Pad"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CAAScdPriUseCases", "CATIA", "CAAPriUseCases", "CAAPriCreateEdgeFillet"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriCreateEdgeFillet.md"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriCreateEdgeFillet.htm"
 converted: "2026-05-11T17:31:51.218485"
 ---
 ## Part Interfaces

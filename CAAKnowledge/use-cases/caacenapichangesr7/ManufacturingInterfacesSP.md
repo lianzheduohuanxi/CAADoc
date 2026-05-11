@@ -4,7 +4,7 @@ category: "use-case"
 module: "CAACenAPIChangesR7"
 version: "V5R7"
 tags: ["CATIMfgAxialToolPathGeneratorBase"]
-source_file: "Doc/online/CAACenAPIChangesR7/ManufacturingInterfacesSP.md"
+source_file: "Doc/online/CAACenAPIChangesR7/ManufacturingInterfacesSP.htm"
 converted: "2026-05-11T17:33:52.134675"
 ---
 

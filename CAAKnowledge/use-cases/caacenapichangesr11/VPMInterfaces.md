@@ -4,7 +4,7 @@ category: "use-case"
 module: "CAACenAPIChangesR11"
 version: "V5R11"
 tags: ["CATIVpmAFLAffectedObject", "CATIVpmFactoryManager", "CATIVpmAFLAction", "CATIVpmLoginSession"]
-source_file: "Doc/online/CAACenAPIChangesR11/VPMInterfaces.md"
+source_file: "Doc/online/CAACenAPIChangesR11/VPMInterfaces.htm"
 converted: "2026-05-11T17:33:50.482134"
 ---
 

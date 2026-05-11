@@ -3,7 +3,7 @@ title: "CAADriInstantiateInnerDitto.CATScript"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CAADriInstantiateInnerDitto", "CATIA", "CAADriInstantiateDittoSource", "CAAScdDriUseCases"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriInstantiateInnerDittoSource.md"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriInstantiateInnerDittoSource.htm"
 converted: "2026-05-11T17:31:51.082294"
 ---
 

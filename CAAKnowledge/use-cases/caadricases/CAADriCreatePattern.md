@@ -3,7 +3,7 @@ title: "Creating a Hatching Pattern On 2D Geometry"
 category: "use case"
 module: "CAADriUseCases"
 tags: ["CATIDrwAnnotationFactory_var", "CATISheet_var", "CATISketch_var", "CATIDftDocumentServices", "CATI2DCurve", "CATIDftHatchingPattern", "CATIContainer_var", "CATIA", "CAADrwCreatePattern", "CATIDftAnnotationFactory", "CATIAlias_var", "CATIDrawing", "CATIView_var", "CAADRWCreatePattern", "CATISpecObject_var", "CATISpecObject", "CATIDrwBreakElem_var", "CAADraftingInterfaces", "CATIDrwAreaFill_var", "CATI2DCurve_var"]
-source_file: "Doc/online/CAADriUseCases/CAADriCreatePattern.md"
+source_file: "Doc/online/CAADriUseCases/CAADriCreatePattern.htm"
 converted: "2026-05-11T17:31:50.962468"
 ---
 # Mechanical Design

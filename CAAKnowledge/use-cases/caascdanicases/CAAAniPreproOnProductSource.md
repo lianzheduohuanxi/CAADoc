@@ -3,7 +3,7 @@ title: "CAAAniPreproOnProduct.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATISamImportDefine", "CATIAParameter", "CATIAConstraints", "CAAScdAniUseCases", "CATIA", "CAAAniPreproOnProduct"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnProductSource.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnProductSource.htm"
 converted: "2026-05-11T17:31:51.826370"
 ---
 

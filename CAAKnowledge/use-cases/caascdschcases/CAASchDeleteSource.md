@@ -3,7 +3,7 @@ title: "CAASchDelete.CATScript"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CATIAProduct", "CAASCH_Delete01", "CAAScdSchUseCases", "CAASchDelete", "CATIA", "CATIASchRoute", "CATIASchComponent", "CATIASchAppConnector", "CATIASchAppConnectable"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchDeleteSource.md"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchDeleteSource.htm"
 converted: "2026-05-11T17:31:51.365141"
 ---
 

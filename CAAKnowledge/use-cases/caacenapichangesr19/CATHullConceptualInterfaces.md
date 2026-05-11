@@ -4,7 +4,7 @@ category: "use-case"
 module: "CAACenAPIChangesR19"
 version: "V5R19"
 tags: ["CATIHCDCfgWorkbenchAddin", "CATISPLDesignTabSettingAtt", "CATIHullShipInfo", "CATIHullBoundingBox", "CATIHullOrientation", "CATIHullMoldedForm"]
-source_file: "Doc/online/CAACenAPIChangesR19/CATHullConceptualInterfaces.md"
+source_file: "Doc/online/CAACenAPIChangesR19/CATHullConceptualInterfaces.htm"
 converted: "2026-05-11T17:33:51.543644"
 ---
 # CAA C++ API Modifications

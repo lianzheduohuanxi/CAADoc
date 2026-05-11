@@ -3,7 +3,7 @@ title: "Creating a Pattern"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsPattern", "CAAGMOperatorsInterfaces", "CATICGMTopPattern", "CATICGMSolidCylinder"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopPattern.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopPattern.htm"
 converted: "2026-05-11T17:33:49.266941"
 ---
 

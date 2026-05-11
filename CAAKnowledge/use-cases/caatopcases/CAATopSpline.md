@@ -3,7 +3,7 @@ title: "Basic Topological Operators"
 category: "use case"
 module: "CAATopUseCases"
 tags: ["CAAATopSpline", "CAAGemBrowser", "CATICGMObject", "CAATopSpline", "CAABopSpine", "CAATopologicalOperators", "CATICGMContainer"]
-source_file: "Doc/online/CAATopUseCases/CAATopSpline.md"
+source_file: "Doc/online/CAATopUseCases/CAATopSpline.htm"
 converted: "2026-05-11T17:31:50.766842"
 ---
 # Geometric Modeler

@@ -3,7 +3,7 @@ title: "Scanning an Edge Curve"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAATopEdgeCurve", "CATICGMContainer", "CAADoc", "CAAGMModelScanEdgeCurve", "CATICGMObject", "CAAGMModelInterfaces", "CAACGMModelScanEdgeCurve", "CATIntCurve", "CAAScanEdgeCurve"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcTobEdgeCurve.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTobEdgeCurve.htm"
 converted: "2026-05-11T17:33:48.549132"
 ---
 

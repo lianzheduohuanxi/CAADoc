@@ -4,7 +4,7 @@ category: "use-case"
 module: "CAACenAPIChangesR7"
 version: "V5R7"
 tags: ["CATIDimForwards", "CATIDimCst", "CATIBRepAccess", "CATIREdge"]
-source_file: "Doc/online/CAACenAPIChangesR7/MecModInterfacesSP.md"
+source_file: "Doc/online/CAACenAPIChangesR7/MecModInterfacesSP.htm"
 converted: "2026-05-11T17:33:52.171535"
 ---
 

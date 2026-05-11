@@ -3,7 +3,7 @@ title: "Dimensions Checking"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CATIA", "CAADriUseCases", "CAADriDimension"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriDimension.md"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriDimension.htm"
 converted: "2026-05-11T17:31:51.055354"
 ---
 

@@ -3,7 +3,7 @@ title: "What's New?"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CAAGMOperatorsInterfaces", "CATInteractiveInterfaces", "CATINavigateObject", "CATINavigateProvider", "CATINavigContainer", "CAAOsmNovel", "CATIGraphNode", "CAAAniCatalog", "CATInterfaceEvents", "CATIRedrawEvent", "CATICstFactory", "CATIntersectionOrientation", "CATIPrintable", "CATIBloc", "CATINavigateFilter", "CAAOsmCatalogSU", "CATIMfgStartupFactories", "CATIPrinterManager", "CATINavigElement", "CATIA"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenWhatsNew.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenWhatsNew.htm"
 converted: "2026-05-11T17:33:47.787486"
 ---
 

@@ -3,7 +3,7 @@ title: "Computing the Area of a CATFace and the Length of a CATEdge"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CATICGMDynMassProperties3D", "CAAGMProperties", "CATICGMObject", "CATICGMDynCreateMassProperties3D", "CAAGMModelGemBrowser", "CAAGMOperatorsProperties", "CATICGMSolidSphere", "CAATopProperties"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopProperties.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopProperties.htm"
 converted: "2026-05-11T17:33:49.289425"
 ---
 

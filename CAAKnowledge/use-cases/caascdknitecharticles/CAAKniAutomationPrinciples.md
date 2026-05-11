@@ -3,7 +3,7 @@ title: "Knowledge Advisor Overview"
 category: "concept"
 module: "CAAScdKniTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAAScdKniTechArticles/CAAKniAutomationPrinciples.md"
+source_file: "Doc/online/CAAScdKniTechArticles/CAAKniAutomationPrinciples.htm"
 converted: "2026-05-11T17:31:52.000294"
 ---
 ## Automation

@@ -3,7 +3,7 @@ title: "Saving and Restoring the Dialog Box State"
 category: "use case"
 module: "CAADlgUseCases"
 tags: ["CAADlgDemoWindow", "CAADlgDialogDemonstrator", "CATISpecObject", "CAADlgFrameReplace", "CATInteractiveApplication", "CAADlgDemoApplication", "CAADialog", "CAADlgFrameReplaceDlg"]
-source_file: "Doc/online/CAADlgUseCases/CAADlgSampleSettings.md"
+source_file: "Doc/online/CAADlgUseCases/CAADlgSampleSettings.htm"
 converted: "2026-05-11T17:17:55.997189"
 ---
 # 3D PLM Enterprise Architecture

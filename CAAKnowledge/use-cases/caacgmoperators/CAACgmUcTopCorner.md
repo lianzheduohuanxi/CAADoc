@@ -3,7 +3,7 @@ title: "Corner"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsCornerCreation", "CATICGMTopCorner", "CAAGMOperatorsInterfaces"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopCorner.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopCorner.htm"
 converted: "2026-05-11T17:33:49.126240"
 ---
 

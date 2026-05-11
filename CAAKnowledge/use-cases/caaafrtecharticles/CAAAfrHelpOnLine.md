@@ -3,7 +3,7 @@ title: "Contextual Help"
 category: "use-case"
 module: "CAAAfrTechArticles"
 tags: ["CATIAfr_C2", "CATIA_P3", "CAAAfrPointHdr", "CATIA_PLM_Express", "CAAApplicationFrame", "CAAAfrGeometryWksHeader", "CAAGeometry", "CATIA", "CATIA_STUDENT"]
-source_file: "Doc/online/CAAAfrTechArticles/CAAAfrHelpOnLine.md"
+source_file: "Doc/online/CAAAfrTechArticles/CAAAfrHelpOnLine.htm"
 converted: "2026-05-11T17:17:55.880772"
 ---
 #  3D PLM Enterprise Architecture

@@ -3,7 +3,7 @@ title: "CAAInfOpenDocument.CATScript"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAScdInfUseCases", "CAAInfOpenDocument", "CATIA", "CAAInfReadDocument"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfOpenDocumentSource.md"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfOpenDocumentSource.htm"
 converted: "2026-05-11T17:31:52.383997"
 ---
 

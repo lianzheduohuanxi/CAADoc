@@ -3,7 +3,7 @@ title: "Creating 1D Coating Mesh Part"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshCoating1D", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshCoating1D.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshCoating1D.htm"
 converted: "2026-05-11T17:31:51.621507"
 ---
 ## Analysis Modeler

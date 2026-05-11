@@ -3,7 +3,7 @@ title: "Adding Business Rules to an Interactive Command"
 category: "use case"
 module: "CAADkpUseCases"
 tags: ["CATIAVPMVDALock", "CAAVPMDesktopProduct", "CAADkpCustomCommand", "CATIAVPMVDACommand", "CATIAVPMVDACommandFactory_var", "CATIVpmFactoryObject"]
-source_file: "Doc/online/CAADkpUseCases/CAADkpCustomCommand.md"
+source_file: "Doc/online/CAADkpUseCases/CAADkpCustomCommand.htm"
 converted: "2026-05-11T17:33:46.012499"
 ---
 

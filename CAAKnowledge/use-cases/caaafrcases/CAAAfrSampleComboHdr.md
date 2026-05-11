@@ -3,7 +3,7 @@ title: "Creating a Combo Command Header"
 category: "use case"
 module: "CAAAfrUseCases"
 tags: ["CAAAfrMRUHeader", "CAAGeometry", "CAAAfrComboColorNotification", "CAAAfrComboColorHeader", "CAAAfrComboColorRep", "CAAAfrComboColorHdr", "CAAIAfrTemporaryObjectColor", "CAAAfrComboRep", "CAAAfrComboRepId", "CATIAfrCommandHeaderRep", "CAAIAfrGeometryWksAddin", "CAAAfrGeoChartWindowAdn", "CAASysGeomRootObj", "CAASysGeoRootObj", "CATImplementHeaderResources", "CAAAfrEduCombo", "CAAApplicationFrame", "CAAAfrCustomizedCommandHeader", "CAAAfrGeoWksAddin2"]
-source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleComboHdr.md"
+source_file: "Doc/online/CAAAfrUseCases/CAAAfrSampleComboHdr.htm"
 converted: "2026-05-11T17:17:55.651120"
 ---
 # 3D PLM Enterprise Architecture

@@ -3,7 +3,7 @@ title: "Weld Offset Calculation"
 category: "use case"
 module: "CAACloUseCases"
 tags: ["CAACommonLayoutItf", "CAAECloAppWeldOffset", "CAACloSetup", "CATICloAppWeldOffset"]
-source_file: "Doc/online/CAACloUseCases/CAAECloAppWeldOffset.md"
+source_file: "Doc/online/CAACloUseCases/CAAECloAppWeldOffset.htm"
 converted: "2026-05-11T17:33:49.540616"
 ---
 

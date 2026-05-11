@@ -3,7 +3,7 @@ title: "Creating an ArrangementItemReservation Object"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CAAArrCreateItemReservation", "CATIA", "CAAScdArrUseCases"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateItemReservation.md"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateItemReservation.htm"
 converted: "2026-05-11T17:31:51.550095"
 ---
 

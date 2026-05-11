@@ -3,7 +3,7 @@ title: "Managing Geometry with User Machining Features"
 category: "use case"
 module: "CAASmiUseCases"
 tags: ["CAASmiUserOperationGeometryPanel", "CATISmgNcGeometryManager", "CAAManufacturing", "CATIMfgViewAccess_var", "CATISmgNcGeometryParameter", "CAASmgOperation", "CATISmgFactory", "CATIMfgGeometryActivity", "CAASmiUserOperationGeomUI", "CATIMfgViewAccess", "CAASmiUserOperationGeometrySelCom", "CAASmiUserMachFeatureCatalog", "CATIEdit", "CATIMfgActivity", "CAASmgMachiningFeature", "CAAESmiUserOperationGeometryEditor", "CATISpecObject_var", "CATISmgNcGeometryManager_var", "CAASmgGuide", "CAASurfaceMachiningItf"]
-source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithUserMF.md"
+source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithUserMF.htm"
 converted: "2026-05-11T17:31:51.281341"
 ---
 # Machining

@@ -3,7 +3,7 @@ title: "Creating Volume Form Features"
 category: "use case"
 module: "CAAGsiUseCases"
 tags: ["CATIGSMProceduralView_var", "CATICkeParm_var", "CATIPrtBooleanFactory", "CATIPrtContainer", "CATIGSMSweepUnspec_var", "CAAGsiVolumeFormFeature", "CAAGSMInterfaces", "CAAGsiVolumeFormFeatures", "CATIMf3DBehavior2", "CATIGSMFactory", "CATIPrtFactory", "CATIGSMProceduralView", "CATIGSMExtrude_var", "CATIPrtFactory_var", "CATIPrtPart_var", "CAAGsiObjectUpdate", "CAAGsiStartVolume", "CATISpecObject_var", "CATIGSMLoft_var", "CATInit"]
-source_file: "Doc/online/CAAGsiUseCases/CAAGsiVolumeFormFeatures.md"
+source_file: "Doc/online/CAAGsiUseCases/CAAGsiVolumeFormFeatures.htm"
 converted: "2026-05-11T17:31:50.653046"
 ---
 # Shape Design & Styling

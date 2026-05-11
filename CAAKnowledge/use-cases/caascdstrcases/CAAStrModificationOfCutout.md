@@ -3,7 +3,7 @@ title: "Modifying Cutouts"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CATIA", "CAAStrEditCutout", "CAAScdStrUseCases"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfCutout.md"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfCutout.htm"
 converted: "2026-05-11T17:31:50.895570"
 ---
 ## Structure Design

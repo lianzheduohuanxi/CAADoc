@@ -3,7 +3,7 @@ title: "Modifying Object Graphical Properties"
 category: "use case"
 module: "CAAVisUseCases"
 tags: ["CATIDescendants", "CAAPropertyWithNewProperties", "CATIPrtContainer", "CATIPartRequest", "CATIVisProperties", "CATIA", "CATIProperty", "CAAGeometryVisualization", "CAAProperty", "CATISpecObject_var", "CAAGviApplyProperties"]
-source_file: "Doc/online/CAAVisUseCases/CAAVisSampleUseCATIVisProperties.md"
+source_file: "Doc/online/CAAVisUseCases/CAAVisSampleUseCATIVisProperties.htm"
 converted: "2026-05-11T17:31:52.198094"
 ---
 # Portal

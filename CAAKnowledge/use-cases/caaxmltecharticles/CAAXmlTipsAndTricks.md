@@ -3,7 +3,7 @@ title: "XML tips and tricks"
 category: "use-case"
 module: "CAAXmlTechArticles"
 tags: ["CATISAXParser_var", "CATIXMLSAXFactory", "CATIndentationCharacter", "CATIXMLDOMDocumentBuilder", "CATIXMLDOMDocumentBuilder_var", "CATIndentation", "CATISAXEntityResolver", "CATIDOMText", "CATIXMLSAXFactory_var"]
-source_file: "Doc/online/CAAXmlTechArticles/CAAXmlTipsAndTricks.md"
+source_file: "Doc/online/CAAXmlTechArticles/CAAXmlTipsAndTricks.htm"
 converted: "2026-05-11T17:33:45.696790"
 ---
 # 3D PLM Enterprise Architecture

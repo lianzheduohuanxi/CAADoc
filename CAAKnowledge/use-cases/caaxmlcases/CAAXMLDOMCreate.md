@@ -3,7 +3,7 @@ title: "Creating XML documents with DOM"
 category: "use case"
 module: "CAAXmlUseCases"
 tags: ["CATIDOMElement", "CAAXMLParser", "CAAXMLDOMCreate", "CATIDOMComment", "CATIXMLDOMDocumentBuilder", "CATIDOMImplementation", "CATIXMLDOMDocumentBuilder_var", "CATIDOMDocument_var", "CATIDOMDocument", "CATIDOMImplementation_var", "CATIDOMDocumentType_var", "CATIDOMText_var", "CATIDOMComment_var", "CATIDOMText", "CATIDOMElement_var"]
-source_file: "Doc/online/CAAXmlUseCases/CAAXMLDOMCreate.md"
+source_file: "Doc/online/CAAXmlUseCases/CAAXMLDOMCreate.htm"
 converted: "2026-05-11T17:33:45.610569"
 ---
 # 3D PLM Enterprise Architecture

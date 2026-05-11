@@ -3,7 +3,7 @@ title: "Editing Object During a Command"
 category: "use case"
 module: "CAADegUseCases"
 tags: ["CAAPriPrtCfgAddin", "CAAPriEditSketchCmd", "CAAPriEditSketch", "CAAPriPrtCfgAdn", "CATISpecObject", "CATIBuildPath", "CATIWorkbenchAddin", "CATISketch", "CAAPriEditSketchNotification", "CATIPrtCfgAddin", "CAAPartInterfaces", "CAAPriCommands", "CAAPriEditSketchDlg", "CATIPad"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleCATEditAgent.md"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleCATEditAgent.htm"
 converted: "2026-05-11T17:33:49.575815"
 ---
 

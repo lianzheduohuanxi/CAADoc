@@ -3,7 +3,7 @@ title: "Creating a Circle Sweep with Three Guides"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAAGMOperatorsCircleSweepThreeGuidesUse", "CAAAdtCircleSweepThreeGuides", "CAADoc", "CAAGMOperatorsCircleSweepThreeGuideswith", "CAAGMOperatorsCircleSweepThreeGuidesis", "CAAGMModelGemBrowser", "CAAGMOperatorsCircleSweepThreeGuidesCode", "CAAGMOperatorsCircleSweepThreeGuides", "CATICGMFrFTopologicalSweep", "CAAGMOperatorsCircleSweepThreeGuidesDo"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCircleSwThreeGuides.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCircleSwThreeGuides.htm"
 converted: "2026-05-11T17:33:48.810459"
 ---
 

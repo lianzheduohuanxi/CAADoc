@@ -3,7 +3,7 @@ title: "Creating an ArrangementRun Object"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CATIA", "CAAArrCreateRun", "CAAScdArrUseCases"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateRun.md"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateRun.htm"
 converted: "2026-05-11T17:31:51.569560"
 ---
 

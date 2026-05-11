@@ -3,7 +3,7 @@ title: "Reading an Attribute"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CATICGMContainer", "CAAGMModelAttributeRead", "CAADoc", "CATICGMObject", "CAAGMModelAttribute", "CAAGMModelInterfaces", "CAAGMModelAttributeCreation", "CAAGMModelAttributeManagement", "CAAAttributeManagement"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGobAttRead.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGobAttRead.htm"
 converted: "2026-05-11T17:33:48.354122"
 ---
 # Reading an Attribute  

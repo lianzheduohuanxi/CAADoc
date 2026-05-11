@@ -3,7 +3,7 @@ title: "Computing the Area of a CATFace and the Length of a CATEdge"
 category: "use case"
 module: "CAATopUseCases"
 tags: ["CAAGemBrowser", "CAATopologicalOperators", "CATICGMObject", "CAATopProperties"]
-source_file: "Doc/online/CAATopUseCases/CAATopProperties.md"
+source_file: "Doc/online/CAATopUseCases/CAATopProperties.htm"
 converted: "2026-05-11T17:31:50.757850"
 ---
 # Geometric Modeler

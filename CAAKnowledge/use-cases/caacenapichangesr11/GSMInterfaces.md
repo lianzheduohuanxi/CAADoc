@@ -4,7 +4,7 @@ category: "use-case"
 module: "CAACenAPIChangesR11"
 version: "V5R11"
 tags: ["CATIGSMFill", "CATIGSMCorner", "CATIGSMAssemble"]
-source_file: "Doc/online/CAACenAPIChangesR11/GSMInterfaces.md"
+source_file: "Doc/online/CAACenAPIChangesR11/GSMInterfaces.htm"
 converted: "2026-05-11T17:33:50.404202"
 ---
 

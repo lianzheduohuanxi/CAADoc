@@ -3,7 +3,7 @@ title: "Export/Import of Loads"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAAniPreProExportImportLoads", "CATIA", "CAAScdAniUseCases", "CATIAAnalysisManager"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProExportImportLoads.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProExportImportLoads.htm"
 converted: "2026-05-11T17:31:51.800927"
 ---
 ## Analysis Modeler

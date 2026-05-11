@@ -3,7 +3,7 @@ title: "Duplicating a Drawing View"
 category: "use-case"
 module: "CAAScdDriUseCases"
 tags: ["CAADriDuplicateAView", "CATIA", "CAADriUseCases", "CAAScdDriUseCases"]
-source_file: "Doc/online/CAAScdDriUseCases/CAADriDuplicateAView.md"
+source_file: "Doc/online/CAAScdDriUseCases/CAADriDuplicateAView.htm"
 converted: "2026-05-11T17:31:51.071818"
 ---
 

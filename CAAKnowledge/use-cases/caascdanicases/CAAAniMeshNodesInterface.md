@@ -3,7 +3,7 @@ title: "Creating Nodes Interface Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniMeshNodesInterface", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshNodesInterface.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshNodesInterface.htm"
 converted: "2026-05-11T17:31:51.659597"
 ---
 ## Analysis Modeler

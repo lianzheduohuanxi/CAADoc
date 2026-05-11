@@ -3,7 +3,7 @@ title: "CAAArrCreateNoContourArea.CATScript"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CATIA", "CAAArrCreateNoContourArea"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateNoContourAreaSource.md"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateNoContourAreaSource.htm"
 converted: "2026-05-11T17:31:51.557571"
 ---
 

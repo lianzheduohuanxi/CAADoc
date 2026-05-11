@@ -3,7 +3,7 @@ title: "New C++ Authorized APIs in CAA V5R19 SP3"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATI2DLayoutClipping", "CATITPSDimVisu", "CATIBRepAccess_var", "CATIA", "CATISysFileAccessStatisticsSettingAtt"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R19SP3NewCPPAPI.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R19SP3NewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.461444"
 ---
 

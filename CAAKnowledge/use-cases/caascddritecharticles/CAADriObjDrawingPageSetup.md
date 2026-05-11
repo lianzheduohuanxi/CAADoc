@@ -3,7 +3,7 @@ title: "DrawingPageSetup Object"
 category: "use-case"
 module: "CAAScdDriTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAAScdDriTechArticles/CAADriObjDrawingPageSetup.md"
+source_file: "Doc/online/CAAScdDriTechArticles/CAADriObjDrawingPageSetup.htm"
 converted: "2026-05-11T17:31:51.118717"
 ---
 # DrawingPageSetup Object

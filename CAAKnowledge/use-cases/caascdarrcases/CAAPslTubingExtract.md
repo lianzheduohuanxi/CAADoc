@@ -4,7 +4,7 @@ title: "CATIArrBendableString, CATIAArrSystemLineProduct Interfaces Use Case
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CAAPslTubingExtract", "CATIAArrBendableString", "CATIArrSystemLineProduct", "CATIA", "CATIArrBendableString", "CATIAArrSystemLineProduct"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAPslTubingExtract.md"
+source_file: "Doc/online/CAAScdArrUseCases/CAAPslTubingExtract.htm"
 converted: "2026-05-11T17:31:51.583562"
 ---
 ## Arrangement

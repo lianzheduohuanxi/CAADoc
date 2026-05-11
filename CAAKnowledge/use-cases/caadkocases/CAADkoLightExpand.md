@@ -3,7 +3,7 @@ title: "Running Light Expand"
 category: "use case"
 module: "CAADkoUseCases"
 tags: ["CATIVpmLightExpandObject", "CAAVPMDesktopObjects", "CAADkoLightExpand"]
-source_file: "Doc/online/CAADkoUseCases/CAADkoLightExpand.md"
+source_file: "Doc/online/CAADkoUseCases/CAADkoLightExpand.htm"
 converted: "2026-05-11T17:33:45.981463"
 ---
 

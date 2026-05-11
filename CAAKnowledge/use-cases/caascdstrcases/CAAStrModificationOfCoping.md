@@ -3,7 +3,7 @@ title: "Modifying Copings"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CATIA", "CAAStrEditCoping", "CAAScdStrUseCases"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfCoping.md"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfCoping.htm"
 converted: "2026-05-11T17:31:50.892078"
 ---
 

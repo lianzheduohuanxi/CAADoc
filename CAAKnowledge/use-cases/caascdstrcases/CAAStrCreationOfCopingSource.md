@@ -3,7 +3,7 @@ title: "CAAStrCreateCoping.CATScript"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CATIA", "CATIAStrFeatureFactory", "CAAStrCreateCoping"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfCopingSource.md"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrCreationOfCopingSource.htm"
 converted: "2026-05-11T17:31:50.868630"
 ---
 

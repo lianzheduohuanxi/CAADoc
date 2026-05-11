@@ -3,7 +3,7 @@ title: "New C++ Authorized APIs in CAA V5R8 SP2"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIFunctActionsGroup", "CATIFunctActionsGroups", "CATIFunctMultiRepMgr", "CATIFunctVariant", "CATIFunctScript", "CATIMfgTPModification", "CATIFunctFacet", "CATIFunctAction", "CATIFunctAssociation", "CATIKnowledgeAdvisorAddin", "CATIFunctActions", "CATIMfgFeedAndSpeedTabPage", "CATIVpmSCLogin", "CATIValue", "CATIFunctAssociations", "CATIDftElementWithStandard", "CATIFunctVariants", "CATIEdiAssemblyConnector", "CATIMfgTPMultipleMotionWithProfileData", "CATIFunctDescription"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R8SP2NewCPPAPI.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R8SP2NewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.646130"
 ---
 

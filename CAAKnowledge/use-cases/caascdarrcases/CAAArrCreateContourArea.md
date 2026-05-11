@@ -3,7 +3,7 @@ title: "Creating an ArrangementArea Object with a Rectangular Contour"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CAAArrCreateContourArea", "CAAArrCreateItemReservation", "CATIA", "CAAScdArrUseCases"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateContourArea.md"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateContourArea.htm"
 converted: "2026-05-11T17:31:51.544106"
 ---
 ## Arrangement

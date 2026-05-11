@@ -3,7 +3,7 @@ title: "About Generative Shape Design Features"
 category: "use-case"
 module: "CAAGsiTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAAGsiTechArticles/CAAGsiShapeDesignFeature.md"
+source_file: "Doc/online/CAAGsiTechArticles/CAAGsiShapeDesignFeature.htm"
 converted: "2026-05-11T17:31:50.673531"
 ---
 # Shape Design & Styling

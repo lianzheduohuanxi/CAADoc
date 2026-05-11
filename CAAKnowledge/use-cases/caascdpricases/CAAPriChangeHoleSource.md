@@ -3,7 +3,7 @@ title: "CAAPriChangeHole.CATScript"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CAAScdPriUseCases", "CATIA", "CATIAHole", "CAAPriChangeHole"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHoleSource.md"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangeHoleSource.htm"
 converted: "2026-05-11T17:31:51.200028"
 ---
 

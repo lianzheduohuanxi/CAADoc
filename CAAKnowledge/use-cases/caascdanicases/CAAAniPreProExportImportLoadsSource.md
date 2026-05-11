@@ -3,7 +3,7 @@ title: "CAAAniPreProExportImportLoads.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAAniPreProExportImportLoads", "CATIA", "CAAScdAniUseCases", "CATIAAnalysisManager"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProExportImportLoadsSource.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreProExportImportLoadsSource.htm"
 converted: "2026-05-11T17:31:51.802920"
 ---
 

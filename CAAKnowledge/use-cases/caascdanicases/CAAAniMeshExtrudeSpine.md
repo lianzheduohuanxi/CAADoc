@@ -3,7 +3,7 @@ title: "Creating Extrude along a Spine Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAScdAniUseCases", "CAAAniMeshExtrudeSpine"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshExtrudeSpine.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshExtrudeSpine.htm"
 converted: "2026-05-11T17:31:51.640587"
 ---
 ## Analysis Modeler

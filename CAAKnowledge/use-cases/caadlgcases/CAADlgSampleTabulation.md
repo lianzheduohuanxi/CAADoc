@@ -3,7 +3,7 @@ title: "Creating Dialog Boxes Automatically Resizable"
 category: "use case"
 module: "CAADlgUseCases"
 tags: ["CAADlgMoreRadioDlg", "CAADlgMoreButtonDlg", "CAADlgDemoWindow", "CAADlgDialogDemonstrator", "CAADlgDemoApplication", "CATInteractiveApplication", "CAADialog", "CAADlgTabulation", "CAADlgFrameReplaceDlg"]
-source_file: "Doc/online/CAADlgUseCases/CAADlgSampleTabulation.md"
+source_file: "Doc/online/CAADlgUseCases/CAADlgSampleTabulation.htm"
 converted: "2026-05-11T17:17:56.018174"
 ---
 # 3D PLM Enterprise Architecture

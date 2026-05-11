@@ -3,7 +3,7 @@ title: "Creating an ArrangementPathway Object"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CATIA", "CAAArrCreatePathway", "CAAScdArrUseCases"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreatePathway.md"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreatePathway.htm"
 converted: "2026-05-11T17:31:51.563057"
 ---
 

@@ -3,7 +3,7 @@ title: "CAAStrWeldInfoOnMembers.CATScript"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CATIA", "CATIASfmMember", "CAAStrWeldInfoOnMembers"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnMembersSource.md"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrWeldInfoOnMembersSource.htm"
 converted: "2026-05-11T17:31:50.911084"
 ---
 

@@ -3,7 +3,7 @@ title: "Creating a Section View from a Plane"
 category: "use case"
 module: "CAADriUseCases"
 tags: ["CATIDftStandardManager", "CATIGeometricalElement", "CATIPrtContainer", "CATIDftDrawing", "CAADrwCreateSectionFromPlane", "CATIDftDocumentServices", "CATIContainer_var", "CATIA", "CATI2DLine_var", "CATIStringList", "CATIDftView", "CATIPrtPart_var", "CATIAlias", "CATInit_var", "CATISpecObject_var", "CATISpecObject", "CATIDescendants", "CAADrwCreatViewFrom3D", "CATIProduct", "CATIDftGenViewFactory"]
-source_file: "Doc/online/CAADriUseCases/CAADriCreateSectionFromPlane.md"
+source_file: "Doc/online/CAADriUseCases/CAADriCreateSectionFromPlane.htm"
 converted: "2026-05-11T17:31:50.976131"
 ---
 # Mechanical Design

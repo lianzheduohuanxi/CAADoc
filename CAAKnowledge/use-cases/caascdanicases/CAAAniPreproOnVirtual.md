@@ -3,7 +3,7 @@ title: "Creating Virtual Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CAAAniPreproOnVirtual", "CATISamImportDefine", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnVirtual.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnVirtual.htm"
 converted: "2026-05-11T17:31:51.835848"
 ---
 ## Analysis Modeler

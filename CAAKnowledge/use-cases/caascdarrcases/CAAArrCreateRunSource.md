@@ -3,7 +3,7 @@ title: "CAAArrCreateRun.CATScript"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CATIA", "CAAArrCreateRun"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateRunSource.md"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateRunSource.htm"
 converted: "2026-05-11T17:31:51.571552"
 ---
 

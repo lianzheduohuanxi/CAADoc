@@ -3,7 +3,7 @@ title: "Adding a Macro as a Command in a Toolbar"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAInstallation", "CAADoc"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfLauchMacro.md"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfLauchMacro.htm"
 converted: "2026-05-11T17:31:52.379510"
 ---
 

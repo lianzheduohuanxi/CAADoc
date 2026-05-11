@@ -3,7 +3,7 @@ title: "Adding Print Standard Functions to Your Application"
 category: "use case"
 module: "CAAPrtUseCases"
 tags: ["CATIA", "CAAPrtDialog", "CAAPrint", "CAAPrtApplication", "CAAPrtApplicationUse"]
-source_file: "Doc/online/CAAPrtUseCases/CAAPrtSamplePrint.md"
+source_file: "Doc/online/CAAPrtUseCases/CAAPrtSamplePrint.htm"
 converted: "2026-05-11T17:17:56.124848"
 ---
 # 3D PLM Enterprise Architecture

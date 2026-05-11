@@ -3,7 +3,7 @@ title: "Sphere"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMModelInterfaces", "CAAGMModelSphereCreation"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcSphereCreation.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcSphereCreation.htm"
 converted: "2026-05-11T17:33:48.523639"
 ---
 

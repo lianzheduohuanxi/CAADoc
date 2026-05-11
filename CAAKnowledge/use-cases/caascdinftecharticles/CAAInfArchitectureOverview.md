@@ -3,7 +3,7 @@ title: "Object Architecture Overview"
 category: "concept"
 module: "CAAScdInfTechArticles"
 tags: ["CATIA"]
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfArchitectureOverview.md"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfArchitectureOverview.htm"
 converted: "2026-05-11T17:31:52.406949"
 ---
 

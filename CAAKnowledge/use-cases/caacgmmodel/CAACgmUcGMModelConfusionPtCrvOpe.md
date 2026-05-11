@@ -3,7 +3,7 @@ title: "Checking the Confusion of Points on a Curve"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CATICGMConfusionPtOnCrvPtOnCrv", "CAADoc", "CAAGMModelConfusionOpe", "CAAGMModelGemBrowser", "CAAGMModelInterfaces", "CATICGMLocalAnalysis1D"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelConfusionPtCrvOpe.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGMModelConfusionPtCrvOpe.htm"
 converted: "2026-05-11T17:33:48.267654"
 ---
 # Checking the Confusion of Points on a Curve  

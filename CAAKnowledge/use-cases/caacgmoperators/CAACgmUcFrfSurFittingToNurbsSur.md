@@ -3,7 +3,7 @@ title: "Converting Surfaces into NURBS"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsSurFittingToNurbsSur", "CAAGMOperatorsInterfaces", "CAADoc", "CATICGMSurFittingToNurbsSur", "CATICGMObject", "CAAGMModelGemBrowser", "CAASurFittingToNurbsSur", "CATIA", "CAAGMOperatorInterfaces"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcFrfSurFittingToNurbsSur.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcFrfSurFittingToNurbsSur.htm"
 converted: "2026-05-11T17:33:48.947040"
 ---
 

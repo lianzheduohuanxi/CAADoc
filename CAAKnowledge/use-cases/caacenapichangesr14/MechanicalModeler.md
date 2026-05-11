@@ -4,7 +4,7 @@ category: "use-case"
 module: "CAACenAPIChangesR14"
 version: "V5R14"
 tags: ["CATIMfBRep", "CATIMechanicalImport", "CATIMfBiDimResult", "CATIMfMonoDimResult", "CATIMfTriDimResult", "CATIMechanicalTool", "CATIMf3DBehavior", "CATIMfGeometryAccess", "CATIShapeFeatureBody", "CATIFeaturize", "CATIMfZeroDimResult", "CATIMfBRepFactory", "CATIMechanicalProperties", "CATIMechanicalFeature"]
-source_file: "Doc/online/CAACenAPIChangesR14/MechanicalModeler.md"
+source_file: "Doc/online/CAACenAPIChangesR14/MechanicalModeler.htm"
 converted: "2026-05-11T17:33:50.936303"
 ---
 

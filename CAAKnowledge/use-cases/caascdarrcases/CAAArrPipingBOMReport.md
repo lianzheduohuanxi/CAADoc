@@ -3,7 +3,7 @@ title: "CATIAV5ArrWorkbench, CATIAArrBOMReport Interfaces Use Case"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CAAArrPipingBOMReport", "CATIAArrBOMReport", "CATIA", "CATIAV5ArrWorkbench", "CATIAArrWorkbench"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrPipingBOMReport.md"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrPipingBOMReport.htm"
 converted: "2026-05-11T17:31:51.574542"
 ---
 

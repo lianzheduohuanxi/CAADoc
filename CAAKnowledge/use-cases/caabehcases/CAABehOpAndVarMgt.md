@@ -3,7 +3,7 @@ title: "Managing Variables and Operation States for Behavior Command"
 category: "use case"
 module: "CAABehUseCases"
 tags: ["CAAOBMInterfaces", "CAAOBMInterfacesCommand", "CATIType_var", "CAAOBMInterfacesProduct", "CATIDocRoots", "CATICkeParm", "CATIValue", "CATIConnector_var", "CATIVariableManagement", "CATIBehOperationManagement_var", "CATICkeParm_var", "CATIBehOperationManagement", "CATICkeParmFactory_var", "CATIPrdObjectPublisher_var", "CATILinkableObject_var", "CAAOBMInterfacesDlg", "CATIVariableManagement_var", "CAAOBMInterfacesCmd", "CAAOBMInterfacesPart", "CATIProduct_var"]
-source_file: "Doc/online/CAABehUseCases/CAABehOpAndVarMgt.md"
+source_file: "Doc/online/CAABehUseCases/CAABehOpAndVarMgt.htm"
 converted: "2026-05-11T17:33:49.917165"
 ---
 

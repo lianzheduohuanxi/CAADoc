@@ -3,7 +3,7 @@ title: "Creating a V5 Geometrical Element from V4 Data"
 category: "use case"
 module: "CAAV4iUseCases"
 tags: ["CAACATIAV4Interfaces", "CAAV4iEduTranslV4ToV5", "CAADataTranslator", "CATIV4DataTranslator", "CATIAV4Interfaces", "CATIA"]
-source_file: "Doc/online/CAAV4iUseCases/CAAV4iTranslUseCase.md"
+source_file: "Doc/online/CAAV4iUseCases/CAAV4iTranslUseCase.htm"
 converted: "2026-05-11T17:33:45.807427"
 ---
 # 3D PLM PPR Hub Open Gateway

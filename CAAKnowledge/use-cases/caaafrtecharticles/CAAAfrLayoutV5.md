@@ -3,7 +3,7 @@ title: "Understanding the Application Frame Layout"
 category: "use-case"
 module: "CAAAfrTechArticles"
 tags: ["CATIDocumentEdit", "CAAAfrHistogramChartWindow", "CAAEMyInterface", "CATIAfrGeneralWksAddin", "CATISO", "CATIVisu", "CATIAApplicationFrame", "CATIEditor"]
-source_file: "Doc/online/CAAAfrTechArticles/CAAAfrLayoutV5.md"
+source_file: "Doc/online/CAAAfrTechArticles/CAAAfrLayoutV5.htm"
 converted: "2026-05-11T17:17:55.923668"
 ---
 # 3D PLM Enterprise Architecture

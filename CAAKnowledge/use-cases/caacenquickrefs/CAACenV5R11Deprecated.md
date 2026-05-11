@@ -3,7 +3,7 @@ title: "Deprecated CAA V5R9 APIs Removed from CAA V5R11"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATITPSReferenceFrame", "CATIGSMAssemble", "CATITTRS", "CATIVpmAFLAffectedObject", "CATIVpmAFLAction", "CATIDrwAnnotationFactory", "CATIMechanicalPartProperties"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R11Deprecated.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R11Deprecated.htm"
 converted: "2026-05-11T17:33:47.051543"
 ---
 

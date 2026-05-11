@@ -3,7 +3,7 @@ title: "CAAStrEditCoping.CATScript"
 category: "use-case"
 module: "CAAScdStrUseCases"
 tags: ["CATIA", "CAAStrEditCoping"]
-source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfCopingSource.md"
+source_file: "Doc/online/CAAScdStrUseCases/CAAStrModificationOfCopingSource.htm"
 converted: "2026-05-11T17:31:50.893073"
 ---
 

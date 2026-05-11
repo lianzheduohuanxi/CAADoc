@@ -3,7 +3,7 @@ title: "Deleting Schematic Objects"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAADoc", "CAASCH_Delete01", "CAAScdSchUseCases", "CAASchDelete", "CATIA", "CAASchAppBase", "CAASCHEDUApp", "CATIASchRoute", "CAASchPlatformModeler", "CATIASchAppConnectable", "CAASchAppUtilities"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchDelete.md"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchDelete.htm"
 converted: "2026-05-11T17:31:51.359152"
 ---
 ## Schematics Platform Modeler

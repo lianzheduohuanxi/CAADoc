@@ -3,7 +3,7 @@ title: "Shape Automation Objects"
 category: "use-case"
 module: "CAAScdPriTechArticles"
 tags: []
-source_file: "Doc/online/CAAScdPriTechArticles/CAAPriTocShapes.md"
+source_file: "Doc/online/CAAScdPriTechArticles/CAAPriTocShapes.htm"
 converted: "2026-05-11T17:31:51.248415"
 ---
 # Shape Automation Objects

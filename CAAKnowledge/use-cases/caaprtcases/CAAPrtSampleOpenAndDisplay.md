@@ -3,7 +3,7 @@ title: "Opening and Displaying an Image File"
 category: "use case"
 module: "CAAPrtUseCases"
 tags: ["CAAPrtApplication", "CAAPrtWheatField", "CAAPrtDialog", "CAAPrint"]
-source_file: "Doc/online/CAAPrtUseCases/CAAPrtSampleOpenAndDisplay.md"
+source_file: "Doc/online/CAAPrtUseCases/CAAPrtSampleOpenAndDisplay.htm"
 converted: "2026-05-11T17:17:56.117863"
 ---
 # 3D PLM Enterprise Architecture

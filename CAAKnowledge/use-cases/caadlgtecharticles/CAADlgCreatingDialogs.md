@@ -3,7 +3,7 @@ title: "Creating Dialog Objects"
 category: "use-case"
 module: "CAADlgTechArticles"
 tags: ["CATInteractiveApplication"]
-source_file: "Doc/online/CAADlgTechArticles/CAADlgCreatingDialogs.md"
+source_file: "Doc/online/CAADlgTechArticles/CAADlgCreatingDialogs.htm"
 converted: "2026-05-11T17:17:56.030157"
 ---
 # 3D PLM Enterprise Architecture

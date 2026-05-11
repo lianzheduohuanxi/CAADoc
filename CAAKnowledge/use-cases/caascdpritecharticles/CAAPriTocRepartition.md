@@ -3,7 +3,7 @@ title: "Repartition Automation Objects"
 category: "use-case"
 module: "CAAScdPriTechArticles"
 tags: []
-source_file: "Doc/online/CAAScdPriTechArticles/CAAPriTocRepartition.md"
+source_file: "Doc/online/CAAScdPriTechArticles/CAAPriTocRepartition.htm"
 converted: "2026-05-11T17:31:51.239439"
 ---
 # Repartition Automation Objects

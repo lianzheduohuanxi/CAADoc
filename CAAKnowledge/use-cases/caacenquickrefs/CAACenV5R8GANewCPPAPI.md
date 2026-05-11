@@ -3,7 +3,7 @@ title: "New C++ Authorized APIs in CAA V5R8 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATISchAppCntrColor", "CATIMf3DBehavior", "CATISchAppAddCommand", "CATIAVPMVDAExists", "CATIMfgTPSaveData", "CATIMfgActivityMacroMotion", "CATIEhiNetworkExtremity", "CATIGSMAxisToAxis", "CATIMfgActivityMachinableDesignFeature", "CATIMfgMappingForProfileContouring", "CATIUdfFeatureSet", "CATIMfgToolPathCycle", "CATITPSFactoryAdvanced", "CATIDftGenView", "CATISchAppDeleteCheck", "CATIPrintables", "CATIMfgAuxiliaryOperation", "CATICkeParameterSet", "CATIRuleSet", "CATIMfgActivityElementaryMotion"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R8GANewCPPAPI.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R8GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.614918"
 ---
 

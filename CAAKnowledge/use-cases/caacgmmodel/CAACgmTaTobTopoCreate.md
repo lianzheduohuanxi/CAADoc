@@ -3,7 +3,7 @@ title: "How to Associate Topology with Geometry"
 category: "tutorial"
 module: "CAACgmModel"
 tags: ["CATIA", "CATIntCurve"]
-source_file: "Doc/online/CAACgmModel/CAACgmTaTobTopoCreate.md"
+source_file: "Doc/online/CAACgmModel/CAACgmTaTobTopoCreate.htm"
 converted: "2026-05-11T17:33:48.033778"
 ---
 # How to Associate Topology with Geometry  

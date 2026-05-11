@@ -3,7 +3,7 @@ title: "The CGM Topological Model"
 category: "use-case"
 module: "CAATobTechArticles"
 tags: []
-source_file: "Doc/online/CAATobTechArticles/TopoModel.md"
+source_file: "Doc/online/CAATobTechArticles/TopoModel.htm"
 converted: "2026-05-11T17:33:45.920949"
 ---
 

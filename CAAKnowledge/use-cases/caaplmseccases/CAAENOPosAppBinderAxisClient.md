@@ -5,7 +5,7 @@ title: "
 category: "use case"
 module: "CAAPLMSecUseCases"
 tags: ["CAAENOPosApplicationBinderImplClient", "CAAWebServices", "CAAJAXRPCHTTPSessionHandler", "CAAENOPosApplicationBinderImplUseCase", "CAAENOPosApplicationBinderImplWrapper", "CAAPLMSecurity", "CAAENOPosAppBinderImplAxis1_3Client"]
-source_file: "Doc/online/CAAPLMSecUseCases/CAAENOPosAppBinderAxisClient.md"
+source_file: "Doc/online/CAAPLMSecUseCases/CAAENOPosAppBinderAxisClient.htm"
 converted: "2026-05-11T17:33:45.558180"
 ---
 #  CAA Web Services Home 

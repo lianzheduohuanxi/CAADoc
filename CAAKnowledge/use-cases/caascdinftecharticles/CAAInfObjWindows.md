@@ -3,7 +3,7 @@ title: "Windows Object"
 category: "use-case"
 module: "CAAScdInfTechArticles"
 tags: []
-source_file: "Doc/online/CAAScdInfTechArticles/CAAInfObjWindows.md"
+source_file: "Doc/online/CAAScdInfTechArticles/CAAInfObjWindows.htm"
 converted: "2026-05-11T17:31:52.432118"
 ---
 # Windows Object

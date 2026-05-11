@@ -4,7 +4,7 @@ category: "use-case"
 module: "CAACenAPIChangesR7"
 version: "V5R7"
 tags: ["CATIDraft"]
-source_file: "Doc/online/CAACenAPIChangesR7/PartInterfacesSP.md"
+source_file: "Doc/online/CAACenAPIChangesR7/PartInterfacesSP.htm"
 converted: "2026-05-11T17:33:52.215562"
 ---
 

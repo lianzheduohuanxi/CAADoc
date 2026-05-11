@@ -3,7 +3,7 @@ title: "Getting Started with Dialog Boxes"
 category: "use case"
 module: "CAADlgUseCases"
 tags: ["CAADlgHelloWindow", "CAADlgHelloWindowId", "CAADlgHelloApplication", "CATInteractiveApplication", "CATIA", "CAADialog"]
-source_file: "Doc/online/CAADlgUseCases/CAADlgSampleGettingStarted.md"
+source_file: "Doc/online/CAADlgUseCases/CAADlgSampleGettingStarted.htm"
 converted: "2026-05-11T17:17:55.978720"
 ---
 # 3D PLM Enterprise Architecture

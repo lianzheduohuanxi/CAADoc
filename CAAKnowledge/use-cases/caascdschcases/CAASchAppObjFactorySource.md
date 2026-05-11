@@ -3,7 +3,7 @@ title: "CAASchAppObjFactory.CATScript"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAASCHEDUCompressFunc", "CAAScdSchUseCases", "CAASCH_Detail01", "CATIASchCompGraphic", "CAASCHEDU_SamplePID", "CATIA", "CAASCHEDUFuncString", "CATIASchListOfBSTRs", "CATIASchCompatible", "CATIASchAppConnectable", "CATIASchCntrLocation", "CAASchAppObjFactory", "CATIASchCompConnector", "CATIASchRouteGraphic", "CATIASchGRRComp", "CAASCHEDUConnector", "CATIASchGRR", "CATIASchAppConnector", "CATIASchComponent2"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchAppObjFactorySource.md"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchAppObjFactorySource.htm"
 converted: "2026-05-11T17:31:51.321739"
 ---
 

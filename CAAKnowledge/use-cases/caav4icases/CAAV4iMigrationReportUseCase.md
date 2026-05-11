@@ -3,7 +3,7 @@ title: "Reading Migration Report of a Model"
 category: "use case"
 module: "CAAV4iUseCases"
 tags: ["CATIAV4Interfaces", "CAACATIAV4Interfaces", "CAAV4iMigrationReportExtraction"]
-source_file: "Doc/online/CAAV4iUseCases/CAAV4iMigrationReportUseCase.md"
+source_file: "Doc/online/CAAV4iUseCases/CAAV4iMigrationReportUseCase.htm"
 converted: "2026-05-11T17:33:45.775884"
 ---
 # 3D PLM PPR Hub Open Gateway

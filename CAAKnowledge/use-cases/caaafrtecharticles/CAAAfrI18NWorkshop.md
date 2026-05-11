@@ -3,7 +3,7 @@ title: "Creating Resources for Workshops or Workbenches"
 category: "use-case"
 module: "CAAAfrTechArticles"
 tags: ["CAAAfrSubmenuId", "CAAAfrWorkbenchId", "CAAAfrIconBoxId", "CAAAfrWorkBenchPointer", "CAAAfrMenuId", "CAAAfrWorkbenchPointer", "CAAAfrToolbarId"]
-source_file: "Doc/online/CAAAfrTechArticles/CAAAfrI18NWorkshop.md"
+source_file: "Doc/online/CAAAfrTechArticles/CAAAfrI18NWorkshop.htm"
 converted: "2026-05-11T17:17:55.896732"
 ---
 # 3D PLM Enterprise Architecture

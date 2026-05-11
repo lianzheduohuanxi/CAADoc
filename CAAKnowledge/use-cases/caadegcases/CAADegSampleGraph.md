@@ -3,7 +3,7 @@ title: "Implementing the Statechart Diagram"
 category: "use case"
 module: "CAADegUseCases"
 tags: ["CAADegCreateRectangleCmd", "CAAISysPlane", "CAADialogEngine", "CAAGeometry", "CAACreateRectangleCmd", "CATIndicationAgent", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleGraph.md"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleGraph.htm"
 converted: "2026-05-11T17:33:49.670669"
 ---
 

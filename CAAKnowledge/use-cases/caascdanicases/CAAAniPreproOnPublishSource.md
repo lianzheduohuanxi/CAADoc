@@ -3,7 +3,7 @@ title: "CAAAniPreproOnPublish.catvbs"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CATISamImportDefine", "CAAAniPreproOnPublish", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnPublishSource.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproOnPublishSource.htm"
 converted: "2026-05-11T17:31:51.829358"
 ---
 

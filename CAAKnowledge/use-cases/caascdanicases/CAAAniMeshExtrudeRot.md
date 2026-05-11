@@ -3,7 +3,7 @@ title: "Creating Extrude with Rotation Mesh Parts"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CAAAniMeshExtrudeRot", "CATIA", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshExtrudeRot.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniMeshExtrudeRot.htm"
 converted: "2026-05-11T17:31:51.633976"
 ---
 ## Analysis Modeler

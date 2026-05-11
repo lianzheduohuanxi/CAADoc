@@ -3,7 +3,7 @@ title: "Using the Smart Duplicator"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CATICGMContainer", "CAADoc", "CATICGMObject", "CATICGMSmartBodyDuplicator", "CAAGMModelInterfaces", "CAATopSmartDuplicator", "CAAGMModelSmartDuplicator"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcTobSmartDuplicator.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTobSmartDuplicator.htm"
 converted: "2026-05-11T17:33:48.560636"
 ---
 

@@ -3,7 +3,7 @@ title: "Introduction to XML"
 category: "concept"
 module: "CAAXmlTechArticles"
 tags: ["CATIDOMElements", "CATIDOMText"]
-source_file: "Doc/online/CAAXmlTechArticles/CAAXmlIntroduction.md"
+source_file: "Doc/online/CAAXmlTechArticles/CAAXmlIntroduction.htm"
 converted: "2026-05-11T17:33:45.680797"
 ---
 # 3D PLM Enterprise Architecture

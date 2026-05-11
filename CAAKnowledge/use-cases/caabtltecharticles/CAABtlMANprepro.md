@@ -3,7 +3,7 @@ title: "The Declarative File Preprocessor"
 category: "use-case"
 module: "CAABtlTechArticles"
 tags: []
-source_file: "Doc/online/CAABtlTechArticles/CAABtlMANprepro.md"
+source_file: "Doc/online/CAABtlTechArticles/CAABtlMANprepro.htm"
 converted: "2026-05-11T17:33:46.116441"
 ---
 

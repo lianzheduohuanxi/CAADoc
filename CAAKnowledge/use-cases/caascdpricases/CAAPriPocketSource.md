@@ -3,7 +3,7 @@ title: "CAAPriPocket.CATScript"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CAAScdPriUseCases", "CATIA", "CAAPriPocket"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriPocketSource.md"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriPocketSource.htm"
 converted: "2026-05-11T17:31:51.233955"
 ---
 

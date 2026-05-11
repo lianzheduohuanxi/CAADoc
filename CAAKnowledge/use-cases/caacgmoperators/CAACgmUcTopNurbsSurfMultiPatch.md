@@ -3,7 +3,7 @@ title: "Creating a Multi Patch NURBS Surface"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsOverview", "CAAGMOperatorsInterfaces", "CAATopNurbsSurfMultiPatch", "CAADoc", "CATICGMObject", "CAAGMModelGemBrowser", "CAAGMOperatortsNurbsSurfMultiPatch", "CATICGMTopSkin", "CATIA", "CAAGMOperatorsNurbsSurfMultiPatch"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcTopNurbsSurfMultiPatch.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcTopNurbsSurfMultiPatch.htm"
 converted: "2026-05-11T17:33:49.224912"
 ---
 

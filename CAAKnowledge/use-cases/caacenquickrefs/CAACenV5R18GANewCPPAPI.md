@@ -3,7 +3,7 @@ title: "New C++ Authorized APIs in CAA V5R18 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIPrtThreadStandardServices", "CATIEnovUEAffectedObject", "CATImmCAAServices", "CATI2DLayoutLayout", "CATISchAnnotationBreak", "CATIEhfManageLengthTolerance", "CATITPSTangentPlane", "CATIMmiResultFreeze", "CATICciCompositesWorkbenchAddin", "CATITPSVisualization", "CATI2DLayoutSheet", "CATIMeasurableInContext", "CATICloudQsrAddin", "CATIEhfBundleSegmentLink", "CATISchAppMultiImage", "CATIElbFillerPlugInstance", "CATIPDMUEAllowDocumentLoading", "CATIDrwBGAddin", "CATImportAgentBehavior", "CATIAVPMVDADuplicatePRC"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R18GANewCPPAPI.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R18GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.358944"
 ---
 

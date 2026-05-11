@@ -3,7 +3,7 @@ title: "Using the Topological Objects"
 category: "use case"
 module: "CAATobUseCases"
 tags: ["CAATobTetra", "CATICGMObject", "CAAGemBrowser", "CAAGobCreation", "CATIntersectionSurSur", "CATIntersectionCrvCrv", "CATIA", "CAATopologicalObjects"]
-source_file: "Doc/online/CAATobUseCases/CAATobTetra.md"
+source_file: "Doc/online/CAATobUseCases/CAATobTetra.htm"
 converted: "2026-05-11T17:33:45.845499"
 ---
 # Geometric Modeler

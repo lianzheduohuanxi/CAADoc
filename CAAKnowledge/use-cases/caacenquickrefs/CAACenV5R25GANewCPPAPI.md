@@ -3,7 +3,7 @@ title: "New C++ Authorized APIs in CAA V5-6R2015 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIThreadManagement", "CATICGMDistanceBodyBody", "CATITPSExtendedCylinder", "CATIACbdUserImportIDF", "CATIPrdHandlePDMObject", "CATIAVPMVDACreateExtension", "CATIA", "CATICGMHealGaps", "CATIPDMSaveContext", "CATIAV4Interfaces", "CATIMfgSpiralMilling3x"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R25GANewCPPAPI.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R25GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.564481"
 ---
 

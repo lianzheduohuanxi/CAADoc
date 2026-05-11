@@ -3,7 +3,7 @@ title: "Assigning Resources to a State Dialog Command"
 category: "use-case"
 module: "CAADegTechArticles"
 tags: ["CAAGeometry", "CAADegCreateTriangleCmd"]
-source_file: "Doc/online/CAADegTechArticles/CAADegResources.md"
+source_file: "Doc/online/CAADegTechArticles/CAADegResources.htm"
 converted: "2026-05-11T17:33:49.875645"
 ---
 

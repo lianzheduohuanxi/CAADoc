@@ -3,7 +3,7 @@ title: "CAAAsmCreateAssyHole.CATScript"
 category: "use-case"
 module: "CAAScdAsmUseCases"
 tags: ["CAAScdAsmUseCases", "CATIA", "CAAAsmCreateAssyHole"]
-source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmCreateAssyHoleSource.md"
+source_file: "Doc/online/CAAScdAsmUseCases/CAAAsmCreateAssyHoleSource.htm"
 converted: "2026-05-11T17:31:50.846178"
 ---
 

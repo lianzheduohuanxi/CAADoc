@@ -3,7 +3,7 @@ title: "Arranging Dialog Objects Using Tabulations"
 category: "use-case"
 module: "CAADlgTechArticles"
 tags: []
-source_file: "Doc/online/CAADlgTechArticles/CAADlgTabLayout.md"
+source_file: "Doc/online/CAADlgTechArticles/CAADlgTabLayout.htm"
 converted: "2026-05-11T17:17:56.095914"
 ---
 # 3D PLM Enterprise Architecture

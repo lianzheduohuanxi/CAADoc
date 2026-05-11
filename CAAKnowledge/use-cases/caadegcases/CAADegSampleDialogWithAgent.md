@@ -3,7 +3,7 @@ title: "Associating a Dialog Box with a Dialog Agent - 1"
 category: "use case"
 module: "CAADegUseCases"
 tags: ["CAADegCreatePolylineCmd", "CAADegPointEditor", "CAADialogEngine", "CAAGeometry", "CAADegCreatePointCmd", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleDialogWithAgent.md"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleDialogWithAgent.htm"
 converted: "2026-05-11T17:33:49.626183"
 ---
 

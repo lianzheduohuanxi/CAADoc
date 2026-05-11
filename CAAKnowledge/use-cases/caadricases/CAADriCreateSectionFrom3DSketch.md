@@ -3,7 +3,7 @@ title: "Creating a Section View from a 3D Sketch"
 category: "use case"
 module: "CAADriUseCases"
 tags: ["CATIDftStandardManager", "CATIPrtContainer", "CATIDftDrawing", "CATIDftDocumentServices", "CATIContainer_var", "CATIA", "CATI2DLine_var", "CATI2DWFGeometry_var", "CATIStringList", "CATIDftView", "CATIPrtPart_var", "CATIAlias", "CATInit_var", "CATI2DWFGeometry", "CATISpecObject_var", "CATISpecObject", "CATIDescendants", "CAADrwCreateSectionFrom3DSketch", "CAADrwCreatViewFrom3D", "CATIProduct"]
-source_file: "Doc/online/CAADriUseCases/CAADriCreateSectionFrom3DSketch.md"
+source_file: "Doc/online/CAADriUseCases/CAADriCreateSectionFrom3DSketch.htm"
 converted: "2026-05-11T17:31:50.970014"
 ---
 # Mechanical Design

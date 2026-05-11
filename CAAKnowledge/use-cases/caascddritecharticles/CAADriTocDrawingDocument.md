@@ -3,7 +3,7 @@ title: "Drafting Automation Objects"
 category: "use-case"
 module: "CAAScdDriTechArticles"
 tags: []
-source_file: "Doc/online/CAAScdDriTechArticles/CAADriTocDrawingDocument.md"
+source_file: "Doc/online/CAAScdDriTechArticles/CAADriTocDrawingDocument.htm"
 converted: "2026-05-11T17:31:51.137172"
 ---
 # Drafting Automation Objects

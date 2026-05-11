@@ -3,7 +3,7 @@ title: "Part Document Automation Objects"
 category: "use-case"
 module: "CAAScdMmrTechArticles"
 tags: []
-source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrTocPartDocument.md"
+source_file: "Doc/online/CAAScdMmrTechArticles/CAAMmrTocPartDocument.htm"
 converted: "2026-05-11T17:31:51.155629"
 ---
 # Part Document Automation Objects

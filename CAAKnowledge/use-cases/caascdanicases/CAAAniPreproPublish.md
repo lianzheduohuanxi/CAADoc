@@ -3,7 +3,7 @@ title: "Creating Preprocessing Data from Publications"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATIA", "CATISamImportDefine", "CAAAniPreproOnPublish", "CAAScdAniUseCases"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproPublish.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproPublish.htm"
 converted: "2026-05-11T17:31:51.848332"
 ---
 ## Analysis Modeler

@@ -3,7 +3,7 @@ title: "Cone"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMModelConeCreation", "CAAGMModelInterfaces"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcConeCreation.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcConeCreation.htm"
 converted: "2026-05-11T17:33:48.181947"
 ---
 

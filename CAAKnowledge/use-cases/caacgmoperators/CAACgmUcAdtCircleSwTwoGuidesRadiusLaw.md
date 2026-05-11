@@ -3,7 +3,7 @@ title: "Creating a Circle Sweep with Two Guides and a Radius Law"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CAAGMOperatorsCircleSweepTwoGuidesRadius", "CAAGMModelGemBrowser", "CATICGMFrFTopologicalSweep", "CAAAdtCircleSweepTwoGuidesRadius"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCircleSwTwoGuidesRadiusLaw.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCircleSwTwoGuidesRadiusLaw.htm"
 converted: "2026-05-11T17:33:48.822965"
 ---
 

@@ -3,7 +3,7 @@ title: "Graphical Properties"
 category: "use-case"
 module: "CAAVisTechArticles"
 tags: ["CATIAVisPropertySet", "CATIA", "CATIProperty", "CATIVisProperties", "CATISelectShow", "CATIVisu", "CAAEPstVisPropertiesPoint"]
-source_file: "Doc/online/CAAVisTechArticles/CAAVisGraphicProperties.md"
+source_file: "Doc/online/CAAVisTechArticles/CAAVisGraphicProperties.htm"
 converted: "2026-05-11T17:31:52.277889"
 ---
 #  3D PLM Enterprise Architecture

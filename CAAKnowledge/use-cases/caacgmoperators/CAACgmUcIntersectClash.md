@@ -3,7 +3,7 @@ title: "Boolean Intersection"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CATICGMDynBoolean", "CAAGMTopDumpJournal", "CAAGMOperatorsClashIntersect"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcIntersectClash.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcIntersectClash.htm"
 converted: "2026-05-11T17:33:48.954937"
 ---
 

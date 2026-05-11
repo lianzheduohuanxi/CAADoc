@@ -3,7 +3,7 @@ title: "Creating an Attribute"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGeometricObjects", "CAAGobAT", "CAADoc", "CATICGMObject", "CATICGMProjectionPtSur", "CAAGMModelGemBrowser", "CAAGMModelAttribute", "CAAGMModelInterfaces", "CAAGMModelAttributeCreation", "CAAGMModelAttributeManagement"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcGobAttCreation.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcGobAttCreation.htm"
 converted: "2026-05-11T17:33:48.342765"
 ---
 # Creating an Attribute  

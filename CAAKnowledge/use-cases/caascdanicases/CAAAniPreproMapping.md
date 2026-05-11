@@ -3,7 +3,7 @@ title: "Mapping Loads"
 category: "use-case"
 module: "CAAScdAniUseCases"
 tags: ["CATISamImportDefine", "CAAScdAniUseCases", "CAAAniPreproOnPublish", "CATIA", "CAAAniPreproMapping"]
-source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproMapping.md"
+source_file: "Doc/online/CAAScdAniUseCases/CAAAniPreproMapping.htm"
 converted: "2026-05-11T17:31:51.809905"
 ---
 ## Analysis Modeler

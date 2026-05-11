@@ -3,7 +3,7 @@ title: "Extract a Face from a Solid"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsExtractFace", "CAAGMOperatorsInterfaces", "CATICGMTopExtractFace"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcExtractFace.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcExtractFace.htm"
 converted: "2026-05-11T17:33:48.913581"
 ---
 

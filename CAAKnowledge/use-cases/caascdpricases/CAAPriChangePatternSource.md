@@ -3,7 +3,7 @@ title: "CAAPriPatternDescription.CATScript"
 category: "use-case"
 module: "CAAScdPriUseCases"
 tags: ["CATIA", "CAAPriChangePattern", "CAAPriPatternDescription"]
-source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangePatternSource.md"
+source_file: "Doc/online/CAAScdPriUseCases/CAAPriChangePatternSource.htm"
 converted: "2026-05-11T17:31:51.213996"
 ---
 

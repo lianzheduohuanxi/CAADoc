@@ -3,7 +3,7 @@ title: "Achieving a Given Continuity along a Wire"
 category: "use case"
 module: "CAACgmOperators"
 tags: ["CAAGMOperatorsInterfaces", "CAADoc", "CATICGMTopCleanCrvOperator", "CAAGMModelGemBrowser", "CATICGMTopWire", "CAAGMOperatorsCleanCrv", "CAAAdtCleanCrv"]
-source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCleanCurve.md"
+source_file: "Doc/online/CAACgmOperators/CAACgmUcAdtCleanCurve.htm"
 converted: "2026-05-11T17:33:48.844279"
 ---
 

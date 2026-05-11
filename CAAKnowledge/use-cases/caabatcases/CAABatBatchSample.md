@@ -3,7 +3,7 @@ title: "Creating a CAA V5 Batch"
 category: "use case"
 module: "CAABatUseCases"
 tags: ["CAABatBatchSample", "CATIBatchElementCAA", "CATIBatch", "CATIBatchCAA", "CATIBatchElementsCAA", "CAABatchInfrastructure"]
-source_file: "Doc/online/CAABatUseCases/CAABatBatchSample.md"
+source_file: "Doc/online/CAABatUseCases/CAABatBatchSample.htm"
 converted: "2026-05-11T17:33:45.740129"
 ---
 # Middleware

@@ -3,7 +3,7 @@ title: "CAASchQueryConnectivity.CATScript"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CAASCH_CompRoute01", "CATIAProduct", "CATIASchRouteGraphic", "CAAScdSchUseCases", "CATIA", "CATIASchCntrLocation", "CATIASchGRR", "CAASchQueryConnectivity", "CATIASchCompGraphic", "CATIASchAppConnectable"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryConnectivitySource.md"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchQueryConnectivitySource.htm"
 converted: "2026-05-11T17:31:51.471879"
 ---
 

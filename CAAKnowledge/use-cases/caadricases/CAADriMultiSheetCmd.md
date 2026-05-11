@@ -3,7 +3,7 @@ title: "Creating a Multi Sheet Interactive Command"
 category: "use case"
 module: "CAADriUseCases"
 tags: ["CATIADocument", "CATIModelEvents_var", "CAADrwMultiSheetCmd", "CAADrwAddin", "CAAUseCaseCommands", "CATIADrawingDocument", "CAADraftingInterfaces", "CATIA", "CATIDftMultiSheetCmd", "CATIDrwText", "CATIDftMultiSheetMode", "CATIAApplication"]
-source_file: "Doc/online/CAADriUseCases/CAADriMultiSheetCmd.md"
+source_file: "Doc/online/CAADriUseCases/CAADriMultiSheetCmd.htm"
 converted: "2026-05-11T17:31:51.012436"
 ---
 # Mechanical Design

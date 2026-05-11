@@ -3,7 +3,7 @@ title: "Associating a Dialog Box with a Dialog Agent - 2"
 category: "use case"
 module: "CAADegUseCases"
 tags: ["CAADegHstChartWndDlg", "CAAGeometry", "CAADegHistogramChartWindowCmdDo", "CAADialogEngine", "CAADegHistogramChartWindowCmd", "CAADegEditor1DeselectedNotification", "CAADegEditor1SelectedNotification", "CAADegGeoCommands"]
-source_file: "Doc/online/CAADegUseCases/CAADegSampleDialogWithAgent2.md"
+source_file: "Doc/online/CAADegUseCases/CAADegSampleDialogWithAgent2.htm"
 converted: "2026-05-11T17:33:49.642672"
 ---
 

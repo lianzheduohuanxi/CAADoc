@@ -3,7 +3,7 @@ title: "Prism Object"
 category: "use-case"
 module: "CAAScdPriTechArticles"
 tags: []
-source_file: "Doc/online/CAAScdPriTechArticles/CAAPriObjPrism.md"
+source_file: "Doc/online/CAAScdPriTechArticles/CAAPriObjPrism.htm"
 converted: "2026-05-11T17:31:51.237447"
 ---
 # Prism Object

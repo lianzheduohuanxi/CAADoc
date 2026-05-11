@@ -3,7 +3,7 @@ title: "New C++ Authorized APIs in CAA V5R11 GA"
 category: "use-case"
 module: "CAACenQuickRefs"
 tags: ["CATIMSHSelectedElement", "CATITPSNoa", "CATIMfResultManagement", "CATICkeFunctionFactory", "CATISchPostPaste", "CATIParmManipulator", "CATIEleUipFilteringCriteria", "CATISchAppObsoleteClass", "CATIEhiPrtWkbCfgAddin", "CATIMSHSelectedFace", "CATIDftGDT", "CATISchAppSourcePostPaste", "CATIMfgDesignHole", "CATICkeUnit", "CATIMfgMacrosTabPage", "CATInitBatchOnHost", "CATIDesktopDocUE", "CATIBRepAccess", "CATISketchPositioning", "CATIParmSelector"]
-source_file: "Doc/online/CAACenQuickRefs/CAACenV5R11GANewCPPAPI.md"
+source_file: "Doc/online/CAACenQuickRefs/CAACenV5R11GANewCPPAPI.htm"
 converted: "2026-05-11T17:33:47.082066"
 ---
 

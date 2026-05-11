@@ -3,7 +3,7 @@ title: "Creating Features in an Applicative Container"
 category: "use case"
 module: "CAASchUseCases"
 tags: ["CAASchAppSample2", "CATISchAppObjectFactory", "CAASchAppSample1", "CATISchSession", "CAASCHEDU_SamplePID", "CATISchGRRComp", "CAASchApp", "CAASchEduOut2", "CAASchEduIn2", "CATISchBaseFactory", "CAASchAppSample2Main", "CAASchPlatformModeler", "CATISchCompGraphic", "CATIView", "CAASchAppUtilities", "CATISpecObject", "CATISchComponent", "CATInit", "CAASchAppBase", "CAASchAppBaseEnv"]
-source_file: "Doc/online/CAASchUseCases/CAASchSample2.md"
+source_file: "Doc/online/CAASchUseCases/CAASchSample2.htm"
 converted: "2026-05-11T17:31:51.518765"
 ---
 # Equipment & Systems

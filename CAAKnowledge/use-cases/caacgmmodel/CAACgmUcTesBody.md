@@ -3,7 +3,7 @@ title: "Using a Tessellation Operator"
 category: "use case"
 module: "CAACgmModel"
 tags: ["CAAGMOperatorsInterfaces", "CATICGMCellTessellator", "CAATesBody", "CAAGMOperatorsTesBody", "CATICGMBodyTessellator", "CATICGMObject", "CAAGMModelGemBrowser", "CATICGMTopSkin", "CATIA"]
-source_file: "Doc/online/CAACgmModel/CAACgmUcTesBody.md"
+source_file: "Doc/online/CAACgmModel/CAACgmUcTesBody.htm"
 converted: "2026-05-11T17:33:48.537640"
 ---
 

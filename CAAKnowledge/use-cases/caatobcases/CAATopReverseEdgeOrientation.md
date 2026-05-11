@@ -3,7 +3,7 @@ title: "Geometric Modeler"
 category: "use case"
 module: "CAATobUseCases"
 tags: ["CAATobReverseEdgeOrientation", "CATICGMObject", "CAATopologicalObjects", "CATICGMContainer"]
-source_file: "Doc/online/CAATobUseCases/CAATopReverseEdgeOrientation.md"
+source_file: "Doc/online/CAATobUseCases/CAATopReverseEdgeOrientation.htm"
 converted: "2026-05-11T17:33:45.870486"
 ---
 

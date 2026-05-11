@@ -3,7 +3,7 @@ title: "CAAArrCreatePathway.CATScript"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CATIA", "CAAArrCreatePathway"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreatePathwaySource.md"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreatePathwaySource.htm"
 converted: "2026-05-11T17:31:51.565051"
 ---
 

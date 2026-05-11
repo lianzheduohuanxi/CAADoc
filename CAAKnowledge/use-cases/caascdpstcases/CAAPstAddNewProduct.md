@@ -3,7 +3,7 @@ title: "Adding a New Product"
 category: "use-case"
 module: "CAAScdPstUseCases"
 tags: ["CAAPstPad1_2", "CAAPstAddNewProduct", "CATIA", "CAAScdPstUseCases", "CAAPstPad1_1"]
-source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddNewProduct.md"
+source_file: "Doc/online/CAAScdPstUseCases/CAAPstAddNewProduct.htm"
 converted: "2026-05-11T17:31:52.326450"
 ---
 

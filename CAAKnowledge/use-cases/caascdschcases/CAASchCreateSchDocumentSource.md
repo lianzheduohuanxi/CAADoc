@@ -3,7 +3,7 @@ title: "CAASchCreateSchDocument.CATScript"
 category: "use-case"
 module: "CAAScdSchUseCases"
 tags: ["CATIA", "CAASCH_Detail01", "CAASchCreateSchDocument", "CAAScdSchUseCases"]
-source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocumentSource.md"
+source_file: "Doc/online/CAAScdSchUseCases/CAASchCreateSchDocumentSource.htm"
 converted: "2026-05-11T17:31:51.349674"
 ---
 

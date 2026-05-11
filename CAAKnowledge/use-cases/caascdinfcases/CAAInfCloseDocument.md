@@ -3,7 +3,7 @@ title: "Closing a CATIA Document"
 category: "use-case"
 module: "CAAScdInfUseCases"
 tags: ["CAAScdInfUseCases", "CAAInfReadDocument", "CAAInfOpenDocument", "CAAInfCloseDocument", "CATIA"]
-source_file: "Doc/online/CAAScdInfUseCases/CAAInfCloseDocument.md"
+source_file: "Doc/online/CAAScdInfUseCases/CAAInfCloseDocument.htm"
 converted: "2026-05-11T17:31:52.350580"
 ---
 ## Infrastructure

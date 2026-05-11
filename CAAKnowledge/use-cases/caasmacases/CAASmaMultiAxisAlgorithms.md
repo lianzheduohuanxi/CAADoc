@@ -3,7 +3,7 @@ title: "Multi-axis Machining Algorithms"
 category: "use case"
 module: "CAASmaUseCases"
 tags: ["CATInstantiateComponent", "CATIGeometricalElement", "CATIGSMPoint_var", "CATIVisProperties_var", "CATIVisProperties", "CATIMfgTPMultipleMotion_var", "CATIMfgTPMultipleMotion", "CAAMultiAxisAlgorithms", "CATIContainer_var", "CATIPartRequest", "CATIGeometricalElement_var", "CATIMfgMachiningContainer", "CATIMfgManufacturingFactories", "CATIGSMFactory", "CAASmaMultiAxisAlgorithms", "CAASurfaceMachiningAlgoItf", "CATIDescendants_var", "CATIMfgMultiAxisAlgorithm", "CATISpecObject_var", "CATIPartRequest_var"]
-source_file: "Doc/online/CAASmaUseCases/CAASmaMultiAxisAlgorithms.md"
+source_file: "Doc/online/CAASmaUseCases/CAASmaMultiAxisAlgorithms.htm"
 converted: "2026-05-11T17:31:50.835710"
 ---
 # Machining

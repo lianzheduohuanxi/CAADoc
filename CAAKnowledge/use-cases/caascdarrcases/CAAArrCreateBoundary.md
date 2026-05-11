@@ -3,7 +3,7 @@ title: "Creating an ArrangementBoundary Object"
 category: "use-case"
 module: "CAAScdArrUseCases"
 tags: ["CAAArrCreateBoundary", "CATIA", "CAAScdArrUseCases"]
-source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateBoundary.md"
+source_file: "Doc/online/CAAScdArrUseCases/CAAArrCreateBoundary.htm"
 converted: "2026-05-11T17:31:51.537121"
 ---
 ## Arrangement

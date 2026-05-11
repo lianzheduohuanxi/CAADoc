@@ -3,7 +3,7 @@ title: "Computing a Tool Path with User Machining Features"
 category: "use case"
 module: "CAASmiUseCases"
 tags: ["CATIMfgCompoundTraject", "CAASmiUserOperationToolPathReplay", "CAAToolAngle", "CATISmgNcGeometryManager", "CATIMfgToolPathFactory", "CATIMfgComputeToolPathCustom", "CAAGuide", "CATISmgNcGeometryParameter", "CAASmgOperation", "CAAApproachDistance", "CAAISmiUserMachFeature", "CAASmiUserOperationpToolPathReplay", "CATIMfgToolPathComponents", "CATIMfgTPSaveData", "CAASmgMachiningFeature", "CATIMfgActivityParameters", "CAAESmiUserOperationTPComputation", "CAASmgGuide", "CAAESmiUserMachFeature", "CAASmiUserMachFeature"]
-source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithUserMFToolPath.md"
+source_file: "Doc/online/CAASmiUseCases/CAASmiUserOperationWithUserMFToolPath.htm"
 converted: "2026-05-11T17:31:51.288324"
 ---
 # Machining 
